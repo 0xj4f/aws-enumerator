@@ -1,0 +1,168 @@
+[
+    {
+      "name": "US East (N. Virginia)",
+      "code": "us-east-1",
+      "continent": "North America"
+    },
+    {
+      "name": "US East (Ohio)",
+      "code": "us-east-2",
+      "continent": "North America"
+    },
+    {
+      "name": "US West (N. California)",
+      "code": "us-west-1",
+      "continent": "North America"
+    },
+    {
+      "name": "US West (Oregon)",
+      "code": "us-west-2",
+      "continent": "North America"
+    },
+    {
+      "name": "Africa (Cape Town)",
+      "code": "af-south-1",
+      "continent": "Africa"
+    },
+    {
+      "name": "Asia Pacific (Hong Kong)",
+      "code": "ap-east-1",
+      "continent": "Asia"
+    },
+    {
+      "name": "Asia Pacific (Hyderabad)",
+      "code": "ap-south-2",
+      "continent": "Asia"
+    },
+    {
+      "name": "Asia Pacific (Jakarta)",
+      "code": "ap-southeast-3",
+      "continent": "Asia"
+    },
+    {
+      "name": "Asia Pacific (Kuala Lumpur)",
+      "code": "ap-southeast-5",
+      "continent": "Asia"
+    },
+    {
+      "name": "Asia Pacific (Melbourne)",
+      "code": "ap-southeast-4",
+      "continent": "Australia"
+    },
+    {
+      "name": "Asia Pacific (Mumbai)",
+      "code": "ap-south-1",
+      "continent": "Asia"
+    },
+    {
+      "name": "Asia Pacific (Osaka)",
+      "code": "ap-northeast-3",
+      "continent": "Asia"
+    },
+    {
+      "name": "Asia Pacific (Seoul)",
+      "code": "ap-northeast-2",
+      "continent": "Asia"
+    },
+    {
+      "name": "Asia Pacific (Singapore)",
+      "code": "ap-southeast-1",
+      "continent": "Asia"
+    },
+    {
+      "name": "Asia Pacific (Sydney)",
+      "code": "ap-southeast-2",
+      "continent": "Australia"
+    },
+    {
+      "name": "Asia Pacific (Tokyo)",
+      "code": "ap-northeast-1",
+      "continent": "Asia"
+    },
+    {
+      "name": "Canada (Central)",
+      "code": "ca-central-1",
+      "continent": "North America"
+    },
+    {
+      "name": "Canada West (Calgary)",
+      "code": "ca-west-1",
+      "continent": "North America"
+    },
+    {
+      "name": "Europe (Frankfurt)",
+      "code": "eu-central-1",
+      "continent": "Europe"
+    },
+    {
+      "name": "Europe (Zurich)",
+      "code": "eu-central-2",
+      "continent": "Europe"
+    },
+    {
+      "name": "Europe (Stockholm)",
+      "code": "eu-north-1",
+      "continent": "Europe"
+    },
+    {
+      "name": "Europe (Milan)",
+      "code": "eu-south-1",
+      "continent": "Europe"
+    },
+    {
+      "name": "Europe (Spain)",
+      "code": "eu-south-2",
+      "continent": "Europe"
+    },
+    {
+      "name": "Europe (Ireland)",
+      "code": "eu-west-1",
+      "continent": "Europe"
+    },
+    {
+      "name": "Europe (London)",
+      "code": "eu-west-2",
+      "continent": "Europe"
+    },
+    {
+      "name": "Europe (Paris)",
+      "code": "eu-west-3",
+      "continent": "Europe"
+    },
+    {
+      "name": "Israel (Tel Aviv)",
+      "code": "il-central-1",
+      "continent": "Asia"
+    },
+    {
+      "name": "Mexico (Central)",
+      "code": "mx-central-1",
+      "continent": "North America"
+    },
+    {
+      "name": "Middle East (Bahrain)",
+      "code": "me-south-1",
+      "continent": "Asia"
+    },
+    {
+      "name": "Middle East (UAE)",
+      "code": "me-central-1",
+      "continent": "Asia"
+    },
+    {
+      "name": "South America (São Paulo)",
+      "code": "sa-east-1",
+      "continent": "South America"
+    },
+    {
+      "name": "AWS GovCloud (US-East)",
+      "code": "us-gov-east-1",
+      "continent": "North America"
+    },
+    {
+      "name": "AWS GovCloud (US-West)",
+      "code": "us-gov-west-1",
+      "continent": "North America"
+    }
+  ]
+  
