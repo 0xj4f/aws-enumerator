@@ -15,6 +15,8 @@ aws-enum/
 │   ├── components/
 │   │   ├── __init__.py
 │   │   ├── iam.py            # IAM Users, Roles, Policies
+│   │   ├── vpc.py            # VPCs, Subnets, Route Tables, Internet Gateways, NACLs
+│   │   ├── sg.py             # Security Groups and Rules
 │   │   ├── ec2.py            # EC2 instances and details
 │   │   ├── ecr.py            # ECR repositories and details
 │   │   ├── cloudtrail.py     # CloudTrail info
@@ -31,6 +33,15 @@ aws-enum/
 │           │   ├── users.json
 │           │   ├── roles.json
 │           │   └── policies.json
+│           ├── vpc/
+│           │   ├── vpcs.json
+│           │   ├── subnets.json
+│           │   ├── route_tables.json
+│           │   ├── internet_gateways.json
+│           │   ├── nat_gateways.json
+│           │   └── nacls.json
+│           ├── sg/
+│           │   └── security_groups.json
 │           ├── ec2/
 │           │   └── instances.json
 │           ├── ecr/
