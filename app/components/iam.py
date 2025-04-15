@@ -1,6 +1,7 @@
 import json, os
 
 def enumerate(session, path):
+    print("[+] IAM Enumeration Starting...")
     os.makedirs(path, exist_ok=True)
     iam_client = session.client('iam')
 
@@ -43,3 +44,5 @@ def enumerate(session, path):
 
     with open(f"{path}/role_attached_policies.json", "w") as f:
         json.dump(role_attached_policies, f, default=str, indent=2)
+
+    print("[+] IAM Enumeration Finished!")
