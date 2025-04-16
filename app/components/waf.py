@@ -1,4 +1,4 @@
-# v3 
+# V4 
 import json
 import os
 
@@ -6,6 +6,9 @@ def enumerate(session, path):
     os.makedirs(path, exist_ok=True)
 
     all_web_acls = []
+    all_rule_groups = []
+    all_ip_sets = []
+    all_logging_configs = []
 
     scopes = ["REGIONAL", "CLOUDFRONT"]
 
@@ -14,9 +17,10 @@ def enumerate(session, path):
         region_session = session
         if scope == "CLOUDFRONT":
             region_session = session.__class__(profile_name=session.profile_name, region_name="us-east-1")
-        
+
         client = region_session.client("wafv2")
 
+        # --- WebACLs ---
         next_marker = None
         try:
             while True:
@@ -70,5 +74,69 @@ def enumerate(session, path):
                 "Error": f"Error listing WAF WebACLs: {str(e)}"
             })
 
+        # --- Rule Groups ---
+        try:
+            response = client.list_rule_groups(Scope=scope)
+            for rule_group in response.get("RuleGroups", []):
+                try:
+                    details = client.get_rule_group(
+                        Name=rule_group["Name"],
+                        Scope=scope,
+                        Id=rule_group["Id"]
+                    )
+                    all_rule_groups.append(details.get("RuleGroup", {}))
+                except Exception as e:
+                    all_rule_groups.append({
+                        "Scope": scope,
+                        "Error": f"Error getting Rule Group {rule_group['Name']}: {str(e)}"
+
+                    })
+        except Exception as e:
+            all_rule_groups.append({
+                "Scope": scope,
+                "Error": f"Error listing Rule Groups: {str(e)}"
+            })
+
+        # --- IP Sets ---
+        try:
+            response = client.list_ip_sets(Scope=scope)
+            for ip_set in response.get("IPSets", []):
+                try:
+                    details = client.get_ip_set(
+                        Name=ip_set["Name"],
+                        Scope=scope,
+                        Id=ip_set["Id"]
+                    )
+                    all_ip_sets.append(details.get("IPSet", {}))
+                except Exception as e:
+                    all_ip_sets.append({
+                        "Scope": scope,
+                        "Error": f"Error getting IP Set {ip_set['Name']}: {str(e)}"
+                    })
+        except Exception as e:
+            all_ip_sets.append({
+                "Scope": scope,
+                "Error": f"Error listing IP Sets: {str(e)}"
+            })
+
+        # --- Logging Configurations ---
+        try:
+            response = client.list_logging_configurations(Scope=scope)
+            all_logging_configs.extend(response.get("LoggingConfigurations", []))
+        except Exception as e:
+            all_logging_configs.append({
+                "Scope": scope,
+                "Error": f"Error getting Logging Configs: {str(e)}"
+            })
+
     with open(f"{path}/web_acls.json", "w") as f:
         json.dump(all_web_acls, f, default=str, indent=2)
+
+    with open(f"{path}/rule_groups.json", "w") as f:
+        json.dump(all_rule_groups, f, default=str, indent=2)
+
+    with open(f"{path}/ip_sets.json", "w") as f:
+        json.dump(all_ip_sets, f, default=str, indent=2)
+
+    with open(f"{path}/logging_configs.json", "w") as f:
+        json.dump(all_logging_configs, f, default=str, indent=2)
