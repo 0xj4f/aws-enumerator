@@ -4,8 +4,8 @@ import argparse
 import boto3
 import json
 import os
-from components import waf
-# from components import iam, vpc, sg, ec2, ecr, cloudtrail, cloudfront, waf, flowlogs
+from components import s3
+# from components import iam, vpc, sg, ec2, s3, ecr, cloudtrail, cloudfront, waf, flowlogs
 from utils.aws_utils import get_boto3_session
 
 def parse_args():
@@ -28,11 +28,12 @@ def main():
     # vpc.enumerate(session, f"{base_path}/vpc")
     # sg.enumerate(session, f"{base_path}/sg")
     # ec2.enumerate(session, f"{base_path}/ec2")
+    s3.enumerate(session, f"{base_path}/s3")
     # flowlogs.enumerate(session, f"{base_path}/flowlogs")
     # ecr.enumerate(session, f"{base_path}/ecr")
     # cloudtrail.enumerate(session, f"{base_path}/cloudtrail")
     # cloudfront.enumerate(session, f"{base_path}/cloudfront")
-    waf.enumerate(session, f"{base_path}/waf")
+    # waf.enumerate(session, f"{base_path}/waf")
     
 
 if __name__ == "__main__":
