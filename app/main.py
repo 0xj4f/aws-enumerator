@@ -4,7 +4,7 @@ import argparse
 import boto3
 import json
 import os
-from components import cloudtrail
+from components import cloudfront
 # from components import iam, vpc, sg, ec2, ecr, cloudtrail, cloudfront, waf, flowlogs
 from utils.aws_utils import get_boto3_session
 
@@ -30,8 +30,8 @@ def main():
     # ec2.enumerate(session, f"{base_path}/ec2")
     # flowlogs.enumerate(session, f"{base_path}/flowlogs")
     # ecr.enumerate(session, f"{base_path}/ecr")
-    cloudtrail.enumerate(session, f"{base_path}/cloudtrail")
-    # cloudfront.enumerate(session, f"{base_path}/cloudfront")
+    # cloudtrail.enumerate(session, f"{base_path}/cloudtrail")
+    cloudfront.enumerate(session, f"{base_path}/cloudfront")
     # waf.enumerate(session, f"{base_path}/waf")
     
 
