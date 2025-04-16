@@ -27,6 +27,13 @@ reports/{account}/{region}/s3/
 ├── versioning/
 │   ├── {bucket}.json
 
+TO ADD:
+- Add logging configurations
+- Include bucket encryption info
+- get s3 bucket sub paths 
+    - till get .gz
+    - and to check until AWSLogs 
+    - depth level 4
 """
 
 import json
