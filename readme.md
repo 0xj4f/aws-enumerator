@@ -280,3 +280,21 @@ aws sts get-session-token --duration-seconds 3600 # 1 hr
 aws configure export-credentials --format env
 aws configure export-credentials --profile not_default --format env
 ```
+
+## DOCKER RUN
+```bash
+
+# by ENV
+docker run --rm \
+  -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
+  -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
+  -e AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN \
+  -v $(pwd)/reports:/app/reports \
+  aws_enumerator --region eu-west-2
+
+# OR .aws folder mount
+docker run --rm \
+  -v ~/.aws:/root/.aws \
+  -v $(pwd)/reports:/app/reports \
+  aws_enumerator --region eu-west-2
+```
