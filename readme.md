@@ -247,3 +247,36 @@ This provides a straightforward and consistent pattern to repeat for other compo
 - Validate this structure and approach meets your requirements.
 - Proceed to implement the rest of the components following the IAM example.
 - Run initial tests to verify JSON output formatting.
+
+# AWS COMMANDS
+
+```bash
+
+aws sts assume-role \
+  --role-arn arn:aws:iam::00000000:role/test-role \
+  --role-session-name test-session
+
+{
+    "Credentials": {
+        "AccessKeyId": "x",
+        "SecretAccessKey": "x",
+        "SessionToken": "x",
+        "Expiration": "x"
+    },
+    "AssumedRoleUser": {
+        "AssumedRoleId": "XXXXX:test-session",
+        "Arn": "arn:aws:sts::XXXXXX:assumed-role/test-role/test-session"
+    }
+}
+
+```
+
+
+
+Get Access And Secret Key of Account
+```bash
+aws sts get-session-token --duration-seconds 3600 # 1 hr
+
+aws configure export-credentials --format env
+aws configure export-credentials --profile not_default --format env
+```
