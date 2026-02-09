@@ -296,11 +296,11 @@ docker run --rm \
   -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
   -e AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN \
   -v $(pwd)/reports:/app/reports \
-  aws_enumerator --region eu-west-2
+  0xj4f/aws-enumerator:0.1.0 --region eu-west-2
 
 # OR .aws folder mount
 docker run --rm \
   -v ~/.aws:/root/.aws \
   -v $(pwd)/reports:/app/reports \
-  aws_enumerator --region eu-west-2
+  0xj4f/aws-enumerator:0.1.0 --region eu-west-2
 ```
