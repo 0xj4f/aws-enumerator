@@ -277,6 +277,12 @@ Get Access And Secret Key of Account
 ```bash
 aws sts get-session-token --duration-seconds 3600 # 1 hr
 
+# get env 
+aws sts get-caller-identity
+eval "$(aws-sso eval -S adaptive --profile 'aws-profile-name')"
+printenv | grep -iE 'AWS_SESSION|AWS_SECRET|AWS_ACCESS'
+
+# get env as file exports
 aws configure export-credentials --format env
 aws configure export-credentials --profile not_default --format env
 ```

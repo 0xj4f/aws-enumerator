@@ -4,9 +4,12 @@ import argparse
 import boto3
 import json
 import os
-from components import s3
-# from components import iam, vpc, sg, ec2, s3, ecr, cloudtrail, cloudfront, waf, flowlogs
+# from components import s3
+from components import iam, vpc, sg, ec2, s3, cloudtrail, cloudfront, waf, flowlogs
 from utils.aws_utils import get_boto3_session
+from datetime import datetime
+
+
 
 def parse_args():
     parser = argparse.ArgumentParser(description="AWS Enumeration Tool")
@@ -19,21 +22,23 @@ def main():
     session = get_boto3_session(args.region)
     sts = session.client('sts')
     account_number = sts.get_caller_identity()['Account']
-
-    base_path = f"reports/{account_number}/{args.region}"
+    # base_path = f"reports/{account_number}/{args.region}"
+    date_today = datetime.now().strftime("%Y%m%d")
+    
+    base_path = f"reports/{date_today}/{account_number}/{args.region}"
     os.makedirs(base_path, exist_ok=True)
 
     # Enumerate each AWS component
-    # iam.enumerate(session, f"{base_path}/iam")
-    # vpc.enumerate(session, f"{base_path}/vpc")
-    # sg.enumerate(session, f"{base_path}/sg")
-    # ec2.enumerate(session, f"{base_path}/ec2")
+    iam.enumerate(session, f"{base_path}/iam")
+    vpc.enumerate(session, f"{base_path}/vpc")
+    sg.enumerate(session, f"{base_path}/sg")
+    ec2.enumerate(session, f"{base_path}/ec2")
     s3.enumerate(session, f"{base_path}/s3")
-    # flowlogs.enumerate(session, f"{base_path}/flowlogs")
+    flowlogs.enumerate(session, f"{base_path}/flowlogs")
     # ecr.enumerate(session, f"{base_path}/ecr")
-    # cloudtrail.enumerate(session, f"{base_path}/cloudtrail")
-    # cloudfront.enumerate(session, f"{base_path}/cloudfront")
-    # waf.enumerate(session, f"{base_path}/waf")
+    cloudtrail.enumerate(session, f"{base_path}/cloudtrail")
+    cloudfront.enumerate(session, f"{base_path}/cloudfront")
+    waf.enumerate(session, f"{base_path}/waf")
     
 
 if __name__ == "__main__":
