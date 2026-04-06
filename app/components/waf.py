@@ -2,8 +2,13 @@
 import json
 import os
 
-def enumerate(session, path):
-    print("    \033[1;32m[+]\033[0m WAF Enumeration Starting...")
+def enumerate(session, path, scope="BOTH"):
+    """Enumerate WAF resources.
+
+    scope: "BOTH" (default, backward compat), "REGIONAL", or "CLOUDFRONT"
+    """
+    scope_label = f"WAF ({scope})" if scope != "BOTH" else "WAF"
+    print(f"    \033[1;32m[+]\033[0m {scope_label} Enumeration Starting...")
     os.makedirs(path, exist_ok=True)
 
     all_web_acls = []
@@ -11,7 +16,14 @@ def enumerate(session, path):
     all_ip_sets = []
     all_logging_configs = []
 
-    scopes = ["REGIONAL", "CLOUDFRONT"]
+    if scope == "BOTH":
+        scopes = ["REGIONAL", "CLOUDFRONT"]
+    elif scope == "REGIONAL":
+        scopes = ["REGIONAL"]
+    elif scope == "CLOUDFRONT":
+        scopes = ["CLOUDFRONT"]
+    else:
+        scopes = ["REGIONAL", "CLOUDFRONT"]
 
     for scope in scopes:
         # WAF for CLOUDFRONT requires a us-east-1 client
@@ -142,4 +154,4 @@ def enumerate(session, path):
     with open(f"{path}/logging_configs.json", "w") as f:
         json.dump(all_logging_configs, f, default=str, indent=2)
 
-    print("    \033[1;32m[+]\033[0m WAF Enumeration Finished!")
+    print(f"    \033[1;32m[+]\033[0m {scope_label} Enumeration Finished!")
