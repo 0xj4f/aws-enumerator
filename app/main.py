@@ -4,7 +4,8 @@ import argparse
 import boto3
 import json
 import os
-from components import iam, vpc, sg, ec2, s3, cloudtrail, cloudfront, waf, flowlogs
+import shutil
+from components import iam, vpc, sg, ec2, s3, cloudtrail, cloudfront, waf, flowlogs, policy_parser
 from utils.aws_utils import get_boto3_session
 from datetime import datetime
 
@@ -69,6 +70,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description="AWS Enumerator - by 0xj4f")
     parser.add_argument("--region", default="eu-west-2", help="AWS Region (default eu-west-2)")
     parser.add_argument("--all", action="store_true", help="Enumerate all regions (future)")
+    parser.add_argument("--zip", action="store_true", help="Create a zip archive of the report")
     return parser.parse_args()
 
 def main():
@@ -97,12 +99,21 @@ def main():
     cloudfront.enumerate(session, f"{base_path}/cloudfront")
     waf.enumerate(session, f"{base_path}/waf")
 
+    # Run policy analysis
+    policy_parser.analyze(base_path)
+
     generate_manifest(base_path, account_number, args.region, caller_identity, start_time)
 
     elapsed = round((datetime.now() - start_time).total_seconds(), 2)
     print(f"\n    \033[1;32m[+]\033[0m Enumeration complete in {elapsed}s")
     print(f"    \033[1;32m[+]\033[0m Reports saved to: {base_path}")
-    print(f"    \033[1;32m[+]\033[0m Manifest: {base_path}/manifest.json\n")
+    print(f"    \033[1;32m[+]\033[0m Manifest: {base_path}/manifest.json")
+
+    if args.zip:
+        zip_path = shutil.make_archive(base_path, 'zip', os.path.dirname(base_path), os.path.basename(base_path))
+        print(f"    \033[1;32m[+]\033[0m Zip archive: {zip_path}")
+
+    print()
 
 
 if __name__ == "__main__":
