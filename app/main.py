@@ -199,6 +199,7 @@ def main():
             )
             print(f"    \033[1;32m[+]\033[0m Zip archive: {zip_path}")
 
+    print(f"    \033[1;36m[*]\033[0m Dashboard: open dashboard/index.html and load the report")
     print()
 
 

@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>0xj4f AWS Attack Graph</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.30.4/cytoscape.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+    --bg-primary: #0f0f1a;
+    --bg-secondary: #141428;
+    --bg-card: #1a1a35;
+    --bg-hover: #222245;
+    --border: #2a2a50;
+    --text-primary: #e0e0f0;
+    --text-secondary: #8888aa;
+    --text-muted: #555577;
+    --accent: #4FC3F7;
+    --accent-dim: #2a7ab5;
+    --danger: #e94560;
+    --warning: #FFA726;
+    --success: #66BB6A;
+    --purple: #AB47BC;
+    --yellow: #FFEE58;
+    --sidebar-width: 280px;
+    --header-height: 50px;
+    --detail-height: 200px;
+}
+
+body {
+    font-family: 'Segoe UI', -apple-system, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Header */
+#header {
+    height: var(--header-height);
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    gap: 16px;
+    z-index: 10;
+}
+
+#header .brand {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--accent);
+    white-space: nowrap;
+}
+
+#header .brand span {
+    color: var(--text-secondary);
+    font-weight: 400;
+    font-size: 12px;
+    margin-left: 6px;
+}
+
+#header .controls {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex: 1;
+    justify-content: flex-end;
+}
+
+button {
+    background: var(--bg-card);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    padding: 6px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.15s;
+}
+
+button:hover { background: var(--bg-hover); border-color: var(--accent-dim); }
+button.primary { background: var(--accent-dim); border-color: var(--accent); }
+button.primary:hover { background: var(--accent); color: #000; }
+button.danger { border-color: var(--danger); color: var(--danger); }
+button.danger:hover { background: var(--danger); color: #fff; }
+
+/* Layout */
+#app {
+    display: flex;
+    height: calc(100vh - var(--header-height));
+}
+
+/* Sidebar */
+#sidebar {
+    width: var(--sidebar-width);
+    min-width: var(--sidebar-width);
+    background: var(--bg-secondary);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    padding: 12px;
+}
+
+.section {
+    margin-bottom: 16px;
+}
+
+.section-title {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+}
+
+.stat-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 8px;
+    text-align: center;
+}
+
+.stat-item .value {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.stat-item .label {
+    font-size: 10px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+}
+
+.stat-item.critical .value { color: var(--danger); }
+.stat-item.high .value { color: var(--warning); }
+.stat-item.medium .value { color: var(--yellow); }
+
+/* Filters */
+.filter-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 0;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.filter-item input[type="checkbox"] {
+    accent-color: var(--accent);
+}
+
+.filter-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+/* Path Finder */
+.path-section select {
+    width: 100%;
+    background: var(--bg-card);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    padding: 6px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    margin-bottom: 6px;
+}
+
+.path-section select option { background: var(--bg-card); }
+
+.path-result {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 8px;
+    font-size: 11px;
+    margin-top: 8px;
+    display: none;
+}
+
+.path-result.active { display: block; }
+
+.path-result .path-cost {
+    color: var(--danger);
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.path-result .path-steps {
+    margin-top: 6px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.path-result .path-steps .step-node {
+    color: var(--accent);
+}
+
+.path-result .path-steps .step-edge {
+    color: var(--warning);
+    font-size: 10px;
+}
+
+/* Main content area */
+#main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+#graph-container {
+    flex: 1;
+    position: relative;
+    background: var(--bg-primary);
+}
+
+#cy {
+    width: 100%;
+    height: 100%;
+}
+
+/* Loading overlay */
+#drop-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-primary);
+    z-index: 5;
+}
+
+#drop-overlay.hidden { display: none; }
+
+#drop-overlay .drop-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+}
+
+#drop-overlay .drop-text {
+    font-size: 16px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+#drop-overlay .drop-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+#drop-overlay.dragover {
+    background: rgba(79, 195, 247, 0.05);
+    border: 2px dashed var(--accent);
+}
+
+/* Detail Panel */
+#detail-panel {
+    height: var(--detail-height);
+    min-height: var(--detail-height);
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border);
+    padding: 12px 16px;
+    overflow-y: auto;
+    font-size: 12px;
+}
+
+#detail-panel.collapsed {
+    height: 32px;
+    min-height: 32px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+#detail-panel .detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+#detail-panel .detail-header h3 {
+    font-size: 13px;
+    color: var(--accent);
+}
+
+#detail-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.detail-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-field .field-label {
+    font-size: 10px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.detail-field .field-value {
+    font-size: 12px;
+    color: var(--text-primary);
+    word-break: break-all;
+}
+
+.finding-badge {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 600;
+    margin: 2px;
+}
+
+.finding-badge.critical { background: rgba(233,69,96,0.2); color: var(--danger); border: 1px solid var(--danger); }
+.finding-badge.high { background: rgba(255,167,38,0.2); color: var(--warning); border: 1px solid var(--warning); }
+.finding-badge.medium { background: rgba(255,238,88,0.2); color: var(--yellow); border: 1px solid var(--yellow); }
+
+/* Search */
+#search-input {
+    width: 200px;
+    background: var(--bg-card);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    outline: none;
+}
+
+#search-input:focus { border-color: var(--accent-dim); }
+
+/* Graph legend */
+#legend {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: rgba(20,20,40,0.9);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 10px;
+    z-index: 3;
+}
+
+#legend .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 0;
+}
+
+#legend .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+/* Graph info overlay */
+#graph-info {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    font-size: 11px;
+    color: var(--text-muted);
+    z-index: 3;
+}
+
+/* Layout selector */
+#layout-select {
+    background: var(--bg-card);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    padding: 6px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+/* Hidden file input */
+#file-input { display: none; }
+</style>
+</head>
+<body>
+
+<div id="header">
+    <div class="brand">0xj4f AWS Attack Graph <span>v0.2.0</span></div>
+    <div class="controls">
+        <input type="text" id="search-input" placeholder="Search nodes...">
+        <select id="layout-select">
+            <option value="cose">Layout: Force-directed</option>
+            <option value="circle">Layout: Circle</option>
+            <option value="grid">Layout: Grid</option>
+            <option value="breadthfirst">Layout: Hierarchical</option>
+            <option value="concentric">Layout: Concentric</option>
+        </select>
+        <button onclick="document.getElementById('file-input').click()">Load Report (.zip)</button>
+        <button class="danger" id="btn-clear" onclick="clearGraph()" style="display:none">Clear</button>
+        <input type="file" id="file-input" accept=".zip">
+    </div>
+</div>
+
+<div id="app">
+    <div id="sidebar">
+        <!-- Summary -->
+        <div class="section" id="summary-section">
+            <div class="section-title">Account Summary</div>
+            <div class="stat-grid" id="stats-grid">
+                <div class="stat-item"><div class="value" id="stat-users">-</div><div class="label">Users</div></div>
+                <div class="stat-item"><div class="value" id="stat-roles">-</div><div class="label">Roles</div></div>
+                <div class="stat-item"><div class="value" id="stat-groups">-</div><div class="label">Groups</div></div>
+                <div class="stat-item"><div class="value" id="stat-policies">-</div><div class="label">Policies</div></div>
+                <div class="stat-item"><div class="value" id="stat-instances">-</div><div class="label">EC2</div></div>
+                <div class="stat-item"><div class="value" id="stat-buckets">-</div><div class="label">S3</div></div>
+            </div>
+        </div>
+
+        <!-- Findings -->
+        <div class="section" id="findings-section">
+            <div class="section-title">Findings</div>
+            <div class="stat-grid">
+                <div class="stat-item critical"><div class="value" id="stat-critical">-</div><div class="label">Critical</div></div>
+                <div class="stat-item high"><div class="value" id="stat-high">-</div><div class="label">High</div></div>
+                <div class="stat-item medium"><div class="value" id="stat-medium">-</div><div class="label">Medium</div></div>
+                <div class="stat-item"><div class="value" id="stat-total-findings">-</div><div class="label">Total</div></div>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="section">
+            <div class="section-title">Node Filters</div>
+            <label class="filter-item"><input type="checkbox" checked data-filter="user"><span class="filter-dot" style="background:#4FC3F7"></span>Users</label>
+            <label class="filter-item"><input type="checkbox" checked data-filter="role"><span class="filter-dot" style="background:#AB47BC"></span>Roles</label>
+            <label class="filter-item"><input type="checkbox" checked data-filter="group"><span class="filter-dot" style="background:#66BB6A"></span>Groups</label>
+            <label class="filter-item"><input type="checkbox" checked data-filter="policy"><span class="filter-dot" style="background:#FFA726"></span>Policies</label>
+            <label class="filter-item"><input type="checkbox" checked data-filter="instance"><span class="filter-dot" style="background:#EF5350"></span>EC2 Instances</label>
+            <label class="filter-item"><input type="checkbox" checked data-filter="bucket"><span class="filter-dot" style="background:#FFEE58"></span>S3 Buckets</label>
+        </div>
+
+        <!-- Edge Filters -->
+        <div class="section">
+            <div class="section-title">Edge Filters</div>
+            <label class="filter-item"><input type="checkbox" checked data-edge-filter="structural">Structural (membership, policy)</label>
+            <label class="filter-item"><input type="checkbox" checked data-edge-filter="trust">Trust relationships</label>
+            <label class="filter-item"><input type="checkbox" checked data-edge-filter="finding">Findings (privesc, danger)</label>
+            <label class="filter-item"><input type="checkbox" checked data-edge-filter="compute">Compute (instance-role)</label>
+        </div>
+
+        <!-- Path Finder -->
+        <div class="section path-section">
+            <div class="section-title">Shortest Path (Dijkstra)</div>
+            <select id="path-from"><option value="">-- Source (compromised) --</option></select>
+            <select id="path-to"><option value="">-- Target (goal) --</option></select>
+            <button class="primary" onclick="findPath()" style="width:100%">Find Attack Path</button>
+            <button onclick="clearPath()" style="width:100%;margin-top:4px">Clear Path</button>
+            <div class="path-result" id="path-result">
+                <div>Cost: <span class="path-cost" id="path-cost"></span></div>
+                <div>Hops: <span id="path-hops"></span></div>
+                <div class="path-steps" id="path-steps"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="main">
+        <div id="graph-container">
+            <div id="drop-overlay">
+                <div class="drop-icon">&#128274;</div>
+                <div class="drop-text">Load an AWS Enumerator report (.zip)</div>
+                <div class="drop-sub">Click "Load Report" or drag & drop the .zip file here</div>
+            </div>
+            <div id="cy"></div>
+            <div id="graph-info"></div>
+            <div id="legend">
+                <div class="legend-item"><span class="legend-dot" style="background:#4FC3F7"></span> User</div>
+                <div class="legend-item"><span class="legend-dot" style="background:#AB47BC"></span> Role</div>
+                <div class="legend-item"><span class="legend-dot" style="background:#66BB6A"></span> Group</div>
+                <div class="legend-item"><span class="legend-dot" style="background:#FFA726"></span> Policy</div>
+                <div class="legend-item"><span class="legend-dot" style="background:#EF5350"></span> EC2</div>
+                <div class="legend-item"><span class="legend-dot" style="background:#FFEE58"></span> S3</div>
+            </div>
+        </div>
+
+        <div id="detail-panel">
+            <div class="detail-header">
+                <h3 id="detail-title">Click a node or edge to inspect</h3>
+                <button onclick="toggleDetail()" style="padding:2px 8px;font-size:10px">_</button>
+            </div>
+            <div id="detail-content"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+// ── State ──
+let cy = null;
+let reportData = {};
+let findingsMap = {};
+
+// ── Node Colors ──
+const NODE_COLORS = {
+    user: '#4FC3F7', role: '#AB47BC', group: '#66BB6A',
+    policy: '#FFA726', instance: '#EF5350', bucket: '#FFEE58'
+};
+
+const NODE_SHAPES = {
+    user: 'ellipse', role: 'diamond', group: 'round-rectangle',
+    policy: 'rectangle', instance: 'hexagon', bucket: 'barrel'
+};
+
+// ── File Loading (Zip) ──
+document.getElementById('file-input').addEventListener('change', handleFileSelect);
+
+// Drag and drop
+const overlay = document.getElementById('drop-overlay');
+document.body.addEventListener('dragover', (e) => { e.preventDefault(); overlay.classList.add('dragover'); });
+document.body.addEventListener('dragleave', () => overlay.classList.remove('dragover'));
+document.body.addEventListener('drop', async (e) => {
+    e.preventDefault();
+    overlay.classList.remove('dragover');
+    const file = e.dataTransfer.files[0];
+    if (file && file.name.endsWith('.zip')) {
+        await loadZipFile(file);
+    }
+});
+
+async function handleFileSelect(event) {
+    const file = event.target.files[0];
+    if (file) await loadZipFile(file);
+}
+
+async function loadZipFile(file) {
+    overlay.querySelector('.drop-text').textContent = 'Loading...';
+    try {
+        const zip = await JSZip.loadAsync(file);
+        const files = {};
+        const promises = [];
+        zip.forEach((relPath, zipEntry) => {
+            if (!zipEntry.dir && relPath.endsWith('.json')) {
+                promises.push(
+                    zipEntry.async('string').then(content => {
+                        files[relPath] = content;
+                    })
+                );
+            }
+        });
+        await Promise.all(promises);
+        processLoadedFiles(files);
+    } catch (err) {
+        overlay.querySelector('.drop-text').textContent = 'Error loading zip: ' + err.message;
+        console.error(err);
+    }
+}
+
+async function processLoadedFiles(files) {
+    reportData = {};
+
+    // Find the report root (look for manifest.json or iam/ directory)
+    let rootPrefix = '';
+    for (const path of Object.keys(files)) {
+        if (path.endsWith('manifest.json')) {
+            rootPrefix = path.replace('manifest.json', '');
+            break;
+        }
+    }
+
+    // If no manifest, try to find iam/users.json to detect root
+    if (!rootPrefix) {
+        for (const path of Object.keys(files)) {
+            if (path.includes('iam/users.json')) {
+                const parts = path.split('iam/users.json');
+                rootPrefix = parts[0];
+                break;
+            }
+            // For --all mode: look in global/iam/users.json
+            if (path.includes('global/iam/users.json')) {
+                const parts = path.split('global/');
+                rootPrefix = parts[0];
+                break;
+            }
+        }
+    }
+
+    // Determine if this is --all mode or single region
+    const isAllMode = Object.keys(files).some(p => p.includes(rootPrefix + 'global/'));
+
+    // Helper to read a JSON file by relative path (files are already strings from zip)
+    function readJSON(relPath) {
+        const fullPath = rootPrefix + relPath;
+        for (const [path, content] of Object.entries(files)) {
+            if (path === fullPath || path.endsWith('/' + relPath) || path === relPath) {
+                try { return JSON.parse(content); } catch { return null; }
+            }
+        }
+        // Fuzzy match: try to find file ending with relPath
+        for (const [path, content] of Object.entries(files)) {
+            if (path.endsWith(relPath)) {
+                try { return JSON.parse(content); } catch { return null; }
+            }
+        }
+        return null;
+    }
+
+    // Load data based on mode
+    const iamPrefix = isAllMode ? 'global/' : '';
+    const s3Prefix = isAllMode ? 'global/' : '';
+    const analysisPrefix = isAllMode ? 'global/' : '';
+
+    reportData.users = readJSON(iamPrefix + 'iam/users.json') || [];
+    reportData.roles = readJSON(iamPrefix + 'iam/roles.json') || [];
+    reportData.groups = readJSON(iamPrefix + 'iam/groups.json') || [];
+    reportData.policies = readJSON(iamPrefix + 'iam/policies.json') || [];
+    reportData.userGroupMemberships = readJSON(iamPrefix + 'iam/user_group_memberships.json') || {};
+    reportData.userAttachedPolicies = readJSON(iamPrefix + 'iam/user_attached_policies.json') || {};
+    reportData.roleAttachedPolicies = readJSON(iamPrefix + 'iam/role_attached_policies.json') || {};
+    reportData.groupAttachedPolicies = readJSON(iamPrefix + 'iam/group_attached_policies.json') || {};
+    reportData.findings = readJSON(analysisPrefix + 'analysis/findings.json') || { findings: [] };
+    reportData.trustRelationships = readJSON(analysisPrefix + 'analysis/trust_relationships.json') || [];
+    reportData.permissionMap = readJSON(analysisPrefix + 'analysis/permission_map.json') || {};
+    reportData.summary = readJSON(analysisPrefix + 'analysis/summary.json') || {};
+    reportData.manifest = readJSON('manifest.json') || {};
+
+    // Load S3 and EC2 (may be in various region dirs)
+    reportData.buckets = readJSON(s3Prefix + 's3/buckets.json') || [];
+
+    // For instances, try current dir first, then scan all region dirs
+    reportData.instances = [];
+    if (!isAllMode) {
+        const inst = readJSON('ec2/instances.json');
+        if (inst) reportData.instances = inst;
+    } else {
+        // Scan all region directories for instances
+        const regionDirs = new Set();
+        for (const path of Object.keys(files)) {
+            const rel = path.replace(rootPrefix, '');
+            const match = rel.match(/^([a-z]{2}-[a-z]+-\d+)\//);
+            if (match) regionDirs.add(match[1]);
+        }
+        for (const region of regionDirs) {
+            const inst = readJSON(region + '/ec2/instances.json');
+            if (inst && Array.isArray(inst)) {
+                reportData.instances.push(...inst);
+            }
+        }
+    }
+
+    buildGraph();
+}
+
+// ── Graph Construction ──
+function buildGraph() {
+    const elements = [];
+    findingsMap = {};
+
+    // Index findings by entity
+    const findings = reportData.findings.findings || [];
+    for (const f of findings) {
+        const entity = f.entity;
+        if (!findingsMap[entity]) findingsMap[entity] = [];
+        findingsMap[entity].push(f);
+    }
+
+    // ─ Create Nodes ─
+
+    // Users
+    for (const u of reportData.users) {
+        const entityKey = 'user/' + u.UserName;
+        const ef = findingsMap[entityKey] || [];
+        const maxSev = getMaxSeverity(ef);
+        elements.push({
+            group: 'nodes',
+            data: {
+                id: u.Arn || 'user:' + u.UserName,
+                label: u.UserName,
+                type: 'user',
+                entityData: u,
+                findings: ef,
+                maxSeverity: maxSev,
+                hasMFA: (u.MFADevices && u.MFADevices.length > 0),
+                hasConsole: u.HasLoginProfile,
+                accessKeys: (u.AccessKeys || []).filter(k => k.Status === 'Active').length,
+                isHighValue: maxSev === 'CRITICAL'
+            }
+        });
+    }
+
+    // Roles
+    for (const r of reportData.roles) {
+        const entityKey = 'role/' + r.RoleName;
+        const ef = findingsMap[entityKey] || [];
+        const maxSev = getMaxSeverity(ef);
+        const isAdmin = isAdminRole(r.RoleName, reportData.roleAttachedPolicies[r.RoleName] || []);
+        elements.push({
+            group: 'nodes',
+            data: {
+                id: r.Arn || 'role:' + r.RoleName,
+                label: r.RoleName,
+                type: 'role',
+                entityData: r,
+                findings: ef,
+                maxSeverity: maxSev,
+                isHighValue: isAdmin || maxSev === 'CRITICAL'
+            }
+        });
+    }
+
+    // Groups
+    for (const g of reportData.groups) {
+        elements.push({
+            group: 'nodes',
+            data: {
+                id: g.Arn || 'group:' + g.GroupName,
+                label: g.GroupName,
+                type: 'group',
+                entityData: g,
+                findings: findingsMap['group/' + g.GroupName] || [],
+                maxSeverity: getMaxSeverity(findingsMap['group/' + g.GroupName] || [])
+            }
+        });
+    }
+
+    // Policies (custom managed)
+    for (const p of reportData.policies) {
+        elements.push({
+            group: 'nodes',
+            data: {
+                id: p.Arn || 'policy:' + p.PolicyName,
+                label: p.PolicyName,
+                type: 'policy',
+                entityData: p
+            }
+        });
+    }
+
+    // EC2 Instances
+    for (const inst of reportData.instances) {
+        const name = (inst.Tags && inst.Tags.Name) || inst.InstanceId;
+        const imdsVuln = inst.MetadataOptions && inst.MetadataOptions.HttpTokens === 'optional';
+        elements.push({
+            group: 'nodes',
+            data: {
+                id: inst.InstanceId,
+                label: name,
+                type: 'instance',
+                entityData: inst,
+                imdsVulnerable: imdsVuln,
+                isHighValue: false
+            }
+        });
+    }
+
+    // S3 Buckets
+    for (const b of reportData.buckets) {
+        elements.push({
+            group: 'nodes',
+            data: {
+                id: 'bucket:' + b.Name,
+                label: b.Name,
+                type: 'bucket',
+                entityData: b
+            }
+        });
+    }
+
+    // ─ Create Edges ─
+    const nodeIds = new Set(elements.filter(e => e.group === 'nodes').map(e => e.data.id));
+
+    // User → Group (MEMBER_OF)
+    for (const [username, groups] of Object.entries(reportData.userGroupMemberships)) {
+        if (!Array.isArray(groups)) continue;
+        const userId = findNodeId(nodeIds, 'user', username);
+        for (const g of groups) {
+            const groupId = findNodeId(nodeIds, 'group', g.GroupName || g);
+            if (userId && groupId) {
+                elements.push(makeEdge(userId, groupId, 'MEMBER_OF', 0, 'structural', '#555577'));
+            }
+        }
+    }
+
+    // User → Policy (HAS_POLICY)
+    for (const [username, pols] of Object.entries(reportData.userAttachedPolicies)) {
+        if (!Array.isArray(pols)) continue;
+        const userId = findNodeId(nodeIds, 'user', username);
+        for (const p of pols) {
+            const polId = findNodeId(nodeIds, 'policy', p.PolicyName);
+            if (userId && polId) {
+                elements.push(makeEdge(userId, polId, 'HAS_POLICY', 0, 'structural', '#555577'));
+            }
+        }
+    }
+
+    // Role → Policy (HAS_POLICY)
+    for (const [rolename, pols] of Object.entries(reportData.roleAttachedPolicies)) {
+        if (!Array.isArray(pols)) continue;
+        const roleId = findNodeId(nodeIds, 'role', rolename);
+        for (const p of pols) {
+            const polId = findNodeId(nodeIds, 'policy', p.PolicyName);
+            if (roleId && polId) {
+                elements.push(makeEdge(roleId, polId, 'HAS_POLICY', 0, 'structural', '#555577'));
+            }
+        }
+    }
+
+    // Group → Policy (HAS_POLICY)
+    for (const [groupname, pols] of Object.entries(reportData.groupAttachedPolicies)) {
+        if (!Array.isArray(pols)) continue;
+        const groupId = findNodeId(nodeIds, 'group', groupname);
+        for (const p of pols) {
+            const polId = findNodeId(nodeIds, 'policy', p.PolicyName);
+            if (groupId && polId) {
+                elements.push(makeEdge(groupId, polId, 'HAS_POLICY', 0, 'structural', '#555577'));
+            }
+        }
+    }
+
+    // Trust relationships (CAN_ASSUME)
+    for (const trust of reportData.trustRelationships) {
+        const roleId = findNodeId(nodeIds, 'role', trust.role_name);
+        if (!roleId) continue;
+
+        // Find the trusted principal as a node if it exists
+        let principalId = null;
+        if (trust.principal_type === 'AWS' && trust.trusted_principal !== '*') {
+            // Try to match to a user or role by ARN
+            if (nodeIds.has(trust.trusted_principal)) {
+                principalId = trust.trusted_principal;
+            }
+        }
+
+        if (principalId) {
+            const weight = trust.is_cross_account ? 4 : 2;
+            const edgeType = trust.is_cross_account ? 'CAN_ASSUME_CROSS' : 'CAN_ASSUME';
+            const color = trust.is_cross_account ? '#e94560' : '#AB47BC';
+            elements.push(makeEdge(principalId, roleId, edgeType, weight, 'trust', color));
+        }
+    }
+
+    // Instance → Role (INSTANCE_ROLE)
+    for (const inst of reportData.instances) {
+        if (inst.IamInstanceProfile && inst.IamInstanceProfile.Arn) {
+            const profileArn = inst.IamInstanceProfile.Arn;
+            // Instance profile ARN → try to find matching role
+            // Profile ARN: arn:aws:iam::ACCT:instance-profile/NAME
+            // Role ARN: arn:aws:iam::ACCT:role/NAME
+            const profileName = profileArn.split('/').pop();
+            const roleId = findNodeId(nodeIds, 'role', profileName);
+            if (roleId) {
+                elements.push(makeEdge(inst.InstanceId, roleId, 'INSTANCE_ROLE', 1, 'compute', '#4FC3F7'));
+
+                // If IMDS v1 (HttpTokens=optional), add SSRF edge
+                if (inst.MetadataOptions && inst.MetadataOptions.HttpTokens === 'optional') {
+                    elements.push(makeEdge(inst.InstanceId, roleId, 'SSRF_TO_IMDS', 3, 'compute', '#FFA726'));
+                }
+            }
+        }
+    }
+
+    // Initialize Cytoscape
+    initGraph(elements);
+    updateStats();
+    populatePathSelectors();
+    document.getElementById('drop-overlay').classList.add('hidden');
+    document.getElementById('btn-clear').style.display = '';
+}
+
+function makeEdge(source, target, type, weight, category, color) {
+    return {
+        group: 'edges',
+        data: {
+            id: `${source}->${target}:${type}`,
+            source, target,
+            type, weight, category, color,
+            label: type.replace(/_/g, ' ')
+        }
+    };
+}
+
+function findNodeId(nodeIds, type, name) {
+    // Try ARN-based match first
+    for (const id of nodeIds) {
+        if (type === 'user' && id.includes(':user/') && id.endsWith('/' + name)) return id;
+        if (type === 'user' && id === 'user:' + name) return id;
+        if (type === 'role' && id.includes(':role/') && id.endsWith('/' + name)) return id;
+        if (type === 'role' && id === 'role:' + name) return id;
+        if (type === 'group' && id.includes(':group/') && id.endsWith('/' + name)) return id;
+        if (type === 'group' && id === 'group:' + name) return id;
+        if (type === 'policy' && id.includes(':policy/') && id.endsWith('/' + name)) return id;
+        if (type === 'policy' && id === 'policy:' + name) return id;
+    }
+    return null;
+}
+
+function getMaxSeverity(findings) {
+    if (findings.some(f => f.severity === 'CRITICAL')) return 'CRITICAL';
+    if (findings.some(f => f.severity === 'HIGH')) return 'HIGH';
+    if (findings.some(f => f.severity === 'MEDIUM')) return 'MEDIUM';
+    return null;
+}
+
+function isAdminRole(roleName, attachedPolicies) {
+    const adminPolicies = ['AdministratorAccess', 'IAMFullAccess', 'PowerUserAccess'];
+    return attachedPolicies.some(p => adminPolicies.includes(p.PolicyName));
+}
+
+// ── Cytoscape Init ──
+function initGraph(elements) {
+    if (cy) cy.destroy();
+
+    cy = cytoscape({
+        container: document.getElementById('cy'),
+        elements: elements,
+        style: [
+            {
+                selector: 'node',
+                style: {
+                    'label': 'data(label)',
+                    'font-size': '9px',
+                    'color': '#e0e0f0',
+                    'text-valign': 'bottom',
+                    'text-margin-y': 4,
+                    'background-color': (ele) => NODE_COLORS[ele.data('type')] || '#888',
+                    'shape': (ele) => NODE_SHAPES[ele.data('type')] || 'ellipse',
+                    'width': 30,
+                    'height': 30,
+                    'border-width': 0,
+                    'text-background-color': '#0f0f1a',
+                    'text-background-opacity': 0.7,
+                    'text-background-padding': '2px',
+                    'text-background-shape': 'roundrectangle',
+                    'overlay-opacity': 0
+                }
+            },
+            {
+                selector: 'node[?isHighValue]',
+                style: {
+                    'border-width': 3,
+                    'border-color': '#e94560',
+                    'width': 40,
+                    'height': 40
+                }
+            },
+            {
+                selector: 'node[maxSeverity="CRITICAL"]',
+                style: {
+                    'border-width': 3,
+                    'border-color': '#e94560'
+                }
+            },
+            {
+                selector: 'node[maxSeverity="HIGH"]',
+                style: {
+                    'border-width': 2,
+                    'border-color': '#FFA726'
+                }
+            },
+            {
+                selector: 'node[maxSeverity="MEDIUM"]',
+                style: {
+                    'border-width': 2,
+                    'border-color': '#FFEE58'
+                }
+            },
+            {
+                selector: 'edge',
+                style: {
+                    'width': 1.5,
+                    'line-color': 'data(color)',
+                    'target-arrow-color': 'data(color)',
+                    'target-arrow-shape': 'triangle',
+                    'curve-style': 'bezier',
+                    'arrow-scale': 0.8,
+                    'opacity': 0.6
+                }
+            },
+            {
+                selector: 'edge[category="finding"]',
+                style: {
+                    'line-style': 'dashed',
+                    'line-dash-pattern': [6, 3]
+                }
+            },
+            {
+                selector: '.highlighted',
+                style: {
+                    'opacity': 1,
+                    'z-index': 999
+                }
+            },
+            {
+                selector: '.highlighted-path',
+                style: {
+                    'line-color': '#e94560',
+                    'target-arrow-color': '#e94560',
+                    'width': 4,
+                    'opacity': 1,
+                    'z-index': 999
+                }
+            },
+            {
+                selector: '.highlighted-path-node',
+                style: {
+                    'border-width': 4,
+                    'border-color': '#e94560',
+                    'background-color': '#e94560',
+                    'width': 40,
+                    'height': 40,
+                    'z-index': 999,
+                    'opacity': 1
+                }
+            },
+            {
+                selector: '.dimmed',
+                style: {
+                    'opacity': 0.1
+                }
+            },
+            {
+                selector: '.hidden-filter',
+                style: {
+                    'display': 'none'
+                }
+            },
+            {
+                selector: ':selected',
+                style: {
+                    'border-width': 3,
+                    'border-color': '#4FC3F7'
+                }
+            }
+        ],
+        layout: { name: 'cose', animate: false, nodeRepulsion: 8000, idealEdgeLength: 100 },
+        minZoom: 0.1,
+        maxZoom: 5,
+        wheelSensitivity: 0.3
+    });
+
+    // Event listeners
+    cy.on('tap', 'node', (e) => showNodeDetail(e.target));
+    cy.on('tap', 'edge', (e) => showEdgeDetail(e.target));
+    cy.on('tap', (e) => { if (e.target === cy) clearDetail(); });
+
+    updateGraphInfo();
+}
+
+// ── Stats ──
+function updateStats() {
+    document.getElementById('stat-users').textContent = reportData.users.length;
+    document.getElementById('stat-roles').textContent = reportData.roles.length;
+    document.getElementById('stat-groups').textContent = reportData.groups.length;
+    document.getElementById('stat-policies').textContent = reportData.policies.length;
+    document.getElementById('stat-instances').textContent = reportData.instances.length;
+    document.getElementById('stat-buckets').textContent = reportData.buckets.length;
+
+    const summary = reportData.summary || {};
+    document.getElementById('stat-critical').textContent = summary.critical_count || 0;
+    document.getElementById('stat-high').textContent = summary.high_count || 0;
+    document.getElementById('stat-medium').textContent = summary.medium_count || 0;
+    document.getElementById('stat-total-findings').textContent = summary.total_findings || 0;
+}
+
+// ── Path Finding ──
+function populatePathSelectors() {
+    const fromSel = document.getElementById('path-from');
+    const toSel = document.getElementById('path-to');
+    fromSel.innerHTML = '<option value="">-- Source (compromised) --</option>';
+    toSel.innerHTML = '<option value="">-- Target (goal) --</option>';
+
+    if (!cy) return;
+
+    const nodes = cy.nodes().sort((a, b) => {
+        const typeOrder = { user: 0, role: 1, instance: 2, group: 3, bucket: 4, policy: 5 };
+        const ta = typeOrder[a.data('type')] || 99;
+        const tb = typeOrder[b.data('type')] || 99;
+        if (ta !== tb) return ta - tb;
+        return a.data('label').localeCompare(b.data('label'));
+    });
+
+    for (const node of nodes) {
+        const type = node.data('type');
+        const label = `[${type}] ${node.data('label')}`;
+        const opt1 = new Option(label, node.id());
+        const opt2 = new Option(label, node.id());
+        if (node.data('isHighValue')) {
+            opt2.style.color = '#e94560';
+            opt2.textContent = '* ' + label;
+        }
+        fromSel.add(opt1);
+        toSel.add(opt2);
+    }
+}
+
+function findPath() {
+    if (!cy) return;
+    clearPath();
+
+    const fromId = document.getElementById('path-from').value;
+    const toId = document.getElementById('path-to').value;
+    if (!fromId || !toId) return;
+
+    const source = cy.getElementById(fromId);
+    const target = cy.getElementById(toId);
+    if (!source.length || !target.length) return;
+
+    const dijkstra = cy.elements().dijkstra({
+        root: source,
+        weight: (edge) => edge.data('weight') || 1,
+        directed: false
+    });
+
+    const distance = dijkstra.distanceTo(target);
+    const path = dijkstra.pathTo(target);
+
+    if (distance === Infinity || !path.length) {
+        document.getElementById('path-result').classList.add('active');
+        document.getElementById('path-cost').textContent = 'No path found';
+        document.getElementById('path-hops').textContent = '-';
+        document.getElementById('path-steps').innerHTML = 'These nodes are not connected in the graph.';
+        return;
+    }
+
+    // Dim everything, highlight path
+    cy.elements().addClass('dimmed');
+    path.addClass('highlighted-path').removeClass('dimmed');
+    path.nodes().addClass('highlighted-path-node').removeClass('dimmed');
+
+    // Show result
+    const nodeCount = path.nodes().length;
+    const edgeCount = path.edges().length;
+    document.getElementById('path-cost').textContent = distance.toFixed(1);
+    document.getElementById('path-hops').textContent = edgeCount + ' edges, ' + nodeCount + ' nodes';
+
+    let stepsHtml = '';
+    const pathNodes = path.nodes();
+    const pathEdges = path.edges();
+    for (let i = 0; i < pathNodes.length; i++) {
+        const n = pathNodes[i];
+        stepsHtml += `<span class="step-node">[${n.data('type')}] ${n.data('label')}</span>`;
+        if (i < pathEdges.length) {
+            const e = pathEdges[i];
+            stepsHtml += `<br><span class="step-edge">&nbsp;&nbsp;--( ${e.data('type')} w:${e.data('weight')} )--&gt;</span><br>`;
+        }
+    }
+    document.getElementById('path-steps').innerHTML = stepsHtml;
+    document.getElementById('path-result').classList.add('active');
+}
+
+function clearPath() {
+    if (cy) {
+        cy.elements().removeClass('dimmed highlighted-path highlighted-path-node');
+    }
+    document.getElementById('path-result').classList.remove('active');
+}
+
+// ── Filters ──
+document.querySelectorAll('[data-filter]').forEach(cb => {
+    cb.addEventListener('change', applyFilters);
+});
+
+document.querySelectorAll('[data-edge-filter]').forEach(cb => {
+    cb.addEventListener('change', applyFilters);
+});
+
+function applyFilters() {
+    if (!cy) return;
+
+    const nodeFilters = {};
+    document.querySelectorAll('[data-filter]').forEach(cb => {
+        nodeFilters[cb.dataset.filter] = cb.checked;
+    });
+
+    const edgeFilters = {};
+    document.querySelectorAll('[data-edge-filter]').forEach(cb => {
+        edgeFilters[cb.dataset.edgeFilter] = cb.checked;
+    });
+
+    cy.nodes().forEach(node => {
+        const type = node.data('type');
+        if (nodeFilters[type] === false) {
+            node.addClass('hidden-filter');
+        } else {
+            node.removeClass('hidden-filter');
+        }
+    });
+
+    cy.edges().forEach(edge => {
+        const category = edge.data('category');
+        if (edgeFilters[category] === false) {
+            edge.addClass('hidden-filter');
+        } else {
+            edge.removeClass('hidden-filter');
+        }
+    });
+}
+
+// ── Search ──
+document.getElementById('search-input').addEventListener('input', (e) => {
+    if (!cy) return;
+    const query = e.target.value.toLowerCase().trim();
+    if (!query) {
+        cy.nodes().removeClass('dimmed');
+        return;
+    }
+    cy.nodes().forEach(node => {
+        const label = (node.data('label') || '').toLowerCase();
+        const id = (node.id() || '').toLowerCase();
+        if (label.includes(query) || id.includes(query)) {
+            node.removeClass('dimmed');
+        } else {
+            node.addClass('dimmed');
+        }
+    });
+});
+
+// ── Layout ──
+document.getElementById('layout-select').addEventListener('change', (e) => {
+    if (!cy) return;
+    const layoutName = e.target.value;
+    const opts = { name: layoutName, animate: true, animationDuration: 500 };
+    if (layoutName === 'cose') {
+        opts.nodeRepulsion = 8000;
+        opts.idealEdgeLength = 100;
+    }
+    if (layoutName === 'breadthfirst') {
+        opts.spacingFactor = 1.2;
+    }
+    cy.layout(opts).run();
+});
+
+// ── Detail Panel ──
+function showNodeDetail(node) {
+    const d = node.data();
+    const titleEl = document.getElementById('detail-title');
+    const contentEl = document.getElementById('detail-content');
+    titleEl.textContent = `[${d.type}] ${d.label}`;
+    titleEl.style.color = NODE_COLORS[d.type] || '#4FC3F7';
+
+    let html = '';
+
+    if (d.type === 'user') {
+        const u = d.entityData;
+        html += field('ARN', u.Arn);
+        html += field('Created', u.CreateDate);
+        html += field('Console Access', u.HasLoginProfile ? 'Yes' : 'No');
+        html += field('Active Access Keys', (u.AccessKeys || []).filter(k => k.Status === 'Active').length);
+        html += field('MFA Enabled', (u.MFADevices && u.MFADevices.length > 0) ? 'Yes' : 'No');
+        html += field('Password Last Used', u.PasswordLastUsed || 'Never');
+    } else if (d.type === 'role') {
+        const r = d.entityData;
+        html += field('ARN', r.Arn);
+        html += field('Created', r.CreateDate);
+        html += field('Path', r.Path);
+        html += field('Max Session', r.MaxSessionDuration ? r.MaxSessionDuration + 's' : '-');
+    } else if (d.type === 'group') {
+        html += field('ARN', d.entityData.Arn);
+        html += field('Created', d.entityData.CreateDate);
+    } else if (d.type === 'policy') {
+        html += field('ARN', d.entityData.Arn);
+        html += field('Version', d.entityData.DefaultVersionId);
+        html += field('Attachments', d.entityData.AttachmentCount);
+    } else if (d.type === 'instance') {
+        const i = d.entityData;
+        html += field('Instance ID', i.InstanceId);
+        html += field('Type', i.InstanceType);
+        html += field('State', i.State);
+        html += field('Public IP', i.PublicIpAddress || 'None');
+        html += field('Private IP', i.PrivateIpAddress);
+        html += field('VPC', i.VpcId);
+        html += field('IMDSv2', i.MetadataOptions?.HttpTokens === 'required' ? 'Enforced' : 'NOT ENFORCED');
+        html += field('Profile', i.IamInstanceProfile?.Arn || 'None');
+    } else if (d.type === 'bucket') {
+        html += field('Name', d.entityData.Name);
+        html += field('Region', d.entityData.Region);
+        html += field('Created', d.entityData.CreationDate);
+    }
+
+    // Findings
+    const findings = d.findings || [];
+    if (findings.length > 0) {
+        html += '<div style="grid-column:1/-1;margin-top:8px"><div class="field-label">FINDINGS</div>';
+        for (const f of findings) {
+            const cls = f.severity.toLowerCase();
+            html += `<span class="finding-badge ${cls}">${f.id} ${f.severity}</span> `;
+        }
+        html += '<div style="margin-top:4px;color:#8888aa;font-size:11px">';
+        for (const f of findings) {
+            html += `${f.id}: ${f.title}<br>`;
+        }
+        html += '</div></div>';
+    }
+
+    contentEl.innerHTML = html;
+}
+
+function showEdgeDetail(edge) {
+    const d = edge.data();
+    document.getElementById('detail-title').textContent = `Edge: ${d.type}`;
+    document.getElementById('detail-title').style.color = d.color;
+
+    let html = '';
+    html += field('Type', d.type);
+    html += field('Weight', d.weight);
+    html += field('Category', d.category);
+    html += field('Source', edge.source().data('label'));
+    html += field('Target', edge.target().data('label'));
+    document.getElementById('detail-content').innerHTML = html;
+}
+
+function clearDetail() {
+    document.getElementById('detail-title').textContent = 'Click a node or edge to inspect';
+    document.getElementById('detail-title').style.color = '#4FC3F7';
+    document.getElementById('detail-content').innerHTML = '';
+}
+
+function field(label, value) {
+    return `<div class="detail-field"><span class="field-label">${label}</span><span class="field-value">${value || '-'}</span></div>`;
+}
+
+function toggleDetail() {
+    document.getElementById('detail-panel').classList.toggle('collapsed');
+}
+
+// ── Utilities ──
+function updateGraphInfo() {
+    if (!cy) return;
+    const nodes = cy.nodes().length;
+    const edges = cy.edges().length;
+    document.getElementById('graph-info').textContent = `${nodes} nodes, ${edges} edges`;
+}
+
+function clearGraph() {
+    if (cy) cy.destroy();
+    cy = null;
+    reportData = {};
+    findingsMap = {};
+    document.getElementById('drop-overlay').classList.remove('hidden');
+    document.getElementById('btn-clear').style.display = 'none';
+    clearDetail();
+    updateStats();
+    document.getElementById('graph-info').textContent = '';
+    document.getElementById('path-result').classList.remove('active');
+    // Reset stats
+    ['stat-users','stat-roles','stat-groups','stat-policies','stat-instances','stat-buckets',
+     'stat-critical','stat-high','stat-medium','stat-total-findings'].forEach(id => {
+        document.getElementById(id).textContent = '-';
+    });
+}
+</script>
+</body>
+</html>
