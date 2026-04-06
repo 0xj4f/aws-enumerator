@@ -2,6 +2,7 @@ import json
 import os
 
 def enumerate(session, path):
+    print("    \033[1;32m[+]\033[0m CloudTrail Enumeration Starting...")
     os.makedirs(path, exist_ok=True)
     client = session.client("cloudtrail")
 
@@ -25,3 +26,5 @@ def enumerate(session, path):
 
     with open(f"{path}/trails.json", "w") as f:
         json.dump(enriched_trails, f, default=str, indent=2)
+
+    print("    \033[1;32m[+]\033[0m CloudTrail Enumeration Finished!")

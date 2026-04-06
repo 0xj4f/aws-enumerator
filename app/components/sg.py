@@ -1,6 +1,7 @@
 import json, os
 
 def enumerate(session, path):
+    print("    \033[1;32m[+]\033[0m Security Groups Enumeration Starting...")
     os.makedirs(path, exist_ok=True)
     ec2_client = session.client("ec2")
 
@@ -43,3 +44,5 @@ def enumerate(session, path):
 
     with open(f"{path}/security_groups.json", "w") as f:
         json.dump(detailed_sg_info, f, indent=2, default=str)
+
+    print("    \033[1;32m[+]\033[0m Security Groups Enumeration Finished!")

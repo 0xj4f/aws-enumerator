@@ -3,6 +3,7 @@ import json
 import os
 
 def enumerate(session, path):
+    print("    \033[1;32m[+]\033[0m WAF Enumeration Starting...")
     os.makedirs(path, exist_ok=True)
 
     all_web_acls = []
@@ -140,3 +141,5 @@ def enumerate(session, path):
 
     with open(f"{path}/logging_configs.json", "w") as f:
         json.dump(all_logging_configs, f, default=str, indent=2)
+
+    print("    \033[1;32m[+]\033[0m WAF Enumeration Finished!")
