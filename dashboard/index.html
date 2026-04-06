@@ -400,12 +400,63 @@ button.danger:hover { background: var(--danger); color: #fff; }
 
 /* Hidden file input */
 #file-input { display: none; }
+
+/* Attack path items */
+.attack-path-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 8px;
+    margin-bottom: 4px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-size: 11px;
+}
+
+.attack-path-item:hover {
+    border-color: var(--accent-dim);
+    background: var(--bg-hover);
+}
+
+.attack-path-item.active {
+    border-color: var(--danger);
+    background: rgba(233,69,96,0.1);
+}
+
+.attack-path-item .ap-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.attack-path-item .ap-cost {
+    font-weight: 700;
+    font-size: 12px;
+    padding: 1px 6px;
+    border-radius: 3px;
+}
+
+.attack-path-item .ap-cost.cost-low { background: rgba(233,69,96,0.2); color: var(--danger); }
+.attack-path-item .ap-cost.cost-med { background: rgba(255,167,38,0.2); color: var(--warning); }
+.attack-path-item .ap-cost.cost-high { background: rgba(102,187,106,0.2); color: var(--success); }
+
+.attack-path-item .ap-route {
+    color: var(--text-secondary);
+    font-size: 10px;
+    line-height: 1.5;
+    word-break: break-all;
+}
+
+.attack-path-item .ap-route .ap-node { color: var(--accent); }
+.attack-path-item .ap-route .ap-edge { color: var(--text-muted); }
+.attack-path-item .ap-target { color: var(--danger); font-weight: 600; }
 </style>
 </head>
 <body>
 
 <div id="header">
-    <div class="brand">0xj4f AWS Attack Graph <span>v0.2.0</span></div>
+    <div class="brand">AWS Attack Graph <span>v0.2.0</span></div>
     <div class="controls">
         <input type="text" id="search-input" placeholder="Search nodes...">
         <select id="layout-select">
@@ -479,6 +530,17 @@ button.danger:hover { background: var(--danger); color: #fff; }
                 <div>Hops: <span id="path-hops"></span></div>
                 <div class="path-steps" id="path-steps"></div>
             </div>
+        </div>
+
+        <!-- All Attack Paths -->
+        <div class="section">
+            <div class="section-title">All Attack Paths</div>
+            <div style="font-size:11px;color:var(--text-secondary);margin-bottom:6px">
+                Finds shortest path from every entity to every high-value target
+            </div>
+            <button class="danger" onclick="findAllAttackPaths()" style="width:100%">Discover All Paths</button>
+            <div id="attack-paths-status" style="font-size:11px;color:var(--text-muted);margin-top:4px"></div>
+            <div id="attack-paths-list" style="margin-top:8px;max-height:300px;overflow-y:auto"></div>
         </div>
     </div>
 
