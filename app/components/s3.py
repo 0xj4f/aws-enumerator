@@ -40,7 +40,7 @@ def enumerate(session, path):
     buckets_metadata = []
 
     subdirs = ["policies", "acls", "public_access_block", "versioning",
-               "encryption", "tagging", "logging", "cors"]
+               "encryption", "tagging", "logging", "cors", "notifications"]
     dirs = {}
     for subdir in subdirs:
         d = os.path.join(path, subdir)
@@ -123,6 +123,16 @@ def enumerate(session, path):
             cors = s3_client.get_bucket_cors(Bucket=bucket_name)
             with open(f"{dirs['cors']}/{bucket_name}.json", "w") as f:
                 json.dump(cors.get("CORSRules", []), f, indent=2)
+        except ClientError:
+            pass
+
+        # Save event notifications
+        try:
+            notif = s3_client.get_bucket_notification_configuration(Bucket=bucket_name)
+            notif.pop('ResponseMetadata', None)
+            if notif:
+                with open(f"{dirs['notifications']}/{bucket_name}.json", "w") as f:
+                    json.dump(notif, f, indent=2)
         except ClientError:
             pass
 
