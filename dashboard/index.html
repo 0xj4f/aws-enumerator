@@ -516,6 +516,10 @@ button.danger:hover { background: var(--danger); color: #fff; }
             <label class="filter-item"><input type="checkbox" checked data-edge-filter="trust">Trust relationships</label>
             <label class="filter-item"><input type="checkbox" checked data-edge-filter="finding">Findings (privesc, danger)</label>
             <label class="filter-item"><input type="checkbox" checked data-edge-filter="compute">Compute (instance-role)</label>
+            <label class="filter-item"><input type="checkbox" checked data-edge-filter="s3_access">S3 access (IAM to bucket)</label>
+            <label class="filter-item"><input type="checkbox" checked data-edge-filter="s3_grant">S3 grants (bucket to entity)</label>
+            <label class="filter-item"><input type="checkbox" checked data-edge-filter="kms">KMS encryption</label>
+            <label class="filter-item"><input type="checkbox" checked data-edge-filter="notification">Notifications (Lambda/SQS/SNS)</label>
         </div>
 
         <!-- Path Finder -->
@@ -560,6 +564,10 @@ button.danger:hover { background: var(--danger); color: #fff; }
                 <div class="legend-item"><span class="legend-dot" style="background:#FFA726"></span> Policy</div>
                 <div class="legend-item"><span class="legend-dot" style="background:#EF5350"></span> EC2</div>
                 <div class="legend-item"><span class="legend-dot" style="background:#FFEE58"></span> S3</div>
+                <div class="legend-item"><span class="legend-dot" style="background:#78909C"></span> KMS</div>
+                <div class="legend-item"><span class="legend-dot" style="background:#CE93D8"></span> Lambda</div>
+                <div class="legend-item"><span class="legend-dot" style="background:#A5D6A7"></span> SQS</div>
+                <div class="legend-item"><span class="legend-dot" style="background:#FFAB91"></span> SNS</div>
             </div>
         </div>
 
@@ -582,12 +590,20 @@ let findingsMap = {};
 // ── Node Colors ──
 const NODE_COLORS = {
     user: '#4FC3F7', role: '#AB47BC', group: '#66BB6A',
-    policy: '#FFA726', instance: '#EF5350', bucket: '#FFEE58'
+    policy: '#FFA726', instance: '#EF5350', bucket: '#FFEE58',
+    kms: '#78909C', lambda: '#CE93D8', sqs: '#A5D6A7', sns: '#FFAB91'
 };
 
 const NODE_SHAPES = {
     user: 'ellipse', role: 'diamond', group: 'round-rectangle',
-    policy: 'rectangle', instance: 'hexagon', bucket: 'barrel'
+    policy: 'rectangle', instance: 'hexagon', bucket: 'barrel',
+    kms: 'pentagon', lambda: 'star', sqs: 'round-rectangle', sns: 'round-rectangle'
+};
+
+const S3_EDGE_COLORS = {
+    CAN_READ: '#26C6DA', CAN_WRITE: '#FFA726', CAN_ADMIN: '#e94560',
+    FULL_ACCESS: '#e94560', GRANTS_ACCESS: '#66BB6A', GRANTS_PUBLIC: '#e94560',
+    GRANTS_CROSS_ACCOUNT: '#FF7043', ENCRYPTED_BY: '#78909C', NOTIFIES: '#CE93D8'
 };
 
 // ── File Loading (Zip) ──
@@ -700,6 +716,7 @@ async function processLoadedFiles(files) {
     reportData.trustRelationships = readJSON(analysisPrefix + 'analysis/trust_relationships.json') || [];
     reportData.permissionMap = readJSON(analysisPrefix + 'analysis/permission_map.json') || {};
     reportData.summary = readJSON(analysisPrefix + 'analysis/summary.json') || {};
+    reportData.s3Relationships = readJSON(analysisPrefix + 'analysis/s3_relationships.json') || { edges: [], findings: [] };
     reportData.manifest = readJSON('manifest.json') || {};
 
     // Load S3 and EC2 (may be in various region dirs)
@@ -935,6 +952,76 @@ function buildGraph() {
                 }
             }
         }
+    }
+
+    // S3 Relationship edges
+    const s3Edges = (reportData.s3Relationships && reportData.s3Relationships.edges) || [];
+    for (const edge of s3Edges) {
+        let sourceId = edge.source;
+        let targetId = edge.target;
+
+        // Resolve source to existing node ID
+        if (sourceId.startsWith('bucket:')) {
+            // bucket nodes already use bucket: prefix
+        } else {
+            // IAM ARN — check if node exists
+            if (!nodeIds.has(sourceId)) {
+                // Try to match by name from ARN
+                const parts = sourceId.split('/');
+                const name = parts[parts.length - 1];
+                const resolved = findNodeId(nodeIds, 'role', name) || findNodeId(nodeIds, 'user', name);
+                if (resolved) sourceId = resolved;
+                else continue; // skip if source not in graph
+            }
+        }
+
+        // Resolve target — may need placeholder nodes for KMS/Lambda/SQS/SNS
+        if (!nodeIds.has(targetId)) {
+            if (targetId.startsWith('kms:') || targetId.startsWith('lambda:') ||
+                targetId.startsWith('sqs:') || targetId.startsWith('sns:')) {
+                const prefix = targetId.split(':')[0];
+                const arn = targetId.substring(prefix.length + 1);
+                const shortLabel = arn.split('/').pop() || arn.split(':').pop() || targetId;
+                elements.push({
+                    group: 'nodes',
+                    data: { id: targetId, label: shortLabel, type: prefix, entityData: { arn: arn } }
+                });
+                nodeIds.add(targetId);
+            } else if (targetId.startsWith('bucket:')) {
+                // bucket should already exist
+                if (!nodeIds.has(targetId)) continue;
+            } else if (targetId === 'principal:*') {
+                // Public access — skip creating a node, just note it
+                continue;
+            } else {
+                // Unknown principal ARN (e.g. cross-account) — create placeholder
+                const shortLabel = targetId.split('/').pop() || targetId.split(':').pop();
+                elements.push({
+                    group: 'nodes',
+                    data: { id: targetId, label: shortLabel, type: 'role', entityData: { arn: targetId, external: true } }
+                });
+                nodeIds.add(targetId);
+            }
+        }
+
+        if (!nodeIds.has(sourceId) || !nodeIds.has(targetId)) continue;
+
+        const color = S3_EDGE_COLORS[edge.type] || '#888';
+        const category = edge.category || 's3_access';
+        elements.push({
+            group: 'edges',
+            data: {
+                id: `${sourceId}->${targetId}:${edge.type}`,
+                source: sourceId,
+                target: targetId,
+                type: edge.type,
+                weight: edge.weight || 1,
+                category: category,
+                color: color,
+                label: edge.type.replace(/_/g, ' '),
+                s3Meta: edge
+            }
+        });
     }
 
     // Initialize Cytoscape
@@ -1384,6 +1471,23 @@ function showEdgeDetail(edge) {
     html += field('Category', d.category);
     html += field('Source', edge.source().data('label'));
     html += field('Target', edge.target().data('label'));
+
+    // S3 relationship metadata
+    if (d.s3Meta) {
+        const m = d.s3Meta;
+        if (m.access_types) html += field('Access Types', m.access_types.join(', '));
+        if (m.matched_actions) html += field('Matched Actions', m.matched_actions.join(', '));
+        if (m.matched_resources) html += field('Matched Resources', m.matched_resources.join(', '));
+        if (m.source_policy) html += field('Source Policy', m.source_policy);
+        if (m.source_type) html += field('Policy Type', m.source_type);
+        if (m.granted_actions) html += field('Granted Actions', m.granted_actions.join(', '));
+        if (m.is_cross_account) html += field('Cross-Account', 'Yes');
+        if (m.has_conditions) html += field('Has Conditions', 'Yes');
+        if (m.is_wildcard_resource) html += field('Wildcard Resource', 'Yes');
+        if (m.kms_key_arn) html += field('KMS Key', m.kms_key_arn);
+        if (m.events) html += field('Events', m.events.join(', '));
+    }
+
     document.getElementById('detail-content').innerHTML = html;
 }
 
@@ -1420,11 +1524,139 @@ function clearGraph() {
     updateStats();
     document.getElementById('graph-info').textContent = '';
     document.getElementById('path-result').classList.remove('active');
+    document.getElementById('attack-paths-list').innerHTML = '';
+    document.getElementById('attack-paths-status').textContent = '';
     // Reset stats
     ['stat-users','stat-roles','stat-groups','stat-policies','stat-instances','stat-buckets',
      'stat-critical','stat-high','stat-medium','stat-total-findings'].forEach(id => {
         document.getElementById(id).textContent = '-';
     });
+}
+
+// ── All Attack Paths Discovery ──
+function findAllAttackPaths() {
+    if (!cy) return;
+    const statusEl = document.getElementById('attack-paths-status');
+    const listEl = document.getElementById('attack-paths-list');
+    listEl.innerHTML = '';
+    statusEl.textContent = 'Scanning...';
+
+    // Identify high-value targets
+    const targets = cy.nodes().filter(n => {
+        if (n.data('isHighValue')) return true;
+        if (n.data('maxSeverity') === 'CRITICAL') return true;
+        // Admin roles (has AdminAccess-like policies)
+        if (n.data('type') === 'role') {
+            const attached = reportData.roleAttachedPolicies[n.data('label')] || [];
+            if (attached.some(p => ['AdministratorAccess','IAMFullAccess','PowerUserAccess'].includes(p.PolicyName))) return true;
+        }
+        return false;
+    });
+
+    // Source nodes: all users, roles, instances (potential entry points)
+    const sources = cy.nodes().filter(n => {
+        const t = n.data('type');
+        return t === 'user' || t === 'role' || t === 'instance';
+    });
+
+    if (targets.length === 0) {
+        statusEl.textContent = 'No high-value targets detected';
+        return;
+    }
+
+    const allPaths = [];
+    let scanned = 0;
+
+    for (const source of sources) {
+        const dijkstra = cy.elements().dijkstra({
+            root: source,
+            weight: (edge) => edge.data('weight') || 1,
+            directed: false
+        });
+
+        for (const target of targets) {
+            if (source.id() === target.id()) continue;
+            const distance = dijkstra.distanceTo(target);
+            if (distance === Infinity || distance === 0) continue;
+
+            const path = dijkstra.pathTo(target);
+            if (path.length < 2) continue;
+
+            allPaths.push({
+                source: source,
+                target: target,
+                distance: distance,
+                path: path,
+                hops: path.edges().length
+            });
+        }
+        scanned++;
+    }
+
+    // Sort by cost (easiest paths first)
+    allPaths.sort((a, b) => a.distance - b.distance);
+
+    // Deduplicate: keep only the shortest path per unique (source, target) pair
+    const seen = new Set();
+    const uniquePaths = [];
+    for (const p of allPaths) {
+        const key = p.source.id() + '>' + p.target.id();
+        if (!seen.has(key)) {
+            seen.add(key);
+            uniquePaths.push(p);
+        }
+    }
+
+    // Cap display
+    const display = uniquePaths.slice(0, 50);
+
+    statusEl.textContent = `${uniquePaths.length} paths found (${sources.length} sources -> ${targets.length} targets)`;
+
+    let html = '';
+    for (let i = 0; i < display.length; i++) {
+        const p = display[i];
+        const costClass = p.distance <= 2 ? 'cost-low' : p.distance <= 5 ? 'cost-med' : 'cost-high';
+        const sourceType = p.source.data('type');
+        const targetType = p.target.data('type');
+
+        // Build route summary
+        let route = '';
+        const pNodes = p.path.nodes();
+        const pEdges = p.path.edges();
+        for (let j = 0; j < pNodes.length; j++) {
+            route += `<span class="ap-node">${pNodes[j].data('label')}</span>`;
+            if (j < pEdges.length) {
+                route += ` <span class="ap-edge">-[${pEdges[j].data('type')}]-></span> `;
+            }
+        }
+
+        html += `<div class="attack-path-item" data-path-idx="${i}" onclick="highlightDiscoveredPath(${i})">
+            <div class="ap-header">
+                <span>[${sourceType}] ${p.source.data('label')} -> <span class="ap-target">[${targetType}] ${p.target.data('label')}</span></span>
+                <span class="ap-cost ${costClass}">${p.distance.toFixed(1)}</span>
+            </div>
+            <div class="ap-route">${route}</div>
+        </div>`;
+    }
+    listEl.innerHTML = html;
+
+    // Store paths for highlighting
+    window._discoveredPaths = display;
+}
+
+function highlightDiscoveredPath(idx) {
+    if (!cy || !window._discoveredPaths || !window._discoveredPaths[idx]) return;
+    clearPath();
+
+    const p = window._discoveredPaths[idx];
+    cy.elements().addClass('dimmed');
+    p.path.addClass('highlighted-path').removeClass('dimmed');
+    p.path.nodes().addClass('highlighted-path-node').removeClass('dimmed');
+
+    // Highlight active item in list
+    document.querySelectorAll('.attack-path-item').forEach(el => el.classList.remove('active'));
+    const item = document.querySelector(`.attack-path-item[data-path-idx="${idx}"]`);
+    if (item) item.classList.add('active');
 }
 </script>
 </body>

@@ -11,6 +11,7 @@ reports/{account}/{region}/analysis/
 ├── findings.json
 ├── permission_map.json
 ├── trust_relationships.json
+├── s3_relationships.json
 └── summary.json
 """
 
@@ -181,6 +182,36 @@ DANGEROUS_RULES = [
      "action_pattern": "kms:Decrypt", "resource_pattern": "*",
      "title": "Can decrypt with any KMS key"},
 ]
+
+# ──────────────────────────────────────────────────────────────
+# S3 Action Classifications
+# ──────────────────────────────────────────────────────────────
+
+S3_READ_ACTIONS = [
+    "s3:GetObject", "s3:GetObjectVersion", "s3:ListBucket",
+    "s3:ListBucketVersions", "s3:HeadObject", "s3:GetBucketLocation"
+]
+S3_WRITE_ACTIONS = [
+    "s3:PutObject", "s3:DeleteObject", "s3:DeleteObjectVersion",
+    "s3:AbortMultipartUpload", "s3:RestoreObject"
+]
+S3_ADMIN_ACTIONS = [
+    "s3:PutBucketPolicy", "s3:DeleteBucket", "s3:PutBucketAcl",
+    "s3:PutBucketVersioning", "s3:PutEncryptionConfiguration",
+    "s3:PutLifecycleConfiguration", "s3:PutBucketPublicAccessBlock"
+]
+
+S3_ACCESS_WEIGHTS = {
+    "FULL_ACCESS": 0,
+    "CAN_ADMIN": 0.5,
+    "CAN_READ": 1,
+    "CAN_WRITE": 1,
+    "GRANTS_ACCESS": 1,
+    "GRANTS_PUBLIC": 0,
+    "GRANTS_CROSS_ACCOUNT": 2,
+    "ENCRYPTED_BY": 3,
+    "NOTIFIES": 5,
+}
 
 
 # ──────────────────────────────────────────────────────────────
@@ -708,6 +739,320 @@ def _generate_summary(findings):
 
 
 # ──────────────────────────────────────────────────────────────
+# S3 Resource Relationship Analysis
+# ──────────────────────────────────────────────────────────────
+
+def _extract_bucket_from_arn(resource_arn):
+    """Extract bucket name from an S3 ARN. Returns (bucket_pattern, is_wildcard)."""
+    if not isinstance(resource_arn, str):
+        return None, False
+    if resource_arn == '*':
+        return '*', True
+    if not resource_arn.startswith('arn:aws:s3:::'):
+        return None, False
+    # Strip arn:aws:s3:::
+    remainder = resource_arn[13:]
+    # Split on / to get bucket name (ignore object path)
+    bucket_part = remainder.split('/')[0]
+    is_wildcard = '*' in bucket_part or '?' in bucket_part
+    return bucket_part, is_wildcard
+
+
+def _arn_matches_bucket(resource_arn, bucket_name):
+    """Check if an S3 resource ARN matches a specific bucket name."""
+    bucket_pattern, is_wildcard = _extract_bucket_from_arn(resource_arn)
+    if bucket_pattern is None:
+        return False
+    if bucket_pattern == '*':
+        return True
+    if is_wildcard:
+        return fnmatch.fnmatch(bucket_name, bucket_pattern)
+    return bucket_pattern == bucket_name
+
+
+def _classify_s3_access(actions, resources, bucket_name):
+    """Classify what kind of S3 access a statement grants to a bucket.
+    Returns set of access types and list of matched actions."""
+    # Check if any resource matches the bucket
+    resource_matches = any(_arn_matches_bucket(r, bucket_name) for r in resources)
+    if not resource_matches:
+        return set(), []
+
+    access_types = set()
+    matched_actions = []
+
+    for action in actions:
+        # Check for full S3 wildcard
+        if _action_matches(action, 's3:*') or action == '*':
+            access_types.add('FULL_ACCESS')
+            matched_actions.append(action)
+            continue
+
+        for read_action in S3_READ_ACTIONS:
+            if _action_matches(action, read_action):
+                access_types.add('CAN_READ')
+                matched_actions.append(action)
+                break
+
+        for write_action in S3_WRITE_ACTIONS:
+            if _action_matches(action, write_action):
+                access_types.add('CAN_WRITE')
+                matched_actions.append(action)
+                break
+
+        for admin_action in S3_ADMIN_ACTIONS:
+            if _action_matches(action, admin_action):
+                access_types.add('CAN_ADMIN')
+                matched_actions.append(action)
+                break
+
+    return access_types, list(set(matched_actions))
+
+
+def _analyze_s3_relationships(report_path, permission_map, roles, users):
+    """Analyze S3 resource relationships from IAM policies, bucket policies, encryption, and notifications."""
+    edges = []
+    findings = []
+
+    # Load S3 data
+    s3_path = os.path.join(report_path, "s3")
+    buckets_data = _load_json(os.path.join(s3_path, "buckets.json"))
+    if not isinstance(buckets_data, list):
+        buckets_data = []
+
+    bucket_names = [b.get('Name') for b in buckets_data if b.get('Name')]
+
+    # Detect account ID from roles
+    account_id = None
+    for r in roles:
+        account_id = _extract_account_from_arn(r.get('Arn', ''))
+        if account_id:
+            break
+
+    # ── Step 1: IAM → Bucket edges (from permission_map) ──
+    for entity_type in ["users", "roles"]:
+        for entity_name, entity_data in permission_map.get(entity_type, {}).items():
+            entity_arn = entity_data.get('arn', '')
+
+            for stmt in entity_data.get('effective_statements', []):
+                actions = stmt.get('actions', [])
+                resources = stmt.get('resources', [])
+
+                # Check if any action is S3-related
+                has_s3 = any(
+                    _action_matches(a, 's3:*') or a == '*' or a.lower().startswith('s3:')
+                    for a in actions
+                )
+                if not has_s3:
+                    continue
+
+                for bucket_name in bucket_names:
+                    access_types, matched = _classify_s3_access(actions, resources, bucket_name)
+                    if not access_types:
+                        continue
+
+                    # Pick the highest-privilege access type for the edge
+                    if 'FULL_ACCESS' in access_types:
+                        edge_type = 'FULL_ACCESS'
+                    elif 'CAN_ADMIN' in access_types:
+                        edge_type = 'CAN_ADMIN'
+                    elif 'CAN_WRITE' in access_types:
+                        edge_type = 'CAN_WRITE'
+                    else:
+                        edge_type = 'CAN_READ'
+
+                    is_wildcard = any(r == '*' for r in resources)
+                    matched_resources = [r for r in resources if _arn_matches_bucket(r, bucket_name)]
+
+                    edges.append({
+                        "source": entity_arn,
+                        "target": f"bucket:{bucket_name}",
+                        "type": edge_type,
+                        "weight": S3_ACCESS_WEIGHTS.get(edge_type, 1),
+                        "category": "s3_access",
+                        "direction": "entity_to_bucket",
+                        "access_types": sorted(access_types),
+                        "source_policy": stmt.get('source', 'unknown'),
+                        "source_type": stmt.get('source_type', 'unknown'),
+                        "matched_actions": matched,
+                        "matched_resources": matched_resources,
+                        "is_wildcard_resource": is_wildcard
+                    })
+
+    # ── Step 2: Bucket → Entity edges (from bucket policies) ──
+    policies_dir = os.path.join(s3_path, "policies")
+    if os.path.isdir(policies_dir):
+        # Build ARN lookup for matching principals
+        known_arns = set()
+        for u in users:
+            if u.get('Arn'):
+                known_arns.add(u['Arn'])
+        for r in roles:
+            if r.get('Arn'):
+                known_arns.add(r['Arn'])
+
+        for bucket_name in bucket_names:
+            policy_file = os.path.join(policies_dir, f"{bucket_name}.json")
+            policy_doc = _load_json(policy_file)
+            if not isinstance(policy_doc, dict):
+                continue
+
+            for stmt in policy_doc.get('Statement', []):
+                effect = stmt.get('Effect', '')
+                if effect != 'Allow':
+                    continue
+
+                principals = _extract_principals(stmt.get('Principal', {}))
+                granted_actions = _normalize_to_list(stmt.get('Action', []))
+                conditions = stmt.get('Condition', {})
+
+                for principal in principals:
+                    pval = principal['value']
+                    ptype = principal['type']
+
+                    # Public access
+                    if pval == '*':
+                        edge_type = 'GRANTS_PUBLIC'
+                        edges.append({
+                            "source": f"bucket:{bucket_name}",
+                            "target": "principal:*",
+                            "type": edge_type,
+                            "weight": S3_ACCESS_WEIGHTS.get(edge_type, 0),
+                            "category": "s3_grant",
+                            "direction": "bucket_to_entity",
+                            "granted_actions": granted_actions,
+                            "has_conditions": bool(conditions),
+                            "is_cross_account": False
+                        })
+                        # Only flag as finding if no conditions restrict it
+                        if not conditions:
+                            findings.append({
+                                "id": "S3-PUBLIC-001",
+                                "severity": "HIGH",
+                                "category": "s3_public_access",
+                                "title": f"Bucket '{bucket_name}' has public access via bucket policy",
+                                "entity": f"bucket/{bucket_name}",
+                                "entity_arn": f"arn:aws:s3:::{bucket_name}",
+                                "description": f"S3 bucket '{bucket_name}' grants access to "
+                                               f"Principal '*' for actions: {', '.join(granted_actions)}",
+                                "matched_actions": granted_actions,
+                                "source_policy": "BucketPolicy",
+                                "source_type": "bucket_policy",
+                                "resource": [f"arn:aws:s3:::{bucket_name}"],
+                                "remediation": "Remove wildcard Principal or add restrictive Conditions"
+                            })
+                        continue
+
+                    if ptype == 'Service':
+                        continue  # Skip service principals (e.g. logging.s3.amazonaws.com)
+
+                    # Check cross-account
+                    principal_account = _extract_account_from_arn(pval)
+                    is_cross_account = (
+                        principal_account is not None and
+                        account_id is not None and
+                        principal_account != account_id
+                    )
+
+                    if is_cross_account:
+                        edge_type = 'GRANTS_CROSS_ACCOUNT'
+                    else:
+                        edge_type = 'GRANTS_ACCESS'
+
+                    # Use the principal ARN as target if it's a known entity, otherwise raw
+                    target_id = pval if pval in known_arns else pval
+
+                    edges.append({
+                        "source": f"bucket:{bucket_name}",
+                        "target": target_id,
+                        "type": edge_type,
+                        "weight": S3_ACCESS_WEIGHTS.get(edge_type, 1),
+                        "category": "s3_grant",
+                        "direction": "bucket_to_entity",
+                        "granted_actions": granted_actions,
+                        "has_conditions": bool(conditions),
+                        "is_cross_account": is_cross_account
+                    })
+
+    # ── Step 3: KMS edges (from encryption configs) ──
+    encryption_dir = os.path.join(s3_path, "encryption")
+    if os.path.isdir(encryption_dir):
+        for bucket_name in bucket_names:
+            enc_data = _load_json(os.path.join(encryption_dir, f"{bucket_name}.json"))
+            if not isinstance(enc_data, dict):
+                continue
+            rules = enc_data.get('Rules', [])
+            for rule in rules:
+                default_enc = rule.get('ApplyServerSideEncryptionByDefault', {})
+                if default_enc.get('SSEAlgorithm') == 'aws:kms':
+                    kms_key = default_enc.get('KMSMasterKeyID', '')
+                    if kms_key:
+                        edges.append({
+                            "source": f"bucket:{bucket_name}",
+                            "target": f"kms:{kms_key}",
+                            "type": "ENCRYPTED_BY",
+                            "weight": S3_ACCESS_WEIGHTS.get("ENCRYPTED_BY", 3),
+                            "category": "kms",
+                            "kms_key_arn": kms_key
+                        })
+
+    # ── Step 4: Notification edges (from notification configs) ──
+    notifications_dir = os.path.join(s3_path, "notifications")
+    if os.path.isdir(notifications_dir):
+        for bucket_name in bucket_names:
+            notif_data = _load_json(os.path.join(notifications_dir, f"{bucket_name}.json"))
+            if not isinstance(notif_data, dict):
+                continue
+
+            # Lambda
+            for config in notif_data.get('LambdaFunctionConfigurations', []):
+                arn = config.get('LambdaFunctionArn', '')
+                events = config.get('Events', [])
+                if arn:
+                    edges.append({
+                        "source": f"bucket:{bucket_name}",
+                        "target": f"lambda:{arn}",
+                        "type": "NOTIFIES",
+                        "weight": S3_ACCESS_WEIGHTS.get("NOTIFIES", 5),
+                        "category": "notification",
+                        "target_type": "lambda",
+                        "events": events
+                    })
+
+            # SQS
+            for config in notif_data.get('QueueConfigurations', []):
+                arn = config.get('QueueArn', '')
+                events = config.get('Events', [])
+                if arn:
+                    edges.append({
+                        "source": f"bucket:{bucket_name}",
+                        "target": f"sqs:{arn}",
+                        "type": "NOTIFIES",
+                        "weight": S3_ACCESS_WEIGHTS.get("NOTIFIES", 5),
+                        "category": "notification",
+                        "target_type": "sqs",
+                        "events": events
+                    })
+
+            # SNS
+            for config in notif_data.get('TopicConfigurations', []):
+                arn = config.get('TopicArn', '')
+                events = config.get('Events', [])
+                if arn:
+                    edges.append({
+                        "source": f"bucket:{bucket_name}",
+                        "target": f"sns:{arn}",
+                        "type": "NOTIFIES",
+                        "weight": S3_ACCESS_WEIGHTS.get("NOTIFIES", 5),
+                        "category": "notification",
+                        "target_type": "sns",
+                        "events": events
+                    })
+
+    return {"edges": edges, "findings": findings}
+
+
+# ──────────────────────────────────────────────────────────────
 # Main Entry Point
 # ──────────────────────────────────────────────────────────────
 
@@ -747,7 +1092,12 @@ def analyze(report_path):
     trust_relationships, trust_findings = _analyze_trust_policies(roles)
     findings.extend(trust_findings)
 
-    # 4. Save reports
+    # 4. S3 resource relationships
+    s3_relationships = _analyze_s3_relationships(report_path, permission_map, roles, users)
+    findings.extend(s3_relationships.get("findings", []))
+    s3_edge_count = len(s3_relationships.get("edges", []))
+
+    # 5. Save reports
     with open(os.path.join(analysis_dir, "findings.json"), "w") as f:
         json.dump({"findings": findings}, f, indent=2, default=str)
 
@@ -756,6 +1106,9 @@ def analyze(report_path):
 
     with open(os.path.join(analysis_dir, "trust_relationships.json"), "w") as f:
         json.dump(trust_relationships, f, indent=2, default=str)
+
+    with open(os.path.join(analysis_dir, "s3_relationships.json"), "w") as f:
+        json.dump(s3_relationships, f, indent=2, default=str)
 
     summary = _generate_summary(findings)
     with open(os.path.join(analysis_dir, "summary.json"), "w") as f:
@@ -771,5 +1124,8 @@ def analyze(report_path):
         print(f"    \033[1;31m[!]\033[0m Findings: {crit} CRITICAL, {high} HIGH, {med} MEDIUM ({total} total)")
     else:
         print("    \033[1;32m[+]\033[0m No findings detected")
+
+    if s3_edge_count > 0:
+        print(f"    \033[1;32m[+]\033[0m S3 relationships: {s3_edge_count} edges discovered")
 
     print("    \033[1;32m[+]\033[0m Policy Analysis Finished!")
