@@ -10,7 +10,7 @@ def enumerate(session, path):
     response = ec2_client.describe_instances()
     reservations = response.get("Reservations", [])
 
-    print("[+] Ec2 Enumeration Started.")
+    print("    \033[1;32m[+]\033[0m EC2 Enumeration Starting...")
     for reservation in reservations:
         for instance in reservation.get("Instances", []):
             # Extract tags into a dict
@@ -62,4 +62,4 @@ def enumerate(session, path):
     with open(f"{path}/instances.json", "w") as f:
         json.dump(all_instances, f, indent=2, default=str)
 
-    print("[+] Ec2 Enumeration Finished!")
+    print("    \033[1;32m[+]\033[0m EC2 Enumeration Finished!")

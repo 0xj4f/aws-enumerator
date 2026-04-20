@@ -2,6 +2,7 @@ import os
 import json
 
 def enumerate(session, path):
+    print("    \033[1;32m[+]\033[0m VPC Enumeration Starting...")
     os.makedirs(path, exist_ok=True)
     ec2_client = session.client("ec2")
 
@@ -49,3 +50,5 @@ def enumerate(session, path):
     peering_connections = ec2_client.describe_vpc_peering_connections()["VpcPeeringConnections"]
     with open(f"{path}/vpc_peering_connections.json", "w") as f:
         json.dump(peering_connections, f, indent=2, default=str)
+
+    print("    \033[1;32m[+]\033[0m VPC Enumeration Finished!")

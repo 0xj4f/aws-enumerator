@@ -2,6 +2,7 @@ import json
 import os
 
 def enumerate(session, path):
+    print("    \033[1;32m[+]\033[0m CloudFront Enumeration Starting...")
     os.makedirs(path, exist_ok=True)
     client = session.client("cloudfront")
 
@@ -39,3 +40,5 @@ def enumerate(session, path):
 
     with open(f"{path}/distributions.json", "w") as f:
         json.dump(distributions, f, default=str, indent=2)
+
+    print("    \033[1;32m[+]\033[0m CloudFront Enumeration Finished!")
