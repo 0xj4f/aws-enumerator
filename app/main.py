@@ -5,9 +5,14 @@ import boto3
 import json
 import os
 import shutil
-from components import iam, vpc, sg, ec2, s3, cloudtrail, cloudfront, waf, flowlogs, policy_parser
-from utils.aws_utils import get_boto3_session, get_enabled_regions
 from datetime import datetime
+
+try:
+    from app.components import iam, vpc, sg, ec2, s3, cloudtrail, cloudfront, waf, flowlogs, policy_parser
+    from app.utils.aws_utils import get_boto3_session, get_enabled_regions
+except ImportError:
+    from components import iam, vpc, sg, ec2, s3, cloudtrail, cloudfront, waf, flowlogs, policy_parser
+    from utils.aws_utils import get_boto3_session, get_enabled_regions
 
 VERSION = "0.2.0"
 
