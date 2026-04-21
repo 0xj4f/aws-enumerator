@@ -451,6 +451,54 @@ button.danger:hover { background: var(--danger); color: #fff; }
 .attack-path-item .ap-route .ap-node { color: var(--accent); }
 .attack-path-item .ap-route .ap-edge { color: var(--text-muted); }
 .attack-path-item .ap-target { color: var(--danger); font-weight: 600; }
+
+/* Node action buttons in detail panel */
+.node-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 6px;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+}
+
+.node-actions button {
+    font-size: 11px;
+    padding: 4px 10px;
+}
+
+/* Focus info bar */
+#focus-bar {
+    display: none;
+    background: rgba(79, 195, 247, 0.1);
+    border: 1px solid var(--accent-dim);
+    border-radius: 4px;
+    padding: 8px 12px;
+    margin-bottom: 12px;
+    font-size: 11px;
+    color: var(--accent);
+}
+
+#focus-bar.active { display: block; }
+#focus-bar .focus-label { font-weight: 700; }
+#focus-bar .focus-actions { margin-top: 4px; }
+
+/* Owned nodes list in sidebar */
+.owned-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3px 6px;
+    font-size: 11px;
+    background: rgba(233, 69, 96, 0.1);
+    border: 1px solid rgba(233, 69, 96, 0.3);
+    border-radius: 3px;
+    margin-bottom: 3px;
+}
+
+.owned-item .owned-name { color: var(--danger); }
+.owned-item .owned-remove { cursor: pointer; color: var(--text-muted); font-size: 10px; }
+.owned-item .owned-remove:hover { color: var(--danger); }
 </style>
 </head>
 <body>
@@ -474,6 +522,22 @@ button.danger:hover { background: var(--danger); color: #fff; }
 
 <div id="app">
     <div id="sidebar">
+        <!-- Focus Mode -->
+        <div id="focus-bar">
+            <span class="focus-label">Focused: </span><span id="focus-node-name"></span>
+            <div class="focus-actions">
+                <button onclick="unfocusNode()" style="font-size:10px;padding:2px 8px">Exit Focus</button>
+                <button onclick="expandFocus()" style="font-size:10px;padding:2px 8px">Expand +1 hop</button>
+            </div>
+        </div>
+
+        <!-- Owned Nodes -->
+        <div class="section" id="owned-section" style="display:none">
+            <div class="section-title">Owned / Compromised</div>
+            <div id="owned-list"></div>
+            <button onclick="clearAllOwned()" style="width:100%;font-size:10px;margin-top:4px">Clear All Owned</button>
+        </div>
+
         <!-- Summary -->
         <div class="section" id="summary-section">
             <div class="section-title">Account Summary</div>
@@ -1195,6 +1259,29 @@ function initGraph(elements) {
                     'border-width': 3,
                     'border-color': '#4FC3F7'
                 }
+            },
+            {
+                selector: '.owned',
+                style: {
+                    'border-width': 4,
+                    'border-color': '#e94560',
+                    'border-style': 'double',
+                    'background-opacity': 1,
+                    'width': 42,
+                    'height': 42,
+                    'font-weight': 'bold',
+                    'text-outline-color': '#e94560',
+                    'text-outline-width': 0.5
+                }
+            },
+            {
+                selector: '.focused',
+                style: {
+                    'border-width': 3,
+                    'border-color': '#4FC3F7',
+                    'opacity': 1,
+                    'z-index': 999
+                }
             }
         ],
         layout: { name: 'cose', animate: false, nodeRepulsion: 8000, idealEdgeLength: 100 },
@@ -1457,7 +1544,26 @@ function showNodeDetail(node) {
         html += '</div></div>';
     }
 
+    // Connection summary
+    const edges = node.connectedEdges();
+    const neighbors = node.neighborhood().nodes();
+    html += `<div style="grid-column:1/-1;margin-top:4px">`;
+    html += field('Connections', `${edges.length} edges, ${neighbors.length} neighbors`);
+    html += `</div>`;
+
+    // Action buttons
+    const isOwned = node.hasClass('owned');
+    const nodeId = node.id();
+    html += `<div class="node-actions">`;
+    html += `<button class="primary" onclick="focusNode('${nodeId.replace(/'/g, "\\'")}')">Focus</button>`;
+    html += `<button class="${isOwned ? 'danger' : ''}" onclick="toggleOwned('${nodeId.replace(/'/g, "\\'")}')">${isOwned ? 'Unmark Owned' : 'Mark Owned'}</button>`;
+    if (window._focusedNodeId) {
+        html += `<button onclick="unfocusNode()">Unfocus</button>`;
+    }
+    html += `</div>`;
+
     contentEl.innerHTML = html;
+    window._selectedNodeId = nodeId;
 }
 
 function showEdgeDetail(edge) {
@@ -1513,13 +1619,128 @@ function updateGraphInfo() {
     document.getElementById('graph-info').textContent = `${nodes} nodes, ${edges} edges`;
 }
 
+// ── Focus Mode ──
+window._focusedNodeId = null;
+window._focusDepth = 1;
+window._ownedNodes = new Set();
+
+function focusNode(nodeId) {
+    if (!cy) return;
+    const node = cy.getElementById(nodeId);
+    if (!node.length) return;
+
+    window._focusedNodeId = nodeId;
+    window._focusDepth = 1;
+
+    _applyFocus(node);
+
+    // Update focus bar
+    document.getElementById('focus-bar').classList.add('active');
+    document.getElementById('focus-node-name').textContent =
+        `[${node.data('type')}] ${node.data('label')}`;
+}
+
+function _applyFocus(node) {
+    // Collect the neighborhood at current depth
+    let visible = node.closedNeighborhood();
+    for (let i = 1; i < window._focusDepth; i++) {
+        visible = visible.closedNeighborhood();
+    }
+
+    // Dim everything, show only the focused neighborhood
+    cy.elements().addClass('dimmed').removeClass('focused');
+    visible.removeClass('dimmed');
+    node.addClass('focused');
+
+    // Fit view to the visible elements
+    cy.fit(visible, 40);
+}
+
+function expandFocus() {
+    if (!cy || !window._focusedNodeId) return;
+    window._focusDepth++;
+    const node = cy.getElementById(window._focusedNodeId);
+    if (node.length) _applyFocus(node);
+}
+
+function unfocusNode() {
+    if (!cy) return;
+    window._focusedNodeId = null;
+    window._focusDepth = 1;
+    cy.elements().removeClass('dimmed focused');
+    document.getElementById('focus-bar').classList.remove('active');
+    cy.fit(undefined, 40);
+}
+
+// ── Owned / Compromised Marking ──
+function toggleOwned(nodeId) {
+    if (!cy) return;
+    const node = cy.getElementById(nodeId);
+    if (!node.length) return;
+
+    if (node.hasClass('owned')) {
+        node.removeClass('owned');
+        window._ownedNodes.delete(nodeId);
+    } else {
+        node.addClass('owned');
+        window._ownedNodes.add(nodeId);
+    }
+
+    _updateOwnedList();
+
+    // Re-render detail panel if this node is selected
+    if (window._selectedNodeId === nodeId) {
+        showNodeDetail(node);
+    }
+}
+
+function clearAllOwned() {
+    if (!cy) return;
+    cy.nodes('.owned').removeClass('owned');
+    window._ownedNodes.clear();
+    _updateOwnedList();
+}
+
+function _updateOwnedList() {
+    const listEl = document.getElementById('owned-list');
+    const sectionEl = document.getElementById('owned-section');
+
+    if (window._ownedNodes.size === 0) {
+        sectionEl.style.display = 'none';
+        listEl.innerHTML = '';
+        return;
+    }
+
+    sectionEl.style.display = '';
+    let html = '';
+    for (const nodeId of window._ownedNodes) {
+        const node = cy.getElementById(nodeId);
+        if (!node.length) continue;
+        const label = node.data('label');
+        const type = node.data('type');
+        const safeId = nodeId.replace(/'/g, "\\'");
+        html += `<div class="owned-item">
+            <span class="owned-name" style="cursor:pointer" onclick="focusNode('${safeId}')">[${type}] ${label}</span>
+            <span class="owned-remove" onclick="toggleOwned('${safeId}')">x</span>
+        </div>`;
+    }
+    listEl.innerHTML = html;
+}
+
 function clearGraph() {
     if (cy) cy.destroy();
     cy = null;
     reportData = {};
     findingsMap = {};
+    window._focusedNodeId = null;
+    window._focusDepth = 1;
+    window._ownedNodes.clear();
+    window._selectedNodeId = null;
     document.getElementById('drop-overlay').classList.remove('hidden');
     document.getElementById('btn-clear').style.display = 'none';
+    document.getElementById('focus-bar').classList.remove('active');
+    document.getElementById('owned-section').style.display = 'none';
+    document.getElementById('owned-list').innerHTML = '';
     clearDetail();
     updateStats();
     document.getElementById('graph-info').textContent = '';
