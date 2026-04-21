@@ -119,6 +119,18 @@ open dashboard/index.html
 
 Drop the `.zip` file onto the dashboard or click "Load Report".
 
+**Visualize the hierarchy** &mdash; see how roles, policies, instances, and buckets connect across the account.
+
+![Attack graph hierarchy view](docs/00.png)
+
+**Identify high-connectivity nodes** &mdash; find roles and entry points with the most relationships and exposure.
+
+![Node connections and entry points](docs/01.png)
+
+**Discover attack paths** &mdash; Dijkstra shortest path from any compromised node to high-value targets.
+
+![Attack path discovery](docs/02.png)
+
 ---
 
 ## Report Structure
