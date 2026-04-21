@@ -52,5 +52,7 @@ jobs:
 
       - name: Create Git tag
         run: |
+          git config --global user.email "0xj4f.sh@gmail.com"
+          git config --global user.name "0xj4f"
           git tag -a "${{ steps.version.outputs.tag }}" -m "Release ${{ steps.version.outputs.version }}"
           git push origin "${{ steps.version.outputs.tag }}"
