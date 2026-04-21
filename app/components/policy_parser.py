@@ -213,6 +213,39 @@ S3_ACCESS_WEIGHTS = {
     "NOTIFIES": 5,
 }
 
+# ──────────────────────────────────────────────────────────────
+# EC2 Action Classifications
+# ──────────────────────────────────────────────────────────────
+
+EC2_LAUNCH_ACTIONS = ["ec2:RunInstances"]
+EC2_TERMINATE_ACTIONS = ["ec2:TerminateInstances"]
+EC2_MANAGE_ACTIONS = [
+    "ec2:StartInstances", "ec2:StopInstances", "ec2:RebootInstances",
+    "ec2:ModifyInstanceAttribute"
+]
+EC2_CONNECT_ACTIONS = [
+    "ssm:StartSession", "ssm:SendCommand",
+    "ec2-instance-connect:SendSSHPublicKey"
+]
+EC2_SG_ADMIN_ACTIONS = [
+    "ec2:AuthorizeSecurityGroupIngress", "ec2:RevokeSecurityGroupIngress",
+    "ec2:CreateSecurityGroup", "ec2:DeleteSecurityGroup"
+]
+
+EC2_ACCESS_WEIGHTS = {
+    "INSTANCE_ROLE": 0,
+    "EC2_FULL_ACCESS": 0,
+    "CAN_LAUNCH": 1,
+    "CAN_TERMINATE": 1,
+    "CAN_MANAGE": 1,
+    "CAN_CONNECT": 0.5,
+    "CAN_ADMIN_SG": 1,
+    "HAS_SG": 0,
+    "SG_ALLOWS_FROM": 1,
+    "PUBLIC_INBOUND": 0,
+    "INTERNET_FACING": 0,
+}
+
 
 # ──────────────────────────────────────────────────────────────
 # Data Loaders
@@ -1053,6 +1086,367 @@ def _analyze_s3_relationships(report_path, permission_map, roles, users):
 
 
 # ──────────────────────────────────────────────────────────────
+# EC2 Compute Relationship Analysis
+# ──────────────────────────────────────────────────────────────
+
+def _load_ec2_data(report_path):
+    """Load EC2 instances, SGs, VPC data. Handles both single-region and --all mode."""
+    instances = []
+    security_groups = []
+    route_tables = []
+    internet_gateways = []
+    subnets = []
+
+    # Try local (single-region mode)
+    local_instances = _load_json(os.path.join(report_path, "ec2", "instances.json"))
+    if isinstance(local_instances, list) and local_instances:
+        instances.extend(local_instances)
+        sg_data = _load_json(os.path.join(report_path, "sg", "security_groups.json"))
+        if isinstance(sg_data, list):
+            security_groups.extend(sg_data)
+        rt_data = _load_json(os.path.join(report_path, "vpc", "route_tables.json"))
+        if isinstance(rt_data, list):
+            route_tables.extend(rt_data)
+        igw_data = _load_json(os.path.join(report_path, "vpc", "internet_gateways.json"))
+        if isinstance(igw_data, list):
+            internet_gateways.extend(igw_data)
+        sub_data = _load_json(os.path.join(report_path, "vpc", "subnets.json"))
+        if isinstance(sub_data, list):
+            subnets.extend(sub_data)
+    else:
+        # --all mode: scan sibling region directories
+        parent = os.path.dirname(report_path)
+        if os.path.isdir(parent):
+            for entry in os.listdir(parent):
+                region_path = os.path.join(parent, entry)
+                if not os.path.isdir(region_path) or entry == 'global':
+                    continue
+                inst = _load_json(os.path.join(region_path, "ec2", "instances.json"))
+                if isinstance(inst, list):
+                    instances.extend(inst)
+                sg = _load_json(os.path.join(region_path, "sg", "security_groups.json"))
+                if isinstance(sg, list):
+                    security_groups.extend(sg)
+                rt = _load_json(os.path.join(region_path, "vpc", "route_tables.json"))
+                if isinstance(rt, list):
+                    route_tables.extend(rt)
+                igw = _load_json(os.path.join(region_path, "vpc", "internet_gateways.json"))
+                if isinstance(igw, list):
+                    internet_gateways.extend(igw)
+                sub = _load_json(os.path.join(region_path, "vpc", "subnets.json"))
+                if isinstance(sub, list):
+                    subnets.extend(sub)
+
+    return instances, security_groups, route_tables, internet_gateways, subnets
+
+
+def _classify_ec2_access(actions):
+    """Classify what kind of EC2 access a set of actions grants."""
+    access_types = set()
+    matched = []
+
+    for action in actions:
+        if _action_matches(action, 'ec2:*') or action == '*':
+            access_types.add('EC2_FULL_ACCESS')
+            matched.append(action)
+            continue
+
+        for a in EC2_LAUNCH_ACTIONS:
+            if _action_matches(action, a):
+                access_types.add('CAN_LAUNCH')
+                matched.append(action)
+
+        for a in EC2_TERMINATE_ACTIONS:
+            if _action_matches(action, a):
+                access_types.add('CAN_TERMINATE')
+                matched.append(action)
+
+        for a in EC2_MANAGE_ACTIONS:
+            if _action_matches(action, a):
+                access_types.add('CAN_MANAGE')
+                matched.append(action)
+
+        for a in EC2_CONNECT_ACTIONS:
+            if _action_matches(action, a):
+                access_types.add('CAN_CONNECT')
+                matched.append(action)
+
+        for a in EC2_SG_ADMIN_ACTIONS:
+            if _action_matches(action, a):
+                access_types.add('CAN_ADMIN_SG')
+                matched.append(action)
+
+    return access_types, list(set(matched))
+
+
+def _is_resource_match_ec2(resources, instance_id):
+    """Check if a resource list matches an EC2 instance (wildcard or specific)."""
+    for r in resources:
+        if r == '*':
+            return True
+        if isinstance(r, str) and instance_id in r:
+            return True
+        if isinstance(r, str) and 'ec2' in r.lower() and r.endswith('*'):
+            return True
+    return False
+
+
+def _check_sg_public_access(sg_data):
+    """Check if a security group allows inbound from 0.0.0.0/0 or ::/0.
+    Returns list of (port_desc, cidr) tuples for public rules."""
+    public_rules = []
+    for rule in sg_data.get('InboundRules', []):
+        # Check IPv4
+        for ip_range in rule.get('IpRanges', []):
+            cidr = ip_range.get('CidrIp', '')
+            if cidr == '0.0.0.0/0':
+                port_desc = _describe_port(rule)
+                public_rules.append((port_desc, cidr))
+
+        # Check IPv6
+        for ip_range in rule.get('Ipv6Ranges', []):
+            cidr = ip_range.get('CidrIpv6', '')
+            if cidr == '::/0':
+                port_desc = _describe_port(rule)
+                public_rules.append((port_desc, cidr))
+
+    return public_rules
+
+
+def _describe_port(rule):
+    """Create a human-readable port description from an SG rule."""
+    protocol = rule.get('IpProtocol', '-1')
+    if protocol == '-1':
+        return 'all traffic'
+    from_port = rule.get('FromPort', 0)
+    to_port = rule.get('ToPort', 0)
+    if from_port == to_port:
+        return f"{from_port}/{protocol}"
+    return f"{from_port}-{to_port}/{protocol}"
+
+
+def _analyze_ec2_relationships(report_path, permission_map, roles):
+    """Analyze EC2 compute relationships: instance→role, IAM→EC2 access,
+    network exposure (SG/VPC), SG-to-SG references, IMDS findings."""
+    edges = []
+    findings = []
+
+    instances, security_groups, route_tables, internet_gateways, subnets = _load_ec2_data(report_path)
+
+    if not instances:
+        return {"edges": [], "findings": []}
+
+    # Build lookups
+    sg_lookup = {sg.get('GroupId'): sg for sg in security_groups}
+    role_lookup = {r.get('RoleName'): r for r in roles}
+    role_arn_lookup = {r.get('Arn'): r for r in roles}
+
+    # Build subnet → has_igw_route mapping
+    subnet_has_igw = set()
+    igw_vpcs = set()
+    for igw in internet_gateways:
+        for att in igw.get('Attachments', []):
+            igw_vpcs.add(att.get('VpcId'))
+
+    for rt in route_tables:
+        has_igw_route = False
+        for route in rt.get('Routes', []):
+            gw = route.get('GatewayId', '')
+            dest = route.get('DestinationCidrBlock', '')
+            if gw.startswith('igw-') and dest == '0.0.0.0/0':
+                has_igw_route = True
+                break
+        if has_igw_route:
+            for assoc in rt.get('Associations', []):
+                sid = assoc.get('SubnetId')
+                if sid:
+                    subnet_has_igw.add(sid)
+            # If it's the main route table, all subnets in the VPC without explicit association get it
+            for assoc in rt.get('Associations', []):
+                if assoc.get('Main', False):
+                    vpc_id = rt.get('VpcId')
+                    for sub in subnets:
+                        if sub.get('VpcId') == vpc_id:
+                            subnet_has_igw.add(sub.get('SubnetId'))
+
+    # ── Step 1: Instance → Role edges ──
+    for inst in instances:
+        profile = inst.get('IamInstanceProfile', {})
+        if not profile or not profile.get('Arn'):
+            continue
+
+        profile_arn = profile['Arn']
+        # Extract name: arn:aws:iam::ACCT:instance-profile/NAME
+        profile_name = profile_arn.split('/')[-1] if '/' in profile_arn else ''
+        if not profile_name:
+            continue
+
+        # Match to role
+        role = role_lookup.get(profile_name)
+        if role:
+            edges.append({
+                "source": inst['InstanceId'],
+                "target": role['Arn'],
+                "type": "INSTANCE_ROLE",
+                "weight": EC2_ACCESS_WEIGHTS["INSTANCE_ROLE"],
+                "category": "compute",
+                "instance_profile_arn": profile_arn
+            })
+
+    # ── Step 2: IAM → EC2 access edges ──
+    instance_ids = [inst['InstanceId'] for inst in instances]
+
+    for entity_type in ["users", "roles"]:
+        for entity_name, entity_data in permission_map.get(entity_type, {}).items():
+            entity_arn = entity_data.get('arn', '')
+
+            for stmt in entity_data.get('effective_statements', []):
+                actions = stmt.get('actions', [])
+                resources = stmt.get('resources', [])
+
+                access_types, matched = _classify_ec2_access(actions)
+                if not access_types:
+                    continue
+
+                # Pick highest privilege type
+                if 'EC2_FULL_ACCESS' in access_types:
+                    edge_type = 'EC2_FULL_ACCESS'
+                elif 'CAN_CONNECT' in access_types:
+                    edge_type = 'CAN_CONNECT'
+                elif 'CAN_TERMINATE' in access_types:
+                    edge_type = 'CAN_TERMINATE'
+                elif 'CAN_MANAGE' in access_types:
+                    edge_type = 'CAN_MANAGE'
+                elif 'CAN_LAUNCH' in access_types:
+                    edge_type = 'CAN_LAUNCH'
+                else:
+                    edge_type = 'CAN_ADMIN_SG'
+
+                is_wildcard = any(r == '*' for r in resources)
+
+                # Create edges to matching instances
+                for inst_id in instance_ids:
+                    if is_wildcard or _is_resource_match_ec2(resources, inst_id):
+                        edges.append({
+                            "source": entity_arn,
+                            "target": inst_id,
+                            "type": edge_type,
+                            "weight": EC2_ACCESS_WEIGHTS.get(edge_type, 1),
+                            "category": "ec2_access",
+                            "access_types": sorted(access_types),
+                            "source_policy": stmt.get('source', 'unknown'),
+                            "source_type": stmt.get('source_type', 'unknown'),
+                            "matched_actions": matched,
+                            "is_wildcard_resource": is_wildcard
+                        })
+                        break  # One edge per entity→instance (avoid duplicates per statement)
+
+    # ── Step 3: Instance → SG edges + network exposure ──
+    seen_sgs = set()
+
+    for inst in instances:
+        inst_id = inst['InstanceId']
+        has_public_ip = bool(inst.get('PublicIpAddress'))
+        subnet_id = inst.get('SubnetId', '')
+
+        for sg_ref in inst.get('SecurityGroups', []):
+            sg_id = sg_ref.get('GroupId', '')
+            if not sg_id:
+                continue
+
+            edges.append({
+                "source": inst_id,
+                "target": sg_id,
+                "type": "HAS_SG",
+                "weight": EC2_ACCESS_WEIGHTS["HAS_SG"],
+                "category": "ec2_network"
+            })
+
+            # Check public exposure
+            sg_data = sg_lookup.get(sg_id, {})
+            if sg_data:
+                public_rules = _check_sg_public_access(sg_data)
+                if public_rules and has_public_ip:
+                    ports = ', '.join(r[0] for r in public_rules)
+                    findings.append({
+                        "id": "EC2-EXPOSURE-001",
+                        "severity": "HIGH",
+                        "category": "ec2_exposure",
+                        "title": f"Instance {inst_id} publicly exposed on {ports}",
+                        "entity": f"instance/{inst_id}",
+                        "entity_arn": inst_id,
+                        "description": f"Instance '{inst_id}' has a public IP "
+                                       f"({inst.get('PublicIpAddress')}) and security group "
+                                       f"'{sg_id}' allows inbound from 0.0.0.0/0 on {ports}.",
+                        "matched_actions": [],
+                        "source_policy": sg_id,
+                        "source_type": "security_group",
+                        "resource": [inst_id],
+                        "remediation": "Restrict inbound rules to specific CIDR ranges"
+                    })
+
+            seen_sgs.add(sg_id)
+
+        # Internet-facing check (IGW route)
+        if has_public_ip and subnet_id in subnet_has_igw:
+            findings.append({
+                "id": "EC2-INET-001",
+                "severity": "MEDIUM",
+                "category": "ec2_exposure",
+                "title": f"Instance {inst_id} is internet-facing (IGW route)",
+                "entity": f"instance/{inst_id}",
+                "entity_arn": inst_id,
+                "description": f"Instance '{inst_id}' has a public IP and its subnet "
+                               f"'{subnet_id}' routes to an Internet Gateway.",
+                "matched_actions": [],
+                "source_policy": "route_table",
+                "source_type": "vpc",
+                "resource": [inst_id],
+                "remediation": "Move to private subnet or remove public IP"
+            })
+
+        # IMDS vulnerability
+        metadata = inst.get('MetadataOptions', {})
+        if metadata.get('HttpTokens') == 'optional':
+            findings.append({
+                "id": "EC2-IMDS-001",
+                "severity": "MEDIUM",
+                "category": "ec2_imds",
+                "title": f"Instance {inst_id} allows IMDSv1 (SSRF risk)",
+                "entity": f"instance/{inst_id}",
+                "entity_arn": inst_id,
+                "description": f"Instance '{inst_id}' has HttpTokens set to 'optional', "
+                               f"allowing IMDSv1. An SSRF vulnerability could expose "
+                               f"instance role credentials.",
+                "matched_actions": [],
+                "source_policy": "MetadataOptions",
+                "source_type": "ec2_config",
+                "resource": [inst_id],
+                "remediation": "Set HttpTokens to 'required' to enforce IMDSv2"
+            })
+
+    # ── Step 4: SG-to-SG references ──
+    for sg_data in security_groups:
+        sg_id = sg_data.get('GroupId', '')
+        for rule in sg_data.get('InboundRules', []):
+            for pair in rule.get('UserIdGroupPairs', []):
+                source_sg = pair.get('GroupId', '')
+                if source_sg and source_sg != sg_id:
+                    port_desc = _describe_port(rule)
+                    edges.append({
+                        "source": source_sg,
+                        "target": sg_id,
+                        "type": "SG_ALLOWS_FROM",
+                        "weight": EC2_ACCESS_WEIGHTS["SG_ALLOWS_FROM"],
+                        "category": "ec2_network",
+                        "ports": port_desc,
+                        "direction": "inbound"
+                    })
+
+    return {"edges": edges, "findings": findings}
+
+
+# ──────────────────────────────────────────────────────────────
 # Main Entry Point
 # ──────────────────────────────────────────────────────────────
 
@@ -1097,7 +1491,12 @@ def analyze(report_path):
     findings.extend(s3_relationships.get("findings", []))
     s3_edge_count = len(s3_relationships.get("edges", []))
 
-    # 5. Save reports
+    # 5. EC2 compute relationships
+    ec2_relationships = _analyze_ec2_relationships(report_path, permission_map, roles)
+    findings.extend(ec2_relationships.get("findings", []))
+    ec2_edge_count = len(ec2_relationships.get("edges", []))
+
+    # 6. Save reports
     with open(os.path.join(analysis_dir, "findings.json"), "w") as f:
         json.dump({"findings": findings}, f, indent=2, default=str)
 
@@ -1109,6 +1508,9 @@ def analyze(report_path):
 
     with open(os.path.join(analysis_dir, "s3_relationships.json"), "w") as f:
         json.dump(s3_relationships, f, indent=2, default=str)
+
+    with open(os.path.join(analysis_dir, "ec2_relationships.json"), "w") as f:
+        json.dump(ec2_relationships, f, indent=2, default=str)
 
     summary = _generate_summary(findings)
     with open(os.path.join(analysis_dir, "summary.json"), "w") as f:
@@ -1127,5 +1529,8 @@ def analyze(report_path):
 
     if s3_edge_count > 0:
         print(f"    \033[1;32m[+]\033[0m S3 relationships: {s3_edge_count} edges discovered")
+
+    if ec2_edge_count > 0:
+        print(f"    \033[1;32m[+]\033[0m EC2 relationships: {ec2_edge_count} edges discovered")
 
     print("    \033[1;32m[+]\033[0m Policy Analysis Finished!")
