@@ -571,6 +571,7 @@ button.danger:hover { background: var(--danger); color: #fff; }
             <label class="filter-item"><input type="checkbox" checked data-filter="policy"><span class="filter-dot" style="background:#FFA726"></span>Policies</label>
             <label class="filter-item"><input type="checkbox" checked data-filter="instance"><span class="filter-dot" style="background:#EF5350"></span>EC2 Instances</label>
             <label class="filter-item"><input type="checkbox" checked data-filter="bucket"><span class="filter-dot" style="background:#FFEE58"></span>S3 Buckets</label>
+            <label class="filter-item"><input type="checkbox" checked data-filter="sg"><span class="filter-dot" style="background:#B0BEC5"></span>Security Groups</label>
         </div>
 
         <!-- Edge Filters -->
@@ -584,6 +585,8 @@ button.danger:hover { background: var(--danger); color: #fff; }
             <label class="filter-item"><input type="checkbox" checked data-edge-filter="s3_grant">S3 grants (bucket to entity)</label>
             <label class="filter-item"><input type="checkbox" checked data-edge-filter="kms">KMS encryption</label>
             <label class="filter-item"><input type="checkbox" checked data-edge-filter="notification">Notifications (Lambda/SQS/SNS)</label>
+            <label class="filter-item"><input type="checkbox" checked data-edge-filter="ec2_access">EC2 access (who can manage)</label>
+            <label class="filter-item"><input type="checkbox" checked data-edge-filter="ec2_network">EC2 network (SG, exposure)</label>
         </div>
 
         <!-- Path Finder -->
@@ -628,6 +631,7 @@ button.danger:hover { background: var(--danger); color: #fff; }
                 <div class="legend-item"><span class="legend-dot" style="background:#FFA726"></span> Policy</div>
                 <div class="legend-item"><span class="legend-dot" style="background:#EF5350"></span> EC2</div>
                 <div class="legend-item"><span class="legend-dot" style="background:#FFEE58"></span> S3</div>
+                <div class="legend-item"><span class="legend-dot" style="background:#B0BEC5"></span> SG</div>
                 <div class="legend-item"><span class="legend-dot" style="background:#78909C"></span> KMS</div>
                 <div class="legend-item"><span class="legend-dot" style="background:#CE93D8"></span> Lambda</div>
                 <div class="legend-item"><span class="legend-dot" style="background:#A5D6A7"></span> SQS</div>
@@ -655,19 +659,30 @@ let findingsMap = {};
 const NODE_COLORS = {
     user: '#4FC3F7', role: '#AB47BC', group: '#66BB6A',
     policy: '#FFA726', instance: '#EF5350', bucket: '#FFEE58',
-    kms: '#78909C', lambda: '#CE93D8', sqs: '#A5D6A7', sns: '#FFAB91'
+    kms: '#78909C', lambda: '#CE93D8', sqs: '#A5D6A7', sns: '#FFAB91',
+    sg: '#B0BEC5'
 };
 
 const NODE_SHAPES = {
     user: 'ellipse', role: 'diamond', group: 'round-rectangle',
     policy: 'rectangle', instance: 'hexagon', bucket: 'barrel',
-    kms: 'pentagon', lambda: 'star', sqs: 'round-rectangle', sns: 'round-rectangle'
+    kms: 'pentagon', lambda: 'star', sqs: 'round-rectangle', sns: 'round-rectangle',
+    sg: 'octagon'
 };
 
 const S3_EDGE_COLORS = {
     CAN_READ: '#26C6DA', CAN_WRITE: '#FFA726', CAN_ADMIN: '#e94560',
     FULL_ACCESS: '#e94560', GRANTS_ACCESS: '#66BB6A', GRANTS_PUBLIC: '#e94560',
     GRANTS_CROSS_ACCOUNT: '#FF7043', ENCRYPTED_BY: '#78909C', NOTIFIES: '#CE93D8'
+};
+
+const EC2_EDGE_COLORS = {
+    INSTANCE_ROLE: '#4FC3F7', EC2_FULL_ACCESS: '#e94560',
+    CAN_LAUNCH: '#FFA726', CAN_TERMINATE: '#e94560',
+    CAN_MANAGE: '#FFA726', CAN_CONNECT: '#66BB6A',
+    CAN_ADMIN_SG: '#AB47BC',
+    HAS_SG: '#555577', SG_ALLOWS_FROM: '#AB47BC',
+    PUBLIC_INBOUND: '#e94560', INTERNET_FACING: '#e94560'
 };
 
 // ── File Loading (Zip) ──
@@ -781,6 +796,7 @@ async function processLoadedFiles(files) {
     reportData.permissionMap = readJSON(analysisPrefix + 'analysis/permission_map.json') || {};
     reportData.summary = readJSON(analysisPrefix + 'analysis/summary.json') || {};
     reportData.s3Relationships = readJSON(analysisPrefix + 'analysis/s3_relationships.json') || { edges: [], findings: [] };
+    reportData.ec2Relationships = readJSON(analysisPrefix + 'analysis/ec2_relationships.json') || { edges: [], findings: [] };
     reportData.manifest = readJSON('manifest.json') || {};
 
     // Load S3 and EC2 (may be in various region dirs)
@@ -1084,6 +1100,70 @@ function buildGraph() {
                 color: color,
                 label: edge.type.replace(/_/g, ' '),
                 s3Meta: edge
+            }
+        });
+    }
+
+    // EC2 Relationship edges
+    const ec2Edges = (reportData.ec2Relationships && reportData.ec2Relationships.edges) || [];
+    for (const edge of ec2Edges) {
+        let sourceId = edge.source;
+        let targetId = edge.target;
+
+        // Resolve IAM ARNs to existing node IDs
+        if (!nodeIds.has(sourceId) && !sourceId.startsWith('sg-')) {
+            const parts = sourceId.split('/');
+            const name = parts[parts.length - 1];
+            const resolved = findNodeId(nodeIds, 'role', name) || findNodeId(nodeIds, 'user', name);
+            if (resolved) sourceId = resolved;
+        }
+        if (!nodeIds.has(targetId) && !targetId.startsWith('sg-')) {
+            const parts = targetId.split('/');
+            const name = parts[parts.length - 1];
+            const resolved = findNodeId(nodeIds, 'role', name) || findNodeId(nodeIds, 'user', name);
+            if (resolved) targetId = resolved;
+        }
+
+        // Create SG nodes as needed
+        if (sourceId.startsWith('sg-') && !nodeIds.has(sourceId)) {
+            const sgData = (reportData.securityGroups || []).find(s => s.GroupId === sourceId);
+            const sgLabel = sgData ? sgData.GroupName : sourceId;
+            elements.push({
+                group: 'nodes',
+                data: { id: sourceId, label: sgLabel, type: 'sg', entityData: sgData || { GroupId: sourceId } }
+            });
+            nodeIds.add(sourceId);
+        }
+        if (targetId.startsWith('sg-') && !nodeIds.has(targetId)) {
+            const sgData = (reportData.securityGroups || []).find(s => s.GroupId === targetId);
+            const sgLabel = sgData ? sgData.GroupName : targetId;
+            elements.push({
+                group: 'nodes',
+                data: { id: targetId, label: sgLabel, type: 'sg', entityData: sgData || { GroupId: targetId } }
+            });
+            nodeIds.add(targetId);
+        }
+
+        if (!nodeIds.has(sourceId) || !nodeIds.has(targetId)) continue;
+
+        // Deduplicate: skip if same INSTANCE_ROLE edge was already created by the old hardcoded logic
+        const edgeId = `${sourceId}->${targetId}:${edge.type}`;
+        if (elements.some(e => e.group === 'edges' && e.data.id === edgeId)) continue;
+
+        const color = EC2_EDGE_COLORS[edge.type] || S3_EDGE_COLORS[edge.type] || '#888';
+        const category = edge.category || 'ec2_access';
+        elements.push({
+            group: 'edges',
+            data: {
+                id: edgeId,
+                source: sourceId,
+                target: targetId,
+                type: edge.type,
+                weight: edge.weight != null ? edge.weight : 1,
+                category: category,
+                color: color,
+                label: edge.type.replace(/_/g, ' '),
+                s3Meta: edge  // reuse s3Meta field for detail panel display
             }
         });
     }
