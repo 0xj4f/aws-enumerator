@@ -1,306 +1,210 @@
-# AWS ENUMERATOR
+# AWS Enumerator
 
-The goal is to enumerate and map out resources and configurations in an AWS account, saving outputs as JSON files in a structured directory for easy review and further analysis.
+**by [0xj4f](https://github.com/0xj4f)**
 
----
+An AWS attack graph tool inspired by [BloodHound](https://github.com/BloodHoundAD/BloodHound). Enumerate AWS resources, analyze IAM policies for privilege escalation paths, map trust relationships, and visualize the attack surface through an interactive graph dashboard.
 
-##  Project Structure
+Built for **offensive security** and **assumed breach scenarios** &mdash; you have access to an AWS account or a set of AWS keys, and you need to understand what you can reach, what you can escalate to, and where the high-value targets are.
 
-The following directory layout clearly organizes your modules and outputs:
-
-```
-aws-enum/
-├── app/
-│   ├── main.py               # Entry-point (CLI handling)
-│   ├── components/
-│   │   ├── __init__.py
-│   │   ├── iam.py            # IAM Users, Roles, Policies
-│   │   ├── vpc.py            # VPCs, Subnets, Route Tables, Internet Gateways, NACLs
-│   │   ├── sg.py             # Security Groups and Rules
-│   │   ├── ec2.py            # EC2 instances and details
-│   │   ├── ecr.py            # ECR repositories and details
-│   │   ├── cloudtrail.py     # CloudTrail info
-│   │   ├── cloudfront.py     # CloudFront distributions
-│   │   ├── waf.py            # WAF WebACL configurations
-│   │   └── flowlogs.py       # VPC Flow Logs
-│   └── utils/
-│       ├── __init__.py
-│       └── aws_utils.py      # Boto3 session/helper functions
-├── reports/                  # Output directory (generated)
-│   └── {account_number}/
-│       └── {region}/
-│           ├── iam/
-│           │   ├── users.json
-│           │   ├── roles.json
-│           │   └── policies.json
-│           ├── vpc/
-│           │   ├── vpcs.json
-│           │   ├── subnets.json
-│           │   ├── route_tables.json
-│           │   ├── internet_gateways.json
-│           │   ├── nat_gateways.json
-│           │   └── nacls.json
-│           ├── sg/
-│           │   └── security_groups.json
-│           ├── ec2/
-│           │   └── instances.json
-│           ├── ecr/
-│           │   └── repositories.json
-│           ├── cloudtrail/
-│           │   └── trails.json
-│           ├── cloudfront/
-│           │   └── distributions.json
-│           ├── waf/
-│           │   └── web_acls.json
-│           └── flowlogs/
-│               └── flowlogs.json
-├── requirements.txt          # Python dependencies
-└── README.md
-```
+> This project is in **continuous development**. Features, parsers, and dashboard capabilities are actively being added.
 
 ---
 
-##  Command Line Interface (CLI)
+## Features
 
-Usage:
+### Enumeration
+- **IAM** &mdash; Users (access keys, MFA, console access), roles (trust policies), groups, managed policies (full document content), inline policies, permission boundaries, account password policy
+- **S3** &mdash; Buckets, policies, ACLs, public access blocks, versioning, encryption, tagging, logging, CORS, event notifications
+- **EC2** &mdash; Instances with metadata, instance profiles, security groups, network interfaces, IMDS configuration
+- **VPC** &mdash; VPCs, subnets, route tables, internet gateways, NAT gateways, NACLs, VPC endpoints, peering connections
+- **Security Groups** &mdash; Rules with associated ENI/instance resources
+- **CloudTrail, CloudFront, WAF, Flow Logs**
+
+### Policy Analysis
+- **20 privilege escalation detection rules** &mdash; CreatePolicyVersion, PassRole+Lambda, PassRole+EC2, PassRole+CloudFormation, AttachUserPolicy, CreateAccessKey, UpdateAssumeRolePolicy, and more
+- **10 dangerous permission rules** &mdash; Wildcard admin, iam:*, s3:*, unrestricted PassRole, kms:Decrypt on *, etc.
+- **Trust policy analysis** &mdash; Cross-account trust, wildcard principals, service trust
+- **S3 resource relationships** &mdash; IAM-to-bucket access (CAN_READ, CAN_WRITE, CAN_ADMIN, FULL_ACCESS), bucket policy grants, public access detection, KMS encryption links, event notification targets
+- **EC2 compute relationships** &mdash; Instance-to-role mapping, who can manage/terminate/connect to instances, security group exposure, IMDS vulnerability detection, SG-to-SG references
+
+### Dashboard
+- **Interactive attack graph** powered by Cytoscape.js with Dijkstra shortest path
+- **Node types** &mdash; Users, roles, groups, policies, EC2, S3, security groups, KMS keys, Lambda, SQS, SNS
+- **Weighted edges** for attack path cost modeling (direct access = 0, PassRole chains = 2, SSRF = 3, cross-account = 4)
+- **Focus mode** &mdash; Click a node to isolate it and its relationships
+- **Owned/compromised marking** &mdash; Flag nodes you control and find paths from them
+- **"Discover All Paths"** &mdash; Auto-find every shortest path from every entity to every high-value target
+- **Attack path playback** &mdash; Auto-play through discovered paths with adjustable speed
+- **Resizable panels**, search, layout switching, node/edge filters
+- Load reports via `.zip` file (drag & drop or file picker)
+
+### Multi-Region
+- `--all` flag enumerates all enabled regions (auto-discovered via `ec2:DescribeRegions`)
+- Global services (IAM, S3, CloudFront) enumerated once; regional services per-region
+- `--zip` flag packages reports for easy transport
+
+---
+
+## Quick Start
+
+### Install via pipx (recommended)
 
 ```bash
-./app/main.py [--region REGION] [--all]
+pipx install git+https://github.com/0xj4f/aws-enumerator.git
 ```
 
-- Default region: `eu-west-2`
-- `--region` to override region
-- `--all` for future use (loop all regions - MVP skips this initially)
-
----
-
-##  Workflow and Logic (Step-by-Step)
-
-1. Initialize AWS Session (utils/aws_utils.py)  
-   Create a reusable session function.
-   
-   ```python
-   def get_boto3_session(region):
-       import boto3
-       return boto3.Session(region_name=region)
-   ```
-
-2. IAM Enumeration (components/iam.py)  
-   - List all users, groups, roles, policies
-   - Save descriptions for each into structured JSONs
-   - Output examples:
-     - `reports/{account}/{region}/iam/users.json`
-     - `reports/{account}/{region}/iam/roles.json`
-     - `reports/{account}/{region}/iam/policies.json`
-
-3. EC2 Enumeration (components/ec2.py)  
-   - Describe instances with details (ID, type, state, security groups)
-   - Output to:
-     - `reports/{account}/{region}/ec2/instances.json`
-
-4. ECR Enumeration (components/ecr.py)  
-   - List repositories and detailed metadata
-   - Output to:
-     - `reports/{account}/{region}/ecr/repositories.json`
-
-5. CloudTrail Enumeration (components/cloudtrail.py)  
-   - List Trails
-   - Save details:
-     - `reports/{account}/{region}/cloudtrail/trails.json`
-
-6. CloudFront Enumeration (components/cloudfront.py)  
-   - List distributions, configurations, origins
-   - Output:
-     - `reports/{account}/{region}/cloudfront/distributions.json`
-
-7. WAF Enumeration (components/waf.py)  
-   - List WebACLs, rules, configurations
-   - Output:
-     - `reports/{account}/{region}/waf/web_acls.json`
-
-8. FlowLogs Enumeration (components/flowlogs.py)  
-   - List VPC flow logs configurations
-   - Output:
-     - `reports/{account}/{region}/flowlogs/flowlogs.json`
-
----
-
-##  Python Dependencies (`requirements.txt`)
-
-Your MVP needs only minimal dependencies:
-
-```text
-boto3
-```
-
-Install using:
+Or install locally for development:
 
 ```bash
-pip3 install -r requirements.txt
+git clone https://github.com/0xj4f/aws-enumerator.git
+cd aws-enumerator
+pip install -e .
 ```
 
----
-
-##  Sample Implementation (Skeleton - main.py)
-
-Here's how your entry point might look (`app/main.py`):
-
-```python
-#!/usr/bin/env python3
-import argparse
-import boto3
-import json
-import os
-from components import iam, ec2, ecr, cloudtrail, cloudfront, waf, flowlogs
-from utils.aws_utils import get_boto3_session
-
-def parse_args():
-    parser = argparse.ArgumentParser(description="AWS Enumeration Tool")
-    parser.add_argument("--region", default="eu-west-2", help="AWS Region (default eu-west-2)")
-    parser.add_argument("--all", action="store_true", help="Enumerate all regions (future)")
-    return parser.parse_args()
-
-def main():
-    args = parse_args()
-    session = get_boto3_session(args.region)
-    sts = session.client('sts')
-    account_number = sts.get_caller_identity()['Account']
-
-    base_path = f"reports/{account_number}/{args.region}"
-    os.makedirs(base_path, exist_ok=True)
-
-    # Enumerate each AWS component
-    iam.enumerate(session, f"{base_path}/iam")
-    ec2.enumerate(session, f"{base_path}/ec2")
-    ecr.enumerate(session, f"{base_path}/ecr")
-    cloudtrail.enumerate(session, f"{base_path}/cloudtrail")
-    cloudfront.enumerate(session, f"{base_path}/cloudfront")
-    waf.enumerate(session, f"{base_path}/waf")
-    flowlogs.enumerate(session, f"{base_path}/flowlogs")
-
-if __name__ == "__main__":
-    main()
-```
-
----
-
-##  Component Example (IAM)
-
-(`components/iam.py`):
-
-```python
-import boto3, json, os
-
-def enumerate(session, path):
-    os.makedirs(path, exist_ok=True)
-    iam_client = session.client('iam')
-
-    # Users
-    users = iam_client.list_users()['Users']
-    with open(f"{path}/users.json", "w") as f:
-        json.dump(users, f, default=str, indent=2)
-
-    # Roles
-    roles = iam_client.list_roles()['Roles']
-    with open(f"{path}/roles.json", "w") as f:
-        json.dump(roles, f, default=str, indent=2)
-
-    # Policies
-    policies = iam_client.list_policies(Scope='Local')['Policies']
-    with open(f"{path}/policies.json", "w") as f:
-        json.dump(policies, f, default=str, indent=2)
-```
-
-This provides a straightforward and consistent pattern to repeat for other components.
-
----
-
-##  Validation Checklist
-
-| Task                          | Status  |
-|-------------------------------|---------|
-| Directory structure           |  Done |
-| CLI & Argument Parsing        |  Done |
-| IAM component                 |  Sample |
-| EC2 component                 |  Planned |
-| ECR component                 |  Planned |
-| CloudTrail component          |  Planned |
-| CloudFront component          |  Planned |
-| WAF component                 |  Planned |
-| FlowLogs component            |  Planned |
-| JSON outputs structure        |  Done |
-| Dependency management         |  Done |
-
----
-
-##  Future Enhancements (Post-MVP)
-
-- Multi-region (`--all` flag)
-- Comprehensive error handling & logging
-- Parallel requests for speed optimization
-- Encryption & security for generated reports
-
----
-
-## Next Steps:
-
-- Validate this structure and approach meets your requirements.
-- Proceed to implement the rest of the components following the IAM example.
-- Run initial tests to verify JSON output formatting.
-
-# AWS COMMANDS
+Then run:
 
 ```bash
-
-aws sts assume-role \
-  --role-arn arn:aws:iam::00000000:role/test-role \
-  --role-session-name test-session
-
-{
-    "Credentials": {
-        "AccessKeyId": "x",
-        "SecretAccessKey": "x",
-        "SessionToken": "x",
-        "Expiration": "x"
-    },
-    "AssumedRoleUser": {
-        "AssumedRoleId": "XXXXX:test-session",
-        "Arn": "arn:aws:sts::XXXXXX:assumed-role/test-role/test-session"
-    }
-}
-
+aws-enumerator --region eu-west-2
+aws-enumerator --all --zip
 ```
 
+### Run with Docker
 
-
-Get Access And Secret Key of Account
 ```bash
-aws sts get-session-token --duration-seconds 3600 # 1 hr
-
-# get env 
-aws sts get-caller-identity
-eval "$(aws-sso eval -S adaptive --profile 'aws-profile-name')"
-printenv | grep -iE 'AWS_SESSION|AWS_SECRET|AWS_ACCESS'
-
-# get env as file exports
-aws configure export-credentials --format env
-aws configure export-credentials --profile not_default --format env
-```
-
-## DOCKER RUN
-```bash
-
-# by ENV
+# With environment variables
 docker run --rm \
   -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
   -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
   -e AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN \
   -v $(pwd)/reports:/app/reports \
-  0xj4f/aws-enumerator:0.1.0 --region eu-west-2
+  0xj4f/aws-enumerator:latest --region eu-west-2
 
-# OR .aws folder mount
+# With AWS credentials file
 docker run --rm \
   -v ~/.aws:/root/.aws \
   -v $(pwd)/reports:/app/reports \
-  0xj4f/aws-enumerator:0.1.0 --region eu-west-2
+  0xj4f/aws-enumerator:latest --region eu-west-2 --zip
 ```
+
+### Run directly (no install)
+
+```bash
+git clone https://github.com/0xj4f/aws-enumerator.git
+cd aws-enumerator
+pip install boto3
+python app/main.py --region eu-west-2
+```
+
+---
+
+## Usage
+
+```
+aws-enumerator [--region REGION] [--all] [--zip]
+```
+
+| Flag | Description |
+|------|-------------|
+| `--region` | AWS region to enumerate (default: `eu-west-2`) |
+| `--all` | Enumerate all enabled regions |
+| `--zip` | Create a zip archive of the report |
+
+### Dashboard
+
+After enumeration, open the dashboard and load your report:
+
+```bash
+open dashboard/index.html
+```
+
+Drop the `.zip` file onto the dashboard or click "Load Report".
+
+---
+
+## Report Structure
+
+### Single region
+```
+reports/{date}/{account}/{region}/
+    iam/           # Users, roles, groups, policies, inline policies, policy documents
+    s3/            # Buckets, policies, ACLs, encryption, notifications
+    ec2/           # Instances
+    vpc/           # VPCs, subnets, route tables, gateways
+    sg/            # Security groups
+    cloudtrail/    # Trails
+    cloudfront/    # Distributions
+    waf/           # WebACLs, rule groups, IP sets
+    flowlogs/      # VPC flow logs
+    analysis/      # findings.json, permission_map.json, trust_relationships.json,
+                   # s3_relationships.json, ec2_relationships.json, summary.json
+    manifest.json
+```
+
+### All regions (`--all`)
+```
+reports/{date}/{account}/
+    global/        # IAM, S3, CloudFront, analysis
+    us-east-1/     # Regional services
+    eu-west-2/     # Regional services
+    ...
+    manifest.json
+```
+
+---
+
+## AWS Credentials
+
+This tool requires valid AWS credentials. Use any standard method:
+
+```bash
+# Assume a role
+aws sts assume-role \
+  --role-arn arn:aws:iam::ACCOUNT:role/ROLE_NAME \
+  --role-session-name enum-session
+
+# Export credentials
+eval "$(aws configure export-credentials --format env)"
+
+# Or use SSO
+eval "$(aws-sso eval -S profile-name --profile profile-name)"
+```
+
+---
+
+## Project Structure
+
+```
+aws-enumerator/
+    app/
+        main.py                  # CLI entry point
+        components/
+            iam.py               # IAM enumeration (enriched)
+            s3.py                # S3 enumeration
+            ec2.py               # EC2 enumeration
+            vpc.py               # VPC enumeration
+            sg.py                # Security groups
+            cloudtrail.py        # CloudTrail
+            cloudfront.py        # CloudFront
+            waf.py               # WAF
+            flowlogs.py          # Flow logs
+            policy_parser.py     # Policy analysis & relationship engine
+        utils/
+            aws_utils.py         # Boto3 session helpers
+            regions.json         # AWS regions reference
+    dashboard/
+        index.html               # Attack graph dashboard (single file)
+    Dockerfile
+    pyproject.toml
+    requirements.txt
+    LICENSE
+```
+
+---
+
+## License
+
+MIT License. See [LICENSE](LICENSE).
+
+## Author
+
+**0xj4f** &mdash; [github.com/0xj4f](https://github.com/0xj4f)
