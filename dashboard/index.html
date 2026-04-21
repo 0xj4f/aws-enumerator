@@ -271,22 +271,42 @@ button.danger:hover { background: var(--danger); color: #fff; }
     border: 2px dashed var(--accent);
 }
 
-/* Detail Panel */
+/* Detail Panel — resizable */
 #detail-panel {
     height: var(--detail-height);
-    min-height: var(--detail-height);
+    min-height: 40px;
+    max-height: 60vh;
     background: var(--bg-secondary);
     border-top: 1px solid var(--border);
     padding: 12px 16px;
     overflow-y: auto;
     font-size: 12px;
+    position: relative;
 }
 
 #detail-panel.collapsed {
     height: 32px;
     min-height: 32px;
+    max-height: 32px;
     overflow: hidden;
     cursor: pointer;
+}
+
+/* Resize handle at top of detail panel */
+#detail-resize-handle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    cursor: ns-resize;
+    background: transparent;
+    z-index: 10;
+}
+
+#detail-resize-handle:hover,
+#detail-resize-handle.dragging {
+    background: var(--accent-dim);
 }
 
 #detail-panel .detail-header {
@@ -452,6 +472,40 @@ button.danger:hover { background: var(--danger); color: #fff; }
 .attack-path-item .ap-route .ap-edge { color: var(--text-muted); }
 .attack-path-item .ap-target { color: var(--danger); font-weight: 600; }
 
+/* Playback controls */
+.playback-controls {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    margin-top: 6px;
+}
+
+.playback-controls button {
+    padding: 4px 10px;
+    font-size: 11px;
+}
+
+.playback-controls button.playing {
+    background: var(--danger);
+    border-color: var(--danger);
+    color: #fff;
+}
+
+.playback-controls select {
+    background: var(--bg-card);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    padding: 4px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+}
+
+.playback-progress {
+    font-size: 10px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+}
+
 /* Node action buttons in detail panel */
 .node-actions {
     grid-column: 1 / -1;
@@ -611,6 +665,18 @@ button.danger:hover { background: var(--danger); color: #fff; }
             </div>
             <button class="danger" onclick="findAllAttackPaths()" style="width:100%">Discover All Paths</button>
             <div id="attack-paths-status" style="font-size:11px;color:var(--text-muted);margin-top:4px"></div>
+            <div class="playback-controls" id="playback-controls" style="display:none">
+                <button id="btn-play" onclick="togglePlayback()">Play</button>
+                <button onclick="playbackPrev()">Prev</button>
+                <button onclick="playbackNext()">Next</button>
+                <select id="playback-speed">
+                    <option value="2000">2s</option>
+                    <option value="3000" selected>3s</option>
+                    <option value="5000">5s</option>
+                    <option value="8000">8s</option>
+                </select>
+            </div>
+            <div class="playback-progress" id="playback-progress"></div>
             <div id="attack-paths-list" style="margin-top:8px;max-height:300px;overflow-y:auto"></div>
         </div>
     </div>
@@ -640,6 +706,7 @@ button.danger:hover { background: var(--danger); color: #fff; }
         </div>
 
         <div id="detail-panel">
+            <div id="detail-resize-handle"></div>
             <div class="detail-header">
                 <h3 id="detail-title">Click a node or edge to inspect</h3>
                 <button onclick="toggleDetail()" style="padding:2px 8px;font-size:10px">_</button>
@@ -1827,6 +1894,11 @@ function clearGraph() {
     document.getElementById('path-result').classList.remove('active');
     document.getElementById('attack-paths-list').innerHTML = '';
     document.getElementById('attack-paths-status').textContent = '';
+    document.getElementById('playback-controls').style.display = 'none';
+    document.getElementById('playback-progress').textContent = '';
+    stopPlayback();
+    window._discoveredPaths = null;
+    window._currentPathIdx = 0;
     // Reset stats
     ['stat-users','stat-roles','stat-groups','stat-policies','stat-instances','stat-buckets',
      'stat-critical','stat-high','stat-medium','stat-total-findings'].forEach(id => {
@@ -1954,11 +2026,145 @@ function highlightDiscoveredPath(idx) {
     p.path.addClass('highlighted-path').removeClass('dimmed');
     p.path.nodes().addClass('highlighted-path-node').removeClass('dimmed');
 
+    // Fit view to the path
+    cy.fit(p.path, 60);
+
     // Highlight active item in list
     document.querySelectorAll('.attack-path-item').forEach(el => el.classList.remove('active'));
     const item = document.querySelector(`.attack-path-item[data-path-idx="${idx}"]`);
-    if (item) item.classList.add('active');
+    if (item) {
+        item.classList.add('active');
+        item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    window._currentPathIdx = idx;
+    _updatePlaybackProgress();
 }
+
+// ── Detail Panel Resize ──
+(function initResize() {
+    const panel = document.getElementById('detail-panel');
+    const handle = document.getElementById('detail-resize-handle');
+    let startY, startH, dragging = false;
+
+    handle.addEventListener('mousedown', (e) => {
+        if (panel.classList.contains('collapsed')) return;
+        dragging = true;
+        startY = e.clientY;
+        startH = panel.offsetHeight;
+        handle.classList.add('dragging');
+        document.body.style.cursor = 'ns-resize';
+        document.body.style.userSelect = 'none';
+        e.preventDefault();
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (!dragging) return;
+        const delta = startY - e.clientY;
+        const newH = Math.max(40, Math.min(window.innerHeight * 0.6, startH + delta));
+        panel.style.height = newH + 'px';
+    });
+
+    document.addEventListener('mouseup', () => {
+        if (!dragging) return;
+        dragging = false;
+        handle.classList.remove('dragging');
+        document.body.style.cursor = '';
+        document.body.style.userSelect = '';
+        // Notify cytoscape to resize
+        if (cy) cy.resize();
+    });
+})();
+
+// ── Attack Path Playback ──
+window._playbackTimer = null;
+window._currentPathIdx = 0;
+
+function togglePlayback() {
+    if (window._playbackTimer) {
+        stopPlayback();
+    } else {
+        startPlayback();
+    }
+}
+
+function startPlayback() {
+    if (!window._discoveredPaths || window._discoveredPaths.length === 0) return;
+
+    const btn = document.getElementById('btn-play');
+    btn.textContent = 'Stop';
+    btn.classList.add('playing');
+    document.getElementById('playback-controls').style.display = '';
+
+    // Start from current or beginning
+    if (window._currentPathIdx == null || window._currentPathIdx >= window._discoveredPaths.length) {
+        window._currentPathIdx = 0;
+    }
+
+    highlightDiscoveredPath(window._currentPathIdx);
+
+    const speed = parseInt(document.getElementById('playback-speed').value) || 3000;
+    window._playbackTimer = setInterval(() => {
+        window._currentPathIdx++;
+        if (window._currentPathIdx >= window._discoveredPaths.length) {
+            window._currentPathIdx = 0; // loop
+        }
+        highlightDiscoveredPath(window._currentPathIdx);
+    }, speed);
+}
+
+function stopPlayback() {
+    if (window._playbackTimer) {
+        clearInterval(window._playbackTimer);
+        window._playbackTimer = null;
+    }
+    const btn = document.getElementById('btn-play');
+    btn.textContent = 'Play';
+    btn.classList.remove('playing');
+}
+
+function playbackNext() {
+    stopPlayback();
+    if (!window._discoveredPaths || window._discoveredPaths.length === 0) return;
+    window._currentPathIdx = ((window._currentPathIdx || 0) + 1) % window._discoveredPaths.length;
+    highlightDiscoveredPath(window._currentPathIdx);
+}
+
+function playbackPrev() {
+    stopPlayback();
+    if (!window._discoveredPaths || window._discoveredPaths.length === 0) return;
+    window._currentPathIdx = ((window._currentPathIdx || 0) - 1 + window._discoveredPaths.length) % window._discoveredPaths.length;
+    highlightDiscoveredPath(window._currentPathIdx);
+}
+
+function _updatePlaybackProgress() {
+    const el = document.getElementById('playback-progress');
+    if (!window._discoveredPaths || window._discoveredPaths.length === 0) {
+        el.textContent = '';
+        return;
+    }
+    el.textContent = `Path ${(window._currentPathIdx || 0) + 1} of ${window._discoveredPaths.length}`;
+}
+
+// Show playback controls when paths are discovered
+const _origFindAll = findAllAttackPaths;
+findAllAttackPaths = function() {
+    stopPlayback();
+    _origFindAll();
+    if (window._discoveredPaths && window._discoveredPaths.length > 0) {
+        document.getElementById('playback-controls').style.display = '';
+        window._currentPathIdx = 0;
+        _updatePlaybackProgress();
+    }
+};
+
+// Speed change restarts playback if playing
+document.getElementById('playback-speed').addEventListener('change', () => {
+    if (window._playbackTimer) {
+        stopPlayback();
+        startPlayback();
+    }
+});
 </script>
 </body>
 </html>
