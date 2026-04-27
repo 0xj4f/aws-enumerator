@@ -209,12 +209,3 @@ aws-enumerator/
     LICENSE
 ```
 
----
-
-## License
-
-MIT License. See [LICENSE](LICENSE).
-
-## Author
-
-**0xj4f** &mdash; [github.com/0xj4f](https://github.com/0xj4f)
