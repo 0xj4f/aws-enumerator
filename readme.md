@@ -226,13 +226,3 @@ aws-enumerator/
 - **[docs/attack_paths.md](docs/attack_paths.md)** &mdash; Field guide for attack scenarios. Maps starting positions (compromised EC2, pod, leaked keys, etc.) to possible escalation paths, with edge-type translation and dashboard usage tips.
 
 > Reminder: The graph and findings show *configuration risk* and *possibility*. They are not a substitute for manual validation. Always start by inspecting the highest-connectivity nodes &mdash; they tend to sit at choke points where attack paths converge.
-
----
-
-## License
-
-MIT License. See [LICENSE](LICENSE).
-
-## Author
-
-**0xj4f** &mdash; [github.com/0xj4f](https://github.com/0xj4f)

@@ -169,6 +169,19 @@ button.danger:hover { background: var(--danger); color: #fff; }
     display: inline-block;
 }
 
+.filter-icon {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #1a1a35;
+    background-size: 70% 70%;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 1.5px solid var(--border);
+    display: inline-block;
+    flex-shrink: 0;
+}
+
 /* Path Finder */
 .path-section select {
     width: 100%;
@@ -398,6 +411,18 @@ button.danger:hover { background: var(--danger); color: #fff; }
     border-radius: 50%;
 }
 
+#legend .legend-icon {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: #1a1a35;
+    background-size: 70% 70%;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 2px solid var(--border);
+    flex-shrink: 0;
+}
+
 /* Graph info overlay */
 #graph-info {
     position: absolute;
@@ -619,20 +644,20 @@ button.danger:hover { background: var(--danger); color: #fff; }
         <!-- Filters -->
         <div class="section">
             <div class="section-title">Node Filters</div>
-            <label class="filter-item"><input type="checkbox" checked data-filter="user"><span class="filter-dot" style="background:#4FC3F7"></span>Users</label>
-            <label class="filter-item"><input type="checkbox" checked data-filter="role"><span class="filter-dot" style="background:#AB47BC"></span>Roles</label>
-            <label class="filter-item"><input type="checkbox" checked data-filter="group"><span class="filter-dot" style="background:#66BB6A"></span>Groups</label>
-            <label class="filter-item"><input type="checkbox" checked data-filter="policy"><span class="filter-dot" style="background:#FFA726"></span>Policies</label>
-            <label class="filter-item"><input type="checkbox" checked data-filter="instance"><span class="filter-dot" style="background:#EF5350"></span>EC2 Instances</label>
-            <label class="filter-item"><input type="checkbox" checked data-filter="bucket"><span class="filter-dot" style="background:#FFEE58"></span>S3 Buckets</label>
-            <label class="filter-item"><input type="checkbox" checked data-filter="sg"><span class="filter-dot" style="background:#B0BEC5"></span>Security Groups</label>
-            <label class="filter-item"><input type="checkbox" checked data-filter="cluster"><span class="filter-dot" style="background:#326CE5"></span>EKS Clusters</label>
-            <label class="filter-item"><input type="checkbox" checked data-filter="pod"><span class="filter-dot" style="background:#5DADE2"></span>Pods</label>
-            <label class="filter-item"><input type="checkbox" checked data-filter="sa"><span class="filter-dot" style="background:#F39C12"></span>Service Accounts</label>
-            <label class="filter-item"><input type="checkbox" checked data-filter="k8srole"><span class="filter-dot" style="background:#9B59B6"></span>K8s Roles</label>
-            <label class="filter-item"><input type="checkbox" checked data-filter="k8ssecret"><span class="filter-dot" style="background:#E91E63"></span>K8s Secrets</label>
-            <label class="filter-item"><input type="checkbox" checked data-filter="k8sservice"><span class="filter-dot" style="background:#1ABC9C"></span>K8s Services</label>
-            <label class="filter-item"><input type="checkbox" checked data-filter="k8singress"><span class="filter-dot" style="background:#E74C3C"></span>K8s Ingresses</label>
+            <label class="filter-item"><input type="checkbox" checked data-filter="user"><span class="filter-icon" style="background-image:url(icons/user.svg);border-color:#4FC3F7"></span>Users</label>
+            <label class="filter-item"><input type="checkbox" checked data-filter="role"><span class="filter-icon" style="background-image:url(icons/role.svg);border-color:#AB47BC"></span>Roles</label>
+            <label class="filter-item"><input type="checkbox" checked data-filter="group"><span class="filter-icon" style="background-image:url(icons/group.svg);border-color:#66BB6A"></span>Groups</label>
+            <label class="filter-item"><input type="checkbox" checked data-filter="policy"><span class="filter-icon" style="background-image:url(icons/policy.svg);border-color:#FFA726"></span>Policies</label>
+            <label class="filter-item"><input type="checkbox" checked data-filter="instance"><span class="filter-icon" style="background-image:url(icons/instance.svg);border-color:#EF5350"></span>EC2 Instances</label>
+            <label class="filter-item"><input type="checkbox" checked data-filter="bucket"><span class="filter-icon" style="background-image:url(icons/bucket.svg);border-color:#FFEE58"></span>S3 Buckets</label>
+            <label class="filter-item"><input type="checkbox" checked data-filter="sg"><span class="filter-icon" style="background-image:url(icons/sg.svg);border-color:#B0BEC5"></span>Security Groups</label>
+            <label class="filter-item"><input type="checkbox" checked data-filter="cluster"><span class="filter-icon" style="background-image:url(icons/cluster.svg);border-color:#326CE5"></span>EKS Clusters</label>
+            <label class="filter-item"><input type="checkbox" checked data-filter="pod"><span class="filter-icon" style="background-image:url(icons/pod.svg);border-color:#5DADE2"></span>Pods</label>
+            <label class="filter-item"><input type="checkbox" checked data-filter="sa"><span class="filter-icon" style="background-image:url(icons/sa.svg);border-color:#F39C12"></span>Service Accounts</label>
+            <label class="filter-item"><input type="checkbox" checked data-filter="k8srole"><span class="filter-icon" style="background-image:url(icons/k8srole.svg);border-color:#9B59B6"></span>K8s Roles</label>
+            <label class="filter-item"><input type="checkbox" checked data-filter="k8ssecret"><span class="filter-icon" style="background-image:url(icons/k8ssecret.svg);border-color:#E91E63"></span>K8s Secrets</label>
+            <label class="filter-item"><input type="checkbox" checked data-filter="k8sservice"><span class="filter-icon" style="background-image:url(icons/k8sservice.svg);border-color:#1ABC9C"></span>K8s Services</label>
+            <label class="filter-item"><input type="checkbox" checked data-filter="k8singress"><span class="filter-icon" style="background-image:url(icons/k8singress.svg);border-color:#E74C3C"></span>K8s Ingresses</label>
         </div>
 
         <!-- Edge Filters -->
@@ -704,21 +729,22 @@ button.danger:hover { background: var(--danger); color: #fff; }
             <div id="cy"></div>
             <div id="graph-info"></div>
             <div id="legend">
-                <div class="legend-item"><span class="legend-dot" style="background:#4FC3F7"></span> User</div>
-                <div class="legend-item"><span class="legend-dot" style="background:#AB47BC"></span> Role</div>
-                <div class="legend-item"><span class="legend-dot" style="background:#66BB6A"></span> Group</div>
-                <div class="legend-item"><span class="legend-dot" style="background:#FFA726"></span> Policy</div>
-                <div class="legend-item"><span class="legend-dot" style="background:#EF5350"></span> EC2</div>
-                <div class="legend-item"><span class="legend-dot" style="background:#FFEE58"></span> S3</div>
-                <div class="legend-item"><span class="legend-dot" style="background:#B0BEC5"></span> SG</div>
-                <div class="legend-item"><span class="legend-dot" style="background:#78909C"></span> KMS</div>
-                <div class="legend-item"><span class="legend-dot" style="background:#CE93D8"></span> Lambda</div>
-                <div class="legend-item"><span class="legend-dot" style="background:#A5D6A7"></span> SQS</div>
-                <div class="legend-item"><span class="legend-dot" style="background:#FFAB91"></span> SNS</div>
-                <div class="legend-item"><span class="legend-dot" style="background:#326CE5"></span> EKS Cluster</div>
-                <div class="legend-item"><span class="legend-dot" style="background:#5DADE2"></span> Pod</div>
-                <div class="legend-item"><span class="legend-dot" style="background:#F39C12"></span> ServiceAccount</div>
-                <div class="legend-item"><span class="legend-dot" style="background:#9B59B6"></span> K8s Role</div>
+                <div class="legend-item"><span class="legend-icon" style="background-image:url(icons/user.svg);border-color:#4FC3F7"></span> User</div>
+                <div class="legend-item"><span class="legend-icon" style="background-image:url(icons/role.svg);border-color:#AB47BC"></span> Role</div>
+                <div class="legend-item"><span class="legend-icon" style="background-image:url(icons/group.svg);border-color:#66BB6A"></span> Group</div>
+                <div class="legend-item"><span class="legend-icon" style="background-image:url(icons/policy.svg);border-color:#FFA726"></span> Policy</div>
+                <div class="legend-item"><span class="legend-icon" style="background-image:url(icons/instance.svg);border-color:#EF5350"></span> EC2</div>
+                <div class="legend-item"><span class="legend-icon" style="background-image:url(icons/bucket.svg);border-color:#FFEE58"></span> S3</div>
+                <div class="legend-item"><span class="legend-icon" style="background-image:url(icons/sg.svg);border-color:#B0BEC5"></span> SG</div>
+                <div class="legend-item"><span class="legend-icon" style="background-image:url(icons/kms.svg);border-color:#78909C"></span> KMS</div>
+                <div class="legend-item"><span class="legend-icon" style="background-image:url(icons/lambda.svg);border-color:#CE93D8"></span> Lambda</div>
+                <div class="legend-item"><span class="legend-icon" style="background-image:url(icons/sqs.svg);border-color:#A5D6A7"></span> SQS</div>
+                <div class="legend-item"><span class="legend-icon" style="background-image:url(icons/sns.svg);border-color:#FFAB91"></span> SNS</div>
+                <div class="legend-item"><span class="legend-icon" style="background-image:url(icons/cluster.svg);border-color:#326CE5"></span> EKS Cluster</div>
+                <div class="legend-item"><span class="legend-icon" style="background-image:url(icons/pod.svg);border-color:#5DADE2"></span> Pod</div>
+                <div class="legend-item"><span class="legend-icon" style="background-image:url(icons/sa.svg);border-color:#F39C12"></span> ServiceAccount</div>
+                <div class="legend-item"><span class="legend-icon" style="background-image:url(icons/k8srole.svg);border-color:#9B59B6"></span> K8s Role</div>
+                <div class="legend-item"><span class="legend-icon" style="background-image:url(icons/k8ssecret.svg);border-color:#E91E63"></span> K8s Secret</div>
                 <div class="legend-item"><span class="legend-dot" style="background:#FFD700"></span> IRSA bridge</div>
             </div>
         </div>
@@ -1424,11 +1450,31 @@ function initGraph(elements) {
                     'color': '#e0e0f0',
                     'text-valign': 'bottom',
                     'text-margin-y': 4,
-                    'background-color': (ele) => NODE_COLORS[ele.data('type')] || '#888',
-                    'shape': (ele) => NODE_SHAPES[ele.data('type')] || 'ellipse',
-                    'width': 30,
-                    'height': 30,
-                    'border-width': 0,
+                    // Dark inner background with icon, colored border encodes type
+                    'background-color': '#1a1a35',
+                    'background-image': (ele) => {
+                        const t = ele.data('type');
+                        return t ? `url(icons/${t}.svg)` : 'none';
+                    },
+                    // Explicit sizing + centering for stable rendering across zoom levels.
+                    // 'fit:none' tells Cytoscape to use our explicit width/height instead of
+                    // computing them from background-fit, which avoids zoom-related drift.
+                    'background-fit': 'none',
+                    'background-clip': 'node',
+                    'background-image-containment': 'inside',
+                    'background-image-opacity': 1,
+                    'background-width': '60%',
+                    'background-height': '60%',
+                    'background-position-x': '50%',
+                    'background-position-y': '50%',
+                    'background-offset-x': 0,
+                    'background-offset-y': 0,
+                    'shape': 'ellipse',
+                    'width': 38,
+                    'height': 38,
+                    'border-width': 2.5,
+                    'border-color': (ele) => NODE_COLORS[ele.data('type')] || '#888',
+                    'border-opacity': 1,
                     'text-background-color': '#0f0f1a',
                     'text-background-opacity': 0.7,
                     'text-background-padding': '2px',
@@ -1437,33 +1483,43 @@ function initGraph(elements) {
                 }
             },
             {
+                // High-value targets get a larger size and a red outer halo
                 selector: 'node[?isHighValue]',
                 style: {
-                    'border-width': 3,
-                    'border-color': '#e94560',
-                    'width': 40,
-                    'height': 40
+                    'width': 46,
+                    'height': 46,
+                    'outline-color': '#e94560',
+                    'outline-width': 3,
+                    'outline-opacity': 0.9,
+                    'outline-offset': 2
                 }
             },
             {
+                // CRITICAL findings: red outer halo (border still encodes node type)
                 selector: 'node[maxSeverity="CRITICAL"]',
                 style: {
-                    'border-width': 3,
-                    'border-color': '#e94560'
+                    'outline-color': '#e94560',
+                    'outline-width': 3,
+                    'outline-opacity': 0.9,
+                    'outline-offset': 2
                 }
             },
             {
                 selector: 'node[maxSeverity="HIGH"]',
                 style: {
-                    'border-width': 2,
-                    'border-color': '#FFA726'
+                    'outline-color': '#FFA726',
+                    'outline-width': 2.5,
+                    'outline-opacity': 0.9,
+                    'outline-offset': 2
                 }
             },
             {
                 selector: 'node[maxSeverity="MEDIUM"]',
                 style: {
-                    'border-width': 2,
-                    'border-color': '#FFEE58'
+                    'outline-color': '#FFEE58',
+                    'outline-width': 2,
+                    'outline-opacity': 0.9,
+                    'outline-offset': 2
                 }
             },
             {
@@ -1513,11 +1569,12 @@ function initGraph(elements) {
             {
                 selector: '.highlighted-path-node',
                 style: {
-                    'border-width': 4,
-                    'border-color': '#e94560',
-                    'background-color': '#e94560',
-                    'width': 40,
-                    'height': 40,
+                    'outline-color': '#e94560',
+                    'outline-width': 4,
+                    'outline-opacity': 1,
+                    'outline-offset': 2,
+                    'width': 44,
+                    'height': 44,
                     'z-index': 999,
                     'opacity': 1
                 }
@@ -1537,19 +1594,22 @@ function initGraph(elements) {
             {
                 selector: ':selected',
                 style: {
-                    'border-width': 3,
-                    'border-color': '#4FC3F7'
+                    'outline-color': '#4FC3F7',
+                    'outline-width': 3,
+                    'outline-opacity': 1,
+                    'outline-offset': 2
                 }
             },
             {
                 selector: '.owned',
                 style: {
-                    'border-width': 4,
-                    'border-color': '#e94560',
-                    'border-style': 'double',
-                    'background-opacity': 1,
-                    'width': 42,
-                    'height': 42,
+                    'outline-color': '#e94560',
+                    'outline-width': 4,
+                    'outline-opacity': 1,
+                    'outline-offset': 3,
+                    'outline-style': 'double',
+                    'width': 48,
+                    'height': 48,
                     'font-weight': 'bold',
                     'text-outline-color': '#e94560',
                     'text-outline-width': 0.5
@@ -1558,8 +1618,10 @@ function initGraph(elements) {
             {
                 selector: '.focused',
                 style: {
-                    'border-width': 3,
-                    'border-color': '#4FC3F7',
+                    'outline-color': '#4FC3F7',
+                    'outline-width': 3,
+                    'outline-opacity': 1,
+                    'outline-offset': 2,
                     'opacity': 1,
                     'z-index': 999
                 }
