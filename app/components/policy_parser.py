@@ -1447,6 +1447,569 @@ def _analyze_ec2_relationships(report_path, permission_map, roles):
 
 
 # ──────────────────────────────────────────────────────────────
+# Kubernetes (EKS + IRSA) Relationship Analysis
+# ──────────────────────────────────────────────────────────────
+
+K8S_ACCESS_WEIGHTS = {
+    "IRSA_BRIDGE": 1,
+    "RUNS_AS": 0,
+    "BOUND_TO": 0,
+    "MOUNTS_SECRET": 1,
+    "SELECTS": 0,
+    "EXPOSES": 0,
+    "IN_CLUSTER": 0,
+    "NODE_ROLE": 0,
+    "CLUSTER_ROLE": 0,
+}
+
+
+def _load_k8s_data(report_path):
+    """Load EKS + K8s data. Handles both single-region and --all mode.
+    Returns dict: {cluster_name: {'cluster_meta': {...}, 'pods': [...], 'service_accounts': [...], ...}}"""
+    clusters = {}
+
+    def _load_region(region_path):
+        eks_clusters_file = os.path.join(region_path, "eks", "clusters.json")
+        eks_nodegroups_file = os.path.join(region_path, "eks", "nodegroups.json")
+        k8s_dir = os.path.join(region_path, "k8s")
+
+        eks_clusters = _load_json(eks_clusters_file)
+        if not isinstance(eks_clusters, list):
+            return
+
+        nodegroups_map = _load_json(eks_nodegroups_file)
+        if not isinstance(nodegroups_map, dict):
+            nodegroups_map = {}
+
+        for c in eks_clusters:
+            if not isinstance(c, dict):
+                continue
+            name = c.get('name')
+            if not name:
+                continue
+
+            cluster_data = {
+                "cluster_meta": c,
+                "nodegroups": nodegroups_map.get(name, []),
+                "pods": [],
+                "service_accounts": [],
+                "roles": [],
+                "cluster_roles": [],
+                "role_bindings": [],
+                "cluster_role_bindings": [],
+                "secrets": [],
+                "services": [],
+                "ingresses": [],
+                "namespaces": [],
+                "auth_status": "unknown"
+            }
+
+            cluster_dir = os.path.join(k8s_dir, name)
+            if os.path.isdir(cluster_dir):
+                info = _load_json(os.path.join(cluster_dir, "cluster_info.json"))
+                if isinstance(info, dict):
+                    cluster_data["auth_status"] = info.get("auth_status", "unknown")
+
+                for key in ["pods", "service_accounts", "roles", "cluster_roles",
+                            "role_bindings", "cluster_role_bindings", "secrets",
+                            "services", "ingresses", "namespaces"]:
+                    data = _load_json(os.path.join(cluster_dir, f"{key}.json"))
+                    if isinstance(data, list):
+                        cluster_data[key] = data
+
+            clusters[name] = cluster_data
+
+    # Try local (single-region mode)
+    if os.path.isdir(os.path.join(report_path, "eks")):
+        _load_region(report_path)
+
+    # Try sibling regions (--all mode)
+    if not clusters:
+        parent = os.path.dirname(report_path)
+        if os.path.isdir(parent):
+            for entry in os.listdir(parent):
+                rp = os.path.join(parent, entry)
+                if os.path.isdir(rp) and entry != 'global':
+                    _load_region(rp)
+
+    return clusters
+
+
+def _safe_get(obj, *keys, default=None):
+    """Walk a dict path safely."""
+    for k in keys:
+        if not isinstance(obj, dict):
+            return default
+        obj = obj.get(k)
+        if obj is None:
+            return default
+    return obj
+
+
+def _normalize_subjects(binding):
+    """Extract subject list from a RoleBinding/ClusterRoleBinding."""
+    return binding.get('subjects') or []
+
+
+def _analyze_k8s_relationships(report_path, permission_map, roles):
+    """Build K8s + IRSA edges and findings."""
+    edges = []
+    findings = []
+
+    clusters = _load_k8s_data(report_path)
+    if not clusters:
+        return {"edges": [], "findings": []}
+
+    # Build IAM role lookup
+    role_arns = {r.get('Arn') for r in roles if r.get('Arn')}
+    role_by_name = {r.get('RoleName'): r for r in roles if r.get('RoleName')}
+
+    for cluster_name, cdata in clusters.items():
+        cluster_meta = cdata['cluster_meta']
+        cluster_id = f"cluster:{cluster_name}"
+
+        # Cluster service role edge
+        cluster_role_arn = cluster_meta.get('roleArn')
+        if cluster_role_arn and cluster_role_arn in role_arns:
+            edges.append({
+                "source": cluster_id,
+                "target": cluster_role_arn,
+                "type": "CLUSTER_ROLE",
+                "weight": K8S_ACCESS_WEIGHTS["CLUSTER_ROLE"],
+                "category": "k8s_compute",
+                "cluster": cluster_name
+            })
+
+        # Nodegroup roles
+        for ng in cdata.get('nodegroups', []) if isinstance(cdata.get('nodegroups'), list) else []:
+            ng_name = ng.get('nodegroupName', '')
+            ng_role = ng.get('nodeRole', '')
+            ng_id = f"nodegroup:{cluster_name}/{ng_name}"
+            if ng_role and ng_role in role_arns:
+                edges.append({
+                    "source": ng_id,
+                    "target": ng_role,
+                    "type": "NODE_ROLE",
+                    "weight": K8S_ACCESS_WEIGHTS["NODE_ROLE"],
+                    "category": "k8s_compute",
+                    "cluster": cluster_name
+                })
+
+        # Service Account → IRSA bridge → IAM Role (the killer edge)
+        sa_lookup = {}  # (namespace, name) -> sa_id
+        for sa in cdata.get('service_accounts', []):
+            ns = _safe_get(sa, 'metadata', 'namespace', default='default')
+            sa_name = _safe_get(sa, 'metadata', 'name', default='')
+            if not sa_name:
+                continue
+            sa_id = f"sa:{cluster_name}/{ns}/{sa_name}"
+            sa_lookup[(ns, sa_name)] = sa_id
+
+            # IRSA detection
+            annotations = _safe_get(sa, 'metadata', 'annotations', default={}) or {}
+            irsa_arn = annotations.get('eks.amazonaws.com/role-arn')
+            if irsa_arn:
+                weight = K8S_ACCESS_WEIGHTS["IRSA_BRIDGE"]
+                edges.append({
+                    "source": sa_id,
+                    "target": irsa_arn,
+                    "type": "IRSA_BRIDGE",
+                    "weight": weight,
+                    "category": "k8s_irsa",
+                    "annotation": "eks.amazonaws.com/role-arn",
+                    "cluster": cluster_name,
+                    "namespace": ns,
+                    "service_account": sa_name,
+                    "iam_role_arn": irsa_arn,
+                    "iam_role_known": irsa_arn in role_arns
+                })
+
+                # Check if IRSA role has admin-level AWS perms
+                role_name_from_arn = irsa_arn.split('/')[-1] if '/' in irsa_arn else None
+                if role_name_from_arn and role_name_from_arn in permission_map.get('roles', {}):
+                    role_data = permission_map['roles'][role_name_from_arn]
+                    has_admin = False
+                    for stmt in role_data.get('effective_statements', []):
+                        for action in stmt.get('actions', []):
+                            if action == '*' or _action_matches(action, 'iam:*'):
+                                for r in stmt.get('resources', []):
+                                    if r == '*':
+                                        has_admin = True
+                                        break
+                            if has_admin:
+                                break
+                        if has_admin:
+                            break
+                    if has_admin:
+                        findings.append({
+                            "id": "K8S-IRSA-ADMIN",
+                            "severity": "CRITICAL",
+                            "category": "k8s_irsa",
+                            "title": f"ServiceAccount {ns}/{sa_name} (cluster {cluster_name}) has IRSA -> admin IAM role",
+                            "entity": f"sa/{cluster_name}/{ns}/{sa_name}",
+                            "entity_arn": sa_id,
+                            "description": f"ServiceAccount '{sa_name}' in namespace '{ns}' "
+                                           f"of cluster '{cluster_name}' is bound to IAM role "
+                                           f"'{irsa_arn}' which has admin-level AWS permissions. "
+                                           f"Pod compromise = AWS account compromise.",
+                            "matched_actions": ["iam:*", "*"],
+                            "source_policy": "ServiceAccount IRSA annotation",
+                            "source_type": "k8s_irsa",
+                            "resource": [sa_id],
+                            "remediation": "Restrict IRSA role permissions to minimum required"
+                        })
+
+        # Pods
+        pod_lookup = {}  # (namespace, name) -> pod_id
+        for pod in cdata.get('pods', []):
+            ns = _safe_get(pod, 'metadata', 'namespace', default='default')
+            pod_name = _safe_get(pod, 'metadata', 'name', default='')
+            if not pod_name:
+                continue
+            pod_id = f"pod:{cluster_name}/{ns}/{pod_name}"
+            pod_lookup[(ns, pod_name)] = pod_id
+
+            # Pod runs in cluster
+            edges.append({
+                "source": pod_id,
+                "target": cluster_id,
+                "type": "IN_CLUSTER",
+                "weight": K8S_ACCESS_WEIGHTS["IN_CLUSTER"],
+                "category": "k8s_structural",
+                "cluster": cluster_name
+            })
+
+            # Pod -> ServiceAccount
+            sa_name = _safe_get(pod, 'spec', 'service_account_name') or \
+                      _safe_get(pod, 'spec', 'service_account') or 'default'
+            sa_id = sa_lookup.get((ns, sa_name)) or f"sa:{cluster_name}/{ns}/{sa_name}"
+            edges.append({
+                "source": pod_id,
+                "target": sa_id,
+                "type": "RUNS_AS",
+                "weight": K8S_ACCESS_WEIGHTS["RUNS_AS"],
+                "category": "k8s_workload",
+                "cluster": cluster_name,
+                "namespace": ns
+            })
+
+            # Default SA finding
+            if sa_name == 'default':
+                findings.append({
+                    "id": "K8S-DEFAULT-SA",
+                    "severity": "MEDIUM",
+                    "category": "k8s_workload",
+                    "title": f"Pod {ns}/{pod_name} uses default ServiceAccount",
+                    "entity": f"pod/{cluster_name}/{ns}/{pod_name}",
+                    "entity_arn": pod_id,
+                    "description": f"Pod '{pod_name}' in namespace '{ns}' uses the default "
+                                   f"ServiceAccount. Best practice is to use a dedicated SA.",
+                    "matched_actions": [],
+                    "source_policy": "PodSpec",
+                    "source_type": "k8s_pod",
+                    "resource": [pod_id],
+                    "remediation": "Create a dedicated ServiceAccount for this workload"
+                })
+
+            # Security context findings
+            spec = pod.get('spec') or {}
+            sec_ctx = spec.get('security_context') or {}
+            host_network = spec.get('host_network')
+            host_pid = spec.get('host_pid')
+
+            # Check container security contexts
+            privileged = False
+            for container in spec.get('containers', []) or []:
+                c_sec = container.get('security_context') or {}
+                if c_sec.get('privileged'):
+                    privileged = True
+                    break
+
+            if privileged:
+                findings.append({
+                    "id": "K8S-PRIV-001",
+                    "severity": "CRITICAL",
+                    "category": "k8s_security_context",
+                    "title": f"Pod {ns}/{pod_name} runs privileged container (cluster {cluster_name})",
+                    "entity": f"pod/{cluster_name}/{ns}/{pod_name}",
+                    "entity_arn": pod_id,
+                    "description": f"Pod '{pod_name}' has at least one privileged container. "
+                                   f"Privileged containers can escape to the node.",
+                    "matched_actions": [],
+                    "source_policy": "PodSpec.containers[].securityContext.privileged",
+                    "source_type": "k8s_pod",
+                    "resource": [pod_id],
+                    "remediation": "Remove privileged: true from container securityContext"
+                })
+
+            if host_network:
+                findings.append({
+                    "id": "K8S-HOSTNET-001",
+                    "severity": "HIGH",
+                    "category": "k8s_security_context",
+                    "title": f"Pod {ns}/{pod_name} uses hostNetwork (cluster {cluster_name})",
+                    "entity": f"pod/{cluster_name}/{ns}/{pod_name}",
+                    "entity_arn": pod_id,
+                    "description": f"Pod '{pod_name}' shares the host's network namespace, "
+                                   f"giving it access to all node-level network interfaces.",
+                    "matched_actions": [],
+                    "source_policy": "PodSpec.hostNetwork",
+                    "source_type": "k8s_pod",
+                    "resource": [pod_id],
+                    "remediation": "Set hostNetwork: false unless absolutely required"
+                })
+
+            if host_pid:
+                findings.append({
+                    "id": "K8S-HOSTPID-001",
+                    "severity": "HIGH",
+                    "category": "k8s_security_context",
+                    "title": f"Pod {ns}/{pod_name} uses hostPID (cluster {cluster_name})",
+                    "entity": f"pod/{cluster_name}/{ns}/{pod_name}",
+                    "entity_arn": pod_id,
+                    "description": f"Pod '{pod_name}' shares the host's PID namespace and "
+                                   f"can see/signal all processes on the node.",
+                    "matched_actions": [],
+                    "source_policy": "PodSpec.hostPID",
+                    "source_type": "k8s_pod",
+                    "resource": [pod_id],
+                    "remediation": "Set hostPID: false unless absolutely required"
+                })
+
+            # Mounted secrets
+            for vol in spec.get('volumes') or []:
+                secret_vol = vol.get('secret') or {}
+                secret_name = secret_vol.get('secret_name')
+                if secret_name:
+                    sec_id = f"k8ssecret:{cluster_name}/{ns}/{secret_name}"
+                    edges.append({
+                        "source": pod_id,
+                        "target": sec_id,
+                        "type": "MOUNTS_SECRET",
+                        "weight": K8S_ACCESS_WEIGHTS["MOUNTS_SECRET"],
+                        "category": "k8s_workload",
+                        "cluster": cluster_name,
+                        "namespace": ns,
+                        "secret_name": secret_name
+                    })
+
+        # RBAC: bindings link subjects (SAs) to roles
+        # RoleBinding (namespaced)
+        for rb in cdata.get('role_bindings', []):
+            rb_ns = _safe_get(rb, 'metadata', 'namespace', default='default')
+            role_ref = rb.get('role_ref') or {}
+            ref_kind = role_ref.get('kind')  # Role | ClusterRole
+            ref_name = role_ref.get('name', '')
+            if not ref_name:
+                continue
+
+            if ref_kind == 'ClusterRole':
+                target_id = f"k8srole:{cluster_name}/cluster/{ref_name}"
+            else:
+                target_id = f"k8srole:{cluster_name}/{rb_ns}/{ref_name}"
+
+            for subj in _normalize_subjects(rb):
+                if subj.get('kind') == 'ServiceAccount':
+                    s_ns = subj.get('namespace', rb_ns)
+                    s_name = subj.get('name', '')
+                    if not s_name:
+                        continue
+                    sa_id = sa_lookup.get((s_ns, s_name)) or f"sa:{cluster_name}/{s_ns}/{s_name}"
+                    edges.append({
+                        "source": sa_id,
+                        "target": target_id,
+                        "type": "BOUND_TO",
+                        "weight": K8S_ACCESS_WEIGHTS["BOUND_TO"],
+                        "category": "k8s_rbac",
+                        "cluster": cluster_name,
+                        "binding_name": _safe_get(rb, 'metadata', 'name'),
+                        "binding_kind": "RoleBinding",
+                        "role_kind": ref_kind,
+                        "role_name": ref_name
+                    })
+
+        # ClusterRoleBinding (cluster-wide)
+        for crb in cdata.get('cluster_role_bindings', []):
+            role_ref = crb.get('role_ref') or {}
+            ref_name = role_ref.get('name', '')
+            if not ref_name:
+                continue
+            target_id = f"k8srole:{cluster_name}/cluster/{ref_name}"
+            is_cluster_admin = (ref_name == 'cluster-admin')
+
+            for subj in _normalize_subjects(crb):
+                if subj.get('kind') == 'ServiceAccount':
+                    s_ns = subj.get('namespace', 'default')
+                    s_name = subj.get('name', '')
+                    if not s_name:
+                        continue
+                    sa_id = sa_lookup.get((s_ns, s_name)) or f"sa:{cluster_name}/{s_ns}/{s_name}"
+                    edges.append({
+                        "source": sa_id,
+                        "target": target_id,
+                        "type": "BOUND_TO",
+                        "weight": K8S_ACCESS_WEIGHTS["BOUND_TO"],
+                        "category": "k8s_rbac",
+                        "cluster": cluster_name,
+                        "binding_name": _safe_get(crb, 'metadata', 'name'),
+                        "binding_kind": "ClusterRoleBinding",
+                        "role_kind": "ClusterRole",
+                        "role_name": ref_name
+                    })
+
+                    if is_cluster_admin:
+                        findings.append({
+                            "id": "K8S-RBAC-001",
+                            "severity": "CRITICAL",
+                            "category": "k8s_rbac",
+                            "title": f"ServiceAccount {s_ns}/{s_name} bound to cluster-admin (cluster {cluster_name})",
+                            "entity": f"sa/{cluster_name}/{s_ns}/{s_name}",
+                            "entity_arn": sa_id,
+                            "description": f"ServiceAccount '{s_name}' in namespace '{s_ns}' "
+                                           f"is bound to cluster-admin via ClusterRoleBinding "
+                                           f"'{_safe_get(crb, 'metadata', 'name')}'. "
+                                           f"This SA has full cluster control.",
+                            "matched_actions": ["*"],
+                            "source_policy": _safe_get(crb, 'metadata', 'name', default='cluster-admin-binding'),
+                            "source_type": "k8s_rbac",
+                            "resource": [sa_id],
+                            "remediation": "Use a more restrictive ClusterRole or namespaced Role"
+                        })
+
+        # Wildcard RBAC findings (Role/ClusterRole with verb * on resource *)
+        for role in cdata.get('roles', []) + cdata.get('cluster_roles', []):
+            r_kind = 'ClusterRole' if 'kind' in role and role.get('kind') == 'ClusterRole' else 'Role'
+            r_ns = _safe_get(role, 'metadata', 'namespace', default='cluster')
+            r_name = _safe_get(role, 'metadata', 'name', default='')
+            if not r_name:
+                continue
+            for rule in role.get('rules') or []:
+                verbs = rule.get('verbs') or []
+                resources = rule.get('resources') or []
+                if '*' in verbs and '*' in resources:
+                    findings.append({
+                        "id": "K8S-RBAC-002",
+                        "severity": "HIGH",
+                        "category": "k8s_rbac",
+                        "title": f"{r_kind} {r_ns}/{r_name} has * on * (cluster {cluster_name})",
+                        "entity": f"k8srole/{cluster_name}/{r_ns}/{r_name}",
+                        "entity_arn": f"k8srole:{cluster_name}/{r_ns}/{r_name}",
+                        "description": f"{r_kind} '{r_name}' allows verb '*' on resource '*'. "
+                                       f"Anyone bound to this role has unrestricted cluster access.",
+                        "matched_actions": ["*"],
+                        "source_policy": r_name,
+                        "source_type": "k8s_rbac",
+                        "resource": [f"k8srole:{cluster_name}/{r_ns}/{r_name}"],
+                        "remediation": "Restrict verbs and resources to least-privilege"
+                    })
+
+        # Services
+        svc_lookup = {}
+        for svc in cdata.get('services', []):
+            ns = _safe_get(svc, 'metadata', 'namespace', default='default')
+            svc_name = _safe_get(svc, 'metadata', 'name', default='')
+            if not svc_name:
+                continue
+            svc_id = f"k8sservice:{cluster_name}/{ns}/{svc_name}"
+            svc_lookup[(ns, svc_name)] = svc_id
+
+            svc_type = _safe_get(svc, 'spec', 'type', default='ClusterIP')
+            selector = _safe_get(svc, 'spec', 'selector', default={}) or {}
+
+            if svc_type == 'LoadBalancer':
+                findings.append({
+                    "id": "K8S-NET-001",
+                    "severity": "HIGH",
+                    "category": "k8s_network",
+                    "title": f"Service {ns}/{svc_name} is LoadBalancer (public exposure) in cluster {cluster_name}",
+                    "entity": f"k8sservice/{cluster_name}/{ns}/{svc_name}",
+                    "entity_arn": svc_id,
+                    "description": f"Service '{svc_name}' is of type LoadBalancer, "
+                                   f"likely exposing the workload to the internet via an ELB.",
+                    "matched_actions": [],
+                    "source_policy": "Service.spec.type",
+                    "source_type": "k8s_service",
+                    "resource": [svc_id],
+                    "remediation": "Use Ingress with auth or restrict via NetworkPolicy"
+                })
+
+            # Service -> Pod via selector
+            for (p_ns, p_name), pod_id in pod_lookup.items():
+                if p_ns != ns:
+                    continue
+                # Match selector against pod labels
+                # Find the pod's labels
+                for pod in cdata.get('pods', []):
+                    if _safe_get(pod, 'metadata', 'namespace') == p_ns and \
+                       _safe_get(pod, 'metadata', 'name') == p_name:
+                        labels = _safe_get(pod, 'metadata', 'labels', default={}) or {}
+                        if selector and all(labels.get(k) == v for k, v in selector.items()):
+                            edges.append({
+                                "source": svc_id,
+                                "target": pod_id,
+                                "type": "SELECTS",
+                                "weight": K8S_ACCESS_WEIGHTS["SELECTS"],
+                                "category": "k8s_network",
+                                "cluster": cluster_name,
+                                "namespace": ns
+                            })
+                        break
+
+        # Ingresses
+        for ing in cdata.get('ingresses', []):
+            ns = _safe_get(ing, 'metadata', 'namespace', default='default')
+            ing_name = _safe_get(ing, 'metadata', 'name', default='')
+            if not ing_name:
+                continue
+            ing_id = f"k8singress:{cluster_name}/{ns}/{ing_name}"
+            annotations = _safe_get(ing, 'metadata', 'annotations', default={}) or {}
+
+            # Ingress -> Service
+            for rule in _safe_get(ing, 'spec', 'rules', default=[]) or []:
+                http = rule.get('http') or {}
+                for p in http.get('paths') or []:
+                    backend = p.get('backend') or {}
+                    svc_ref = backend.get('service') or {}
+                    svc_name = svc_ref.get('name')
+                    if svc_name:
+                        target_svc = svc_lookup.get((ns, svc_name)) or f"k8sservice:{cluster_name}/{ns}/{svc_name}"
+                        edges.append({
+                            "source": ing_id,
+                            "target": target_svc,
+                            "type": "EXPOSES",
+                            "weight": K8S_ACCESS_WEIGHTS["EXPOSES"],
+                            "category": "k8s_network",
+                            "cluster": cluster_name,
+                            "namespace": ns
+                        })
+
+            # Auth annotation check
+            has_auth = any(
+                key.startswith('nginx.ingress.kubernetes.io/auth') or
+                key.startswith('alb.ingress.kubernetes.io/auth')
+                for key in annotations.keys()
+            )
+            if not has_auth:
+                findings.append({
+                    "id": "K8S-NET-002",
+                    "severity": "MEDIUM",
+                    "category": "k8s_network",
+                    "title": f"Ingress {ns}/{ing_name} has no auth annotation (cluster {cluster_name})",
+                    "entity": f"k8singress/{cluster_name}/{ns}/{ing_name}",
+                    "entity_arn": ing_id,
+                    "description": f"Ingress '{ing_name}' has no auth-related annotation. "
+                                   f"Verify the underlying service handles authentication.",
+                    "matched_actions": [],
+                    "source_policy": "Ingress.metadata.annotations",
+                    "source_type": "k8s_ingress",
+                    "resource": [ing_id],
+                    "remediation": "Add auth annotation or ensure service-level auth"
+                })
+
+    return {"edges": edges, "findings": findings}
+
+
+# ──────────────────────────────────────────────────────────────
 # Main Entry Point
 # ──────────────────────────────────────────────────────────────
 
@@ -1496,7 +2059,12 @@ def analyze(report_path):
     findings.extend(ec2_relationships.get("findings", []))
     ec2_edge_count = len(ec2_relationships.get("edges", []))
 
-    # 6. Save reports
+    # 6. Kubernetes (EKS + IRSA) relationships
+    k8s_relationships = _analyze_k8s_relationships(report_path, permission_map, roles)
+    findings.extend(k8s_relationships.get("findings", []))
+    k8s_edge_count = len(k8s_relationships.get("edges", []))
+
+    # 7. Save reports
     with open(os.path.join(analysis_dir, "findings.json"), "w") as f:
         json.dump({"findings": findings}, f, indent=2, default=str)
 
@@ -1511,6 +2079,9 @@ def analyze(report_path):
 
     with open(os.path.join(analysis_dir, "ec2_relationships.json"), "w") as f:
         json.dump(ec2_relationships, f, indent=2, default=str)
+
+    with open(os.path.join(analysis_dir, "k8s_relationships.json"), "w") as f:
+        json.dump(k8s_relationships, f, indent=2, default=str)
 
     summary = _generate_summary(findings)
     with open(os.path.join(analysis_dir, "summary.json"), "w") as f:
@@ -1532,5 +2103,8 @@ def analyze(report_path):
 
     if ec2_edge_count > 0:
         print(f"    \033[1;32m[+]\033[0m EC2 relationships: {ec2_edge_count} edges discovered")
+
+    if k8s_edge_count > 0:
+        print(f"    \033[1;32m[+]\033[0m K8s relationships: {k8s_edge_count} edges discovered")
 
     print("    \033[1;32m[+]\033[0m Policy Analysis Finished!")
