@@ -1,7 +1,5 @@
 # AWS Enumerator
 
-**by [0xj4f](https://github.com/0xj4f)**
-
 An AWS attack graph tool inspired by [BloodHound](https://github.com/BloodHoundAD/BloodHound). Enumerate AWS resources, analyze IAM policies for privilege escalation paths, map trust relationships, and visualize the attack surface through an interactive graph dashboard.
 
 Built for **offensive security** and **assumed breach scenarios** &mdash; you have access to an AWS account or a set of AWS keys, and you need to understand what you can reach, what you can escalate to, and where the high-value targets are.
