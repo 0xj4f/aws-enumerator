@@ -626,6 +626,13 @@ button.danger:hover { background: var(--danger); color: #fff; }
             <label class="filter-item"><input type="checkbox" checked data-filter="instance"><span class="filter-dot" style="background:#EF5350"></span>EC2 Instances</label>
             <label class="filter-item"><input type="checkbox" checked data-filter="bucket"><span class="filter-dot" style="background:#FFEE58"></span>S3 Buckets</label>
             <label class="filter-item"><input type="checkbox" checked data-filter="sg"><span class="filter-dot" style="background:#B0BEC5"></span>Security Groups</label>
+            <label class="filter-item"><input type="checkbox" checked data-filter="cluster"><span class="filter-dot" style="background:#326CE5"></span>EKS Clusters</label>
+            <label class="filter-item"><input type="checkbox" checked data-filter="pod"><span class="filter-dot" style="background:#5DADE2"></span>Pods</label>
+            <label class="filter-item"><input type="checkbox" checked data-filter="sa"><span class="filter-dot" style="background:#F39C12"></span>Service Accounts</label>
+            <label class="filter-item"><input type="checkbox" checked data-filter="k8srole"><span class="filter-dot" style="background:#9B59B6"></span>K8s Roles</label>
+            <label class="filter-item"><input type="checkbox" checked data-filter="k8ssecret"><span class="filter-dot" style="background:#E91E63"></span>K8s Secrets</label>
+            <label class="filter-item"><input type="checkbox" checked data-filter="k8sservice"><span class="filter-dot" style="background:#1ABC9C"></span>K8s Services</label>
+            <label class="filter-item"><input type="checkbox" checked data-filter="k8singress"><span class="filter-dot" style="background:#E74C3C"></span>K8s Ingresses</label>
         </div>
 
         <!-- Edge Filters -->
@@ -641,6 +648,12 @@ button.danger:hover { background: var(--danger); color: #fff; }
             <label class="filter-item"><input type="checkbox" checked data-edge-filter="notification">Notifications (Lambda/SQS/SNS)</label>
             <label class="filter-item"><input type="checkbox" checked data-edge-filter="ec2_access">EC2 access (who can manage)</label>
             <label class="filter-item"><input type="checkbox" checked data-edge-filter="ec2_network">EC2 network (SG, exposure)</label>
+            <label class="filter-item"><input type="checkbox" checked data-edge-filter="k8s_irsa">IRSA bridge (SA &rarr; IAM)</label>
+            <label class="filter-item"><input type="checkbox" checked data-edge-filter="k8s_workload">K8s workload (pod, secret)</label>
+            <label class="filter-item"><input type="checkbox" checked data-edge-filter="k8s_rbac">K8s RBAC</label>
+            <label class="filter-item"><input type="checkbox" checked data-edge-filter="k8s_network">K8s network (svc, ingress)</label>
+            <label class="filter-item"><input type="checkbox" checked data-edge-filter="k8s_compute">K8s compute (nodegroup)</label>
+            <label class="filter-item"><input type="checkbox" checked data-edge-filter="k8s_structural">K8s structural</label>
         </div>
 
         <!-- Path Finder -->
@@ -702,6 +715,11 @@ button.danger:hover { background: var(--danger); color: #fff; }
                 <div class="legend-item"><span class="legend-dot" style="background:#CE93D8"></span> Lambda</div>
                 <div class="legend-item"><span class="legend-dot" style="background:#A5D6A7"></span> SQS</div>
                 <div class="legend-item"><span class="legend-dot" style="background:#FFAB91"></span> SNS</div>
+                <div class="legend-item"><span class="legend-dot" style="background:#326CE5"></span> EKS Cluster</div>
+                <div class="legend-item"><span class="legend-dot" style="background:#5DADE2"></span> Pod</div>
+                <div class="legend-item"><span class="legend-dot" style="background:#F39C12"></span> ServiceAccount</div>
+                <div class="legend-item"><span class="legend-dot" style="background:#9B59B6"></span> K8s Role</div>
+                <div class="legend-item"><span class="legend-dot" style="background:#FFD700"></span> IRSA bridge</div>
             </div>
         </div>
 
@@ -727,14 +745,20 @@ const NODE_COLORS = {
     user: '#4FC3F7', role: '#AB47BC', group: '#66BB6A',
     policy: '#FFA726', instance: '#EF5350', bucket: '#FFEE58',
     kms: '#78909C', lambda: '#CE93D8', sqs: '#A5D6A7', sns: '#FFAB91',
-    sg: '#B0BEC5'
+    sg: '#B0BEC5',
+    cluster: '#326CE5', pod: '#5DADE2', sa: '#F39C12',
+    k8srole: '#9B59B6', k8ssecret: '#E91E63',
+    k8sservice: '#1ABC9C', k8singress: '#E74C3C', nodegroup: '#7F8C8D'
 };
 
 const NODE_SHAPES = {
     user: 'ellipse', role: 'diamond', group: 'round-rectangle',
     policy: 'rectangle', instance: 'hexagon', bucket: 'barrel',
     kms: 'pentagon', lambda: 'star', sqs: 'round-rectangle', sns: 'round-rectangle',
-    sg: 'octagon'
+    sg: 'octagon',
+    cluster: 'tag', pod: 'round-rectangle', sa: 'diamond',
+    k8srole: 'rectangle', k8ssecret: 'cut-rectangle',
+    k8sservice: 'round-tag', k8singress: 'concave-hexagon', nodegroup: 'round-octagon'
 };
 
 const S3_EDGE_COLORS = {
@@ -750,6 +774,18 @@ const EC2_EDGE_COLORS = {
     CAN_ADMIN_SG: '#AB47BC',
     HAS_SG: '#555577', SG_ALLOWS_FROM: '#AB47BC',
     PUBLIC_INBOUND: '#e94560', INTERNET_FACING: '#e94560'
+};
+
+const K8S_EDGE_COLORS = {
+    IRSA_BRIDGE: '#FFD700',
+    RUNS_AS: '#5DADE2',
+    BOUND_TO: '#9B59B6',
+    MOUNTS_SECRET: '#E91E63',
+    SELECTS: '#1ABC9C',
+    EXPOSES: '#E74C3C',
+    IN_CLUSTER: '#555577',
+    NODE_ROLE: '#7F8C8D',
+    CLUSTER_ROLE: '#7F8C8D'
 };
 
 // ── File Loading (Zip) ──
@@ -864,6 +900,7 @@ async function processLoadedFiles(files) {
     reportData.summary = readJSON(analysisPrefix + 'analysis/summary.json') || {};
     reportData.s3Relationships = readJSON(analysisPrefix + 'analysis/s3_relationships.json') || { edges: [], findings: [] };
     reportData.ec2Relationships = readJSON(analysisPrefix + 'analysis/ec2_relationships.json') || { edges: [], findings: [] };
+    reportData.k8sRelationships = readJSON(analysisPrefix + 'analysis/k8s_relationships.json') || { edges: [], findings: [] };
     reportData.manifest = readJSON('manifest.json') || {};
 
     // Load S3 and EC2 (may be in various region dirs)
@@ -1235,6 +1272,95 @@ function buildGraph() {
         });
     }
 
+    // K8s Relationship edges
+    const k8sEdges = (reportData.k8sRelationships && reportData.k8sRelationships.edges) || [];
+    for (const edge of k8sEdges) {
+        let sourceId = edge.source;
+        let targetId = edge.target;
+
+        // Resolve IAM ARN endpoints (IRSA bridge target, NODE_ROLE target, CLUSTER_ROLE target)
+        if (!nodeIds.has(sourceId) && sourceId.startsWith('arn:aws:iam:')) {
+            const parts = sourceId.split('/');
+            const name = parts[parts.length - 1];
+            const resolved = findNodeId(nodeIds, 'role', name) || findNodeId(nodeIds, 'user', name);
+            if (resolved) sourceId = resolved;
+        }
+        if (!nodeIds.has(targetId) && targetId.startsWith('arn:aws:iam:')) {
+            const parts = targetId.split('/');
+            const name = parts[parts.length - 1];
+            const resolved = findNodeId(nodeIds, 'role', name) || findNodeId(nodeIds, 'user', name);
+            if (resolved) targetId = resolved;
+        }
+
+        // Auto-create K8s placeholder nodes for missing endpoints
+        for (const id of [sourceId, targetId]) {
+            if (nodeIds.has(id)) continue;
+            const colon = id.indexOf(':');
+            if (colon < 0) continue;
+            const prefix = id.slice(0, colon);
+            const remainder = id.slice(colon + 1);
+            const validK8sPrefixes = ['cluster', 'pod', 'sa', 'k8srole', 'k8ssecret', 'k8sservice', 'k8singress', 'nodegroup'];
+            if (!validK8sPrefixes.includes(prefix)) continue;
+
+            // Generate friendly label from remainder
+            // Format: {cluster}/{namespace}/{name} for most types
+            const segs = remainder.split('/');
+            const label = segs[segs.length - 1] || remainder;
+            const ns = segs.length >= 3 ? segs[1] : null;
+
+            elements.push({
+                group: 'nodes',
+                data: {
+                    id: id,
+                    label: label,
+                    type: prefix,
+                    entityData: {
+                        cluster: segs[0] || null,
+                        namespace: ns,
+                        name: label,
+                        k8s_id: id
+                    }
+                }
+            });
+            nodeIds.add(id);
+        }
+
+        // External IAM ARN that wasn't resolved → create lightweight role placeholder
+        for (const id of [sourceId, targetId]) {
+            if (nodeIds.has(id)) continue;
+            if (id.startsWith('arn:aws:iam:')) {
+                const label = id.split('/').pop() || id;
+                elements.push({
+                    group: 'nodes',
+                    data: { id: id, label: label, type: 'role', entityData: { Arn: id, external: true } }
+                });
+                nodeIds.add(id);
+            }
+        }
+
+        if (!nodeIds.has(sourceId) || !nodeIds.has(targetId)) continue;
+
+        const edgeId = `${sourceId}->${targetId}:${edge.type}`;
+        if (elements.some(e => e.group === 'edges' && e.data.id === edgeId)) continue;
+
+        const color = K8S_EDGE_COLORS[edge.type] || '#888';
+        const category = edge.category || 'k8s_workload';
+        elements.push({
+            group: 'edges',
+            data: {
+                id: edgeId,
+                source: sourceId,
+                target: targetId,
+                type: edge.type,
+                weight: edge.weight != null ? edge.weight : 1,
+                category: category,
+                color: color,
+                label: edge.type.replace(/_/g, ' '),
+                s3Meta: edge  // reuse for detail panel
+            }
+        });
+    }
+
     // Initialize Cytoscape
     initGraph(elements);
     updateStats();
@@ -1357,6 +1483,14 @@ function initGraph(elements) {
                 style: {
                     'line-style': 'dashed',
                     'line-dash-pattern': [6, 3]
+                }
+            },
+            {
+                selector: 'edge[type="IRSA_BRIDGE"]',
+                style: {
+                    'width': 3,
+                    'opacity': 1,
+                    'line-style': 'solid'
                 }
             },
             {
@@ -1674,6 +1808,40 @@ function showNodeDetail(node) {
         html += field('Name', d.entityData.Name);
         html += field('Region', d.entityData.Region);
         html += field('Created', d.entityData.CreationDate);
+    } else if (d.type === 'cluster') {
+        html += field('Name', d.entityData?.name || d.label);
+        html += field('Cluster ID', d.id);
+    } else if (d.type === 'pod') {
+        html += field('Name', d.entityData?.name || d.label);
+        html += field('Namespace', d.entityData?.namespace || '-');
+        html += field('Cluster', d.entityData?.cluster || '-');
+        html += field('K8s ID', d.id);
+    } else if (d.type === 'sa') {
+        html += field('Name', d.entityData?.name || d.label);
+        html += field('Namespace', d.entityData?.namespace || '-');
+        html += field('Cluster', d.entityData?.cluster || '-');
+        // Find IRSA edge from this SA
+        const cy_node = cy.getElementById(d.id);
+        const irsaEdges = cy_node.outgoers('edge[type="IRSA_BRIDGE"]');
+        if (irsaEdges.length > 0) {
+            const target = irsaEdges[0].target();
+            html += field('IRSA &rarr; IAM Role', target.data('label'));
+        }
+    } else if (d.type === 'k8srole') {
+        html += field('Name', d.entityData?.name || d.label);
+        html += field('Namespace/Scope', d.entityData?.namespace || 'cluster');
+        html += field('Cluster', d.entityData?.cluster || '-');
+    } else if (d.type === 'k8ssecret') {
+        html += field('Name', d.entityData?.name || d.label);
+        html += field('Namespace', d.entityData?.namespace || '-');
+        html += field('Cluster', d.entityData?.cluster || '-');
+    } else if (d.type === 'k8sservice' || d.type === 'k8singress') {
+        html += field('Name', d.entityData?.name || d.label);
+        html += field('Namespace', d.entityData?.namespace || '-');
+        html += field('Cluster', d.entityData?.cluster || '-');
+    } else if (d.type === 'nodegroup') {
+        html += field('Name', d.entityData?.name || d.label);
+        html += field('Cluster', d.entityData?.cluster || '-');
     }
 
     // Findings
