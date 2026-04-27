@@ -16,6 +16,7 @@ Built for **offensive security** and **assumed breach scenarios** &mdash; you ha
 - **EC2** &mdash; Instances with metadata, instance profiles, security groups, network interfaces, IMDS configuration
 - **VPC** &mdash; VPCs, subnets, route tables, internet gateways, NAT gateways, NACLs, VPC endpoints, peering connections
 - **Security Groups** &mdash; Rules with associated ENI/instance resources
+- **EKS / Kubernetes** &mdash; Clusters, node groups, Fargate profiles, addons + per-cluster K8s API enumeration (namespaces, pods, service accounts, RBAC roles & bindings, secret names, services, ingresses)
 - **CloudTrail, CloudFront, WAF, Flow Logs**
 
 ### Policy Analysis
@@ -24,10 +25,11 @@ Built for **offensive security** and **assumed breach scenarios** &mdash; you ha
 - **Trust policy analysis** &mdash; Cross-account trust, wildcard principals, service trust
 - **S3 resource relationships** &mdash; IAM-to-bucket access (CAN_READ, CAN_WRITE, CAN_ADMIN, FULL_ACCESS), bucket policy grants, public access detection, KMS encryption links, event notification targets
 - **EC2 compute relationships** &mdash; Instance-to-role mapping, who can manage/terminate/connect to instances, security group exposure, IMDS vulnerability detection, SG-to-SG references
+- **Kubernetes relationships** &mdash; **IRSA bridge** (ServiceAccount &rarr; IAM role via `eks.amazonaws.com/role-arn` annotation), pod-to-SA, RBAC bindings, mounted secrets, service/ingress exposure, privileged container findings, cluster-admin detection
 
 ### Dashboard
 - **Interactive attack graph** powered by Cytoscape.js with Dijkstra shortest path
-- **Node types** &mdash; Users, roles, groups, policies, EC2, S3, security groups, KMS keys, Lambda, SQS, SNS
+- **Node types** &mdash; Users, roles, groups, policies, EC2, S3, security groups, KMS keys, Lambda, SQS, SNS, EKS clusters, pods, service accounts, K8s roles, K8s secrets, services, ingresses
 - **Weighted edges** for attack path cost modeling (direct access = 0, PassRole chains = 2, SSRF = 3, cross-account = 4)
 - **Focus mode** &mdash; Click a node to isolate it and its relationships
 - **Owned/compromised marking** &mdash; Flag nodes you control and find paths from them
@@ -141,12 +143,15 @@ reports/{date}/{account}/{region}/
     ec2/           # Instances
     vpc/           # VPCs, subnets, route tables, gateways
     sg/            # Security groups
+    eks/           # Clusters, node groups, Fargate profiles, addons
+    k8s/           # Per-cluster K8s API data (pods, SAs, RBAC, secrets, services, ingresses)
     cloudtrail/    # Trails
     cloudfront/    # Distributions
     waf/           # WebACLs, rule groups, IP sets
     flowlogs/      # VPC flow logs
     analysis/      # findings.json, permission_map.json, trust_relationships.json,
-                   # s3_relationships.json, ec2_relationships.json, summary.json
+                   # s3_relationships.json, ec2_relationships.json,
+                   # k8s_relationships.json, summary.json
     manifest.json
 ```
 
@@ -193,6 +198,8 @@ aws-enumerator/
             ec2.py               # EC2 enumeration
             vpc.py               # VPC enumeration
             sg.py                # Security groups
+            eks.py               # EKS clusters, node groups, Fargate, addons
+            k8s.py               # Per-cluster Kubernetes API enumeration
             cloudtrail.py        # CloudTrail
             cloudfront.py        # CloudFront
             waf.py               # WAF
@@ -200,12 +207,32 @@ aws-enumerator/
             policy_parser.py     # Policy analysis & relationship engine
         utils/
             aws_utils.py         # Boto3 session helpers
+            eks_auth.py          # STS-based K8s API token generator
             regions.json         # AWS regions reference
     dashboard/
         index.html               # Attack graph dashboard (single file)
+    docs/
+        attack_paths.md          # Attack scenarios & path field guide
     Dockerfile
     pyproject.toml
     requirements.txt
     LICENSE
 ```
 
+---
+
+## Documentation
+
+- **[docs/attack_paths.md](docs/attack_paths.md)** &mdash; Field guide for attack scenarios. Maps starting positions (compromised EC2, pod, leaked keys, etc.) to possible escalation paths, with edge-type translation and dashboard usage tips.
+
+> Reminder: The graph and findings show *configuration risk* and *possibility*. They are not a substitute for manual validation. Always start by inspecting the highest-connectivity nodes &mdash; they tend to sit at choke points where attack paths converge.
+
+---
+
+## License
+
+MIT License. See [LICENSE](LICENSE).
+
+## Author
+
+**0xj4f** &mdash; [github.com/0xj4f](https://github.com/0xj4f)
