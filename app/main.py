@@ -8,10 +8,12 @@ import shutil
 from datetime import datetime
 
 try:
-    from app.components import iam, vpc, sg, ec2, s3, cloudtrail, cloudfront, waf, flowlogs, eks, k8s, policy_parser
+    from app.components import (iam, vpc, sg, ec2, s3, cloudtrail, cloudfront, waf,
+                                 flowlogs, eks, k8s, secretsmanager, ssm, policy_parser)
     from app.utils.aws_utils import get_boto3_session, get_enabled_regions
 except ImportError:
-    from components import iam, vpc, sg, ec2, s3, cloudtrail, cloudfront, waf, flowlogs, eks, k8s, policy_parser
+    from components import (iam, vpc, sg, ec2, s3, cloudtrail, cloudfront, waf,
+                            flowlogs, eks, k8s, secretsmanager, ssm, policy_parser)
     from utils.aws_utils import get_boto3_session, get_enabled_regions
 
 VERSION = "0.2.0"
@@ -89,6 +91,8 @@ def enumerate_single_region(session, base_path):
     waf.enumerate(session, f"{base_path}/waf")
     eks.enumerate(session, f"{base_path}/eks")
     k8s.enumerate(session, f"{base_path}/eks", f"{base_path}/k8s")
+    secretsmanager.enumerate(session, f"{base_path}/secretsmanager")
+    ssm.enumerate(session, f"{base_path}/ssm")
 
     # Run policy analysis
     policy_parser.analyze(base_path)
@@ -117,6 +121,8 @@ def enumerate_regional_services(session, region_path):
     waf.enumerate(session, f"{region_path}/waf", scope="REGIONAL")
     eks.enumerate(session, f"{region_path}/eks")
     k8s.enumerate(session, f"{region_path}/eks", f"{region_path}/k8s")
+    secretsmanager.enumerate(session, f"{region_path}/secretsmanager")
+    ssm.enumerate(session, f"{region_path}/ssm")
 
 
 def parse_args():

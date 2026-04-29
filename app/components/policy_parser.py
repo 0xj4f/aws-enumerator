@@ -1241,6 +1241,31 @@ def _analyze_ec2_relationships(report_path, permission_map, roles):
     role_lookup = {r.get('RoleName'): r for r in roles}
     role_arn_lookup = {r.get('Arn'): r for r in roles}
 
+    # Load instance profile metadata for canonical profile→role mapping.
+    # Without this, profiles with names that differ from their role names
+    # (common for EKS managed node groups) get silently dropped.
+    instance_profiles = _load_json(os.path.join(report_path, "iam", "instance_profiles.json"))
+    if not isinstance(instance_profiles, list):
+        # In --all mode, IAM lives in ../global/iam/
+        parent = os.path.dirname(report_path)
+        if os.path.isdir(parent):
+            instance_profiles = _load_json(os.path.join(parent, "global", "iam", "instance_profiles.json"))
+        if not isinstance(instance_profiles, list):
+            instance_profiles = []
+
+    profile_to_role_arn = {}  # profile_arn -> role_arn (from the profile's Roles[] array)
+    for prof in instance_profiles:
+        if not isinstance(prof, dict):
+            continue
+        prof_arn = prof.get('Arn')
+        prof_roles = prof.get('Roles', [])
+        if prof_arn and prof_roles and isinstance(prof_roles, list):
+            first_role = prof_roles[0] if prof_roles else None
+            if isinstance(first_role, dict):
+                role_arn_in_prof = first_role.get('Arn')
+                if role_arn_in_prof:
+                    profile_to_role_arn[prof_arn] = role_arn_in_prof
+
     # Build subnet → has_igw_route mapping
     subnet_has_igw = set()
     igw_vpcs = set()
@@ -1276,13 +1301,26 @@ def _analyze_ec2_relationships(report_path, permission_map, roles):
             continue
 
         profile_arn = profile['Arn']
-        # Extract name: arn:aws:iam::ACCT:instance-profile/NAME
         profile_name = profile_arn.split('/')[-1] if '/' in profile_arn else ''
         if not profile_name:
             continue
 
-        # Match to role
-        role = role_lookup.get(profile_name)
+        # Primary: ARN-based lookup using instance profile metadata.
+        # This works even when profile_name != role_name (e.g., EKS).
+        role = None
+        match_method = None
+        role_arn_from_profile = profile_to_role_arn.get(profile_arn)
+        if role_arn_from_profile:
+            role = role_arn_lookup.get(role_arn_from_profile)
+            if role:
+                match_method = "arn"
+
+        # Fallback: legacy name-based match (when profile metadata wasn't loaded)
+        if not role:
+            role = role_lookup.get(profile_name)
+            if role:
+                match_method = "name_fallback"
+
         if role:
             edges.append({
                 "source": inst['InstanceId'],
@@ -1290,7 +1328,30 @@ def _analyze_ec2_relationships(report_path, permission_map, roles):
                 "type": "INSTANCE_ROLE",
                 "weight": EC2_ACCESS_WEIGHTS["INSTANCE_ROLE"],
                 "category": "compute",
-                "instance_profile_arn": profile_arn
+                "instance_profile_arn": profile_arn,
+                "match_method": match_method
+            })
+        else:
+            # Profile exists but no role could be resolved — actionable misconfiguration
+            # or sign that instance_profiles.json wasn't enumerated (insufficient IAM perms).
+            findings.append({
+                "id": "EC2-PROFILE-001",
+                "severity": "MEDIUM",
+                "category": "ec2_misconfig",
+                "title": f"Instance {inst['InstanceId']} has unresolved instance profile",
+                "entity": f"instance/{inst['InstanceId']}",
+                "entity_arn": inst['InstanceId'],
+                "description": f"Instance has IamInstanceProfile '{profile_arn}' "
+                               f"but no IAM role could be resolved. The profile may be "
+                               f"missing, deleted, in a different account, or "
+                               f"iam:ListInstanceProfiles permission was unavailable "
+                               f"during enumeration.",
+                "matched_actions": [],
+                "source_policy": profile_arn,
+                "source_type": "ec2_config",
+                "resource": [inst['InstanceId']],
+                "remediation": "Verify the instance profile exists and contains a role; "
+                               "ensure the enumerator has iam:ListInstanceProfiles permission"
             })
 
     # ── Step 2: IAM → EC2 access edges ──
@@ -1442,6 +1503,415 @@ def _analyze_ec2_relationships(report_path, permission_map, roles):
                         "ports": port_desc,
                         "direction": "inbound"
                     })
+
+    return {"edges": edges, "findings": findings}
+
+
+# ──────────────────────────────────────────────────────────────
+# Secrets Manager + SSM Parameter Store Relationship Analysis
+# ──────────────────────────────────────────────────────────────
+
+SECRET_READ_ACTIONS = [
+    "secretsmanager:GetSecretValue",
+    "secretsmanager:DescribeSecret",
+    "secretsmanager:ListSecretVersionIds",
+    "secretsmanager:GetSecretValueBatch",
+]
+SECRET_WRITE_ACTIONS = [
+    "secretsmanager:UpdateSecret",
+    "secretsmanager:PutSecretValue",
+    "secretsmanager:DeleteSecret",
+    "secretsmanager:RotateSecret",
+    "secretsmanager:PutResourcePolicy",
+]
+SSM_READ_ACTIONS = [
+    "ssm:GetParameter",
+    "ssm:GetParameters",
+    "ssm:GetParameterHistory",
+    "ssm:GetParametersByPath",
+    "ssm:DescribeParameters",
+]
+
+SECRETS_ACCESS_WEIGHTS = {
+    "CAN_READ_SECRET": 1,
+    "CAN_WRITE_SECRET": 1,
+    "SECRET_ENCRYPTED_BY": 3,
+    "SECRET_GRANTS_ACCESS": 1,
+    "SECRET_GRANTS_CROSS_ACCOUNT": 2,
+    "SECRET_GRANTS_PUBLIC": 0,
+    "CAN_READ_PARAM": 1,
+    "PARAM_ENCRYPTED_BY": 3,
+}
+
+# Patterns that suggest a parameter contains a credential
+SENSITIVE_PARAM_PATTERNS = [
+    "*password*", "*passwd*", "*secret*", "*token*",
+    "*api[-_]key*", "*apikey*", "*credential*", "*cred*",
+    "*private[-_]key*", "*db[-_]pass*",
+]
+
+
+def _arn_matches_secret(resource_arn, secret_arn):
+    """Check if a policy resource ARN matches a Secrets Manager secret ARN.
+
+    Secret ARN format: arn:aws:secretsmanager:REGION:ACCT:secret:NAME-suffix
+    The trailing 6-char suffix is auto-generated; resources may match by full
+    ARN, by name pattern, or by the *.
+    """
+    if not isinstance(resource_arn, str) or not secret_arn:
+        return False
+    if resource_arn == '*':
+        return True
+    if not resource_arn.startswith('arn:aws:secretsmanager:'):
+        return False
+    # Convert wildcard pattern matching
+    return fnmatch.fnmatch(secret_arn.lower(), resource_arn.lower())
+
+
+def _arn_matches_param(resource_arn, param_name, region, account_id):
+    """Check if a resource ARN matches an SSM parameter.
+
+    SSM Parameter ARN format: arn:aws:ssm:REGION:ACCT:parameter/NAME
+    (the "parameter" prefix; name may include slashes for hierarchy)
+    """
+    if not isinstance(resource_arn, str):
+        return False
+    if resource_arn == '*':
+        return True
+    if not resource_arn.startswith('arn:aws:ssm:'):
+        return False
+    # Build the canonical parameter ARN. SSM parameter names can start with /
+    # but the ARN form drops a leading slash and has "parameter/" prefix.
+    name_for_arn = param_name.lstrip('/')
+    canonical = f"arn:aws:ssm:{region or '*'}:{account_id or '*'}:parameter/{name_for_arn}"
+    return (
+        fnmatch.fnmatch(canonical.lower(), resource_arn.lower())
+        or fnmatch.fnmatch(resource_arn.lower(), canonical.lower())
+    )
+
+
+def _classify_secret_access(actions):
+    """Return a set of (CAN_READ_SECRET, CAN_WRITE_SECRET) and matched actions."""
+    access = set()
+    matched = []
+    for action in actions:
+        if _action_matches(action, 'secretsmanager:*') or action == '*':
+            access.add('CAN_READ_SECRET')
+            access.add('CAN_WRITE_SECRET')
+            matched.append(action)
+            continue
+        for ra in SECRET_READ_ACTIONS:
+            if _action_matches(action, ra):
+                access.add('CAN_READ_SECRET')
+                matched.append(action)
+                break
+        for wa in SECRET_WRITE_ACTIONS:
+            if _action_matches(action, wa):
+                access.add('CAN_WRITE_SECRET')
+                matched.append(action)
+                break
+    return access, list(set(matched))
+
+
+def _classify_param_access(actions):
+    """Return whether actions grant SSM read access and matched actions."""
+    matched = []
+    for action in actions:
+        if _action_matches(action, 'ssm:*') or action == '*':
+            matched.append(action)
+            return True, list(set(matched))
+        for ra in SSM_READ_ACTIONS:
+            if _action_matches(action, ra):
+                matched.append(action)
+    return (len(matched) > 0), list(set(matched))
+
+
+def _looks_sensitive_param_name(name):
+    """Heuristic: does the parameter name suggest credentials/secrets?"""
+    n = (name or "").lower()
+    return any(fnmatch.fnmatch(n, pat) for pat in SENSITIVE_PARAM_PATTERNS)
+
+
+def _load_secrets_data(report_path):
+    """Load Secrets Manager + SSM data, handling both single-region and --all modes."""
+    secrets, resource_policies, params = [], {}, []
+
+    def _load_region(region_path):
+        sm_secrets = _load_json(os.path.join(region_path, "secretsmanager", "secrets.json"))
+        if isinstance(sm_secrets, list):
+            secrets.extend(sm_secrets)
+
+        rp_dir = os.path.join(region_path, "secretsmanager", "resource_policies")
+        if os.path.isdir(rp_dir):
+            for fname in os.listdir(rp_dir):
+                if fname.endswith('.json'):
+                    rp = _load_json(os.path.join(rp_dir, fname))
+                    if isinstance(rp, dict) and rp.get('SecretArn'):
+                        resource_policies[rp['SecretArn']] = rp
+
+        ssm_params = _load_json(os.path.join(region_path, "ssm", "parameters.json"))
+        if isinstance(ssm_params, list):
+            params.extend(ssm_params)
+
+    # Try local (single-region mode)
+    if os.path.isdir(os.path.join(report_path, "secretsmanager")) or \
+       os.path.isdir(os.path.join(report_path, "ssm")):
+        _load_region(report_path)
+    else:
+        # --all mode: scan sibling region dirs
+        parent = os.path.dirname(report_path)
+        if os.path.isdir(parent):
+            for entry in os.listdir(parent):
+                rp = os.path.join(parent, entry)
+                if os.path.isdir(rp) and entry != 'global':
+                    _load_region(rp)
+
+    return secrets, resource_policies, params
+
+
+def _analyze_secrets_relationships(report_path, permission_map, roles, users):
+    """Build CAN_READ_SECRET / CAN_READ_PARAM and resource-policy edges + findings."""
+    edges = []
+    findings = []
+
+    secrets, resource_policies, params = _load_secrets_data(report_path)
+    if not secrets and not params:
+        return {"edges": [], "findings": []}
+
+    # Detect account ID from any role ARN
+    account_id = None
+    for r in roles:
+        account_id = _extract_account_from_arn(r.get('Arn', ''))
+        if account_id:
+            break
+
+    # Known principal ARNs (for matching resource policy principals to graph entities)
+    known_arns = set()
+    for u in users:
+        if u.get('Arn'):
+            known_arns.add(u['Arn'])
+    for r in roles:
+        if r.get('Arn'):
+            known_arns.add(r['Arn'])
+
+    # ── Step 1: IAM → Secret edges (from permission_map) ──
+    for entity_type in ["users", "roles"]:
+        for entity_name, entity_data in permission_map.get(entity_type, {}).items():
+            entity_arn = entity_data.get('arn', '')
+
+            for stmt in entity_data.get('effective_statements', []):
+                actions = stmt.get('actions', [])
+                resources = stmt.get('resources', [])
+
+                # Secrets Manager
+                has_sm = any(
+                    _action_matches(a, 'secretsmanager:*') or a == '*' or
+                    a.lower().startswith('secretsmanager:')
+                    for a in actions
+                )
+                if has_sm:
+                    access, matched_acts = _classify_secret_access(actions)
+                    if access:
+                        for secret in secrets:
+                            secret_arn = secret.get('ARN')
+                            if not secret_arn:
+                                continue
+                            if not any(_arn_matches_secret(r, secret_arn) for r in resources):
+                                continue
+
+                            secret_node = f"secret:{secret_arn}"
+                            # Pick the higher-privilege edge type if both
+                            if 'CAN_WRITE_SECRET' in access:
+                                edge_type = 'CAN_WRITE_SECRET'
+                            else:
+                                edge_type = 'CAN_READ_SECRET'
+
+                            edges.append({
+                                "source": entity_arn,
+                                "target": secret_node,
+                                "type": edge_type,
+                                "weight": SECRETS_ACCESS_WEIGHTS.get(edge_type, 1),
+                                "category": "secrets",
+                                "access_types": sorted(access),
+                                "source_policy": stmt.get('source', 'unknown'),
+                                "source_type": stmt.get('source_type', 'unknown'),
+                                "matched_actions": matched_acts,
+                                "is_wildcard_resource": any(r == '*' for r in resources),
+                            })
+
+                # SSM Parameters
+                has_ssm = any(
+                    _action_matches(a, 'ssm:*') or a == '*' or a.lower().startswith('ssm:')
+                    for a in actions
+                )
+                if has_ssm:
+                    grants_read, matched_acts = _classify_param_access(actions)
+                    if grants_read:
+                        for param in params:
+                            pname = param.get('Name')
+                            if not pname:
+                                continue
+                            if not any(
+                                _arn_matches_param(r, pname, param.get('ARN', '').split(':')[3] if param.get('ARN') else None, account_id)
+                                for r in resources
+                            ):
+                                continue
+
+                            param_node = f"ssmparam:{param.get('ARN') or pname}"
+                            edges.append({
+                                "source": entity_arn,
+                                "target": param_node,
+                                "type": "CAN_READ_PARAM",
+                                "weight": SECRETS_ACCESS_WEIGHTS.get("CAN_READ_PARAM", 1),
+                                "category": "secrets",
+                                "source_policy": stmt.get('source', 'unknown'),
+                                "source_type": stmt.get('source_type', 'unknown'),
+                                "matched_actions": matched_acts,
+                                "is_wildcard_resource": any(r == '*' for r in resources),
+                                "param_type": param.get('Type'),
+                            })
+
+    # ── Step 2: Secret KMS encryption edges ──
+    for secret in secrets:
+        secret_arn = secret.get('ARN')
+        kms_key = secret.get('KmsKeyId')
+        if secret_arn and kms_key:
+            edges.append({
+                "source": f"secret:{secret_arn}",
+                "target": f"kms:{kms_key}",
+                "type": "SECRET_ENCRYPTED_BY",
+                "weight": SECRETS_ACCESS_WEIGHTS["SECRET_ENCRYPTED_BY"],
+                "category": "kms",
+                "kms_key_arn": kms_key,
+            })
+
+    # ── Step 3: SSM Parameter KMS edges ──
+    for param in params:
+        pname = param.get('Name')
+        kms_key = param.get('KeyId')
+        # Only SecureString uses KMS encryption (others use plain storage)
+        if pname and kms_key and param.get('Type') == 'SecureString':
+            param_node = f"ssmparam:{param.get('ARN') or pname}"
+            edges.append({
+                "source": param_node,
+                "target": f"kms:{kms_key}",
+                "type": "PARAM_ENCRYPTED_BY",
+                "weight": SECRETS_ACCESS_WEIGHTS["PARAM_ENCRYPTED_BY"],
+                "category": "kms",
+                "kms_key_arn": kms_key,
+            })
+
+    # ── Step 4: Secret resource policy edges + findings ──
+    for secret_arn, rp_data in resource_policies.items():
+        policy_doc = rp_data.get('ResourcePolicy', {})
+        if not isinstance(policy_doc, dict):
+            continue
+
+        for stmt in policy_doc.get('Statement', []):
+            if stmt.get('Effect') != 'Allow':
+                continue
+            principals = _extract_principals(stmt.get('Principal', {}))
+            granted_actions = _normalize_to_list(stmt.get('Action', []))
+            conditions = stmt.get('Condition', {})
+
+            for principal in principals:
+                pval = principal['value']
+                ptype = principal['type']
+
+                if pval == '*':
+                    edges.append({
+                        "source": f"secret:{secret_arn}",
+                        "target": "principal:*",
+                        "type": "SECRET_GRANTS_PUBLIC",
+                        "weight": SECRETS_ACCESS_WEIGHTS["SECRET_GRANTS_PUBLIC"],
+                        "category": "secrets",
+                        "granted_actions": granted_actions,
+                        "has_conditions": bool(conditions),
+                    })
+                    if not conditions:
+                        findings.append({
+                            "id": "SECRET-PUB-001",
+                            "severity": "HIGH",
+                            "category": "secrets_public",
+                            "title": f"Secret '{rp_data.get('SecretName', secret_arn)}' has public access via resource policy",
+                            "entity": f"secret/{rp_data.get('SecretName', secret_arn)}",
+                            "entity_arn": secret_arn,
+                            "description": f"Secret resource policy grants Principal '*' "
+                                           f"without Condition constraints. Anyone in any "
+                                           f"AWS account could potentially read the secret "
+                                           f"if they have appropriate IAM permissions.",
+                            "matched_actions": granted_actions,
+                            "source_policy": "ResourcePolicy",
+                            "source_type": "secret_resource_policy",
+                            "resource": [secret_arn],
+                            "remediation": "Remove wildcard Principal or add restrictive Conditions",
+                        })
+                    continue
+
+                if ptype == 'Service':
+                    continue  # service principals (e.g., lambda.amazonaws.com) — not a graph node
+
+                principal_account = _extract_account_from_arn(pval)
+                is_cross_account = (
+                    principal_account is not None and
+                    account_id is not None and
+                    principal_account != account_id
+                )
+
+                edge_type = "SECRET_GRANTS_CROSS_ACCOUNT" if is_cross_account else "SECRET_GRANTS_ACCESS"
+                edges.append({
+                    "source": f"secret:{secret_arn}",
+                    "target": pval,
+                    "type": edge_type,
+                    "weight": SECRETS_ACCESS_WEIGHTS.get(edge_type, 1),
+                    "category": "secrets",
+                    "granted_actions": granted_actions,
+                    "has_conditions": bool(conditions),
+                    "is_cross_account": is_cross_account,
+                })
+
+                if is_cross_account:
+                    findings.append({
+                        "id": "SECRET-XAUTH-001",
+                        "severity": "MEDIUM",
+                        "category": "secrets_cross_account",
+                        "title": f"Secret '{rp_data.get('SecretName', secret_arn)}' shared cross-account to {principal_account}",
+                        "entity": f"secret/{rp_data.get('SecretName', secret_arn)}",
+                        "entity_arn": secret_arn,
+                        "description": f"Secret resource policy grants access to principal "
+                                       f"'{pval}' from account {principal_account}.",
+                        "matched_actions": granted_actions,
+                        "source_policy": "ResourcePolicy",
+                        "source_type": "secret_resource_policy",
+                        "resource": [secret_arn],
+                        "remediation": "Verify cross-account sharing is intended; "
+                                       "consider adding ExternalId condition for trust boundary",
+                    })
+
+    # ── Step 5: SSM parameter findings (sensitive name + plaintext type) ──
+    for param in params:
+        pname = param.get('Name', '')
+        ptype = param.get('Type', '')
+        if not pname:
+            continue
+        if ptype == 'String' and _looks_sensitive_param_name(pname):
+            findings.append({
+                "id": "PARAM-PLAIN-001",
+                "severity": "MEDIUM",
+                "category": "ssm_plaintext_secret",
+                "title": f"Parameter '{pname}' looks like a secret but stored as plaintext String",
+                "entity": f"ssmparam/{pname}",
+                "entity_arn": param.get('ARN', pname),
+                "description": f"SSM parameter '{pname}' has type 'String' (plaintext) "
+                               f"but its name suggests it contains a credential. "
+                               f"Anyone with ssm:GetParameter on this name reads the "
+                               f"value in plaintext, no KMS gate.",
+                "matched_actions": ["ssm:GetParameter"],
+                "source_policy": "Parameter Type",
+                "source_type": "ssm_config",
+                "resource": [param.get('ARN', pname)],
+                "remediation": "Migrate the parameter to type 'SecureString' with a KMS key",
+            })
 
     return {"edges": edges, "findings": findings}
 
@@ -2064,7 +2534,12 @@ def analyze(report_path):
     findings.extend(k8s_relationships.get("findings", []))
     k8s_edge_count = len(k8s_relationships.get("edges", []))
 
-    # 7. Save reports
+    # 7. Secrets Manager + SSM Parameter Store relationships
+    secrets_relationships = _analyze_secrets_relationships(report_path, permission_map, roles, users)
+    findings.extend(secrets_relationships.get("findings", []))
+    secrets_edge_count = len(secrets_relationships.get("edges", []))
+
+    # 8. Save reports
     with open(os.path.join(analysis_dir, "findings.json"), "w") as f:
         json.dump({"findings": findings}, f, indent=2, default=str)
 
@@ -2082,6 +2557,9 @@ def analyze(report_path):
 
     with open(os.path.join(analysis_dir, "k8s_relationships.json"), "w") as f:
         json.dump(k8s_relationships, f, indent=2, default=str)
+
+    with open(os.path.join(analysis_dir, "secrets_relationships.json"), "w") as f:
+        json.dump(secrets_relationships, f, indent=2, default=str)
 
     summary = _generate_summary(findings)
     with open(os.path.join(analysis_dir, "summary.json"), "w") as f:
@@ -2106,5 +2584,8 @@ def analyze(report_path):
 
     if k8s_edge_count > 0:
         print(f"    \033[1;32m[+]\033[0m K8s relationships: {k8s_edge_count} edges discovered")
+
+    if secrets_edge_count > 0:
+        print(f"    \033[1;32m[+]\033[0m Secrets/SSM relationships: {secrets_edge_count} edges discovered")
 
     print("    \033[1;32m[+]\033[0m Policy Analysis Finished!")
