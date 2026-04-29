@@ -658,6 +658,8 @@ button.danger:hover { background: var(--danger); color: #fff; }
             <label class="filter-item"><input type="checkbox" checked data-filter="k8ssecret"><span class="filter-icon" style="background-image:url(icons/k8ssecret.svg);border-color:#E91E63"></span>K8s Secrets</label>
             <label class="filter-item"><input type="checkbox" checked data-filter="k8sservice"><span class="filter-icon" style="background-image:url(icons/k8sservice.svg);border-color:#1ABC9C"></span>K8s Services</label>
             <label class="filter-item"><input type="checkbox" checked data-filter="k8singress"><span class="filter-icon" style="background-image:url(icons/k8singress.svg);border-color:#E74C3C"></span>K8s Ingresses</label>
+            <label class="filter-item"><input type="checkbox" checked data-filter="secret"><span class="filter-icon" style="background-image:url(icons/secret.svg);border-color:#FF7043"></span>Secrets</label>
+            <label class="filter-item"><input type="checkbox" checked data-filter="ssmparam"><span class="filter-icon" style="background-image:url(icons/ssmparam.svg);border-color:#26A69A"></span>SSM Parameters</label>
         </div>
 
         <!-- Edge Filters -->
@@ -679,6 +681,7 @@ button.danger:hover { background: var(--danger); color: #fff; }
             <label class="filter-item"><input type="checkbox" checked data-edge-filter="k8s_network">K8s network (svc, ingress)</label>
             <label class="filter-item"><input type="checkbox" checked data-edge-filter="k8s_compute">K8s compute (nodegroup)</label>
             <label class="filter-item"><input type="checkbox" checked data-edge-filter="k8s_structural">K8s structural</label>
+            <label class="filter-item"><input type="checkbox" checked data-edge-filter="secrets">Secret access (read/write)</label>
         </div>
 
         <!-- Path Finder -->
@@ -745,6 +748,8 @@ button.danger:hover { background: var(--danger); color: #fff; }
                 <div class="legend-item"><span class="legend-icon" style="background-image:url(icons/sa.svg);border-color:#F39C12"></span> ServiceAccount</div>
                 <div class="legend-item"><span class="legend-icon" style="background-image:url(icons/k8srole.svg);border-color:#9B59B6"></span> K8s Role</div>
                 <div class="legend-item"><span class="legend-icon" style="background-image:url(icons/k8ssecret.svg);border-color:#E91E63"></span> K8s Secret</div>
+                <div class="legend-item"><span class="legend-icon" style="background-image:url(icons/secret.svg);border-color:#FF7043"></span> Secret</div>
+                <div class="legend-item"><span class="legend-icon" style="background-image:url(icons/ssmparam.svg);border-color:#26A69A"></span> SSM Param</div>
                 <div class="legend-item"><span class="legend-dot" style="background:#FFD700"></span> IRSA bridge</div>
             </div>
         </div>
@@ -774,7 +779,8 @@ const NODE_COLORS = {
     sg: '#B0BEC5',
     cluster: '#326CE5', pod: '#5DADE2', sa: '#F39C12',
     k8srole: '#9B59B6', k8ssecret: '#E91E63',
-    k8sservice: '#1ABC9C', k8singress: '#E74C3C', nodegroup: '#7F8C8D'
+    k8sservice: '#1ABC9C', k8singress: '#E74C3C', nodegroup: '#7F8C8D',
+    secret: '#FF7043', ssmparam: '#26A69A'
 };
 
 const NODE_SHAPES = {
@@ -784,7 +790,8 @@ const NODE_SHAPES = {
     sg: 'octagon',
     cluster: 'tag', pod: 'round-rectangle', sa: 'diamond',
     k8srole: 'rectangle', k8ssecret: 'cut-rectangle',
-    k8sservice: 'round-tag', k8singress: 'concave-hexagon', nodegroup: 'round-octagon'
+    k8sservice: 'round-tag', k8singress: 'concave-hexagon', nodegroup: 'round-octagon',
+    secret: 'cut-rectangle', ssmparam: 'tag'
 };
 
 const S3_EDGE_COLORS = {
@@ -812,6 +819,17 @@ const K8S_EDGE_COLORS = {
     IN_CLUSTER: '#555577',
     NODE_ROLE: '#7F8C8D',
     CLUSTER_ROLE: '#7F8C8D'
+};
+
+const SECRETS_EDGE_COLORS = {
+    CAN_READ_SECRET: '#e94560',
+    CAN_WRITE_SECRET: '#FFA726',
+    SECRET_ENCRYPTED_BY: '#78909C',
+    SECRET_GRANTS_ACCESS: '#66BB6A',
+    SECRET_GRANTS_CROSS_ACCOUNT: '#FF7043',
+    SECRET_GRANTS_PUBLIC: '#e94560',
+    CAN_READ_PARAM: '#FFA726',
+    PARAM_ENCRYPTED_BY: '#78909C'
 };
 
 // ── File Loading (Zip) ──
@@ -927,6 +945,7 @@ async function processLoadedFiles(files) {
     reportData.s3Relationships = readJSON(analysisPrefix + 'analysis/s3_relationships.json') || { edges: [], findings: [] };
     reportData.ec2Relationships = readJSON(analysisPrefix + 'analysis/ec2_relationships.json') || { edges: [], findings: [] };
     reportData.k8sRelationships = readJSON(analysisPrefix + 'analysis/k8s_relationships.json') || { edges: [], findings: [] };
+    reportData.secretsRelationships = readJSON(analysisPrefix + 'analysis/secrets_relationships.json') || { edges: [], findings: [] };
     reportData.manifest = readJSON('manifest.json') || {};
 
     // Load S3 and EC2 (may be in various region dirs)
@@ -1383,6 +1402,84 @@ function buildGraph() {
                 color: color,
                 label: edge.type.replace(/_/g, ' '),
                 s3Meta: edge  // reuse for detail panel
+            }
+        });
+    }
+
+    // Secrets / SSM Relationship edges
+    const secretsEdges = (reportData.secretsRelationships && reportData.secretsRelationships.edges) || [];
+    for (const edge of secretsEdges) {
+        let sourceId = edge.source;
+        let targetId = edge.target;
+
+        // Resolve IAM ARN endpoints (entity → secret/param)
+        if (!nodeIds.has(sourceId) && sourceId.startsWith('arn:aws:iam:')) {
+            const parts = sourceId.split('/');
+            const name = parts[parts.length - 1];
+            const resolved = findNodeId(nodeIds, 'role', name) || findNodeId(nodeIds, 'user', name);
+            if (resolved) sourceId = resolved;
+        }
+        if (!nodeIds.has(targetId) && targetId.startsWith('arn:aws:iam:')) {
+            const parts = targetId.split('/');
+            const name = parts[parts.length - 1];
+            const resolved = findNodeId(nodeIds, 'role', name) || findNodeId(nodeIds, 'user', name);
+            if (resolved) targetId = resolved;
+        }
+
+        // Create secret/ssmparam/kms placeholder nodes if needed
+        for (const id of [sourceId, targetId]) {
+            if (nodeIds.has(id)) continue;
+            const colon = id.indexOf(':');
+            if (colon < 0) continue;
+            const prefix = id.slice(0, colon);
+            if (!['secret', 'ssmparam', 'kms'].includes(prefix)) continue;
+
+            const remainder = id.slice(colon + 1);
+            // Friendly label: last segment of ARN/name
+            const label = remainder.split(':').pop().split('/').pop() || remainder;
+
+            elements.push({
+                group: 'nodes',
+                data: {
+                    id: id,
+                    label: label,
+                    type: prefix,
+                    entityData: { arn: remainder, name: label }
+                }
+            });
+            nodeIds.add(id);
+        }
+
+        // External cross-account principal? create lightweight placeholder
+        if (!nodeIds.has(targetId) && targetId.startsWith('arn:aws:iam:')) {
+            const label = targetId.split('/').pop() || targetId;
+            elements.push({
+                group: 'nodes',
+                data: { id: targetId, label: label, type: 'role', entityData: { Arn: targetId, external: true } }
+            });
+            nodeIds.add(targetId);
+        }
+
+        if (targetId === 'principal:*') continue;
+        if (!nodeIds.has(sourceId) || !nodeIds.has(targetId)) continue;
+
+        const edgeId = `${sourceId}->${targetId}:${edge.type}`;
+        if (elements.some(e => e.group === 'edges' && e.data.id === edgeId)) continue;
+
+        const color = SECRETS_EDGE_COLORS[edge.type] || '#888';
+        const category = edge.category || 'secrets';
+        elements.push({
+            group: 'edges',
+            data: {
+                id: edgeId,
+                source: sourceId,
+                target: targetId,
+                type: edge.type,
+                weight: edge.weight != null ? edge.weight : 1,
+                category: category,
+                color: color,
+                label: edge.type.replace(/_/g, ' '),
+                s3Meta: edge
             }
         });
     }
@@ -1904,6 +2001,28 @@ function showNodeDetail(node) {
     } else if (d.type === 'nodegroup') {
         html += field('Name', d.entityData?.name || d.label);
         html += field('Cluster', d.entityData?.cluster || '-');
+    } else if (d.type === 'secret') {
+        html += field('Name', d.entityData?.name || d.label);
+        html += field('ARN', d.entityData?.arn || d.id);
+        // Show readers (incoming CAN_READ_SECRET edges)
+        const cyNode = cy.getElementById(d.id);
+        const readers = cyNode.incomers('edge[type="CAN_READ_SECRET"]').sources();
+        if (readers.length > 0) {
+            html += field('Readable by', `${readers.length} entity/entities`);
+        }
+        // Show KMS encryption
+        const kmsEdges = cyNode.outgoers('edge[type="SECRET_ENCRYPTED_BY"]');
+        if (kmsEdges.length > 0) {
+            html += field('Encrypted by', kmsEdges[0].target().data('label'));
+        }
+    } else if (d.type === 'ssmparam') {
+        html += field('Name', d.entityData?.name || d.label);
+        html += field('ARN', d.entityData?.arn || d.id);
+        const cyNode = cy.getElementById(d.id);
+        const readers = cyNode.incomers('edge[type="CAN_READ_PARAM"]').sources();
+        if (readers.length > 0) {
+            html += field('Readable by', `${readers.length} entity/entities`);
+        }
     }
 
     // Findings

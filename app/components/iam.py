@@ -363,6 +363,25 @@ def _enumerate_permission_boundaries(path, users, roles):
                 }, f, indent=2, default=str)
 
 
+def _enumerate_instance_profiles(iam_client, path):
+    """Enumerate all IAM instance profiles, including the role(s) inside each.
+
+    list_instance_profiles returns each profile with a Roles[] array containing
+    the actual role(s) attached. This is the canonical way to map an EC2
+    instance's IamInstanceProfile.Arn back to its IAM role, since profile names
+    and role names often differ (e.g. EKS managed node groups).
+    """
+    try:
+        profiles = _paginate_iam(iam_client, 'list_instance_profiles', 'InstanceProfiles')
+    except ClientError as e:
+        with open(f"{path}/instance_profiles.json", "w") as f:
+            json.dump({"Error": str(e)}, f, indent=2)
+        return
+
+    with open(f"{path}/instance_profiles.json", "w") as f:
+        json.dump(profiles, f, indent=2, default=str)
+
+
 def enumerate(session, path):
     print("    \033[1;32m[+]\033[0m IAM Enumeration Starting...")
     os.makedirs(path, exist_ok=True)
@@ -376,6 +395,9 @@ def enumerate(session, path):
     groups = _enumerate_groups(iam_client, path)
     roles = _enumerate_roles(iam_client, path)
     policies = _enumerate_policies(iam_client, path)
+
+    # Instance profiles (links EC2 instances to roles, including when names differ)
+    _enumerate_instance_profiles(iam_client, path)
 
     # Inline policies for all entity types
     _enumerate_inline_policies(iam_client, path, users, roles, groups)
