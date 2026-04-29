@@ -590,44 +590,80 @@ def _detect_privesc_paths(permission_map):
 # ──────────────────────────────────────────────────────────────
 
 def _detect_dangerous_permissions(permission_map):
-    """Detect overly permissive or dangerous permission patterns."""
-    findings = []
+    """Detect overly permissive or dangerous permission patterns.
+
+    Matching semantics:
+      - A rule's action_pattern represents a *dangerous capability* (e.g. "*",
+        "iam:*", "secretsmanager:GetSecretValue").
+      - The rule fires only when an entity's allowed-action wildcard *covers*
+        the dangerous capability — i.e. the rule pattern (treated as a literal
+        name) matches the entity action (treated as a glob pattern).
+      - Note: `_action_matches(pattern, action)` internally calls
+        fnmatch(action, pattern), so to check "does entity_glob cover rule"
+        we pass the entity action as the pattern argument and the rule's
+        capability as the action argument.
+      - Same logic for resource_pattern.
+      - Findings are deduplicated by (rule_id, entity) so a role with the same
+        permission across multiple inline policies only reports once. The
+        deduped finding's matched_actions accumulate across statements.
+    """
+    findings_by_key = {}  # (rule_id, entity_label) -> finding dict
 
     for entity_type in ["users", "roles", "groups"]:
         for entity_name, entity_data in permission_map.get(entity_type, {}).items():
+            entity_label = f"{entity_type.rstrip('s')}/{entity_name}"
+
             for stmt in entity_data.get('effective_statements', []):
                 actions = stmt.get('actions', [])
                 resources = stmt.get('resources', [])
 
                 for rule in DANGEROUS_RULES:
-                    action_match = any(
-                        _action_matches(a, rule["action_pattern"]) or
-                        _action_matches(rule["action_pattern"], a)
-                        for a in actions
-                    )
-                    resource_match = any(
-                        r == rule["resource_pattern"] or r == "*"
-                        for r in resources
-                    ) if rule["resource_pattern"] == "*" else True
+                    # Entity action globs that cover the rule's dangerous capability:
+                    # fnmatch(rule_pattern, entity_action) — rule_pattern is the literal,
+                    # entity_action is the glob pattern that may cover it.
+                    matched_actions = [
+                        a for a in actions
+                        if _action_matches(a, rule["action_pattern"])
+                    ]
+                    if not matched_actions:
+                        continue
 
-                    if action_match and resource_match:
-                        findings.append({
-                            "id": rule["id"],
-                            "severity": rule["severity"],
-                            "category": "dangerous_permission",
-                            "title": rule["title"],
-                            "entity": f"{entity_type.rstrip('s')}/{entity_name}",
-                            "entity_arn": entity_data.get("arn", ""),
-                            "description": f"{entity_type.rstrip('s').title()} '{entity_name}' "
-                                           f"has {rule['title']}.",
-                            "matched_actions": actions,
-                            "source_policy": stmt.get("source", "unknown"),
-                            "source_type": stmt.get("source_type", "unknown"),
-                            "resource": resources,
-                            "remediation": "Restrict to specific actions and resource ARNs"
-                        })
+                    # Entity resource globs that cover the rule's resource pattern
+                    matched_resources = [
+                        r for r in resources
+                        if _action_matches(r, rule["resource_pattern"])
+                    ]
+                    if not matched_resources:
+                        continue
 
-    return findings
+                    key = (rule["id"], entity_label)
+                    if key in findings_by_key:
+                        existing = findings_by_key[key]
+                        for a in matched_actions:
+                            if a not in existing["matched_actions"]:
+                                existing["matched_actions"].append(a)
+                        for r in matched_resources:
+                            if r not in existing["resource"]:
+                                existing["resource"].append(r)
+                        continue
+
+                    findings_by_key[key] = {
+                        "id": rule["id"],
+                        "severity": rule["severity"],
+                        "category": "dangerous_permission",
+                        "title": rule["title"],
+                        "entity": entity_label,
+                        "entity_arn": entity_data.get("arn", ""),
+                        "description": f"{entity_type.rstrip('s').title()} '{entity_name}' "
+                                       f"has {rule['title']}.",
+                        "matched_actions": list(matched_actions),
+                        "source_policy": stmt.get("source", "unknown"),
+                        "source_type": stmt.get("source_type", "unknown"),
+                        "resource": list(matched_resources),
+                        "remediation": "Restrict to specific actions and resource ARNs"
+                    }
+
+    return list(findings_by_key.values())
 
 
 # ──────────────────────────────────────────────────────────────
