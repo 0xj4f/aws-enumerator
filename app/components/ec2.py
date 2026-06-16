@@ -1,16 +1,20 @@
-import json
-import os
+try:
+    from app.utils.aws_utils import safe, save_json
+except ImportError:
+    from utils.aws_utils import safe, save_json
+
 
 def enumerate(session, path):
-    os.makedirs(path, exist_ok=True)
+    print("    \033[1;32m[+]\033[0m EC2 Enumeration Starting...")
     ec2_client = session.client("ec2")
 
     all_instances = []
+    reservations = safe(
+        "EC2 describe_instances",
+        lambda: ec2_client.describe_instances().get("Reservations", []),
+        default=[],
+    )
 
-    response = ec2_client.describe_instances()
-    reservations = response.get("Reservations", [])
-
-    print("    \033[1;32m[+]\033[0m EC2 Enumeration Starting...")
     for reservation in reservations:
         for instance in reservation.get("Instances", []):
             # Extract tags into a dict
@@ -59,7 +63,6 @@ def enumerate(session, path):
 
             all_instances.append(instance_data)
 
-    with open(f"{path}/instances.json", "w") as f:
-        json.dump(all_instances, f, indent=2, default=str)
+    save_json(path, "instances.json", all_instances)
 
     print("    \033[1;32m[+]\033[0m EC2 Enumeration Finished!")

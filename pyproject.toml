@@ -37,3 +37,4 @@ include = ["app*"]
 
 [tool.setuptools.package-data]
 "app.utils" = ["regions.json"]
+"app" = ["dashboard/index.html", "dashboard/icons/*.svg"]

@@ -9,12 +9,14 @@ from datetime import datetime
 
 try:
     from app.components import (iam, vpc, sg, ec2, s3, cloudtrail, cloudfront, waf,
-                                 flowlogs, eks, k8s, secretsmanager, ssm, policy_parser)
+                                 flowlogs, eks, k8s, secretsmanager, ssm, lambda_, policy_parser)
     from app.utils.aws_utils import get_boto3_session, get_enabled_regions
+    from app.utils.dashboard import serve_dashboard
 except ImportError:
     from components import (iam, vpc, sg, ec2, s3, cloudtrail, cloudfront, waf,
-                            flowlogs, eks, k8s, secretsmanager, ssm, policy_parser)
+                            flowlogs, eks, k8s, secretsmanager, ssm, lambda_, policy_parser)
     from utils.aws_utils import get_boto3_session, get_enabled_regions
+    from utils.dashboard import serve_dashboard
 
 VERSION = "0.2.0"
 
@@ -78,51 +80,65 @@ def generate_manifest(base_path, account_number, caller_identity, start_time,
         json.dump(manifest, f, indent=2, default=str)
 
 
+def run_module(label, fn, *args, **kwargs):
+    """Run one enumeration module, isolating failures.
+
+    A crash in a single module (e.g. an unexpected error or a permission wall
+    that raises) is logged and swallowed so the rest of the run continues.
+    """
+    try:
+        fn(*args, **kwargs)
+    except Exception as e:
+        print(f"    \033[1;31m[-]\033[0m {label} module failed: {e}")
+
+
 def enumerate_single_region(session, base_path):
     """Run all services in a single region directory (original behavior)."""
-    iam.enumerate(session, f"{base_path}/iam")
-    vpc.enumerate(session, f"{base_path}/vpc")
-    sg.enumerate(session, f"{base_path}/sg")
-    ec2.enumerate(session, f"{base_path}/ec2")
-    s3.enumerate(session, f"{base_path}/s3")
-    flowlogs.enumerate(session, f"{base_path}/flowlogs")
-    cloudtrail.enumerate(session, f"{base_path}/cloudtrail")
-    cloudfront.enumerate(session, f"{base_path}/cloudfront")
-    waf.enumerate(session, f"{base_path}/waf")
-    eks.enumerate(session, f"{base_path}/eks")
-    k8s.enumerate(session, f"{base_path}/eks", f"{base_path}/k8s")
-    secretsmanager.enumerate(session, f"{base_path}/secretsmanager")
-    ssm.enumerate(session, f"{base_path}/ssm")
+    run_module("iam", iam.enumerate, session, f"{base_path}/iam")
+    run_module("vpc", vpc.enumerate, session, f"{base_path}/vpc")
+    run_module("sg", sg.enumerate, session, f"{base_path}/sg")
+    run_module("ec2", ec2.enumerate, session, f"{base_path}/ec2")
+    run_module("s3", s3.enumerate, session, f"{base_path}/s3")
+    run_module("flowlogs", flowlogs.enumerate, session, f"{base_path}/flowlogs")
+    run_module("cloudtrail", cloudtrail.enumerate, session, f"{base_path}/cloudtrail")
+    run_module("cloudfront", cloudfront.enumerate, session, f"{base_path}/cloudfront")
+    run_module("waf", waf.enumerate, session, f"{base_path}/waf")
+    run_module("eks", eks.enumerate, session, f"{base_path}/eks")
+    run_module("k8s", k8s.enumerate, session, f"{base_path}/eks", f"{base_path}/k8s")
+    run_module("secretsmanager", secretsmanager.enumerate, session, f"{base_path}/secretsmanager")
+    run_module("ssm", ssm.enumerate, session, f"{base_path}/ssm")
+    run_module("lambda", lambda_.enumerate, session, f"{base_path}/lambda")
 
     # Run policy analysis
-    policy_parser.analyze(base_path)
+    run_module("policy_parser", policy_parser.analyze, base_path)
 
 
 def enumerate_global_services(session, global_path):
     """Enumerate global AWS services (IAM, S3, CloudFront, WAF CloudFront scope)."""
     print("    \033[1;36m[*]\033[0m Enumerating global services...\n")
 
-    iam.enumerate(session, f"{global_path}/iam")
-    s3.enumerate(session, f"{global_path}/s3")
-    cloudfront.enumerate(session, f"{global_path}/cloudfront")
-    waf.enumerate(session, f"{global_path}/waf_cloudfront", scope="CLOUDFRONT")
+    run_module("iam", iam.enumerate, session, f"{global_path}/iam")
+    run_module("s3", s3.enumerate, session, f"{global_path}/s3")
+    run_module("cloudfront", cloudfront.enumerate, session, f"{global_path}/cloudfront")
+    run_module("waf", waf.enumerate, session, f"{global_path}/waf_cloudfront", scope="CLOUDFRONT")
 
     # Policy analysis on global IAM data
-    policy_parser.analyze(global_path)
+    run_module("policy_parser", policy_parser.analyze, global_path)
 
 
 def enumerate_regional_services(session, region_path):
     """Enumerate regional AWS services for a single region."""
-    vpc.enumerate(session, f"{region_path}/vpc")
-    sg.enumerate(session, f"{region_path}/sg")
-    ec2.enumerate(session, f"{region_path}/ec2")
-    cloudtrail.enumerate(session, f"{region_path}/cloudtrail")
-    flowlogs.enumerate(session, f"{region_path}/flowlogs")
-    waf.enumerate(session, f"{region_path}/waf", scope="REGIONAL")
-    eks.enumerate(session, f"{region_path}/eks")
-    k8s.enumerate(session, f"{region_path}/eks", f"{region_path}/k8s")
-    secretsmanager.enumerate(session, f"{region_path}/secretsmanager")
-    ssm.enumerate(session, f"{region_path}/ssm")
+    run_module("vpc", vpc.enumerate, session, f"{region_path}/vpc")
+    run_module("sg", sg.enumerate, session, f"{region_path}/sg")
+    run_module("ec2", ec2.enumerate, session, f"{region_path}/ec2")
+    run_module("cloudtrail", cloudtrail.enumerate, session, f"{region_path}/cloudtrail")
+    run_module("flowlogs", flowlogs.enumerate, session, f"{region_path}/flowlogs")
+    run_module("waf", waf.enumerate, session, f"{region_path}/waf", scope="REGIONAL")
+    run_module("eks", eks.enumerate, session, f"{region_path}/eks")
+    run_module("k8s", k8s.enumerate, session, f"{region_path}/eks", f"{region_path}/k8s")
+    run_module("secretsmanager", secretsmanager.enumerate, session, f"{region_path}/secretsmanager")
+    run_module("ssm", ssm.enumerate, session, f"{region_path}/ssm")
+    run_module("lambda", lambda_.enumerate, session, f"{region_path}/lambda")
 
 
 def parse_args():
@@ -130,11 +146,24 @@ def parse_args():
     parser.add_argument("--region", default="eu-west-2", help="AWS Region (default eu-west-2)")
     parser.add_argument("--all", action="store_true", help="Enumerate all enabled regions")
     parser.add_argument("--zip", action="store_true", help="Create a zip archive of the report")
+    parser.add_argument("--dashboard", action="store_true",
+                        help="Serve the attack-graph dashboard locally and open it in the browser (no AWS creds needed)")
+    parser.add_argument("--port", type=int, default=8000, help="Port for --dashboard (default 8000)")
     return parser.parse_args()
 
 
 def main():
     args = parse_args()
+
+    if args.dashboard:
+        serve_dashboard(args.port)
+        return
+
+    # Resilience: adaptive retries + a higher attempt cap so throttling
+    # (429) and transient errors are retried with backoff across every client.
+    os.environ.setdefault("AWS_RETRY_MODE", "adaptive")
+    os.environ.setdefault("AWS_MAX_ATTEMPTS", "10")
+
     session = get_boto3_session(args.region)
     sts = session.client('sts')
     caller_identity = sts.get_caller_identity()
@@ -214,7 +243,7 @@ def main():
             )
             print(f"    \033[1;32m[+]\033[0m Zip archive: {zip_path}")
 
-    print(f"    \033[1;36m[*]\033[0m Dashboard: open dashboard/index.html and load the report")
+    print(f"    \033[1;36m[*]\033[0m Dashboard: run 'aws-enumerator --dashboard' and load the report")
     print()
 
 
