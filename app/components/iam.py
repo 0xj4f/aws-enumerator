@@ -170,7 +170,7 @@ def _enumerate_users(iam_client, path):
     with open(f"{path}/user_attached_policies.json", "w") as f:
         json.dump(user_attached_policies, f, indent=2, default=str)
 
-    return enriched_users
+    return enriched_users, user_attached_policies
 
 
 def _enumerate_groups(iam_client, path):
@@ -196,7 +196,7 @@ def _enumerate_groups(iam_client, path):
     with open(f"{path}/group_attached_policies.json", "w") as f:
         json.dump(group_attached_policies, f, indent=2, default=str)
 
-    return groups
+    return groups, group_attached_policies
 
 
 def _enumerate_roles(iam_client, path):
@@ -222,7 +222,7 @@ def _enumerate_roles(iam_client, path):
     with open(f"{path}/role_attached_policies.json", "w") as f:
         json.dump(role_attached_policies, f, indent=2, default=str)
 
-    return roles
+    return roles, role_attached_policies
 
 
 def _enumerate_policies(iam_client, path):
@@ -236,6 +236,7 @@ def _enumerate_policies(iam_client, path):
     docs_dir = os.path.join(path, "policy_documents")
     os.makedirs(docs_dir, exist_ok=True)
 
+    fetched_arns = set()
     for policy in policies:
         policy_name = policy['PolicyName']
         policy_arn = policy['Arn']
@@ -255,11 +256,58 @@ def _enumerate_policies(iam_client, path):
             safe_name = policy_name.replace('/', '_')
             with open(f"{docs_dir}/{safe_name}_{version_id}.json", "w") as f:
                 json.dump(doc, f, indent=2, default=str)
+            fetched_arns.add(policy_arn)
         except ClientError as e:
             with open(f"{docs_dir}/{policy_name}_error.json", "w") as f:
                 json.dump({"PolicyName": policy_name, "Error": str(e)}, f, indent=2)
 
-    return policies
+    return fetched_arns
+
+
+def _enumerate_attached_policy_documents(iam_client, path, attached_maps, fetched_arns):
+    """Fetch documents for *attached* policies whose docs weren't already saved.
+
+    list_policies(Scope='Local') only covers customer-managed policies, so
+    AWS-managed policies attached to entities (AdministratorAccess, PowerUserAccess,
+    IAMFullAccess, …) would otherwise have no document — making every permission
+    they grant invisible to the analyzer. Resolve each attached ARN by its default
+    version and store it in the same shape `_load_policy_documents` expects.
+    """
+    docs_dir = os.path.join(path, "policy_documents")
+    os.makedirs(docs_dir, exist_ok=True)
+
+    # Union of all attached policy ARNs not already fetched above.
+    arn_to_name = {}
+    for amap in attached_maps:
+        if not isinstance(amap, dict):
+            continue
+        for _entity, attached in amap.items():
+            if not isinstance(attached, list):
+                continue
+            for pol in attached:
+                arn = pol.get('PolicyArn')
+                name = pol.get('PolicyName')
+                if arn and name and arn not in fetched_arns:
+                    arn_to_name[arn] = name
+
+    for arn, name in arn_to_name.items():
+        safe_name = name.replace('/', '_')
+        try:
+            default_version = iam_client.get_policy(PolicyArn=arn)['Policy']['DefaultVersionId']
+            version = iam_client.get_policy_version(PolicyArn=arn, VersionId=default_version)
+            doc = {
+                "PolicyName": name,
+                "PolicyArn": arn,
+                "VersionId": default_version,
+                "Document": version['PolicyVersion']['Document']
+            }
+            with open(f"{docs_dir}/{safe_name}_{default_version}.json", "w") as f:
+                json.dump(doc, f, indent=2, default=str)
+        except ClientError as e:
+            with open(f"{docs_dir}/{safe_name}_error.json", "w") as f:
+                json.dump({"PolicyName": name, "PolicyArn": arn, "Error": str(e)}, f, indent=2)
+
+    return arn_to_name
 
 
 def _enumerate_inline_policies(iam_client, path, users, roles, groups):
@@ -391,10 +439,17 @@ def enumerate(session, path):
     _enumerate_account_level(iam_client, path)
 
     # Core entities
-    users = _enumerate_users(iam_client, path)
-    groups = _enumerate_groups(iam_client, path)
-    roles = _enumerate_roles(iam_client, path)
-    policies = _enumerate_policies(iam_client, path)
+    users, user_attached = _enumerate_users(iam_client, path)
+    groups, group_attached = _enumerate_groups(iam_client, path)
+    roles, role_attached = _enumerate_roles(iam_client, path)
+    fetched_arns = _enumerate_policies(iam_client, path)
+
+    # Documents for attached AWS-managed policies (AdministratorAccess, etc.) that
+    # list_policies(Scope='Local') doesn't cover — without these, admin granted via
+    # an AWS-managed policy is invisible to the analyzer.
+    _enumerate_attached_policy_documents(
+        iam_client, path, [user_attached, group_attached, role_attached], fetched_arns
+    )
 
     # Instance profiles (links EC2 instances to roles, including when names differ)
     _enumerate_instance_profiles(iam_client, path)

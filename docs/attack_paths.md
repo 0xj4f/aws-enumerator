@@ -8,6 +8,19 @@ A scenario-based reference for navigating the attack graph produced by `aws-enum
 
 ---
 
+## Service Coverage
+
+`aws-enumerator` collects and graphs the services below — **metadata and policies only** (never secret values, DB rows, object contents, or Lambda env-var values):
+
+- **Identity & access** — IAM (users, roles, groups, managed **and** AWS-managed policy documents, inline policies, instance profiles, permission boundaries), Cognito (identity pools + auth/unauth role mappings, user pools), STS trust policies.
+- **Compute** — EC2, Lambda, ECS task definitions, CloudFormation stacks, Glue jobs/endpoints, CodeBuild projects, SageMaker notebooks, EKS + Kubernetes (RBAC, IRSA).
+- **Data & secrets** — S3, RDS (instances + snapshots), DynamoDB, EBS snapshots, Secrets Manager, SSM Parameter Store, KMS (keys, key policies, grants), ECR.
+- **Network & messaging** — VPC, Security Groups, ELB/ALB, API Gateway (REST + HTTP), CloudFront, Route53, SNS, SQS, WAF, VPC Flow Logs, CloudTrail.
+
+Every service feeds the attack graph plus the privilege-escalation, dangerous-permission, and resource-exposure detectors in `policy_parser.py`. **Each finding carries a `reference` field** linking back to the relevant section of this guide — the dashboard renders it as a *📖 attack path* link on the node, and a run prints the reference for every CRITICAL finding.
+
+---
+
 ## Methodology
 
 The general flow:
@@ -243,11 +256,15 @@ The starting points before any compromise.
 |---------|---------------|------------------|
 | Public S3 buckets | `aws s3 ls s3://name/ --no-sign-request` | Finding `S3-PUBLIC-001` |
 | Public EC2 instances | nmap, web app fuzzing | Finding `EC2-EXPOSURE-001` |
-| Internet-facing ALB / ELB | App-layer testing | LoadBalancer services in K8s |
-| Public RDS endpoints | Direct DB connection attempts | (Not yet enumerated) |
+| Internet-facing ALB / ELB | App-layer testing | Finding `ELB-PUB-001` + `EXPOSES` edges to targets |
+| Public RDS instances / snapshots | Direct DB connect / restore shared snapshot | Findings `RDS-PUB-001`, `RDS-SNAP-001` |
 | Cross-account trust with `*` Principal | Confused deputy / unauthenticated assume | Finding `TRUST-001` |
-| Lambda function URLs | Direct HTTP invocation | (Check Lambda configs manually) |
-| API Gateway | Auth bypass, IAM auth misconfigurations | Listed in CloudFront-related data |
+| Lambda function URLs | Direct HTTP invocation | Finding `LAMBDA-URL-001` |
+| API Gateway with no authorizer | Auth bypass on Lambda-backed routes | Finding `APIGW-AUTH-001` + `INVOKES` edge |
+| Cognito unauthenticated identity pool | Anonymous → IAM role credentials | Finding `COGNITO-UNAUTH-001` |
+| Public EBS snapshot | Restore the volume, read the data | Finding `EBS-PUB-001` |
+| Public ECR repository | Pull images, inspect for secrets | Finding `ECR-PUB-001` |
+| Dangling DNS record | Subdomain takeover | Finding `ROUTE53-DANGLING-001` |
 
 ### Phishing / credential harvesting
 The dashboard tells you which users have:
@@ -256,6 +273,33 @@ The dashboard tells you which users have:
 - Stale access keys (old `CreateDate`, still `Active`)
 
 These are your phishing targets — known-bad credential hygiene maps directly to victim selection.
+
+---
+
+## Scenario 7 — Cognito unauthenticated identity pool
+
+A Cognito **identity pool** hands out AWS credentials to callers. If it allows *unauthenticated* identities, **anyone on the internet** can obtain credentials for the pool's unauthenticated IAM role — no login required. This is a direct external → IAM-role bridge.
+
+### Step 1: Spot it in the graph
+Look for a `cognito` node with a `POOL_UNAUTH_ROLE` edge to an IAM role. Finding `COGNITO-UNAUTH-001` flags it directly.
+
+### Step 2: Get anonymous credentials
+```bash
+# IdentityPoolId comes from the cognito node / leaked app config
+POOL_ID="us-east-1:xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+ID=$(aws cognito-identity get-id --identity-pool-id "$POOL_ID" --query IdentityId --output text)
+aws cognito-identity get-credentials-for-identity --identity-id "$ID"
+```
+The returned credentials belong to the **unauthenticated role**. From here you're in Scenario 3 — mark that role Owned and run "Discover All Paths."
+
+### Possible attack paths
+
+| Starting point | Target | Path |
+|----------------|--------|------|
+| Internet (anonymous) | Unauthenticated IAM role | `cognito` → `POOL_UNAUTH_ROLE` → role (finding `COGNITO-UNAUTH-001`) |
+| Unauth role with over-broad policy | Whatever the role can reach | Follow the role's outgoing edges |
+
+> Over-permissioned unauthenticated roles are a top cloud misconfiguration — the role usually has far more than the app needs.
 
 ---
 
@@ -278,6 +322,32 @@ These are the 20 detection rules built into `policy_parser.py`. If you see these
 | `PRIVESC-018` | PassRole → Glue → SSH into managed endpoint |
 | `PRIVESC-019` | PassRole → CodeBuild → CI code execution |
 | `PRIVESC-020` | PassRole → SageMaker → notebook RCE |
+
+> These are detected from IAM permissions regardless of resource scope — a tightly-scoped grant (e.g. `iam:PutRolePolicy` on one harmless role) can still match. Confirm the `Resource` before claiming the path.
+
+---
+
+## Resource-Exposure & External-Access Findings
+
+Beyond IAM privesc, the parser flags resources exposed publicly or shared cross-account — data-access and entry-point findings. Each finding's `reference` links here.
+
+| Finding | Severity | What it means |
+|---------|----------|---------------|
+| `KMS-PUB-001` / `KMS-XACCT-001` | HIGH / MED | Key policy grants decrypt to `*` / another account — anything that key protects (secrets, params, EBS, RDS, S3-SSE) may be decryptable. Trace `CAN_DECRYPT` edges into the key. |
+| `LAMBDA-URL-001` | HIGH | Lambda Function URL with `AuthType=NONE` — unauthenticated internet invocation. |
+| `LAMBDA-PUB-001` | HIGH | Lambda resource policy grants invoke to `*` without conditions. |
+| `MSG-PUB-001` / `MSG-XACCT-001` | HIGH / MED | SNS topic or SQS queue policy grants access publicly / cross-account. |
+| `ECR-PUB-001` / `ECR-XACCT-001` | HIGH / MED | ECR repo policy allows public / cross-account pull (inspect images for secrets) or push (poison images). |
+| `DDB-PUB-001` / `DDB-XACCT-001` | HIGH / MED | DynamoDB table resource policy grants public / cross-account access. |
+| `RDS-PUB-001` | HIGH | DB instance is `PubliclyAccessible`. |
+| `RDS-SNAP-001` | HIGH | DB snapshot shared publicly (`restore`=`all`) — restore it and read the data. |
+| `RDS-ENC-001` | MED | DB storage is unencrypted. |
+| `APIGW-AUTH-001` | MED | API has Lambda integrations but no authorizer — likely unauthenticated routes (`INVOKES` edge to the function). |
+| `EBS-PUB-001` / `EBS-XACCT-001` | HIGH / MED | EBS snapshot shared publicly / cross-account — create a volume from it and mount the data. |
+| `COGNITO-UNAUTH-001` | HIGH | Cognito identity pool grants an unauthenticated IAM role (see Scenario 7). |
+| `ROUTE53-DANGLING-001` | LOW | DNS record points at a takeover-prone target (S3 website, CloudFront, ELB, …) — possible subdomain takeover if the backend is gone. |
+| `SECRET-PUB-001` / `SECRET-XAUTH-001` | HIGH / MED | Secrets Manager secret shared publicly / cross-account via resource policy. |
+| `PARAM-PLAIN-001` | MED | SSM parameter named like a secret but stored as plaintext `String`. |
 
 ---
 
@@ -325,6 +395,19 @@ When you see this edge in the dashboard, here's what it means for an attacker:
 | `PUBLIC_INBOUND` | * → Instance | "Internet can reach this instance" |
 | `INTERNET_FACING` | * → Instance | "Subnet routes to IGW + public IP" |
 | `SSRF_TO_IMDS` | Instance → Role | "IMDSv1 enabled — SSRF gives credentials" |
+| `USES_ROLE` | Compute → Role | "Control this function/task/stack/job ⇒ act as its execution role" |
+| `CAN_INVOKE` / `CAN_UPDATE_CODE` | Entity → Lambda | "Invoke it, or overwrite its code to run as the exec role" |
+| `CAN_MODIFY` | Entity → Compute | "Create/modify/run this ECS/CFN/Glue/CodeBuild/SageMaker resource (pairs with PassRole)" |
+| `CAN_DECRYPT` / `CAN_ADMIN_KEY` | Entity → KMS | "Decrypt with / take over this key" |
+| `KMS_GRANTS_DECRYPT/PUBLIC/CROSS_ACCOUNT` | KMS → Principal | "Key policy lets this principal use the key, bypassing IAM" |
+| `CAN_SEND` / `CAN_RECEIVE` | Entity → SNS/SQS | "Publish/send to or receive from this topic/queue" |
+| `MSG_GRANTS_*` | SNS/SQS → Principal | "Topic/queue policy grants access publicly/cross-account" |
+| `CAN_READ_TABLE` / `CAN_WRITE_TABLE` | Entity → DynamoDB | "Read or write table items" |
+| `INVOKES` | API Gateway → Lambda | "This API route invokes the function (entry point)" |
+| `POOL_AUTH_ROLE` / `POOL_UNAUTH_ROLE` | Cognito → Role | "Pool hands this IAM role to authenticated / anonymous callers" |
+| `EXPOSES` | ELB → Instance/Lambda | "Internet-facing load balancer routes to this backend" |
+| `EBS_SHARED_PUBLIC` / `EBS_SHARED_CROSS_ACCOUNT` | Snapshot → Principal | "Snapshot is restorable by anyone / another account" |
+| `RDS_ENCRYPTED_BY` / `EBS_ENCRYPTED_BY` | Resource → KMS | "Need this key to decrypt; check kms:Decrypt access" |
 
 ---
 

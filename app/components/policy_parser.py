@@ -495,6 +495,20 @@ def _build_permission_map(users, roles, role_attached, user_attached, group_atta
 
         perm_map["groups"][gname] = group_entry
 
+    # Propagate group permissions to member users. Without this, access granted
+    # only via group membership is invisible for the user across privesc,
+    # dangerous-permission, and every relationship analyzer (which read the
+    # user's effective_statements). Each inherited statement is tagged via_group.
+    for user_entry in perm_map["users"].values():
+        for gname in user_entry.get("groups", []):
+            group_entry = perm_map["groups"].get(gname)
+            if not group_entry:
+                continue
+            for stmt in group_entry.get("effective_statements", []):
+                inherited = dict(stmt)
+                inherited["via_group"] = gname
+                user_entry["effective_statements"].append(inherited)
+
     return perm_map
 
 
@@ -2260,6 +2274,919 @@ def _analyze_lambda_relationships(report_path, permission_map, roles, users):
 
 
 # ──────────────────────────────────────────────────────────────
+# KMS Relationship Analysis
+# ──────────────────────────────────────────────────────────────
+
+KMS_DECRYPT_ACTIONS = [
+    "kms:Decrypt", "kms:ReEncryptFrom",
+    "kms:GenerateDataKey", "kms:GenerateDataKeyWithoutPlaintext",
+    "kms:GenerateDataKeyPair", "kms:GenerateDataKeyPairWithoutPlaintext",
+]
+KMS_ENCRYPT_ACTIONS = ["kms:Encrypt", "kms:ReEncryptTo"]
+KMS_ADMIN_ACTIONS = [
+    "kms:PutKeyPolicy", "kms:CreateGrant", "kms:ScheduleKeyDeletion",
+    "kms:DisableKey", "kms:CancelKeyDeletion",
+]
+
+KMS_ACCESS_WEIGHTS = {
+    "CAN_DECRYPT": 1,
+    "CAN_ENCRYPT": 1,
+    "CAN_ADMIN_KEY": 1,
+    "KMS_GRANT": 1,
+    "KMS_GRANTS_DECRYPT": 1,
+    "KMS_GRANTS_CROSS_ACCOUNT": 2,
+    "KMS_GRANTS_PUBLIC": 0,
+}
+
+
+def _arn_matches_kms(resource_arn, key):
+    """Match a policy resource ARN against a KMS key (by key ARN or alias ARN)."""
+    if not isinstance(resource_arn, str):
+        return False
+    if resource_arn == '*':
+        return True
+    if not resource_arn.startswith('arn:aws:kms:'):
+        return False
+    r = resource_arn.lower()
+    key_arn = (key.get('Arn') or '').lower()
+    if key_arn and (fnmatch.fnmatch(key_arn, r) or fnmatch.fnmatch(r, key_arn)):
+        return True
+    parts = (key.get('Arn') or '').split(':')
+    if len(parts) >= 5:
+        region, acct = parts[3], parts[4]
+        for alias in key.get('Aliases', []):
+            alias_arn = f"arn:aws:kms:{region}:{acct}:{alias}".lower()
+            if fnmatch.fnmatch(alias_arn, r) or fnmatch.fnmatch(r, alias_arn):
+                return True
+    return False
+
+
+def _classify_kms_access(actions):
+    """Return access types (CAN_DECRYPT/CAN_ENCRYPT/CAN_ADMIN_KEY) + matched actions."""
+    access = set()
+    matched = []
+    for action in actions:
+        if _action_matches(action, 'kms:*') or action == '*':
+            access.update({'CAN_DECRYPT', 'CAN_ENCRYPT', 'CAN_ADMIN_KEY'})
+            matched.append(action)
+            continue
+        for a in KMS_DECRYPT_ACTIONS:
+            if _action_matches(action, a):
+                access.add('CAN_DECRYPT')
+                matched.append(action)
+                break
+        for a in KMS_ENCRYPT_ACTIONS:
+            if _action_matches(action, a):
+                access.add('CAN_ENCRYPT')
+                matched.append(action)
+                break
+        for a in KMS_ADMIN_ACTIONS:
+            if _action_matches(action, a):
+                access.add('CAN_ADMIN_KEY')
+                matched.append(action)
+                break
+    return access, list(set(matched))
+
+
+def _load_kms_data(report_path):
+    """Load KMS keys + key policies, handling single-region and --all modes."""
+    keys, key_policies = [], {}
+
+    def _load_region(region_path):
+        ks = _load_json(os.path.join(region_path, "kms", "keys.json"))
+        if isinstance(ks, list):
+            keys.extend(ks)
+        kp_dir = os.path.join(region_path, "kms", "key_policies")
+        if os.path.isdir(kp_dir):
+            for fname in os.listdir(kp_dir):
+                if fname.endswith('.json'):
+                    kp = _load_json(os.path.join(kp_dir, fname))
+                    if isinstance(kp, dict) and kp.get('KeyId'):
+                        key_policies[kp['KeyId']] = kp
+
+    if os.path.isdir(os.path.join(report_path, "kms")):
+        _load_region(report_path)
+    else:
+        parent = os.path.dirname(report_path)
+        if os.path.isdir(parent):
+            for entry in os.listdir(parent):
+                rp = os.path.join(parent, entry)
+                if os.path.isdir(rp) and entry != 'global':
+                    _load_region(rp)
+
+    return keys, key_policies
+
+
+def _analyze_kms_relationships(report_path, permission_map, roles, users):
+    """Build IAM→key decrypt/admin edges and cross-account/public key-policy grants.
+
+    KMS is a separate authorization plane: a key policy or grant can let a
+    principal decrypt independently of IAM. This connects roles to the `kms:`
+    nodes already drawn from SECRET_ENCRYPTED_BY / PARAM_ENCRYPTED_BY edges.
+    """
+    edges = []
+    findings = []
+
+    keys, key_policies = _load_kms_data(report_path)
+    if not keys:
+        return {"edges": [], "findings": []}
+
+    account_id = None
+    for r in roles:
+        account_id = _extract_account_from_arn(r.get('Arn', ''))
+        if account_id:
+            break
+
+    # ── Step 1: IAM → key edges (from permission_map) ──
+    for entity_type in ["users", "roles"]:
+        for entity_name, entity_data in permission_map.get(entity_type, {}).items():
+            entity_arn = entity_data.get('arn', '')
+
+            for stmt in entity_data.get('effective_statements', []):
+                actions = stmt.get('actions', [])
+                resources = stmt.get('resources', [])
+
+                has_kms = any(
+                    _action_matches(a, 'kms:*') or a == '*' or a.lower().startswith('kms:')
+                    for a in actions
+                )
+                if not has_kms:
+                    continue
+
+                access, matched_acts = _classify_kms_access(actions)
+                if not access:
+                    continue
+
+                for key in keys:
+                    key_arn = key.get('Arn')
+                    if not key_arn:
+                        continue
+                    if not any(_arn_matches_kms(r, key) for r in resources):
+                        continue
+
+                    if 'CAN_ADMIN_KEY' in access:
+                        edge_type = 'CAN_ADMIN_KEY'
+                    elif 'CAN_DECRYPT' in access:
+                        edge_type = 'CAN_DECRYPT'
+                    else:
+                        edge_type = 'CAN_ENCRYPT'
+
+                    edges.append({
+                        "source": entity_arn,
+                        "target": f"kms:{key_arn}",
+                        "type": edge_type,
+                        "weight": KMS_ACCESS_WEIGHTS.get(edge_type, 1),
+                        "category": "kms",
+                        "access_types": sorted(access),
+                        "source_policy": stmt.get('source', 'unknown'),
+                        "source_type": stmt.get('source_type', 'unknown'),
+                        "matched_actions": matched_acts,
+                        "is_wildcard_resource": any(r == '*' for r in resources),
+                    })
+
+    # ── Step 2: Key-policy grants (bypass IAM) ──
+    for key in keys:
+        key_arn = key.get('Arn')
+        kp = key_policies.get(key.get('KeyId'))
+        if not key_arn or not kp:
+            continue
+        policy_doc = kp.get('Policy', {})
+        if not isinstance(policy_doc, dict):
+            continue
+
+        key_label = (key.get('Aliases') or [key_arn])[0]
+        for stmt in policy_doc.get('Statement', []):
+            if stmt.get('Effect') != 'Allow':
+                continue
+            principals = _extract_principals(stmt.get('Principal', {}))
+            granted_actions = _normalize_to_list(stmt.get('Action', []))
+            conditions = stmt.get('Condition', {})
+
+            for principal in principals:
+                pval = principal['value']
+                ptype = principal['type']
+
+                if pval == '*':
+                    edges.append({
+                        "source": f"kms:{key_arn}",
+                        "target": "principal:*",
+                        "type": "KMS_GRANTS_PUBLIC",
+                        "weight": KMS_ACCESS_WEIGHTS["KMS_GRANTS_PUBLIC"],
+                        "category": "kms",
+                        "granted_actions": granted_actions,
+                        "has_conditions": bool(conditions),
+                    })
+                    if not conditions:
+                        findings.append({
+                            "id": "KMS-PUB-001",
+                            "severity": "HIGH",
+                            "category": "kms_public",
+                            "title": f"KMS key '{key_label}' policy grants access to Principal '*'",
+                            "entity": f"kms/{key_label}",
+                            "entity_arn": key_arn,
+                            "description": "The key policy grants Principal '*' without Condition "
+                                           "constraints — anything that key encrypts may be decryptable "
+                                           "outside the account.",
+                            "matched_actions": granted_actions,
+                            "source_policy": "KeyPolicy",
+                            "source_type": "kms_key_policy",
+                            "resource": [key_arn],
+                            "remediation": "Scope the Principal or add a Condition (e.g. kms:CallerAccount).",
+                        })
+                    continue
+
+                if ptype == 'Service':
+                    continue
+
+                principal_account = _extract_account_from_arn(pval)
+                # The standard "enable IAM" statement grants the account root — same
+                # account, already covered by IAM edges; only flag cross-account.
+                if principal_account is not None and account_id is not None and \
+                   principal_account == account_id:
+                    continue
+
+                if principal_account is not None and account_id is not None and \
+                   principal_account != account_id:
+                    edges.append({
+                        "source": f"kms:{key_arn}",
+                        "target": pval,
+                        "type": "KMS_GRANTS_CROSS_ACCOUNT",
+                        "weight": KMS_ACCESS_WEIGHTS["KMS_GRANTS_CROSS_ACCOUNT"],
+                        "category": "kms",
+                        "granted_actions": granted_actions,
+                        "has_conditions": bool(conditions),
+                        "is_cross_account": True,
+                    })
+                    findings.append({
+                        "id": "KMS-XACCT-001",
+                        "severity": "MEDIUM",
+                        "category": "kms_cross_account",
+                        "title": f"KMS key '{key_label}' policy grants access cross-account to {principal_account}",
+                        "entity": f"kms/{key_label}",
+                        "entity_arn": key_arn,
+                        "description": f"The key policy grants '{pval}' (account {principal_account}) "
+                                       f"use of the key, independent of IAM.",
+                        "matched_actions": granted_actions,
+                        "source_policy": "KeyPolicy",
+                        "source_type": "kms_key_policy",
+                        "resource": [key_arn],
+                        "remediation": "Verify cross-account key sharing is intended.",
+                    })
+
+    # ── Step 3: Grants (grantee may decrypt without IAM/key-policy) ──
+    for key in keys:
+        key_arn = key.get('Arn')
+        if not key_arn:
+            continue
+        for grant in key.get('Grants', []):
+            grantee = grant.get('GranteePrincipal')
+            # Only graph ARN grantees (skip AWS service principals)
+            if not isinstance(grantee, str) or not grantee.startswith('arn:aws:iam:'):
+                continue
+            edges.append({
+                "source": grantee,
+                "target": f"kms:{key_arn}",
+                "type": "KMS_GRANT",
+                "weight": KMS_ACCESS_WEIGHTS["KMS_GRANT"],
+                "category": "kms",
+                "operations": grant.get('Operations', []),
+                "grant_id": grant.get('GrantId'),
+            })
+
+    return {"edges": edges, "findings": findings}
+
+
+# ──────────────────────────────────────────────────────────────
+# Compute Relationship Analysis (ECS · CloudFormation · Glue · CodeBuild · SageMaker)
+# ──────────────────────────────────────────────────────────────
+
+COMPUTE_DIRS = ["ecs", "cloudformation", "glue", "codebuild", "sagemaker"]
+
+# Per resource Type: (IAM actions that create/modify/run it, service prefix).
+# Holding one of these + PassRole on the resource's role == privesc to that role.
+COMPUTE_ACTIONS = {
+    "ecstask":   (["ecs:RunTask", "ecs:StartTask", "ecs:RegisterTaskDefinition"], "ecs"),
+    "cfnstack":  (["cloudformation:CreateStack", "cloudformation:UpdateStack", "cloudformation:CreateChangeSet"], "cloudformation"),
+    "gluejob":   (["glue:CreateJob", "glue:UpdateJob", "glue:StartJobRun", "glue:CreateDevEndpoint", "glue:UpdateDevEndpoint"], "glue"),
+    "codebuild": (["codebuild:CreateProject", "codebuild:UpdateProject", "codebuild:StartBuild"], "codebuild"),
+    "sagemaker": (["sagemaker:CreateNotebookInstance", "sagemaker:CreatePresignedNotebookInstanceUrl"], "sagemaker"),
+}
+
+COMPUTE_WEIGHTS = {"USES_ROLE": 0, "CAN_MODIFY": 1}
+
+
+def _load_compute_data(report_path):
+    """Load normalized compute resources ({Type, Arn, Name, Roles}) from all compute dirs."""
+    resources = []
+
+    def _load_region(region_path):
+        for svc in COMPUTE_DIRS:
+            data = _load_json(os.path.join(region_path, svc, "resources.json"))
+            if isinstance(data, list):
+                resources.extend(data)
+
+    if any(os.path.isdir(os.path.join(report_path, svc)) for svc in COMPUTE_DIRS):
+        _load_region(report_path)
+    else:
+        parent = os.path.dirname(report_path)
+        if os.path.isdir(parent):
+            for entry in os.listdir(parent):
+                rp = os.path.join(parent, entry)
+                if os.path.isdir(rp) and entry != 'global':
+                    _load_region(rp)
+    return resources
+
+
+def _resolve_role_arn(role_value, role_name_lookup):
+    """Normalize a role value (ARN or bare name) to a role ARN where possible."""
+    if not role_value:
+        return None
+    if role_value.startswith('arn:'):
+        return role_value
+    return role_name_lookup.get(role_value, role_value)
+
+
+def _analyze_compute_relationships(report_path, permission_map, roles, users):
+    """{resource}→role USES_ROLE bridges + IAM→resource CAN_MODIFY edges for the
+    five PassRole compute targets, so PRIVESC-016..020 findings reach real nodes."""
+    edges = []
+
+    resources = _load_compute_data(report_path)
+    if not resources:
+        return {"edges": [], "findings": []}
+
+    role_name_lookup = {r.get('RoleName'): r.get('Arn')
+                        for r in roles if r.get('RoleName') and r.get('Arn')}
+
+    # ── Step 1: resource → execution role (USES_ROLE) ──
+    for res in resources:
+        rtype, rarn = res.get('Type'), res.get('Arn')
+        if not rtype or not rarn:
+            continue
+        node = f"{rtype}:{rarn}"
+        for role_value in res.get('Roles', []):
+            role_arn = _resolve_role_arn(role_value, role_name_lookup)
+            if role_arn:
+                edges.append({
+                    "source": node,
+                    "target": role_arn,
+                    "type": "USES_ROLE",
+                    "weight": COMPUTE_WEIGHTS["USES_ROLE"],
+                    "category": "compute",
+                    "resource_type": rtype,
+                    "resource_name": res.get('Name'),
+                })
+
+    # ── Step 2: IAM → resource (who can create/modify/run it) ──
+    seen = set()
+    for entity_type in ["users", "roles"]:
+        for entity_name, entity_data in permission_map.get(entity_type, {}).items():
+            entity_arn = entity_data.get('arn', '')
+            for stmt in entity_data.get('effective_statements', []):
+                actions = stmt.get('actions', [])
+                stmt_resources = stmt.get('resources', [])
+                for res in resources:
+                    rtype, rarn = res.get('Type'), res.get('Arn')
+                    if not rtype or not rarn or rtype not in COMPUTE_ACTIONS:
+                        continue
+                    key = (entity_arn, rtype, rarn)
+                    if key in seen:
+                        continue
+                    svc_actions, svc_prefix = COMPUTE_ACTIONS[rtype]
+                    has_action = any(
+                        _action_matches(a, f'{svc_prefix}:*') or a == '*' or
+                        any(_action_matches(a, sa) for sa in svc_actions)
+                        for a in actions
+                    )
+                    if not has_action:
+                        continue
+                    # Glue resources are bare names — only a wildcard resource matches them.
+                    if rarn.startswith('arn:'):
+                        arn_ok = any(r == '*' or fnmatch.fnmatch(rarn.lower(), r.lower())
+                                     for r in stmt_resources if isinstance(r, str))
+                    else:
+                        arn_ok = any(r == '*' for r in stmt_resources)
+                    if not arn_ok:
+                        continue
+                    seen.add(key)
+                    edges.append({
+                        "source": entity_arn,
+                        "target": f"{rtype}:{rarn}",
+                        "type": "CAN_MODIFY",
+                        "weight": COMPUTE_WEIGHTS["CAN_MODIFY"],
+                        "category": "compute",
+                        "resource_type": rtype,
+                        "resource_name": res.get('Name'),
+                        "source_policy": stmt.get('source', 'unknown'),
+                        "source_type": stmt.get('source_type', 'unknown'),
+                    })
+
+    return {"edges": edges, "findings": []}
+
+
+# ──────────────────────────────────────────────────────────────
+# Messaging Relationship Analysis (SNS + SQS)
+# ──────────────────────────────────────────────────────────────
+
+MESSAGING_CONFIG = {
+    "sns": {"service": "sns", "read": ["sns:Subscribe"], "write": ["sns:Publish"],
+            "admin": ["sns:SetTopicAttributes", "sns:AddPermission", "sns:DeleteTopic"]},
+    "sqs": {"service": "sqs", "read": ["sqs:ReceiveMessage"], "write": ["sqs:SendMessage"],
+            "admin": ["sqs:SetQueueAttributes", "sqs:AddPermission", "sqs:DeleteQueue"]},
+}
+
+MESSAGING_WEIGHTS = {
+    "CAN_SEND": 1, "CAN_RECEIVE": 1, "CAN_ADMIN_MSG": 1,
+    "MSG_GRANTS_PUBLIC": 0, "MSG_GRANTS_CROSS_ACCOUNT": 2,
+}
+
+
+def _arn_matches_simple(resource_arn, target_arn):
+    """Generic ARN match: '*' matches all, else fnmatch the target against the pattern."""
+    if not isinstance(resource_arn, str) or not target_arn:
+        return False
+    if resource_arn == '*':
+        return True
+    return fnmatch.fnmatch(target_arn.lower(), resource_arn.lower())
+
+
+def _load_messaging_data(report_path):
+    """Load SNS topics + SQS queues ({Type, Arn, Name, Policy})."""
+    resources = []
+
+    def _load_region(region_path):
+        for svc in ["sns", "sqs"]:
+            data = _load_json(os.path.join(region_path, svc, "resources.json"))
+            if isinstance(data, list):
+                resources.extend(data)
+
+    if os.path.isdir(os.path.join(report_path, "sns")) or os.path.isdir(os.path.join(report_path, "sqs")):
+        _load_region(report_path)
+    else:
+        parent = os.path.dirname(report_path)
+        if os.path.isdir(parent):
+            for entry in os.listdir(parent):
+                rp = os.path.join(parent, entry)
+                if os.path.isdir(rp) and entry != 'global':
+                    _load_region(rp)
+    return resources
+
+
+def _analyze_messaging_relationships(report_path, permission_map, roles, users):
+    """IAM→topic/queue access edges + cross-account/public resource-policy grants."""
+    edges = []
+    findings = []
+
+    resources = _load_messaging_data(report_path)
+    if not resources:
+        return {"edges": [], "findings": []}
+
+    account_id = None
+    for r in roles:
+        account_id = _extract_account_from_arn(r.get('Arn', ''))
+        if account_id:
+            break
+
+    # ── Step 1: IAM → topic/queue ──
+    for entity_type in ["users", "roles"]:
+        for entity_name, entity_data in permission_map.get(entity_type, {}).items():
+            entity_arn = entity_data.get('arn', '')
+            for stmt in entity_data.get('effective_statements', []):
+                actions = stmt.get('actions', [])
+                stmt_resources = stmt.get('resources', [])
+                for res in resources:
+                    rtype, rarn = res.get('Type'), res.get('Arn')
+                    cfg = MESSAGING_CONFIG.get(rtype)
+                    if not cfg or not rarn:
+                        continue
+                    svc = cfg['service']
+                    cap, matched = set(), []
+                    for a in actions:
+                        if _action_matches(a, f'{svc}:*') or a == '*':
+                            cap.update({'CAN_SEND', 'CAN_RECEIVE', 'CAN_ADMIN_MSG'})
+                            matched.append(a)
+                            continue
+                        for ra in cfg['read']:
+                            if _action_matches(a, ra):
+                                cap.add('CAN_RECEIVE'); matched.append(a); break
+                        for wa in cfg['write']:
+                            if _action_matches(a, wa):
+                                cap.add('CAN_SEND'); matched.append(a); break
+                        for aa in cfg['admin']:
+                            if _action_matches(a, aa):
+                                cap.add('CAN_ADMIN_MSG'); matched.append(a); break
+                    if not cap:
+                        continue
+                    if not any(_arn_matches_simple(r, rarn) for r in stmt_resources):
+                        continue
+                    edge_type = ('CAN_ADMIN_MSG' if 'CAN_ADMIN_MSG' in cap
+                                 else 'CAN_RECEIVE' if 'CAN_RECEIVE' in cap else 'CAN_SEND')
+                    edges.append({
+                        "source": entity_arn,
+                        "target": f"{rtype}:{rarn}",
+                        "type": edge_type,
+                        "weight": MESSAGING_WEIGHTS.get(edge_type, 1),
+                        "category": "messaging",
+                        "access_types": sorted(cap),
+                        "matched_actions": list(set(matched)),
+                        "source_policy": stmt.get('source', 'unknown'),
+                        "source_type": stmt.get('source_type', 'unknown'),
+                        "is_wildcard_resource": any(r == '*' for r in stmt_resources),
+                    })
+
+    # ── Step 2: resource-policy grants ──
+    for res in resources:
+        rtype, rarn = res.get('Type'), res.get('Arn')
+        policy = res.get('Policy')
+        if not rarn or not isinstance(policy, dict):
+            continue
+        name = res.get('Name', rarn)
+        for stmt in policy.get('Statement', []):
+            if stmt.get('Effect') != 'Allow':
+                continue
+            principals = _extract_principals(stmt.get('Principal', {}))
+            granted = _normalize_to_list(stmt.get('Action', []))
+            conditions = stmt.get('Condition', {})
+            for principal in principals:
+                pval, ptype = principal['value'], principal['type']
+                if pval == '*':
+                    edges.append({
+                        "source": f"{rtype}:{rarn}", "target": "principal:*",
+                        "type": "MSG_GRANTS_PUBLIC", "weight": MESSAGING_WEIGHTS["MSG_GRANTS_PUBLIC"],
+                        "category": "messaging", "granted_actions": granted,
+                        "has_conditions": bool(conditions),
+                    })
+                    if not conditions:
+                        findings.append({
+                            "id": "MSG-PUB-001", "severity": "HIGH", "category": f"{rtype}_public",
+                            "title": f"{rtype.upper()} '{name}' grants access to Principal '*'",
+                            "entity": f"{rtype}/{name}", "entity_arn": rarn,
+                            "description": f"The {rtype.upper()} resource policy grants Principal '*' "
+                                           f"without Condition constraints.",
+                            "matched_actions": granted, "source_policy": "ResourcePolicy",
+                            "source_type": f"{rtype}_resource_policy", "resource": [rarn],
+                            "remediation": "Scope the Principal or add a Condition (e.g. aws:SourceArn/SourceAccount).",
+                        })
+                    continue
+                if ptype == 'Service':
+                    continue
+                pacct = _extract_account_from_arn(pval)
+                if pacct is not None and account_id is not None and pacct == account_id:
+                    continue
+                if pacct is not None and account_id is not None and pacct != account_id:
+                    edges.append({
+                        "source": f"{rtype}:{rarn}", "target": pval,
+                        "type": "MSG_GRANTS_CROSS_ACCOUNT",
+                        "weight": MESSAGING_WEIGHTS["MSG_GRANTS_CROSS_ACCOUNT"],
+                        "category": "messaging", "granted_actions": granted, "is_cross_account": True,
+                    })
+                    findings.append({
+                        "id": "MSG-XACCT-001", "severity": "MEDIUM", "category": f"{rtype}_cross_account",
+                        "title": f"{rtype.upper()} '{name}' grants access cross-account to {pacct}",
+                        "entity": f"{rtype}/{name}", "entity_arn": rarn,
+                        "description": f"The {rtype.upper()} resource policy grants '{pval}' (account {pacct}) access.",
+                        "matched_actions": granted, "source_policy": "ResourcePolicy",
+                        "source_type": f"{rtype}_resource_policy", "resource": [rarn],
+                        "remediation": "Verify cross-account access is intended.",
+                    })
+
+    return {"edges": edges, "findings": findings}
+
+
+# ──────────────────────────────────────────────────────────────
+# New-Surface Relationship Analysis (ECR · RDS · API Gateway · DynamoDB)
+# ──────────────────────────────────────────────────────────────
+
+NEWSURFACE_WEIGHTS = {
+    "ECR_GRANTS_PUBLIC": 0, "ECR_GRANTS_CROSS_ACCOUNT": 2,
+    "RDS_ENCRYPTED_BY": 3,
+    "INVOKES": 1,
+    "CAN_READ_TABLE": 1, "CAN_WRITE_TABLE": 1,
+    "DDB_GRANTS_PUBLIC": 0, "DDB_GRANTS_CROSS_ACCOUNT": 2,
+}
+
+DDB_READ_ACTIONS = ["dynamodb:GetItem", "dynamodb:BatchGetItem", "dynamodb:Query", "dynamodb:Scan"]
+DDB_WRITE_ACTIONS = ["dynamodb:PutItem", "dynamodb:UpdateItem", "dynamodb:DeleteItem", "dynamodb:BatchWriteItem"]
+
+
+def _load_newsurface_data(report_path):
+    data = {"ecr": [], "rds": [], "apigw": [], "dynamodb": []}
+    dir_map = {"ecr": "ecr", "rds": "rds", "apigw": "apigateway", "dynamodb": "dynamodb"}
+
+    def _load_region(region_path):
+        for key, d in dir_map.items():
+            arr = _load_json(os.path.join(region_path, d, "resources.json"))
+            if isinstance(arr, list):
+                data[key].extend(arr)
+
+    if any(os.path.isdir(os.path.join(report_path, d)) for d in dir_map.values()):
+        _load_region(report_path)
+    else:
+        parent = os.path.dirname(report_path)
+        if os.path.isdir(parent):
+            for entry in os.listdir(parent):
+                rp = os.path.join(parent, entry)
+                if os.path.isdir(rp) and entry != 'global':
+                    _load_region(rp)
+    return data
+
+
+def _resource_policy_grants(label, rarn, name, policy, account_id, prefix,
+                            public_type, xacct_type, pub_id, xacct_id):
+    """Emit public/cross-account edges + findings from a resource-based policy."""
+    edges, findings = [], []
+    if not isinstance(policy, dict):
+        return edges, findings
+    node = f"{prefix}:{rarn}"
+    for stmt in policy.get('Statement', []):
+        if stmt.get('Effect') != 'Allow':
+            continue
+        principals = _extract_principals(stmt.get('Principal', {}))
+        granted = _normalize_to_list(stmt.get('Action', []))
+        conditions = stmt.get('Condition', {})
+        for principal in principals:
+            pval, ptype = principal['value'], principal['type']
+            if pval == '*':
+                edges.append({"source": node, "target": "principal:*", "type": public_type,
+                              "weight": NEWSURFACE_WEIGHTS.get(public_type, 0), "category": prefix,
+                              "granted_actions": granted, "has_conditions": bool(conditions)})
+                if not conditions:
+                    findings.append({"id": pub_id, "severity": "HIGH", "category": f"{prefix}_public",
+                        "title": f"{label} '{name}' grants access to Principal '*'",
+                        "entity": f"{prefix}/{name}", "entity_arn": rarn,
+                        "description": f"The {label} resource policy grants Principal '*' without Condition constraints.",
+                        "matched_actions": granted, "source_policy": "ResourcePolicy",
+                        "source_type": f"{prefix}_resource_policy", "resource": [rarn],
+                        "remediation": "Scope the Principal or add Condition constraints."})
+                continue
+            if ptype == 'Service':
+                continue
+            pacct = _extract_account_from_arn(pval)
+            if pacct and account_id and pacct == account_id:
+                continue
+            if pacct and account_id and pacct != account_id:
+                edges.append({"source": node, "target": pval, "type": xacct_type,
+                              "weight": NEWSURFACE_WEIGHTS.get(xacct_type, 2), "category": prefix,
+                              "granted_actions": granted, "is_cross_account": True})
+                findings.append({"id": xacct_id, "severity": "MEDIUM", "category": f"{prefix}_cross_account",
+                    "title": f"{label} '{name}' grants access cross-account to {pacct}",
+                    "entity": f"{prefix}/{name}", "entity_arn": rarn,
+                    "description": f"The {label} resource policy grants '{pval}' (account {pacct}) access.",
+                    "matched_actions": granted, "source_policy": "ResourcePolicy",
+                    "source_type": f"{prefix}_resource_policy", "resource": [rarn],
+                    "remediation": "Verify cross-account access is intended."})
+    return edges, findings
+
+
+def _analyze_newsurface_relationships(report_path, permission_map, roles, users):
+    """ECR/DynamoDB resource-policy grants, RDS exposure findings + KMS edges,
+    and API Gateway → Lambda invoke edges."""
+    edges, findings = [], []
+    data = _load_newsurface_data(report_path)
+    if not any(data.values()):
+        return {"edges": [], "findings": []}
+
+    account_id = None
+    for r in roles:
+        account_id = _extract_account_from_arn(r.get('Arn', ''))
+        if account_id:
+            break
+
+    # ── ECR repo policies ──
+    for repo in data["ecr"]:
+        if repo.get("Arn"):
+            e, f = _resource_policy_grants("ECR repo", repo["Arn"], repo.get("Name", repo["Arn"]),
+                repo.get("Policy"), account_id, "ecr",
+                "ECR_GRANTS_PUBLIC", "ECR_GRANTS_CROSS_ACCOUNT", "ECR-PUB-001", "ECR-XACCT-001")
+            edges += e; findings += f
+
+    # ── DynamoDB resource policies + IAM → table access ──
+    for tbl in data["dynamodb"]:
+        if tbl.get("Arn"):
+            e, f = _resource_policy_grants("DynamoDB table", tbl["Arn"], tbl.get("Name", tbl["Arn"]),
+                tbl.get("Policy"), account_id, "dynamodb",
+                "DDB_GRANTS_PUBLIC", "DDB_GRANTS_CROSS_ACCOUNT", "DDB-PUB-001", "DDB-XACCT-001")
+            edges += e; findings += f
+
+    ddb_tables = [t for t in data["dynamodb"] if t.get("Arn")]
+    if ddb_tables:
+        for entity_type in ["users", "roles"]:
+            for ename, edata in permission_map.get(entity_type, {}).items():
+                entity_arn = edata.get('arn', '')
+                for stmt in edata.get('effective_statements', []):
+                    actions, sres = stmt.get('actions', []), stmt.get('resources', [])
+                    write = any(_action_matches(a, 'dynamodb:*') or a == '*' or
+                                any(_action_matches(a, x) for x in DDB_WRITE_ACTIONS) for a in actions)
+                    read = any(_action_matches(a, 'dynamodb:*') or a == '*' or
+                               any(_action_matches(a, x) for x in DDB_READ_ACTIONS) for a in actions)
+                    if not (read or write):
+                        continue
+                    for tbl in ddb_tables:
+                        if not any(_arn_matches_simple(r, tbl["Arn"]) for r in sres):
+                            continue
+                        etype = "CAN_WRITE_TABLE" if write else "CAN_READ_TABLE"
+                        edges.append({"source": entity_arn, "target": f"dynamodb:{tbl['Arn']}", "type": etype,
+                            "weight": NEWSURFACE_WEIGHTS.get(etype, 1), "category": "dynamodb",
+                            "source_policy": stmt.get('source', 'unknown'),
+                            "source_type": stmt.get('source_type', 'unknown')})
+
+    # ── RDS exposure findings + KMS edges ──
+    for db in data["rds"]:
+        rarn, name = db.get("Arn"), db.get("Name")
+        if not rarn:
+            continue
+        if db.get("Kind") == "instance" and db.get("Public"):
+            findings.append({"id": "RDS-PUB-001", "severity": "HIGH", "category": "rds_public",
+                "title": f"RDS instance '{name}' is publicly accessible", "entity": f"rds/{name}", "entity_arn": rarn,
+                "description": "The DB instance has PubliclyAccessible=true; it may be reachable from the internet (subject to security groups).",
+                "matched_actions": [], "source_policy": "DBConfig", "source_type": "rds_config", "resource": [rarn],
+                "remediation": "Set PubliclyAccessible=false and place the instance in private subnets."})
+        if db.get("Kind") == "snapshot" and db.get("PublicSnapshot"):
+            findings.append({"id": "RDS-SNAP-001", "severity": "HIGH", "category": "rds_public_snapshot",
+                "title": f"RDS snapshot '{name}' is shared publicly", "entity": f"rds/{name}", "entity_arn": rarn,
+                "description": "The snapshot 'restore' attribute includes 'all' — anyone can restore it and read the data.",
+                "matched_actions": [], "source_policy": "SnapshotAttributes", "source_type": "rds_config", "resource": [rarn],
+                "remediation": "Remove public sharing from the snapshot immediately."})
+        if db.get("Kind") == "instance" and not db.get("Encrypted"):
+            findings.append({"id": "RDS-ENC-001", "severity": "MEDIUM", "category": "rds_unencrypted",
+                "title": f"RDS instance '{name}' storage is not encrypted", "entity": f"rds/{name}", "entity_arn": rarn,
+                "description": "StorageEncrypted=false; data at rest is not protected by KMS.",
+                "matched_actions": [], "source_policy": "DBConfig", "source_type": "rds_config", "resource": [rarn],
+                "remediation": "Recreate the instance with storage encryption enabled."})
+        if db.get("KmsKeyId"):
+            edges.append({"source": f"rds:{rarn}", "target": f"kms:{db['KmsKeyId']}", "type": "RDS_ENCRYPTED_BY",
+                "weight": NEWSURFACE_WEIGHTS["RDS_ENCRYPTED_BY"], "category": "kms", "kms_key_arn": db["KmsKeyId"]})
+
+    # ── API Gateway → Lambda invoke edges + public-endpoint findings ──
+    for api in data["apigw"]:
+        rarn, name = api.get("Arn"), api.get("Name")
+        if not rarn:
+            continue
+        for fn in api.get("LambdaTargets", []):
+            edges.append({"source": f"apigw:{rarn}", "target": f"lambda:{fn}", "type": "INVOKES",
+                "weight": NEWSURFACE_WEIGHTS["INVOKES"], "category": "apigw", "api_name": name})
+        if not api.get("HasAuthorizer") and api.get("LambdaTargets"):
+            findings.append({"id": "APIGW-AUTH-001", "severity": "MEDIUM", "category": "apigw_public",
+                "title": f"API '{name}' has Lambda integrations but no authorizer", "entity": f"apigw/{name}", "entity_arn": rarn,
+                "description": "The API has no authorizer configured; its Lambda-backed routes may be invocable without authentication.",
+                "matched_actions": [], "source_policy": "APIConfig", "source_type": "apigw_config", "resource": [rarn],
+                "remediation": "Attach an authorizer (IAM, Cognito, or Lambda) or confirm public access is intended."})
+
+    return {"edges": edges, "findings": findings}
+
+
+# ──────────────────────────────────────────────────────────────
+# Extra Relationship Analysis (Cognito · EBS snapshots · ELB · Route53)
+# ──────────────────────────────────────────────────────────────
+
+EXTRA_WEIGHTS = {
+    "POOL_AUTH_ROLE": 1,
+    "POOL_UNAUTH_ROLE": 0,   # anonymous → role: cheap to traverse, high impact
+    "EBS_SHARED_PUBLIC": 0,
+    "EBS_SHARED_CROSS_ACCOUNT": 2,
+    "EBS_ENCRYPTED_BY": 3,
+    "EXPOSES": 1,
+}
+
+
+def _load_extra_data(report_path):
+    """Load Cognito/EBS/ELB (regional) + Route53 (global) normalized resources."""
+    data = {"cognito": [], "ebs": [], "elb": [], "route53": []}
+    dir_map = {"cognito": "cognito", "ebs": "ebs", "elb": "elb", "route53": "route53"}
+
+    def _load_region(region_path):
+        for key, d in dir_map.items():
+            arr = _load_json(os.path.join(region_path, d, "resources.json"))
+            if isinstance(arr, list):
+                data[key].extend(arr)
+
+    # Always load whatever is directly under report_path (single-region: all four;
+    # --all global path: route53).
+    _load_region(report_path)
+
+    # In --all mode (report_path == .../global) also scan sibling region dirs for
+    # the regional services (cognito/ebs/elb live per-region, route53 stays global).
+    if os.path.basename(report_path) == "global":
+        parent = os.path.dirname(report_path)
+        if os.path.isdir(parent):
+            for entry in os.listdir(parent):
+                rp = os.path.join(parent, entry)
+                if os.path.isdir(rp) and entry != "global":
+                    _load_region(rp)
+    return data
+
+
+def _analyze_extra_relationships(report_path, permission_map, roles, users):
+    """Cognito pool→role bridges (incl. anonymous unauth role), EBS public/shared
+    snapshot exposure, internet-facing ELB→target exposure, Route53 dangling records."""
+    edges, findings = [], []
+    data = _load_extra_data(report_path)
+    if not any(data.values()):
+        return {"edges": [], "findings": []}
+
+    account_id = None
+    for r in roles:
+        account_id = _extract_account_from_arn(r.get('Arn', ''))
+        if account_id:
+            break
+
+    # ── Cognito identity pools → IAM roles ──
+    for pool in data["cognito"]:
+        if pool.get("Kind") != "identity_pool":
+            continue
+        node = f"cognito:{pool.get('Id')}"
+        name = pool.get("Name", pool.get("Id"))
+        if pool.get("AuthRole"):
+            edges.append({"source": node, "target": pool["AuthRole"], "type": "POOL_AUTH_ROLE",
+                          "weight": EXTRA_WEIGHTS["POOL_AUTH_ROLE"], "category": "cognito", "pool_name": name})
+        if pool.get("UnauthRole"):
+            edges.append({"source": node, "target": pool["UnauthRole"], "type": "POOL_UNAUTH_ROLE",
+                          "weight": EXTRA_WEIGHTS["POOL_UNAUTH_ROLE"], "category": "cognito", "pool_name": name})
+            findings.append({"id": "COGNITO-UNAUTH-001", "severity": "HIGH", "category": "cognito_unauth",
+                "title": f"Cognito identity pool '{name}' grants an unauthenticated role",
+                "entity": f"cognito/{name}", "entity_arn": pool.get("Id"),
+                "description": f"The identity pool maps UNAUTHENTICATED identities to IAM role "
+                               f"'{pool['UnauthRole']}' — anyone on the internet can obtain credentials for it.",
+                "matched_actions": [], "source_policy": "IdentityPoolRoles", "source_type": "cognito_config",
+                "resource": [pool.get("Id")],
+                "remediation": "Remove the unauthenticated role or tightly scope it; set "
+                               "AllowUnauthenticatedIdentities=false if anonymous access isn't required."})
+
+    # ── EBS snapshot sharing ──
+    for snap in data["ebs"]:
+        sid = snap.get("Id")
+        if not sid:
+            continue
+        node = f"ebssnapshot:{sid}"
+        if snap.get("Public"):
+            edges.append({"source": node, "target": "principal:*", "type": "EBS_SHARED_PUBLIC",
+                          "weight": EXTRA_WEIGHTS["EBS_SHARED_PUBLIC"], "category": "ebs"})
+            findings.append({"id": "EBS-PUB-001", "severity": "HIGH", "category": "ebs_public",
+                "title": f"EBS snapshot '{sid}' is shared publicly",
+                "entity": f"ebssnapshot/{sid}", "entity_arn": sid,
+                "description": "The snapshot's createVolumePermission includes the 'all' group — anyone "
+                               "can create a volume from it and read the data.",
+                "matched_actions": [], "source_policy": "SnapshotAttributes", "source_type": "ebs_config",
+                "resource": [sid], "remediation": "Remove public sharing from the snapshot immediately."})
+        for acct in snap.get("SharedAccounts", []):
+            edges.append({"source": node, "target": f"arn:aws:iam::{acct}:root",
+                          "type": "EBS_SHARED_CROSS_ACCOUNT", "weight": EXTRA_WEIGHTS["EBS_SHARED_CROSS_ACCOUNT"],
+                          "category": "ebs", "is_cross_account": True})
+            findings.append({"id": "EBS-XACCT-001", "severity": "MEDIUM", "category": "ebs_cross_account",
+                "title": f"EBS snapshot '{sid}' is shared cross-account to {acct}",
+                "entity": f"ebssnapshot/{sid}", "entity_arn": sid,
+                "description": f"The snapshot is shared with account {acct} via createVolumePermission.",
+                "matched_actions": [], "source_policy": "SnapshotAttributes", "source_type": "ebs_config",
+                "resource": [sid], "remediation": "Verify cross-account sharing is intended."})
+        if snap.get("KmsKeyId"):
+            edges.append({"source": node, "target": f"kms:{snap['KmsKeyId']}", "type": "EBS_ENCRYPTED_BY",
+                          "weight": EXTRA_WEIGHTS["EBS_ENCRYPTED_BY"], "category": "kms", "kms_key_arn": snap["KmsKeyId"]})
+
+    # ── ELB exposure ──
+    for lb in data["elb"]:
+        arn = lb.get("Arn")
+        if not arn:
+            continue
+        node = f"elb:{arn}"
+        name = lb.get("Name", arn)
+        if lb.get("Scheme") == "internet-facing":
+            findings.append({"id": "ELB-PUB-001", "severity": "MEDIUM", "category": "elb_public",
+                "title": f"Load balancer '{name}' is internet-facing",
+                "entity": f"elb/{name}", "entity_arn": arn,
+                "description": "The load balancer scheme is 'internet-facing' — its targets are reachable "
+                               "from the internet (subject to security groups / listener rules).",
+                "matched_actions": [], "source_policy": "LBConfig", "source_type": "elb_config",
+                "resource": [arn], "remediation": "Confirm public exposure is intended; otherwise use an internal scheme."})
+        for tgt in lb.get("Targets", []):
+            kind, tid = tgt.get("kind"), tgt.get("id")
+            if not tid:
+                continue
+            if kind == "lambda":
+                target_node = f"lambda:{tid}"
+            elif kind == "instance":
+                target_node = tid  # EC2 instance node id == instance id
+            else:
+                continue  # ip targets have no graph node
+            edges.append({"source": node, "target": target_node, "type": "EXPOSES",
+                          "weight": EXTRA_WEIGHTS["EXPOSES"], "category": "elb",
+                          "lb_scheme": lb.get("Scheme")})
+
+    # ── Route53 dangling-record candidates ──
+    for zone in data["route53"]:
+        for cand in zone.get("TakeoverCandidates", []):
+            findings.append({"id": "ROUTE53-DANGLING-001", "severity": "LOW", "category": "route53_dangling",
+                "title": f"Potential dangling DNS record: {cand.get('Name')}",
+                "entity": f"route53/{zone.get('Name')}", "entity_arn": zone.get("Id"),
+                "description": f"Record '{cand.get('Name')}' points at '{cand.get('Target')}', a takeover-prone "
+                               f"target. If the backing resource no longer exists, the subdomain may be hijackable.",
+                "matched_actions": [], "source_policy": "DNS", "source_type": "route53_record",
+                "resource": [cand.get('Name')],
+                "remediation": "Verify the target resource still exists; remove the record if not."})
+
+    return {"edges": edges, "findings": findings}
+
+
+# ──────────────────────────────────────────────────────────────
 # Kubernetes (EKS + IRSA) Relationship Analysis
 # ──────────────────────────────────────────────────────────────
 
@@ -2823,6 +3750,46 @@ def _analyze_k8s_relationships(report_path, permission_map, roles):
 
 
 # ──────────────────────────────────────────────────────────────
+# Documentation references (finding → attack_paths.md)
+# ──────────────────────────────────────────────────────────────
+
+DOC_BASE = "https://github.com/0xj4f/aws-enumerator/blob/main/docs/attack_paths.md"
+
+# Finding-ID prefix → attack_paths.md section anchor. Lets a finding "signal"
+# its documented attack path (rendered as a link in the dashboard + printed for
+# CRITICAL findings at run end). Anchors must match headings in attack_paths.md.
+_DOC_ANCHORS = {
+    "PRIVESC": "#common-privilege-escalation-patterns",
+    "DANGER": "#high-value-targets-to-hunt",
+    "TRUST": "#scenario-6--youre-external-no-foothold-yet",
+    "EC2": "#scenario-1--you-compromised-an-ec2-instance",
+    "K8S": "#scenario-2--you-compromised-a-kubernetes-pod",
+    "S3": "#scenario-5--you-have-access-to-an-s3-bucket",
+    "COGNITO": "#scenario-7--cognito-unauthenticated-identity-pool",
+    # Resource-exposure / external-access findings (shared section)
+    "KMS": "#resource-exposure--external-access-findings",
+    "LAMBDA": "#resource-exposure--external-access-findings",
+    "MSG": "#resource-exposure--external-access-findings",
+    "ECR": "#resource-exposure--external-access-findings",
+    "DDB": "#resource-exposure--external-access-findings",
+    "RDS": "#resource-exposure--external-access-findings",
+    "APIGW": "#resource-exposure--external-access-findings",
+    "EBS": "#resource-exposure--external-access-findings",
+    "ROUTE53": "#resource-exposure--external-access-findings",
+    "SECRET": "#resource-exposure--external-access-findings",
+    "PARAM": "#resource-exposure--external-access-findings",
+}
+
+
+def _doc_reference(finding_id):
+    """Map a finding id (e.g. 'PRIVESC-014') to its attack_paths.md doc URL."""
+    if not isinstance(finding_id, str) or not finding_id:
+        return DOC_BASE
+    prefix = finding_id.split("-")[0].upper()
+    return f"{DOC_BASE}{_DOC_ANCHORS.get(prefix, '')}"
+
+
+# ──────────────────────────────────────────────────────────────
 # Main Entry Point
 # ──────────────────────────────────────────────────────────────
 
@@ -2887,7 +3854,36 @@ def analyze(report_path):
     findings.extend(lambda_relationships.get("findings", []))
     lambda_edge_count = len(lambda_relationships.get("edges", []))
 
-    # 9. Save reports
+    # 9. KMS relationships
+    kms_relationships = _analyze_kms_relationships(report_path, permission_map, roles, users)
+    findings.extend(kms_relationships.get("findings", []))
+    kms_edge_count = len(kms_relationships.get("edges", []))
+
+    # 10. Compute relationships (ECS, CloudFormation, Glue, CodeBuild, SageMaker)
+    compute_relationships = _analyze_compute_relationships(report_path, permission_map, roles, users)
+    findings.extend(compute_relationships.get("findings", []))
+    compute_edge_count = len(compute_relationships.get("edges", []))
+
+    # 11. Messaging relationships (SNS + SQS)
+    messaging_relationships = _analyze_messaging_relationships(report_path, permission_map, roles, users)
+    findings.extend(messaging_relationships.get("findings", []))
+    messaging_edge_count = len(messaging_relationships.get("edges", []))
+
+    # 12. New-surface relationships (ECR, RDS, API Gateway, DynamoDB)
+    newsurface_relationships = _analyze_newsurface_relationships(report_path, permission_map, roles, users)
+    findings.extend(newsurface_relationships.get("findings", []))
+    newsurface_edge_count = len(newsurface_relationships.get("edges", []))
+
+    # 13. Extra relationships (Cognito, EBS snapshots, ELB, Route53)
+    extra_relationships = _analyze_extra_relationships(report_path, permission_map, roles, users)
+    findings.extend(extra_relationships.get("findings", []))
+    extra_edge_count = len(extra_relationships.get("edges", []))
+
+    # 14. Save reports
+    # Signal documentation: link every finding to its attack-path section.
+    for f in findings:
+        f["reference"] = _doc_reference(f.get("id"))
+
     with open(os.path.join(analysis_dir, "findings.json"), "w") as f:
         json.dump({"findings": findings}, f, indent=2, default=str)
 
@@ -2912,6 +3908,21 @@ def analyze(report_path):
     with open(os.path.join(analysis_dir, "lambda_relationships.json"), "w") as f:
         json.dump(lambda_relationships, f, indent=2, default=str)
 
+    with open(os.path.join(analysis_dir, "kms_relationships.json"), "w") as f:
+        json.dump(kms_relationships, f, indent=2, default=str)
+
+    with open(os.path.join(analysis_dir, "compute_relationships.json"), "w") as f:
+        json.dump(compute_relationships, f, indent=2, default=str)
+
+    with open(os.path.join(analysis_dir, "messaging_relationships.json"), "w") as f:
+        json.dump(messaging_relationships, f, indent=2, default=str)
+
+    with open(os.path.join(analysis_dir, "newsurface_relationships.json"), "w") as f:
+        json.dump(newsurface_relationships, f, indent=2, default=str)
+
+    with open(os.path.join(analysis_dir, "extra_relationships.json"), "w") as f:
+        json.dump(extra_relationships, f, indent=2, default=str)
+
     summary = _generate_summary(findings)
     with open(os.path.join(analysis_dir, "summary.json"), "w") as f:
         json.dump(summary, f, indent=2)
@@ -2927,6 +3938,17 @@ def analyze(report_path):
     else:
         print("    \033[1;32m[+]\033[0m No findings detected")
 
+    # Signal documentation for CRITICAL findings — point the operator at the
+    # documented attack path for each one.
+    criticals = [f for f in findings if f.get("severity") == "CRITICAL"]
+    if criticals:
+        print(f"    \033[1;31m[!]\033[0m {len(criticals)} CRITICAL path(s) — see attack-path docs:")
+        for f in criticals[:20]:
+            print(f"        \033[1;31m•\033[0m {f.get('id')}  {f.get('entity', '')}")
+            print(f"          \033[1;36m{f.get('reference', '')}\033[0m")
+        if len(criticals) > 20:
+            print(f"        \033[1;33m…and {len(criticals) - 20} more\033[0m")
+
     if s3_edge_count > 0:
         print(f"    \033[1;32m[+]\033[0m S3 relationships: {s3_edge_count} edges discovered")
 
@@ -2941,5 +3963,20 @@ def analyze(report_path):
 
     if lambda_edge_count > 0:
         print(f"    \033[1;32m[+]\033[0m Lambda relationships: {lambda_edge_count} edges discovered")
+
+    if kms_edge_count > 0:
+        print(f"    \033[1;32m[+]\033[0m KMS relationships: {kms_edge_count} edges discovered")
+
+    if compute_edge_count > 0:
+        print(f"    \033[1;32m[+]\033[0m Compute relationships: {compute_edge_count} edges discovered")
+
+    if messaging_edge_count > 0:
+        print(f"    \033[1;32m[+]\033[0m Messaging relationships: {messaging_edge_count} edges discovered")
+
+    if newsurface_edge_count > 0:
+        print(f"    \033[1;32m[+]\033[0m ECR/RDS/APIGW/DynamoDB relationships: {newsurface_edge_count} edges discovered")
+
+    if extra_edge_count > 0:
+        print(f"    \033[1;32m[+]\033[0m Cognito/EBS/ELB relationships: {extra_edge_count} edges discovered")
 
     print("    \033[1;32m[+]\033[0m Policy Analysis Finished!")
