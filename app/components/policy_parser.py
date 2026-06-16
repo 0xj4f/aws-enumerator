@@ -1953,6 +1953,313 @@ def _analyze_secrets_relationships(report_path, permission_map, roles, users):
 
 
 # ──────────────────────────────────────────────────────────────
+# Lambda Relationship Analysis
+# ──────────────────────────────────────────────────────────────
+
+LAMBDA_INVOKE_ACTIONS = [
+    "lambda:InvokeFunction",
+    "lambda:InvokeFunctionUrl",
+    "lambda:InvokeAsync",
+]
+LAMBDA_UPDATE_CODE_ACTIONS = [
+    "lambda:UpdateFunctionCode",
+]
+LAMBDA_MODIFY_CONFIG_ACTIONS = [
+    "lambda:UpdateFunctionConfiguration",
+    "lambda:AddPermission",
+    "lambda:CreateFunctionUrlConfig",
+    "lambda:UpdateFunctionUrlConfig",
+    "lambda:PublishVersion",
+    "lambda:UpdateAlias",
+]
+
+LAMBDA_ACCESS_WEIGHTS = {
+    "CAN_INVOKE": 1,
+    "CAN_UPDATE_CODE": 1,   # update code -> run arbitrary code as the execution role
+    "CAN_MODIFY_CONFIG": 1,
+    "USES_ROLE": 0,         # controlling a function == acting as its execution role
+    "LAMBDA_GRANTS_INVOKE": 1,
+    "LAMBDA_GRANTS_CROSS_ACCOUNT": 2,
+    "LAMBDA_GRANTS_PUBLIC": 0,
+}
+
+
+def _arn_matches_lambda(resource_arn, function_arn):
+    """Check if a policy resource ARN matches a Lambda function ARN.
+
+    Function ARN format: arn:aws:lambda:REGION:ACCT:function:NAME[:QUALIFIER]
+    Resources may match by full ARN, by wildcard, or carry a version/alias
+    qualifier the unqualified function ARN does not.
+    """
+    if not isinstance(resource_arn, str) or not function_arn:
+        return False
+    if resource_arn == '*':
+        return True
+    if not resource_arn.startswith('arn:aws:lambda:'):
+        return False
+    r = resource_arn.lower()
+    f = function_arn.lower()
+    if fnmatch.fnmatch(f, r) or fnmatch.fnmatch(r, f):
+        return True
+    # Resource carries a trailing :qualifier (…:function:name:1 / …:function:name:*);
+    # compare against the qualifier-stripped base.
+    parts = r.split(':')
+    if len(parts) >= 8:
+        r_base = ':'.join(parts[:7])
+        if fnmatch.fnmatch(f, r_base):
+            return True
+    return False
+
+
+def _classify_lambda_access(actions):
+    """Return a set of CAN_INVOKE/CAN_UPDATE_CODE/CAN_MODIFY_CONFIG and matched actions."""
+    access = set()
+    matched = []
+    for action in actions:
+        if _action_matches(action, 'lambda:*') or action == '*':
+            access.update({'CAN_INVOKE', 'CAN_UPDATE_CODE', 'CAN_MODIFY_CONFIG'})
+            matched.append(action)
+            continue
+        for a in LAMBDA_INVOKE_ACTIONS:
+            if _action_matches(action, a):
+                access.add('CAN_INVOKE')
+                matched.append(action)
+                break
+        for a in LAMBDA_UPDATE_CODE_ACTIONS:
+            if _action_matches(action, a):
+                access.add('CAN_UPDATE_CODE')
+                matched.append(action)
+                break
+        for a in LAMBDA_MODIFY_CONFIG_ACTIONS:
+            if _action_matches(action, a):
+                access.add('CAN_MODIFY_CONFIG')
+                matched.append(action)
+                break
+    return access, list(set(matched))
+
+
+def _load_lambda_data(report_path):
+    """Load Lambda data, handling both single-region and --all modes."""
+    functions, resource_policies = [], {}
+
+    def _load_region(region_path):
+        fns = _load_json(os.path.join(region_path, "lambda", "functions.json"))
+        if isinstance(fns, list):
+            functions.extend(fns)
+
+        rp_dir = os.path.join(region_path, "lambda", "resource_policies")
+        if os.path.isdir(rp_dir):
+            for fname in os.listdir(rp_dir):
+                if fname.endswith('.json'):
+                    rp = _load_json(os.path.join(rp_dir, fname))
+                    if isinstance(rp, dict) and rp.get('FunctionArn'):
+                        resource_policies[rp['FunctionArn']] = rp
+
+    if os.path.isdir(os.path.join(report_path, "lambda")):
+        _load_region(report_path)
+    else:
+        # --all mode: scan sibling region dirs
+        parent = os.path.dirname(report_path)
+        if os.path.isdir(parent):
+            for entry in os.listdir(parent):
+                rp = os.path.join(parent, entry)
+                if os.path.isdir(rp) and entry != 'global':
+                    _load_region(rp)
+
+    return functions, resource_policies
+
+
+def _analyze_lambda_relationships(report_path, permission_map, roles, users):
+    """Build IAM→Lambda, Lambda→execution-role, and resource-policy edges + findings."""
+    edges = []
+    findings = []
+
+    functions, resource_policies = _load_lambda_data(report_path)
+    if not functions:
+        return {"edges": [], "findings": []}
+
+    # Detect account ID from any role ARN
+    account_id = None
+    for r in roles:
+        account_id = _extract_account_from_arn(r.get('Arn', ''))
+        if account_id:
+            break
+
+    # ── Step 1: IAM → Lambda edges (from permission_map) ──
+    for entity_type in ["users", "roles"]:
+        for entity_name, entity_data in permission_map.get(entity_type, {}).items():
+            entity_arn = entity_data.get('arn', '')
+
+            for stmt in entity_data.get('effective_statements', []):
+                actions = stmt.get('actions', [])
+                resources = stmt.get('resources', [])
+
+                has_lambda = any(
+                    _action_matches(a, 'lambda:*') or a == '*' or a.lower().startswith('lambda:')
+                    for a in actions
+                )
+                if not has_lambda:
+                    continue
+
+                access, matched_acts = _classify_lambda_access(actions)
+                if not access:
+                    continue
+
+                for fn in functions:
+                    fn_arn = fn.get('FunctionArn')
+                    if not fn_arn:
+                        continue
+                    if not any(_arn_matches_lambda(r, fn_arn) for r in resources):
+                        continue
+
+                    # Pick the highest-privilege edge type when several apply.
+                    if 'CAN_UPDATE_CODE' in access:
+                        edge_type = 'CAN_UPDATE_CODE'
+                    elif 'CAN_MODIFY_CONFIG' in access:
+                        edge_type = 'CAN_MODIFY_CONFIG'
+                    else:
+                        edge_type = 'CAN_INVOKE'
+
+                    edges.append({
+                        "source": entity_arn,
+                        "target": f"lambda:{fn_arn}",
+                        "type": edge_type,
+                        "weight": LAMBDA_ACCESS_WEIGHTS.get(edge_type, 1),
+                        "category": "compute",
+                        "access_types": sorted(access),
+                        "source_policy": stmt.get('source', 'unknown'),
+                        "source_type": stmt.get('source_type', 'unknown'),
+                        "matched_actions": matched_acts,
+                        "is_wildcard_resource": any(r == '*' for r in resources),
+                    })
+
+    # ── Step 2: Lambda → execution role edges ──
+    for fn in functions:
+        fn_arn = fn.get('FunctionArn')
+        role_arn = fn.get('Role')
+        if fn_arn and role_arn:
+            edges.append({
+                "source": f"lambda:{fn_arn}",
+                "target": role_arn,
+                "type": "USES_ROLE",
+                "weight": LAMBDA_ACCESS_WEIGHTS["USES_ROLE"],
+                "category": "compute",
+                "function_name": fn.get('FunctionName'),
+            })
+
+    # ── Step 3: Public Function URL findings ──
+    for fn in functions:
+        url = fn.get('FunctionUrl')
+        if isinstance(url, dict) and url.get('AuthType') == 'NONE':
+            fn_name = fn.get('FunctionName', fn.get('FunctionArn'))
+            findings.append({
+                "id": "LAMBDA-URL-001",
+                "severity": "HIGH",
+                "category": "lambda_public",
+                "title": f"Lambda '{fn_name}' has a public Function URL (AuthType=NONE)",
+                "entity": f"lambda/{fn_name}",
+                "entity_arn": fn.get('FunctionArn'),
+                "description": "The function has a Function URL with AuthType 'NONE', so it is "
+                               "invocable by anyone on the internet without authentication.",
+                "matched_actions": ["lambda:InvokeFunctionUrl"],
+                "source_policy": "FunctionUrlConfig",
+                "source_type": "lambda_config",
+                "resource": [fn.get('FunctionArn')],
+                "remediation": "Set AuthType to AWS_IAM, or remove the Function URL if not needed.",
+            })
+
+    # ── Step 4: Resource-policy edges + findings ──
+    for fn_arn, rp_data in resource_policies.items():
+        policy_doc = rp_data.get('ResourcePolicy', {})
+        if not isinstance(policy_doc, dict):
+            continue
+
+        fn_name = rp_data.get('FunctionName', fn_arn)
+        for stmt in policy_doc.get('Statement', []):
+            if stmt.get('Effect') != 'Allow':
+                continue
+            principals = _extract_principals(stmt.get('Principal', {}))
+            granted_actions = _normalize_to_list(stmt.get('Action', []))
+            conditions = stmt.get('Condition', {})
+
+            for principal in principals:
+                pval = principal['value']
+                ptype = principal['type']
+
+                if pval == '*':
+                    edges.append({
+                        "source": f"lambda:{fn_arn}",
+                        "target": "principal:*",
+                        "type": "LAMBDA_GRANTS_PUBLIC",
+                        "weight": LAMBDA_ACCESS_WEIGHTS["LAMBDA_GRANTS_PUBLIC"],
+                        "category": "compute",
+                        "granted_actions": granted_actions,
+                        "has_conditions": bool(conditions),
+                    })
+                    # A '*' principal gated by a SourceArn/SourceAccount condition is the
+                    # normal way services (S3, SNS, …) invoke Lambda — only flag unconditional.
+                    if not conditions:
+                        findings.append({
+                            "id": "LAMBDA-PUB-001",
+                            "severity": "HIGH",
+                            "category": "lambda_public",
+                            "title": f"Lambda '{fn_name}' grants public invoke via resource policy",
+                            "entity": f"lambda/{fn_name}",
+                            "entity_arn": fn_arn,
+                            "description": "The function resource policy grants Principal '*' "
+                                           "without Condition constraints — any AWS principal "
+                                           "may invoke it.",
+                            "matched_actions": granted_actions,
+                            "source_policy": "ResourcePolicy",
+                            "source_type": "lambda_resource_policy",
+                            "resource": [fn_arn],
+                            "remediation": "Scope the Principal, or add a SourceArn/SourceAccount Condition.",
+                        })
+                    continue
+
+                if ptype == 'Service':
+                    continue  # service principals (e.g., s3.amazonaws.com) — not a graph node
+
+                principal_account = _extract_account_from_arn(pval)
+                is_cross_account = (
+                    principal_account is not None and
+                    account_id is not None and
+                    principal_account != account_id
+                )
+
+                edge_type = "LAMBDA_GRANTS_CROSS_ACCOUNT" if is_cross_account else "LAMBDA_GRANTS_INVOKE"
+                edges.append({
+                    "source": f"lambda:{fn_arn}",
+                    "target": pval,
+                    "type": edge_type,
+                    "weight": LAMBDA_ACCESS_WEIGHTS.get(edge_type, 1),
+                    "category": "compute",
+                    "granted_actions": granted_actions,
+                    "has_conditions": bool(conditions),
+                    "is_cross_account": is_cross_account,
+                })
+
+                if is_cross_account:
+                    findings.append({
+                        "id": "LAMBDA-XACCT-001",
+                        "severity": "MEDIUM",
+                        "category": "lambda_cross_account",
+                        "title": f"Lambda '{fn_name}' grants invoke cross-account to {principal_account}",
+                        "entity": f"lambda/{fn_name}",
+                        "entity_arn": fn_arn,
+                        "description": f"The function resource policy grants invoke to principal "
+                                       f"'{pval}' from account {principal_account}.",
+                        "matched_actions": granted_actions,
+                        "source_policy": "ResourcePolicy",
+                        "source_type": "lambda_resource_policy",
+                        "resource": [fn_arn],
+                        "remediation": "Verify cross-account invoke is intended.",
+                    })
+
+    return {"edges": edges, "findings": findings}
+
+
+# ──────────────────────────────────────────────────────────────
 # Kubernetes (EKS + IRSA) Relationship Analysis
 # ──────────────────────────────────────────────────────────────
 
@@ -2575,7 +2882,12 @@ def analyze(report_path):
     findings.extend(secrets_relationships.get("findings", []))
     secrets_edge_count = len(secrets_relationships.get("edges", []))
 
-    # 8. Save reports
+    # 8. Lambda relationships
+    lambda_relationships = _analyze_lambda_relationships(report_path, permission_map, roles, users)
+    findings.extend(lambda_relationships.get("findings", []))
+    lambda_edge_count = len(lambda_relationships.get("edges", []))
+
+    # 9. Save reports
     with open(os.path.join(analysis_dir, "findings.json"), "w") as f:
         json.dump({"findings": findings}, f, indent=2, default=str)
 
@@ -2596,6 +2908,9 @@ def analyze(report_path):
 
     with open(os.path.join(analysis_dir, "secrets_relationships.json"), "w") as f:
         json.dump(secrets_relationships, f, indent=2, default=str)
+
+    with open(os.path.join(analysis_dir, "lambda_relationships.json"), "w") as f:
+        json.dump(lambda_relationships, f, indent=2, default=str)
 
     summary = _generate_summary(findings)
     with open(os.path.join(analysis_dir, "summary.json"), "w") as f:
@@ -2623,5 +2938,8 @@ def analyze(report_path):
 
     if secrets_edge_count > 0:
         print(f"    \033[1;32m[+]\033[0m Secrets/SSM relationships: {secrets_edge_count} edges discovered")
+
+    if lambda_edge_count > 0:
+        print(f"    \033[1;32m[+]\033[0m Lambda relationships: {lambda_edge_count} edges discovered")
 
     print("    \033[1;32m[+]\033[0m Policy Analysis Finished!")

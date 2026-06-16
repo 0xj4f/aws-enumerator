@@ -108,13 +108,15 @@ aws-enumerator [--region REGION] [--all] [--zip]
 | `--region` | AWS region to enumerate (default: `eu-west-2`) |
 | `--all` | Enumerate all enabled regions |
 | `--zip` | Create a zip archive of the report |
+| `--dashboard` | Serve the attack-graph dashboard locally and open it in your browser (no AWS credentials needed) |
+| `--port` | Port for `--dashboard` (default: `8000`) |
 
 ### Dashboard
 
-After enumeration, open the dashboard and load your report:
+The dashboard ships with the package. Serve it and open your browser with:
 
 ```bash
-open dashboard/index.html
+aws-enumerator --dashboard
 ```
 
 Drop the `.zip` file onto the dashboard or click "Load Report".
@@ -204,13 +206,18 @@ aws-enumerator/
             cloudfront.py        # CloudFront
             waf.py               # WAF
             flowlogs.py          # Flow logs
+            secretsmanager.py    # Secrets Manager (metadata only)
+            ssm.py               # SSM Parameter Store (metadata only)
+            lambda_.py           # Lambda functions
             policy_parser.py     # Policy analysis & relationship engine
         utils/
             aws_utils.py         # Boto3 session helpers
             eks_auth.py          # STS-based K8s API token generator
+            dashboard.py         # Local dashboard web server (--dashboard)
             regions.json         # AWS regions reference
-    dashboard/
-        index.html               # Attack graph dashboard (single file)
+        dashboard/               # Attack graph dashboard (ships with package)
+            index.html           # Single-file Cytoscape.js app
+            icons/               # AWS service node icons
     docs/
         attack_paths.md          # Attack scenarios & path field guide
     Dockerfile

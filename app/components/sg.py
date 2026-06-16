@@ -1,15 +1,19 @@
-import json, os
+try:
+    from app.utils.aws_utils import safe, save_json
+except ImportError:
+    from utils.aws_utils import safe, save_json
+
 
 def enumerate(session, path):
     print("    \033[1;32m[+]\033[0m Security Groups Enumeration Starting...")
-    os.makedirs(path, exist_ok=True)
     ec2_client = session.client("ec2")
 
-    # Describe security groups
-    response = ec2_client.describe_security_groups()
-    security_groups = response["SecurityGroups"]
+    security_groups = safe(
+        "SG describe_security_groups",
+        lambda: ec2_client.describe_security_groups()["SecurityGroups"],
+        default=[],
+    )
 
-    # Prepare a detailed list
     detailed_sg_info = []
     for sg in security_groups:
         sg_info = {
@@ -21,28 +25,27 @@ def enumerate(session, path):
             "OutboundRules": sg.get("IpPermissionsEgress", [])
         }
 
-        # Find associated ENIs (network interfaces)
-        enis = ec2_client.describe_network_interfaces(
-            Filters=[
-                {"Name": "group-id", "Values": [sg["GroupId"]]}
-            ]
-        )["NetworkInterfaces"]
+        # Find associated ENIs (network interfaces) — isolated per group.
+        enis = safe(
+            f"SG {sg['GroupId']} describe_network_interfaces",
+            lambda gid=sg["GroupId"]: ec2_client.describe_network_interfaces(
+                Filters=[{"Name": "group-id", "Values": [gid]}]
+            )["NetworkInterfaces"],
+            default=[],
+        )
 
-        associated_resources = []
-        for eni in enis:
-            association = {
+        sg_info["AssociatedResources"] = [
+            {
                 "NetworkInterfaceId": eni["NetworkInterfaceId"],
                 "PrivateIpAddress": eni.get("PrivateIpAddress"),
                 "Attachment": eni.get("Attachment"),
                 "Description": eni.get("Description"),
                 "InstanceId": eni.get("Attachment", {}).get("InstanceId")
             }
-            associated_resources.append(association)
-
-        sg_info["AssociatedResources"] = associated_resources
+            for eni in enis
+        ]
         detailed_sg_info.append(sg_info)
 
-    with open(f"{path}/security_groups.json", "w") as f:
-        json.dump(detailed_sg_info, f, indent=2, default=str)
+    save_json(path, "security_groups.json", detailed_sg_info)
 
     print("    \033[1;32m[+]\033[0m Security Groups Enumeration Finished!")
