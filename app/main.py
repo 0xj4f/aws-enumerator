@@ -9,12 +9,16 @@ from datetime import datetime
 
 try:
     from app.components import (iam, vpc, sg, ec2, s3, cloudtrail, cloudfront, waf,
-                                 flowlogs, eks, k8s, secretsmanager, ssm, lambda_, policy_parser)
+                                 flowlogs, eks, k8s, secretsmanager, ssm, lambda_, kms,
+                                 ecs, cloudformation, glue, codebuild, sagemaker,
+                                 sns, sqs, ecr, rds, dynamodb, apigateway, policy_parser)
     from app.utils.aws_utils import get_boto3_session, get_enabled_regions
     from app.utils.dashboard import serve_dashboard
 except ImportError:
     from components import (iam, vpc, sg, ec2, s3, cloudtrail, cloudfront, waf,
-                            flowlogs, eks, k8s, secretsmanager, ssm, lambda_, policy_parser)
+                            flowlogs, eks, k8s, secretsmanager, ssm, lambda_, kms,
+                            ecs, cloudformation, glue, codebuild, sagemaker,
+                            sns, sqs, ecr, rds, dynamodb, apigateway, policy_parser)
     from utils.aws_utils import get_boto3_session, get_enabled_regions
     from utils.dashboard import serve_dashboard
 
@@ -108,6 +112,18 @@ def enumerate_single_region(session, base_path):
     run_module("secretsmanager", secretsmanager.enumerate, session, f"{base_path}/secretsmanager")
     run_module("ssm", ssm.enumerate, session, f"{base_path}/ssm")
     run_module("lambda", lambda_.enumerate, session, f"{base_path}/lambda")
+    run_module("kms", kms.enumerate, session, f"{base_path}/kms")
+    run_module("ecs", ecs.enumerate, session, f"{base_path}/ecs")
+    run_module("cloudformation", cloudformation.enumerate, session, f"{base_path}/cloudformation")
+    run_module("glue", glue.enumerate, session, f"{base_path}/glue")
+    run_module("codebuild", codebuild.enumerate, session, f"{base_path}/codebuild")
+    run_module("sagemaker", sagemaker.enumerate, session, f"{base_path}/sagemaker")
+    run_module("sns", sns.enumerate, session, f"{base_path}/sns")
+    run_module("sqs", sqs.enumerate, session, f"{base_path}/sqs")
+    run_module("ecr", ecr.enumerate, session, f"{base_path}/ecr")
+    run_module("rds", rds.enumerate, session, f"{base_path}/rds")
+    run_module("dynamodb", dynamodb.enumerate, session, f"{base_path}/dynamodb")
+    run_module("apigateway", apigateway.enumerate, session, f"{base_path}/apigateway")
 
     # Run policy analysis
     run_module("policy_parser", policy_parser.analyze, base_path)
@@ -139,6 +155,18 @@ def enumerate_regional_services(session, region_path):
     run_module("secretsmanager", secretsmanager.enumerate, session, f"{region_path}/secretsmanager")
     run_module("ssm", ssm.enumerate, session, f"{region_path}/ssm")
     run_module("lambda", lambda_.enumerate, session, f"{region_path}/lambda")
+    run_module("kms", kms.enumerate, session, f"{region_path}/kms")
+    run_module("ecs", ecs.enumerate, session, f"{region_path}/ecs")
+    run_module("cloudformation", cloudformation.enumerate, session, f"{region_path}/cloudformation")
+    run_module("glue", glue.enumerate, session, f"{region_path}/glue")
+    run_module("codebuild", codebuild.enumerate, session, f"{region_path}/codebuild")
+    run_module("sagemaker", sagemaker.enumerate, session, f"{region_path}/sagemaker")
+    run_module("sns", sns.enumerate, session, f"{region_path}/sns")
+    run_module("sqs", sqs.enumerate, session, f"{region_path}/sqs")
+    run_module("ecr", ecr.enumerate, session, f"{region_path}/ecr")
+    run_module("rds", rds.enumerate, session, f"{region_path}/rds")
+    run_module("dynamodb", dynamodb.enumerate, session, f"{region_path}/dynamodb")
+    run_module("apigateway", apigateway.enumerate, session, f"{region_path}/apigateway")
 
 
 def parse_args():
