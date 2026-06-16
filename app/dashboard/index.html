@@ -783,7 +783,8 @@ const NODE_COLORS = {
     secret: '#FF7043', ssmparam: '#26A69A',
     ecstask: '#FF9900', cfnstack: '#D13212', gluejob: '#C925D1',
     codebuild: '#3B48CC', sagemaker: '#01A88D',
-    ecr: '#F58536', rds: '#3F8624', apigw: '#A166FF', dynamodb: '#2E73B8'
+    ecr: '#F58536', rds: '#3F8624', apigw: '#A166FF', dynamodb: '#2E73B8',
+    cognito: '#D81B60', ebssnapshot: '#8E24AA', elb: '#5C6BC0', route53zone: '#00897B'
 };
 
 const NODE_SHAPES = {
@@ -797,7 +798,8 @@ const NODE_SHAPES = {
     secret: 'cut-rectangle', ssmparam: 'tag',
     ecstask: 'round-rectangle', cfnstack: 'rectangle', gluejob: 'diamond',
     codebuild: 'round-rectangle', sagemaker: 'hexagon',
-    ecr: 'round-rectangle', rds: 'barrel', apigw: 'hexagon', dynamodb: 'rectangle'
+    ecr: 'round-rectangle', rds: 'barrel', apigw: 'hexagon', dynamodb: 'rectangle',
+    cognito: 'ellipse', ebssnapshot: 'round-rectangle', elb: 'octagon', route53zone: 'pentagon'
 };
 
 const S3_EDGE_COLORS = {
@@ -880,6 +882,15 @@ const NEWSURFACE_EDGE_COLORS = {
     CAN_WRITE_TABLE: '#FFA726',
     DDB_GRANTS_PUBLIC: '#e94560',
     DDB_GRANTS_CROSS_ACCOUNT: '#EF5350'
+};
+
+const EXTRA_EDGE_COLORS = {
+    POOL_AUTH_ROLE: '#9CCC65',
+    POOL_UNAUTH_ROLE: '#e94560',
+    EBS_SHARED_PUBLIC: '#e94560',
+    EBS_SHARED_CROSS_ACCOUNT: '#EF5350',
+    EBS_ENCRYPTED_BY: '#78909C',
+    EXPOSES: '#FFA726'
 };
 
 // ── File Loading (Zip) ──
@@ -1001,6 +1012,7 @@ async function processLoadedFiles(files) {
     reportData.computeRelationships = readJSON(analysisPrefix + 'analysis/compute_relationships.json') || { edges: [], findings: [] };
     reportData.messagingRelationships = readJSON(analysisPrefix + 'analysis/messaging_relationships.json') || { edges: [], findings: [] };
     reportData.newsurfaceRelationships = readJSON(analysisPrefix + 'analysis/newsurface_relationships.json') || { edges: [], findings: [] };
+    reportData.extraRelationships = readJSON(analysisPrefix + 'analysis/extra_relationships.json') || { edges: [], findings: [] };
     reportData.manifest = readJSON('manifest.json') || {};
 
     // Load S3 and EC2 (may be in various region dirs)
@@ -1890,6 +1902,74 @@ function buildGraph() {
         });
     }
 
+    // Extra edges (Cognito pool→role, EBS snapshot sharing, ELB→target exposure)
+    const EXTRA_PREFIXES = ['cognito', 'ebssnapshot', 'elb', 'kms', 'lambda'];
+    const extraEdges = (reportData.extraRelationships && reportData.extraRelationships.edges) || [];
+    for (const edge of extraEdges) {
+        let sourceId = edge.source;
+        let targetId = edge.target;
+
+        if (!nodeIds.has(sourceId) && sourceId.startsWith('arn:aws:iam:')) {
+            const name = sourceId.split('/').pop();
+            const resolved = findNodeId(nodeIds, 'role', name) || findNodeId(nodeIds, 'user', name);
+            if (resolved) sourceId = resolved;
+        }
+        if (!nodeIds.has(targetId) && targetId.startsWith('arn:aws:iam:')) {
+            const name = targetId.split('/').pop();
+            const resolved = findNodeId(nodeIds, 'role', name) || findNodeId(nodeIds, 'user', name);
+            if (resolved) targetId = resolved;
+        }
+
+        // Create cognito/ebssnapshot/elb/kms/lambda placeholder nodes
+        for (const id of [sourceId, targetId]) {
+            if (nodeIds.has(id)) continue;
+            const colon = id.indexOf(':');
+            if (colon < 0) continue;
+            const prefix = id.slice(0, colon);
+            if (!EXTRA_PREFIXES.includes(prefix)) continue;
+            const remainder = id.slice(colon + 1);
+            const label = remainder.split(':').pop().split('/').pop() || remainder;
+            elements.push({
+                group: 'nodes',
+                data: { id: id, label: label, type: prefix, entityData: { arn: remainder, name: label } }
+            });
+            nodeIds.add(id);
+        }
+
+        // External role / cross-account principal placeholder
+        if (!nodeIds.has(targetId) && targetId.startsWith('arn:aws:iam:')) {
+            const label = targetId.split('/').pop() || targetId;
+            elements.push({
+                group: 'nodes',
+                data: { id: targetId, label: label, type: 'role', entityData: { Arn: targetId, external: true } }
+            });
+            nodeIds.add(targetId);
+        }
+
+        if (targetId === 'principal:*') continue;
+        if (!nodeIds.has(sourceId) || !nodeIds.has(targetId)) continue;
+
+        const edgeId = `${sourceId}->${targetId}:${edge.type}`;
+        if (elements.some(e => e.group === 'edges' && e.data.id === edgeId)) continue;
+
+        const color = EXTRA_EDGE_COLORS[edge.type] || '#888';
+        const category = edge.category || 'extra';
+        elements.push({
+            group: 'edges',
+            data: {
+                id: edgeId,
+                source: sourceId,
+                target: targetId,
+                type: edge.type,
+                weight: edge.weight != null ? edge.weight : 1,
+                category: category,
+                color: color,
+                label: edge.type.replace(/_/g, ' '),
+                s3Meta: edge
+            }
+        });
+    }
+
     // Initialize Cytoscape
     initGraph(elements);
     updateStats();
@@ -2441,7 +2521,11 @@ function showNodeDetail(node) {
         }
         html += '<div style="margin-top:4px;color:#8888aa;font-size:11px">';
         for (const f of findings) {
-            html += `${f.id}: ${f.title}<br>`;
+            html += `${f.id}: ${f.title}`;
+            if (f.reference) {
+                html += ` <a href="${f.reference}" target="_blank" rel="noopener" style="color:#4FC3F7;text-decoration:none">📖 attack path</a>`;
+            }
+            html += `<br>`;
         }
         html += '</div></div>';
     }

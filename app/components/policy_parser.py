@@ -495,6 +495,20 @@ def _build_permission_map(users, roles, role_attached, user_attached, group_atta
 
         perm_map["groups"][gname] = group_entry
 
+    # Propagate group permissions to member users. Without this, access granted
+    # only via group membership is invisible for the user across privesc,
+    # dangerous-permission, and every relationship analyzer (which read the
+    # user's effective_statements). Each inherited statement is tagged via_group.
+    for user_entry in perm_map["users"].values():
+        for gname in user_entry.get("groups", []):
+            group_entry = perm_map["groups"].get(gname)
+            if not group_entry:
+                continue
+            for stmt in group_entry.get("effective_statements", []):
+                inherited = dict(stmt)
+                inherited["via_group"] = gname
+                user_entry["effective_statements"].append(inherited)
+
     return perm_map
 
 
@@ -3022,6 +3036,157 @@ def _analyze_newsurface_relationships(report_path, permission_map, roles, users)
 
 
 # ──────────────────────────────────────────────────────────────
+# Extra Relationship Analysis (Cognito · EBS snapshots · ELB · Route53)
+# ──────────────────────────────────────────────────────────────
+
+EXTRA_WEIGHTS = {
+    "POOL_AUTH_ROLE": 1,
+    "POOL_UNAUTH_ROLE": 0,   # anonymous → role: cheap to traverse, high impact
+    "EBS_SHARED_PUBLIC": 0,
+    "EBS_SHARED_CROSS_ACCOUNT": 2,
+    "EBS_ENCRYPTED_BY": 3,
+    "EXPOSES": 1,
+}
+
+
+def _load_extra_data(report_path):
+    """Load Cognito/EBS/ELB (regional) + Route53 (global) normalized resources."""
+    data = {"cognito": [], "ebs": [], "elb": [], "route53": []}
+    dir_map = {"cognito": "cognito", "ebs": "ebs", "elb": "elb", "route53": "route53"}
+
+    def _load_region(region_path):
+        for key, d in dir_map.items():
+            arr = _load_json(os.path.join(region_path, d, "resources.json"))
+            if isinstance(arr, list):
+                data[key].extend(arr)
+
+    # Always load whatever is directly under report_path (single-region: all four;
+    # --all global path: route53).
+    _load_region(report_path)
+
+    # In --all mode (report_path == .../global) also scan sibling region dirs for
+    # the regional services (cognito/ebs/elb live per-region, route53 stays global).
+    if os.path.basename(report_path) == "global":
+        parent = os.path.dirname(report_path)
+        if os.path.isdir(parent):
+            for entry in os.listdir(parent):
+                rp = os.path.join(parent, entry)
+                if os.path.isdir(rp) and entry != "global":
+                    _load_region(rp)
+    return data
+
+
+def _analyze_extra_relationships(report_path, permission_map, roles, users):
+    """Cognito pool→role bridges (incl. anonymous unauth role), EBS public/shared
+    snapshot exposure, internet-facing ELB→target exposure, Route53 dangling records."""
+    edges, findings = [], []
+    data = _load_extra_data(report_path)
+    if not any(data.values()):
+        return {"edges": [], "findings": []}
+
+    account_id = None
+    for r in roles:
+        account_id = _extract_account_from_arn(r.get('Arn', ''))
+        if account_id:
+            break
+
+    # ── Cognito identity pools → IAM roles ──
+    for pool in data["cognito"]:
+        if pool.get("Kind") != "identity_pool":
+            continue
+        node = f"cognito:{pool.get('Id')}"
+        name = pool.get("Name", pool.get("Id"))
+        if pool.get("AuthRole"):
+            edges.append({"source": node, "target": pool["AuthRole"], "type": "POOL_AUTH_ROLE",
+                          "weight": EXTRA_WEIGHTS["POOL_AUTH_ROLE"], "category": "cognito", "pool_name": name})
+        if pool.get("UnauthRole"):
+            edges.append({"source": node, "target": pool["UnauthRole"], "type": "POOL_UNAUTH_ROLE",
+                          "weight": EXTRA_WEIGHTS["POOL_UNAUTH_ROLE"], "category": "cognito", "pool_name": name})
+            findings.append({"id": "COGNITO-UNAUTH-001", "severity": "HIGH", "category": "cognito_unauth",
+                "title": f"Cognito identity pool '{name}' grants an unauthenticated role",
+                "entity": f"cognito/{name}", "entity_arn": pool.get("Id"),
+                "description": f"The identity pool maps UNAUTHENTICATED identities to IAM role "
+                               f"'{pool['UnauthRole']}' — anyone on the internet can obtain credentials for it.",
+                "matched_actions": [], "source_policy": "IdentityPoolRoles", "source_type": "cognito_config",
+                "resource": [pool.get("Id")],
+                "remediation": "Remove the unauthenticated role or tightly scope it; set "
+                               "AllowUnauthenticatedIdentities=false if anonymous access isn't required."})
+
+    # ── EBS snapshot sharing ──
+    for snap in data["ebs"]:
+        sid = snap.get("Id")
+        if not sid:
+            continue
+        node = f"ebssnapshot:{sid}"
+        if snap.get("Public"):
+            edges.append({"source": node, "target": "principal:*", "type": "EBS_SHARED_PUBLIC",
+                          "weight": EXTRA_WEIGHTS["EBS_SHARED_PUBLIC"], "category": "ebs"})
+            findings.append({"id": "EBS-PUB-001", "severity": "HIGH", "category": "ebs_public",
+                "title": f"EBS snapshot '{sid}' is shared publicly",
+                "entity": f"ebssnapshot/{sid}", "entity_arn": sid,
+                "description": "The snapshot's createVolumePermission includes the 'all' group — anyone "
+                               "can create a volume from it and read the data.",
+                "matched_actions": [], "source_policy": "SnapshotAttributes", "source_type": "ebs_config",
+                "resource": [sid], "remediation": "Remove public sharing from the snapshot immediately."})
+        for acct in snap.get("SharedAccounts", []):
+            edges.append({"source": node, "target": f"arn:aws:iam::{acct}:root",
+                          "type": "EBS_SHARED_CROSS_ACCOUNT", "weight": EXTRA_WEIGHTS["EBS_SHARED_CROSS_ACCOUNT"],
+                          "category": "ebs", "is_cross_account": True})
+            findings.append({"id": "EBS-XACCT-001", "severity": "MEDIUM", "category": "ebs_cross_account",
+                "title": f"EBS snapshot '{sid}' is shared cross-account to {acct}",
+                "entity": f"ebssnapshot/{sid}", "entity_arn": sid,
+                "description": f"The snapshot is shared with account {acct} via createVolumePermission.",
+                "matched_actions": [], "source_policy": "SnapshotAttributes", "source_type": "ebs_config",
+                "resource": [sid], "remediation": "Verify cross-account sharing is intended."})
+        if snap.get("KmsKeyId"):
+            edges.append({"source": node, "target": f"kms:{snap['KmsKeyId']}", "type": "EBS_ENCRYPTED_BY",
+                          "weight": EXTRA_WEIGHTS["EBS_ENCRYPTED_BY"], "category": "kms", "kms_key_arn": snap["KmsKeyId"]})
+
+    # ── ELB exposure ──
+    for lb in data["elb"]:
+        arn = lb.get("Arn")
+        if not arn:
+            continue
+        node = f"elb:{arn}"
+        name = lb.get("Name", arn)
+        if lb.get("Scheme") == "internet-facing":
+            findings.append({"id": "ELB-PUB-001", "severity": "MEDIUM", "category": "elb_public",
+                "title": f"Load balancer '{name}' is internet-facing",
+                "entity": f"elb/{name}", "entity_arn": arn,
+                "description": "The load balancer scheme is 'internet-facing' — its targets are reachable "
+                               "from the internet (subject to security groups / listener rules).",
+                "matched_actions": [], "source_policy": "LBConfig", "source_type": "elb_config",
+                "resource": [arn], "remediation": "Confirm public exposure is intended; otherwise use an internal scheme."})
+        for tgt in lb.get("Targets", []):
+            kind, tid = tgt.get("kind"), tgt.get("id")
+            if not tid:
+                continue
+            if kind == "lambda":
+                target_node = f"lambda:{tid}"
+            elif kind == "instance":
+                target_node = tid  # EC2 instance node id == instance id
+            else:
+                continue  # ip targets have no graph node
+            edges.append({"source": node, "target": target_node, "type": "EXPOSES",
+                          "weight": EXTRA_WEIGHTS["EXPOSES"], "category": "elb",
+                          "lb_scheme": lb.get("Scheme")})
+
+    # ── Route53 dangling-record candidates ──
+    for zone in data["route53"]:
+        for cand in zone.get("TakeoverCandidates", []):
+            findings.append({"id": "ROUTE53-DANGLING-001", "severity": "LOW", "category": "route53_dangling",
+                "title": f"Potential dangling DNS record: {cand.get('Name')}",
+                "entity": f"route53/{zone.get('Name')}", "entity_arn": zone.get("Id"),
+                "description": f"Record '{cand.get('Name')}' points at '{cand.get('Target')}', a takeover-prone "
+                               f"target. If the backing resource no longer exists, the subdomain may be hijackable.",
+                "matched_actions": [], "source_policy": "DNS", "source_type": "route53_record",
+                "resource": [cand.get('Name')],
+                "remediation": "Verify the target resource still exists; remove the record if not."})
+
+    return {"edges": edges, "findings": findings}
+
+
+# ──────────────────────────────────────────────────────────────
 # Kubernetes (EKS + IRSA) Relationship Analysis
 # ──────────────────────────────────────────────────────────────
 
@@ -3585,6 +3750,46 @@ def _analyze_k8s_relationships(report_path, permission_map, roles):
 
 
 # ──────────────────────────────────────────────────────────────
+# Documentation references (finding → attack_paths.md)
+# ──────────────────────────────────────────────────────────────
+
+DOC_BASE = "https://github.com/0xj4f/aws-enumerator/blob/main/docs/attack_paths.md"
+
+# Finding-ID prefix → attack_paths.md section anchor. Lets a finding "signal"
+# its documented attack path (rendered as a link in the dashboard + printed for
+# CRITICAL findings at run end). Anchors must match headings in attack_paths.md.
+_DOC_ANCHORS = {
+    "PRIVESC": "#common-privilege-escalation-patterns",
+    "DANGER": "#high-value-targets-to-hunt",
+    "TRUST": "#scenario-6--youre-external-no-foothold-yet",
+    "EC2": "#scenario-1--you-compromised-an-ec2-instance",
+    "K8S": "#scenario-2--you-compromised-a-kubernetes-pod",
+    "S3": "#scenario-5--you-have-access-to-an-s3-bucket",
+    "COGNITO": "#scenario-7--cognito-unauthenticated-identity-pool",
+    # Resource-exposure / external-access findings (shared section)
+    "KMS": "#resource-exposure--external-access-findings",
+    "LAMBDA": "#resource-exposure--external-access-findings",
+    "MSG": "#resource-exposure--external-access-findings",
+    "ECR": "#resource-exposure--external-access-findings",
+    "DDB": "#resource-exposure--external-access-findings",
+    "RDS": "#resource-exposure--external-access-findings",
+    "APIGW": "#resource-exposure--external-access-findings",
+    "EBS": "#resource-exposure--external-access-findings",
+    "ROUTE53": "#resource-exposure--external-access-findings",
+    "SECRET": "#resource-exposure--external-access-findings",
+    "PARAM": "#resource-exposure--external-access-findings",
+}
+
+
+def _doc_reference(finding_id):
+    """Map a finding id (e.g. 'PRIVESC-014') to its attack_paths.md doc URL."""
+    if not isinstance(finding_id, str) or not finding_id:
+        return DOC_BASE
+    prefix = finding_id.split("-")[0].upper()
+    return f"{DOC_BASE}{_DOC_ANCHORS.get(prefix, '')}"
+
+
+# ──────────────────────────────────────────────────────────────
 # Main Entry Point
 # ──────────────────────────────────────────────────────────────
 
@@ -3669,7 +3874,16 @@ def analyze(report_path):
     findings.extend(newsurface_relationships.get("findings", []))
     newsurface_edge_count = len(newsurface_relationships.get("edges", []))
 
-    # 13. Save reports
+    # 13. Extra relationships (Cognito, EBS snapshots, ELB, Route53)
+    extra_relationships = _analyze_extra_relationships(report_path, permission_map, roles, users)
+    findings.extend(extra_relationships.get("findings", []))
+    extra_edge_count = len(extra_relationships.get("edges", []))
+
+    # 14. Save reports
+    # Signal documentation: link every finding to its attack-path section.
+    for f in findings:
+        f["reference"] = _doc_reference(f.get("id"))
+
     with open(os.path.join(analysis_dir, "findings.json"), "w") as f:
         json.dump({"findings": findings}, f, indent=2, default=str)
 
@@ -3706,6 +3920,9 @@ def analyze(report_path):
     with open(os.path.join(analysis_dir, "newsurface_relationships.json"), "w") as f:
         json.dump(newsurface_relationships, f, indent=2, default=str)
 
+    with open(os.path.join(analysis_dir, "extra_relationships.json"), "w") as f:
+        json.dump(extra_relationships, f, indent=2, default=str)
+
     summary = _generate_summary(findings)
     with open(os.path.join(analysis_dir, "summary.json"), "w") as f:
         json.dump(summary, f, indent=2)
@@ -3720,6 +3937,17 @@ def analyze(report_path):
         print(f"    \033[1;31m[!]\033[0m Findings: {crit} CRITICAL, {high} HIGH, {med} MEDIUM ({total} total)")
     else:
         print("    \033[1;32m[+]\033[0m No findings detected")
+
+    # Signal documentation for CRITICAL findings — point the operator at the
+    # documented attack path for each one.
+    criticals = [f for f in findings if f.get("severity") == "CRITICAL"]
+    if criticals:
+        print(f"    \033[1;31m[!]\033[0m {len(criticals)} CRITICAL path(s) — see attack-path docs:")
+        for f in criticals[:20]:
+            print(f"        \033[1;31m•\033[0m {f.get('id')}  {f.get('entity', '')}")
+            print(f"          \033[1;36m{f.get('reference', '')}\033[0m")
+        if len(criticals) > 20:
+            print(f"        \033[1;33m…and {len(criticals) - 20} more\033[0m")
 
     if s3_edge_count > 0:
         print(f"    \033[1;32m[+]\033[0m S3 relationships: {s3_edge_count} edges discovered")
@@ -3747,5 +3975,8 @@ def analyze(report_path):
 
     if newsurface_edge_count > 0:
         print(f"    \033[1;32m[+]\033[0m ECR/RDS/APIGW/DynamoDB relationships: {newsurface_edge_count} edges discovered")
+
+    if extra_edge_count > 0:
+        print(f"    \033[1;32m[+]\033[0m Cognito/EBS/ELB relationships: {extra_edge_count} edges discovered")
 
     print("    \033[1;32m[+]\033[0m Policy Analysis Finished!")

@@ -11,14 +11,16 @@ try:
     from app.components import (iam, vpc, sg, ec2, s3, cloudtrail, cloudfront, waf,
                                  flowlogs, eks, k8s, secretsmanager, ssm, lambda_, kms,
                                  ecs, cloudformation, glue, codebuild, sagemaker,
-                                 sns, sqs, ecr, rds, dynamodb, apigateway, policy_parser)
+                                 sns, sqs, ecr, rds, dynamodb, apigateway,
+                                 cognito, ebs, elb, route53, policy_parser)
     from app.utils.aws_utils import get_boto3_session, get_enabled_regions
     from app.utils.dashboard import serve_dashboard
 except ImportError:
     from components import (iam, vpc, sg, ec2, s3, cloudtrail, cloudfront, waf,
                             flowlogs, eks, k8s, secretsmanager, ssm, lambda_, kms,
                             ecs, cloudformation, glue, codebuild, sagemaker,
-                            sns, sqs, ecr, rds, dynamodb, apigateway, policy_parser)
+                            sns, sqs, ecr, rds, dynamodb, apigateway,
+                            cognito, ebs, elb, route53, policy_parser)
     from utils.aws_utils import get_boto3_session, get_enabled_regions
     from utils.dashboard import serve_dashboard
 
@@ -124,6 +126,10 @@ def enumerate_single_region(session, base_path):
     run_module("rds", rds.enumerate, session, f"{base_path}/rds")
     run_module("dynamodb", dynamodb.enumerate, session, f"{base_path}/dynamodb")
     run_module("apigateway", apigateway.enumerate, session, f"{base_path}/apigateway")
+    run_module("cognito", cognito.enumerate, session, f"{base_path}/cognito")
+    run_module("ebs", ebs.enumerate, session, f"{base_path}/ebs")
+    run_module("elb", elb.enumerate, session, f"{base_path}/elb")
+    run_module("route53", route53.enumerate, session, f"{base_path}/route53")
 
     # Run policy analysis
     run_module("policy_parser", policy_parser.analyze, base_path)
@@ -137,6 +143,7 @@ def enumerate_global_services(session, global_path):
     run_module("s3", s3.enumerate, session, f"{global_path}/s3")
     run_module("cloudfront", cloudfront.enumerate, session, f"{global_path}/cloudfront")
     run_module("waf", waf.enumerate, session, f"{global_path}/waf_cloudfront", scope="CLOUDFRONT")
+    run_module("route53", route53.enumerate, session, f"{global_path}/route53")
 
     # Policy analysis on global IAM data
     run_module("policy_parser", policy_parser.analyze, global_path)
@@ -167,6 +174,9 @@ def enumerate_regional_services(session, region_path):
     run_module("rds", rds.enumerate, session, f"{region_path}/rds")
     run_module("dynamodb", dynamodb.enumerate, session, f"{region_path}/dynamodb")
     run_module("apigateway", apigateway.enumerate, session, f"{region_path}/apigateway")
+    run_module("cognito", cognito.enumerate, session, f"{region_path}/cognito")
+    run_module("ebs", ebs.enumerate, session, f"{region_path}/ebs")
+    run_module("elb", elb.enumerate, session, f"{region_path}/elb")
 
 
 def parse_args():
