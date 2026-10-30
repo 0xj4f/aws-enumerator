@@ -1,0 +1,209 @@
+[
+  {
+    "ApiId": "demohttp01",
+    "Arn": "arn:aws:apigateway:eu-west-2::/apis/demohttp01",
+    "Authorizers": [
+      {
+        "Id": "jwt001",
+        "Name": "demo-jwt",
+        "Type": "JWT"
+      }
+    ],
+    "DisableExecuteApiEndpoint": null,
+    "EndpointTypes": null,
+    "HasAuthorizer": true,
+    "Integrations": [
+      {
+        "ApiKeyRequired": false,
+        "AuthorizationType": "JWT",
+        "AuthorizerId": "jwt001",
+        "EffectiveAuthorizationType": "JWT",
+        "IntegrationType": "HTTP_PROXY",
+        "LambdaArn": null,
+        "Path": null,
+        "Qualifier": null,
+        "RouteKey": "ANY /{proxy+}",
+        "Stage": null,
+        "Unresolved": false
+      },
+      {
+        "ApiKeyRequired": false,
+        "AuthorizationType": "NONE",
+        "AuthorizerId": null,
+        "EffectiveAuthorizationType": "NONE",
+        "IntegrationType": "AWS_PROXY",
+        "LambdaArn": "arn:aws:lambda:eu-west-2:111122223333:function:demo-processor",
+        "Path": null,
+        "Qualifier": null,
+        "RouteKey": "GET /orders",
+        "Stage": null,
+        "Unresolved": false
+      }
+    ],
+    "LambdaTargets": [
+      "arn:aws:lambda:eu-west-2:111122223333:function:demo-processor"
+    ],
+    "Name": "demo-http-api",
+    "Protocol": "HTTP",
+    "ResourcePolicy": null,
+    "Stages": [
+      {
+        "AccessLogDestinationArn": null,
+        "StageName": "$default",
+        "VariableNames": [],
+        "WebAclArn": null
+      }
+    ],
+    "Type": "apigw",
+    "UnauthenticatedLambdaRoutes": [
+      {
+        "LambdaArn": "arn:aws:lambda:eu-west-2:111122223333:function:demo-processor",
+        "Path": null,
+        "Qualifier": null,
+        "RouteKey": "GET /orders",
+        "Stage": null
+      }
+    ]
+  },
+  {
+    "ApiId": "demorest01",
+    "Arn": "arn:aws:apigateway:eu-west-2::/restapis/demorest01",
+    "Authorizers": [],
+    "DisableExecuteApiEndpoint": null,
+    "EndpointTypes": [
+      "REGIONAL"
+    ],
+    "HasAuthorizer": false,
+    "Integrations": [
+      {
+        "ApiKeyRequired": false,
+        "AuthorizationType": "NONE",
+        "AuthorizerId": null,
+        "EffectiveAuthorizationType": "NONE",
+        "IntegrationType": "AWS_PROXY",
+        "LambdaArn": "arn:aws:lambda:eu-west-2:111122223333:function:demo-processor",
+        "Method": "GET",
+        "Path": "/orders",
+        "Qualifier": null,
+        "Stage": null,
+        "Unresolved": false
+      },
+      {
+        "ApiKeyRequired": false,
+        "AuthorizationType": "NONE",
+        "AuthorizerId": null,
+        "EffectiveAuthorizationType": "NONE",
+        "IntegrationType": null,
+        "LambdaArn": null,
+        "Method": "POST",
+        "Path": "/orders",
+        "Qualifier": null,
+        "Stage": null,
+        "Unresolved": false
+      }
+    ],
+    "LambdaTargets": [
+      "arn:aws:lambda:eu-west-2:111122223333:function:demo-processor"
+    ],
+    "Name": "demo-rest-api",
+    "Protocol": "REST",
+    "ResourcePolicy": null,
+    "Stages": [
+      {
+        "AccessLogDestinationArn": "arn:aws:logs:eu-west-2:111122223333:log-group:demo-api-access",
+        "StageName": "prod",
+        "VariableNames": [
+          "lambdaAlias"
+        ],
+        "WebAclArn": "arn:aws:wafv2:eu-west-2:111122223333:regional/webacl/demo-api-acl/a1a1a1a1-0000-4000-8000-0000000000a2"
+      }
+    ],
+    "Type": "apigw",
+    "UnauthenticatedLambdaRoutes": [
+      {
+        "LambdaArn": "arn:aws:lambda:eu-west-2:111122223333:function:demo-processor",
+        "Method": "GET",
+        "Path": "/orders",
+        "Qualifier": null,
+        "Stage": null
+      }
+    ]
+  },
+  {
+    "ApiId": "demorest02",
+    "Arn": "arn:aws:apigateway:eu-west-2::/restapis/demorest02",
+    "Authorizers": [
+      {
+        "Id": "auth01",
+        "Name": "demo-lambda-authorizer",
+        "Type": "TOKEN"
+      }
+    ],
+    "DisableExecuteApiEndpoint": null,
+    "EndpointTypes": [
+      "REGIONAL"
+    ],
+    "HasAuthorizer": true,
+    "Integrations": [
+      {
+        "ApiKeyRequired": false,
+        "AuthorizationType": "CUSTOM",
+        "AuthorizerId": "auth01",
+        "EffectiveAuthorizationType": "CUSTOM",
+        "IntegrationType": "AWS_PROXY",
+        "LambdaArn": "arn:aws:lambda:eu-west-2:111122223333:function:demo-internal",
+        "Method": "ANY",
+        "Path": "/{proxy+}",
+        "Qualifier": "live",
+        "Stage": null,
+        "Unresolved": false
+      }
+    ],
+    "LambdaTargets": [
+      "arn:aws:lambda:eu-west-2:111122223333:function:demo-internal"
+    ],
+    "Name": "demo-rest-auth",
+    "Protocol": "REST",
+    "ResourcePolicy": null,
+    "Stages": [
+      {
+        "AccessLogDestinationArn": null,
+        "StageName": "dev",
+        "VariableNames": [],
+        "WebAclArn": null
+      }
+    ],
+    "Type": "apigw",
+    "UnauthenticatedLambdaRoutes": []
+  },
+  {
+    "ApiId": "demows0001",
+    "Arn": "arn:aws:apigateway:eu-west-2::/apis/demows0001",
+    "Authorizers": [],
+    "DisableExecuteApiEndpoint": null,
+    "EndpointTypes": null,
+    "HasAuthorizer": false,
+    "Integrations": [
+      {
+        "ApiKeyRequired": false,
+        "AuthorizationType": "NONE",
+        "AuthorizerId": null,
+        "EffectiveAuthorizationType": "NONE",
+        "IntegrationType": null,
+        "LambdaArn": null,
+        "Path": null,
+        "Qualifier": null,
+        "RouteKey": "$connect",
+        "Stage": null,
+        "Unresolved": false
+      }
+    ],
+    "LambdaTargets": [],
+    "Name": "demo-ws-api",
+    "Protocol": "WEBSOCKET",
+    "ResourcePolicy": null,
+    "Stages": [],
+    "Type": "apigw",
+    "UnauthenticatedLambdaRoutes": []
+  }
+]

@@ -1,0 +1,12 @@
+[
+  {
+    "Name": "example-malformed-bucket",
+    "CreationDate": "2026-01-01 00:00:00+00:00",
+    "Region": "eu-west-2"
+  },
+  {
+    "Name": "example-region-error",
+    "CreationDate": "2026-01-01 00:00:00+00:00",
+    "RegionError": "An error occurred (AccessDenied) when calling the GetBucketLocation operation: User: arn:aws:iam::123456789012:user/demo-operator is not authorized to perform: s3:GetBucketLocation"
+  }
+]

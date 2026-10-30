@@ -1,0 +1,17 @@
+[
+  {
+    "ARN": "arn:aws:wafv2:eu-west-2:111122223333:regional/rulegroup/demo-rate-rules/a1a1a1a1-0000-4000-8000-0000000000a3",
+    "Capacity": 2,
+    "Description": null,
+    "Id": "a1a1a1a1-0000-4000-8000-0000000000a3",
+    "LabelNamespace": null,
+    "Name": "demo-rate-rules",
+    "Rules": [],
+    "Scope": "REGIONAL",
+    "VisibilityConfig": {
+      "CloudWatchMetricsEnabled": true,
+      "MetricName": "demo-rate-rules",
+      "SampledRequestsEnabled": true
+    }
+  }
+]

@@ -1,0 +1,10 @@
+[
+  {
+    "Type": "ecstask",
+    "Arn": "arn:aws:ecs:eu-west-2:123456789012:task-definition/x:1",
+    "Name": "${window.__aeXssCanary=1}",
+    "Roles": [
+      "arn:aws:iam::123456789012:role/<img src=x onerror=window.__aeXssCanary=1>"
+    ]
+  }
+]

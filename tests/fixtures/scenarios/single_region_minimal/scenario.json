@@ -1,0 +1,17 @@
+{
+  "name": "single_region_minimal",
+  "description": "dev_golden_demo: alice (ssm:StartSession on *), admin role trusting alice, app role + instance profile, 3 EC2 instances running as app (F-003 shape: 1 of 3 CAN_CONNECT edges).",
+  "account": "111122223333",
+  "layout": "single_region",
+  "regions": [
+    "eu-west-2"
+  ],
+  "report_dirs": [
+    "111122223333/eu-west-2"
+  ],
+  "scope_dirs": [
+    "111122223333/eu-west-2"
+  ],
+  "expect_exception": false,
+  "baseline": "d13c215"
+}

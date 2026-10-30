@@ -4,7 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "aws-enumerator"
-version = "0.2.0"
+# The version has one source: aws_enumerator/_version.py (F-122); see [tool.setuptools.dynamic].
+dynamic = ["version"]
 description = "AWS attack graph tool - enumerate, analyze, and visualize AWS attack surfaces"
 readme = "readme.md"
 license = {text = "MIT"}
@@ -20,9 +21,12 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Topic :: Security",
 ]
+# Ranges here; exact hashed pins for reproducible installs in requirements.txt (runtime) and
+# requirements-dev.txt (dev extras), generated with pip-compile --generate-hashes (see their headers).
 dependencies = [
-    "boto3",
-    "kubernetes",
+    "boto3>=1.35,<2",
+    "botocore>=1.35,<2",
+    "kubernetes>=30,<34",
 ]
 
 [project.urls]
@@ -30,11 +34,81 @@ Homepage = "https://github.com/0xj4f/aws-enumerator"
 Repository = "https://github.com/0xj4f/aws-enumerator"
 
 [project.scripts]
-aws-enumerator = "app.main:main"
+aws-enumerator = "aws_enumerator.cli:main"
 
 [tool.setuptools.packages.find]
-include = ["app*"]
+include = ["aws_enumerator*"]
+
+[tool.setuptools.dynamic]
+version = {attr = "aws_enumerator._version.__version__"}
 
 [tool.setuptools.package-data]
-"app.utils" = ["regions.json"]
-"app" = ["dashboard/index.html", "dashboard/icons/*.svg"]
+"aws_enumerator" = [
+    "dashboard/index.html",
+    "dashboard/css/*.css",
+    "dashboard/icons/*.svg",
+    "dashboard/vendor/*",
+    "dashboard/js/*.js",
+    "schemas/*.json",
+    "util/regions.json",
+    # engine data (request contracts-engine-2): graph/findings schemas, rule catalogue, its NOTICE and schema
+    "engine/schema/*.json",
+    "engine/rules/data/*.json",
+    "engine/rules/data/NOTICE",
+    "engine/rules/schema.json",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8,<9",
+    "pytest-timeout>=2.3,<3",
+    "jsonschema>=4.18,<5",
+    "ruff>=0.6,<1",
+    "pip-tools>=7.4,<8",
+    "mypy>=1.10,<2",
+    "pip-audit>=2.7,<3",
+    "bandit>=1.7,<2",
+]
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+pythonpath = ["."]
+xfail_strict = true
+# importlib import mode: test files in different directories may share a basename
+# (tests/python/collectors/a/test_s3.py vs tests/python/engine/domains/s3/test_s3.py).
+addopts = "-ra --strict-markers -p no:cacheprovider --import-mode=importlib -m 'not perf'"
+faulthandler_timeout = 120
+markers = [
+    "finding(*ids): ties the test to verified finding IDs (F-xxx); read by --finding-report and scripts/finding_coverage.py",
+    "golden: compares current output against the goldens in tests/golden/v1 and tests/golden/collectors-v2 (scripts/check.sh golden)",
+    "collectors: collector contract tests (fake AWS, no network)",
+    "perf: performance budgets; deselected by default, run with -m perf",
+    "slow: slow but deterministic tests",
+    "allow_loopback: the test may open sockets to 127.0.0.1 / ::1 (everything else stays blocked)",
+]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 120
+extend-exclude = [
+    "build",
+    "internal-docs",
+    "tests/fixtures",
+    "tests/golden",
+    "aws_enumerator/dashboard/vendor",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "B", "A", "C90", "T20"]
+
+[tool.ruff.lint.mccabe]
+# Ratchet: the largest function in the d13c215 engine scores 58. Lower this as
+# functions are split (F-084); never raise it.
+max-complexity = 58
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["T20"]
+"scripts/**" = ["T20"]
+"aws_enumerator/cli.py" = ["T20"]
+"aws_enumerator/logging_setup.py" = ["T20"]

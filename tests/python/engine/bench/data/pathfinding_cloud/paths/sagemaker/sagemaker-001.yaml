@@ -1,0 +1,208 @@
+id: sagemaker-001
+name: iam:PassRole + sagemaker:CreateNotebookInstance
+category: new-passrole
+services:
+- iam
+- sagemaker
+description: A principal with `iam:PassRole` and `sagemaker:CreateNotebookInstance` can create a SageMaker notebook instance with a privileged execution role. SageMaker notebooks run Jupyter environments that provide shell access and can execute arbitrary code with the permissions of the attached IAM role. The attacker can then access the notebook and run commands with elevated privileges. 
+prerequisites:
+  admin:
+  - A role must exist that trusts sagemaker.amazonaws.com to assume it
+  - The role must have administrative permissions (e.g., AdministratorAccess)
+  lateral:
+  - A role must exist that trusts sagemaker.amazonaws.com to assume it
+exploitationSteps:
+  awscli:
+  - step: 1
+    command: |
+      aws sagemaker create-notebook-instance \
+        --notebook-instance-name privesc-notebook \
+        --instance-type ml.t2.medium \
+        --role-arn arn:aws:iam::ACCOUNT_ID:role/PRIVILEGED_ROLE
+    description: Create a SageMaker notebook instance with the privileged role
+  - step: 2
+    command: aws sagemaker describe-notebook-instance --notebook-instance-name privesc-notebook
+    description: Wait for the notebook instance to be in 'InService' status
+  - step: 3
+    command: aws sagemaker create-presigned-notebook-instance-url --notebook-instance-name privesc-notebook
+    description: Generate a presigned URL to access the notebook
+  - step: 4
+    command: Open the presigned URL in a browser and use the Jupyter terminal to execute privileged commands
+    description: Access the notebook and execute commands with the privileged role's permissions
+recommendation: |
+  High powered service roles + overly permissive `iam:PassRole` is what makes this privilege escalation path exploitable and impactful.
+
+  - **Avoid administrative service roles** - Very rarely does a SageMaker notebook instance need administrative access. Use the principle of least privilege.
+  - **Avoid granting `iam:PassRole` on all resources** - Whenever possible, restrict `iam:PassRole` to specific roles or specific services.
+
+  Use IAM policy conditions to restrict which roles can be passed and to which services:
+
+  ```json
+  {
+    "Effect": "Allow",
+    "Action": "iam:PassRole",
+    "Resource": "arn:aws:iam::ACCOUNT_ID:role/SpecificSageMakerRole",
+    "Condition": {
+      "StringEquals": {
+        "iam:PassedToService": "sagemaker.amazonaws.com"
+      }
+    }
+  }
+  ```
+
+  - Monitor CloudTrail for unusual SageMaker notebook creation followed by immediate access
+  - Monitor CloudTrail for notebook instance creation by principals who do not usually create notebooks
+  - Monitor CloudTrail for roles being passed to SageMaker that haven't been used before
+  - Monitor and alert on SageMaker notebook creation with privileged roles
+  - Regularly audit SageMaker notebook instances for excessive IAM permissions
+  - Regularly audit all IAM roles that trust the SageMaker service and down-scope any roles with administrative access
+
+limitations: |
+  This path provides administrative access only if the passed role has administrative permissions (e.g., AdministratorAccess or an equivalent custom policy). If only limited roles are available, you gain access limited to those permissions. However, even limited access may enable multi-hop attacks or access to sensitive data.
+detectionTools:
+  pmapper: https://github.com/nccgroup/PMapper/blob/91d2e60102bdadf346d77b60d90ddaa4a678f037/principalmapper/graphing/sagemaker_edges.py#L94
+  prowler: https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L258
+  cloudsplaining: https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L226
+discoveryAttribution:
+  firstDocumented:
+    author: Spencer Gietzen
+    organization: Rhino Security Labs
+    date: 2019
+    link: https://rhinosecuritylabs.com/aws/aws-privilege-escalation-methods-mitigation-part-2/
+references:
+- title: AWS Privilege Escalation Methods and Mitigation
+  url: https://rhinosecuritylabs.com/aws/aws-privilege-escalation-methods-mitigation/
+- title: IAM Vulnerable - SageMaker PassRole
+  url: https://github.com/BishopFox/iam-vulnerable
+- title: HackTricks - AWS - SageMaker Privesc
+  url: https://cloud.hacktricks.wiki/en/pentesting-cloud/aws-security/aws-privilege-escalation/aws-sagemaker-privesc/index.html#iampassrole--sagemakercreatenotebookinstance-sagemakercreatepresignednotebookinstanceurl
+relatedPaths:
+- sagemaker-002
+- sagemaker-003
+- sagemaker-004
+learningEnvironments:
+  iam-vulnerable:
+    type: open-source
+    githubLink: https://github.com/BishopFox/iam-vulnerable
+    scenario: SageMaker-CreateNotebookPassRole
+    description: "Deploy Terraform into your own AWS account and practice individual exploitation paths"
+  pathfinding-labs:
+    type: open-source
+    githubLink: https://github.com/DataDog/pathfinding-labs
+    scenario: "privesc-one-hop/to-admin/iam-passrole+sagemaker-createnotebookinstance"
+    description: "Deploy Terraform scenarios individually or in groups, each with attack and cleanup scripts"
+permissions:
+  required:
+  - permission: iam:PassRole
+    resourceConstraints: Target role ARN must be in the Resource section
+  - permission: sagemaker:CreateNotebookInstance
+    resourceConstraints: Must have permission to create SageMaker notebook instances
+  additional:
+  - permission: iam:ListRoles
+    resourceConstraints: Helpful for discovering available roles to pass
+  - permission: iam:GetRole
+    resourceConstraints: Useful for viewing role trust policies and attached permissions
+  - permission: sagemaker:DescribeNotebookInstance
+    resourceConstraints: Helpful for checking notebook instance status before accessing
+  - permission: sagemaker:CreatePresignedNotebookInstanceUrl
+    resourceConstraints: Required to generate access URL to the notebook interface
+attackVisualization:
+  nodes:
+  - id: start
+    label: Starting Principal
+    type: principal
+    description: |
+      The starting principal (user or role) with `iam:PassRole` and `sagemaker:CreateNotebookInstance` permissions. This principal will create a SageMaker notebook instance with a privileged role attached and access it to gain elevated privileges.
+  - id: notebook_instance
+    label: New SageMaker Notebook Instance
+    type: resource
+    description: |
+      The newly created SageMaker notebook instance running a Jupyter environment. The instance is created with `sagemaker:CreateNotebookInstance` and configured to use a privileged IAM role via `iam:PassRole`. The notebook provides shell access through the Jupyter terminal interface.
+  - id: target_role
+    label: Existing Role That Trusts the sagemaker Service
+    type: principal
+    description: |
+      The privileged IAM role that is passed to the SageMaker notebook instance during creation. This role must trust sagemaker.amazonaws.com as a principal in its trust policy. When the notebook instance runs, all code and commands execute with this role's permissions.
+  - id: access_notebook
+    label: Access Jupyter Terminal
+    type: payload
+    color: '#99ccff'
+    description: |
+      The attacker accesses the notebook instance and opens the Jupyter terminal. Access can be obtained via a presigned URL (if they have `sagemaker:CreatePresignedNotebookInstanceUrl` permission) or by navigating directly to the notebook in the AWS Console (if they have console access with username/password credentials). Once in Jupyter, the terminal provides full shell access with the target role's credentials available via the AWS SDK or instance metadata.
+  - id: admin_outcome
+    label: Effective Administrator
+    type: outcome
+    description: |
+      If the target role has administrative permissions (AdministratorAccess or equivalent), the attacker gains full administrative access to the AWS account by executing privileged commands in the Jupyter terminal or using the AWS CLI/SDK within the notebook.
+  - id: partial_outcome
+    label: Some additional access
+    type: outcome
+    color: '#ffeb99'
+    description: |
+      If the target role has some elevated permissions but not full admin, the attacker gains partial privilege escalation. This could include access to sensitive data (S3, RDS, DynamoDB), the ability to modify IAM resources, or permissions that enable additional escalation paths.
+  - id: minimal_outcome
+    label: No additional access
+    type: outcome
+    color: '#cccccc'
+    description: |
+      If the target role only has minimal permissions or no interesting permissions, the privilege escalation may not provide meaningful additional access to the attacker. The notebook access would be limited to basic operations.
+  edges:
+  - from: start
+    to: notebook_instance
+    label: iam:PassRole + sagemaker:CreateNotebookInstance
+    description: |
+      The attacker creates a new SageMaker notebook instance and passes a privileged role to it. The instance is configured with the target role via the --role-arn parameter.
+
+      Command:
+      ```bash
+      aws sagemaker create-notebook-instance \
+        --notebook-instance-name privesc-notebook \
+        --instance-type ml.t2.medium \
+        --role-arn arn:aws:iam::ACCOUNT_ID:role/PRIVILEGED_ROLE
+      ```
+
+      The notebook instance will take a few minutes to reach 'InService' status before it can be accessed.
+  - from: notebook_instance
+    to: target_role
+    label: Notebook assumes role
+    description: |
+      When the SageMaker notebook instance starts, it automatically assumes the target role. All code executed in the Jupyter environment (including terminal commands) runs with the permissions granted to this role. Credentials are available via the AWS SDK and boto3.
+  - from: target_role
+    to: access_notebook
+    label: sagemaker:CreatePresignedNotebookInstanceUrl (or console access)
+    description: |
+      The attacker accesses the notebook interface to open the Jupyter terminal. There are two methods:
+
+      **Method 1 (API access - easiest):** If the attacker has `sagemaker:CreatePresignedNotebookInstanceUrl` permission, they can generate a presigned URL for direct access:
+
+      ```bash
+      aws sagemaker create-presigned-notebook-instance-url \
+        --notebook-instance-name privesc-notebook
+      ```
+
+      The presigned URL provides authenticated access to the Jupyter interface without requiring AWS Console login.
+
+      **Method 2 (Console access):** If the attacker has an IAM user with a login profile (username/password) and can authenticate to the AWS Console, they can navigate directly to the notebook URL without needing the CreatePresignedNotebookInstanceUrl permission. The direct URL format is: `https://NOTEBOOK_NAME.notebook.REGION.sagemaker.aws/tree`
+
+      Once in Jupyter (via either method), the attacker can open a terminal or create notebooks to execute privileged operations with the target role's credentials.
+  - from: access_notebook
+    to: admin_outcome
+    label: If role has admin permissions
+    branch: A
+    condition: admin
+    description: |
+      If the target role has AdministratorAccess or equivalent administrative permissions, the attacker gains full control over the AWS account. They can execute any privileged command from the Jupyter terminal, such as creating access keys, modifying IAM policies, or accessing any AWS resource.
+  - from: access_notebook
+    to: partial_outcome
+    label: If role has some permissions
+    branch: B
+    condition: some_permissions
+    description: |
+      If the target role has elevated but non-administrative permissions, the attacker gains partial privilege escalation. This might include access to sensitive data stores (S3 buckets, RDS databases, DynamoDB tables), permissions to modify IAM resources (AttachUserPolicy, PutUserPolicy), or permissions that enable additional privilege escalation techniques.
+  - from: access_notebook
+    to: minimal_outcome
+    label: If role has minimal permissions
+    branch: C
+    condition: no_permissions
+    description: |
+      If the target role only has minimal or non-sensitive permissions, the privilege escalation may not yield meaningful additional access. However, even limited access to the notebook environment could be useful for reconnaissance or as part of a multi-step attack chain.

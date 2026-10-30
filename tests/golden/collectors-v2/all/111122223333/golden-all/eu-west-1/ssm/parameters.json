@@ -1,0 +1,13 @@
+[
+  {
+    "ARN": "arn:aws:ssm:eu-west-1:111122223333:parameter/demo/west/flag",
+    "DataType": "text",
+    "KeyId": null,
+    "LastModifiedDate": "2024-01-05T10:00:00Z",
+    "Name": "/demo/west/flag",
+    "PolicyStatus": "absent",
+    "Tier": "Standard",
+    "Type": "String",
+    "Version": 1
+  }
+]

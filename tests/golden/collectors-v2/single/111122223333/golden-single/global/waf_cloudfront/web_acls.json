@@ -1,0 +1,47 @@
+[
+  {
+    "ARN": "arn:aws:wafv2:us-east-1:111122223333:global/webacl/demo-cf-acl/c0c0c0c0-0000-4000-8000-0000000000c1",
+    "AssociatedResources": [
+      {
+        "Arn": "arn:aws:cloudfront::111122223333:distribution/E1DEMOEXAMPLE01",
+        "ResourceType": "CLOUDFRONT"
+      }
+    ],
+    "Capacity": 700,
+    "DefaultAction": {
+      "Allow": {}
+    },
+    "Description": "demo-cf-acl (acme)",
+    "Id": "c0c0c0c0-0000-4000-8000-0000000000c1",
+    "LabelNamespace": null,
+    "ManagedByFirewallManager": null,
+    "Name": "demo-cf-acl",
+    "Rules": [
+      {
+        "Name": "AWS-AWSManagedRulesCommonRuleSet",
+        "OverrideAction": {
+          "None": {}
+        },
+        "Priority": 0,
+        "Statement": {
+          "ManagedRuleGroupStatement": {
+            "Name": "AWSManagedRulesCommonRuleSet",
+            "VendorName": "AWS"
+          }
+        },
+        "VisibilityConfig": {
+          "CloudWatchMetricsEnabled": true,
+          "MetricName": "common",
+          "SampledRequestsEnabled": true
+        }
+      }
+    ],
+    "Scope": "CLOUDFRONT",
+    "UncheckedResourceTypes": [],
+    "VisibilityConfig": {
+      "CloudWatchMetricsEnabled": true,
+      "MetricName": "demo-cf-acl",
+      "SampledRequestsEnabled": true
+    }
+  }
+]

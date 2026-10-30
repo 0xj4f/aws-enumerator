@@ -1,0 +1,37 @@
+[
+  {
+    "Name": "<img src=x onerror=window.__aeXssCanary=1>",
+    "CreationDate": "2026-01-01 00:00:00+00:00",
+    "Region": "eu-west-2"
+  },
+  {
+    "Name": "\"><svg onload=window.__aeXssCanary=1>",
+    "CreationDate": "2026-01-01 00:00:00+00:00",
+    "Region": "eu-west-2"
+  },
+  {
+    "Name": "javascript:window.__aeXssCanary=1",
+    "CreationDate": "2026-01-01 00:00:00+00:00",
+    "Region": "eu-west-2"
+  },
+  {
+    "Name": "constructor",
+    "CreationDate": "2026-01-01 00:00:00+00:00",
+    "Region": "eu-west-2"
+  },
+  {
+    "Name": "__proto__",
+    "CreationDate": "2026-01-01 00:00:00+00:00",
+    "Region": "eu-west-2"
+  },
+  {
+    "Name": "hasOwnProperty",
+    "CreationDate": "2026-01-01 00:00:00+00:00",
+    "Region": "eu-west-2"
+  },
+  {
+    "Name": "toString",
+    "CreationDate": "2026-01-01 00:00:00+00:00",
+    "Region": "eu-west-2"
+  }
+]

@@ -1,0 +1,50 @@
+{
+  "breakers": [],
+  "calls": [
+    {
+      "api": "accessanalyzer:ListAnalyzers",
+      "count": 1,
+      "error_code": null,
+      "items": 1,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": true,
+      "status": "ok"
+    }
+  ],
+  "duration_seconds": "<stripped>",
+  "ended_at": "<stripped>",
+  "error": null,
+  "item_errors": [],
+  "item_errors_truncated": false,
+  "module": "accessanalyzer",
+  "protocol": "ctx",
+  "region": "eu-west-2",
+  "schema_version": 1,
+  "sections": [
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "analyzers",
+      "status": "ok"
+    }
+  ],
+  "services": [
+    "accessanalyzer"
+  ],
+  "started_at": "<stripped>",
+  "status": "ok",
+  "status_reason": null,
+  "summary": {
+    "calls": 1,
+    "denied": 0,
+    "error": 0,
+    "item_errors": 0,
+    "not_configured": 0,
+    "ok": 1,
+    "skipped": 0,
+    "throttled": 0
+  }
+}

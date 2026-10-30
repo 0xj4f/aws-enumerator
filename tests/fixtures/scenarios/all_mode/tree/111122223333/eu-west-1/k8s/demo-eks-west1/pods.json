@@ -1,0 +1,50 @@
+[
+  {
+    "api_version": null,
+    "kind": null,
+    "metadata": {
+      "name": "apps-1",
+      "namespace": "apps",
+      "labels": {
+        "app": "apps"
+      },
+      "annotations": null,
+      "uid": "4f57193a-aaaa-4bbb-8ccc-81f65f32378f",
+      "creation_timestamp": "2026-01-01 00:00:00+00:00",
+      "resource_version": "1000",
+      "owner_references": null,
+      "managed_fields": null
+    },
+    "spec": {
+      "containers": [
+        {
+          "name": "main",
+          "image": "public.ecr.aws/docker/library/busybox:1.36",
+          "command": null,
+          "args": null,
+          "env": null,
+          "env_from": null,
+          "ports": null,
+          "security_context": null,
+          "volume_mounts": null
+        }
+      ],
+      "init_containers": null,
+      "ephemeral_containers": null,
+      "service_account_name": "apps-sa",
+      "service_account": "apps-sa",
+      "automount_service_account_token": null,
+      "host_network": null,
+      "host_pid": null,
+      "host_ipc": null,
+      "node_name": "ip-10-0-1-10.demo.internal",
+      "security_context": {},
+      "volumes": null
+    },
+    "status": {
+      "phase": "Running",
+      "pod_ip": "10.0.1.20",
+      "host_ip": "10.0.1.10"
+    }
+  }
+]

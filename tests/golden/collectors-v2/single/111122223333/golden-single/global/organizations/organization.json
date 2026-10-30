@@ -1,0 +1,23 @@
+{
+  "AccountId": "111122223333",
+  "Arn": "arn:aws:organizations::999999999999:organization/o-exampleorg1",
+  "AvailablePolicyTypes": [
+    {
+      "Status": "ENABLED",
+      "Type": "RESOURCE_CONTROL_POLICY"
+    },
+    {
+      "Status": "ENABLED",
+      "Type": "SERVICE_CONTROL_POLICY"
+    }
+  ],
+  "FeatureSet": "ALL",
+  "Id": "o-exampleorg1",
+  "InOrganization": true,
+  "IsManagementAccount": false,
+  "ManagementAccountId": "999999999999",
+  "PolicyCollection": {
+    "RESOURCE_CONTROL_POLICY": "complete",
+    "SERVICE_CONTROL_POLICY": "complete"
+  }
+}

@@ -1,0 +1,40 @@
+[
+  {
+    "Category": "VPN",
+    "CustomerGatewayId": "cgw-0dec0000000000002",
+    "Options": {
+      "StaticRoutesOnly": true,
+      "TunnelOptions": [
+        {
+          "OutsideIpAddress": "198.51.100.30"
+        }
+      ]
+    },
+    "Routes": [
+      {
+        "DestinationCidrBlock": "192.168.0.0/16",
+        "Source": "Static",
+        "State": "available"
+      }
+    ],
+    "State": "available",
+    "Tags": [
+      {
+        "Key": "Name",
+        "Value": "demo-office-vpn"
+      }
+    ],
+    "Type": "ipsec.1",
+    "VgwTelemetry": [
+      {
+        "AcceptedRouteCount": 1,
+        "LastStatusChange": "2024-01-05T10:00:00Z",
+        "OutsideIpAddress": "198.51.100.30",
+        "Status": "UP",
+        "StatusMessage": ""
+      }
+    ],
+    "VpnConnectionId": "vpn-0dec0000000000002",
+    "VpnGatewayId": "vgw-0dec0000000000002"
+  }
+]

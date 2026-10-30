@@ -1,0 +1,21 @@
+{
+  "DefaultVersionId": "v3",
+  "Document": {
+    "Statement": [
+      {
+        "Action": [
+          "ec2:DescribeInstances",
+          "eks:DescribeCluster"
+        ],
+        "Effect": "Allow",
+        "Resource": "*"
+      }
+    ],
+    "Version": "2012-10-17"
+  },
+  "PolicyArn": "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
+  "PolicyName": "AmazonEKSWorkerNodePolicy",
+  "PolicyType": "AWS",
+  "VersionId": "v3",
+  "Versions": []
+}

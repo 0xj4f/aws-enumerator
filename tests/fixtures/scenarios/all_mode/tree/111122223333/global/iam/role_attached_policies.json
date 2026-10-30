@@ -1,0 +1,18 @@
+{
+  "AppRole": [],
+  "demo-admin": [
+    {
+      "PolicyName": "AdministratorAccess",
+      "PolicyArn": "arn:aws:iam::aws:policy/AdministratorAccess"
+    }
+  ],
+  "demo-lambda-exec": [],
+  "demo-eks-cluster": [],
+  "demo-eks-node": [],
+  "demo-irsa-west1": [
+    {
+      "PolicyName": "AdministratorAccess",
+      "PolicyArn": "arn:aws:iam::aws:policy/AdministratorAccess"
+    }
+  ]
+}

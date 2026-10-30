@@ -1,0 +1,29 @@
+{
+  "LambdaFunctionConfigurations": [
+    {
+      "Id": "n1",
+      "LambdaFunctionArn": "arn:aws:lambda:eu-west-2:123456789012:function:demo-url-fn",
+      "Events": [
+        "s3:ObjectCreated:*"
+      ]
+    }
+  ],
+  "QueueConfigurations": [
+    {
+      "Id": "n2",
+      "QueueArn": "arn:aws:sqs:eu-west-2:123456789012:demo-queue",
+      "Events": [
+        "s3:ObjectRemoved:*"
+      ]
+    }
+  ],
+  "TopicConfigurations": [
+    {
+      "Id": "n3",
+      "TopicArn": "arn:aws:sns:eu-west-2:123456789012:demo-topic",
+      "Events": [
+        "s3:ObjectCreated:Put"
+      ]
+    }
+  ]
+}

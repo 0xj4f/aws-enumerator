@@ -1,0 +1,117 @@
+[
+  {
+    "InstanceId": "i-0a1b2c3d4e5f6eb01",
+    "InstanceType": "t3.micro",
+    "State": "running",
+    "LaunchTime": "2026-01-01 00:00:00+00:00",
+    "AvailabilityZone": "eu-west-2a",
+    "AmiId": "ami-0a1b2c3d4e5f6abcd",
+    "PublicIpAddress": "203.0.113.10",
+    "PrivateIpAddress": "10.0.1.10",
+    "SubnetId": "subnet-0a1b2c3d4e5f6ab01",
+    "VpcId": "vpc-0a1b2c3d4e5f6aaaa",
+    "IamInstanceProfile": {
+      "Arn": "arn:aws:iam::123456789012:instance-profile/demo-web-profile",
+      "Id": "AIPAOEFNBGPGLCHELFFPH"
+    },
+    "SecurityGroups": [
+      {
+        "GroupId": "sg-0a1b2c3d4e5f6eb01",
+        "GroupName": "demo-web"
+      }
+    ],
+    "NetworkInterfaces": [
+      {
+        "NetworkInterfaceId": "eni-64e39103eddfbb00b",
+        "PrivateIpAddress": "10.0.1.10",
+        "SubnetId": "subnet-0a1b2c3d4e5f6ab01",
+        "VpcId": "vpc-0a1b2c3d4e5f6aaaa",
+        "MacAddress": "02:00:00:00:00:01",
+        "Status": "in-use"
+      }
+    ],
+    "MetadataOptions": {
+      "HttpTokens": "optional",
+      "HttpPutResponseHopLimit": 1
+    },
+    "Monitoring": "disabled",
+    "Tags": {
+      "Name": "demo-web"
+    }
+  },
+  {
+    "InstanceId": "i-0a1b2c3ddb000002",
+    "InstanceType": "t3.micro",
+    "State": "running",
+    "LaunchTime": "2026-01-01 00:00:00+00:00",
+    "AvailabilityZone": "eu-west-2a",
+    "AmiId": "ami-0a1b2c3d4e5f6abcd",
+    "PublicIpAddress": null,
+    "PrivateIpAddress": "10.0.2.20",
+    "SubnetId": "subnet-0a1b2c3d4e5f6ab02",
+    "VpcId": "vpc-0a1b2c3d4e5f6aaaa",
+    "IamInstanceProfile": {},
+    "SecurityGroups": [
+      {
+        "GroupId": "sg-0a1b2c3ddb",
+        "GroupName": "demo-db"
+      }
+    ],
+    "NetworkInterfaces": [
+      {
+        "NetworkInterfaceId": "eni-ee94166aeb5ea3448",
+        "PrivateIpAddress": "10.0.2.20",
+        "SubnetId": "subnet-0a1b2c3d4e5f6ab02",
+        "VpcId": "vpc-0a1b2c3d4e5f6aaaa",
+        "MacAddress": "02:00:00:00:00:01",
+        "Status": "in-use"
+      }
+    ],
+    "MetadataOptions": {
+      "HttpTokens": "required",
+      "HttpPutResponseHopLimit": 1
+    },
+    "Monitoring": "disabled",
+    "Tags": {
+      "Name": "demo-db"
+    }
+  },
+  {
+    "InstanceId": "i-0a1b2c3d4e5f60f03",
+    "InstanceType": "t3.micro",
+    "State": "running",
+    "LaunchTime": "2026-01-01 00:00:00+00:00",
+    "AvailabilityZone": "eu-west-2a",
+    "AmiId": "ami-0a1b2c3d4e5f6abcd",
+    "PublicIpAddress": "203.0.113.30",
+    "PrivateIpAddress": "10.0.1.10",
+    "SubnetId": "subnet-0a1b2c3d4e5f6ab02",
+    "VpcId": "vpc-0a1b2c3d4e5f6aaaa",
+    "IamInstanceProfile": {
+      "Arn": "arn:aws:iam::123456789012:instance-profile/demo-deleted-profile",
+      "Id": "AIPAMDNCFJNNPODFABBGN"
+    },
+    "SecurityGroups": [
+      {
+        "GroupId": "sg-0a1b2c3d4e5f6a110",
+        "GroupName": "demo-wide-open"
+      }
+    ],
+    "NetworkInterfaces": [
+      {
+        "NetworkInterfaceId": "eni-6db5c696b96fc3c63",
+        "PrivateIpAddress": "10.0.1.10",
+        "SubnetId": "subnet-0a1b2c3d4e5f6ab02",
+        "VpcId": "vpc-0a1b2c3d4e5f6aaaa",
+        "MacAddress": "02:00:00:00:00:01",
+        "Status": "in-use"
+      }
+    ],
+    "MetadataOptions": {
+      "HttpTokens": "optional",
+      "HttpPutResponseHopLimit": 1
+    },
+    "Monitoring": "disabled",
+    "Tags": {}
+  }
+]

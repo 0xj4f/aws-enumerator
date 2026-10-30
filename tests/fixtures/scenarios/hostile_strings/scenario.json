@@ -1,0 +1,17 @@
+{
+  "name": "hostile_strings",
+  "description": "Resource names, tags, paths and descriptions carrying HTML/JS-looking canaries (window.__aeXssCanary), quotes, backslashes, unicode controls and JS prototype names (F-008, F-041, F-042). Filenames stay safe.",
+  "account": "123456789012",
+  "layout": "single_region",
+  "regions": [
+    "eu-west-2"
+  ],
+  "report_dirs": [
+    "123456789012/eu-west-2"
+  ],
+  "scope_dirs": [
+    "123456789012/eu-west-2"
+  ],
+  "expect_exception": false,
+  "baseline": "d13c215"
+}

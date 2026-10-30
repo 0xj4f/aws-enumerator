@@ -1,0 +1,68 @@
+{
+  "DefaultVersionId": "v1",
+  "Document": {
+    "Statement": [
+      {
+        "Action": "iam:PassRole",
+        "Effect": "Allow",
+        "Resource": "arn:aws:iam::111122223333:role/demo-lambda-role"
+      },
+      {
+        "Action": [
+          "cloudformation:CreateStack",
+          "cloudformation:UpdateStack"
+        ],
+        "Effect": "Allow",
+        "Resource": "*"
+      },
+      {
+        "Action": [
+          "lambda:CreateFunction",
+          "lambda:InvokeFunction",
+          "lambda:UpdateFunctionCode"
+        ],
+        "Effect": "Allow",
+        "Resource": "*"
+      }
+    ],
+    "Version": "2012-10-17"
+  },
+  "PolicyArn": "arn:aws:iam::111122223333:policy/demo-ci-deploy",
+  "PolicyName": "demo-ci-deploy",
+  "PolicyType": "Local",
+  "VersionId": "v1",
+  "Versions": [
+    {
+      "CreateDate": "2024-01-09T10:00:00Z",
+      "Document": {
+        "Statement": [
+          {
+            "Action": "iam:PassRole",
+            "Effect": "Allow",
+            "Resource": "arn:aws:iam::111122223333:role/demo-lambda-role"
+          },
+          {
+            "Action": [
+              "cloudformation:CreateStack",
+              "cloudformation:UpdateStack"
+            ],
+            "Effect": "Allow",
+            "Resource": "*"
+          },
+          {
+            "Action": [
+              "lambda:CreateFunction",
+              "lambda:InvokeFunction",
+              "lambda:UpdateFunctionCode"
+            ],
+            "Effect": "Allow",
+            "Resource": "*"
+          }
+        ],
+        "Version": "2012-10-17"
+      },
+      "IsDefaultVersion": true,
+      "VersionId": "v1"
+    }
+  ]
+}

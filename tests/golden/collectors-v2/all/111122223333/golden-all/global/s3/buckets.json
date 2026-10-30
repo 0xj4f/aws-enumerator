@@ -1,0 +1,166 @@
+[
+  {
+    "Arn": "arn:aws:s3:::demo-data-bucket",
+    "CreationDate": "2024-01-01T10:00:00Z",
+    "Name": "demo-data-bucket",
+    "PolicyIsPublic": false,
+    "PolicyStatus": "present",
+    "Region": "eu-west-2",
+    "SubResources": {
+      "acl": "present",
+      "cors": "skipped",
+      "encryption": "present",
+      "logging": "skipped",
+      "notifications": "present",
+      "ownership_controls": "present",
+      "policy": "present",
+      "policy_status": "present",
+      "public_access_block": "present",
+      "replication": "skipped",
+      "tagging": "skipped",
+      "versioning": "skipped",
+      "website": "skipped"
+    }
+  },
+  {
+    "Arn": "arn:aws:s3:::demo-denied-bucket",
+    "CollectionErrors": [
+      {
+        "api": "s3:GetBucketAcl",
+        "error_code": "AccessDenied",
+        "status": "denied"
+      },
+      {
+        "api": "s3:GetBucketEncryption",
+        "error_code": "AccessDenied",
+        "status": "denied"
+      },
+      {
+        "api": "s3:GetBucketNotificationConfiguration",
+        "error_code": "AccessDenied",
+        "status": "denied"
+      },
+      {
+        "api": "s3:GetBucketOwnershipControls",
+        "error_code": "AccessDenied",
+        "status": "denied"
+      },
+      {
+        "api": "s3:GetBucketPolicy",
+        "error_code": "AccessDenied",
+        "status": "denied"
+      },
+      {
+        "api": "s3:GetBucketPolicyStatus",
+        "error_code": "AccessDenied",
+        "status": "denied"
+      },
+      {
+        "api": "s3:GetPublicAccessBlock",
+        "error_code": "AccessDenied",
+        "status": "denied"
+      }
+    ],
+    "CreationDate": "2024-01-02T10:00:00Z",
+    "Name": "demo-denied-bucket",
+    "PolicyIsPublic": null,
+    "PolicyStatus": "denied",
+    "Region": "eu-west-2",
+    "SubResources": {
+      "acl": "denied",
+      "cors": "skipped",
+      "encryption": "denied",
+      "logging": "skipped",
+      "notifications": "denied",
+      "ownership_controls": "denied",
+      "policy": "denied",
+      "policy_status": "denied",
+      "public_access_block": "denied",
+      "replication": "skipped",
+      "tagging": "skipped",
+      "versioning": "skipped",
+      "website": "skipped"
+    }
+  },
+  {
+    "Arn": "arn:aws:s3:::demo-legacy-eu-bucket",
+    "CollectionErrors": [
+      {
+        "api": "s3:GetBucketAcl",
+        "error_code": "AccessDenied",
+        "status": "denied"
+      },
+      {
+        "api": "s3:GetBucketPolicy",
+        "error_code": "AccessDenied",
+        "status": "denied"
+      }
+    ],
+    "CreationDate": "2024-01-03T10:00:00Z",
+    "Name": "demo-legacy-eu-bucket",
+    "PolicyIsPublic": true,
+    "PolicyStatus": "denied",
+    "Region": "eu-west-1",
+    "SubResources": {
+      "acl": "denied",
+      "cors": "skipped",
+      "encryption": "present",
+      "logging": "skipped",
+      "notifications": "absent",
+      "ownership_controls": "present",
+      "policy": "denied",
+      "policy_status": "present",
+      "public_access_block": "absent",
+      "replication": "skipped",
+      "tagging": "skipped",
+      "versioning": "skipped",
+      "website": "skipped"
+    }
+  },
+  {
+    "Arn": "arn:aws:s3:::demo-logs-bucket",
+    "CreationDate": "2024-01-04T10:00:00Z",
+    "Name": "demo-logs-bucket",
+    "PolicyIsPublic": false,
+    "PolicyStatus": "absent",
+    "Region": "us-east-1",
+    "SubResources": {
+      "acl": "present",
+      "cors": "skipped",
+      "encryption": "present",
+      "logging": "skipped",
+      "notifications": "absent",
+      "ownership_controls": "present",
+      "policy": "absent",
+      "policy_status": "absent",
+      "public_access_block": "present",
+      "replication": "skipped",
+      "tagging": "skipped",
+      "versioning": "skipped",
+      "website": "skipped"
+    }
+  },
+  {
+    "Arn": "arn:aws:s3:::demo-public-site",
+    "CreationDate": "2024-01-05T10:00:00Z",
+    "Name": "demo-public-site",
+    "PolicyIsPublic": true,
+    "PolicyStatus": "present",
+    "Region": "eu-west-1",
+    "SubResources": {
+      "acl": "present",
+      "cors": "skipped",
+      "encryption": "present",
+      "logging": "skipped",
+      "notifications": "absent",
+      "ownership_controls": "absent",
+      "policy": "present",
+      "policy_status": "present",
+      "public_access_block": "absent",
+      "replication": "skipped",
+      "tagging": "skipped",
+      "versioning": "skipped",
+      "website": "skipped"
+    }
+  }
+]

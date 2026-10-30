@@ -1,0 +1,9 @@
+{
+  "admin": [
+    {
+      "PolicyName": "AdministratorAccess",
+      "PolicyArn": "arn:aws:iam::aws:policy/AdministratorAccess"
+    }
+  ],
+  "app": []
+}

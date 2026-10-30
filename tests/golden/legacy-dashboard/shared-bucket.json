@@ -1,0 +1,122 @@
+{
+  "description": "A role reads a bucket whose policy grants an admin role; the path pivots through the GRANTS_ACCESS edge.",
+  "directedComparison": [
+    {
+      "directed": 2,
+      "from": "arn:aws:iam::111122223333:role/demo-app-role",
+      "to": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "undirected": 2
+    }
+  ],
+  "discoverAll": {
+    "falsePathCount": 1,
+    "pathCount": 1,
+    "paths": [
+      {
+        "authoredCost": 2,
+        "directedValid": true,
+        "distance": 2,
+        "edges": [
+          {
+            "type": "CAN_READ",
+            "walked": "forward",
+            "weight": 1
+          },
+          {
+            "type": "GRANTS_ACCESS",
+            "walked": "forward",
+            "weight": 1
+          }
+        ],
+        "hops": 2,
+        "reversedEdgeTypes": [],
+        "route": "[role]demo-app-role -CAN_READ(w=1)- [bucket]demo-logs -GRANTS_ACCESS(w=1)- [role]demo-admin-role",
+        "source": "arn:aws:iam::111122223333:role/demo-app-role",
+        "target": "arn:aws:iam::111122223333:role/demo-admin-role",
+        "traversesGrantEdge": true
+      }
+    ],
+    "status": "1 paths found (2 sources -> 1 targets)"
+  },
+  "findPath": [
+    {
+      "cost": "2.0",
+      "from": "arn:aws:iam::111122223333:role/demo-app-role",
+      "hops": "2 edges, 3 nodes",
+      "to": "arn:aws:iam::111122223333:role/demo-admin-role"
+    }
+  ],
+  "graph": {
+    "duplicateIds": [],
+    "edgeCount": 2,
+    "edges": [
+      {
+        "category": "s3_access",
+        "id": "arn:aws:iam::111122223333:role/demo-app-role->bucket:demo-logs:CAN_READ",
+        "source": "arn:aws:iam::111122223333:role/demo-app-role",
+        "target": "bucket:demo-logs",
+        "type": "CAN_READ",
+        "weight": 1
+      },
+      {
+        "category": "s3_grant",
+        "id": "bucket:demo-logs->arn:aws:iam::111122223333:role/demo-admin-role:GRANTS_ACCESS",
+        "source": "bucket:demo-logs",
+        "target": "arn:aws:iam::111122223333:role/demo-admin-role",
+        "type": "GRANTS_ACCESS",
+        "weight": 1
+      }
+    ],
+    "elementsPassedToCytoscape": 5,
+    "graphInfoText": "3 nodes, 2 edges",
+    "nodeCount": 3,
+    "nodes": [
+      {
+        "id": "arn:aws:iam::111122223333:role/demo-admin-role",
+        "isHighValue": true,
+        "label": "demo-admin-role",
+        "maxSeverity": null,
+        "type": "role"
+      },
+      {
+        "id": "arn:aws:iam::111122223333:role/demo-app-role",
+        "isHighValue": false,
+        "label": "demo-app-role",
+        "maxSeverity": null,
+        "type": "role"
+      },
+      {
+        "id": "bucket:demo-logs",
+        "isHighValue": null,
+        "label": "demo-logs",
+        "maxSeverity": null,
+        "type": "bucket"
+      }
+    ]
+  },
+  "harness": "tests/js/helpers/legacy-harness.js (DOM stub + Cytoscape-semantics stub; equal-cost routes may differ from a browser)",
+  "legacy": {
+    "commit": "d13c215",
+    "path": "app/dashboard/index.html"
+  },
+  "note": "Informational characterisation of the legacy dashboard; the paths below are known to be wrong (F-007, F-040). Not a specification.",
+  "pathFinding": {
+    "dijkstraCallsByDiscoverAll": 2,
+    "directedFlags": [
+      false
+    ],
+    "effectiveWeights": [
+      {
+        "authored": 1,
+        "effective": 1,
+        "type": "CAN_READ"
+      },
+      {
+        "authored": 1,
+        "effective": 1,
+        "type": "GRANTS_ACCESS"
+      }
+    ]
+  },
+  "scenario": "shared-bucket"
+}

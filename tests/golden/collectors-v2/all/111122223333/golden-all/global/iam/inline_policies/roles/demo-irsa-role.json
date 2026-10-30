@@ -1,0 +1,16 @@
+{
+  "EntityArn": "arn:aws:iam::111122223333:role/demo-irsa-role",
+  "InlinePolicies": {
+    "demo-irsa-secrets": {
+      "Statement": [
+        {
+          "Action": "secretsmanager:GetSecretValue",
+          "Effect": "Allow",
+          "Resource": "arn:aws:secretsmanager:eu-west-2:111122223333:secret:demo/*"
+        }
+      ],
+      "Version": "2012-10-17"
+    }
+  },
+  "RoleName": "demo-irsa-role"
+}

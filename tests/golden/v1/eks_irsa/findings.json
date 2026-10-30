@@ -1,0 +1,897 @@
+{
+  "account_id": "123456789012",
+  "findings": [
+    {
+      "account": "123456789012",
+      "base_severity": "CRITICAL",
+      "category": "dangerous_permission",
+      "confidence": "definite",
+      "description": "This role is administrator-equivalent: its effective permissions allow every action on every resource. Its 64 individual privilege-escalation and dangerous-permission findings are summarised here.",
+      "evidence": {
+        "basis": "allow-star",
+        "rule_ids": [
+          "DANGER-001"
+        ],
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+                "policy_name": "AdministratorAccess",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "aws_managed",
+                "statement_index": 0,
+                "version_id": "v1"
+              }
+            ],
+            "resource": "*",
+            "rule_action": "*"
+          }
+        ],
+        "subsumed": [
+          {
+            "fingerprint": "057b2e7e4c5b83a0874412f838c77273",
+            "id": "PRIVESC-034",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "07a14d9b333ca2986886206635ea1cdc",
+            "id": "PRIVESC-010",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "07faedde4b976846c7b95cac30e8d87b",
+            "id": "PRIVESC-038",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "0a423f1664f6ba43cfef2449044fad1a",
+            "id": "PRIVESC-020",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "0c08d17363ee4e9855298fb377c4704c",
+            "id": "PRIVESC-004",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "1c83ff561917256880982b470698c084",
+            "id": "PRIVESC-011",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "20b61caeee6ad9fd4c8711f93c0395fa",
+            "id": "PRIVESC-049",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "21fb746ffcebbb961199275c20d82144",
+            "id": "PRIVESC-065",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "2440397331ed67ee52ce6b5846f39041",
+            "id": "PRIVESC-043",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "2481502822f2c14df5fa9d087d0093ab",
+            "id": "PRIVESC-008",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "252e684039f2f8f2807029df70b92469",
+            "id": "DANGER-009",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "2986192dc25874f39b4d901815839b80",
+            "id": "PRIVESC-005",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "2d5cce895978be7eb5f75225d85d69db",
+            "id": "PRIVESC-015",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "329a911e342cc933cd5d15ef9bf92fdb",
+            "id": "PRIVESC-044",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "32b28eafc14aa2bb1d9ab87081ad3129",
+            "id": "PRIVESC-061",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "32d8afaec5c8e60fcc8d85dce44aae11",
+            "id": "PRIVESC-024",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "350343aaa757b51ca89faaf7081c23ee",
+            "id": "PRIVESC-030",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "3bc16e89c6224a2ab7aae84970050eab",
+            "id": "PRIVESC-026",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "3c4478e813a99bce6e7de26aaa085469",
+            "id": "DANGER-005",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "4384f48c013a5696ae6509051ea0685a",
+            "id": "PRIVESC-025",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "44c9ff5d03d12881e7826f7aed16686f",
+            "id": "DANGER-001",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "47eec5248aca166aa5d6fc6225839744",
+            "id": "PRIVESC-007",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "4aa49cd2576333457b97c2d974f5f295",
+            "id": "DANGER-007",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "4cdeffeb4ca342db413977f31642595d",
+            "id": "PRIVESC-028",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "4d5146915f919aa29a440676aa6b37f4",
+            "id": "PRIVESC-031",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "4fc3df515b44eb4fd6e9104e7fa22102",
+            "id": "PRIVESC-013",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "528ed45dd48d2de3335230d3126f1beb",
+            "id": "PRIVESC-032",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "53b7efdf41a820aa2b5580d2916f2c8e",
+            "id": "PRIVESC-033",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "626473b204556a8e4edbc9b19d7a709e",
+            "id": "PRIVESC-058",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "673ad7f988444f06bcfd27cfe1bfb604",
+            "id": "PRIVESC-048",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "6dd4a10484a142331a4cbc0e545d947d",
+            "id": "PRIVESC-002",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "75a5e747f85f1e4a4db5447c6c5c786a",
+            "id": "PRIVESC-046",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "7cfd88e938896b72e2a0bdbe4d44ce3e",
+            "id": "PRIVESC-012",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "7ff63ed98d50bc85a2c1c545fd552cb5",
+            "id": "DANGER-003",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "808dfd4788f089221fc373d1ac676d3e",
+            "id": "PRIVESC-027",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "869b188e0a1a0ec6d4fbef1dd37912d3",
+            "id": "PRIVESC-036",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "8760c165e380ac8aa425f0ffc6312da4",
+            "id": "DANGER-004",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "89523c4f109db7d43b48e6c0e36ebc6a",
+            "id": "PRIVESC-047",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "8a1f96708d4c152c9296b52ab24abaf4",
+            "id": "PRIVESC-003",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "8c8fd36b052366026f80e303d9657625",
+            "id": "PRIVESC-064",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "993b4a479e626ff4eb0967023cdbecf3",
+            "id": "PRIVESC-019",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "a2359d7b313c8cd5c130ded3e5d7b6ce",
+            "id": "PRIVESC-040",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "a49e95b50e2941cf6cece9fdb4003247",
+            "id": "PRIVESC-014",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "a625a86eedb0eca249c034ab53e7c140",
+            "id": "DANGER-008",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "a8588d2133c4c1708eb8f4065626bad8",
+            "id": "PRIVESC-001",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "b79223dae5c4578eaed874a4637c4d47",
+            "id": "PRIVESC-006",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "b7a2fc15aecd3cf67a4e35146730bf20",
+            "id": "PRIVESC-060",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "bb49480337936f427a3dfd81ff83fff1",
+            "id": "PRIVESC-062",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "c11539d7cb532a09f01ae4280f6d5a23",
+            "id": "DANGER-006",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "c97b3e9132c1b84f513f18a4bcf30eb8",
+            "id": "PRIVESC-018",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "cc4a55927585c523e0494686af8d8358",
+            "id": "PRIVESC-016",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "cd09bb91ac0190f511f3dcd49a0108eb",
+            "id": "PRIVESC-035",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "d429e12a9429919d11835f41089e6c97",
+            "id": "PRIVESC-017",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "dfd0592b9f4baa447403c48d11d626af",
+            "id": "DANGER-002",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "e092ded57103ff90a0f8d62de2bc9529",
+            "id": "PRIVESC-045",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "e37f38c51e3c4ffc577d3f55d892c85b",
+            "id": "PRIVESC-042",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "e4468ea1d5a84f3c8242e4e0c5f36070",
+            "id": "PRIVESC-039",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "e50a1d3b72be412fd41713b8faa3ce95",
+            "id": "PRIVESC-059",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "e69ea95d80cd91655a9833ab3262fd9a",
+            "id": "DANGER-010",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "f004da0ed6d1542b77caff2877a53234",
+            "id": "PRIVESC-057",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "f395a6d7cb6ba1f298d4be5b032fca98",
+            "id": "PRIVESC-009",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "f9399065e105ce26fa33bea20f6bea9d",
+            "id": "PRIVESC-063",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "fb1d953df76d414baa8cda29ea913681",
+            "id": "PRIVESC-037",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "ffbfad2dcbd0050029511717feb002aa",
+            "id": "PRIVESC-041",
+            "severity": "INFO"
+          }
+        ],
+        "subsumed_count": 64
+      },
+      "fingerprint": "626186a9703febc8b351484498e7af0a",
+      "id": "ADMIN-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "*",
+        "ec2:*",
+        "iam:*",
+        "iam:passrole",
+        "kms:decrypt",
+        "lambda:*",
+        "s3:*",
+        "secretsmanager:getsecretvalue",
+        "ssm:getparameter",
+        "ssm:getparameters",
+        "ssm:getparametersbypath",
+        "sts:assumerole"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/demo-irsa-admin",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#high-value-targets-to-hunt",
+      "related_node_ids": [
+        "aws-enumerator:account-admin/123456789012"
+      ],
+      "remediation": "Treat this principal as an account administrator: limit who can use it (trust policy, group membership, credentials), require MFA, and replace broad grants (Action:* or iam:*) by the permissions it needs.",
+      "severity": "CRITICAL",
+      "status": "open",
+      "subsumes": [
+        "DANGER-001",
+        "DANGER-002",
+        "DANGER-003",
+        "DANGER-004",
+        "DANGER-005",
+        "DANGER-006",
+        "DANGER-007",
+        "DANGER-008",
+        "DANGER-009",
+        "DANGER-010",
+        "PRIVESC-001",
+        "PRIVESC-002",
+        "PRIVESC-003",
+        "PRIVESC-004",
+        "PRIVESC-005",
+        "PRIVESC-006",
+        "PRIVESC-007",
+        "PRIVESC-008",
+        "PRIVESC-009",
+        "PRIVESC-010",
+        "PRIVESC-011",
+        "PRIVESC-012",
+        "PRIVESC-013",
+        "PRIVESC-014",
+        "PRIVESC-015",
+        "PRIVESC-016",
+        "PRIVESC-017",
+        "PRIVESC-018",
+        "PRIVESC-019",
+        "PRIVESC-020",
+        "PRIVESC-024",
+        "PRIVESC-025",
+        "PRIVESC-026",
+        "PRIVESC-027",
+        "PRIVESC-028",
+        "PRIVESC-030",
+        "PRIVESC-031",
+        "PRIVESC-032",
+        "PRIVESC-033",
+        "PRIVESC-034",
+        "PRIVESC-035",
+        "PRIVESC-036",
+        "PRIVESC-037",
+        "PRIVESC-038",
+        "PRIVESC-039",
+        "PRIVESC-040",
+        "PRIVESC-041",
+        "PRIVESC-042",
+        "PRIVESC-043",
+        "PRIVESC-044",
+        "PRIVESC-045",
+        "PRIVESC-046",
+        "PRIVESC-047",
+        "PRIVESC-048",
+        "PRIVESC-049",
+        "PRIVESC-057",
+        "PRIVESC-058",
+        "PRIVESC-059",
+        "PRIVESC-060",
+        "PRIVESC-061",
+        "PRIVESC-062",
+        "PRIVESC-063",
+        "PRIVESC-064",
+        "PRIVESC-065"
+      ],
+      "title": "Administrator-equivalent principal"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "CRITICAL",
+      "category": "k8s_irsa",
+      "confidence": "definite",
+      "description": "Every pod running as service account payments/payments-sa can assume arn:aws:iam::123456789012:role/demo-irsa-admin, which is administrator-equivalent in AWS: compromising one such pod compromises the account.",
+      "entity": "sa/demo-eks/payments/payments-sa",
+      "entity_arn": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ServiceAccount/payments/payments-sa",
+      "evidence": {
+        "admin_confidence": "definite",
+        "mechanism": "irsa",
+        "role_arn": "arn:aws:iam::123456789012:role/demo-irsa-admin"
+      },
+      "fingerprint": "9cb55a7fd00b11e868c5ecd71c75ddbd",
+      "id": "K8S-IRSA-ADMIN",
+      "legacy_ids": [],
+      "node_id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ServiceAccount/payments/payments-sa",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-2--you-compromised-a-kubernetes-pod",
+      "region": "eu-west-2",
+      "related_node_ids": [
+        "arn:aws:iam::123456789012:role/demo-irsa-admin"
+      ],
+      "remediation": "Restrict the role to the permissions the workload needs, and scope its trust policy to this service account (exact sub and aud conditions).",
+      "resource": [
+        "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ServiceAccount/payments/payments-sa"
+      ],
+      "severity": "CRITICAL",
+      "source_policy": "irsa",
+      "source_type": "k8s_service_account",
+      "status": "open",
+      "title": "Service account can assume an admin IAM role through IRSA (payments/payments-sa, cluster demo-eks)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "CRITICAL",
+      "category": "k8s_rbac",
+      "confidence": "definite",
+      "description": "ClusterRoleBinding 'ci-deployer-admin' grants kube-system/ci-deployer every verb on every resource in the whole cluster. Every pod running as this service account controls the cluster.",
+      "entity": "serviceaccount/demo-eks/kube-system/ci-deployer",
+      "entity_arn": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ServiceAccount/kube-system/ci-deployer",
+      "evidence": {
+        "binding": "ci-deployer-admin",
+        "binding_kind": "ClusterRoleBinding",
+        "role": "cluster-admin",
+        "scope": "cluster"
+      },
+      "fingerprint": "7a9c111155275962280519d21fb0066c",
+      "id": "K8S-RBAC-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "*"
+      ],
+      "node_id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ServiceAccount/kube-system/ci-deployer",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-2--you-compromised-a-kubernetes-pod",
+      "region": "eu-west-2",
+      "remediation": "Use a more restrictive ClusterRole or a namespaced Role.",
+      "resource": [
+        "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ServiceAccount/kube-system/ci-deployer"
+      ],
+      "severity": "CRITICAL",
+      "source_policy": "ci-deployer-admin",
+      "source_type": "k8s_rbac",
+      "status": "open",
+      "title": "ServiceAccount kube-system/ci-deployer bound to cluster-admin (cluster demo-eks)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "k8s_workload",
+      "confidence": "definite",
+      "description": "The pod shares the host's network namespace (every node interface, the node's IMDS).",
+      "entity": "pod/demo-eks/kube-system/node-debugger",
+      "entity_arn": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/kube-system/node-debugger",
+      "evidence": {
+        "field": "hostNetwork",
+        "pod_count": 1,
+        "pods": [
+          "node-debugger"
+        ]
+      },
+      "fingerprint": "6dedf69695ae5d5f0abbbc4232968b24",
+      "id": "K8S-HOSTNET-001",
+      "legacy_ids": [],
+      "node_id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/kube-system/node-debugger",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-2--you-compromised-a-kubernetes-pod",
+      "region": "eu-west-2",
+      "remediation": "Remove hostNetwork: true.",
+      "resource": [
+        "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/kube-system/node-debugger"
+      ],
+      "severity": "HIGH",
+      "source_policy": "PodSpec.hostNetwork",
+      "source_type": "k8s_pod",
+      "status": "open",
+      "title": "Pod uses hostNetwork (kube-system/node-debugger, cluster demo-eks)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "k8s_workload",
+      "confidence": "definite",
+      "description": "The pod shares the host's PID namespace (it can see and signal every process on the node).",
+      "entity": "pod/demo-eks/kube-system/node-debugger",
+      "entity_arn": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/kube-system/node-debugger",
+      "evidence": {
+        "field": "hostPID",
+        "pod_count": 1,
+        "pods": [
+          "node-debugger"
+        ]
+      },
+      "fingerprint": "60519f9dc52106a7711a443128b87827",
+      "id": "K8S-HOSTPID-001",
+      "legacy_ids": [],
+      "node_id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/kube-system/node-debugger",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-2--you-compromised-a-kubernetes-pod",
+      "region": "eu-west-2",
+      "remediation": "Remove hostPID: true.",
+      "resource": [
+        "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/kube-system/node-debugger"
+      ],
+      "severity": "HIGH",
+      "source_policy": "PodSpec.hostPID",
+      "source_type": "k8s_pod",
+      "status": "open",
+      "title": "Pod uses hostPID (kube-system/node-debugger, cluster demo-eks)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "k8s_network",
+      "confidence": "definite",
+      "description": "Service web/web-lb of type LoadBalancer gets an internet-facing AWS load balancer (in-tree cloud provider default (internet-facing)), open to any source address.",
+      "entity": "k8sservice/demo-eks/web/web-lb",
+      "entity_arn": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Service/web/web-lb",
+      "evidence": {
+        "load_balancer_source_ranges": [],
+        "scheme": "internet-facing",
+        "scheme_reason": "in-tree cloud provider default (internet-facing)"
+      },
+      "fingerprint": "738c4a37dce1bbab9381a5bd2b4f6216",
+      "id": "K8S-NET-001",
+      "legacy_ids": [],
+      "node_id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Service/web/web-lb",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "region": "eu-west-2",
+      "remediation": "Use an internal load balancer (service.beta.kubernetes.io/aws-load-balancer-scheme: internal) or restrict loadBalancerSourceRanges.",
+      "resource": [
+        "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Service/web/web-lb"
+      ],
+      "severity": "HIGH",
+      "source_policy": "Service.spec.type",
+      "source_type": "k8s_service",
+      "status": "open",
+      "title": "Service web/web-lb is an internet-facing load balancer (cluster demo-eks)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "k8s_workload",
+      "confidence": "definite",
+      "description": "A privileged container (regular, init or ephemeral) has every capability and the host's devices: it can take over the node.",
+      "entity": "pod/demo-eks/kube-system/node-debugger",
+      "entity_arn": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/kube-system/node-debugger",
+      "evidence": {
+        "containers": [
+          "container main"
+        ],
+        "pod_count": 1,
+        "pods": [
+          "node-debugger"
+        ]
+      },
+      "fingerprint": "25a2c241b79c9b7fd15bbb008683251c",
+      "id": "K8S-PRIV-001",
+      "legacy_ids": [],
+      "node_id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/kube-system/node-debugger",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-2--you-compromised-a-kubernetes-pod",
+      "region": "eu-west-2",
+      "remediation": "Remove privileged: true (regular, init and ephemeral containers).",
+      "resource": [
+        "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/kube-system/node-debugger"
+      ],
+      "severity": "HIGH",
+      "source_policy": "securityContext.privileged",
+      "source_type": "k8s_pod",
+      "status": "open",
+      "title": "Privileged container (kube-system/node-debugger, cluster demo-eks)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "k8s_rbac",
+      "confidence": "definite",
+      "description": "ClusterRole 'demo-wildcard' allows every verb on every resource; whoever is bound to it has unrestricted access to the cluster.",
+      "entity": "k8srole/demo-eks/cluster/demo-wildcard",
+      "entity_arn": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ClusterRole/_/demo-wildcard",
+      "evidence": {
+        "role_kind": "ClusterRole"
+      },
+      "fingerprint": "638d96d8c3c30f0ab3cf2b8dd3abc448",
+      "id": "K8S-RBAC-002",
+      "legacy_ids": [],
+      "matched_actions": [
+        "*"
+      ],
+      "node_id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ClusterRole/_/demo-wildcard",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-2--you-compromised-a-kubernetes-pod",
+      "region": "eu-west-2",
+      "remediation": "Restrict verbs and resources to least privilege.",
+      "resource": [
+        "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ClusterRole/_/demo-wildcard"
+      ],
+      "severity": "HIGH",
+      "source_policy": "demo-wildcard",
+      "source_type": "k8s_rbac",
+      "status": "open",
+      "title": "ClusterRole demo-wildcard allows * on * (cluster demo-eks)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "eks_exposure",
+      "confidence": "definite",
+      "description": "The Kubernetes API endpoint of cluster demo-eks (eu-west-2) is publicly accessible from 0.0.0.0/0. Authentication is still required, but any leaked kubeconfig, token or mapped IAM credential is usable from anywhere, and API-server vulnerabilities are exposed.",
+      "entity": "cluster/demo-eks",
+      "entity_arn": "arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks",
+      "evidence": {
+        "endpoint_private_access": false,
+        "endpoint_public_access": true,
+        "public_access_cidrs": [
+          "0.0.0.0/0"
+        ]
+      },
+      "fingerprint": "3ec4e9da98eba72b14c0a8c697932988",
+      "id": "EKS-ENDPOINT-001",
+      "legacy_ids": [],
+      "node_id": "arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "region": "eu-west-2",
+      "remediation": "Disable public endpoint access, or restrict publicAccessCidrs to known administration networks.",
+      "resource": [
+        "arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks"
+      ],
+      "severity": "MEDIUM",
+      "source_policy": "resourcesVpcConfig",
+      "source_type": "eks_cluster",
+      "status": "open",
+      "title": "EKS cluster demo-eks has a public API endpoint open to the internet"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "trust_policy",
+      "confidence": "conditional",
+      "description": "Web identity provider arn:aws:iam::123456789012:oidc-provider/oidc.eks.eu-west-2.amazonaws.com/id/OCCGIAFDPFCOIHAGDKHALDDCBBKOGLKK can assume 'demo-irsa-reader'.",
+      "entity": "role/demo-irsa-reader",
+      "entity_arn": "arn:aws:iam::123456789012:role/demo-irsa-reader",
+      "evidence": {
+        "admits": "pattern",
+        "conditions": [
+          {
+            "key": "oidc.eks.eu-west-2.amazonaws.com/id/OCCGIAFDPFCOIHAGDKHALDDCBBKOGLKK:sub",
+            "operator": "StringLike",
+            "values": [
+              "system:serviceaccount:web:*"
+            ]
+          }
+        ],
+        "problems": [],
+        "provider": "eks",
+        "statement_index": 0
+      },
+      "fingerprint": "c68a12e590831ffe6f6385dbc7e22589",
+      "id": "TRUST-OIDC-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "sts:AssumeRoleWithWebIdentity"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/demo-irsa-reader",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-6--youre-external-no-foothold-yet",
+      "related_node_ids": [
+        "arn:aws:iam::123456789012:oidc-provider/oidc.eks.eu-west-2.amazonaws.com/id/OCCGIAFDPFCOIHAGDKHALDDCBBKOGLKK"
+      ],
+      "remediation": "Require the provider's audience (<host>:aud) and an exact subject (<host>:sub), e.g. repo:<org>/<repo>:ref:refs/heads/main for GitHub or system:serviceaccount:<ns>:<sa> for EKS.",
+      "resource": [
+        "arn:aws:iam::123456789012:role/demo-irsa-reader"
+      ],
+      "severity": "MEDIUM",
+      "source_policy": "AssumeRolePolicyDocument",
+      "source_type": "trust_policy",
+      "status": "open",
+      "title": "Role 'demo-irsa-reader' trusts eks identities (pattern subjects)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "LOW",
+      "category": "iam_hygiene",
+      "confidence": "definite",
+      "description": "The IAM password policy is below common baselines: password reuse prevention None < 24.",
+      "evidence": {
+        "configured": true,
+        "console_users": 0,
+        "weaknesses": [
+          "password reuse prevention None < 24"
+        ]
+      },
+      "fingerprint": "8324f653d46059d49f0e62bada4e6cf9",
+      "id": "IAM-PWPOL-001",
+      "legacy_ids": [],
+      "node_id": "aws-enumerator:account/123456789012",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-6--youre-external-no-foothold-yet",
+      "remediation": "Set an account password policy: length >= 14, all character classes, reuse prevention 24.",
+      "severity": "LOW",
+      "status": "open",
+      "title": "The account password policy is weak"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "LOW",
+      "category": "k8s_workload",
+      "confidence": "definite",
+      "description": "The pods mount the API token of their namespace's default service account. Use a dedicated service account, or set automountServiceAccountToken: false.",
+      "entity": "pod/demo-eks/default/legacy-app",
+      "entity_arn": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/default/legacy-app",
+      "evidence": {
+        "default_sa_has_rights": false,
+        "pod_count": 1,
+        "pods": [
+          "legacy-app"
+        ]
+      },
+      "fingerprint": "03bf269730a8e140e6744dc7e5bb3d56",
+      "id": "K8S-DEFAULT-SA",
+      "legacy_ids": [],
+      "node_id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/default/legacy-app",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-2--you-compromised-a-kubernetes-pod",
+      "region": "eu-west-2",
+      "remediation": "Create a dedicated ServiceAccount for this workload, or set automountServiceAccountToken: false.",
+      "resource": [
+        "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/default/legacy-app"
+      ],
+      "severity": "LOW",
+      "source_policy": "PodSpec.serviceAccountName",
+      "source_type": "k8s_pod",
+      "status": "open",
+      "title": "Workload runs as the default service account with its token mounted (default/legacy-app, cluster demo-eks)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "LOW",
+      "category": "k8s_workload",
+      "confidence": "definite",
+      "description": "The pods mount the API token of their namespace's default service account. Use a dedicated service account, or set automountServiceAccountToken: false.",
+      "entity": "pod/demo-eks/kube-system/node-debugger",
+      "entity_arn": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/kube-system/node-debugger",
+      "evidence": {
+        "default_sa_has_rights": false,
+        "pod_count": 1,
+        "pods": [
+          "node-debugger"
+        ]
+      },
+      "fingerprint": "6b44806de297daae06de8aa4f127dfbb",
+      "id": "K8S-DEFAULT-SA",
+      "legacy_ids": [],
+      "node_id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/kube-system/node-debugger",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-2--you-compromised-a-kubernetes-pod",
+      "region": "eu-west-2",
+      "remediation": "Create a dedicated ServiceAccount for this workload, or set automountServiceAccountToken: false.",
+      "resource": [
+        "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/kube-system/node-debugger"
+      ],
+      "severity": "LOW",
+      "source_policy": "PodSpec.serviceAccountName",
+      "source_type": "k8s_pod",
+      "status": "open",
+      "title": "Workload runs as the default service account with its token mounted (kube-system/node-debugger, cluster demo-eks)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "trust_policy",
+      "confidence": "conditional",
+      "description": "Web identity provider arn:aws:iam::123456789012:oidc-provider/oidc.eks.eu-west-2.amazonaws.com/id/OCCGIAFDPFCOIHAGDKHALDDCBBKOGLKK can assume 'demo-irsa-admin'.",
+      "entity": "role/demo-irsa-admin",
+      "entity_arn": "arn:aws:iam::123456789012:role/demo-irsa-admin",
+      "evidence": {
+        "admits": "specific",
+        "conditions": [
+          {
+            "key": "oidc.eks.eu-west-2.amazonaws.com/id/OCCGIAFDPFCOIHAGDKHALDDCBBKOGLKK:aud",
+            "operator": "StringEquals",
+            "values": [
+              "sts.amazonaws.com"
+            ]
+          },
+          {
+            "key": "oidc.eks.eu-west-2.amazonaws.com/id/OCCGIAFDPFCOIHAGDKHALDDCBBKOGLKK:sub",
+            "operator": "StringEquals",
+            "values": [
+              "system:serviceaccount:payments:payments-sa"
+            ]
+          }
+        ],
+        "problems": [],
+        "provider": "eks",
+        "statement_index": 0
+      },
+      "fingerprint": "7aed95ebce3a9c11941753be15793adc",
+      "id": "TRUST-OIDC-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "sts:AssumeRoleWithWebIdentity"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/demo-irsa-admin",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-6--youre-external-no-foothold-yet",
+      "related_node_ids": [
+        "arn:aws:iam::123456789012:oidc-provider/oidc.eks.eu-west-2.amazonaws.com/id/OCCGIAFDPFCOIHAGDKHALDDCBBKOGLKK"
+      ],
+      "remediation": "Require the provider's audience (<host>:aud) and an exact subject (<host>:sub), e.g. repo:<org>/<repo>:ref:refs/heads/main for GitHub or system:serviceaccount:<ns>:<sa> for EKS.",
+      "resource": [
+        "arn:aws:iam::123456789012:role/demo-irsa-admin"
+      ],
+      "severity": "INFO",
+      "source_policy": "AssumeRolePolicyDocument",
+      "source_type": "trust_policy",
+      "status": "open",
+      "title": "Role 'demo-irsa-admin' trusts eks identities (specific subjects)"
+    }
+  ],
+  "generated_at": "<stripped>",
+  "mode": "legacy-single",
+  "partition": "aws",
+  "regions": [
+    "eu-west-2"
+  ],
+  "rules_version": "2.1.0",
+  "run_id": "legacy-eu-west-2",
+  "schema_version": "1.0.0",
+  "tool_version": "0.3.0"
+}

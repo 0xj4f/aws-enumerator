@@ -1,0 +1,119 @@
+{
+  "breakers": [],
+  "calls": [
+    {
+      "api": "lambda:GetPolicy",
+      "count": 1,
+      "error_code": "ResourceNotFoundException",
+      "items": null,
+      "not_configured": true,
+      "optional": false,
+      "pages": 0,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "lambda:ListAliases",
+      "count": 1,
+      "error_code": null,
+      "items": 0,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "lambda:ListEventSourceMappings",
+      "count": 1,
+      "error_code": null,
+      "items": 0,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "lambda:ListFunctionUrlConfigs",
+      "count": 1,
+      "error_code": null,
+      "items": 0,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "lambda:ListFunctions",
+      "count": 1,
+      "error_code": null,
+      "items": 1,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": true,
+      "status": "ok"
+    },
+    {
+      "api": "lambda:ListLayers",
+      "count": 1,
+      "error_code": null,
+      "items": 0,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    }
+  ],
+  "duration_seconds": "<stripped>",
+  "ended_at": "<stripped>",
+  "error": null,
+  "item_errors": [],
+  "item_errors_truncated": false,
+  "module": "lambda",
+  "protocol": "ctx",
+  "region": "eu-west-1",
+  "schema_version": 1,
+  "sections": [
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "event_source_mappings",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "functions",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "layers",
+      "status": "ok"
+    }
+  ],
+  "services": [
+    "lambda"
+  ],
+  "started_at": "<stripped>",
+  "status": "ok",
+  "status_reason": null,
+  "summary": {
+    "calls": 6,
+    "denied": 0,
+    "error": 0,
+    "item_errors": 0,
+    "not_configured": 1,
+    "ok": 6,
+    "skipped": 0,
+    "throttled": 0
+  }
+}

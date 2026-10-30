@@ -1,0 +1,33 @@
+{
+  "oidc": [
+    {
+      "Arn": "arn:aws:iam::111122223333:oidc-provider/oidc.eks.eu-west-2.amazonaws.com/id/DEMO0000000000000000000000000002",
+      "ClientIDList": [
+        "sts.amazonaws.com"
+      ],
+      "CreateDate": "2024-01-02T10:00:00Z",
+      "ThumbprintList": [
+        "9e99a48a9960b14926bb7f3b02e22da2b0ab7280"
+      ],
+      "Url": "oidc.eks.eu-west-2.amazonaws.com/id/DEMO0000000000000000000000000002"
+    },
+    {
+      "Arn": "arn:aws:iam::111122223333:oidc-provider/token.actions.githubusercontent.com",
+      "ClientIDList": [
+        "sts.amazonaws.com"
+      ],
+      "CreateDate": "2024-01-03T10:00:00Z",
+      "ThumbprintList": [
+        "6938fd4d98bab03faadb97b34396831e3780aea1"
+      ],
+      "Url": "token.actions.githubusercontent.com"
+    }
+  ],
+  "saml": [
+    {
+      "Arn": "arn:aws:iam::111122223333:saml-provider/demo-idp",
+      "CreateDate": "2024-01-03T10:00:00Z",
+      "ValidUntil": "2034-01-01T10:00:00Z"
+    }
+  ]
+}

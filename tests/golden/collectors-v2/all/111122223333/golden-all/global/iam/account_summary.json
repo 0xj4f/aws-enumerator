@@ -1,0 +1,12 @@
+{
+  "AccountAccessKeysPresent": 0,
+  "AccountMFAEnabled": 1,
+  "Groups": 2,
+  "MFADevices": 1,
+  "MFADevicesInUse": 1,
+  "Policies": 4,
+  "PolicyVersionsInUse": 9,
+  "Roles": 13,
+  "Users": 3,
+  "UsersQuota": 5000
+}

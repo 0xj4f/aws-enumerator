@@ -1,0 +1,249 @@
+{
+  "breakers": [],
+  "calls": [
+    {
+      "api": "eks:DescribeAccessEntry",
+      "count": 1,
+      "error_code": "AccessDeniedException",
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 0,
+      "primary": false,
+      "status": "denied"
+    },
+    {
+      "api": "eks:DescribeAccessEntry",
+      "count": 2,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 2,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "eks:DescribeAddon",
+      "count": 2,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 2,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "eks:DescribeCluster",
+      "count": 1,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "eks:DescribeFargateProfile",
+      "count": 1,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "eks:DescribeNodegroup",
+      "count": 1,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "eks:DescribePodIdentityAssociation",
+      "count": 1,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "eks:ListAccessEntries",
+      "count": 1,
+      "error_code": null,
+      "items": 3,
+      "not_configured": false,
+      "optional": false,
+      "pages": 2,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "eks:ListAddons",
+      "count": 1,
+      "error_code": null,
+      "items": 2,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "eks:ListAssociatedAccessPolicies",
+      "count": 3,
+      "error_code": null,
+      "items": 2,
+      "not_configured": false,
+      "optional": false,
+      "pages": 3,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "eks:ListClusters",
+      "count": 1,
+      "error_code": null,
+      "items": 1,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": true,
+      "status": "ok"
+    },
+    {
+      "api": "eks:ListFargateProfiles",
+      "count": 1,
+      "error_code": null,
+      "items": 1,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "eks:ListNodegroups",
+      "count": 1,
+      "error_code": null,
+      "items": 1,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "eks:ListPodIdentityAssociations",
+      "count": 1,
+      "error_code": null,
+      "items": 1,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    }
+  ],
+  "duration_seconds": "<stripped>",
+  "ended_at": "<stripped>",
+  "error": null,
+  "item_errors": [
+    {
+      "api": "eks:DescribeAccessEntry",
+      "error_code": "AccessDeniedException",
+      "resource": "arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster/access-entry/arn:aws:iam::111122223333:user/demo-alice",
+      "status": "denied"
+    }
+  ],
+  "item_errors_truncated": false,
+  "module": "eks",
+  "protocol": "ctx",
+  "region": "eu-west-2",
+  "schema_version": 1,
+  "sections": [
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "access_entries",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "addons",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "clusters",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "describe",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "fargate_profiles",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "nodegroups",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "pod_identity",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "write",
+      "status": "ok"
+    }
+  ],
+  "services": [
+    "eks"
+  ],
+  "started_at": "<stripped>",
+  "status": "partial",
+  "status_reason": "eks:DescribeAccessEntry denied",
+  "summary": {
+    "calls": 18,
+    "denied": 1,
+    "error": 0,
+    "item_errors": 1,
+    "not_configured": 0,
+    "ok": 17,
+    "skipped": 0,
+    "throttled": 0
+  }
+}

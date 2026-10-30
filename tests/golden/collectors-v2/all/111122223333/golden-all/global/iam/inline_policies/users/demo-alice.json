@@ -1,0 +1,18 @@
+{
+  "EntityArn": "arn:aws:iam::111122223333:user/demo-alice",
+  "InlinePolicies": {
+    "demo-alice-s3-inline": {
+      "Statement": [
+        {
+          "Action": [
+            "s3:ListBucket"
+          ],
+          "Effect": "Allow",
+          "Resource": "arn:aws:s3:::demo-data-bucket"
+        }
+      ],
+      "Version": "2012-10-17"
+    }
+  },
+  "UserName": "demo-alice"
+}

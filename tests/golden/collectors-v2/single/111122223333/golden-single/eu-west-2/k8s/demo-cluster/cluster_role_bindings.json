@@ -1,0 +1,44 @@
+[
+  {
+    "kind": "ClusterRoleBinding",
+    "metadata": {
+      "annotations": null,
+      "labels": null,
+      "name": "cluster-admin"
+    },
+    "role_ref": {
+      "api_group": "rbac.authorization.k8s.io",
+      "kind": "ClusterRole",
+      "name": "cluster-admin"
+    },
+    "subjects": [
+      {
+        "api_group": "rbac.authorization.k8s.io",
+        "kind": "Group",
+        "name": "system:masters",
+        "namespace": null
+      }
+    ]
+  },
+  {
+    "kind": "ClusterRoleBinding",
+    "metadata": {
+      "annotations": null,
+      "labels": null,
+      "name": "demo-worker-admin"
+    },
+    "role_ref": {
+      "api_group": "rbac.authorization.k8s.io",
+      "kind": "ClusterRole",
+      "name": "cluster-admin"
+    },
+    "subjects": [
+      {
+        "api_group": null,
+        "kind": "ServiceAccount",
+        "name": "demo-worker",
+        "namespace": "demo-apps"
+      }
+    ]
+  }
+]

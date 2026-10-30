@@ -1,0 +1,50 @@
+{
+  "demo-admin-role": [
+    {
+      "PolicyArn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "PolicyName": "AdministratorAccess"
+    }
+  ],
+  "demo-app-role": [
+    {
+      "PolicyArn": "arn:aws:iam::111122223333:policy/demo-app-policy",
+      "PolicyName": "demo-app-policy"
+    }
+  ],
+  "demo-build-role": [
+    {
+      "PolicyArn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "PolicyName": "AdministratorAccess"
+    }
+  ],
+  "demo-cfn-role": [
+    {
+      "PolicyArn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "PolicyName": "AdministratorAccess"
+    }
+  ],
+  "demo-cognito-unauth-role": [],
+  "demo-cross-account-role": [
+    {
+      "PolicyArn": "arn:aws:iam::aws:policy/ReadOnlyAccess",
+      "PolicyName": "ReadOnlyAccess"
+    }
+  ],
+  "demo-ecs-task-role": [],
+  "demo-eks-cluster-role": [
+    {
+      "PolicyArn": "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy",
+      "PolicyName": "AmazonEKSClusterPolicy"
+    }
+  ],
+  "demo-eks-node-role": [
+    {
+      "PolicyArn": "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
+      "PolicyName": "AmazonEKSWorkerNodePolicy"
+    }
+  ],
+  "demo-glue-role": [],
+  "demo-irsa-role": [],
+  "demo-lambda-role": [],
+  "demo-sagemaker-role": []
+}

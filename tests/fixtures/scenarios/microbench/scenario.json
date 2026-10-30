@@ -1,0 +1,17 @@
+{
+  "name": "microbench",
+  "description": "po_microbench: 10 labelled roles (ground truth = admin-equivalent or can escalate to admin). labels.json holds the ground truth.",
+  "account": "123456789012",
+  "layout": "single_region",
+  "regions": [
+    "eu-west-2"
+  ],
+  "report_dirs": [
+    "123456789012/eu-west-2"
+  ],
+  "scope_dirs": [
+    "123456789012/eu-west-2"
+  ],
+  "expect_exception": false,
+  "baseline": "d13c215"
+}

@@ -1,0 +1,18 @@
+{
+  "ResourcePolicy": {
+    "Statement": [
+      {
+        "Action": "secretsmanager:GetSecretValue",
+        "Effect": "Allow",
+        "Principal": {
+          "AWS": "arn:aws:iam::999999999999:root"
+        },
+        "Resource": "*",
+        "Sid": "CrossAccountRead"
+      }
+    ],
+    "Version": "2012-10-17"
+  },
+  "SecretArn": "arn:aws:secretsmanager:eu-west-2:111122223333:secret:demo/db-creds-AbCdEf",
+  "SecretName": "demo/db-creds"
+}

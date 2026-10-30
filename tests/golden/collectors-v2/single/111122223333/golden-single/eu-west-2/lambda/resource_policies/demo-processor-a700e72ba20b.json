@@ -1,0 +1,37 @@
+{
+  "FunctionArn": "arn:aws:lambda:eu-west-2:111122223333:function:demo-processor",
+  "FunctionName": "demo-processor",
+  "QualifiedArn": "arn:aws:lambda:eu-west-2:111122223333:function:demo-processor",
+  "Qualifier": null,
+  "ResourcePolicy": {
+    "Statement": [
+      {
+        "Action": "lambda:InvokeFunction",
+        "Condition": {
+          "ArnLike": {
+            "AWS:SourceArn": "arn:aws:s3:::demo-data-bucket"
+          }
+        },
+        "Effect": "Allow",
+        "Principal": {
+          "Service": "s3.amazonaws.com"
+        },
+        "Resource": "arn:aws:lambda:eu-west-2:111122223333:function:demo-processor",
+        "Sid": "S3Invoke"
+      },
+      {
+        "Action": "lambda:InvokeFunctionUrl",
+        "Condition": {
+          "StringEquals": {
+            "lambda:FunctionUrlAuthType": "NONE"
+          }
+        },
+        "Effect": "Allow",
+        "Principal": "*",
+        "Resource": "arn:aws:lambda:eu-west-2:111122223333:function:demo-processor",
+        "Sid": "PublicUrl"
+      }
+    ],
+    "Version": "2012-10-17"
+  }
+}

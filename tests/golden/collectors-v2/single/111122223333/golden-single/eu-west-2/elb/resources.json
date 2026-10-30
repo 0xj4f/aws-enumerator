@@ -1,0 +1,134 @@
+[
+  {
+    "Arn": "arn:aws:elasticloadbalancing:eu-west-2:111122223333:loadbalancer/app/demo-public-alb/0123456789abcdef",
+    "DNSName": "demo-public-alb-1234567890.eu-west-2.elb.amazonaws.com",
+    "LBType": "application",
+    "Listeners": [
+      {
+        "AuthenticateActions": [],
+        "DefaultActionTypes": [
+          "forward"
+        ],
+        "Port": 8443,
+        "Protocol": "HTTPS"
+      },
+      {
+        "AuthenticateActions": [],
+        "DefaultActionTypes": [
+          "redirect"
+        ],
+        "Port": 80,
+        "Protocol": "HTTP"
+      },
+      {
+        "AuthenticateActions": [
+          {
+            "Issuer": null,
+            "Type": "authenticate-cognito",
+            "UserPoolArn": "arn:aws:cognito-idp:eu-west-2:111122223333:userpool/eu-west-2_DemoPool1"
+          }
+        ],
+        "DefaultActionTypes": [
+          "authenticate-cognito",
+          "forward"
+        ],
+        "Port": 443,
+        "Protocol": "HTTPS"
+      }
+    ],
+    "Name": "demo-public-alb",
+    "Scheme": "internet-facing",
+    "SecurityGroups": [
+      "sg-0dec0eeb000000002"
+    ],
+    "Subnets": [],
+    "TargetGroups": [
+      {
+        "Arn": "arn:aws:elasticloadbalancing:eu-west-2:111122223333:targetgroup/demo-lambda-tg/0123456789abcdef",
+        "Name": "demo-lambda-tg",
+        "Port": null,
+        "Protocol": null,
+        "TargetType": "lambda"
+      },
+      {
+        "Arn": "arn:aws:elasticloadbalancing:eu-west-2:111122223333:targetgroup/demo-web-tg/0123456789abcdef",
+        "Name": "demo-web-tg",
+        "Port": 80,
+        "Protocol": "HTTP",
+        "TargetType": "instance"
+      }
+    ],
+    "Targets": [
+      {
+        "TargetGroupArn": "arn:aws:elasticloadbalancing:eu-west-2:111122223333:targetgroup/demo-lambda-tg/0123456789abcdef",
+        "id": "arn:aws:lambda:eu-west-2:111122223333:function:demo-processor",
+        "kind": "lambda"
+      },
+      {
+        "TargetGroupArn": "arn:aws:elasticloadbalancing:eu-west-2:111122223333:targetgroup/demo-web-tg/0123456789abcdef",
+        "id": "i-0dec0eeb000000002",
+        "kind": "instance"
+      }
+    ],
+    "Type": "elb",
+    "VpcId": "vpc-0dec000000000002"
+  },
+  {
+    "Arn": "arn:aws:elasticloadbalancing:eu-west-2:111122223333:loadbalancer/demo-classic-elb",
+    "DNSName": "demo-classic-elb-111.eu-west-2.elb.amazonaws.com",
+    "LBType": "classic",
+    "Listeners": [],
+    "Name": "demo-classic-elb",
+    "Scheme": "internet-facing",
+    "SecurityGroups": [],
+    "Subnets": [],
+    "TargetGroups": [],
+    "Targets": [
+      {
+        "TargetGroupArn": null,
+        "id": "i-0dec0eeb000000002",
+        "kind": "instance"
+      }
+    ],
+    "Type": "elb",
+    "VpcId": "vpc-0dec000000000002"
+  },
+  {
+    "Arn": "arn:aws:elasticloadbalancing:eu-west-2:111122223333:loadbalancer/net/demo-internal-nlb/fedcba9876543210",
+    "CollectionErrors": [
+      {
+        "api": "elbv2:DescribeTargetHealth",
+        "error_code": "AccessDenied",
+        "status": "denied"
+      }
+    ],
+    "DNSName": "demo-internal-nlb-fedcba9876543210.elb.eu-west-2.amazonaws.com",
+    "LBType": "network",
+    "Listeners": [
+      {
+        "AuthenticateActions": [],
+        "DefaultActionTypes": [
+          "forward"
+        ],
+        "Port": 5432,
+        "Protocol": "TCP"
+      }
+    ],
+    "Name": "demo-internal-nlb",
+    "Scheme": "internal",
+    "SecurityGroups": [],
+    "Subnets": [],
+    "TargetGroups": [
+      {
+        "Arn": "arn:aws:elasticloadbalancing:eu-west-2:111122223333:targetgroup/demo-denied-tg/0123456789abcdef",
+        "Name": "demo-denied-tg",
+        "Port": 5432,
+        "Protocol": "TCP",
+        "TargetType": "ip"
+      }
+    ],
+    "Targets": [],
+    "Type": "elb",
+    "VpcId": "vpc-0dec000000000002"
+  }
+]

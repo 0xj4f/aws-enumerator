@@ -1,0 +1,5 @@
+{
+  "name": "demo-unreachable",
+  "endpoint": "https://demo.invalid",
+  "auth_status": "ok"
+}

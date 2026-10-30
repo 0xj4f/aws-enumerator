@@ -1,0 +1,15 @@
+[
+  {
+    "UserName": "alice",
+    "UserId": "AIDAJONBJJENGLJDMLGDK",
+    "Arn": "arn:aws:iam::111122223333:user/alice",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "PasswordLastUsed": "",
+    "Path": "/",
+    "Tags": [],
+    "AccessKeys": [],
+    "MFADevices": [],
+    "HasLoginProfile": false,
+    "PermissionsBoundary": null
+  }
+]

@@ -1,0 +1,230 @@
+[
+  {
+    "file": "bridge_invariant.json",
+    "layer": "semantic",
+    "codes": [
+      "bridge-invariant",
+      "edge-traversable-not-allowed"
+    ]
+  },
+  {
+    "file": "dangling_edge.json",
+    "layer": "semantic",
+    "codes": [
+      "dangling-edge-target"
+    ]
+  },
+  {
+    "file": "duplicate_edge_ids.json",
+    "layer": "semantic",
+    "codes": [
+      "duplicate-edge-id"
+    ]
+  },
+  {
+    "file": "duplicate_node_ids.json",
+    "layer": "semantic",
+    "codes": [
+      "duplicate-node-id"
+    ]
+  },
+  {
+    "file": "edge_id_mismatch.json",
+    "layer": "semantic",
+    "codes": [
+      "edge-id-mismatch"
+    ]
+  },
+  {
+    "file": "edge_source_type.json",
+    "layer": "semantic",
+    "codes": [
+      "edge-source-type"
+    ]
+  },
+  {
+    "file": "finding_dangling_node_id.json",
+    "layer": "semantic",
+    "codes": [
+      "finding-node-missing"
+    ]
+  },
+  {
+    "file": "finding_missing_node_id.json",
+    "layer": "schema",
+    "errors": [
+      [
+        "required",
+        "/findings/0"
+      ]
+    ]
+  },
+  {
+    "file": "legacy_node_id_scheme.json",
+    "layer": "semantic",
+    "codes": [
+      "node-id-pattern"
+    ]
+  },
+  {
+    "file": "max_severity_mismatch.json",
+    "layer": "semantic",
+    "codes": [
+      "max-severity-mismatch"
+    ]
+  },
+  {
+    "file": "meta_targets_mismatch.json",
+    "layer": "semantic",
+    "codes": [
+      "meta-targets-mismatch"
+    ]
+  },
+  {
+    "file": "missing_anonymous_node.json",
+    "layer": "semantic",
+    "codes": [
+      "synthetic-node-missing"
+    ]
+  },
+  {
+    "file": "negative_weight.json",
+    "layer": "schema",
+    "errors": [
+      [
+        "minimum",
+        "/edges/0/weight"
+      ]
+    ]
+  },
+  {
+    "file": "non_numeric_weight.json",
+    "layer": "schema",
+    "errors": [
+      [
+        "type",
+        "/edges/0/weight"
+      ]
+    ]
+  },
+  {
+    "file": "operator_node_missing.json",
+    "layer": "semantic",
+    "codes": [
+      "operator-node-missing"
+    ]
+  },
+  {
+    "file": "out_of_order.json",
+    "layer": "semantic",
+    "codes": [
+      "order"
+    ],
+    "strict_order": true
+  },
+  {
+    "file": "principal_wildcard_node.json",
+    "layer": "schema",
+    "errors": [
+      [
+        "not",
+        "/nodes/22/id"
+      ]
+    ]
+  },
+  {
+    "file": "proto_nested_evidence.json",
+    "layer": "schema",
+    "errors": [
+      [
+        "propertyNames",
+        "/edges/6/evidence/statements/0"
+      ]
+    ]
+  },
+  {
+    "file": "proto_props.json",
+    "layer": "schema",
+    "errors": [
+      [
+        "propertyNames",
+        "/nodes/15/props"
+      ]
+    ]
+  },
+  {
+    "file": "reference_not_https.json",
+    "layer": "schema",
+    "errors": [
+      [
+        "anyOf",
+        "/findings/0/reference"
+      ]
+    ]
+  },
+  {
+    "file": "registry_mismatch.json",
+    "layer": "semantic",
+    "codes": [
+      "edge-registry-mismatch"
+    ]
+  },
+  {
+    "file": "traversable_not_boolean.json",
+    "layer": "schema",
+    "errors": [
+      [
+        "type",
+        "/edges/0/traversable"
+      ]
+    ]
+  },
+  {
+    "file": "traversable_rule_missing.json",
+    "layer": "semantic",
+    "codes": [
+      "traversable-rule-missing"
+    ]
+  },
+  {
+    "file": "traversal_mismatch.json",
+    "layer": "semantic",
+    "codes": [
+      "edge-traversal-mismatch"
+    ]
+  },
+  {
+    "file": "unknown_edge_type.json",
+    "layer": "semantic",
+    "codes": [
+      "unknown-edge-type"
+    ]
+  },
+  {
+    "file": "unknown_top_level_key.json",
+    "layer": "schema",
+    "errors": [
+      [
+        "additionalProperties",
+        ""
+      ]
+    ]
+  },
+  {
+    "file": "weight_below_base.json",
+    "layer": "semantic",
+    "codes": [
+      "weight-below-base"
+    ]
+  },
+  {
+    "file": "wrong_schema_major.json",
+    "layer": "schema",
+    "errors": [
+      [
+        "pattern",
+        "/schema_version"
+      ]
+    ]
+  }
+]

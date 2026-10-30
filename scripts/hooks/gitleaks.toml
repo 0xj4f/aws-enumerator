@@ -1,0 +1,40 @@
+# gitleaks configuration (F-066): the default rules plus rules for the identifiers that make an
+# aws-enumerator report or an engagement note sensitive. Used by the gitleaks pre-commit hook
+# (.pre-commit-config.yaml); run by hand with: gitleaks git --config scripts/hooks/gitleaks.toml
+title = "aws-enumerator"
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "aws-arn-with-account"
+description = "AWS ARN naming a real account (reports and engagement notes must stay out of the repository)"
+regex = '''arn:aws(?:-[a-z]+)*:[a-z0-9-]+:[a-z0-9-]*:([0-9]{12}):[A-Za-z0-9_+=,.@/:*-]+'''
+secretGroup = 1
+keywords = ["arn:aws"]
+
+[rules.allowlist]
+description = "placeholder accounts (docs/contracts: 123456789012, 111122223333, 999999999999, 000000000000)"
+regexTarget = "secret"
+regexes = ['''^(123456789012|111122223333|999999999999|000000000000)$''']
+
+[[rules]]
+id = "aws-account-id-labelled"
+description = "12-digit AWS account id next to an account label"
+regex = '''(?i)(?:account[_ -]?(?:id|number)?|owner[_ -]?id|aws_account)["']?\s*[:=]\s*["']?([0-9]{12})\b'''
+secretGroup = 1
+keywords = ["account", "owner", "aws_account"]
+
+[rules.allowlist]
+description = "placeholder accounts"
+regexTarget = "secret"
+regexes = ['''^(123456789012|111122223333|999999999999|000000000000)$''']
+
+[allowlist]
+description = "synthetic test data and generated lockfiles"
+paths = [
+  '''^tests/fixtures/''',
+  '''^tests/golden/''',
+  '''^requirements(-[a-z]+)?\.txt$''',
+  '''^aws_enumerator/dashboard/vendor/''',
+]

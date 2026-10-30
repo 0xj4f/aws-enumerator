@@ -1,0 +1,13 @@
+[
+  {
+    "CreatedTimestamp": "2024-01-02T10:00:00Z",
+    "EventDataStoreArn": "arn:aws:cloudtrail:eu-west-2:111122223333:eventdatastore/dec0dec0-0000-4000-8000-0000000000f2",
+    "MultiRegionEnabled": true,
+    "Name": "demo-lake",
+    "OrganizationEnabled": false,
+    "RetentionPeriod": 2557,
+    "Status": "ENABLED",
+    "TerminationProtectionEnabled": true,
+    "UpdatedTimestamp": "2024-01-09T10:00:00Z"
+  }
+]

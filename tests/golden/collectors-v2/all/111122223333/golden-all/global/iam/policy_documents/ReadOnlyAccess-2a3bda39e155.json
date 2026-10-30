@@ -1,0 +1,24 @@
+{
+  "DefaultVersionId": "v118",
+  "Document": {
+    "Statement": [
+      {
+        "Action": [
+          "ec2:Describe*",
+          "iam:Get*",
+          "iam:List*",
+          "s3:Get*",
+          "s3:List*"
+        ],
+        "Effect": "Allow",
+        "Resource": "*"
+      }
+    ],
+    "Version": "2012-10-17"
+  },
+  "PolicyArn": "arn:aws:iam::aws:policy/ReadOnlyAccess",
+  "PolicyName": "ReadOnlyAccess",
+  "PolicyType": "AWS",
+  "VersionId": "v118",
+  "Versions": []
+}

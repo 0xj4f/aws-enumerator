@@ -1,0 +1,63 @@
+[
+  {
+    "AllowClassicFlow": true,
+    "AllowUnauth": false,
+    "Arn": "arn:aws:cognito-identity:eu-west-2:111122223333:identitypool/eu-west-2:11111111-2222-4333-8444-55555555555b",
+    "AuthRole": null,
+    "CognitoIdentityProviders": [],
+    "CollectionErrors": [
+      {
+        "api": "cognito-identity:GetIdentityPoolRoles",
+        "error_code": "AccessDeniedException",
+        "status": "denied"
+      }
+    ],
+    "DeveloperProviderName": null,
+    "Id": "eu-west-2:11111111-2222-4333-8444-55555555555b",
+    "Kind": "identity_pool",
+    "Name": "demo_roles_denied_pool",
+    "OpenIdConnectProviderARNs": [],
+    "RoleMappings": null,
+    "SamlProviderARNs": [],
+    "SupportedLoginProviders": {},
+    "Type": "cognito",
+    "UnauthRole": null
+  },
+  {
+    "AllowClassicFlow": true,
+    "AllowUnauth": true,
+    "Arn": "arn:aws:cognito-identity:eu-west-2:111122223333:identitypool/eu-west-2:11111111-2222-4333-8444-55555555555a",
+    "AuthRole": null,
+    "CognitoIdentityProviders": [],
+    "DeveloperProviderName": null,
+    "Id": "eu-west-2:11111111-2222-4333-8444-55555555555a",
+    "Kind": "identity_pool",
+    "Name": "demo_identity_pool",
+    "OpenIdConnectProviderARNs": [],
+    "RoleMappings": {},
+    "SamlProviderARNs": [],
+    "SupportedLoginProviders": {},
+    "Type": "cognito",
+    "UnauthRole": "arn:aws:iam::111122223333:role/demo-cognito-unauth-role"
+  },
+  {
+    "Arn": "arn:aws:cognito-idp:eu-west-2:111122223333:userpool/eu-west-2_DemoPool1",
+    "Clients": [
+      {
+        "ClientId": "dec0c1e47000000000000000a1",
+        "ClientName": "demo-web-client"
+      },
+      {
+        "ClientId": "dec0c1e47000000000000000b2",
+        "ClientName": "demo-backend-client"
+      }
+    ],
+    "Domain": "demo-auth",
+    "Id": "eu-west-2_DemoPool1",
+    "Kind": "user_pool",
+    "MfaConfiguration": "OFF",
+    "Name": "demo-user-pool",
+    "SelfSignupEnabled": true,
+    "Type": "cognito"
+  }
+]

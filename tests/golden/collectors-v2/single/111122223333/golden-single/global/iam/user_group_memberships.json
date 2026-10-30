@@ -1,0 +1,19 @@
+{
+  "demo-alice": [
+    {
+      "Arn": "arn:aws:iam::111122223333:group/demo-developers",
+      "GroupId": "AGPAEXAMPLEDEVS000001",
+      "GroupName": "demo-developers",
+      "Path": "/"
+    }
+  ],
+  "demo-bob": [
+    {
+      "Arn": "arn:aws:iam::111122223333:group/demo-admins",
+      "GroupId": "AGPAEXAMPLEADMINS0001",
+      "GroupName": "demo-admins",
+      "Path": "/"
+    }
+  ],
+  "demo-ci": []
+}

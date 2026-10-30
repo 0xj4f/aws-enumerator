@@ -1,0 +1,34 @@
+[
+  {
+    "api_version": null,
+    "kind": null,
+    "metadata": {
+      "name": "\" onfocus=\"window.__aeXssCanary=1\" autofocus=\"",
+      "namespace": "<img src=x onerror=window.__aeXssCanary=1>",
+      "labels": null,
+      "annotations": null,
+      "uid": "c5fee743-aaaa-4bbb-8ccc-1ca9f0951de8",
+      "creation_timestamp": "2026-01-01 00:00:00+00:00",
+      "resource_version": "1000",
+      "owner_references": null,
+      "managed_fields": null
+    },
+    "spec": {
+      "type": "LoadBalancer",
+      "selector": {
+        "app": "javascript:window.__aeXssCanary=1"
+      },
+      "cluster_ip": "172.20.0.10",
+      "ports": [
+        {
+          "port": 443,
+          "protocol": "TCP",
+          "target_port": 8443
+        }
+      ]
+    },
+    "status": {
+      "load_balancer": {}
+    }
+  }
+]

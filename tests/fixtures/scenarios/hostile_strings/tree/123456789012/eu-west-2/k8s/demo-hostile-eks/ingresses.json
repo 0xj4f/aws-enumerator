@@ -1,0 +1,42 @@
+[
+  {
+    "api_version": null,
+    "kind": null,
+    "metadata": {
+      "name": "demo\\\\path\\\"quote\\'single",
+      "namespace": "<img src=x onerror=window.__aeXssCanary=1>",
+      "labels": null,
+      "annotations": null,
+      "uid": "8a2070fc-aaaa-4bbb-8ccc-b4cb246a404f",
+      "creation_timestamp": "2026-01-01 00:00:00+00:00",
+      "resource_version": "1000",
+      "owner_references": null,
+      "managed_fields": null
+    },
+    "spec": {
+      "ingress_class_name": "alb",
+      "rules": [
+        {
+          "host": "demo.example.com",
+          "http": {
+            "paths": [
+              {
+                "path": "/",
+                "path_type": "Prefix",
+                "backend": {
+                  "service": {
+                    "name": "\" onfocus=\"window.__aeXssCanary=1\" autofocus=\"",
+                    "port": {
+                      "number": 443
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "status": {}
+  }
+]

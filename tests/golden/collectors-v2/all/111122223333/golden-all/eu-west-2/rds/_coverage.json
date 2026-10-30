@@ -1,0 +1,144 @@
+{
+  "breakers": [],
+  "calls": [
+    {
+      "api": "rds:DescribeDBClusterSnapshotAttributes",
+      "count": 2,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 2,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "rds:DescribeDBClusterSnapshots",
+      "count": 1,
+      "error_code": null,
+      "items": 2,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "rds:DescribeDBClusters",
+      "count": 1,
+      "error_code": null,
+      "items": 1,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "rds:DescribeDBInstances",
+      "count": 1,
+      "error_code": null,
+      "items": 2,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": true,
+      "status": "ok"
+    },
+    {
+      "api": "rds:DescribeDBSnapshotAttributes",
+      "count": 1,
+      "error_code": "AccessDenied",
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 0,
+      "primary": false,
+      "status": "denied"
+    },
+    {
+      "api": "rds:DescribeDBSnapshotAttributes",
+      "count": 2,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 2,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "rds:DescribeDBSnapshots",
+      "count": 1,
+      "error_code": null,
+      "items": 3,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    }
+  ],
+  "duration_seconds": "<stripped>",
+  "ended_at": "<stripped>",
+  "error": null,
+  "item_errors": [
+    {
+      "api": "rds:DescribeDBSnapshotAttributes",
+      "error_code": "AccessDenied",
+      "resource": "arn:aws:rds:eu-west-2:111122223333:snapshot:demo-db-snap-denied",
+      "status": "denied"
+    }
+  ],
+  "item_errors_truncated": false,
+  "module": "rds",
+  "protocol": "ctx",
+  "region": "eu-west-2",
+  "schema_version": 1,
+  "sections": [
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "cluster_snapshots",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "clusters",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "instances",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "snapshots",
+      "status": "ok"
+    }
+  ],
+  "services": [
+    "rds"
+  ],
+  "started_at": "<stripped>",
+  "status": "partial",
+  "status_reason": "rds:DescribeDBSnapshotAttributes denied",
+  "summary": {
+    "calls": 9,
+    "denied": 1,
+    "error": 0,
+    "item_errors": 1,
+    "not_configured": 0,
+    "ok": 8,
+    "skipped": 0,
+    "throttled": 0
+  }
+}

@@ -1,0 +1,11 @@
+[
+  {
+    "Type": "cfnstack",
+    "Arn": "arn:aws:cloudformation:eu-west-2:123456789012:stack/demo-stack/b26dc72d-aaaa-4bbb-8ccc-986c754b0e12",
+    "Name": "demo-stack",
+    "Roles": [
+      "arn:aws:iam::123456789012:role/demo-cfn-role"
+    ],
+    "StackStatus": "CREATE_COMPLETE"
+  }
+]

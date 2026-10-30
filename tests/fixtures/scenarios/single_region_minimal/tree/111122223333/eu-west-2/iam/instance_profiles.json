@@ -1,0 +1,32 @@
+[
+  {
+    "Path": "/",
+    "InstanceProfileName": "app",
+    "InstanceProfileId": "AIPAAMCAKEIMAFNGPAFLL",
+    "Arn": "arn:aws:iam::111122223333:instance-profile/app",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "Roles": [
+      {
+        "Path": "/",
+        "RoleName": "app",
+        "RoleId": "AROALCIJOPDKEMNNBFCDO",
+        "Arn": "arn:aws:iam::111122223333:role/app",
+        "CreateDate": "2026-01-01 00:00:00+00:00",
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "ec2.amazonaws.com"
+              },
+              "Action": "sts:AssumeRole"
+            }
+          ]
+        },
+        "Description": "",
+        "MaxSessionDuration": 3600
+      }
+    ]
+  }
+]

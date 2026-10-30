@@ -1,0 +1,101 @@
+{
+  "breakers": [],
+  "calls": [
+    {
+      "api": "organizations:DescribeOrganization",
+      "count": 1,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": true,
+      "status": "ok"
+    },
+    {
+      "api": "organizations:DescribeOrganizationalUnit",
+      "count": 1,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": true,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "organizations:DescribePolicy",
+      "count": 4,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": true,
+      "pages": 4,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "organizations:ListParents",
+      "count": 2,
+      "error_code": null,
+      "items": 2,
+      "not_configured": false,
+      "optional": true,
+      "pages": 2,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "organizations:ListPoliciesForTarget",
+      "count": 6,
+      "error_code": null,
+      "items": 6,
+      "not_configured": false,
+      "optional": true,
+      "pages": 6,
+      "primary": false,
+      "status": "ok"
+    }
+  ],
+  "duration_seconds": "<stripped>",
+  "ended_at": "<stripped>",
+  "error": null,
+  "item_errors": [],
+  "item_errors_truncated": false,
+  "module": "organizations",
+  "protocol": "ctx",
+  "region": "global",
+  "schema_version": 1,
+  "sections": [
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "organization",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "policies",
+      "status": "ok"
+    }
+  ],
+  "services": [
+    "organizations"
+  ],
+  "started_at": "<stripped>",
+  "status": "ok",
+  "status_reason": null,
+  "summary": {
+    "calls": 14,
+    "denied": 0,
+    "error": 0,
+    "item_errors": 0,
+    "not_configured": 0,
+    "ok": 14,
+    "skipped": 0,
+    "throttled": 0
+  }
+}

@@ -1,0 +1,66 @@
+[
+  {
+    "api_version": null,
+    "kind": null,
+    "metadata": {
+      "name": "web-lb",
+      "namespace": "web",
+      "labels": null,
+      "annotations": null,
+      "uid": "41a48002-aaaa-4bbb-8ccc-8d5579a77a26",
+      "creation_timestamp": "2026-01-01 00:00:00+00:00",
+      "resource_version": "1000",
+      "owner_references": null,
+      "managed_fields": null
+    },
+    "spec": {
+      "type": "LoadBalancer",
+      "selector": {
+        "app": "web"
+      },
+      "cluster_ip": "172.20.0.10",
+      "ports": [
+        {
+          "port": 443,
+          "protocol": "TCP",
+          "target_port": 8443
+        }
+      ]
+    },
+    "status": {
+      "load_balancer": {}
+    }
+  },
+  {
+    "api_version": null,
+    "kind": null,
+    "metadata": {
+      "name": "payments-svc",
+      "namespace": "payments",
+      "labels": null,
+      "annotations": null,
+      "uid": "484e7074-aaaa-4bbb-8ccc-36bdd60cd043",
+      "creation_timestamp": "2026-01-01 00:00:00+00:00",
+      "resource_version": "1000",
+      "owner_references": null,
+      "managed_fields": null
+    },
+    "spec": {
+      "type": "ClusterIP",
+      "selector": {
+        "app": "payments"
+      },
+      "cluster_ip": "172.20.0.10",
+      "ports": [
+        {
+          "port": 443,
+          "protocol": "TCP",
+          "target_port": 8443
+        }
+      ]
+    },
+    "status": {
+      "load_balancer": {}
+    }
+  }
+]

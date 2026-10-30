@@ -1,0 +1,432 @@
+{
+  "edges": [
+    {
+      "category": "kms",
+      "edge_id": "e:001c721610bc89ae527f",
+      "matched_actions": [
+        "kms:PutKeyPolicy"
+      ],
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "target": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a1",
+      "type": "CAN_ADMIN_KEY",
+      "weight": 1
+    },
+    {
+      "category": "kms",
+      "edge_id": "e:7751a9ca952bb0e036a4",
+      "matched_actions": [
+        "kms:Decrypt"
+      ],
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "target": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a1",
+      "type": "CAN_DECRYPT",
+      "weight": 1
+    },
+    {
+      "category": "kms",
+      "edge_id": "e:a0230cadec8871fa1958",
+      "has_conditions": true,
+      "matched_actions": [
+        "kms:CancelKeyDeletion",
+        "kms:CreateGrant",
+        "kms:DisableKey",
+        "kms:PutKeyPolicy",
+        "kms:ScheduleKeyDeletion"
+      ],
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "target": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a2",
+      "type": "CAN_ADMIN_KEY",
+      "weight": 4
+    },
+    {
+      "category": "kms",
+      "edge_id": "e:e5e965d1fbb314d735e0",
+      "has_conditions": true,
+      "matched_actions": [
+        "kms:Decrypt",
+        "kms:ReEncryptFrom"
+      ],
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "target": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a2",
+      "type": "CAN_DECRYPT",
+      "weight": 4
+    },
+    {
+      "category": "kms",
+      "edge_id": "e:f492a07060925b230178",
+      "matched_actions": [
+        "kms:PutKeyPolicy"
+      ],
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "target": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a3",
+      "type": "CAN_ADMIN_KEY",
+      "weight": 1
+    },
+    {
+      "category": "kms",
+      "edge_id": "e:df7caf06e7d5fa01e893",
+      "matched_actions": [
+        "kms:Decrypt"
+      ],
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "target": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a3",
+      "type": "CAN_DECRYPT",
+      "weight": 1
+    },
+    {
+      "category": "kms",
+      "edge_id": "e:3a975828521ab56ef615",
+      "has_conditions": true,
+      "matched_actions": [
+        "kms:CancelKeyDeletion",
+        "kms:CreateGrant",
+        "kms:DisableKey",
+        "kms:PutKeyPolicy",
+        "kms:ScheduleKeyDeletion"
+      ],
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "target": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a4",
+      "type": "CAN_ADMIN_KEY",
+      "weight": 2
+    },
+    {
+      "category": "kms",
+      "edge_id": "e:61fbd125c8268293d144",
+      "has_conditions": true,
+      "matched_actions": [
+        "kms:Decrypt",
+        "kms:ReEncryptFrom"
+      ],
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "target": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a4",
+      "type": "CAN_DECRYPT",
+      "weight": 2
+    },
+    {
+      "category": "kms",
+      "edge_id": "e:da873203f176ef8bcce4",
+      "matched_actions": [
+        "kms:PutKeyPolicy"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "target": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a1",
+      "type": "CAN_ADMIN_KEY",
+      "weight": 1
+    },
+    {
+      "category": "kms",
+      "edge_id": "e:f2f3721fbe58513a9b9e",
+      "matched_actions": [
+        "kms:Decrypt"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "target": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a1",
+      "type": "CAN_DECRYPT",
+      "weight": 1
+    },
+    {
+      "category": "kms",
+      "edge_id": "e:a9be9c9f836882dc77ea",
+      "has_conditions": true,
+      "matched_actions": [
+        "kms:CancelKeyDeletion",
+        "kms:CreateGrant",
+        "kms:DisableKey",
+        "kms:PutKeyPolicy",
+        "kms:ScheduleKeyDeletion"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "target": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a2",
+      "type": "CAN_ADMIN_KEY",
+      "weight": 4
+    },
+    {
+      "category": "kms",
+      "edge_id": "e:84cdfa07ec975373ee0c",
+      "has_conditions": true,
+      "matched_actions": [
+        "kms:Decrypt",
+        "kms:ReEncryptFrom"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "target": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a2",
+      "type": "CAN_DECRYPT",
+      "weight": 4
+    },
+    {
+      "category": "kms",
+      "edge_id": "e:1cdd182be87aea9eb2b6",
+      "matched_actions": [
+        "kms:PutKeyPolicy"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "target": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a3",
+      "type": "CAN_ADMIN_KEY",
+      "weight": 1
+    },
+    {
+      "category": "kms",
+      "edge_id": "e:91053738e5b68aa05caa",
+      "matched_actions": [
+        "kms:Decrypt"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "target": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a3",
+      "type": "CAN_DECRYPT",
+      "weight": 1
+    },
+    {
+      "category": "kms",
+      "edge_id": "e:b7e45f8cb11715f3a364",
+      "has_conditions": true,
+      "matched_actions": [
+        "kms:CancelKeyDeletion",
+        "kms:CreateGrant",
+        "kms:DisableKey",
+        "kms:PutKeyPolicy",
+        "kms:ScheduleKeyDeletion"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "target": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a4",
+      "type": "CAN_ADMIN_KEY",
+      "weight": 2
+    },
+    {
+      "category": "kms",
+      "edge_id": "e:d58d09f180728d043e71",
+      "has_conditions": true,
+      "matched_actions": [
+        "kms:Decrypt",
+        "kms:ReEncryptFrom"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "target": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a4",
+      "type": "CAN_DECRYPT",
+      "weight": 2
+    },
+    {
+      "category": "kms",
+      "edge_id": "e:ddcf65ab85fc66f37d88",
+      "matched_actions": [
+        "kms:PutKeyPolicy"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "target": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a1",
+      "type": "CAN_ADMIN_KEY",
+      "weight": 1
+    },
+    {
+      "category": "kms",
+      "edge_id": "e:5e20b9000574cdf285e3",
+      "matched_actions": [
+        "kms:Decrypt"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "target": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a1",
+      "type": "CAN_DECRYPT",
+      "weight": 1
+    },
+    {
+      "category": "kms",
+      "edge_id": "e:f0948667ce16ec2fb6af",
+      "has_conditions": true,
+      "matched_actions": [
+        "kms:CancelKeyDeletion",
+        "kms:CreateGrant",
+        "kms:DisableKey",
+        "kms:PutKeyPolicy",
+        "kms:ScheduleKeyDeletion"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "target": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a2",
+      "type": "CAN_ADMIN_KEY",
+      "weight": 4
+    },
+    {
+      "category": "kms",
+      "edge_id": "e:14f1bbc015a0d6a3614c",
+      "has_conditions": true,
+      "matched_actions": [
+        "kms:Decrypt",
+        "kms:ReEncryptFrom"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "target": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a2",
+      "type": "CAN_DECRYPT",
+      "weight": 4
+    },
+    {
+      "category": "kms",
+      "edge_id": "e:025aaa8940eff1e72c71",
+      "matched_actions": [
+        "kms:PutKeyPolicy"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "target": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a3",
+      "type": "CAN_ADMIN_KEY",
+      "weight": 1
+    },
+    {
+      "category": "kms",
+      "edge_id": "e:932ab0675c9bacb1adae",
+      "matched_actions": [
+        "kms:Decrypt"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "target": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a3",
+      "type": "CAN_DECRYPT",
+      "weight": 1
+    },
+    {
+      "category": "kms",
+      "edge_id": "e:c64ce0bd29987345094a",
+      "has_conditions": true,
+      "matched_actions": [
+        "kms:CancelKeyDeletion",
+        "kms:CreateGrant",
+        "kms:DisableKey",
+        "kms:PutKeyPolicy",
+        "kms:ScheduleKeyDeletion"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "target": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a4",
+      "type": "CAN_ADMIN_KEY",
+      "weight": 2
+    },
+    {
+      "category": "kms",
+      "edge_id": "e:24f7373832190a188b23",
+      "has_conditions": true,
+      "matched_actions": [
+        "kms:Decrypt",
+        "kms:ReEncryptFrom"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "target": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a4",
+      "type": "CAN_DECRYPT",
+      "weight": 2
+    },
+    {
+      "category": "kms",
+      "edge_id": "e:64b045955b83066829a5",
+      "matched_actions": [
+        "kms:PutKeyPolicy"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "target": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a1",
+      "type": "CAN_ADMIN_KEY",
+      "weight": 1
+    },
+    {
+      "category": "kms",
+      "edge_id": "e:4bd7d7a21fc13997834a",
+      "matched_actions": [
+        "kms:Decrypt"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "target": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a1",
+      "type": "CAN_DECRYPT",
+      "weight": 1
+    },
+    {
+      "category": "kms",
+      "edge_id": "e:ed23f329137cda3591fe",
+      "has_conditions": true,
+      "matched_actions": [
+        "kms:CancelKeyDeletion",
+        "kms:CreateGrant",
+        "kms:DisableKey",
+        "kms:PutKeyPolicy",
+        "kms:ScheduleKeyDeletion"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "target": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a2",
+      "type": "CAN_ADMIN_KEY",
+      "weight": 4
+    },
+    {
+      "category": "kms",
+      "edge_id": "e:ffde45af67fb65429785",
+      "has_conditions": true,
+      "matched_actions": [
+        "kms:Decrypt",
+        "kms:ReEncryptFrom"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "target": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a2",
+      "type": "CAN_DECRYPT",
+      "weight": 4
+    },
+    {
+      "category": "kms",
+      "edge_id": "e:7a0c3b528222e46b5c3e",
+      "matched_actions": [
+        "kms:PutKeyPolicy"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "target": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a3",
+      "type": "CAN_ADMIN_KEY",
+      "weight": 1
+    },
+    {
+      "category": "kms",
+      "edge_id": "e:94492d51042df5b000aa",
+      "matched_actions": [
+        "kms:Decrypt"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "target": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a3",
+      "type": "CAN_DECRYPT",
+      "weight": 1
+    },
+    {
+      "category": "kms",
+      "edge_id": "e:0424c6cfe6b2b5ce26a8",
+      "has_conditions": true,
+      "matched_actions": [
+        "kms:CancelKeyDeletion",
+        "kms:CreateGrant",
+        "kms:DisableKey",
+        "kms:PutKeyPolicy",
+        "kms:ScheduleKeyDeletion"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "target": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a4",
+      "type": "CAN_ADMIN_KEY",
+      "weight": 2
+    },
+    {
+      "category": "kms",
+      "edge_id": "e:a9aebdc05e8af90c21bd",
+      "has_conditions": true,
+      "matched_actions": [
+        "kms:Decrypt",
+        "kms:ReEncryptFrom"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "target": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a4",
+      "type": "CAN_DECRYPT",
+      "weight": 2
+    },
+    {
+      "category": "kms",
+      "edge_id": "e:2d6963cd62a7cd521a95",
+      "source": "arn:aws:iam::111122223333:role/demo-lambda-role",
+      "target": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a1",
+      "type": "KMS_GRANT",
+      "weight": 1
+    },
+    {
+      "category": "kms",
+      "edge_id": "e:a329811e46f6d551f76b",
+      "matched_actions": [
+        "kms:Decrypt"
+      ],
+      "source": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a1",
+      "target": "arn:aws:iam::111122223333:role/demo-app-role",
+      "type": "KMS_GRANTS_DECRYPT",
+      "weight": 1
+    }
+  ],
+  "findings": []
+}

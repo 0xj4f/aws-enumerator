@@ -1,0 +1,57 @@
+[
+  {
+    "accessConfig": {
+      "authenticationMode": "API_AND_CONFIG_MAP"
+    },
+    "arn": "arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster",
+    "certificateAuthority": {
+      "data": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tClptRnJaUzFrWlcxdkxXTmgKLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo="
+    },
+    "createdAt": "2024-01-02T10:00:00Z",
+    "endpoint": "https://DEMO0000000000000000000000000002.gr7.eu-west-2.eks.amazonaws.com",
+    "identity": {
+      "oidc": {
+        "issuer": "https://oidc.eks.eu-west-2.amazonaws.com/id/DEMO0000000000000000000000000002"
+      }
+    },
+    "kubernetesNetworkConfig": {
+      "ipFamily": "ipv4",
+      "serviceIpv4Cidr": "172.20.0.0/16"
+    },
+    "logging": {
+      "clusterLogging": [
+        {
+          "enabled": true,
+          "types": [
+            "api",
+            "audit"
+          ]
+        }
+      ]
+    },
+    "name": "demo-cluster",
+    "platformVersion": "eks.7",
+    "resourcesVpcConfig": {
+      "clusterSecurityGroupId": "sg-0dec0c1057ea00002",
+      "endpointPrivateAccess": true,
+      "endpointPublicAccess": true,
+      "publicAccessCidrs": [
+        "0.0.0.0/0"
+      ],
+      "securityGroupIds": [
+        "sg-0dec0abb000000002"
+      ],
+      "subnetIds": [
+        "subnet-0dec0b0b0000002",
+        "subnet-0dec0ba1b000002"
+      ],
+      "vpcId": "vpc-0dec000000000002"
+    },
+    "roleArn": "arn:aws:iam::111122223333:role/demo-eks-cluster-role",
+    "status": "ACTIVE",
+    "tags": {
+      "env": "demo"
+    },
+    "version": "1.29"
+  }
+]

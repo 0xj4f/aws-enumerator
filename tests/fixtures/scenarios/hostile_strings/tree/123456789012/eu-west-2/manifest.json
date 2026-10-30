@@ -1,0 +1,146 @@
+{
+  "tool": "aws-enumerator",
+  "version": "0.2.0",
+  "author": "0xj4f",
+  "run_metadata": {
+    "account_id": "123456789012",
+    "mode": "single_region",
+    "region": "eu-west-2",
+    "regions_enumerated": [],
+    "caller_arn": "arn:aws:iam::123456789012:user/demo-operator",
+    "caller_user_id": "AIDAIOFJECGLDECPDLLDA",
+    "timestamp_start": "2026-01-01T00:00:00",
+    "timestamp_end": "2026-01-01T00:00:00",
+    "duration_seconds": 0.0
+  },
+  "modules_executed": [
+    {
+      "name": "ec2",
+      "path": "ec2/",
+      "file_count": 1,
+      "files": [
+        "instances.json"
+      ]
+    },
+    {
+      "name": "ecs",
+      "path": "ecs/",
+      "file_count": 1,
+      "files": [
+        "resources.json"
+      ]
+    },
+    {
+      "name": "eks",
+      "path": "eks/",
+      "file_count": 2,
+      "files": [
+        "clusters.json",
+        "nodegroups.json"
+      ]
+    },
+    {
+      "name": "iam",
+      "path": "iam/",
+      "file_count": 22,
+      "files": [
+        "account_password_policy.json",
+        "account_summary.json",
+        "group_attached_policies.json",
+        "groups.json",
+        "inline_policies/groups/demo-hostile-group.json",
+        "inline_policies/roles/__proto__.json",
+        "inline_policies/roles/constructor.json",
+        "inline_policies/roles/hasOwnProperty.json",
+        "inline_policies/roles/toString.json",
+        "inline_policies/users/__proto__.json",
+        "inline_policies/users/constructor.json",
+        "inline_policies/users/hasOwnProperty.json",
+        "inline_policies/users/toString.json",
+        "instance_profiles.json",
+        "policies.json",
+        "policy_documents/AdministratorAccess_v1.json",
+        "policy_documents/demo-hostile-policy_v1.json",
+        "role_attached_policies.json",
+        "roles.json",
+        "user_attached_policies.json",
+        "user_group_memberships.json",
+        "users.json"
+      ]
+    },
+    {
+      "name": "k8s",
+      "path": "k8s/",
+      "file_count": 11,
+      "files": [
+        "demo-hostile-eks/cluster_info.json",
+        "demo-hostile-eks/cluster_role_bindings.json",
+        "demo-hostile-eks/cluster_roles.json",
+        "demo-hostile-eks/ingresses.json",
+        "demo-hostile-eks/namespaces.json",
+        "demo-hostile-eks/pods.json",
+        "demo-hostile-eks/role_bindings.json",
+        "demo-hostile-eks/roles.json",
+        "demo-hostile-eks/secrets.json",
+        "demo-hostile-eks/service_accounts.json",
+        "demo-hostile-eks/services.json"
+      ]
+    },
+    {
+      "name": "lambda",
+      "path": "lambda/",
+      "file_count": 1,
+      "files": [
+        "functions.json"
+      ]
+    },
+    {
+      "name": "route53",
+      "path": "route53/",
+      "file_count": 1,
+      "files": [
+        "resources.json"
+      ]
+    },
+    {
+      "name": "s3",
+      "path": "s3/",
+      "file_count": 1,
+      "files": [
+        "buckets.json"
+      ]
+    },
+    {
+      "name": "secretsmanager",
+      "path": "secretsmanager/",
+      "file_count": 1,
+      "files": [
+        "secrets.json"
+      ]
+    },
+    {
+      "name": "sg",
+      "path": "sg/",
+      "file_count": 1,
+      "files": [
+        "security_groups.json"
+      ]
+    },
+    {
+      "name": "sns",
+      "path": "sns/",
+      "file_count": 1,
+      "files": [
+        "resources.json"
+      ]
+    },
+    {
+      "name": "ssm",
+      "path": "ssm/",
+      "file_count": 1,
+      "files": [
+        "parameters.json"
+      ]
+    }
+  ]
+}

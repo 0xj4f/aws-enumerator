@@ -1,0 +1,23 @@
+[
+  {
+    "Arn": "arn:aws:glue:eu-west-2:111122223333:devEndpoint/demo-dev-endpoint",
+    "Kind": "dev_endpoint",
+    "Name": "demo-dev-endpoint",
+    "PublicAddress": "ec2-203-0-113-30.eu-west-2.compute.amazonaws.com",
+    "Roles": [
+      "arn:aws:iam::111122223333:role/demo-glue-role"
+    ],
+    "Status": "READY",
+    "Type": "gluejob"
+  },
+  {
+    "Arn": "arn:aws:glue:eu-west-2:111122223333:job/demo-etl-job",
+    "Command": "glueetl",
+    "Kind": "job",
+    "Name": "demo-etl-job",
+    "Roles": [
+      "arn:aws:iam::111122223333:role/demo-glue-role"
+    ],
+    "Type": "gluejob"
+  }
+]

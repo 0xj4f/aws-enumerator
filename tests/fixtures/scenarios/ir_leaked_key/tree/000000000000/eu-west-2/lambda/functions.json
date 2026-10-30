@@ -1,0 +1,20 @@
+[
+  {
+    "FunctionName": "etl",
+    "FunctionArn": "arn:aws:lambda:eu-west-2:000000000000:function:etl",
+    "Runtime": "python3.12",
+    "Handler": "app.handler",
+    "Role": "arn:aws:iam::000000000000:role/fn-admin-role",
+    "MemorySize": 128,
+    "Timeout": 30,
+    "LastModified": "2026-01-01T00:00:00.000+0000",
+    "PackageType": "Zip",
+    "Layers": [],
+    "VpcConfig": {
+      "VpcId": null,
+      "SubnetIds": [],
+      "SecurityGroupIds": []
+    },
+    "EnvironmentVariableNames": []
+  }
+]

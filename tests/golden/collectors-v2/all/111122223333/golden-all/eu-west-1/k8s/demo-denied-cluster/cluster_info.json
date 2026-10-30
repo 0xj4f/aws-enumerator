@@ -1,0 +1,19 @@
+{
+  "arn": "arn:aws:eks:eu-west-1:111122223333:cluster/demo-denied-cluster",
+  "auth_mode": "eks-token",
+  "auth_status": "skipped",
+  "endpoint": null,
+  "endpoint_hint": null,
+  "endpoint_private_access": null,
+  "endpoint_public_access": null,
+  "error": "no API endpoint (DescribeCluster failed or the cluster is not active)",
+  "error_code": "NoEndpoint",
+  "name": "demo-denied-cluster",
+  "public_access_cidrs": null,
+  "resources": {},
+  "secrets_listed": false,
+  "self_rules_namespaces": 0,
+  "self_rules_reviewed": false,
+  "self_rules_truncated": false,
+  "version": null
+}

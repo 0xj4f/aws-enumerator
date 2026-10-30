@@ -1,0 +1,17 @@
+{
+  "name": "eks_irsa",
+  "description": "One EKS cluster with a nodegroup, 2 IRSA service accounts (admin and read-only roles), RBAC bindings incl. cluster-admin, privileged/hostNetwork/hostPID pods, default-SA pods, LoadBalancer service and ingresses with and without auth annotations, secret mounts and a secrets.json annotation canary.",
+  "account": "123456789012",
+  "layout": "single_region",
+  "regions": [
+    "eu-west-2"
+  ],
+  "report_dirs": [
+    "123456789012/eu-west-2"
+  ],
+  "scope_dirs": [
+    "123456789012/eu-west-2"
+  ],
+  "expect_exception": false,
+  "baseline": "d13c215"
+}

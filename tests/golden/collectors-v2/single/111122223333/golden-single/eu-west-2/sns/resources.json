@@ -1,0 +1,65 @@
+[
+  {
+    "Arn": "arn:aws:sns:eu-west-2:111122223333:demo-alerts",
+    "KmsMasterKeyId": null,
+    "Name": "demo-alerts",
+    "Policy": {
+      "Statement": [
+        {
+          "Action": "SNS:Publish",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::999999999999:root"
+          },
+          "Resource": "arn:aws:sns:eu-west-2:111122223333:demo-alerts",
+          "Sid": "XAccountPublish"
+        }
+      ],
+      "Version": "2012-10-17"
+    },
+    "PolicyStatus": "present",
+    "Subscriptions": [
+      {
+        "Endpoint": "<redacted>@example.com",
+        "Owner": "111122223333",
+        "Protocol": "email",
+        "SubscriptionArn": "arn:aws:sns:eu-west-2:111122223333:demo-alerts:dec0dec0-0000-4000-8000-000000000001"
+      },
+      {
+        "Endpoint": "arn:aws:lambda:eu-west-2:111122223333:function:demo-processor",
+        "Owner": "111122223333",
+        "Protocol": "lambda",
+        "SubscriptionArn": "arn:aws:sns:eu-west-2:111122223333:demo-alerts:dec0dec0-0000-4000-8000-000000000003"
+      },
+      {
+        "Endpoint": "arn:aws:sqs:eu-west-2:111122223333:demo-queue",
+        "Owner": "111122223333",
+        "Protocol": "sqs",
+        "SubscriptionArn": "arn:aws:sns:eu-west-2:111122223333:demo-alerts:dec0dec0-0000-4000-8000-000000000000"
+      },
+      {
+        "Endpoint": "https://hooks.example.com",
+        "Owner": "111122223333",
+        "Protocol": "https",
+        "SubscriptionArn": "arn:aws:sns:eu-west-2:111122223333:demo-alerts:dec0dec0-0000-4000-8000-000000000002"
+      }
+    ],
+    "Type": "sns"
+  },
+  {
+    "Arn": "arn:aws:sns:eu-west-2:111122223333:demo-events",
+    "CollectionErrors": [
+      {
+        "api": "sns:GetTopicAttributes",
+        "error_code": "AccessDenied",
+        "status": "denied"
+      }
+    ],
+    "KmsMasterKeyId": null,
+    "Name": "demo-events",
+    "Policy": null,
+    "PolicyStatus": "denied",
+    "Subscriptions": [],
+    "Type": "sns"
+  }
+]

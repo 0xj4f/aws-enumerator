@@ -1,0 +1,31 @@
+[
+  {
+    "AdministrationRoleARN": "arn:aws:iam::111122223333:role/demo-cfn-role",
+    "Arn": "arn:aws:cloudformation:eu-west-2:111122223333:stackset/demo-baseline:dec0dec0-0000-4000-8000-0000000000c5",
+    "ExecutionRoleName": "demo-stackset-execution",
+    "Name": "demo-baseline",
+    "PermissionModel": "SELF_MANAGED",
+    "Roles": [
+      "arn:aws:iam::111122223333:role/demo-cfn-role"
+    ],
+    "StackSetId": "demo-baseline:dec0dec0-0000-4000-8000-0000000000c5",
+    "Status": "ACTIVE",
+    "Type": "stackset"
+  },
+  {
+    "Arn": "arn:aws:cloudformation:eu-west-2:111122223333:stack/demo-app-stack/00000000-0000-4000-8000-0000000000f1",
+    "Name": "demo-app-stack",
+    "Roles": [
+      "arn:aws:iam::111122223333:role/demo-cfn-role"
+    ],
+    "StackStatus": "UPDATE_COMPLETE",
+    "Type": "cfnstack"
+  },
+  {
+    "Arn": "arn:aws:cloudformation:eu-west-2:111122223333:stack/demo-network-stack/00000000-0000-4000-8000-0000000000f1",
+    "Name": "demo-network-stack",
+    "Roles": [],
+    "StackStatus": "CREATE_COMPLETE",
+    "Type": "cfnstack"
+  }
+]

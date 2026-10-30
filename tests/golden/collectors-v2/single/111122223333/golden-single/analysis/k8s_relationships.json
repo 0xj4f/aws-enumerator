@@ -1,0 +1,383 @@
+{
+  "edges": [
+    {
+      "category": "k8s_compute",
+      "edge_id": "e:c325afba5719c50119df",
+      "source": "cluster:demo-cluster",
+      "target": "arn:aws:iam::111122223333:role/demo-eks-cluster-role",
+      "type": "CLUSTER_ROLE",
+      "weight": 0
+    },
+    {
+      "category": "k8s_rbac",
+      "edge_id": "e:3f0c5569dd68349810cf",
+      "source": "group:demo-cluster/_/system:masters",
+      "target": "k8srole:demo-cluster/cluster/cluster-admin",
+      "type": "BOUND_TO",
+      "weight": 0
+    },
+    {
+      "category": "k8s_network",
+      "edge_id": "e:83c16116a19c3f577f9f",
+      "source": "k8singress:demo-cluster/demo-apps/demo-api-ingress",
+      "target": "k8sservice:demo-cluster/demo-apps/demo-api-lb",
+      "type": "EXPOSES",
+      "weight": 0
+    },
+    {
+      "category": "k8s_network",
+      "edge_id": "e:67a7f079e9066672d1d7",
+      "source": "k8sservice:demo-cluster/demo-apps/demo-api-lb",
+      "target": "pod:demo-cluster/demo-apps/ReplicaSet:demo-api-7d9f8c6b5",
+      "type": "SELECTS",
+      "weight": 0
+    },
+    {
+      "category": "k8s_compute",
+      "edge_id": "e:7fbea6d50177d46cf561",
+      "source": "nodegroup:demo-cluster/demo-ng",
+      "target": "arn:aws:iam::111122223333:role/demo-eks-node-role",
+      "type": "NODE_ROLE",
+      "weight": 0
+    },
+    {
+      "category": "k8s_structural",
+      "edge_id": "e:8a308e6eb6c025e4c2b5",
+      "source": "pod:demo-cluster/demo-apps/ReplicaSet:demo-api-7d9f8c6b5",
+      "target": "cluster:demo-cluster",
+      "type": "IN_CLUSTER",
+      "weight": 0
+    },
+    {
+      "category": "k8s_workload",
+      "edge_id": "e:decb3aa13040b193a338",
+      "source": "pod:demo-cluster/demo-apps/ReplicaSet:demo-api-7d9f8c6b5",
+      "target": "k8ssecret:demo-cluster/demo-apps/demo-db-secret",
+      "type": "MOUNTS_SECRET",
+      "weight": 1
+    },
+    {
+      "category": "k8s_workload",
+      "edge_id": "e:67926913858eea4aeecc",
+      "source": "pod:demo-cluster/demo-apps/ReplicaSet:demo-api-7d9f8c6b5",
+      "target": "sa:demo-cluster/demo-apps/demo-api",
+      "type": "RUNS_AS",
+      "weight": 0
+    },
+    {
+      "category": "k8s_structural",
+      "edge_id": "e:687e6e78b1bdcc02e671",
+      "source": "pod:demo-cluster/demo-apps/demo-worker-0",
+      "target": "cluster:demo-cluster",
+      "type": "IN_CLUSTER",
+      "weight": 0
+    },
+    {
+      "category": "k8s_workload",
+      "edge_id": "e:64025ab72475d96026ef",
+      "source": "pod:demo-cluster/demo-apps/demo-worker-0",
+      "target": "sa:demo-cluster/demo-apps/demo-worker",
+      "type": "RUNS_AS",
+      "weight": 0
+    },
+    {
+      "category": "k8s_structural",
+      "edge_id": "e:77dc967bfbbf1365e501",
+      "source": "pod:demo-cluster/kube-system/aws-node-xyz12",
+      "target": "cluster:demo-cluster",
+      "type": "IN_CLUSTER",
+      "weight": 0
+    },
+    {
+      "category": "k8s_workload",
+      "edge_id": "e:261cfc55d69dee7c41fb",
+      "source": "pod:demo-cluster/kube-system/aws-node-xyz12",
+      "target": "sa:demo-cluster/kube-system/aws-node",
+      "type": "RUNS_AS",
+      "weight": 0
+    },
+    {
+      "category": "k8s_irsa",
+      "edge_id": "e:d8638ce0245350be23c7",
+      "source": "sa:demo-cluster/demo-apps/demo-api",
+      "target": "arn:aws:iam::111122223333:role/demo-irsa-role",
+      "type": "IRSA_BRIDGE",
+      "weight": 0
+    },
+    {
+      "category": "k8s_rbac",
+      "edge_id": "e:f4fe9569765b1dbbfc1f",
+      "source": "sa:demo-cluster/demo-apps/demo-api",
+      "target": "k8srole:demo-cluster/demo-apps/demo-secret-reader",
+      "type": "BOUND_TO",
+      "weight": 0
+    },
+    {
+      "category": "k8s_rbac",
+      "edge_id": "e:5a9cb20dd34707e40a14",
+      "source": "sa:demo-cluster/demo-apps/demo-worker",
+      "target": "k8srole:demo-cluster/cluster/cluster-admin",
+      "type": "BOUND_TO",
+      "weight": 0
+    },
+    {
+      "category": "k8s_irsa",
+      "edge_id": "e:a9b255f317315792beae",
+      "source": "sa:demo-cluster/kube-system/aws-node",
+      "target": "arn:aws:iam::111122223333:role/demo-eks-node-role",
+      "type": "IRSA_BRIDGE",
+      "weight": 0
+    }
+  ],
+  "findings": [
+    {
+      "category": "eks_identity",
+      "description": "The access-entry mapping of arn:aws:iam::111122223333:role/demo-admin-role gives it full control of cluster demo-cluster (access policy AmazonEKSClusterAdminPolicy). Whoever can use this IAM principal controls every workload, secret and service-account identity of the cluster.",
+      "entity": "cluster/demo-cluster",
+      "entity_arn": "arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster",
+      "fingerprint": "3e8295938a1f389c68be87772b2de375",
+      "id": "EKS-ADMIN-001",
+      "matched_actions": [],
+      "node_id": "arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-2--you-compromised-a-kubernetes-pod",
+      "remediation": "Review which IAM principals are mapped to system:masters or AmazonEKSClusterAdminPolicy; prefer namespaced access policies.",
+      "resource": [
+        "arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster"
+      ],
+      "severity": "INFO",
+      "source_policy": "access-entry",
+      "source_type": "eks_identity",
+      "title": "arn:aws:iam::111122223333:role/demo-admin-role is a cluster administrator of EKS cluster demo-cluster"
+    },
+    {
+      "category": "eks_exposure",
+      "description": "The Kubernetes API endpoint of cluster demo-cluster (eu-west-2) is publicly accessible from 0.0.0.0/0. Authentication is still required, but any leaked kubeconfig, token or mapped IAM credential is usable from anywhere, and API-server vulnerabilities are exposed.",
+      "entity": "cluster/demo-cluster",
+      "entity_arn": "arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster",
+      "fingerprint": "2a338b31ce39a8be3c560e6d62603d9c",
+      "id": "EKS-ENDPOINT-001",
+      "matched_actions": [],
+      "node_id": "arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "remediation": "Disable public endpoint access, or restrict publicAccessCidrs to known administration networks.",
+      "resource": [
+        "arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster"
+      ],
+      "severity": "MEDIUM",
+      "source_policy": "resourcesVpcConfig",
+      "source_type": "eks_cluster",
+      "title": "EKS cluster demo-cluster has a public API endpoint open to the internet"
+    },
+    {
+      "category": "k8s_coverage",
+      "description": "SelfSubjectRulesReviews in 3 namespace(s) of cluster demo-cluster show: list secrets (reads every value), read secrets. They describe the identity the collector used, which is a foothold an attacker holding the same credentials would have.",
+      "entity": "cluster/demo-cluster",
+      "entity_arn": "arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster",
+      "fingerprint": "883d77ce5eccb2be9ac80581b22178ef",
+      "id": "K8S-CALLER-001",
+      "matched_actions": [],
+      "node_id": "arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-2--you-compromised-a-kubernetes-pod",
+      "remediation": "No action needed; review whether the collecting identity's Kubernetes rights are broader than intended.",
+      "resource": [
+        "arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster"
+      ],
+      "severity": "INFO",
+      "source_policy": "SelfSubjectRulesReview",
+      "source_type": "k8s_self_rules",
+      "title": "Kubernetes permissions of the collecting identity in cluster demo-cluster"
+    },
+    {
+      "category": "k8s_workload",
+      "description": "The pod shares the host's network namespace (every node interface, the node's IMDS).",
+      "entity": "pod/demo-cluster/demo-apps/demo-worker-0",
+      "entity_arn": "k8s://arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster/Pod/demo-apps/demo-worker-0",
+      "fingerprint": "3c6ea9415d68c492e81e166e0e0b59f6",
+      "id": "K8S-HOSTNET-001",
+      "matched_actions": [],
+      "node_id": "k8s://arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster/Pod/demo-apps/demo-worker-0",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-2--you-compromised-a-kubernetes-pod",
+      "remediation": "Remove hostNetwork: true.",
+      "resource": [
+        "k8s://arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster/Pod/demo-apps/demo-worker-0"
+      ],
+      "severity": "HIGH",
+      "source_policy": "PodSpec.hostNetwork",
+      "source_type": "k8s_pod",
+      "title": "Pod uses hostNetwork (demo-apps/demo-worker-0, cluster demo-cluster)"
+    },
+    {
+      "category": "k8s_workload",
+      "description": "The pod shares the host's network namespace (every node interface, the node's IMDS).",
+      "entity": "pod/demo-cluster/kube-system/aws-node-xyz12",
+      "entity_arn": "k8s://arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster/Pod/kube-system/aws-node-xyz12",
+      "fingerprint": "778cfa50cc0c106d77bb058f408a18e9",
+      "id": "K8S-HOSTNET-001",
+      "matched_actions": [],
+      "node_id": "k8s://arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster/Pod/kube-system/aws-node-xyz12",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-2--you-compromised-a-kubernetes-pod",
+      "remediation": "Remove hostNetwork: true.",
+      "resource": [
+        "k8s://arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster/Pod/kube-system/aws-node-xyz12"
+      ],
+      "severity": "HIGH",
+      "source_policy": "PodSpec.hostNetwork",
+      "source_type": "k8s_pod",
+      "title": "Pod uses hostNetwork (kube-system/aws-node-xyz12, cluster demo-cluster)"
+    },
+    {
+      "category": "k8s_workload",
+      "description": "The pod mounts directories of the node that give control of the node or its container runtime.",
+      "entity": "pod/demo-cluster/demo-apps/demo-worker-0",
+      "entity_arn": "k8s://arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster/Pod/demo-apps/demo-worker-0",
+      "fingerprint": "a3558583c6f4dc3fa8034686768da548",
+      "id": "K8S-HOSTPATH-001",
+      "matched_actions": [],
+      "node_id": "k8s://arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster/Pod/demo-apps/demo-worker-0",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-2--you-compromised-a-kubernetes-pod",
+      "remediation": "Replace hostPath volumes by persistent volumes or projected sources; never mount the container runtime socket, the kubelet directory or the node's root filesystem.",
+      "resource": [
+        "k8s://arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster/Pod/demo-apps/demo-worker-0"
+      ],
+      "severity": "HIGH",
+      "source_policy": "volumes[].hostPath",
+      "source_type": "k8s_pod",
+      "title": "Pod mounts a hostPath volume (demo-apps/demo-worker-0, cluster demo-cluster)"
+    },
+    {
+      "category": "k8s_workload",
+      "description": "The pod shares the host's PID namespace (it can see and signal every process on the node).",
+      "entity": "pod/demo-cluster/demo-apps/demo-worker-0",
+      "entity_arn": "k8s://arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster/Pod/demo-apps/demo-worker-0",
+      "fingerprint": "e25747edead45dc0e5b17caf9b849837",
+      "id": "K8S-HOSTPID-001",
+      "matched_actions": [],
+      "node_id": "k8s://arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster/Pod/demo-apps/demo-worker-0",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-2--you-compromised-a-kubernetes-pod",
+      "remediation": "Remove hostPID: true.",
+      "resource": [
+        "k8s://arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster/Pod/demo-apps/demo-worker-0"
+      ],
+      "severity": "HIGH",
+      "source_policy": "PodSpec.hostPID",
+      "source_type": "k8s_pod",
+      "title": "Pod uses hostPID (demo-apps/demo-worker-0, cluster demo-cluster)"
+    },
+    {
+      "category": "k8s_irsa",
+      "description": "The pod-identity configuration of demo-apps/demo-worker names arn:aws:iam::111122223333:role/demo-app-role, but the role's trust policy does not admit it (trust policy: not_allowed (trust_policy)). The pods get no AWS credentials from it; the configuration is stale or was planted, and is not an attack path.",
+      "entity": "sa/demo-cluster/demo-apps/demo-worker",
+      "entity_arn": "k8s://arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster/ServiceAccount/demo-apps/demo-worker",
+      "fingerprint": "74d4637b5bd5acd640f2c5b51ac7986c",
+      "id": "K8S-IRSA-002",
+      "matched_actions": [],
+      "node_id": "k8s://arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster/ServiceAccount/demo-apps/demo-worker",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-2--you-compromised-a-kubernetes-pod",
+      "remediation": "Remove the stale eks.amazonaws.com/role-arn annotation or Pod Identity association, or fix the role's trust policy if the workload needs it.",
+      "resource": [
+        "k8s://arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster/ServiceAccount/demo-apps/demo-worker"
+      ],
+      "severity": "LOW",
+      "source_policy": "pod-identity",
+      "source_type": "k8s_service_account",
+      "title": "Service account names an IAM role whose trust does not admit it (demo-apps/demo-worker, cluster demo-cluster)"
+    },
+    {
+      "category": "k8s_irsa",
+      "description": "The irsa configuration of kube-system/aws-node names arn:aws:iam::111122223333:role/demo-eks-node-role, but the role's trust policy does not admit it (trust policy: not_allowed (trust_policy)). The pods get no AWS credentials from it; the configuration is stale or was planted, and is not an attack path.",
+      "entity": "sa/demo-cluster/kube-system/aws-node",
+      "entity_arn": "k8s://arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster/ServiceAccount/kube-system/aws-node",
+      "fingerprint": "a5214270134f33edee65d8958bf336c1",
+      "id": "K8S-IRSA-002",
+      "matched_actions": [],
+      "node_id": "k8s://arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster/ServiceAccount/kube-system/aws-node",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-2--you-compromised-a-kubernetes-pod",
+      "remediation": "Remove the stale eks.amazonaws.com/role-arn annotation or Pod Identity association, or fix the role's trust policy if the workload needs it.",
+      "resource": [
+        "k8s://arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster/ServiceAccount/kube-system/aws-node"
+      ],
+      "severity": "LOW",
+      "source_policy": "irsa",
+      "source_type": "k8s_service_account",
+      "title": "Service account names an IAM role whose trust does not admit it (kube-system/aws-node, cluster demo-cluster)"
+    },
+    {
+      "category": "k8s_network",
+      "description": "Service demo-apps/demo-api-lb of type LoadBalancer gets an internet-facing AWS load balancer (in-tree cloud provider default (internet-facing)), open to any source address.",
+      "entity": "k8sservice/demo-cluster/demo-apps/demo-api-lb",
+      "entity_arn": "k8s://arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster/Service/demo-apps/demo-api-lb",
+      "fingerprint": "25e48f2db7cdd8d724a8f182cdf458a4",
+      "id": "K8S-NET-001",
+      "matched_actions": [],
+      "node_id": "k8s://arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster/Service/demo-apps/demo-api-lb",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "remediation": "Use an internal load balancer (service.beta.kubernetes.io/aws-load-balancer-scheme: internal) or restrict loadBalancerSourceRanges.",
+      "resource": [
+        "k8s://arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster/Service/demo-apps/demo-api-lb"
+      ],
+      "severity": "HIGH",
+      "source_policy": "Service.spec.type",
+      "source_type": "k8s_service",
+      "title": "Service demo-apps/demo-api-lb is an internet-facing load balancer (cluster demo-cluster)"
+    },
+    {
+      "category": "k8s_network",
+      "description": "Ingress demo-apps/demo-api-ingress routes to demo-api-lb without an authentication annotation (alb.ingress.kubernetes.io/scheme: internet-facing). Verify that the backends authenticate requests.",
+      "entity": "k8singress/demo-cluster/demo-apps/demo-api-ingress",
+      "entity_arn": "k8s://arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster/Ingress/demo-apps/demo-api-ingress",
+      "fingerprint": "c68cd950d130253d250b4521fa7c7bf3",
+      "id": "K8S-NET-002",
+      "matched_actions": [],
+      "node_id": "k8s://arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster/Ingress/demo-apps/demo-api-ingress",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "remediation": "Restrict the ingress or add authentication in front of it.",
+      "resource": [
+        "k8s://arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster/Ingress/demo-apps/demo-api-ingress"
+      ],
+      "severity": "MEDIUM",
+      "source_policy": "Ingress.metadata.annotations",
+      "source_type": "k8s_ingress",
+      "title": "Ingress demo-apps/demo-api-ingress has no authentication annotation (cluster demo-cluster)"
+    },
+    {
+      "category": "k8s_workload",
+      "description": "A privileged container (regular, init or ephemeral) has every capability and the host's devices: it can take over the node.",
+      "entity": "pod/demo-cluster/demo-apps/demo-worker-0",
+      "entity_arn": "k8s://arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster/Pod/demo-apps/demo-worker-0",
+      "fingerprint": "53c0eb451e4fab031d3c006142093a8d",
+      "id": "K8S-PRIV-001",
+      "matched_actions": [],
+      "node_id": "k8s://arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster/Pod/demo-apps/demo-worker-0",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-2--you-compromised-a-kubernetes-pod",
+      "remediation": "Remove privileged: true (regular, init and ephemeral containers).",
+      "resource": [
+        "k8s://arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster/Pod/demo-apps/demo-worker-0"
+      ],
+      "severity": "HIGH",
+      "source_policy": "securityContext.privileged",
+      "source_type": "k8s_pod",
+      "title": "Privileged container (demo-apps/demo-worker-0, cluster demo-cluster)"
+    },
+    {
+      "category": "k8s_rbac",
+      "description": "ClusterRoleBinding 'demo-worker-admin' grants demo-apps/demo-worker every verb on every resource in the whole cluster. Every pod running as this service account controls the cluster.",
+      "entity": "serviceaccount/demo-cluster/demo-apps/demo-worker",
+      "entity_arn": "k8s://arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster/ServiceAccount/demo-apps/demo-worker",
+      "fingerprint": "229ca320ee99d8385b47aca250dc14ad",
+      "id": "K8S-RBAC-001",
+      "matched_actions": [
+        "*"
+      ],
+      "node_id": "k8s://arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster/ServiceAccount/demo-apps/demo-worker",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-2--you-compromised-a-kubernetes-pod",
+      "remediation": "Use a more restrictive ClusterRole or a namespaced Role.",
+      "resource": [
+        "k8s://arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster/ServiceAccount/demo-apps/demo-worker"
+      ],
+      "severity": "CRITICAL",
+      "source_policy": "demo-worker-admin",
+      "source_type": "k8s_rbac",
+      "title": "ServiceAccount demo-apps/demo-worker bound to cluster-admin (cluster demo-cluster)"
+    }
+  ]
+}

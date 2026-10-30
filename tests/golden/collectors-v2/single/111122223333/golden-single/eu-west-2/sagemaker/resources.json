@@ -1,0 +1,51 @@
+[
+  {
+    "AppNetworkAccessType": "PublicInternetOnly",
+    "Arn": "arn:aws:sagemaker:eu-west-2:111122223333:domain/d-0dec0a1b2c3d4",
+    "AuthMode": "IAM",
+    "DefaultSpaceRole": "arn:aws:iam::111122223333:role/demo-sagemaker-role",
+    "DefaultUserRole": "arn:aws:iam::111122223333:role/demo-sagemaker-role",
+    "DomainId": "d-0dec0a1b2c3d4",
+    "Kind": "domain",
+    "Name": "demo-studio",
+    "Roles": [
+      "arn:aws:iam::111122223333:role/demo-sagemaker-role"
+    ],
+    "Type": "sagemakerdomain"
+  },
+  {
+    "Arn": "arn:aws:sagemaker:eu-west-2:111122223333:notebook-instance/demo-notebook",
+    "DirectInternetAccess": "Enabled",
+    "Kind": "notebook",
+    "Name": "demo-notebook",
+    "Roles": [
+      "arn:aws:iam::111122223333:role/demo-sagemaker-role"
+    ],
+    "RootAccess": "Enabled",
+    "Type": "sagemaker"
+  },
+  {
+    "Arn": "arn:aws:sagemaker:eu-west-2:111122223333:user-profile/d-0dec0a1b2c3d4/demo-analyst",
+    "DomainId": "d-0dec0a1b2c3d4",
+    "ExecutionRole": "arn:aws:iam::111122223333:role/demo-app-role",
+    "InheritsDomainRole": false,
+    "Kind": "user_profile",
+    "Name": "demo-analyst",
+    "Roles": [
+      "arn:aws:iam::111122223333:role/demo-app-role"
+    ],
+    "Type": "sagemakerdomain"
+  },
+  {
+    "Arn": "arn:aws:sagemaker:eu-west-2:111122223333:user-profile/d-0dec0a1b2c3d4/demo-default-user",
+    "DomainId": "d-0dec0a1b2c3d4",
+    "ExecutionRole": null,
+    "InheritsDomainRole": true,
+    "Kind": "user_profile",
+    "Name": "demo-default-user",
+    "Roles": [
+      "arn:aws:iam::111122223333:role/demo-sagemaker-role"
+    ],
+    "Type": "sagemakerdomain"
+  }
+]

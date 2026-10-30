@@ -1,0 +1,79 @@
+{
+  "breakers": [],
+  "calls": [
+    {
+      "api": "ec2:DescribeSnapshots",
+      "count": 1,
+      "error_code": "UnauthorizedOperation",
+      "items": 0,
+      "not_configured": false,
+      "optional": false,
+      "pages": 0,
+      "primary": true,
+      "status": "denied"
+    },
+    {
+      "api": "ec2:GetEbsEncryptionByDefault",
+      "count": 1,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "ec2:GetSnapshotBlockPublicAccessState",
+      "count": 1,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    }
+  ],
+  "duration_seconds": "<stripped>",
+  "ended_at": "<stripped>",
+  "error": null,
+  "item_errors": [],
+  "item_errors_truncated": false,
+  "module": "ebs",
+  "protocol": "ctx",
+  "region": "eu-west-1",
+  "schema_version": 1,
+  "sections": [
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "account_settings",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "snapshots",
+      "status": "ok"
+    }
+  ],
+  "services": [
+    "ec2"
+  ],
+  "started_at": "<stripped>",
+  "status": "denied",
+  "status_reason": "primary call denied: ec2:DescribeSnapshots",
+  "summary": {
+    "calls": 3,
+    "denied": 1,
+    "error": 0,
+    "item_errors": 0,
+    "not_configured": 0,
+    "ok": 2,
+    "skipped": 0,
+    "throttled": 0
+  }
+}

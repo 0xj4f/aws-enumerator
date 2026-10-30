@@ -1,0 +1,131 @@
+{
+  "breakers": [],
+  "calls": [
+    {
+      "api": "cognito-identity:DescribeIdentityPool",
+      "count": 2,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 2,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "cognito-identity:GetIdentityPoolRoles",
+      "count": 1,
+      "error_code": "AccessDeniedException",
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 0,
+      "primary": false,
+      "status": "denied"
+    },
+    {
+      "api": "cognito-identity:GetIdentityPoolRoles",
+      "count": 1,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "cognito-identity:ListIdentityPools",
+      "count": 1,
+      "error_code": null,
+      "items": 2,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "cognito-idp:DescribeUserPool",
+      "count": 1,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "cognito-idp:ListUserPoolClients",
+      "count": 1,
+      "error_code": null,
+      "items": 2,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "cognito-idp:ListUserPools",
+      "count": 1,
+      "error_code": null,
+      "items": 1,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    }
+  ],
+  "duration_seconds": "<stripped>",
+  "ended_at": "<stripped>",
+  "error": null,
+  "item_errors": [
+    {
+      "api": "cognito-identity:GetIdentityPoolRoles",
+      "error_code": "AccessDeniedException",
+      "resource": "arn:aws:cognito-identity:eu-west-2:111122223333:identitypool/eu-west-2:11111111-2222-4333-8444-55555555555b",
+      "status": "denied"
+    }
+  ],
+  "item_errors_truncated": false,
+  "module": "cognito",
+  "protocol": "ctx",
+  "region": "eu-west-2",
+  "schema_version": 1,
+  "sections": [
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "identity_pools",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "user_pools",
+      "status": "ok"
+    }
+  ],
+  "services": [
+    "cognito-identity",
+    "cognito-idp"
+  ],
+  "started_at": "<stripped>",
+  "status": "partial",
+  "status_reason": "cognito-identity:GetIdentityPoolRoles denied",
+  "summary": {
+    "calls": 8,
+    "denied": 1,
+    "error": 0,
+    "item_errors": 1,
+    "not_configured": 0,
+    "ok": 7,
+    "skipped": 0,
+    "throttled": 0
+  }
+}

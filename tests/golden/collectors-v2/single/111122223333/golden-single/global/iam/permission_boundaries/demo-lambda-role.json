@@ -1,0 +1,9 @@
+{
+  "EntityArn": "arn:aws:iam::111122223333:role/demo-lambda-role",
+  "EntityName": "demo-lambda-role",
+  "EntityType": "Role",
+  "PermissionsBoundary": {
+    "PermissionsBoundaryArn": "arn:aws:iam::111122223333:policy/demo-app-policy",
+    "PermissionsBoundaryType": "PermissionsBoundaryPolicy"
+  }
+}

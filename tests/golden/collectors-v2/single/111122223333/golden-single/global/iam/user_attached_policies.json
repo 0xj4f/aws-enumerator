@@ -1,0 +1,15 @@
+{
+  "demo-alice": [
+    {
+      "PolicyArn": "arn:aws:iam::111122223333:policy/demo-dev-policy",
+      "PolicyName": "demo-dev-policy"
+    }
+  ],
+  "demo-bob": [],
+  "demo-ci": [
+    {
+      "PolicyArn": "arn:aws:iam::111122223333:policy/demo-ci-deploy",
+      "PolicyName": "demo-ci-deploy"
+    }
+  ]
+}

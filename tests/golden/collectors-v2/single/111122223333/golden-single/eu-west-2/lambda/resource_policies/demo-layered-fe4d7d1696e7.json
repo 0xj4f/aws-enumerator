@@ -1,0 +1,20 @@
+{
+  "FunctionArn": "arn:aws:lambda:eu-west-2:111122223333:function:demo-layered",
+  "FunctionName": "demo-layered",
+  "QualifiedArn": "arn:aws:lambda:eu-west-2:111122223333:function:demo-layered",
+  "Qualifier": null,
+  "ResourcePolicy": {
+    "Statement": [
+      {
+        "Action": "lambda:InvokeFunction",
+        "Effect": "Allow",
+        "Principal": {
+          "AWS": "arn:aws:iam::999999999999:root"
+        },
+        "Resource": "arn:aws:lambda:eu-west-2:111122223333:function:demo-layered",
+        "Sid": "XAccountInvoke"
+      }
+    ],
+    "Version": "2012-10-17"
+  }
+}

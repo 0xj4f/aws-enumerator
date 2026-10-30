@@ -1,0 +1,21 @@
+{
+  "Owner": {
+    "ID": "c3e2b1a13336ed002dcc73f854ef8b254fee73a1c3e2b1a13336ed002dcc73f8"
+  },
+  "Grants": [
+    {
+      "Grantee": {
+        "ID": "c3e2b1a13336ed002dcc73f854ef8b254fee73a1c3e2b1a13336ed002dcc73f8",
+        "Type": "CanonicalUser"
+      },
+      "Permission": "FULL_CONTROL"
+    },
+    {
+      "Grantee": {
+        "Type": "Group",
+        "URI": "http://acs.amazonaws.com/groups/global/AllUsers"
+      },
+      "Permission": "READ"
+    }
+  ]
+}

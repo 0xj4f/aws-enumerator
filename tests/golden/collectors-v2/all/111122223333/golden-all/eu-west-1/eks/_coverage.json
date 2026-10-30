@@ -1,0 +1,315 @@
+{
+  "breakers": [],
+  "calls": [
+    {
+      "api": "eks:DescribeAccessEntry",
+      "count": 1,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "eks:DescribeCluster",
+      "count": 1,
+      "error_code": "AccessDeniedException",
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 0,
+      "primary": false,
+      "status": "denied"
+    },
+    {
+      "api": "eks:DescribeCluster",
+      "count": 1,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "eks:ListAccessEntries",
+      "count": 1,
+      "error_code": "InvalidRequestException",
+      "items": 0,
+      "not_configured": true,
+      "optional": false,
+      "pages": 0,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "eks:ListAccessEntries",
+      "count": 1,
+      "error_code": null,
+      "items": 1,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "eks:ListAddons",
+      "count": 1,
+      "error_code": "KeyError",
+      "items": 0,
+      "not_configured": false,
+      "optional": false,
+      "pages": 0,
+      "primary": false,
+      "status": "error"
+    },
+    {
+      "api": "eks:ListAddons",
+      "count": 1,
+      "error_code": null,
+      "items": 0,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "eks:ListAssociatedAccessPolicies",
+      "count": 1,
+      "error_code": null,
+      "items": 1,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "eks:ListClusters",
+      "count": 1,
+      "error_code": null,
+      "items": 2,
+      "not_configured": false,
+      "optional": false,
+      "pages": 2,
+      "primary": true,
+      "status": "ok"
+    },
+    {
+      "api": "eks:ListFargateProfiles",
+      "count": 1,
+      "error_code": "AccessDeniedException",
+      "items": 0,
+      "not_configured": false,
+      "optional": false,
+      "pages": 0,
+      "primary": false,
+      "status": "denied"
+    },
+    {
+      "api": "eks:ListFargateProfiles",
+      "count": 1,
+      "error_code": "KeyError",
+      "items": 0,
+      "not_configured": false,
+      "optional": false,
+      "pages": 0,
+      "primary": false,
+      "status": "error"
+    },
+    {
+      "api": "eks:ListNodegroups",
+      "count": 1,
+      "error_code": "KeyError",
+      "items": 0,
+      "not_configured": false,
+      "optional": false,
+      "pages": 0,
+      "primary": false,
+      "status": "error"
+    },
+    {
+      "api": "eks:ListNodegroups",
+      "count": 1,
+      "error_code": null,
+      "items": 0,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "eks:ListPodIdentityAssociations",
+      "count": 2,
+      "error_code": null,
+      "items": 0,
+      "not_configured": false,
+      "optional": false,
+      "pages": 2,
+      "primary": false,
+      "status": "ok"
+    }
+  ],
+  "duration_seconds": "<stripped>",
+  "ended_at": "<stripped>",
+  "error": null,
+  "item_errors": [
+    {
+      "api": "eks:DescribeCluster",
+      "error_code": "AccessDeniedException",
+      "resource": "arn:aws:eks:eu-west-1:111122223333:cluster/demo-denied-cluster",
+      "status": "denied"
+    },
+    {
+      "api": "eks:ListAddons",
+      "error_code": "KeyError",
+      "resource": "arn:aws:eks:eu-west-1:111122223333:cluster/demo-denied-cluster",
+      "status": "error"
+    },
+    {
+      "api": "eks:ListFargateProfiles",
+      "error_code": "AccessDeniedException",
+      "resource": "arn:aws:eks:eu-west-1:111122223333:cluster/demo-west-cluster",
+      "status": "denied"
+    },
+    {
+      "api": "eks:ListFargateProfiles",
+      "error_code": "KeyError",
+      "resource": "arn:aws:eks:eu-west-1:111122223333:cluster/demo-denied-cluster",
+      "status": "error"
+    },
+    {
+      "api": "eks:ListNodegroups",
+      "error_code": "KeyError",
+      "resource": "arn:aws:eks:eu-west-1:111122223333:cluster/demo-denied-cluster",
+      "status": "error"
+    }
+  ],
+  "item_errors_truncated": false,
+  "module": "eks",
+  "protocol": "ctx",
+  "region": "eu-west-1",
+  "schema_version": 1,
+  "sections": [
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "access_entries",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "access_entries",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "addons",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "addons",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "clusters",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "describe",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "describe",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "fargate_profiles",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "fargate_profiles",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "nodegroups",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "nodegroups",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "pod_identity",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "pod_identity",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "write",
+      "status": "ok"
+    }
+  ],
+  "services": [
+    "eks"
+  ],
+  "started_at": "<stripped>",
+  "status": "partial",
+  "status_reason": "eks:DescribeCluster denied (+4 more)",
+  "summary": {
+    "calls": 15,
+    "denied": 2,
+    "error": 3,
+    "item_errors": 5,
+    "not_configured": 1,
+    "ok": 10,
+    "skipped": 0,
+    "throttled": 0
+  }
+}

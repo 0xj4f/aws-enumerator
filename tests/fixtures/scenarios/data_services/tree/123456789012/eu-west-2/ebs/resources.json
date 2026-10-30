@@ -1,0 +1,14 @@
+[
+  {
+    "Type": "ebssnapshot",
+    "Id": "snap-0a1b2c3d4e5f6aaa1",
+    "Name": "snap-0a1b2c3d4e5f6aaa1",
+    "Public": false,
+    "SharedAccounts": [
+      "111122223333"
+    ],
+    "Encrypted": true,
+    "KmsKeyId": "arn:aws:kms:eu-west-2:123456789012:key/4b2c1a3d-aaaa-4bbb-8ccc-1d2e3f4a5b6c",
+    "VolumeId": "vol-0a1b2c3d4e5faaa1"
+  }
+]

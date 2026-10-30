@@ -1,0 +1,34 @@
+[
+  {
+    "api_version": null,
+    "kind": null,
+    "metadata": {
+      "name": "secret-reader",
+      "namespace": "payments",
+      "labels": null,
+      "annotations": null,
+      "uid": "08cc7190-aaaa-4bbb-8ccc-aaa024c8c91b",
+      "creation_timestamp": "2026-01-01 00:00:00+00:00",
+      "resource_version": "1000",
+      "owner_references": null,
+      "managed_fields": null
+    },
+    "rules": [
+      {
+        "api_groups": [
+          ""
+        ],
+        "resources": [
+          "secrets"
+        ],
+        "verbs": [
+          "get",
+          "list"
+        ],
+        "resource_names": null,
+        "non_resource_ur_ls": null
+      }
+    ],
+    "aggregation_rule": null
+  }
+]

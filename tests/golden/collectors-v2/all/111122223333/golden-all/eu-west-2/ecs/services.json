@@ -1,0 +1,17 @@
+[
+  {
+    "AssignPublicIp": "ENABLED",
+    "ClusterArn": "arn:aws:ecs:eu-west-2:111122223333:cluster/demo-ecs",
+    "EnableExecuteCommand": true,
+    "LaunchType": "FARGATE",
+    "Name": "demo-api-svc",
+    "SecurityGroups": [
+      "sg-0dec0eeb000000002"
+    ],
+    "ServiceArn": "arn:aws:ecs:eu-west-2:111122223333:service/demo-ecs/demo-api-svc",
+    "Subnets": [
+      "subnet-0dec0b0b0000002"
+    ],
+    "TaskDefinition": "arn:aws:ecs:eu-west-2:111122223333:task-definition/demo-api:2"
+  }
+]

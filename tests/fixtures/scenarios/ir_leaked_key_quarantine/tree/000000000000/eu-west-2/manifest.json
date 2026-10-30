@@ -1,0 +1,55 @@
+{
+  "tool": "aws-enumerator",
+  "version": "0.2.0",
+  "author": "0xj4f",
+  "run_metadata": {
+    "account_id": "000000000000",
+    "mode": "single_region",
+    "region": "eu-west-2",
+    "regions_enumerated": [],
+    "caller_arn": "arn:aws:iam::000000000000:user/demo-operator",
+    "caller_user_id": "AIDAMICODHIKIMFNCBCIE",
+    "timestamp_start": "2026-01-01T00:00:00",
+    "timestamp_end": "2026-01-01T00:00:00",
+    "duration_seconds": 0.0
+  },
+  "modules_executed": [
+    {
+      "name": "iam",
+      "path": "iam/",
+      "file_count": 14,
+      "files": [
+        "account_password_policy.json",
+        "account_summary.json",
+        "group_attached_policies.json",
+        "groups.json",
+        "inline_policies/groups/devs.json",
+        "inline_policies/users/leaked-user.json",
+        "instance_profiles.json",
+        "policies.json",
+        "policy_documents/AdministratorAccess_v1.json",
+        "role_attached_policies.json",
+        "roles.json",
+        "user_attached_policies.json",
+        "user_group_memberships.json",
+        "users.json"
+      ]
+    },
+    {
+      "name": "lambda",
+      "path": "lambda/",
+      "file_count": 1,
+      "files": [
+        "functions.json"
+      ]
+    },
+    {
+      "name": "s3",
+      "path": "s3/",
+      "file_count": 1,
+      "files": [
+        "buckets.json"
+      ]
+    }
+  ]
+}

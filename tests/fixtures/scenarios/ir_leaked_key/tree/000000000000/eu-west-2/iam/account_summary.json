@@ -1,0 +1,8 @@
+{
+  "Users": 2,
+  "Roles": 3,
+  "Groups": 1,
+  "Policies": 0,
+  "AccountMFAEnabled": 1,
+  "AccountAccessKeysPresent": 0
+}

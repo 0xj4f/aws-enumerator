@@ -1,0 +1,45 @@
+[
+  {
+    "CollectionErrors": [
+      {
+        "api": "eks:DescribeCluster",
+        "error_code": "AccessDeniedException",
+        "status": "denied"
+      }
+    ],
+    "arn": "arn:aws:eks:eu-west-1:111122223333:cluster/demo-denied-cluster",
+    "name": "demo-denied-cluster"
+  },
+  {
+    "accessConfig": {
+      "authenticationMode": "API"
+    },
+    "arn": "arn:aws:eks:eu-west-1:111122223333:cluster/demo-west-cluster",
+    "certificateAuthority": {
+      "data": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tClptRnJaUzFrWlcxdkxXTmgKLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo="
+    },
+    "createdAt": "2024-01-06T10:00:00Z",
+    "endpoint": "https://DEMO0000000000000000000000000001.gr7.eu-west-1.eks.amazonaws.com",
+    "identity": {
+      "oidc": {
+        "issuer": "https://oidc.eks.eu-west-1.amazonaws.com/id/DEMO0000000000000000000000000001"
+      }
+    },
+    "name": "demo-west-cluster",
+    "platformVersion": "eks.12",
+    "resourcesVpcConfig": {
+      "endpointPrivateAccess": false,
+      "endpointPublicAccess": true,
+      "publicAccessCidrs": [
+        "198.51.100.0/24"
+      ],
+      "subnetIds": [
+        "subnet-0dec0ee5700001"
+      ],
+      "vpcId": "vpc-0dec000000000001"
+    },
+    "roleArn": "arn:aws:iam::111122223333:role/demo-eks-cluster-role",
+    "status": "ACTIVE",
+    "version": "1.28"
+  }
+]

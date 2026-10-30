@@ -1,0 +1,19 @@
+{
+  "EntityArn": "arn:aws:iam::111122223333:role/demo-ecs-task-role",
+  "InlinePolicies": {
+    "demo-ecs-sqs": {
+      "Statement": [
+        {
+          "Action": [
+            "sqs:DeleteMessage",
+            "sqs:ReceiveMessage"
+          ],
+          "Effect": "Allow",
+          "Resource": "*"
+        }
+      ],
+      "Version": "2012-10-17"
+    }
+  },
+  "RoleName": "demo-ecs-task-role"
+}

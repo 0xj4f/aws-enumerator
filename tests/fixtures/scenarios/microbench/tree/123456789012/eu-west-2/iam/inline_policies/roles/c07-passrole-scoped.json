@@ -1,0 +1,25 @@
+{
+  "RoleName": "c07-passrole-scoped",
+  "InlinePolicies": {
+    "p": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "iam:PassRole"
+          ],
+          "Resource": "arn:aws:iam::123456789012:role/low-priv-lambda"
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "lambda:CreateFunction",
+            "lambda:InvokeFunction"
+          ],
+          "Resource": "*"
+        }
+      ]
+    }
+  }
+}

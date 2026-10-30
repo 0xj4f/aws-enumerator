@@ -1,0 +1,40 @@
+[
+  {
+    "UserName": "demo-deployer",
+    "UserId": "AIDAKGOLLKCEMNPGCEKIO",
+    "Arn": "arn:aws:iam::123456789012:user/demo-deployer",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "PasswordLastUsed": "",
+    "Path": "/",
+    "Tags": [],
+    "AccessKeys": [
+      {
+        "AccessKeyId": "AKIAEXAMPLEOOJKBOKIB",
+        "Status": "Active",
+        "CreateDate": "2026-01-01 00:00:00+00:00"
+      }
+    ],
+    "MFADevices": [],
+    "HasLoginProfile": false,
+    "PermissionsBoundary": null
+  },
+  {
+    "UserName": "demo-analyst",
+    "UserId": "AIDAKKECAGDDDOLANKCKK",
+    "Arn": "arn:aws:iam::123456789012:user/demo-analyst",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "PasswordLastUsed": "",
+    "Path": "/",
+    "Tags": [],
+    "AccessKeys": [],
+    "MFADevices": [
+      {
+        "SerialNumber": "arn:aws:iam::123456789012:mfa/demo-analyst",
+        "EnableDate": "2026-01-01 00:00:00+00:00"
+      }
+    ],
+    "HasLoginProfile": true,
+    "LoginProfileCreateDate": "2026-01-01 00:00:00+00:00",
+    "PermissionsBoundary": null
+  }
+]

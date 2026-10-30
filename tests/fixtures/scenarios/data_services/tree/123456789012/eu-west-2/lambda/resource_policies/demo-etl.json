@@ -1,0 +1,30 @@
+{
+  "FunctionArn": "arn:aws:lambda:eu-west-2:123456789012:function:demo-etl",
+  "FunctionName": "demo-etl",
+  "ResourcePolicy": {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Principal": {
+          "Service": "s3.amazonaws.com"
+        },
+        "Action": "lambda:InvokeFunction",
+        "Resource": "arn:aws:lambda:eu-west-2:123456789012:function:demo-etl",
+        "Condition": {
+          "ArnLike": {
+            "AWS:SourceArn": "arn:aws:s3:::demo-data-bucket"
+          }
+        }
+      },
+      {
+        "Effect": "Allow",
+        "Principal": {
+          "AWS": "arn:aws:iam::111122223333:root"
+        },
+        "Action": "lambda:InvokeFunction",
+        "Resource": "arn:aws:lambda:eu-west-2:123456789012:function:demo-etl"
+      }
+    ]
+  }
+}

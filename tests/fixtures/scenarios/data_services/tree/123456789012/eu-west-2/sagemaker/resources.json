@@ -1,0 +1,10 @@
+[
+  {
+    "Type": "sagemaker",
+    "Arn": "arn:aws:sagemaker:eu-west-2:123456789012:notebook-instance/demo-notebook",
+    "Name": "demo-notebook",
+    "Roles": [
+      "arn:aws:iam::123456789012:role/demo-sagemaker-role"
+    ]
+  }
+]

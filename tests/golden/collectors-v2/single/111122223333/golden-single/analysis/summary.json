@@ -1,0 +1,562 @@
+{
+  "analyzer_status": [
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "admin-equivalence",
+      "phase": "identity",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "assume",
+      "phase": "identity",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "baseline",
+      "phase": "postprocess",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "closure",
+      "phase": "closure",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "cognito",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "compute",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "coverage-gaps",
+      "phase": "postprocess",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "data_stores",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "ec2",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "edge_services",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "iam-graph",
+      "phase": "principals",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "iam-hygiene",
+      "phase": "identity",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "k8s",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "kms",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "lambda",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "load:compute",
+      "phase": "load",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "load:data_stores",
+      "phase": "load",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "load:ec2",
+      "phase": "load",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "load:edge_services",
+      "phase": "load",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "load:iam",
+      "phase": "load",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "load:k8s",
+      "phase": "load",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "load:kms",
+      "phase": "load",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "load:lambda",
+      "phase": "load",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "load:messaging",
+      "phase": "load",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "load:org",
+      "phase": "load",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "load:posture",
+      "phase": "load",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "load:s3",
+      "phase": "load",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "load:secrets",
+      "phase": "load",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "messaging",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "network",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "permission-map",
+      "phase": "principals",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "posture",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "principals",
+      "phase": "principals",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "rules",
+      "phase": "rules",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "s3",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "secrets",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "severity",
+      "phase": "postprocess",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "subsume",
+      "phase": "postprocess",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "suppression",
+      "phase": "postprocess",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "trust",
+      "phase": "identity",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "write",
+      "phase": "write",
+      "status": "ok"
+    }
+  ],
+  "by_category": {
+    "ami_cross_account": 1,
+    "ami_public": 1,
+    "apigw_public": 2,
+    "cognito_classic_flow": 2,
+    "cognito_unauth": 1,
+    "coverage": 24,
+    "dangerous_permission": 4,
+    "dynamodb_cross_account": 1,
+    "ebs_cross_account": 1,
+    "ebs_public": 1,
+    "ec2_exposure": 2,
+    "ec2_imds": 1,
+    "ec2_userdata": 1,
+    "ecr_cross_account": 1,
+    "ecr_registry": 2,
+    "eks_exposure": 1,
+    "eks_identity": 1,
+    "elb_public": 2,
+    "iam_hygiene": 7,
+    "k8s_coverage": 1,
+    "k8s_irsa": 2,
+    "k8s_network": 2,
+    "k8s_rbac": 1,
+    "k8s_workload": 5,
+    "lambda_cross_account": 1,
+    "lambda_public": 3,
+    "messaging_cross_account": 1,
+    "posture_logging": 1,
+    "posture_waf": 2,
+    "privilege_escalation": 3,
+    "rds_cross_account": 2,
+    "rds_public": 1,
+    "rds_public_snapshot": 2,
+    "rds_unencrypted": 1,
+    "route53_dangling": 2,
+    "s3_public_access": 3,
+    "secret_cross_account": 1,
+    "secret_public": 1,
+    "ssm_document_cross_account": 1,
+    "ssm_document_public": 1,
+    "trust_policy": 3
+  },
+  "by_severity": {
+    "CRITICAL": 5,
+    "HIGH": 21,
+    "INFO": 29,
+    "LOW": 10,
+    "MEDIUM": 31
+  },
+  "coverage_status": "partial",
+  "critical_count": 5,
+  "edges_by_type": {
+    "AMI_SHARED_CROSS_ACCOUNT": 1,
+    "AMI_SHARED_PUBLIC": 1,
+    "AWS_AUTH_MAPPING": 3,
+    "BOUND_TO": 3,
+    "CAN_ADMIN_KEY": 16,
+    "CAN_ADMIN_MSG": 20,
+    "CAN_ADMIN_SG": 12,
+    "CAN_ASSUME": 2,
+    "CAN_ASSUME_WEB_IDENTITY": 2,
+    "CAN_CONNECT": 14,
+    "CAN_DECRYPT": 16,
+    "CAN_ESCALATE": 5,
+    "CAN_EXEC": 20,
+    "CAN_HIJACK": 41,
+    "CAN_MODIFY": 8,
+    "CAN_MODIFY_PERMISSIONS_OF": 84,
+    "CAN_MODIFY_USERDATA": 10,
+    "CAN_PASS_ROLE_TO": 37,
+    "CAN_REACH_NODE_IMDS": 1,
+    "CAN_READ": 13,
+    "CAN_READ_PARAM": 19,
+    "CAN_READ_SECRET": 28,
+    "CAN_READ_TABLE": 12,
+    "CAN_RECEIVE": 3,
+    "CAN_RUN_AS_SA": 8,
+    "CAN_SEND": 1,
+    "CAN_TAKEOVER": 84,
+    "CAN_UPDATE_CODE": 15,
+    "CAN_WRITE": 1,
+    "CAN_WRITE_SECRET": 20,
+    "CAN_WRITE_TABLE": 12,
+    "CLUSTER_ROLE": 1,
+    "COGNITO_PUBLIC_IDENTITY": 1,
+    "DDB_GRANTS_CROSS_ACCOUNT": 1,
+    "EBS_ENCRYPTED_BY": 2,
+    "EBS_SHARED_CROSS_ACCOUNT": 1,
+    "EBS_SHARED_PUBLIC": 1,
+    "EC2_FULL_ACCESS": 8,
+    "ECR_GRANTS_CROSS_ACCOUNT": 1,
+    "EKS_ACCESS_ENTRY": 2,
+    "ENCRYPTED_BY": 1,
+    "EXPOSES": 3,
+    "FULL_ACCESS": 21,
+    "GRANTS_PUBLIC": 2,
+    "HAS_BOUNDARY": 2,
+    "HAS_POLICY": 11,
+    "HAS_SG": 3,
+    "INGRESS_ROUTES_TO": 1,
+    "INSTANCE_ROLE": 2,
+    "INVOKES": 3,
+    "IN_CLUSTER": 3,
+    "IRSA_BRIDGE": 2,
+    "IS_ADMIN_EQUIVALENT": 5,
+    "KMS_GRANT": 1,
+    "KMS_GRANTS_DECRYPT": 1,
+    "LAMBDA_GRANTS_CROSS_ACCOUNT": 1,
+    "LAMBDA_GRANTS_INVOKE": 1,
+    "LAMBDA_GRANTS_PUBLIC": 2,
+    "LAYER_GRANTS_PUBLIC": 1,
+    "MEMBER_OF": 2,
+    "MOUNTS_SECRET": 1,
+    "MSG_GRANTS_CROSS_ACCOUNT": 1,
+    "NODE_ROLE": 1,
+    "NOTIFIES": 2,
+    "PARAM_ENCRYPTED_BY": 1,
+    "POD_IDENTITY": 1,
+    "POOL_UNAUTH_ROLE": 1,
+    "PUBLIC_INBOUND": 12,
+    "RDS_ENCRYPTED_BY": 4,
+    "RDS_SHARED_CROSS_ACCOUNT": 2,
+    "RDS_SHARED_PUBLIC": 2,
+    "RUNS_AS": 3,
+    "SECRET_ENCRYPTED_BY": 5,
+    "SECRET_GRANTS_CROSS_ACCOUNT": 1,
+    "SECRET_GRANTS_PUBLIC": 1,
+    "SELECTS": 1,
+    "SERVICE_CAN_ASSUME": 9,
+    "SG_ALLOWS_FROM": 1,
+    "SSMDOC_SHARED_CROSS_ACCOUNT": 1,
+    "SSMDOC_SHARED_PUBLIC": 1,
+    "SSRF_TO_IMDS": 1,
+    "SUBSCRIBES": 2,
+    "TRIGGERS": 1,
+    "USES_ROLE": 15,
+    "VPC_CONNECTED": 1
+  },
+  "evaluation_gaps": [
+    {
+      "code": "data-stores:resource-policy-unknown",
+      "count": 1,
+      "detail": "ECR repository or DynamoDB table policies that could not be read: their public or cross-account exposure is unknown, not absent."
+    },
+    {
+      "code": "external-identity",
+      "count": null,
+      "detail": "Identity policies of external principals are not visible; cross-account edges are conditional."
+    },
+    {
+      "code": "kms:grants-unknown",
+      "count": 1,
+      "detail": "KMS keys whose grants could not be listed: grant-based access to them is unknown, not absent."
+    },
+    {
+      "code": "kms:key-policy-unknown",
+      "count": 1,
+      "detail": "Customer-managed KMS keys whose key policy could not be read: who may use them is evaluated as conditional (the key policy decides first)."
+    },
+    {
+      "code": "org:rcp-unknown",
+      "count": null,
+      "detail": "reported by the evaluator while running the rules"
+    },
+    {
+      "code": "rds:snapshot-sharing-unknown",
+      "count": 1,
+      "detail": "RDS snapshots whose restore attribute could not be read: their public or cross-account sharing is unknown, not absent."
+    },
+    {
+      "code": "runtime-conditions",
+      "count": null,
+      "detail": "Condition values known only at request time (source IP, MFA, tags in the request) are not evaluated; such decisions are conditional."
+    },
+    {
+      "code": "secrets:resource-policy-unknown",
+      "count": 1,
+      "detail": "Secret or parameter resource policies that could not be read: their public or cross-account exposure is unknown, not absent."
+    },
+    {
+      "code": "session-policies",
+      "count": null,
+      "detail": "Session policies passed at AssumeRole time can only narrow permissions and are not modelled."
+    }
+  ],
+  "graph": {
+    "edges": 669,
+    "nodes": 153
+  },
+  "high_count": 21,
+  "ignored_dirs": [],
+  "info_count": 29,
+  "legacy_edge_counts": {
+    "compute": 81,
+    "data_stores": 33,
+    "ec2": 36,
+    "edge_services": 8,
+    "k8s": 16,
+    "kms": 34,
+    "lambda": 22,
+    "messaging": 25,
+    "s3": 40,
+    "secrets": 75
+  },
+  "low_count": 10,
+  "medium_count": 31,
+  "operator": {
+    "arn": "arn:aws:sts::111122223333:assumed-role/demo-audit-role/demo-session",
+    "node_id": null,
+    "redacted": false,
+    "resolution": "not-in-graph"
+  },
+  "run": {
+    "account_id": "111122223333",
+    "generated_at": "<stripped>",
+    "mode": "run",
+    "partition": "aws",
+    "regions": [
+      "eu-west-2"
+    ],
+    "run_id": "golden-single"
+  },
+  "schema_version": "1.0.0",
+  "status": "ok",
+  "subsumed_count": 75,
+  "suppressed_count": 0,
+  "total_findings": 96,
+  "unattached_count": 0,
+  "unique_findings": 73
+}

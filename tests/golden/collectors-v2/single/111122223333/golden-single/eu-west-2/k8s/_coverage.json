@@ -1,0 +1,182 @@
+{
+  "breakers": [],
+  "calls": [
+    {
+      "api": "k8s:CreateSelfSubjectRulesReview",
+      "count": 3,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 0,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "k8s:GetConfigMap",
+      "count": 1,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 0,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "k8s:GetVersion",
+      "count": 1,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 0,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "k8s:ListClusterRoleBindings",
+      "count": 1,
+      "error_code": null,
+      "items": 2,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "k8s:ListClusterRoles",
+      "count": 1,
+      "error_code": null,
+      "items": 2,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "k8s:ListIngresses",
+      "count": 1,
+      "error_code": null,
+      "items": 1,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "k8s:ListNamespaces",
+      "count": 1,
+      "error_code": null,
+      "items": 3,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "k8s:ListNodes",
+      "count": 1,
+      "error_code": null,
+      "items": 1,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "k8s:ListPods",
+      "count": 1,
+      "error_code": null,
+      "items": 3,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "k8s:ListRoleBindings",
+      "count": 1,
+      "error_code": null,
+      "items": 1,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "k8s:ListRoles",
+      "count": 1,
+      "error_code": null,
+      "items": 1,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "k8s:ListServiceAccounts",
+      "count": 1,
+      "error_code": null,
+      "items": 4,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "k8s:ListServices",
+      "count": 1,
+      "error_code": null,
+      "items": 2,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    }
+  ],
+  "duration_seconds": "<stripped>",
+  "ended_at": "<stripped>",
+  "error": null,
+  "item_errors": [],
+  "item_errors_truncated": false,
+  "module": "k8s",
+  "protocol": "ctx",
+  "region": "eu-west-2",
+  "schema_version": 1,
+  "sections": [
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "cluster",
+      "status": "ok"
+    }
+  ],
+  "services": [
+    "eks"
+  ],
+  "started_at": "<stripped>",
+  "status": "ok",
+  "status_reason": null,
+  "summary": {
+    "calls": 15,
+    "denied": 0,
+    "error": 0,
+    "item_errors": 0,
+    "not_configured": 0,
+    "ok": 15,
+    "skipped": 0,
+    "throttled": 0
+  }
+}

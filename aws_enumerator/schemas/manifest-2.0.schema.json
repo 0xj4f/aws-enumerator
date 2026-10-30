@@ -1,0 +1,311 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/0xj4f/aws-enumerator/schemas/manifest-2.0.schema.json",
+  "title": "aws-enumerator run manifest (manifest.json), schema_version 2.0",
+  "description": "One per run, at <output>/<account>/<run_id>/manifest.json. Contract: docs/contracts/manifest.md. Written atomically at run start (status in_progress), after every unit, and at the end (or on interrupt).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "tool", "run", "target", "operator", "classification", "preflight", "modules",
+    "analysis", "coverage_summary", "files"
+  ],
+  "properties": {
+    "schema_version": {"const": "2.0"},
+    "tool": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version", "git_sha", "python", "boto3", "botocore", "kubernetes"],
+      "properties": {
+        "name": {"const": "aws-enumerator"},
+        "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+([.+-][0-9A-Za-z.+-]+)?$"},
+        "git_sha": {"type": ["string", "null"], "pattern": "^[0-9a-f]{7,40}$"},
+        "python": {"type": "string"},
+        "boto3": {"type": "string"},
+        "botocore": {"type": "string"},
+        "kubernetes": {"type": ["string", "null"]}
+      }
+    },
+    "run": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["run_id", "kind", "status", "started_at", "ended_at", "duration_seconds", "exit_code", "argv",
+                   "options", "resumes", "global_source"],
+      "properties": {
+        "run_id": {"$ref": "#/$defs/run_id"},
+        "kind": {"enum": ["collect", "merge"], "description": "merge: produced by 'aws-enumerator merge' (see sources)"},
+        "status": {"enum": ["in_progress", "complete", "partial", "failed", "interrupted"]},
+        "started_at": {"$ref": "#/$defs/utc"},
+        "ended_at": {"$ref": "#/$defs/utc_or_null"},
+        "duration_seconds": {"type": ["number", "null"], "minimum": 0},
+        "exit_code": {"type": ["integer", "null"], "enum": [0, 1, 2, 130, 143, null]},
+        "argv": {"type": "array", "items": {"type": "string"}, "description": "arguments after the program name, with secrets never present (the CLI takes none)"},
+        "options": {
+          "type": "object",
+          "description": "Effective options after defaults and legacy translation. Additional keys are allowed for options added later.",
+          "required": ["regions_requested", "modules", "skipped_modules", "k8s", "k8s_secrets", "concurrency",
+                       "rate_limit", "max_tier", "deny_breaker", "redact_identity"],
+          "properties": {
+            "regions_requested": {"type": "array", "items": {"type": "string"}, "description": "as given (--region/--regions/--all -> ['all'])"},
+            "modules": {"type": "array", "items": {"$ref": "#/$defs/module_name"}, "description": "selected modules in registry order"},
+            "skipped_modules": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["name", "reason"],
+                "properties": {"name": {"$ref": "#/$defs/module_name"}, "reason": {"type": "string"}}
+              }
+            },
+            "k8s": {"type": "boolean", "description": "default true; false with --no-k8s"},
+            "k8s_secrets": {"type": "boolean", "description": "default false; --k8s-secrets lists Secret metadata only"},
+            "concurrency": {"type": "integer", "minimum": 1, "maximum": 16},
+            "rate_limit": {
+              "type": "object",
+              "required": ["enabled", "default_rps", "overrides"],
+              "properties": {
+                "enabled": {"type": "boolean"},
+                "default_rps": {"type": ["number", "null"], "exclusiveMinimum": 0},
+                "max_rps": {"type": ["number", "null"], "exclusiveMinimum": 0},
+                "overrides": {"type": "object", "additionalProperties": {"type": "number", "exclusiveMinimum": 0}}
+              }
+            },
+            "iam_mode": {"enum": ["gaad", "per-entity", "import"]},
+            "max_tier": {"enum": [1, 2]},
+            "deny_breaker": {"type": "integer", "minimum": 0},
+            "redact_identity": {"type": "boolean"},
+            "zip": {"type": "boolean"}
+          }
+        },
+        "resumes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["resumed_at", "argv", "overrides"],
+            "properties": {
+              "resumed_at": {"$ref": "#/$defs/utc"},
+              "argv": {"type": "array", "items": {"type": "string"}},
+              "overrides": {"type": "object"}
+            }
+          }
+        },
+        "global_source": {
+          "oneOf": [
+            {"type": "null"},
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["run_id", "account_id", "manifest_sha256"],
+              "properties": {
+                "run_id": {"$ref": "#/$defs/run_id"},
+                "account_id": {"$ref": "#/$defs/account_id"},
+                "manifest_sha256": {"$ref": "#/$defs/sha256"}
+              }
+            }
+          ],
+          "description": "set when global/ was copied from another run with --global-from"
+        },
+        "sources": {
+          "type": "array",
+          "description": "kind=merge only: the merged runs",
+          "items": {
+            "type": "object",
+            "required": ["run_id", "account_id", "graph_sha256"],
+            "properties": {
+              "run_id": {"$ref": "#/$defs/run_id"},
+              "account_id": {"$ref": "#/$defs/account_id"},
+              "graph_sha256": {"$ref": "#/$defs/sha256"}
+            }
+          }
+        }
+      }
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["account_id", "partition", "home_region", "global_region", "regions", "region_source", "regions_skipped"],
+      "properties": {
+        "account_id": {"$ref": "#/$defs/account_id"},
+        "partition": {"enum": ["aws", "aws-cn", "aws-us-gov", "aws-iso", "aws-iso-b", "aws-iso-e", "aws-iso-f", "aws-eusc"]},
+        "home_region": {"$ref": "#/$defs/region"},
+        "global_region": {"$ref": "#/$defs/region"},
+        "regions": {"type": "array", "items": {"$ref": "#/$defs/region"}, "description": "regional units collected (sorted); the engine analyses exactly these"},
+        "region_source": {"enum": ["explicit", "profile", "describe_regions", "fallback:sts-probe", "merge"]},
+        "regions_skipped": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["region", "reason"],
+            "properties": {"region": {"$ref": "#/$defs/region"}, "reason": {"type": "string"}}
+          }
+        }
+      }
+    },
+    "operator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["principal_arn", "principal_type", "redacted", "caller_arn", "caller_user_id", "caller_arn_sha256"],
+      "properties": {
+        "caller_arn": {"type": ["string", "null"], "description": "null when redacted"},
+        "caller_user_id": {"type": ["string", "null"], "description": "null when redacted"},
+        "caller_arn_sha256": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/sha256"}]},
+        "principal_arn": {"type": ["string", "null"], "description": "role or user ARN without the session name (assumed-role -> arn:...:iam::<acct>:role/<path/name>)"},
+        "principal_type": {"enum": ["assumed-role", "user", "root", "federated-user", "unknown"]},
+        "redacted": {"type": "boolean"}
+      },
+      "allOf": [
+        {"if": {"properties": {"redacted": {"const": true}}},
+         "then": {"properties": {"caller_arn": {"const": null}, "caller_user_id": {"const": null}}}}
+      ]
+    },
+    "classification": {"const": "CONFIDENTIAL: pre-computed attack map of the target account; see HANDLING.txt"},
+    "preflight": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["mode", "ran_at", "results"],
+          "properties": {
+            "mode": {"enum": ["probe", "simulate"]},
+            "ran_at": {"$ref": "#/$defs/utc"},
+            "results": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["module", "actions", "result", "error_code"],
+                "properties": {
+                  "module": {"$ref": "#/$defs/module_name"},
+                  "actions": {"type": "array", "items": {"type": "string"}},
+                  "result": {"enum": ["ok", "denied", "error", "skipped", "implicit_deny", "explicit_deny", "allowed"]},
+                  "error_code": {"type": ["string", "null"]}
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "modules": {
+      "type": "array",
+      "description": "One entry per (module, unit) that was selected, including skipped ones; sorted by (unit: global first, then region), registry order.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "scope", "region", "status", "status_reason", "started_at", "ended_at", "duration_seconds",
+                     "error", "coverage", "throttle_events", "resumed", "dir"],
+        "properties": {
+          "name": {"$ref": "#/$defs/module_name"},
+          "scope": {"enum": ["global", "regional", "k8s"]},
+          "region": {"type": "string", "pattern": "^(global|[a-z]{2}(-[a-z]+)+-[0-9]+)$"},
+          "status": {"enum": ["ok", "partial", "denied", "failed", "skipped", "interrupted", "not_run"]},
+          "status_reason": {"type": ["string", "null"]},
+          "started_at": {"$ref": "#/$defs/utc_or_null"},
+          "ended_at": {"$ref": "#/$defs/utc_or_null"},
+          "duration_seconds": {"type": ["number", "null"], "minimum": 0},
+          "error": {
+            "oneOf": [
+              {"type": "null"},
+              {"type": "object", "required": ["type"], "properties": {"type": {"type": "string"}, "code": {"type": ["string", "null"]}, "message": {"type": ["string", "null"]}}}
+            ]
+          },
+          "coverage": {
+            "oneOf": [
+              {"type": "null"},
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["calls", "ok", "denied", "error", "throttled", "skipped", "not_configured", "item_errors"],
+                "properties": {
+                  "calls": {"type": "integer", "minimum": 0},
+                  "ok": {"type": "integer", "minimum": 0},
+                  "denied": {"type": "integer", "minimum": 0},
+                  "error": {"type": "integer", "minimum": 0},
+                  "throttled": {"type": "integer", "minimum": 0},
+                  "skipped": {"type": "integer", "minimum": 0},
+                  "not_configured": {"type": "integer", "minimum": 0},
+                  "item_errors": {"type": "integer", "minimum": 0}
+                }
+              }
+            ]
+          },
+          "throttle_events": {"type": "integer", "minimum": 0},
+          "resumed": {"type": "boolean"},
+          "dir": {"type": ["string", "null"], "pattern": "^(global|[a-z]{2}(-[a-z]+)+-[0-9]+)/[a-z][a-z0-9_]*$", "description": "module directory relative to the run root; null when the module did not run"}
+        }
+      }
+    },
+    "analysis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "engine", "started_at", "duration_seconds", "error", "dir", "graph_schema_version"],
+      "properties": {
+        "status": {"enum": ["not_run", "in_progress", "ok", "partial", "failed", "skipped"]},
+        "engine": {"enum": ["legacy", "v2", null]},
+        "started_at": {"$ref": "#/$defs/utc_or_null"},
+        "duration_seconds": {"type": ["number", "null"], "minimum": 0},
+        "error": {"type": ["string", "null"]},
+        "dir": {"const": "analysis"},
+        "graph_schema_version": {"type": ["string", "null"], "description": "graph.json schema_version written by the engine; null for the legacy engine"}
+      }
+    },
+    "coverage_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["modules_by_status", "denied_apis", "partial_modules", "failed_modules", "throttled_calls", "item_errors"],
+      "properties": {
+        "modules_by_status": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "ok": {"type": "integer", "minimum": 0}, "partial": {"type": "integer", "minimum": 0},
+            "denied": {"type": "integer", "minimum": 0}, "failed": {"type": "integer", "minimum": 0},
+            "skipped": {"type": "integer", "minimum": 0}, "interrupted": {"type": "integer", "minimum": 0},
+            "not_run": {"type": "integer", "minimum": 0}
+          }
+        },
+        "denied_apis": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["api", "regions"],
+            "properties": {
+              "api": {"type": "string", "pattern": "^[a-z0-9-]+:[A-Za-z0-9]+$"},
+              "regions": {"type": "array", "items": {"type": "string"}}
+            }
+          }
+        },
+        "partial_modules": {"type": "array", "items": {"$ref": "#/$defs/module_at_unit"}},
+        "failed_modules": {"type": "array", "items": {"$ref": "#/$defs/module_at_unit"}},
+        "throttled_calls": {"type": "integer", "minimum": 0},
+        "item_errors": {"type": "integer", "minimum": 0}
+      }
+    },
+    "files": {
+      "type": "array",
+      "description": "Every regular file under the run root except manifest.json, SHA256SUMS, run.log, *.zip and analysis/exports/**; sorted by path.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "sha256", "bytes"],
+        "properties": {
+          "path": {"type": "string", "pattern": "^[A-Za-z0-9._+=,@-]+(/[A-Za-z0-9._+=,@-]+)*$"},
+          "sha256": {"$ref": "#/$defs/sha256"},
+          "bytes": {"type": "integer", "minimum": 0}
+        }
+      }
+    }
+  },
+  "$defs": {
+    "run_id": {"type": "string", "pattern": "^[A-Za-z0-9._-]{1,64}$"},
+    "account_id": {"type": "string", "pattern": "^[0-9]{12}$"},
+    "region": {"type": "string", "pattern": "^[a-z]{2}(-[a-z]+)+-[0-9]+$"},
+    "module_name": {"type": "string", "pattern": "^[a-z][a-z0-9_]{0,39}$"},
+    "module_at_unit": {"type": "string", "pattern": "^[a-z][a-z0-9_]{0,39}@(global|[a-z]{2}(-[a-z]+)+-[0-9]+)$"},
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "utc": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]+)?Z$"},
+    "utc_or_null": {"type": ["string", "null"], "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]+)?Z$"}
+  }
+}

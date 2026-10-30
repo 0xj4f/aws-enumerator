@@ -1,0 +1,20 @@
+{
+  "fn-admin-role": [
+    {
+      "PolicyName": "AdministratorAccess",
+      "PolicyArn": "arn:aws:iam::aws:policy/AdministratorAccess"
+    }
+  ],
+  "admin-role": [
+    {
+      "PolicyName": "AdministratorAccess",
+      "PolicyArn": "arn:aws:iam::aws:policy/AdministratorAccess"
+    }
+  ],
+  "gha-deploy": [
+    {
+      "PolicyName": "AdministratorAccess",
+      "PolicyArn": "arn:aws:iam::aws:policy/AdministratorAccess"
+    }
+  ]
+}

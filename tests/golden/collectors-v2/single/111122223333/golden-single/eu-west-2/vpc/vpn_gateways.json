@@ -1,0 +1,20 @@
+[
+  {
+    "AmazonSideAsn": 64512,
+    "State": "available",
+    "Tags": [
+      {
+        "Key": "Name",
+        "Value": "demo-vgw"
+      }
+    ],
+    "Type": "ipsec.1",
+    "VpcAttachments": [
+      {
+        "State": "attached",
+        "VpcId": "vpc-0dec000000000002"
+      }
+    ],
+    "VpnGatewayId": "vgw-0dec0000000000002"
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "AgentVersion": "3.2.0.0",
+    "IamRole": null,
+    "InstanceId": "i-0dec0abb000000002",
+    "IsLatestVersion": false,
+    "LastPingDateTime": "2024-01-12T10:00:00Z",
+    "PingStatus": "ConnectionLost",
+    "PlatformName": "Amazon Linux",
+    "PlatformType": "Linux",
+    "PlatformVersion": "2",
+    "ResourceType": "EC2Instance"
+  },
+  {
+    "AgentVersion": "3.3.0.0",
+    "IamRole": null,
+    "InstanceId": "i-0dec0eeb000000002",
+    "IsLatestVersion": true,
+    "LastPingDateTime": "2024-01-15T10:00:00Z",
+    "PingStatus": "Online",
+    "PlatformName": "Amazon Linux",
+    "PlatformType": "Linux",
+    "PlatformVersion": "2023",
+    "ResourceType": "EC2Instance"
+  }
+]

@@ -1,0 +1,292 @@
+{
+  "edges": [
+    {
+      "category": "compute",
+      "edge_id": "e:1ac983747a06b6d19f26",
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "target": "lambda:arn:aws:lambda:eu-west-2:111122223333:function:demo-internal",
+      "type": "CAN_UPDATE_CODE",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:deb731a237a87ac9c7f8",
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "target": "lambda:arn:aws:lambda:eu-west-2:111122223333:function:demo-layered",
+      "type": "CAN_UPDATE_CODE",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:41a279cd718993354353",
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "target": "lambda:arn:aws:lambda:eu-west-2:111122223333:function:demo-processor",
+      "type": "CAN_UPDATE_CODE",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:16562f81ab7c5f685320",
+      "matched_actions": [
+        "lambda:UpdateFunctionCode"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "target": "lambda:arn:aws:lambda:eu-west-2:111122223333:function:demo-internal",
+      "type": "CAN_UPDATE_CODE",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:219f1191bfadc7f1b0fd",
+      "matched_actions": [
+        "lambda:UpdateFunctionCode"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "target": "lambda:arn:aws:lambda:eu-west-2:111122223333:function:demo-layered",
+      "type": "CAN_UPDATE_CODE",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:dfedf409c22b6a4c4efc",
+      "matched_actions": [
+        "lambda:UpdateFunctionCode"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "target": "lambda:arn:aws:lambda:eu-west-2:111122223333:function:demo-processor",
+      "type": "CAN_UPDATE_CODE",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:c35a66d9fe7c4b34c7ad",
+      "matched_actions": [
+        "lambda:UpdateFunctionCode"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "target": "lambda:arn:aws:lambda:eu-west-2:111122223333:function:demo-internal",
+      "type": "CAN_UPDATE_CODE",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:d4785b4fc04de460de4b",
+      "matched_actions": [
+        "lambda:UpdateFunctionCode"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "target": "lambda:arn:aws:lambda:eu-west-2:111122223333:function:demo-layered",
+      "type": "CAN_UPDATE_CODE",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:4775baff167366a9eb5e",
+      "matched_actions": [
+        "lambda:UpdateFunctionCode"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "target": "lambda:arn:aws:lambda:eu-west-2:111122223333:function:demo-processor",
+      "type": "CAN_UPDATE_CODE",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:69a9ece7a13a45e7c377",
+      "matched_actions": [
+        "lambda:UpdateFunctionCode"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "target": "lambda:arn:aws:lambda:eu-west-2:111122223333:function:demo-internal",
+      "type": "CAN_UPDATE_CODE",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:b428e1a9d3a9cd0a4679",
+      "matched_actions": [
+        "lambda:UpdateFunctionCode"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "target": "lambda:arn:aws:lambda:eu-west-2:111122223333:function:demo-layered",
+      "type": "CAN_UPDATE_CODE",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:93f74f7dd2bdb5537df9",
+      "matched_actions": [
+        "lambda:UpdateFunctionCode"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "target": "lambda:arn:aws:lambda:eu-west-2:111122223333:function:demo-processor",
+      "type": "CAN_UPDATE_CODE",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:68bc80666408b9aa82d3",
+      "matched_actions": [
+        "lambda:UpdateFunctionCode"
+      ],
+      "source": "arn:aws:iam::111122223333:user/demo-bob",
+      "target": "lambda:arn:aws:lambda:eu-west-2:111122223333:function:demo-internal",
+      "type": "CAN_UPDATE_CODE",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:7ce67f49e161d752d5ad",
+      "matched_actions": [
+        "lambda:UpdateFunctionCode"
+      ],
+      "source": "arn:aws:iam::111122223333:user/demo-bob",
+      "target": "lambda:arn:aws:lambda:eu-west-2:111122223333:function:demo-layered",
+      "type": "CAN_UPDATE_CODE",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:cd68145c1df0e133ffd9",
+      "matched_actions": [
+        "lambda:UpdateFunctionCode"
+      ],
+      "source": "arn:aws:iam::111122223333:user/demo-bob",
+      "target": "lambda:arn:aws:lambda:eu-west-2:111122223333:function:demo-processor",
+      "type": "CAN_UPDATE_CODE",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:bbfadfe8169d1d581da2",
+      "source": "lambda:arn:aws:lambda:eu-west-2:111122223333:function:demo-internal",
+      "target": "arn:aws:iam::111122223333:role/demo-app-role",
+      "type": "USES_ROLE",
+      "weight": 0
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:710ef4a2e019145654c7",
+      "matched_actions": [
+        "lambda:invokefunctionurl"
+      ],
+      "source": "lambda:arn:aws:lambda:eu-west-2:111122223333:function:demo-internal",
+      "target": "principal:*",
+      "type": "LAMBDA_GRANTS_PUBLIC",
+      "weight": 0
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:f510e56f53c8000cd709",
+      "source": "lambda:arn:aws:lambda:eu-west-2:111122223333:function:demo-layered",
+      "target": "arn:aws:iam::111122223333:role/demo-app-role",
+      "type": "USES_ROLE",
+      "weight": 0
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:121acf12bc18102d2767",
+      "is_cross_account": true,
+      "matched_actions": [
+        "lambda:invokefunction"
+      ],
+      "source": "lambda:arn:aws:lambda:eu-west-2:111122223333:function:demo-layered",
+      "target": "arn:aws:iam::999999999999:root",
+      "type": "LAMBDA_GRANTS_CROSS_ACCOUNT",
+      "weight": 2
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:6f034701563ddad20937",
+      "source": "lambda:arn:aws:lambda:eu-west-2:111122223333:function:demo-processor",
+      "target": "arn:aws:iam::111122223333:role/demo-lambda-role",
+      "type": "USES_ROLE",
+      "weight": 0
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:7dedeade3a04d31649c8",
+      "matched_actions": [
+        "lambda:invokefunctionurl"
+      ],
+      "source": "lambda:arn:aws:lambda:eu-west-2:111122223333:function:demo-processor",
+      "target": "principal:*",
+      "type": "LAMBDA_GRANTS_PUBLIC",
+      "weight": 0
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:a83af6714eb82e38fa0f",
+      "has_conditions": true,
+      "matched_actions": [
+        "lambda:invokefunction"
+      ],
+      "source": "lambda:arn:aws:lambda:eu-west-2:111122223333:function:demo-processor",
+      "target": "service_principal:svc:s3.amazonaws.com",
+      "type": "LAMBDA_GRANTS_INVOKE",
+      "weight": 2
+    }
+  ],
+  "findings": [
+    {
+      "category": "lambda_cross_account",
+      "description": "A policy of the function lets arn:aws:iam::999999999999:root (account 999999999999) perform lambda:invokefunction.",
+      "entity_arn": "arn:aws:lambda:eu-west-2:111122223333:function:demo-layered",
+      "fingerprint": "21f10d8a34b97d93ed7b577d9732eeb7",
+      "id": "LAMBDA-XACCT-001",
+      "matched_actions": [
+        "lambda:invokefunction"
+      ],
+      "node_id": "arn:aws:lambda:eu-west-2:111122223333:function:demo-layered",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "remediation": "Verify cross-account invoke access is intended.",
+      "severity": "MEDIUM",
+      "title": "Lambda 'demo-layered' grants access to account 999999999999"
+    },
+    {
+      "category": "lambda_public",
+      "description": "The function URL needs no authentication and the function policy lets unauthenticated callers invoke it: anyone on the internet can run the function.",
+      "entity_arn": "arn:aws:lambda:eu-west-2:111122223333:function:demo-internal",
+      "fingerprint": "06533e5f8c83a0626b4a44b87762f766",
+      "id": "LAMBDA-URL-001",
+      "matched_actions": [
+        "lambda:InvokeFunctionUrl"
+      ],
+      "node_id": "arn:aws:lambda:eu-west-2:111122223333:function:demo-internal",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "remediation": "Set the function URL AuthType to AWS_IAM, or remove the public InvokeFunctionUrl permission and the URL if it is not needed.",
+      "severity": "HIGH",
+      "title": "Lambda 'demo-internal' has a public function URL on alias/version 'live' (AuthType NONE)"
+    },
+    {
+      "category": "lambda_public",
+      "description": "The function URL needs no authentication and the function policy lets unauthenticated callers invoke it: anyone on the internet can run the function.",
+      "entity_arn": "arn:aws:lambda:eu-west-2:111122223333:function:demo-processor",
+      "fingerprint": "1f8d4459dae56fef2aa5ae8a02369595",
+      "id": "LAMBDA-URL-001",
+      "matched_actions": [
+        "lambda:InvokeFunctionUrl"
+      ],
+      "node_id": "arn:aws:lambda:eu-west-2:111122223333:function:demo-processor",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "remediation": "Set the function URL AuthType to AWS_IAM, or remove the public InvokeFunctionUrl permission and the URL if it is not needed.",
+      "severity": "HIGH",
+      "title": "Lambda 'demo-processor' has a public function URL (AuthType NONE)"
+    },
+    {
+      "category": "lambda_public",
+      "description": "The layer version policy lets any AWS account read the layer (lambda:GetLayerVersion): its code and any configuration or credentials packaged in it are exposed.",
+      "entity_arn": "arn:aws:lambda:eu-west-2:111122223333:layer:demo-deps:3",
+      "fingerprint": "32ef3544ae7c95ac00011cced3796f93",
+      "id": "LAMBDA-LAYER-PUB-001",
+      "matched_actions": [
+        "lambda:getlayerversion"
+      ],
+      "node_id": "arn:aws:lambda:eu-west-2:111122223333:layer:demo-deps:3",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "remediation": "Remove the public statement from the layer version policy (RemoveLayerVersionPermission) or restrict it to an organisation (aws:PrincipalOrgID).",
+      "severity": "MEDIUM",
+      "title": "Lambda layer version 'demo-deps:3' is public"
+    }
+  ]
+}

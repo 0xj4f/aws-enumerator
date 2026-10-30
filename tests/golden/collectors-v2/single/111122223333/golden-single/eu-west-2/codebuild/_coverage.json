@@ -1,0 +1,79 @@
+{
+  "breakers": [],
+  "calls": [
+    {
+      "api": "codebuild:BatchGetProjects",
+      "count": 1,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "codebuild:ListProjects",
+      "count": 1,
+      "error_code": null,
+      "items": 2,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": true,
+      "status": "ok"
+    },
+    {
+      "api": "codebuild:ListSourceCredentials",
+      "count": 1,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    }
+  ],
+  "duration_seconds": "<stripped>",
+  "ended_at": "<stripped>",
+  "error": null,
+  "item_errors": [],
+  "item_errors_truncated": false,
+  "module": "codebuild",
+  "protocol": "ctx",
+  "region": "eu-west-2",
+  "schema_version": 1,
+  "sections": [
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "projects",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "source_credentials",
+      "status": "ok"
+    }
+  ],
+  "services": [
+    "codebuild"
+  ],
+  "started_at": "<stripped>",
+  "status": "ok",
+  "status_reason": null,
+  "summary": {
+    "calls": 3,
+    "denied": 0,
+    "error": 0,
+    "item_errors": 0,
+    "not_configured": 0,
+    "ok": 3,
+    "skipped": 0,
+    "throttled": 0
+  }
+}

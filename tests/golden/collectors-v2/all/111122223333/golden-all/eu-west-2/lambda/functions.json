@@ -1,0 +1,122 @@
+[
+  {
+    "Aliases": [],
+    "CollectionErrors": [
+      {
+        "api": "lambda:ListFunctionUrlConfigs",
+        "error_code": "AccessDeniedException",
+        "status": "denied"
+      }
+    ],
+    "EnvironmentVariableNames": [
+      "STAGE"
+    ],
+    "FunctionArn": "arn:aws:lambda:eu-west-2:111122223333:function:demo-layered",
+    "FunctionName": "demo-layered",
+    "FunctionUrl": null,
+    "FunctionUrls": null,
+    "Handler": "app.handler",
+    "KMSKeyArn": null,
+    "LastModified": "2024-01-15T10:00:00.000+0000",
+    "Layers": [
+      "arn:aws:lambda:eu-west-2:111122223333:layer:demo-deps:3"
+    ],
+    "MemorySize": 256,
+    "PackageType": "Zip",
+    "PolicyStatus": "present",
+    "Role": "arn:aws:iam::111122223333:role/demo-app-role",
+    "Runtime": "python3.12",
+    "Timeout": 30,
+    "VpcConfig": {
+      "SecurityGroupIds": [
+        "sg-0dec0abb000000002"
+      ],
+      "SubnetIds": [
+        "subnet-0dec0ba1b000002"
+      ],
+      "VpcId": "vpc-0dec000000000002"
+    }
+  },
+  {
+    "Aliases": [
+      {
+        "AliasArn": "arn:aws:lambda:eu-west-2:111122223333:function:demo-internal:live",
+        "FunctionVersion": "1",
+        "Name": "live",
+        "PolicyStatus": "present"
+      }
+    ],
+    "EnvironmentVariableNames": [],
+    "FunctionArn": "arn:aws:lambda:eu-west-2:111122223333:function:demo-internal",
+    "FunctionName": "demo-internal",
+    "FunctionUrl": null,
+    "FunctionUrls": [
+      {
+        "AuthType": "NONE",
+        "CorsAllowOrigins": [],
+        "FunctionUrl": "https://demointernallive.lambda-url.eu-west-2.on.aws/",
+        "InvokeMode": "BUFFERED",
+        "Qualifier": "live"
+      }
+    ],
+    "Handler": "index.handler",
+    "KMSKeyArn": null,
+    "LastModified": "2024-01-15T10:00:00.000+0000",
+    "Layers": [],
+    "MemorySize": 128,
+    "PackageType": "Zip",
+    "PolicyStatus": "absent",
+    "Role": "arn:aws:iam::111122223333:role/demo-app-role",
+    "Runtime": "nodejs20.x",
+    "Timeout": 3,
+    "VpcConfig": {
+      "SecurityGroupIds": [],
+      "SubnetIds": [],
+      "VpcId": null
+    }
+  },
+  {
+    "Aliases": [
+      {
+        "AliasArn": "arn:aws:lambda:eu-west-2:111122223333:function:demo-processor:stable",
+        "FunctionVersion": "2",
+        "Name": "stable",
+        "PolicyStatus": "absent"
+      }
+    ],
+    "EnvironmentVariableNames": [
+      "DB_PASSWORD",
+      "LOG_LEVEL"
+    ],
+    "FunctionArn": "arn:aws:lambda:eu-west-2:111122223333:function:demo-processor",
+    "FunctionName": "demo-processor",
+    "FunctionUrl": {
+      "AuthType": "NONE",
+      "Url": "https://demoprocessor0001.lambda-url.eu-west-2.on.aws/"
+    },
+    "FunctionUrls": [
+      {
+        "AuthType": "NONE",
+        "CorsAllowOrigins": [],
+        "FunctionUrl": "https://demoprocessor0001.lambda-url.eu-west-2.on.aws/",
+        "InvokeMode": "BUFFERED",
+        "Qualifier": null
+      }
+    ],
+    "Handler": "main.handler",
+    "KMSKeyArn": null,
+    "LastModified": "2024-01-15T10:00:00.000+0000",
+    "Layers": [],
+    "MemorySize": 512,
+    "PackageType": "Zip",
+    "PolicyStatus": "present",
+    "Role": "arn:aws:iam::111122223333:role/demo-lambda-role",
+    "Runtime": "python3.12",
+    "Timeout": 60,
+    "VpcConfig": {
+      "SecurityGroupIds": [],
+      "SubnetIds": [],
+      "VpcId": null
+    }
+  }
+]

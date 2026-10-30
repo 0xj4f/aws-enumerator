@@ -1,0 +1,14 @@
+{
+  "demo-poweruser": [
+    {
+      "PolicyName": "PowerUserAccess",
+      "PolicyArn": "arn:aws:iam::aws:policy/PowerUserAccess"
+    }
+  ],
+  "demo-quarantined": [],
+  "demo-deny-iam": [],
+  "demo-boundary-capped": [],
+  "demo-passrole-gated": [],
+  "demo-iam-notresource": [],
+  "demo-star-notresource": []
+}

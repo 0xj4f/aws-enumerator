@@ -1,0 +1,64 @@
+[
+  {
+    "aggregation_rule": null,
+    "kind": "ClusterRole",
+    "metadata": {
+      "annotations": null,
+      "labels": null,
+      "name": "cluster-admin"
+    },
+    "rules": [
+      {
+        "api_groups": [
+          "*"
+        ],
+        "non_resource_ur_ls": null,
+        "resource_names": null,
+        "resources": [
+          "*"
+        ],
+        "verbs": [
+          "*"
+        ]
+      },
+      {
+        "api_groups": null,
+        "non_resource_ur_ls": [
+          "*"
+        ],
+        "resource_names": null,
+        "resources": null,
+        "verbs": [
+          "*"
+        ]
+      }
+    ]
+  },
+  {
+    "aggregation_rule": null,
+    "kind": "ClusterRole",
+    "metadata": {
+      "annotations": null,
+      "labels": null,
+      "name": "demo-pod-reader"
+    },
+    "rules": [
+      {
+        "api_groups": [
+          ""
+        ],
+        "non_resource_ur_ls": null,
+        "resource_names": null,
+        "resources": [
+          "pods",
+          "pods/log"
+        ],
+        "verbs": [
+          "get",
+          "list",
+          "watch"
+        ]
+      }
+    ]
+  }
+]

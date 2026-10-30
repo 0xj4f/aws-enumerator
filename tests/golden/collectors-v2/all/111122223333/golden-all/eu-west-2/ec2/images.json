@@ -1,0 +1,30 @@
+[
+  {
+    "Arn": "arn:aws:ec2:eu-west-2::image/ami-0dec0000000000002",
+    "CreationDate": "2024-01-10T10:00:00.000Z",
+    "ImageId": "ami-0dec0000000000002",
+    "Name": "demo-web-ami",
+    "OwnerId": "111122223333",
+    "PlatformDetails": null,
+    "Public": false,
+    "SharedAccounts": [
+      "999999999999"
+    ],
+    "SharedOrganizationalUnits": [],
+    "SharedOrganizations": [],
+    "State": "available"
+  },
+  {
+    "Arn": "arn:aws:ec2:eu-west-2::image/ami-0dec0b0b11c000002",
+    "CreationDate": "2024-01-11T10:00:00.000Z",
+    "ImageId": "ami-0dec0b0b11c000002",
+    "Name": "demo-public-ami",
+    "OwnerId": "111122223333",
+    "PlatformDetails": null,
+    "Public": true,
+    "SharedAccounts": [],
+    "SharedOrganizationalUnits": [],
+    "SharedOrganizations": [],
+    "State": "available"
+  }
+]

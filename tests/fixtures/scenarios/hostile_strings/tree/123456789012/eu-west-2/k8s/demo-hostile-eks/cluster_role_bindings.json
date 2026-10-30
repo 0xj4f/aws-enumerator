@@ -1,0 +1,30 @@
+[
+  {
+    "api_version": null,
+    "kind": null,
+    "metadata": {
+      "name": "{{constructor.constructor('window.__aeXssCanary=1')()}}",
+      "namespace": null,
+      "labels": null,
+      "annotations": null,
+      "uid": "85403aa2-aaaa-4bbb-8ccc-fdc4446b22cc",
+      "creation_timestamp": "2026-01-01 00:00:00+00:00",
+      "resource_version": "1000",
+      "owner_references": null,
+      "managed_fields": null
+    },
+    "role_ref": {
+      "api_group": "rbac.authorization.k8s.io",
+      "kind": "ClusterRole",
+      "name": "cluster-admin"
+    },
+    "subjects": [
+      {
+        "api_group": null,
+        "kind": "ServiceAccount",
+        "name": "\"><svg onload=window.__aeXssCanary=1>",
+        "namespace": "<img src=x onerror=window.__aeXssCanary=1>"
+      }
+    ]
+  }
+]

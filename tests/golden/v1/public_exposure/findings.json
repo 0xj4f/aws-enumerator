@@ -1,0 +1,864 @@
+{
+  "account_id": "123456789012",
+  "findings": [
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "cognito_unauth",
+      "confidence": "definite",
+      "description": "Guest access is enabled: anyone on the internet can obtain credentials for arn:aws:iam::123456789012:role/demo-guest-role.",
+      "evidence": {
+        "allow_unauth": true,
+        "roles": [
+          "arn:aws:iam::123456789012:role/demo-guest-role"
+        ]
+      },
+      "fingerprint": "ccbb47c9e2b19b5721d5033e4bc87270",
+      "id": "COGNITO-UNAUTH-001",
+      "legacy_ids": [],
+      "node_id": "arn:aws:cognito-identity:eu-west-2:123456789012:identitypool/eu-west-2:6f7a8b9c-aaaa-4bbb-8ccc-0d1e2f3a4b5c",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-7--cognito-unauthenticated-identity-pool",
+      "region": "eu-west-2",
+      "related_node_ids": [
+        "arn:aws:iam::123456789012:role/demo-guest-role"
+      ],
+      "remediation": "Remove the unauthenticated role or tightly scope it; set AllowUnauthenticatedIdentities=false if anonymous access isn't required.",
+      "severity": "HIGH",
+      "status": "open",
+      "title": "Cognito identity pool 'demo_guest_pool' grants an unauthenticated role"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "dangerous_permission",
+      "confidence": "definite",
+      "description": "Full EC2 control",
+      "evidence": {
+        "decision": "allow",
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "ec2:*"
+                ],
+                "layer": "identity",
+                "policy_name": "ops",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:ec2:*:123456789012:*",
+            "rule_action": "ec2:*"
+          }
+        ]
+      },
+      "fingerprint": "f5f9de2b9d0f3a9db4f3fba78749866c",
+      "id": "DANGER-004",
+      "legacy_ids": [],
+      "matched_actions": [
+        "ec2:*"
+      ],
+      "node_id": "arn:aws:iam::123456789012:user/demo-ops",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#high-value-targets-to-hunt",
+      "remediation": "Restrict to specific actions and resource ARNs",
+      "rule_version": "2.1.0",
+      "severity": "HIGH",
+      "status": "open",
+      "title": "Full EC2 control"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "ebs_public",
+      "confidence": "definite",
+      "description": "The snapshot's createVolumePermission includes the 'all' group: anyone can create a volume from it and read the data.",
+      "entity": "ebssnapshot/snap-0a1b2c3d4e5f6bb01",
+      "entity_arn": "arn:aws:ec2:eu-west-2::snapshot/snap-0a1b2c3d4e5f6bb01",
+      "evidence": {
+        "mitigated_by": [],
+        "snapshot_block_public_access": null
+      },
+      "fingerprint": "a8f4454e014210f51e8234ec56dc1fe0",
+      "id": "EBS-PUB-001",
+      "legacy_ids": [],
+      "node_id": "arn:aws:ec2:eu-west-2::snapshot/snap-0a1b2c3d4e5f6bb01",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "region": "eu-west-2",
+      "remediation": "Remove the public createVolumePermission and set snapshot Block Public Access to block-all-sharing.",
+      "resource": [
+        "arn:aws:ec2:eu-west-2::snapshot/snap-0a1b2c3d4e5f6bb01"
+      ],
+      "severity": "HIGH",
+      "source_type": "ebs_config",
+      "status": "open",
+      "title": "EBS snapshot 'snap-0a1b2c3d4e5f6bb01' is shared publicly"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "ec2_exposure",
+      "confidence": "definite",
+      "description": "Instance 'i-0a1b2c3d4e5f6eb01' (running) has public address(es) 203.0.113.10; security group(s) sg-0a1b2c3d4e5f6eb01 admit 0.0.0.0/0 on 22/tcp.",
+      "entity": "instance/i-0a1b2c3d4e5f6eb01",
+      "entity_arn": "arn:aws:ec2:eu-west-2:123456789012:instance/i-0a1b2c3d4e5f6eb01",
+      "evidence": {
+        "addresses": [
+          "203.0.113.10"
+        ],
+        "blocked_by_nacl": [],
+        "ports": [
+          "22/tcp"
+        ],
+        "routes": {
+          "4": "full",
+          "6": "none"
+        },
+        "security_groups": [
+          "sg-0a1b2c3d4e5f6eb01"
+        ],
+        "sources": [
+          "0.0.0.0/0"
+        ]
+      },
+      "fingerprint": "a0bcab8778bae816162fa380173e710a",
+      "id": "EC2-EXPOSURE-001",
+      "legacy_ids": [],
+      "node_id": "arn:aws:ec2:eu-west-2:123456789012:instance/i-0a1b2c3d4e5f6eb01",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-1--you-compromised-an-ec2-instance",
+      "region": "eu-west-2",
+      "remediation": "Restrict the security-group ingress to specific source ranges, or move the instance behind a load balancer in a private subnet.",
+      "resource": [
+        "arn:aws:ec2:eu-west-2:123456789012:instance/i-0a1b2c3d4e5f6eb01"
+      ],
+      "severity": "HIGH",
+      "source_type": "security_group",
+      "status": "open",
+      "title": "Instance i-0a1b2c3d4e5f6eb01 is reachable from the internet on 22/tcp"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "lambda_public",
+      "confidence": "definite",
+      "description": "The function URL needs no authentication and the function policy lets unauthenticated callers invoke it: anyone on the internet can run the function.",
+      "evidence": {
+        "auth_type": "NONE",
+        "decision": "allow",
+        "policy": "public",
+        "url": "https://03ff6e69197aaa5947c15f405f3e9dad.lambda-url.eu-west-2.on.aws/"
+      },
+      "fingerprint": "9bd93b131bfda72cf07d76cb2a0ad0b4",
+      "id": "LAMBDA-URL-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "lambda:InvokeFunctionUrl"
+      ],
+      "node_id": "arn:aws:lambda:eu-west-2:123456789012:function:demo-url-fn",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "region": "eu-west-2",
+      "related_node_ids": [
+        "aws-enumerator:anonymous"
+      ],
+      "remediation": "Set the function URL AuthType to AWS_IAM, or remove the public InvokeFunctionUrl permission and the URL if it is not needed.",
+      "severity": "HIGH",
+      "status": "open",
+      "title": "Lambda 'demo-url-fn' has a public function URL (AuthType NONE)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "rds_public",
+      "confidence": "definite",
+      "description": "PubliclyAccessible is true: the endpoint resolves to a public address and is reachable from the internet wherever its security groups allow it.",
+      "entity": "rds/demo-public-db",
+      "entity_arn": "arn:aws:rds:eu-west-2:123456789012:db:demo-public-db",
+      "evidence": {
+        "kind": "instance"
+      },
+      "fingerprint": "2e0f28b8914538bbe32ef44259ee2188",
+      "id": "RDS-PUB-001",
+      "legacy_ids": [],
+      "node_id": "arn:aws:rds:eu-west-2:123456789012:db:demo-public-db",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "region": "eu-west-2",
+      "remediation": "Set PubliclyAccessible=false and place the database in private subnets.",
+      "resource": [
+        "arn:aws:rds:eu-west-2:123456789012:db:demo-public-db"
+      ],
+      "severity": "HIGH",
+      "source_policy": "DBConfig",
+      "source_type": "rds_config",
+      "status": "open",
+      "title": "RDS instance 'demo-public-db' is publicly accessible"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "rds_public_snapshot",
+      "confidence": "definite",
+      "description": "The snapshot's restore attribute includes 'all': any AWS account can restore it and read the data.",
+      "entity": "rds/demo-public-snap",
+      "entity_arn": "arn:aws:rds:eu-west-2:123456789012:snapshot:demo-public-snap",
+      "evidence": {
+        "attribute": "restore"
+      },
+      "fingerprint": "0776210793d72496054ef90bd3319935",
+      "id": "RDS-SNAP-001",
+      "legacy_ids": [],
+      "node_id": "arn:aws:rds:eu-west-2:123456789012:snapshot:demo-public-snap",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "region": "eu-west-2",
+      "remediation": "Remove public sharing from the snapshot immediately.",
+      "resource": [
+        "arn:aws:rds:eu-west-2:123456789012:snapshot:demo-public-snap"
+      ],
+      "severity": "HIGH",
+      "source_policy": "SnapshotAttributes",
+      "source_type": "rds_config",
+      "status": "open",
+      "title": "RDS snapshot 'demo-public-snap' is shared publicly"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "s3_public_access",
+      "confidence": "conditional",
+      "description": "S3 bucket 'demo-public-bucket' gives anyone on the internet CAN_READ (actions: s3:getobject); not verified: s3:account-public-access-block-unknown.",
+      "entity": "bucket/demo-public-bucket",
+      "entity_arn": "arn:aws:s3:::demo-public-bucket",
+      "evidence": {
+        "access_types": [
+          "CAN_READ"
+        ],
+        "auth": "none",
+        "condition_strength": "none",
+        "decision": "allow",
+        "mitigated_by": [],
+        "source": "bucket-policy",
+        "statements": [
+          {
+            "layer": "resource",
+            "policy_arn": "arn:aws:s3:::demo-public-bucket",
+            "policy_name": "BucketPolicy",
+            "sid": null,
+            "source_type": "resource",
+            "statement_index": 0,
+            "version_id": null,
+            "via_group": null
+          }
+        ]
+      },
+      "fingerprint": "fc38f976a700f2bf15f6458349876f6c",
+      "gaps": [
+        "s3:account-public-access-block-unknown"
+      ],
+      "id": "S3-PUBLIC-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "s3:getobject"
+      ],
+      "node_id": "arn:aws:s3:::demo-public-bucket",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-5--you-have-access-to-an-s3-bucket",
+      "region": "eu-west-2",
+      "remediation": "Remove the wildcard Principal or scope it with a principal-restricting condition (aws:PrincipalOrgID, aws:SourceVpce, aws:SourceArn); keep Block Public Access (RestrictPublicBuckets) on at account level.",
+      "resource": [
+        "arn:aws:s3:::demo-public-bucket"
+      ],
+      "severity": "HIGH",
+      "source_type": "s3_bucket_policy",
+      "status": "open",
+      "title": "Bucket 'demo-public-bucket' is public through its bucket policy (CAN_READ)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "s3_public_access",
+      "confidence": "conditional",
+      "description": "S3 bucket 'demo-public-bucket' gives anyone on the internet CAN_READ; not verified: s3:account-public-access-block-unknown.",
+      "entity": "bucket/demo-public-bucket",
+      "entity_arn": "arn:aws:s3:::demo-public-bucket",
+      "evidence": {
+        "access_types": [
+          "CAN_READ"
+        ],
+        "auth": "none",
+        "condition_strength": "none",
+        "decision": "allow",
+        "mitigated_by": [],
+        "source": "acl",
+        "statements": []
+      },
+      "fingerprint": "281331788c0b9ca7f8d70a27f702f2e9",
+      "gaps": [
+        "s3:account-public-access-block-unknown"
+      ],
+      "id": "S3-PUBLIC-002",
+      "legacy_ids": [],
+      "matched_actions": [
+        "acl:READ"
+      ],
+      "node_id": "arn:aws:s3:::demo-public-bucket",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-5--you-have-access-to-an-s3-bucket",
+      "region": "eu-west-2",
+      "remediation": "Remove the AllUsers / AuthenticatedUsers ACL grants, set Object Ownership to BucketOwnerEnforced (ACLs disabled) and turn on IgnorePublicAcls.",
+      "resource": [
+        "arn:aws:s3:::demo-public-bucket"
+      ],
+      "severity": "HIGH",
+      "source_type": "s3_acl",
+      "status": "open",
+      "title": "Bucket 'demo-public-bucket' ACL grants anyone on the internet (READ)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "trust_policy",
+      "confidence": "definite",
+      "description": "Web identity provider cognito-identity.amazonaws.com can assume 'demo-guest-role'; cognito-identity.amazonaws.com:aud missing, cognito-identity.amazonaws.com:amr admits unauthenticated identities.",
+      "entity": "role/demo-guest-role",
+      "entity_arn": "arn:aws:iam::123456789012:role/demo-guest-role",
+      "evidence": {
+        "admits": "any",
+        "conditions": [
+          {
+            "key": "cognito-identity.amazonaws.com:amr",
+            "operator": "ForAnyValue:StringLike",
+            "values": [
+              "unauthenticated"
+            ]
+          }
+        ],
+        "problems": [
+          "cognito-identity.amazonaws.com:amr admits unauthenticated identities",
+          "cognito-identity.amazonaws.com:aud missing"
+        ],
+        "provider": "cognito",
+        "statement_index": 0
+      },
+      "fingerprint": "49ea0c51fd2f4cdc7c2fea5b7a54a5ef",
+      "id": "TRUST-OIDC-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "sts:AssumeRoleWithWebIdentity"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/demo-guest-role",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-6--youre-external-no-foothold-yet",
+      "related_node_ids": [
+        "aws-enumerator:idp/cognito-identity.amazonaws.com"
+      ],
+      "remediation": "Require the provider's audience (<host>:aud) and an exact subject (<host>:sub), e.g. repo:<org>/<repo>:ref:refs/heads/main for GitHub or system:serviceaccount:<ns>:<sa> for EKS.",
+      "resource": [
+        "arn:aws:iam::123456789012:role/demo-guest-role"
+      ],
+      "severity": "HIGH",
+      "source_policy": "AssumeRolePolicyDocument",
+      "source_type": "trust_policy",
+      "status": "open",
+      "title": "Role 'demo-guest-role' trusts cognito identities (any subjects)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "apigw_public",
+      "confidence": "conditional",
+      "description": "This report predates per-method authorisation data: the API has Lambda integrations and no authorizer object, so its routes may be unauthenticated (AWS_IAM methods need no authorizer object; re-collect to decide per route).",
+      "entity": "apigw/demo-open-api",
+      "entity_arn": "arn:aws:apigateway:eu-west-2::/apis/k1l2m3n4o5",
+      "evidence": {
+        "basis": "legacy-has-authorizer",
+        "functions": [
+          "arn:aws:lambda:eu-west-2:123456789012:function:demo-url-fn"
+        ]
+      },
+      "fingerprint": "ea9d6310e8cf4589f43f2b963e77264d",
+      "gaps": [
+        "apigateway:per-method-authorization-unknown"
+      ],
+      "id": "APIGW-AUTH-001",
+      "legacy_ids": [],
+      "node_id": "arn:aws:apigateway:eu-west-2::/apis/k1l2m3n4o5",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "region": "eu-west-2",
+      "remediation": "Attach an authorizer (IAM, Cognito, JWT or Lambda) to the listed routes, or confirm that unauthenticated access is intended.",
+      "resource": [
+        "arn:aws:apigateway:eu-west-2::/apis/k1l2m3n4o5"
+      ],
+      "severity": "MEDIUM",
+      "source_policy": "APIConfig",
+      "source_type": "apigw_config",
+      "status": "open",
+      "title": "API 'demo-open-api' has Lambda integrations and no authorizer object"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "ec2_imds",
+      "confidence": "definite",
+      "description": "Instance 'i-0a1b2c3d4e5f6eb01' (running) has HttpTokens 'optional' with the metadata endpoint enabled: SSRF can read the instance role's temporary credentials.",
+      "entity": "instance/i-0a1b2c3d4e5f6eb01",
+      "entity_arn": "arn:aws:ec2:eu-west-2:123456789012:instance/i-0a1b2c3d4e5f6eb01",
+      "evidence": {
+        "hop_limit": 1,
+        "http_tokens": "optional",
+        "role": "arn:aws:iam::123456789012:role/demo-web-role",
+        "state": "running"
+      },
+      "fingerprint": "1edbabfe2b6924d11f5b401a46dc7eb1",
+      "id": "EC2-IMDS-001",
+      "legacy_ids": [],
+      "node_id": "arn:aws:ec2:eu-west-2:123456789012:instance/i-0a1b2c3d4e5f6eb01",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-1--you-compromised-an-ec2-instance",
+      "region": "eu-west-2",
+      "remediation": "Set HttpTokens to 'required' to enforce IMDSv2 (or disable the metadata endpoint).",
+      "resource": [
+        "arn:aws:ec2:eu-west-2:123456789012:instance/i-0a1b2c3d4e5f6eb01"
+      ],
+      "severity": "MEDIUM",
+      "source_type": "ec2_config",
+      "status": "open",
+      "title": "Instance i-0a1b2c3d4e5f6eb01 allows IMDSv1 (instance role exposed to SSRF)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "ec2_exposure",
+      "confidence": "definite",
+      "description": "Instance 'i-0a1b2c3d4e5f6eb01' has public address(es) 203.0.113.10 and its subnet's effective route table routes to an attached internet gateway.",
+      "entity": "instance/i-0a1b2c3d4e5f6eb01",
+      "entity_arn": "arn:aws:ec2:eu-west-2:123456789012:instance/i-0a1b2c3d4e5f6eb01",
+      "evidence": {
+        "addresses": [
+          "203.0.113.10"
+        ],
+        "routes": {
+          "4": "full",
+          "6": "none"
+        }
+      },
+      "fingerprint": "6563139ec20a77f09f3913ec9f12db18",
+      "id": "EC2-INET-001",
+      "legacy_ids": [],
+      "node_id": "arn:aws:ec2:eu-west-2:123456789012:instance/i-0a1b2c3d4e5f6eb01",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-1--you-compromised-an-ec2-instance",
+      "region": "eu-west-2",
+      "remediation": "Move the instance to a private subnet or remove its public address.",
+      "resource": [
+        "arn:aws:ec2:eu-west-2:123456789012:instance/i-0a1b2c3d4e5f6eb01"
+      ],
+      "severity": "MEDIUM",
+      "source_type": "vpc",
+      "status": "open",
+      "title": "Instance i-0a1b2c3d4e5f6eb01 has a public address in an internet-routed subnet"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "ec2_misconfig",
+      "confidence": "definite",
+      "description": "Instance 'i-0a1b2c3d4e5f60f03' has instance profile 'arn:aws:iam::123456789012:instance-profile/demo-deleted-profile' but no role could be resolved: the instance profile is not among the collected ones (deleted, or in another account).",
+      "entity": "instance/i-0a1b2c3d4e5f60f03",
+      "entity_arn": "arn:aws:ec2:eu-west-2:123456789012:instance/i-0a1b2c3d4e5f60f03",
+      "evidence": {
+        "instance_profile_arn": "arn:aws:iam::123456789012:instance-profile/demo-deleted-profile"
+      },
+      "fingerprint": "48504c06906664d5fd653aa07f50dbd0",
+      "id": "EC2-PROFILE-001",
+      "legacy_ids": [],
+      "node_id": "arn:aws:ec2:eu-west-2:123456789012:instance/i-0a1b2c3d4e5f60f03",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-1--you-compromised-an-ec2-instance",
+      "region": "eu-west-2",
+      "remediation": "Verify the instance profile exists and contains a role; ensure the enumerator has iam:ListInstanceProfiles permission.",
+      "resource": [
+        "arn:aws:ec2:eu-west-2:123456789012:instance/i-0a1b2c3d4e5f60f03"
+      ],
+      "severity": "MEDIUM",
+      "source_type": "ec2_config",
+      "status": "open",
+      "title": "Instance i-0a1b2c3d4e5f60f03 has an unresolved instance profile"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "elb_public",
+      "confidence": "definite",
+      "description": "The load balancer scheme is 'internet-facing': its listeners are reachable from the internet and forward to its targets.",
+      "entity": "elb/demo-public-alb",
+      "entity_arn": "arn:aws:elasticloadbalancing:eu-west-2:123456789012:loadbalancer/app/demo-public-alb/5de55021ac0f7f70",
+      "evidence": {
+        "ports": [],
+        "scheme": "internet-facing",
+        "security_groups": null
+      },
+      "fingerprint": "d9c8161741a6d776fd2ec182b82fcc55",
+      "id": "ELB-PUB-001",
+      "legacy_ids": [],
+      "node_id": "arn:aws:elasticloadbalancing:eu-west-2:123456789012:loadbalancer/app/demo-public-alb/5de55021ac0f7f70",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "region": "eu-west-2",
+      "remediation": "Confirm the public exposure is intended; otherwise use an internal scheme, and protect it with a WAF web ACL.",
+      "resource": [
+        "arn:aws:elasticloadbalancing:eu-west-2:123456789012:loadbalancer/app/demo-public-alb/5de55021ac0f7f70"
+      ],
+      "severity": "MEDIUM",
+      "source_type": "elb_config",
+      "status": "open",
+      "title": "Load balancer 'demo-public-alb' is internet-facing"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "privilege_escalation",
+      "confidence": "definite",
+      "description": "Can take over an existing EC2 instance with an instance profile and run code or API calls as the role it runs as",
+      "evidence": {
+        "decision": "allow",
+        "rule_class": "existing-passrole",
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "ssm:startsession"
+                ],
+                "layer": "identity",
+                "policy_name": "ops",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 1
+              }
+            ],
+            "resource": "arn:aws:ec2:eu-west-2:123456789012:instance/i-0a1b2c3d4e5f6eb01",
+            "rule_action": "ssm:startsession"
+          }
+        ],
+        "targets_detail": [
+          {
+            "arn": "arn:aws:ec2:eu-west-2:123456789012:instance/i-0a1b2c3d4e5f6eb01",
+            "decision": "allow",
+            "node_id": "arn:aws:ec2:eu-west-2:123456789012:instance/i-0a1b2c3d4e5f6eb01",
+            "resource_type": "ec2_instance",
+            "role": "arn:aws:iam::123456789012:role/demo-web-role",
+            "tier": "MEDIUM",
+            "tier_class": "medium"
+          }
+        ]
+      },
+      "fingerprint": "8f6cc2efc70fa70de810da907f0ae16e",
+      "id": "PRIVESC-050",
+      "legacy_ids": [],
+      "matched_actions": [
+        "ssm:startsession"
+      ],
+      "node_id": "arn:aws:iam::123456789012:user/demo-ops",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "related_node_ids": [
+        "arn:aws:ec2:eu-west-2:123456789012:instance/i-0a1b2c3d4e5f6eb01",
+        "arn:aws:iam::123456789012:role/demo-web-role"
+      ],
+      "remediation": "Restrict ssm:StartSession / ssm:SendCommand / ec2-instance-connect:SendSSHPublicKey to specific instances (tags or ARNs) and keep privileged instance profiles off shared instances",
+      "rule_version": "2.1.0",
+      "severity": "MEDIUM",
+      "status": "open",
+      "targets": [
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:ec2:eu-west-2:123456789012:instance/i-0a1b2c3d4e5f6eb01",
+          "tier": "MEDIUM"
+        }
+      ],
+      "title": "Instance command execution: Can take over an existing EC2 instance with an instance profile and run code or API calls as the role it runs as"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "privilege_escalation",
+      "confidence": "definite",
+      "description": "Can take over an existing EC2 instance with an instance profile and run code or API calls as the role it runs as",
+      "evidence": {
+        "decision": "allow",
+        "rule_class": "existing-passrole",
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "ec2:*"
+                ],
+                "layer": "identity",
+                "policy_name": "ops",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:ec2:eu-west-2:123456789012:instance/i-0a1b2c3d4e5f6eb01",
+            "rule_action": "ec2:modifyinstanceattribute"
+          },
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "ec2:*"
+                ],
+                "layer": "identity",
+                "policy_name": "ops",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:ec2:eu-west-2:123456789012:instance/i-0a1b2c3d4e5f6eb01",
+            "rule_action": "ec2:stopinstances"
+          },
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "ec2:*"
+                ],
+                "layer": "identity",
+                "policy_name": "ops",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:ec2:eu-west-2:123456789012:instance/i-0a1b2c3d4e5f6eb01",
+            "rule_action": "ec2:startinstances"
+          }
+        ],
+        "targets_detail": [
+          {
+            "arn": "arn:aws:ec2:eu-west-2:123456789012:instance/i-0a1b2c3d4e5f6eb01",
+            "decision": "allow",
+            "node_id": "arn:aws:ec2:eu-west-2:123456789012:instance/i-0a1b2c3d4e5f6eb01",
+            "resource_type": "ec2_instance",
+            "role": "arn:aws:iam::123456789012:role/demo-web-role",
+            "tier": "MEDIUM",
+            "tier_class": "medium"
+          }
+        ]
+      },
+      "fingerprint": "28dffec153e4592a9e61dc3ef31255b5",
+      "id": "PRIVESC-051",
+      "legacy_ids": [],
+      "matched_actions": [
+        "ec2:modifyinstanceattribute",
+        "ec2:startinstances",
+        "ec2:stopinstances"
+      ],
+      "node_id": "arn:aws:iam::123456789012:user/demo-ops",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "related_node_ids": [
+        "arn:aws:ec2:eu-west-2:123456789012:instance/i-0a1b2c3d4e5f6eb01",
+        "arn:aws:iam::123456789012:role/demo-web-role"
+      ],
+      "remediation": "Restrict ec2:ModifyInstanceAttribute together with Stop/StartInstances on instances with privileged roles",
+      "rule_version": "2.1.0",
+      "severity": "MEDIUM",
+      "status": "open",
+      "targets": [
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:ec2:eu-west-2:123456789012:instance/i-0a1b2c3d4e5f6eb01",
+          "tier": "MEDIUM"
+        }
+      ],
+      "title": "Instance user-data rewrite: Can take over an existing EC2 instance with an instance profile and run code or API calls as the role it runs as"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "rds_unencrypted",
+      "confidence": "definite",
+      "description": "StorageEncrypted is false: data at rest and its snapshots are not protected by KMS.",
+      "entity": "rds/demo-public-db",
+      "entity_arn": "arn:aws:rds:eu-west-2:123456789012:db:demo-public-db",
+      "evidence": {
+        "kind": "instance"
+      },
+      "fingerprint": "9ba66f1861f598862b93107176970b83",
+      "id": "RDS-ENC-001",
+      "legacy_ids": [],
+      "node_id": "arn:aws:rds:eu-west-2:123456789012:db:demo-public-db",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "region": "eu-west-2",
+      "remediation": "Recreate the database (or restore an encrypted copy of a snapshot) with storage encryption.",
+      "resource": [
+        "arn:aws:rds:eu-west-2:123456789012:db:demo-public-db"
+      ],
+      "severity": "MEDIUM",
+      "source_policy": "DBConfig",
+      "source_type": "rds_config",
+      "status": "open",
+      "title": "RDS instance 'demo-public-db' storage is not encrypted"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "route53_dangling",
+      "confidence": "definite",
+      "description": "Record 'static.example.org.' (CNAME) points at 'demo-gone.s3.amazonaws.com' (s3, takeover likely): no bucket 'demo-gone' in this account: anyone may create it.",
+      "entity": "route53/example.org.",
+      "entity_arn": "arn:aws:route53:::hostedzone/Z0EXAMPLEZONEBBB",
+      "evidence": {
+        "alias": null,
+        "check": "no bucket 'demo-gone' in this account: anyone may create it",
+        "claimable": "likely",
+        "kind": "s3",
+        "private": false,
+        "record": "static.example.org.",
+        "target": "demo-gone.s3.amazonaws.com",
+        "type": "CNAME"
+      },
+      "fingerprint": "53dce5fe44d41aca71ba8a12923c49c0",
+      "id": "ROUTE53-DANGLING-001",
+      "legacy_ids": [],
+      "node_id": "arn:aws:route53:::hostedzone/Z0EXAMPLEZONEBBB",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "remediation": "Verify the target resource still exists and belongs to you; remove the record if not.",
+      "resource": [
+        "static.example.org."
+      ],
+      "severity": "MEDIUM",
+      "source_type": "route53_record",
+      "status": "open",
+      "title": "Potential dangling DNS record: static.example.org."
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "LOW",
+      "category": "ec2_imds",
+      "confidence": "definite",
+      "description": "Instance 'i-0a1b2c3d4e5f60f03' (running) has HttpTokens 'optional' with the metadata endpoint enabled: SSRF can read instance metadata and user data (no role is attached).",
+      "entity": "instance/i-0a1b2c3d4e5f60f03",
+      "entity_arn": "arn:aws:ec2:eu-west-2:123456789012:instance/i-0a1b2c3d4e5f60f03",
+      "evidence": {
+        "hop_limit": 1,
+        "http_tokens": "optional",
+        "role": null,
+        "state": "running"
+      },
+      "fingerprint": "563beea33a3e553bd66b7bf575e57658",
+      "id": "EC2-IMDS-001",
+      "legacy_ids": [],
+      "node_id": "arn:aws:ec2:eu-west-2:123456789012:instance/i-0a1b2c3d4e5f60f03",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-1--you-compromised-an-ec2-instance",
+      "region": "eu-west-2",
+      "remediation": "Set HttpTokens to 'required' to enforce IMDSv2 (or disable the metadata endpoint).",
+      "resource": [
+        "arn:aws:ec2:eu-west-2:123456789012:instance/i-0a1b2c3d4e5f60f03"
+      ],
+      "severity": "LOW",
+      "source_type": "ec2_config",
+      "status": "open",
+      "title": "Instance i-0a1b2c3d4e5f60f03 allows IMDSv1"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "LOW",
+      "category": "iam_hygiene",
+      "confidence": "definite",
+      "description": "The IAM password policy is below common baselines: password reuse prevention None < 24.",
+      "evidence": {
+        "configured": true,
+        "console_users": 0,
+        "weaknesses": [
+          "password reuse prevention None < 24"
+        ]
+      },
+      "fingerprint": "8324f653d46059d49f0e62bada4e6cf9",
+      "id": "IAM-PWPOL-001",
+      "legacy_ids": [],
+      "node_id": "aws-enumerator:account/123456789012",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-6--youre-external-no-foothold-yet",
+      "remediation": "Set an account password policy: length >= 14, all character classes, reuse prevention 24.",
+      "severity": "LOW",
+      "status": "open",
+      "title": "The account password policy is weak"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "s3_public_access",
+      "confidence": "conditional",
+      "description": "S3 bucket 'demo-vpce-bucket' gives anyone on the internet CAN_READ (actions: s3:getobject); the grant is conditional (strong restriction); not verified: s3:account-public-access-block-unknown.",
+      "entity": "bucket/demo-vpce-bucket",
+      "entity_arn": "arn:aws:s3:::demo-vpce-bucket",
+      "evidence": {
+        "access_types": [
+          "CAN_READ"
+        ],
+        "auth": "none",
+        "condition_strength": "strong",
+        "decision": "conditional",
+        "mitigated_by": [],
+        "source": "bucket-policy",
+        "statements": [
+          {
+            "layer": "resource",
+            "policy_arn": "arn:aws:s3:::demo-vpce-bucket",
+            "policy_name": "BucketPolicy",
+            "sid": null,
+            "source_type": "resource",
+            "statement_index": 0,
+            "version_id": null,
+            "via_group": null
+          }
+        ]
+      },
+      "fingerprint": "b9e18881b9e489f4cfeefbaea54500ce",
+      "gaps": [
+        "s3:account-public-access-block-unknown"
+      ],
+      "id": "S3-PUBLIC-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "s3:getobject"
+      ],
+      "node_id": "arn:aws:s3:::demo-vpce-bucket",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-5--you-have-access-to-an-s3-bucket",
+      "region": "eu-west-2",
+      "remediation": "Remove the wildcard Principal or scope it with a principal-restricting condition (aws:PrincipalOrgID, aws:SourceVpce, aws:SourceArn); keep Block Public Access (RestrictPublicBuckets) on at account level.",
+      "resource": [
+        "arn:aws:s3:::demo-vpce-bucket"
+      ],
+      "severity": "INFO",
+      "source_type": "s3_bucket_policy",
+      "status": "open",
+      "title": "Bucket 'demo-vpce-bucket' is public through its bucket policy (CAN_READ)"
+    }
+  ],
+  "generated_at": "<stripped>",
+  "mode": "legacy-single",
+  "partition": "aws",
+  "regions": [
+    "eu-west-2"
+  ],
+  "rules_version": "2.1.0",
+  "run_id": "legacy-eu-west-2",
+  "schema_version": "1.0.0",
+  "tool_version": "0.3.0"
+}

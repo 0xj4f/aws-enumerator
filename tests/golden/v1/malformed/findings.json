@@ -1,0 +1,144 @@
+{
+  "account_id": "123456789012",
+  "findings": [
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "s3_public_access",
+      "confidence": "conditional",
+      "description": "S3 bucket 'example-malformed-bucket' gives anyone on the internet CAN_READ (actions: s3:getobject); not verified: s3:account-public-access-block-unknown.",
+      "entity": "bucket/example-malformed-bucket",
+      "entity_arn": "arn:aws:s3:::example-malformed-bucket",
+      "evidence": {
+        "access_types": [
+          "CAN_READ"
+        ],
+        "auth": "none",
+        "condition_strength": "none",
+        "decision": "allow",
+        "mitigated_by": [],
+        "source": "bucket-policy",
+        "statements": [
+          {
+            "layer": "resource",
+            "policy_arn": "arn:aws:s3:::example-malformed-bucket",
+            "policy_name": "BucketPolicy",
+            "sid": null,
+            "source_type": "resource",
+            "statement_index": 0,
+            "version_id": null,
+            "via_group": null
+          }
+        ]
+      },
+      "fingerprint": "a48d58410fc371bb2a5c5941e817841e",
+      "gaps": [
+        "s3:account-public-access-block-unknown"
+      ],
+      "id": "S3-PUBLIC-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "s3:getobject"
+      ],
+      "node_id": "arn:aws:s3:::example-malformed-bucket",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-5--you-have-access-to-an-s3-bucket",
+      "region": "eu-west-2",
+      "remediation": "Remove the wildcard Principal or scope it with a principal-restricting condition (aws:PrincipalOrgID, aws:SourceVpce, aws:SourceArn); keep Block Public Access (RestrictPublicBuckets) on at account level.",
+      "resource": [
+        "arn:aws:s3:::example-malformed-bucket"
+      ],
+      "severity": "HIGH",
+      "source_type": "s3_bucket_policy",
+      "status": "open",
+      "title": "Bucket 'example-malformed-bucket' is public through its bucket policy (CAN_READ)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "eks_exposure",
+      "confidence": "definite",
+      "description": "The Kubernetes API endpoint of cluster demo-unreachable (eu-west-2) is publicly accessible from 0.0.0.0/0. Authentication is still required, but any leaked kubeconfig, token or mapped IAM credential is usable from anywhere, and API-server vulnerabilities are exposed.",
+      "entity": "cluster/demo-unreachable",
+      "entity_arn": "arn:aws:eks:eu-west-2:123456789012:cluster/demo-unreachable",
+      "evidence": {
+        "endpoint_private_access": false,
+        "endpoint_public_access": true,
+        "public_access_cidrs": [
+          "0.0.0.0/0"
+        ]
+      },
+      "fingerprint": "3fef7dd77c573b076d35a7cf186304b9",
+      "id": "EKS-ENDPOINT-001",
+      "legacy_ids": [],
+      "node_id": "arn:aws:eks:eu-west-2:123456789012:cluster/demo-unreachable",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "region": "eu-west-2",
+      "remediation": "Disable public endpoint access, or restrict publicAccessCidrs to known administration networks.",
+      "resource": [
+        "arn:aws:eks:eu-west-2:123456789012:cluster/demo-unreachable"
+      ],
+      "severity": "MEDIUM",
+      "source_policy": "resourcesVpcConfig",
+      "source_type": "eks_cluster",
+      "status": "open",
+      "title": "EKS cluster demo-unreachable has a public API endpoint open to the internet"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "LOW",
+      "category": "iam_hygiene",
+      "confidence": "definite",
+      "description": "No password policy is set: console passwords only need the AWS defaults (0 user(s) with a console password).",
+      "evidence": {
+        "configured": false,
+        "console_users": 0
+      },
+      "fingerprint": "8324f653d46059d49f0e62bada4e6cf9",
+      "id": "IAM-PWPOL-001",
+      "legacy_ids": [],
+      "node_id": "aws-enumerator:account/123456789012",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-6--youre-external-no-foothold-yet",
+      "remediation": "Set an account password policy: length >= 14, all character classes, reuse prevention 24.",
+      "severity": "LOW",
+      "status": "open",
+      "title": "The account has no IAM password policy"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "INFO",
+      "category": "k8s_coverage",
+      "confidence": "definite",
+      "description": "The Kubernetes API was not enumerated for this cluster (no k8s data in the report) (cluster demo-err, eu-west-2). Pods, service accounts, RBAC and network objects of this cluster are unknown: the absence of Kubernetes edges and findings for it is not evidence of a safe cluster.",
+      "entity": "cluster/demo-err",
+      "entity_arn": "arn:aws:eks:eu-west-2:123456789012:cluster/demo-err",
+      "evidence": {
+        "coverage_status": "not-collected"
+      },
+      "fingerprint": "1e1c5619fedab5fad679f982b464d378",
+      "id": "K8S-AUTH-001",
+      "legacy_ids": [],
+      "node_id": "arn:aws:eks:eu-west-2:123456789012:cluster/demo-err",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-2--you-compromised-a-kubernetes-pod",
+      "region": "eu-west-2",
+      "remediation": "Give the collecting identity read access to the cluster (an access entry or aws-auth mapping with the read-only RBAC of 'aws-enumerator permissions --k8s'), or use --k8s-auth kubeconfig/token, and re-run.",
+      "resource": [
+        "arn:aws:eks:eu-west-2:123456789012:cluster/demo-err"
+      ],
+      "severity": "INFO",
+      "source_policy": "cluster_info.auth_status",
+      "source_type": "k8s_cluster",
+      "status": "open",
+      "title": "Kubernetes objects of cluster demo-err were not enumerated"
+    }
+  ],
+  "generated_at": "<stripped>",
+  "mode": "legacy-single",
+  "partition": "aws",
+  "regions": [
+    "eu-west-2"
+  ],
+  "rules_version": "2.1.0",
+  "run_id": "legacy-eu-west-2",
+  "schema_version": "1.0.0",
+  "tool_version": "0.3.0"
+}

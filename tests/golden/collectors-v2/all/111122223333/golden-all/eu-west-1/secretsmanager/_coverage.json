@@ -1,0 +1,57 @@
+{
+  "breakers": [],
+  "calls": [
+    {
+      "api": "secretsmanager:ListSecrets",
+      "count": 1,
+      "error_code": "AccessDeniedException",
+      "items": 0,
+      "not_configured": false,
+      "optional": false,
+      "pages": 0,
+      "primary": true,
+      "status": "denied"
+    }
+  ],
+  "duration_seconds": "<stripped>",
+  "ended_at": "<stripped>",
+  "error": null,
+  "item_errors": [],
+  "item_errors_truncated": false,
+  "module": "secretsmanager",
+  "protocol": "ctx",
+  "region": "eu-west-1",
+  "schema_version": 1,
+  "sections": [
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "policies",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "secrets",
+      "status": "ok"
+    }
+  ],
+  "services": [
+    "secretsmanager"
+  ],
+  "started_at": "<stripped>",
+  "status": "denied",
+  "status_reason": "primary call denied: secretsmanager:ListSecrets",
+  "summary": {
+    "calls": 1,
+    "denied": 1,
+    "error": 0,
+    "item_errors": 0,
+    "not_configured": 0,
+    "ok": 0,
+    "skipped": 0,
+    "throttled": 0
+  }
+}

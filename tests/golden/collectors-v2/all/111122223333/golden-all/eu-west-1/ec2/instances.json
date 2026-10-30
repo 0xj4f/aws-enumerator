@@ -1,0 +1,41 @@
+[
+  {
+    "AmiId": "ami-0dec0000000000001",
+    "Architecture": null,
+    "AvailabilityZone": "eu-west-1a",
+    "IamInstanceProfile": {},
+    "InstanceId": "i-0dec0ee5700000001",
+    "InstanceType": "t3.small",
+    "Ipv6Address": null,
+    "KeyName": null,
+    "LaunchTime": "2024-01-05T10:00:00Z",
+    "MetadataOptions": {
+      "HttpEndpoint": "disabled",
+      "HttpProtocolIpv6": null,
+      "HttpPutResponseHopLimit": 1,
+      "HttpTokens": "optional",
+      "InstanceMetadataTags": null,
+      "State": null
+    },
+    "Monitoring": "disabled",
+    "NetworkInterfaces": [],
+    "Platform": null,
+    "PlatformDetails": null,
+    "PrivateIpAddress": "10.10.1.10",
+    "PublicDnsName": null,
+    "PublicIpAddress": null,
+    "SecurityGroups": [
+      {
+        "GroupId": "sg-0dec0ee5700000001",
+        "GroupName": "demo-west"
+      }
+    ],
+    "State": "stopped",
+    "SubnetId": "subnet-0dec0ee5700001",
+    "Tags": {
+      "Name": "demo-west"
+    },
+    "UserData": null,
+    "VpcId": "vpc-0dec000000000001"
+  }
+]

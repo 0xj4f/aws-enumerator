@@ -1,0 +1,115 @@
+{
+  "schema_version": "2.0",
+  "tool": {
+    "name": "aws-enumerator",
+    "version": "0.3.0",
+    "git_sha": "8b7135b4ef26",
+    "python": "3.10.11",
+    "boto3": "1.37.34",
+    "botocore": "1.37.34",
+    "kubernetes": "33.1.0"
+  },
+  "run": {
+    "run_id": "20260101T000000Z-0e0e0e",
+    "kind": "merge",
+    "status": "complete",
+    "started_at": "2026-10-16T09:29:22Z",
+    "ended_at": "2026-10-16T09:29:22Z",
+    "duration_seconds": 0.035,
+    "exit_code": 0,
+    "argv": [
+      "merge",
+      "-q",
+      "--no-color",
+      "--output",
+      "<redacted>",
+      "--run-id",
+      "20260101T000000Z-0e0e0e",
+      "<redacted>",
+      "<redacted>"
+    ],
+    "options": {
+      "regions_requested": [],
+      "modules": [],
+      "skipped_modules": [],
+      "k8s": false,
+      "k8s_secrets": false,
+      "concurrency": 1,
+      "rate_limit": {
+        "enabled": false,
+        "default_rps": null,
+        "max_rps": null,
+        "overrides": {}
+      },
+      "max_tier": 2,
+      "deny_breaker": 0,
+      "redact_identity": false
+    },
+    "resumes": [],
+    "global_source": null,
+    "sources": [
+      {
+        "run_id": "20260101T000000Z-b2b2b2",
+        "account_id": "111122223333",
+        "graph_sha256": "38d8eb6df8facac754f65b47d0d14be44e87150cf09f7fee830a1243cc9905c1"
+      },
+      {
+        "run_id": "20260101T000000Z-a1a1a1",
+        "account_id": "123456789012",
+        "graph_sha256": "52280318fd81737ce173d113822871926b983a4a004629ae29f854b802dd94c3"
+      }
+    ]
+  },
+  "target": {
+    "account_id": "111122223333",
+    "partition": "aws",
+    "home_region": "us-east-1",
+    "global_region": "us-east-1",
+    "regions": [
+      "eu-west-1",
+      "eu-west-2"
+    ],
+    "region_source": "merge",
+    "regions_skipped": []
+  },
+  "operator": {
+    "caller_arn": null,
+    "caller_user_id": null,
+    "caller_arn_sha256": null,
+    "principal_arn": null,
+    "principal_type": "unknown",
+    "redacted": false
+  },
+  "classification": "CONFIDENTIAL: pre-computed attack map of the target account; see HANDLING.txt",
+  "preflight": null,
+  "modules": [],
+  "analysis": {
+    "status": "ok",
+    "engine": "v2",
+    "started_at": "2026-10-16T09:29:22Z",
+    "duration_seconds": 0.035,
+    "error": null,
+    "dir": "analysis",
+    "graph_schema_version": "1.1.0"
+  },
+  "coverage_summary": {
+    "modules_by_status": {},
+    "denied_apis": [],
+    "partial_modules": [],
+    "failed_modules": [],
+    "throttled_calls": 0,
+    "item_errors": 0
+  },
+  "files": [
+    {
+      "path": "HANDLING.txt",
+      "sha256": "10e799b9018b7ff1606875cdd6c9012857088b0b32d524c4fb716260e21b8249",
+      "bytes": 1087
+    },
+    {
+      "path": "analysis/graph.json",
+      "sha256": "08fda3b679540640c0bcf1a39672df475dd41764752f0aff9a6651bbeca8714d",
+      "bytes": 62158
+    }
+  ]
+}

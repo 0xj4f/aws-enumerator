@@ -1,0 +1,20 @@
+{
+  "name": "all_mode",
+  "description": "--all layout: global (iam, s3, cloudfront, waf_cloudfront, route53) plus eu-west-1 and eu-west-2 with EC2, Lambda, Secrets Manager, SSM, KMS and EKS data. analyze() runs on global/ only.",
+  "account": "111122223333",
+  "layout": "all_mode",
+  "regions": [
+    "eu-west-1",
+    "eu-west-2"
+  ],
+  "report_dirs": [
+    "111122223333/global"
+  ],
+  "scope_dirs": [
+    "111122223333/global",
+    "111122223333/eu-west-1",
+    "111122223333/eu-west-2"
+  ],
+  "expect_exception": false,
+  "baseline": "d13c215"
+}

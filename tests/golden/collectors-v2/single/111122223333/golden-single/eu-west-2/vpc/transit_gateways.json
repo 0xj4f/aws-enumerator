@@ -1,0 +1,24 @@
+[
+  {
+    "CreationTime": "2024-01-02T10:00:00Z",
+    "Description": "demo transit gateway",
+    "Options": {
+      "AmazonSideAsn": 64512,
+      "AutoAcceptSharedAttachments": "enable",
+      "DefaultRouteTableAssociation": "enable",
+      "DefaultRouteTablePropagation": "enable",
+      "DnsSupport": "enable",
+      "VpnEcmpSupport": "enable"
+    },
+    "OwnerId": "111122223333",
+    "State": "available",
+    "Tags": [
+      {
+        "Key": "Name",
+        "Value": "demo-tgw"
+      }
+    ],
+    "TransitGatewayArn": "arn:aws:ec2:eu-west-2:111122223333:transit-gateway/tgw-0dec0000000000002",
+    "TransitGatewayId": "tgw-0dec0000000000002"
+  }
+]

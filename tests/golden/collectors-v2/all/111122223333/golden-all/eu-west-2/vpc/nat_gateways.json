@@ -1,0 +1,16 @@
+[
+  {
+    "CreateTime": "2024-01-02T10:00:00Z",
+    "NatGatewayAddresses": [
+      {
+        "AllocationId": "eipalloc-0dec0000002",
+        "PrivateIp": "10.20.1.5",
+        "PublicIp": "203.0.113.20"
+      }
+    ],
+    "NatGatewayId": "nat-0dec000000000002",
+    "State": "available",
+    "SubnetId": "subnet-0dec0b0b0000002",
+    "VpcId": "vpc-0dec000000000002"
+  }
+]

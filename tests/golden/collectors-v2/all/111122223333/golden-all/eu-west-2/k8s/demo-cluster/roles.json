@@ -1,0 +1,27 @@
+[
+  {
+    "kind": "Role",
+    "metadata": {
+      "annotations": null,
+      "labels": null,
+      "name": "demo-secret-reader",
+      "namespace": "demo-apps"
+    },
+    "rules": [
+      {
+        "api_groups": [
+          ""
+        ],
+        "non_resource_ur_ls": null,
+        "resource_names": null,
+        "resources": [
+          "secrets"
+        ],
+        "verbs": [
+          "get",
+          "list"
+        ]
+      }
+    ]
+  }
+]

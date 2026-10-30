@@ -1,0 +1,23 @@
+{
+  "FunctionArn": "arn:aws:lambda:eu-west-2:111122223333:function:demo-internal",
+  "FunctionName": "demo-internal",
+  "QualifiedArn": "arn:aws:lambda:eu-west-2:111122223333:function:demo-internal:live",
+  "Qualifier": "live",
+  "ResourcePolicy": {
+    "Statement": [
+      {
+        "Action": "lambda:InvokeFunctionUrl",
+        "Condition": {
+          "StringEquals": {
+            "lambda:FunctionUrlAuthType": "NONE"
+          }
+        },
+        "Effect": "Allow",
+        "Principal": "*",
+        "Resource": "arn:aws:lambda:eu-west-2:111122223333:function:demo-internal:live",
+        "Sid": "PublicAliasUrl"
+      }
+    ],
+    "Version": "2012-10-17"
+  }
+}

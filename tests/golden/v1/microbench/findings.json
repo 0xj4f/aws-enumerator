@@ -1,0 +1,5394 @@
+{
+  "account_id": "123456789012",
+  "findings": [
+    {
+      "account": "123456789012",
+      "base_severity": "CRITICAL",
+      "category": "dangerous_permission",
+      "confidence": "definite",
+      "description": "This role is administrator-equivalent: its effective permissions allow every action on every resource. Its 65 individual privilege-escalation and dangerous-permission findings are summarised here.",
+      "evidence": {
+        "basis": "allow-star",
+        "rule_ids": [
+          "DANGER-001"
+        ],
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "*",
+            "rule_action": "*"
+          }
+        ],
+        "subsumed": [
+          {
+            "fingerprint": "008cb02fe4c3a81ac2016dfd419b3369",
+            "id": "PRIVESC-045",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "01f8a1e8f02632922c2444878903fc68",
+            "id": "PRIVESC-013",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "05a62b6114198e370c54b0f3cb165592",
+            "id": "PRIVESC-032",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "07bf54cc0fc3db126e36ca4688a70eac",
+            "id": "PRIVESC-001",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "1e3b2e4a0829b52a8e089ac3d3d0d67e",
+            "id": "DANGER-010",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "1f9787d0a890c9c32cd48005bf3fede0",
+            "id": "PRIVESC-060",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "22a91ec7ddf2135b3f18f4cbc077a266",
+            "id": "PRIVESC-042",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "2706a2235adec0935c5d3a18986952a3",
+            "id": "PRIVESC-015",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "2e8b17102129269d3aa77d76b8e0d295",
+            "id": "DANGER-007",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "303324b1966d3f34b541179dbe34bbd4",
+            "id": "PRIVESC-040",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "3c270573e5150c858060324cf5fc7441",
+            "id": "PRIVESC-064",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "46d2cec7916d7d06ae1d821ba00dad4f",
+            "id": "PRIVESC-046",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "4711c84974420df52128f6420bf3776e",
+            "id": "PRIVESC-061",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "49c129ef760f2cf009a9cc431f0de984",
+            "id": "PRIVESC-030",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "4f418456aca6bf10594e5dda08b3487d",
+            "id": "PRIVESC-008",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "5180037cbec1b4c6110972ccf27dbf7a",
+            "id": "PRIVESC-033",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "58a8483725950edf525c35214a5cd19b",
+            "id": "DANGER-009",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "5971a147dd355f2cb1cfa54dfef896e8",
+            "id": "PRIVESC-067",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "6199c4696b70c4b1d1785d470efa00e4",
+            "id": "PRIVESC-014",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "63c4e55e48d46effa54010b8c811fcb3",
+            "id": "PRIVESC-020",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "649c709bb2d747e3ac3b2f72c9c00c7e",
+            "id": "PRIVESC-043",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "6b4dcadf0ffd02ca117af752312e1a9b",
+            "id": "PRIVESC-062",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "6fe967575e5632e0d3cdafa61c053e36",
+            "id": "PRIVESC-028",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "7380a429fef7ecdf24f6715f2a4ef2dd",
+            "id": "PRIVESC-011",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "74f715629c0bc28f433bc50877d6f43a",
+            "id": "PRIVESC-024",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "783e207f641d1d6511355e6d078b0e08",
+            "id": "PRIVESC-035",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "7ade07fccde96801227cd7936b798a95",
+            "id": "PRIVESC-005",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "7e5f3249a53d377489d97a5e8214ca0d",
+            "id": "PRIVESC-018",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "7eb353e3cd0fdd45a09f9eb3619de2f9",
+            "id": "PRIVESC-044",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "7ec2ab1a6bdb754a7b183b2c0d479e53",
+            "id": "DANGER-004",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "7f860ee4eb056fbe37429c291701a36c",
+            "id": "PRIVESC-048",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "80730dbcbf998c95754203c081a6dbcd",
+            "id": "PRIVESC-017",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "913c82b51cfedb0da42338575bbd8fd0",
+            "id": "PRIVESC-025",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "91b01582b74dbff01d6d56b633ba70f2",
+            "id": "DANGER-001",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "95b90f84d046236f45aab48a60749ce5",
+            "id": "DANGER-008",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "9a6e6a78b22e78bd8696d2aadb6a2977",
+            "id": "PRIVESC-037",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "9a853cd603692e29d2f5a2d7017a5396",
+            "id": "DANGER-006",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "9c1c74e56c5a4ba8ba505d6ff1cd67db",
+            "id": "DANGER-002",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "9fed701d4666dd9118b6a52dcb6ef8aa",
+            "id": "PRIVESC-012",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "a2b6b57e7e09087018df020fa693799b",
+            "id": "PRIVESC-019",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "a95fc5c58c957c133f950881d7a81f32",
+            "id": "PRIVESC-016",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "aadb4393c45a4c25620fc0de54d56911",
+            "id": "DANGER-005",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "ae6d544ad848846f8dc98ab658bddedc",
+            "id": "PRIVESC-036",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "aed97c6daf39ec414442c81c61e95c03",
+            "id": "PRIVESC-007",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "b3a33b18369ef8357b2c729f74b00819",
+            "id": "PRIVESC-063",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "b6a83d065bcc407888a26c9261d1c7c0",
+            "id": "PRIVESC-038",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "be7878457d5c0cf4881ea2af4c29f735",
+            "id": "PRIVESC-047",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "c38765336225f0c795cebf3a49f7343c",
+            "id": "PRIVESC-002",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "c5fdd56b243c63d46a3665628bd4cac8",
+            "id": "PRIVESC-058",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "c9b5fb4b3722e24895896ff0c1e6c846",
+            "id": "PRIVESC-031",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "c9cbedf81dea7ec807c028c795b9666f",
+            "id": "PRIVESC-049",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "ca7a9c1b18448a676465317768b6fca5",
+            "id": "PRIVESC-065",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "cbc3a7c517034ccf8b758d9fa7eb0b8a",
+            "id": "PRIVESC-059",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "d52a984d7a3bda90bc02e61da92309f3",
+            "id": "DANGER-003",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "d6d7ed901ea4d8c8d45d99c8699fa135",
+            "id": "PRIVESC-003",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "d8bd15a8aab4500c0402d56ba12d62b0",
+            "id": "PRIVESC-057",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "d92f2d0c144f3603c0fff689e3bf2b89",
+            "id": "PRIVESC-027",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "e8697565376711df235586765156e0c7",
+            "id": "PRIVESC-006",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "e92c13f640393f32b970b2a30679f628",
+            "id": "PRIVESC-039",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "ebbbf60184f687610f7d73f524085068",
+            "id": "PRIVESC-004",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "ef1b8920453a83bf3fa1e17841a5441d",
+            "id": "PRIVESC-034",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "f181588921668d6c6b216eef83ef3a10",
+            "id": "PRIVESC-010",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "f1f475913dec816868f78a2dbe69c6de",
+            "id": "PRIVESC-041",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "f40856c6eeeb7ad9e2bc048f54d5e96e",
+            "id": "PRIVESC-026",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "fa6135c1a06329e9ba33b6d969fa0bda",
+            "id": "PRIVESC-009",
+            "severity": "HIGH"
+          }
+        ],
+        "subsumed_count": 65
+      },
+      "fingerprint": "5d11f6aabd1b61f969c76923a13a2b61",
+      "id": "ADMIN-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "*",
+        "ec2:*",
+        "iam:*",
+        "iam:passrole",
+        "kms:decrypt",
+        "lambda:*",
+        "s3:*",
+        "secretsmanager:getsecretvalue",
+        "ssm:getparameter",
+        "ssm:getparameters",
+        "ssm:getparametersbypath",
+        "sts:assumerole"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c01-admin",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#high-value-targets-to-hunt",
+      "related_node_ids": [
+        "aws-enumerator:account-admin/123456789012"
+      ],
+      "remediation": "Treat this principal as an account administrator: limit who can use it (trust policy, group membership, credentials), require MFA, and replace broad grants (Action:* or iam:*) by the permissions it needs.",
+      "severity": "CRITICAL",
+      "status": "open",
+      "subsumes": [
+        "DANGER-001",
+        "DANGER-002",
+        "DANGER-003",
+        "DANGER-004",
+        "DANGER-005",
+        "DANGER-006",
+        "DANGER-007",
+        "DANGER-008",
+        "DANGER-009",
+        "DANGER-010",
+        "PRIVESC-001",
+        "PRIVESC-002",
+        "PRIVESC-003",
+        "PRIVESC-004",
+        "PRIVESC-005",
+        "PRIVESC-006",
+        "PRIVESC-007",
+        "PRIVESC-008",
+        "PRIVESC-009",
+        "PRIVESC-010",
+        "PRIVESC-011",
+        "PRIVESC-012",
+        "PRIVESC-013",
+        "PRIVESC-014",
+        "PRIVESC-015",
+        "PRIVESC-016",
+        "PRIVESC-017",
+        "PRIVESC-018",
+        "PRIVESC-019",
+        "PRIVESC-020",
+        "PRIVESC-024",
+        "PRIVESC-025",
+        "PRIVESC-026",
+        "PRIVESC-027",
+        "PRIVESC-028",
+        "PRIVESC-030",
+        "PRIVESC-031",
+        "PRIVESC-032",
+        "PRIVESC-033",
+        "PRIVESC-034",
+        "PRIVESC-035",
+        "PRIVESC-036",
+        "PRIVESC-037",
+        "PRIVESC-038",
+        "PRIVESC-039",
+        "PRIVESC-040",
+        "PRIVESC-041",
+        "PRIVESC-042",
+        "PRIVESC-043",
+        "PRIVESC-044",
+        "PRIVESC-045",
+        "PRIVESC-046",
+        "PRIVESC-047",
+        "PRIVESC-048",
+        "PRIVESC-049",
+        "PRIVESC-057",
+        "PRIVESC-058",
+        "PRIVESC-059",
+        "PRIVESC-060",
+        "PRIVESC-061",
+        "PRIVESC-062",
+        "PRIVESC-063",
+        "PRIVESC-064",
+        "PRIVESC-065",
+        "PRIVESC-067"
+      ],
+      "title": "Administrator-equivalent principal"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "CRITICAL",
+      "category": "privilege_escalation",
+      "confidence": "definite",
+      "description": "Can create arbitrary inline policy on roles",
+      "evidence": {
+        "decision": "allow",
+        "rule_class": "principal-modification",
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "iam:putrolepolicy"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+            "rule_action": "iam:putrolepolicy"
+          }
+        ],
+        "targets_detail": [
+          {
+            "arn": "arn:aws:iam::123456789012:role/c01-admin",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/c01-admin",
+            "tier": "CRITICAL",
+            "tier_class": "admin"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c02-poweruser-notaction",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/c02-poweruser-notaction",
+            "tier": "HIGH",
+            "tier_class": "high"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+            "tier": "CRITICAL",
+            "tier_class": "self"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+            "tier": "MEDIUM",
+            "tier_class": "medium"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+            "tier": "MEDIUM",
+            "tier_class": "medium"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c06-quarantined",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/c06-quarantined",
+            "tier": "MEDIUM",
+            "tier_class": "medium"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+            "tier": "MEDIUM",
+            "tier_class": "medium"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c08-self-service-keys",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/c08-self-service-keys",
+            "tier": "MEDIUM",
+            "tier_class": "medium"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c09-boundary-capped",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/c09-boundary-capped",
+            "tier": "HIGH",
+            "tier_class": "high"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c10-readonly",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/c10-readonly",
+            "tier": "MEDIUM",
+            "tier_class": "medium"
+          }
+        ]
+      },
+      "fingerprint": "f2cfda4a4662d9224803c651f86fb0b3",
+      "id": "PRIVESC-005",
+      "legacy_ids": [],
+      "matched_actions": [
+        "iam:putrolepolicy"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "related_node_ids": [
+        "arn:aws:iam::123456789012:role/c01-admin",
+        "arn:aws:iam::123456789012:role/c02-poweruser-notaction",
+        "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+        "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+        "arn:aws:iam::123456789012:role/c05-iam-notresource",
+        "arn:aws:iam::123456789012:role/c06-quarantined",
+        "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+        "arn:aws:iam::123456789012:role/c08-self-service-keys",
+        "arn:aws:iam::123456789012:role/c09-boundary-capped",
+        "arn:aws:iam::123456789012:role/c10-readonly"
+      ],
+      "remediation": "Remove iam:PutRolePolicy or restrict Resource to specific role ARNs",
+      "rule_version": "2.1.0",
+      "severity": "CRITICAL",
+      "status": "open",
+      "targets": [
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+          "tier": "CRITICAL"
+        },
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/c01-admin",
+          "tier": "CRITICAL"
+        },
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/c02-poweruser-notaction",
+          "tier": "HIGH"
+        },
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/c06-quarantined",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/c08-self-service-keys",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/c09-boundary-capped",
+          "tier": "HIGH"
+        },
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/c10-readonly",
+          "tier": "MEDIUM"
+        }
+      ],
+      "title": "PutRolePolicy: Can create arbitrary inline policy on roles"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "CRITICAL",
+      "category": "privilege_escalation",
+      "confidence": "definite",
+      "description": "Can create arbitrary inline policy on roles",
+      "evidence": {
+        "decision": "allow",
+        "rule_class": "principal-modification",
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "iam:*"
+                ],
+                "layer": "identity",
+                "not_resources": [
+                  "arn:aws:iam::123456789012:role/breakglass"
+                ],
+                "policy_name": "p",
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+            "rule_action": "iam:putrolepolicy"
+          }
+        ],
+        "targets_detail": [
+          {
+            "arn": "arn:aws:iam::123456789012:role/c01-admin",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/c01-admin",
+            "tier": "CRITICAL",
+            "tier_class": "admin"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c02-poweruser-notaction",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/c02-poweruser-notaction",
+            "tier": "HIGH",
+            "tier_class": "high"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+            "tier": "MEDIUM",
+            "tier_class": "medium"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+            "tier": "MEDIUM",
+            "tier_class": "medium"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+            "tier": "CRITICAL",
+            "tier_class": "self"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c06-quarantined",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/c06-quarantined",
+            "tier": "MEDIUM",
+            "tier_class": "medium"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+            "tier": "MEDIUM",
+            "tier_class": "medium"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c08-self-service-keys",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/c08-self-service-keys",
+            "tier": "MEDIUM",
+            "tier_class": "medium"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c09-boundary-capped",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/c09-boundary-capped",
+            "tier": "HIGH",
+            "tier_class": "high"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c10-readonly",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/c10-readonly",
+            "tier": "MEDIUM",
+            "tier_class": "medium"
+          }
+        ]
+      },
+      "fingerprint": "9189de33d40c002d358bc6aa3aa272ef",
+      "id": "PRIVESC-005",
+      "legacy_ids": [],
+      "matched_actions": [
+        "iam:putrolepolicy"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "related_node_ids": [
+        "arn:aws:iam::123456789012:role/c01-admin",
+        "arn:aws:iam::123456789012:role/c02-poweruser-notaction",
+        "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+        "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+        "arn:aws:iam::123456789012:role/c05-iam-notresource",
+        "arn:aws:iam::123456789012:role/c06-quarantined",
+        "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+        "arn:aws:iam::123456789012:role/c08-self-service-keys",
+        "arn:aws:iam::123456789012:role/c09-boundary-capped",
+        "arn:aws:iam::123456789012:role/c10-readonly"
+      ],
+      "remediation": "Remove iam:PutRolePolicy or restrict Resource to specific role ARNs",
+      "rule_version": "2.1.0",
+      "severity": "CRITICAL",
+      "status": "open",
+      "targets": [
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+          "tier": "CRITICAL"
+        },
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/c01-admin",
+          "tier": "CRITICAL"
+        },
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/c02-poweruser-notaction",
+          "tier": "HIGH"
+        },
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/c06-quarantined",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/c08-self-service-keys",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/c09-boundary-capped",
+          "tier": "HIGH"
+        },
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/c10-readonly",
+          "tier": "MEDIUM"
+        }
+      ],
+      "title": "PutRolePolicy: Can create arbitrary inline policy on roles"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "CRITICAL",
+      "category": "privilege_escalation",
+      "confidence": "definite",
+      "description": "Can attach managed policies (including AdministratorAccess) to roles",
+      "evidence": {
+        "decision": "allow",
+        "rule_class": "principal-modification",
+        "steps": [
+          {
+            "context": {
+              "iam:PolicyARN": "arn:aws:iam::aws:policy/AdministratorAccess"
+            },
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "iam:*"
+                ],
+                "layer": "identity",
+                "not_resources": [
+                  "arn:aws:iam::123456789012:role/breakglass"
+                ],
+                "policy_name": "p",
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+            "rule_action": "iam:attachrolepolicy"
+          }
+        ],
+        "targets_detail": [
+          {
+            "arn": "arn:aws:iam::123456789012:role/c01-admin",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/c01-admin",
+            "tier": "CRITICAL",
+            "tier_class": "admin"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c02-poweruser-notaction",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/c02-poweruser-notaction",
+            "tier": "HIGH",
+            "tier_class": "high"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+            "tier": "MEDIUM",
+            "tier_class": "medium"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+            "tier": "MEDIUM",
+            "tier_class": "medium"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+            "tier": "CRITICAL",
+            "tier_class": "self"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c06-quarantined",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/c06-quarantined",
+            "tier": "MEDIUM",
+            "tier_class": "medium"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+            "tier": "MEDIUM",
+            "tier_class": "medium"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c08-self-service-keys",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/c08-self-service-keys",
+            "tier": "MEDIUM",
+            "tier_class": "medium"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c09-boundary-capped",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/c09-boundary-capped",
+            "tier": "HIGH",
+            "tier_class": "high"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c10-readonly",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/c10-readonly",
+            "tier": "MEDIUM",
+            "tier_class": "medium"
+          }
+        ]
+      },
+      "fingerprint": "35e8158de85c302b06cf7452a9cb9075",
+      "id": "PRIVESC-008",
+      "legacy_ids": [],
+      "matched_actions": [
+        "iam:attachrolepolicy"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "related_node_ids": [
+        "arn:aws:iam::123456789012:role/c01-admin",
+        "arn:aws:iam::123456789012:role/c02-poweruser-notaction",
+        "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+        "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+        "arn:aws:iam::123456789012:role/c05-iam-notresource",
+        "arn:aws:iam::123456789012:role/c06-quarantined",
+        "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+        "arn:aws:iam::123456789012:role/c08-self-service-keys",
+        "arn:aws:iam::123456789012:role/c09-boundary-capped",
+        "arn:aws:iam::123456789012:role/c10-readonly"
+      ],
+      "remediation": "Remove or restrict iam:AttachRolePolicy",
+      "rule_version": "2.1.0",
+      "severity": "CRITICAL",
+      "status": "open",
+      "targets": [
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+          "tier": "CRITICAL"
+        },
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/c01-admin",
+          "tier": "CRITICAL"
+        },
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/c02-poweruser-notaction",
+          "tier": "HIGH"
+        },
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/c06-quarantined",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/c08-self-service-keys",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/c09-boundary-capped",
+          "tier": "HIGH"
+        },
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/c10-readonly",
+          "tier": "MEDIUM"
+        }
+      ],
+      "title": "AttachRolePolicy: Can attach managed policies (including AdministratorAccess) to roles"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "CRITICAL",
+      "category": "privilege_escalation",
+      "confidence": "definite",
+      "description": "Can modify role trust policies to allow self to assume any role",
+      "evidence": {
+        "decision": "allow",
+        "rule_class": "principal-access",
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "iam:*"
+                ],
+                "layer": "identity",
+                "not_resources": [
+                  "arn:aws:iam::123456789012:role/breakglass"
+                ],
+                "policy_name": "p",
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:role/c01-admin",
+            "rule_action": "iam:updateassumerolepolicy"
+          }
+        ],
+        "targets_detail": [
+          {
+            "arn": "arn:aws:iam::123456789012:role/c01-admin",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/c01-admin",
+            "tier": "CRITICAL",
+            "tier_class": "admin"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c02-poweruser-notaction",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/c02-poweruser-notaction",
+            "tier": "HIGH",
+            "tier_class": "high"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+            "tier": "MEDIUM",
+            "tier_class": "medium"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+            "tier": "MEDIUM",
+            "tier_class": "medium"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c06-quarantined",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/c06-quarantined",
+            "tier": "MEDIUM",
+            "tier_class": "medium"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+            "tier": "MEDIUM",
+            "tier_class": "medium"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c08-self-service-keys",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/c08-self-service-keys",
+            "tier": "MEDIUM",
+            "tier_class": "medium"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c09-boundary-capped",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/c09-boundary-capped",
+            "tier": "HIGH",
+            "tier_class": "high"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c10-readonly",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/c10-readonly",
+            "tier": "MEDIUM",
+            "tier_class": "medium"
+          }
+        ]
+      },
+      "fingerprint": "54bc4fe2e3a2b6a9f3547dea459916e7",
+      "id": "PRIVESC-013",
+      "legacy_ids": [],
+      "matched_actions": [
+        "iam:updateassumerolepolicy"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "related_node_ids": [
+        "arn:aws:iam::123456789012:role/c01-admin",
+        "arn:aws:iam::123456789012:role/c02-poweruser-notaction",
+        "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+        "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+        "arn:aws:iam::123456789012:role/c06-quarantined",
+        "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+        "arn:aws:iam::123456789012:role/c08-self-service-keys",
+        "arn:aws:iam::123456789012:role/c09-boundary-capped",
+        "arn:aws:iam::123456789012:role/c10-readonly"
+      ],
+      "remediation": "Remove iam:UpdateAssumeRolePolicy or restrict to specific role ARNs",
+      "rule_version": "2.1.0",
+      "severity": "CRITICAL",
+      "status": "open",
+      "targets": [
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/c01-admin",
+          "tier": "CRITICAL"
+        },
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/c02-poweruser-notaction",
+          "tier": "HIGH"
+        },
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/c09-boundary-capped",
+          "tier": "HIGH"
+        },
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/c06-quarantined",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/c08-self-service-keys",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/c10-readonly",
+          "tier": "MEDIUM"
+        }
+      ],
+      "title": "UpdateAssumeRolePolicy: Can modify role trust policies to allow self to assume any role"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "CRITICAL",
+      "category": "privilege_escalation",
+      "confidence": "definite",
+      "description": "Can delete or replace the permissions boundary of a role that has one, lifting the cap on its identity policies",
+      "evidence": {
+        "closure": {
+          "previous_severity": "HIGH",
+          "targets": [
+            {
+              "chain": [
+                "e:f73669f40e0ab9a15a04",
+                "e:848c13c72a4a316343ea"
+              ],
+              "confidence": "definite",
+              "node_id": "arn:aws:iam::123456789012:role/c09-boundary-capped",
+              "tier": "CRITICAL"
+            }
+          ]
+        },
+        "decision": "allow",
+        "rule_class": "principal-modification",
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "iam:*"
+                ],
+                "layer": "identity",
+                "not_resources": [
+                  "arn:aws:iam::123456789012:role/breakglass"
+                ],
+                "policy_name": "p",
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:role/c09-boundary-capped",
+            "rule_action": "iam:deleterolepermissionsboundary"
+          }
+        ],
+        "targets_detail": [
+          {
+            "arn": "arn:aws:iam::123456789012:role/c09-boundary-capped",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/c09-boundary-capped",
+            "tier": "HIGH",
+            "tier_class": "high"
+          }
+        ]
+      },
+      "fingerprint": "c703dd1ccd2bb9458ce7110d2be219c6",
+      "id": "PRIVESC-067",
+      "legacy_ids": [],
+      "matched_actions": [
+        "iam:deleterolepermissionsboundary"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "related_node_ids": [
+        "arn:aws:iam::123456789012:role/c09-boundary-capped"
+      ],
+      "remediation": "Deny iam:DeleteRolePermissionsBoundary and iam:PutRolePermissionsBoundary to the principals the boundary is meant to cap (a boundary-protection statement in the boundary itself)",
+      "rule_version": "2.1.0",
+      "severity": "CRITICAL",
+      "status": "open",
+      "targets": [
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/c09-boundary-capped",
+          "tier": "CRITICAL"
+        }
+      ],
+      "title": "Role permissions boundary removal: Can delete or replace the permissions boundary of a role that has one, lifting the cap on its identity policies"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "dangerous_permission",
+      "confidence": "definite",
+      "description": "Unrestricted S3 access across all buckets",
+      "evidence": {
+        "decision": "allow",
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "layer": "identity",
+                "not_actions": [
+                  "iam:*",
+                  "organizations:*",
+                  "account:*"
+                ],
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:s3:::*",
+            "rule_action": "s3:*"
+          }
+        ]
+      },
+      "fingerprint": "e3a63096aaf1eae1e505ecbe0d0ed693",
+      "id": "DANGER-003",
+      "legacy_ids": [],
+      "matched_actions": [
+        "s3:*"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c02-poweruser-notaction",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#high-value-targets-to-hunt",
+      "remediation": "Restrict to specific actions and resource ARNs",
+      "rule_version": "2.1.0",
+      "severity": "HIGH",
+      "status": "open",
+      "title": "Unrestricted S3 access across all buckets"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "dangerous_permission",
+      "confidence": "definite",
+      "description": "Full EC2 control",
+      "evidence": {
+        "decision": "allow",
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "layer": "identity",
+                "not_actions": [
+                  "iam:*",
+                  "organizations:*",
+                  "account:*"
+                ],
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:ec2:*:123456789012:*",
+            "rule_action": "ec2:*"
+          }
+        ]
+      },
+      "fingerprint": "7959e098a22769dc264482e932f4c5c4",
+      "id": "DANGER-004",
+      "legacy_ids": [],
+      "matched_actions": [
+        "ec2:*"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c02-poweruser-notaction",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#high-value-targets-to-hunt",
+      "remediation": "Restrict to specific actions and resource ARNs",
+      "rule_version": "2.1.0",
+      "severity": "HIGH",
+      "status": "open",
+      "title": "Full EC2 control"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "dangerous_permission",
+      "confidence": "definite",
+      "description": "May call sts:AssumeRole on any role in the account; whether a role can actually be assumed is decided by its trust policy (see the CAN_ASSUME edges)",
+      "evidence": {
+        "decision": "allow",
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "layer": "identity",
+                "not_actions": [
+                  "iam:*",
+                  "organizations:*",
+                  "account:*"
+                ],
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:role/*",
+            "rule_action": "sts:AssumeRole"
+          }
+        ]
+      },
+      "fingerprint": "11332433efe2b29acab4d27a648db3ac",
+      "id": "DANGER-005",
+      "legacy_ids": [],
+      "matched_actions": [
+        "sts:assumerole"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c02-poweruser-notaction",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#high-value-targets-to-hunt",
+      "remediation": "Restrict to specific actions and resource ARNs",
+      "rule_version": "2.1.0",
+      "severity": "HIGH",
+      "status": "open",
+      "title": "May call sts:AssumeRole on any role (each role's trust policy decides)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "dangerous_permission",
+      "confidence": "definite",
+      "description": "Full Lambda control (code execution)",
+      "evidence": {
+        "decision": "allow",
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "layer": "identity",
+                "not_actions": [
+                  "iam:*",
+                  "organizations:*",
+                  "account:*"
+                ],
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:lambda:*:123456789012:function:*",
+            "rule_action": "lambda:*"
+          }
+        ]
+      },
+      "fingerprint": "828e9aaec93f5094b52c68f769ea2d50",
+      "id": "DANGER-007",
+      "legacy_ids": [],
+      "matched_actions": [
+        "lambda:*"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c02-poweruser-notaction",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#high-value-targets-to-hunt",
+      "remediation": "Restrict to specific actions and resource ARNs",
+      "rule_version": "2.1.0",
+      "severity": "HIGH",
+      "status": "open",
+      "title": "Full Lambda control (code execution)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "dangerous_permission",
+      "confidence": "definite",
+      "description": "Can decrypt with any KMS key",
+      "evidence": {
+        "decision": "allow",
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "layer": "identity",
+                "not_actions": [
+                  "iam:*",
+                  "organizations:*",
+                  "account:*"
+                ],
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:kms:*:123456789012:key/*",
+            "rule_action": "kms:Decrypt"
+          }
+        ]
+      },
+      "fingerprint": "58486443ce2b3e84ed4f203574a28e7a",
+      "id": "DANGER-010",
+      "legacy_ids": [],
+      "matched_actions": [
+        "kms:decrypt"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c02-poweruser-notaction",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#high-value-targets-to-hunt",
+      "remediation": "Restrict to specific actions and resource ARNs",
+      "rule_version": "2.1.0",
+      "severity": "HIGH",
+      "status": "open",
+      "title": "Can decrypt with any KMS key"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "privilege_escalation",
+      "confidence": "definite",
+      "description": "Can create a new default version of a customer-managed policy with arbitrary permissions",
+      "evidence": {
+        "decision": "allow",
+        "rule_class": "policy-modification",
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "iam:*"
+                ],
+                "layer": "identity",
+                "not_resources": [
+                  "arn:aws:iam::123456789012:role/breakglass"
+                ],
+                "policy_name": "p",
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:policy/~any~",
+            "rule_action": "iam:createpolicyversion"
+          }
+        ],
+        "targets_detail": [
+          {
+            "arn": "arn:aws:iam::123456789012:policy/~any~",
+            "decision": "allow",
+            "node_id": null,
+            "probe": true,
+            "tier": "HIGH",
+            "tier_class": "probe"
+          }
+        ]
+      },
+      "fingerprint": "7f9bff52594ea74a180c6cfff932832e",
+      "id": "PRIVESC-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "iam:createpolicyversion"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "remediation": "Restrict iam:CreatePolicyVersion to specific policy ARNs or remove",
+      "rule_version": "2.1.0",
+      "severity": "HIGH",
+      "status": "open",
+      "title": "CreatePolicyVersion: Can create a new default version of a customer-managed policy with arbitrary permissions"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "privilege_escalation",
+      "confidence": "definite",
+      "description": "Can activate older permissive policy versions",
+      "evidence": {
+        "decision": "allow",
+        "rule_class": "policy-modification",
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "iam:*"
+                ],
+                "layer": "identity",
+                "not_resources": [
+                  "arn:aws:iam::123456789012:role/breakglass"
+                ],
+                "policy_name": "p",
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:policy/~any~",
+            "rule_action": "iam:setdefaultpolicyversion"
+          }
+        ],
+        "targets_detail": [
+          {
+            "arn": "arn:aws:iam::123456789012:policy/~any~",
+            "decision": "allow",
+            "node_id": null,
+            "probe": true,
+            "tier": "HIGH",
+            "tier_class": "probe"
+          }
+        ]
+      },
+      "fingerprint": "c93709b80cd723164523c473745e0389",
+      "id": "PRIVESC-002",
+      "legacy_ids": [],
+      "matched_actions": [
+        "iam:setdefaultpolicyversion"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "remediation": "Remove iam:SetDefaultPolicyVersion or restrict to specific policies; delete unused permissive policy versions",
+      "rule_version": "2.1.0",
+      "severity": "HIGH",
+      "status": "open",
+      "title": "SetDefaultPolicyVersion: Can activate older permissive policy versions"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "privilege_escalation",
+      "confidence": "definite",
+      "description": "Can create arbitrary inline policy on users",
+      "evidence": {
+        "decision": "allow",
+        "rule_class": "principal-modification",
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "iam:*"
+                ],
+                "layer": "identity",
+                "not_resources": [
+                  "arn:aws:iam::123456789012:role/breakglass"
+                ],
+                "policy_name": "p",
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:user/~any~",
+            "rule_action": "iam:putuserpolicy"
+          }
+        ],
+        "targets_detail": [
+          {
+            "arn": "arn:aws:iam::123456789012:user/~any~",
+            "decision": "allow",
+            "node_id": null,
+            "probe": true,
+            "tier": "HIGH",
+            "tier_class": "probe"
+          }
+        ]
+      },
+      "fingerprint": "92d4a04745b79eed8d8f8a885e8076c7",
+      "id": "PRIVESC-003",
+      "legacy_ids": [],
+      "matched_actions": [
+        "iam:putuserpolicy"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "remediation": "Remove iam:PutUserPolicy or restrict Resource to specific user ARNs",
+      "rule_version": "2.1.0",
+      "severity": "HIGH",
+      "status": "open",
+      "title": "PutUserPolicy: Can create arbitrary inline policy on users"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "privilege_escalation",
+      "confidence": "definite",
+      "description": "Can create arbitrary inline policy on groups",
+      "evidence": {
+        "decision": "allow",
+        "rule_class": "principal-modification",
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "iam:*"
+                ],
+                "layer": "identity",
+                "not_resources": [
+                  "arn:aws:iam::123456789012:role/breakglass"
+                ],
+                "policy_name": "p",
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:group/~any~",
+            "rule_action": "iam:putgrouppolicy"
+          }
+        ],
+        "targets_detail": [
+          {
+            "arn": "arn:aws:iam::123456789012:group/~any~",
+            "decision": "allow",
+            "node_id": null,
+            "probe": true,
+            "tier": "HIGH",
+            "tier_class": "probe"
+          }
+        ]
+      },
+      "fingerprint": "0509600fff94428a996f05a8dbdb4c95",
+      "id": "PRIVESC-004",
+      "legacy_ids": [],
+      "matched_actions": [
+        "iam:putgrouppolicy"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "remediation": "Remove iam:PutGroupPolicy or restrict Resource to specific group ARNs",
+      "rule_version": "2.1.0",
+      "severity": "HIGH",
+      "status": "open",
+      "title": "PutGroupPolicy: Can create arbitrary inline policy on groups"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "privilege_escalation",
+      "confidence": "definite",
+      "description": "Can attach managed policies (including AdministratorAccess) to users",
+      "evidence": {
+        "decision": "allow",
+        "rule_class": "principal-modification",
+        "steps": [
+          {
+            "context": {
+              "iam:PolicyARN": "arn:aws:iam::aws:policy/AdministratorAccess"
+            },
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "iam:attachuserpolicy"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:user/~any~",
+            "rule_action": "iam:attachuserpolicy"
+          }
+        ],
+        "targets_detail": [
+          {
+            "arn": "arn:aws:iam::123456789012:user/~any~",
+            "decision": "allow",
+            "node_id": null,
+            "probe": true,
+            "tier": "HIGH",
+            "tier_class": "probe"
+          }
+        ]
+      },
+      "fingerprint": "91acda9ff9b8b6ab0da1c821d7bf02c0",
+      "id": "PRIVESC-006",
+      "legacy_ids": [],
+      "matched_actions": [
+        "iam:attachuserpolicy"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "remediation": "Remove or restrict iam:AttachUserPolicy",
+      "rule_version": "2.1.0",
+      "severity": "HIGH",
+      "status": "open",
+      "title": "AttachUserPolicy: Can attach managed policies (including AdministratorAccess) to users"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "privilege_escalation",
+      "confidence": "definite",
+      "description": "Can attach managed policies (including AdministratorAccess) to users",
+      "evidence": {
+        "decision": "allow",
+        "rule_class": "principal-modification",
+        "steps": [
+          {
+            "context": {
+              "iam:PolicyARN": "arn:aws:iam::aws:policy/AdministratorAccess"
+            },
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "iam:*"
+                ],
+                "layer": "identity",
+                "not_resources": [
+                  "arn:aws:iam::123456789012:role/breakglass"
+                ],
+                "policy_name": "p",
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:user/~any~",
+            "rule_action": "iam:attachuserpolicy"
+          }
+        ],
+        "targets_detail": [
+          {
+            "arn": "arn:aws:iam::123456789012:user/~any~",
+            "decision": "allow",
+            "node_id": null,
+            "probe": true,
+            "tier": "HIGH",
+            "tier_class": "probe"
+          }
+        ]
+      },
+      "fingerprint": "a365d6b47a67cde9bbd08e8686d66993",
+      "id": "PRIVESC-006",
+      "legacy_ids": [],
+      "matched_actions": [
+        "iam:attachuserpolicy"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "remediation": "Remove or restrict iam:AttachUserPolicy",
+      "rule_version": "2.1.0",
+      "severity": "HIGH",
+      "status": "open",
+      "title": "AttachUserPolicy: Can attach managed policies (including AdministratorAccess) to users"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "privilege_escalation",
+      "confidence": "definite",
+      "description": "Can attach managed policies (including AdministratorAccess) to groups",
+      "evidence": {
+        "decision": "allow",
+        "rule_class": "principal-modification",
+        "steps": [
+          {
+            "context": {
+              "iam:PolicyARN": "arn:aws:iam::aws:policy/AdministratorAccess"
+            },
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "iam:*"
+                ],
+                "layer": "identity",
+                "not_resources": [
+                  "arn:aws:iam::123456789012:role/breakglass"
+                ],
+                "policy_name": "p",
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:group/~any~",
+            "rule_action": "iam:attachgrouppolicy"
+          }
+        ],
+        "targets_detail": [
+          {
+            "arn": "arn:aws:iam::123456789012:group/~any~",
+            "decision": "allow",
+            "node_id": null,
+            "probe": true,
+            "tier": "HIGH",
+            "tier_class": "probe"
+          }
+        ]
+      },
+      "fingerprint": "fcf03af65bd44b3dba00e99bb10a64d1",
+      "id": "PRIVESC-007",
+      "legacy_ids": [],
+      "matched_actions": [
+        "iam:attachgrouppolicy"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "remediation": "Remove or restrict iam:AttachGroupPolicy",
+      "rule_version": "2.1.0",
+      "severity": "HIGH",
+      "status": "open",
+      "title": "AttachGroupPolicy: Can attach managed policies (including AdministratorAccess) to groups"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "privilege_escalation",
+      "confidence": "definite",
+      "description": "Can create access keys for other users",
+      "evidence": {
+        "decision": "allow",
+        "rule_class": "principal-access",
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "iam:*"
+                ],
+                "layer": "identity",
+                "not_resources": [
+                  "arn:aws:iam::123456789012:role/breakglass"
+                ],
+                "policy_name": "p",
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:user/~any~",
+            "rule_action": "iam:createaccesskey"
+          }
+        ],
+        "targets_detail": [
+          {
+            "arn": "arn:aws:iam::123456789012:user/~any~",
+            "decision": "allow",
+            "node_id": null,
+            "probe": true,
+            "tier": "HIGH",
+            "tier_class": "probe"
+          }
+        ]
+      },
+      "fingerprint": "6baac6650d7dbdb343e9629bf724ea49",
+      "id": "PRIVESC-009",
+      "legacy_ids": [],
+      "matched_actions": [
+        "iam:createaccesskey"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "remediation": "Restrict iam:CreateAccessKey Resource to self only (${aws:username})",
+      "rule_version": "2.1.0",
+      "severity": "HIGH",
+      "status": "open",
+      "title": "CreateAccessKey: Can create access keys for other users"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "privilege_escalation",
+      "confidence": "definite",
+      "description": "Can create console login for users without one",
+      "evidence": {
+        "decision": "allow",
+        "rule_class": "principal-access",
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "iam:*"
+                ],
+                "layer": "identity",
+                "not_resources": [
+                  "arn:aws:iam::123456789012:role/breakglass"
+                ],
+                "policy_name": "p",
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:user/~any~",
+            "rule_action": "iam:createloginprofile"
+          }
+        ],
+        "targets_detail": [
+          {
+            "arn": "arn:aws:iam::123456789012:user/~any~",
+            "decision": "allow",
+            "node_id": null,
+            "probe": true,
+            "tier": "HIGH",
+            "tier_class": "probe"
+          }
+        ]
+      },
+      "fingerprint": "865df47f5aad3fed24c17f29df830619",
+      "id": "PRIVESC-010",
+      "legacy_ids": [],
+      "matched_actions": [
+        "iam:createloginprofile"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "remediation": "Restrict iam:CreateLoginProfile Resource to self only",
+      "rule_version": "2.1.0",
+      "severity": "HIGH",
+      "status": "open",
+      "title": "CreateLoginProfile: Can create console login for users without one"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "privilege_escalation",
+      "confidence": "definite",
+      "description": "Can reset console passwords for other users",
+      "evidence": {
+        "decision": "allow",
+        "rule_class": "principal-access",
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "iam:*"
+                ],
+                "layer": "identity",
+                "not_resources": [
+                  "arn:aws:iam::123456789012:role/breakglass"
+                ],
+                "policy_name": "p",
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:user/~any~",
+            "rule_action": "iam:updateloginprofile"
+          }
+        ],
+        "targets_detail": [
+          {
+            "arn": "arn:aws:iam::123456789012:user/~any~",
+            "decision": "allow",
+            "node_id": null,
+            "probe": true,
+            "tier": "HIGH",
+            "tier_class": "probe"
+          }
+        ]
+      },
+      "fingerprint": "5beeb92a13215b2feddacce7edcde4c2",
+      "id": "PRIVESC-011",
+      "legacy_ids": [],
+      "matched_actions": [
+        "iam:updateloginprofile"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "remediation": "Restrict iam:UpdateLoginProfile Resource to self only",
+      "rule_version": "2.1.0",
+      "severity": "HIGH",
+      "status": "open",
+      "title": "UpdateLoginProfile: Can reset console passwords for other users"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "privilege_escalation",
+      "confidence": "definite",
+      "description": "Can add self or others to privileged groups",
+      "evidence": {
+        "decision": "allow",
+        "rule_class": "group-membership",
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "iam:*"
+                ],
+                "layer": "identity",
+                "not_resources": [
+                  "arn:aws:iam::123456789012:role/breakglass"
+                ],
+                "policy_name": "p",
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:group/~any~",
+            "rule_action": "iam:addusertogroup"
+          }
+        ],
+        "targets_detail": [
+          {
+            "arn": "arn:aws:iam::123456789012:group/~any~",
+            "decision": "allow",
+            "node_id": null,
+            "probe": true,
+            "tier": "HIGH",
+            "tier_class": "probe"
+          }
+        ]
+      },
+      "fingerprint": "fc55738a8f1ef050e0b48d05ee32862f",
+      "id": "PRIVESC-012",
+      "legacy_ids": [],
+      "matched_actions": [
+        "iam:addusertogroup"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "remediation": "Remove or restrict iam:AddUserToGroup to specific groups",
+      "rule_version": "2.1.0",
+      "severity": "HIGH",
+      "status": "open",
+      "title": "AddUserToGroup: Can add self or others to privileged groups"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "privilege_escalation",
+      "confidence": "definite",
+      "description": "Can delete one of another user's two access keys and create a new one for that user",
+      "evidence": {
+        "decision": "allow",
+        "rule_class": "principal-access",
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "iam:*"
+                ],
+                "layer": "identity",
+                "not_resources": [
+                  "arn:aws:iam::123456789012:role/breakglass"
+                ],
+                "policy_name": "p",
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:user/~any~",
+            "rule_action": "iam:deleteaccesskey"
+          },
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "iam:*"
+                ],
+                "layer": "identity",
+                "not_resources": [
+                  "arn:aws:iam::123456789012:role/breakglass"
+                ],
+                "policy_name": "p",
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:user/~any~",
+            "rule_action": "iam:createaccesskey"
+          }
+        ],
+        "targets_detail": [
+          {
+            "arn": "arn:aws:iam::123456789012:user/~any~",
+            "decision": "allow",
+            "node_id": null,
+            "probe": true,
+            "tier": "HIGH",
+            "tier_class": "probe"
+          }
+        ]
+      },
+      "fingerprint": "755abce181c407606763d5c2c1bfbd2a",
+      "id": "PRIVESC-024",
+      "legacy_ids": [],
+      "matched_actions": [
+        "iam:createaccesskey",
+        "iam:deleteaccesskey"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "remediation": "Restrict iam:CreateAccessKey and iam:DeleteAccessKey to the caller's own user (user/${aws:username})",
+      "rule_version": "2.1.0",
+      "severity": "HIGH",
+      "status": "open",
+      "title": "CreateAccessKey+DeleteAccessKey: Can delete one of another user's two access keys and create a new one for that user"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "CRITICAL",
+      "category": "dangerous_permission",
+      "confidence": "conditional",
+      "description": "Full administrator access (Action:* Resource:*)",
+      "evidence": {
+        "condition_strength": "strong",
+        "decision": "conditional",
+        "steps": [
+          {
+            "decision": "conditional",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "*",
+            "rule_action": "*"
+          }
+        ],
+        "subsumed": [
+          {
+            "fingerprint": "0f9a77f1477eab1474b76a0fa838c03c",
+            "id": "DANGER-004",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "4456e45f928a971e9957fb02f2cf782f",
+            "id": "DANGER-007",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "f7e1a9b02ca358d9b2386d181b5db833",
+            "id": "DANGER-003",
+            "severity": "LOW"
+          }
+        ]
+      },
+      "fingerprint": "dd083fca2f3327edd54606ae0e0b7e25",
+      "gaps": [
+        "boundary:doc-missing"
+      ],
+      "id": "DANGER-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "*"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c09-boundary-capped",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#high-value-targets-to-hunt",
+      "remediation": "Restrict to specific actions and resource ARNs",
+      "rule_version": "2.1.0",
+      "severity": "MEDIUM",
+      "status": "open",
+      "subsumes": [
+        "DANGER-003",
+        "DANGER-004",
+        "DANGER-007"
+      ],
+      "title": "Full administrator access (Action:* Resource:*)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "CRITICAL",
+      "category": "dangerous_permission",
+      "confidence": "conditional",
+      "description": "Full IAM control",
+      "evidence": {
+        "condition_strength": "strong",
+        "decision": "conditional",
+        "steps": [
+          {
+            "decision": "conditional",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:*",
+            "rule_action": "iam:*"
+          }
+        ],
+        "subsumed": [
+          {
+            "fingerprint": "01ca0dc1c5f3efc93ed072a7ef0a56ee",
+            "id": "PRIVESC-002",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "1e0d41571a81aeb6517115fb6a74a0cb",
+            "id": "PRIVESC-012",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "215a0c09193f460c7124d3b87bf5b11f",
+            "id": "PRIVESC-009",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "66a1d8e3ad7e07dcc939045a41ed418b",
+            "id": "PRIVESC-013",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "68fa5a13dc53190553615a4be6e6017a",
+            "id": "PRIVESC-004",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "784d9999c5dcb56b1cee08abae87ae6f",
+            "id": "PRIVESC-003",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "81c5c1cb19f268ddc1d7cd98c70ec759",
+            "id": "PRIVESC-011",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "8521190f49f07877218c1ea65d2aceda",
+            "id": "PRIVESC-010",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "8a8d1f06dae7f0feb6b6fe1a048efaf7",
+            "id": "PRIVESC-001",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "8eaa290ddd73b09728db51094e418a54",
+            "id": "PRIVESC-006",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "9aa1127298e385e3df8a4b2fe9c18bd6",
+            "id": "PRIVESC-007",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "9d8c64b778d39b59734c1d9d2d5c5414",
+            "id": "PRIVESC-008",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "a58a71d68931c705330278e0549eee8d",
+            "id": "PRIVESC-005",
+            "severity": "MEDIUM"
+          }
+        ]
+      },
+      "fingerprint": "6bc1e7773000febfba9c36e22b025d72",
+      "gaps": [
+        "boundary:doc-missing"
+      ],
+      "id": "DANGER-002",
+      "legacy_ids": [],
+      "matched_actions": [
+        "iam:*"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c09-boundary-capped",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#high-value-targets-to-hunt",
+      "remediation": "Restrict to specific actions and resource ARNs",
+      "rule_version": "2.1.0",
+      "severity": "MEDIUM",
+      "status": "open",
+      "subsumes": [
+        "PRIVESC-001",
+        "PRIVESC-002",
+        "PRIVESC-003",
+        "PRIVESC-004",
+        "PRIVESC-005",
+        "PRIVESC-006",
+        "PRIVESC-007",
+        "PRIVESC-008",
+        "PRIVESC-009",
+        "PRIVESC-010",
+        "PRIVESC-011",
+        "PRIVESC-012",
+        "PRIVESC-013"
+      ],
+      "title": "Full IAM control"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "dangerous_permission",
+      "confidence": "definite",
+      "description": "Can read all secrets",
+      "evidence": {
+        "decision": "allow",
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "layer": "identity",
+                "not_actions": [
+                  "iam:*",
+                  "organizations:*",
+                  "account:*"
+                ],
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:secretsmanager:*:123456789012:secret:*",
+            "rule_action": "secretsmanager:GetSecretValue"
+          }
+        ]
+      },
+      "fingerprint": "3beaa04f1dd5e0b960356db38a266abf",
+      "id": "DANGER-008",
+      "legacy_ids": [],
+      "matched_actions": [
+        "secretsmanager:getsecretvalue"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c02-poweruser-notaction",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#high-value-targets-to-hunt",
+      "remediation": "Restrict to specific actions and resource ARNs",
+      "rule_version": "2.1.0",
+      "severity": "MEDIUM",
+      "status": "open",
+      "title": "Can read all secrets"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "dangerous_permission",
+      "confidence": "definite",
+      "description": "Can read all SSM parameters (may contain secrets)",
+      "evidence": {
+        "decision": "allow",
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "layer": "identity",
+                "not_actions": [
+                  "iam:*",
+                  "organizations:*",
+                  "account:*"
+                ],
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:ssm:*:123456789012:parameter/*",
+            "rule_action": "ssm:GetParameter | ssm:GetParameters | ssm:GetParametersByPath"
+          }
+        ]
+      },
+      "fingerprint": "2bb37c4d48bd8ca5ae3422cad0872e9a",
+      "id": "DANGER-009",
+      "legacy_ids": [],
+      "matched_actions": [
+        "ssm:getparameter",
+        "ssm:getparameters",
+        "ssm:getparametersbypath"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c02-poweruser-notaction",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#high-value-targets-to-hunt",
+      "remediation": "Restrict to specific actions and resource ARNs",
+      "rule_version": "2.1.0",
+      "severity": "MEDIUM",
+      "status": "open",
+      "title": "Can read all SSM parameters (may contain secrets)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "CRITICAL",
+      "category": "privilege_escalation",
+      "confidence": "conditional",
+      "description": "Can launch EC2 with privileged role, access credentials via IMDS",
+      "evidence": {
+        "condition_strength": "strong",
+        "decision": "conditional",
+        "rule_class": "new-passrole",
+        "steps": [
+          {
+            "context": {
+              "iam:PassedToService": "ec2.amazonaws.com"
+            },
+            "decision": "conditional",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:role/c01-admin",
+            "rule_action": "iam:passrole"
+          },
+          {
+            "decision": "conditional",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:ec2:*:123456789012:instance/*",
+            "rule_action": "ec2:runinstances"
+          }
+        ],
+        "targets_detail": [
+          {
+            "arn": "arn:aws:iam::123456789012:role/c01-admin",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c01-admin",
+            "tier": "CRITICAL",
+            "tier_class": "admin",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c06-quarantined",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c06-quarantined",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c08-self-service-keys",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c08-self-service-keys",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c10-readonly",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c10-readonly",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          }
+        ]
+      },
+      "fingerprint": "9f8c5073e4a2bbcd726481f8604b3744",
+      "gaps": [
+        "boundary:doc-missing"
+      ],
+      "id": "PRIVESC-015",
+      "legacy_ids": [],
+      "matched_actions": [
+        "ec2:runinstances",
+        "iam:passrole"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c09-boundary-capped",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "related_node_ids": [
+        "arn:aws:iam::123456789012:role/c01-admin",
+        "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+        "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+        "arn:aws:iam::123456789012:role/c05-iam-notresource",
+        "arn:aws:iam::123456789012:role/c06-quarantined",
+        "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+        "arn:aws:iam::123456789012:role/c08-self-service-keys",
+        "arn:aws:iam::123456789012:role/c10-readonly"
+      ],
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs",
+      "rule_version": "2.1.0",
+      "severity": "MEDIUM",
+      "status": "open",
+      "targets": [
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c01-admin",
+          "tier": "CRITICAL"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c06-quarantined",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c08-self-service-keys",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c10-readonly",
+          "tier": "MEDIUM"
+        }
+      ],
+      "title": "PassRole+EC2: Can launch EC2 with privileged role, access credentials via IMDS"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "CRITICAL",
+      "category": "privilege_escalation",
+      "confidence": "conditional",
+      "description": "Can pass a privileged role to a new EC2 Spot instance and run arbitrary code or API calls as that role",
+      "evidence": {
+        "condition_strength": "strong",
+        "decision": "conditional",
+        "rule_class": "new-passrole",
+        "steps": [
+          {
+            "context": {
+              "iam:PassedToService": "ec2.amazonaws.com"
+            },
+            "decision": "conditional",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:role/c01-admin",
+            "rule_action": "iam:passrole"
+          },
+          {
+            "decision": "conditional",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "*",
+            "rule_action": "ec2:requestspotinstances"
+          }
+        ],
+        "targets_detail": [
+          {
+            "arn": "arn:aws:iam::123456789012:role/c01-admin",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c01-admin",
+            "tier": "CRITICAL",
+            "tier_class": "admin",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c06-quarantined",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c06-quarantined",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c08-self-service-keys",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c08-self-service-keys",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c10-readonly",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c10-readonly",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          }
+        ]
+      },
+      "fingerprint": "617e0acb775c1c1c9098ff5602e6ebd5",
+      "gaps": [
+        "boundary:doc-missing"
+      ],
+      "id": "PRIVESC-026",
+      "legacy_ids": [],
+      "matched_actions": [
+        "ec2:requestspotinstances",
+        "iam:passrole"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c09-boundary-capped",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "related_node_ids": [
+        "arn:aws:iam::123456789012:role/c01-admin",
+        "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+        "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+        "arn:aws:iam::123456789012:role/c05-iam-notresource",
+        "arn:aws:iam::123456789012:role/c06-quarantined",
+        "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+        "arn:aws:iam::123456789012:role/c08-self-service-keys",
+        "arn:aws:iam::123456789012:role/c10-readonly"
+      ],
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs, add an iam:PassedToService condition and limit who can create a new EC2 Spot instance",
+      "rule_version": "2.1.0",
+      "severity": "MEDIUM",
+      "status": "open",
+      "targets": [
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c01-admin",
+          "tier": "CRITICAL"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c06-quarantined",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c08-self-service-keys",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c10-readonly",
+          "tier": "MEDIUM"
+        }
+      ],
+      "title": "PassRole+EC2 Spot: Can pass a privileged role to a new EC2 Spot instance and run arbitrary code or API calls as that role"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "CRITICAL",
+      "category": "privilege_escalation",
+      "confidence": "conditional",
+      "description": "Can pass a privileged role to a new Data Pipeline and run arbitrary code or API calls as that role",
+      "evidence": {
+        "condition_strength": "strong",
+        "decision": "conditional",
+        "rule_class": "new-passrole",
+        "steps": [
+          {
+            "context": {
+              "iam:PassedToService": "datapipeline.amazonaws.com"
+            },
+            "decision": "conditional",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:role/c01-admin",
+            "rule_action": "iam:passrole"
+          },
+          {
+            "decision": "conditional",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "*",
+            "rule_action": "datapipeline:createpipeline"
+          },
+          {
+            "decision": "conditional",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "*",
+            "rule_action": "datapipeline:putpipelinedefinition"
+          },
+          {
+            "decision": "conditional",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "*",
+            "rule_action": "datapipeline:activatepipeline"
+          }
+        ],
+        "targets_detail": [
+          {
+            "arn": "arn:aws:iam::123456789012:role/c01-admin",
+            "decision": "conditional",
+            "node_id": "arn:aws:iam::123456789012:role/c01-admin",
+            "tier": "CRITICAL",
+            "tier_class": "admin",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+            "decision": "conditional",
+            "node_id": "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+            "decision": "conditional",
+            "node_id": "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+            "decision": "conditional",
+            "node_id": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c06-quarantined",
+            "decision": "conditional",
+            "node_id": "arn:aws:iam::123456789012:role/c06-quarantined",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+            "decision": "conditional",
+            "node_id": "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c08-self-service-keys",
+            "decision": "conditional",
+            "node_id": "arn:aws:iam::123456789012:role/c08-self-service-keys",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c10-readonly",
+            "decision": "conditional",
+            "node_id": "arn:aws:iam::123456789012:role/c10-readonly",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          }
+        ]
+      },
+      "fingerprint": "cac1a44769557a5bca93966c4919f75a",
+      "gaps": [
+        "boundary:doc-missing"
+      ],
+      "id": "PRIVESC-031",
+      "legacy_ids": [],
+      "matched_actions": [
+        "datapipeline:activatepipeline",
+        "datapipeline:createpipeline",
+        "datapipeline:putpipelinedefinition",
+        "iam:passrole"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c09-boundary-capped",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "related_node_ids": [
+        "arn:aws:iam::123456789012:role/c01-admin",
+        "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+        "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+        "arn:aws:iam::123456789012:role/c05-iam-notresource",
+        "arn:aws:iam::123456789012:role/c06-quarantined",
+        "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+        "arn:aws:iam::123456789012:role/c08-self-service-keys",
+        "arn:aws:iam::123456789012:role/c10-readonly"
+      ],
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs, add an iam:PassedToService condition and limit who can create a new Data Pipeline",
+      "rule_version": "2.1.0",
+      "severity": "MEDIUM",
+      "status": "open",
+      "targets": [
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c01-admin",
+          "tier": "CRITICAL"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c06-quarantined",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c08-self-service-keys",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c10-readonly",
+          "tier": "MEDIUM"
+        }
+      ],
+      "title": "PassRole+Data Pipeline: Can pass a privileged role to a new Data Pipeline and run arbitrary code or API calls as that role"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "CRITICAL",
+      "category": "privilege_escalation",
+      "confidence": "conditional",
+      "description": "Can pass a privileged role to a new EMR cluster (instance profile role) and run arbitrary code or API calls as that role",
+      "evidence": {
+        "condition_strength": "strong",
+        "decision": "conditional",
+        "rule_class": "new-passrole",
+        "steps": [
+          {
+            "context": {
+              "iam:PassedToService": "elasticmapreduce.amazonaws.com"
+            },
+            "decision": "conditional",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:role/c01-admin",
+            "rule_action": "iam:passrole"
+          },
+          {
+            "decision": "conditional",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "*",
+            "rule_action": "elasticmapreduce:runjobflow"
+          }
+        ],
+        "targets_detail": [
+          {
+            "arn": "arn:aws:iam::123456789012:role/c01-admin",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c01-admin",
+            "tier": "CRITICAL",
+            "tier_class": "admin",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c06-quarantined",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c06-quarantined",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c08-self-service-keys",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c08-self-service-keys",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c10-readonly",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c10-readonly",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          }
+        ]
+      },
+      "fingerprint": "4f0d40f0b1d240f2b62d88687db2e6d0",
+      "gaps": [
+        "boundary:doc-missing"
+      ],
+      "id": "PRIVESC-032",
+      "legacy_ids": [],
+      "matched_actions": [
+        "elasticmapreduce:runjobflow",
+        "iam:passrole"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c09-boundary-capped",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "related_node_ids": [
+        "arn:aws:iam::123456789012:role/c01-admin",
+        "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+        "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+        "arn:aws:iam::123456789012:role/c05-iam-notresource",
+        "arn:aws:iam::123456789012:role/c06-quarantined",
+        "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+        "arn:aws:iam::123456789012:role/c08-self-service-keys",
+        "arn:aws:iam::123456789012:role/c10-readonly"
+      ],
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs, add an iam:PassedToService condition and limit who can create a new EMR cluster (instance profile role)",
+      "rule_version": "2.1.0",
+      "severity": "MEDIUM",
+      "status": "open",
+      "targets": [
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c01-admin",
+          "tier": "CRITICAL"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c06-quarantined",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c08-self-service-keys",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c10-readonly",
+          "tier": "MEDIUM"
+        }
+      ],
+      "title": "PassRole+EMR: Can pass a privileged role to a new EMR cluster (instance profile role) and run arbitrary code or API calls as that role"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "CRITICAL",
+      "category": "privilege_escalation",
+      "confidence": "conditional",
+      "description": "Can pass a privileged role to a new GameLift fleet and run arbitrary code or API calls as that role",
+      "evidence": {
+        "condition_strength": "strong",
+        "decision": "conditional",
+        "rule_class": "new-passrole",
+        "steps": [
+          {
+            "context": {
+              "iam:PassedToService": "gamelift.amazonaws.com"
+            },
+            "decision": "conditional",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:role/c01-admin",
+            "rule_action": "iam:passrole"
+          },
+          {
+            "decision": "conditional",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "*",
+            "rule_action": "gamelift:createbuild"
+          },
+          {
+            "decision": "conditional",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "*",
+            "rule_action": "gamelift:requestuploadcredentials"
+          },
+          {
+            "decision": "conditional",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "*",
+            "rule_action": "gamelift:createfleet"
+          }
+        ],
+        "targets_detail": [
+          {
+            "arn": "arn:aws:iam::123456789012:role/c01-admin",
+            "decision": "conditional",
+            "node_id": "arn:aws:iam::123456789012:role/c01-admin",
+            "tier": "CRITICAL",
+            "tier_class": "admin",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+            "decision": "conditional",
+            "node_id": "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+            "decision": "conditional",
+            "node_id": "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+            "decision": "conditional",
+            "node_id": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c06-quarantined",
+            "decision": "conditional",
+            "node_id": "arn:aws:iam::123456789012:role/c06-quarantined",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+            "decision": "conditional",
+            "node_id": "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c08-self-service-keys",
+            "decision": "conditional",
+            "node_id": "arn:aws:iam::123456789012:role/c08-self-service-keys",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c10-readonly",
+            "decision": "conditional",
+            "node_id": "arn:aws:iam::123456789012:role/c10-readonly",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          }
+        ]
+      },
+      "fingerprint": "c6b76dfb4b76d46fcc86eb1c1b553ebf",
+      "gaps": [
+        "boundary:doc-missing"
+      ],
+      "id": "PRIVESC-034",
+      "legacy_ids": [],
+      "matched_actions": [
+        "gamelift:createbuild",
+        "gamelift:createfleet",
+        "gamelift:requestuploadcredentials",
+        "iam:passrole"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c09-boundary-capped",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "related_node_ids": [
+        "arn:aws:iam::123456789012:role/c01-admin",
+        "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+        "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+        "arn:aws:iam::123456789012:role/c05-iam-notresource",
+        "arn:aws:iam::123456789012:role/c06-quarantined",
+        "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+        "arn:aws:iam::123456789012:role/c08-self-service-keys",
+        "arn:aws:iam::123456789012:role/c10-readonly"
+      ],
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs, add an iam:PassedToService condition and limit who can create a new GameLift fleet",
+      "rule_version": "2.1.0",
+      "severity": "MEDIUM",
+      "status": "open",
+      "targets": [
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c01-admin",
+          "tier": "CRITICAL"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c06-quarantined",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c08-self-service-keys",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c10-readonly",
+          "tier": "MEDIUM"
+        }
+      ],
+      "title": "PassRole+GameLift: Can pass a privileged role to a new GameLift fleet and run arbitrary code or API calls as that role"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "CRITICAL",
+      "category": "privilege_escalation",
+      "confidence": "conditional",
+      "description": "Can pass a privileged role to a new Image Builder build instance (instance profile role) and run arbitrary code or API calls as that role",
+      "evidence": {
+        "condition_strength": "strong",
+        "decision": "conditional",
+        "rule_class": "new-passrole",
+        "steps": [
+          {
+            "context": {
+              "iam:PassedToService": "ec2.amazonaws.com"
+            },
+            "decision": "conditional",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:role/c01-admin",
+            "rule_action": "iam:passrole"
+          },
+          {
+            "decision": "conditional",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "*",
+            "rule_action": "imagebuilder:createcomponent"
+          },
+          {
+            "decision": "conditional",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "*",
+            "rule_action": "imagebuilder:createimagerecipe"
+          },
+          {
+            "decision": "conditional",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "*",
+            "rule_action": "imagebuilder:createinfrastructureconfiguration"
+          },
+          {
+            "decision": "conditional",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "*",
+            "rule_action": "imagebuilder:createimage"
+          }
+        ],
+        "targets_detail": [
+          {
+            "arn": "arn:aws:iam::123456789012:role/c01-admin",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c01-admin",
+            "tier": "CRITICAL",
+            "tier_class": "admin",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c06-quarantined",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c06-quarantined",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c08-self-service-keys",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c08-self-service-keys",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c10-readonly",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c10-readonly",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          }
+        ]
+      },
+      "fingerprint": "06cc1734c177afc5e79e5d020d67945f",
+      "gaps": [
+        "boundary:doc-missing"
+      ],
+      "id": "PRIVESC-037",
+      "legacy_ids": [],
+      "matched_actions": [
+        "iam:passrole",
+        "imagebuilder:createcomponent",
+        "imagebuilder:createimage",
+        "imagebuilder:createimagerecipe",
+        "imagebuilder:createinfrastructureconfiguration"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c09-boundary-capped",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "related_node_ids": [
+        "arn:aws:iam::123456789012:role/c01-admin",
+        "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+        "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+        "arn:aws:iam::123456789012:role/c05-iam-notresource",
+        "arn:aws:iam::123456789012:role/c06-quarantined",
+        "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+        "arn:aws:iam::123456789012:role/c08-self-service-keys",
+        "arn:aws:iam::123456789012:role/c10-readonly"
+      ],
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs, add an iam:PassedToService condition and limit who can create a new Image Builder build instance (instance profile role)",
+      "rule_version": "2.1.0",
+      "severity": "MEDIUM",
+      "status": "open",
+      "targets": [
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c01-admin",
+          "tier": "CRITICAL"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c06-quarantined",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c08-self-service-keys",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c10-readonly",
+          "tier": "MEDIUM"
+        }
+      ],
+      "title": "PassRole+Image Builder: Can pass a privileged role to a new Image Builder build instance (instance profile role) and run arbitrary code or API calls as that role"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "CRITICAL",
+      "category": "privilege_escalation",
+      "confidence": "conditional",
+      "description": "Can associate a privileged role's instance profile with an existing instance and run commands there (Systems Manager or EC2 Instance Connect), then use the role's credentials from the instance metadata service",
+      "evidence": {
+        "condition_strength": "strong",
+        "decision": "conditional",
+        "rule_class": "new-passrole",
+        "steps": [
+          {
+            "context": {
+              "iam:PassedToService": "ec2.amazonaws.com"
+            },
+            "decision": "conditional",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:role/c01-admin",
+            "rule_action": "iam:passrole"
+          },
+          {
+            "decision": "conditional",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:ec2:*:123456789012:instance/*",
+            "rule_action": "ec2:associateiaminstanceprofile"
+          },
+          {
+            "decision": "conditional",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:ec2:*:123456789012:instance/*",
+            "rule_action": "ssm:startsession"
+          }
+        ],
+        "targets_detail": [
+          {
+            "arn": "arn:aws:iam::123456789012:role/c01-admin",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c01-admin",
+            "tier": "CRITICAL",
+            "tier_class": "admin",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c06-quarantined",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c06-quarantined",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c08-self-service-keys",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c08-self-service-keys",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c10-readonly",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c10-readonly",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          }
+        ]
+      },
+      "fingerprint": "0907e207399d433dae509492171edb81",
+      "gaps": [
+        "boundary:doc-missing"
+      ],
+      "id": "PRIVESC-064",
+      "legacy_ids": [],
+      "matched_actions": [
+        "ec2:associateiaminstanceprofile",
+        "iam:passrole",
+        "ssm:startsession"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c09-boundary-capped",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "related_node_ids": [
+        "arn:aws:iam::123456789012:role/c01-admin",
+        "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+        "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+        "arn:aws:iam::123456789012:role/c05-iam-notresource",
+        "arn:aws:iam::123456789012:role/c06-quarantined",
+        "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+        "arn:aws:iam::123456789012:role/c08-self-service-keys",
+        "arn:aws:iam::123456789012:role/c10-readonly"
+      ],
+      "remediation": "Restrict iam:PassRole to specific roles with iam:PassedToService ec2.amazonaws.com, and restrict ec2:AssociateIamInstanceProfile / ReplaceIamInstanceProfileAssociation",
+      "rule_version": "2.1.0",
+      "severity": "MEDIUM",
+      "status": "open",
+      "targets": [
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c01-admin",
+          "tier": "CRITICAL"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c06-quarantined",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c08-self-service-keys",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c10-readonly",
+          "tier": "MEDIUM"
+        }
+      ],
+      "title": "PassRole+instance profile association: Can associate a privileged role's instance profile with an existing instance and run commands there (Systems Manager or EC2 Instance Connect), then use the role's credentials from the instance metadata service"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "CRITICAL",
+      "category": "privilege_escalation",
+      "confidence": "conditional",
+      "description": "Can create a launch configuration or launch template with a privileged instance profile and user data, and an Auto Scaling group that launches it",
+      "evidence": {
+        "condition_strength": "strong",
+        "decision": "conditional",
+        "rule_class": "new-passrole",
+        "steps": [
+          {
+            "context": {
+              "iam:PassedToService": "ec2.amazonaws.com"
+            },
+            "decision": "conditional",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:role/c01-admin",
+            "rule_action": "iam:passrole"
+          },
+          {
+            "decision": "conditional",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "*",
+            "rule_action": "autoscaling:createlaunchconfiguration"
+          },
+          {
+            "decision": "conditional",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "*",
+            "rule_action": "autoscaling:createautoscalinggroup"
+          }
+        ],
+        "targets_detail": [
+          {
+            "arn": "arn:aws:iam::123456789012:role/c01-admin",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c01-admin",
+            "tier": "CRITICAL",
+            "tier_class": "admin",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c06-quarantined",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c06-quarantined",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c08-self-service-keys",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c08-self-service-keys",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/c10-readonly",
+            "decision": "conditional",
+            "in_instance_profile": false,
+            "instance_profile": "creatable",
+            "node_id": "arn:aws:iam::123456789012:role/c10-readonly",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          }
+        ]
+      },
+      "fingerprint": "0593734f0f282b4c3b1a10f773e76a63",
+      "gaps": [
+        "boundary:doc-missing"
+      ],
+      "id": "PRIVESC-065",
+      "legacy_ids": [],
+      "matched_actions": [
+        "autoscaling:createautoscalinggroup",
+        "autoscaling:createlaunchconfiguration",
+        "iam:passrole"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c09-boundary-capped",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "related_node_ids": [
+        "arn:aws:iam::123456789012:role/c01-admin",
+        "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+        "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+        "arn:aws:iam::123456789012:role/c05-iam-notresource",
+        "arn:aws:iam::123456789012:role/c06-quarantined",
+        "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+        "arn:aws:iam::123456789012:role/c08-self-service-keys",
+        "arn:aws:iam::123456789012:role/c10-readonly"
+      ],
+      "remediation": "Restrict iam:PassRole to specific roles with iam:PassedToService ec2.amazonaws.com, and restrict who can create launch configurations, launch templates and Auto Scaling groups",
+      "rule_version": "2.1.0",
+      "severity": "MEDIUM",
+      "status": "open",
+      "targets": [
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c01-admin",
+          "tier": "CRITICAL"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c03-putrolepolicy",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c04-attachuserpolicy",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c05-iam-notresource",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c06-quarantined",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c08-self-service-keys",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c10-readonly",
+          "tier": "MEDIUM"
+        }
+      ],
+      "title": "PassRole+Auto Scaling: Can create a launch configuration or launch template with a privileged instance profile and user data, and an Auto Scaling group that launches it"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "CRITICAL",
+      "category": "privilege_escalation",
+      "confidence": "conditional",
+      "description": "Can delete or replace the permissions boundary of a role that has one, lifting the cap on its identity policies",
+      "evidence": {
+        "condition_strength": "strong",
+        "decision": "conditional",
+        "rule_class": "principal-modification",
+        "steps": [
+          {
+            "decision": "conditional",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:role/c09-boundary-capped",
+            "rule_action": "iam:deleterolepermissionsboundary"
+          }
+        ],
+        "targets_detail": [
+          {
+            "arn": "arn:aws:iam::123456789012:role/c09-boundary-capped",
+            "decision": "conditional",
+            "node_id": "arn:aws:iam::123456789012:role/c09-boundary-capped",
+            "tier": "CRITICAL",
+            "tier_class": "self"
+          }
+        ]
+      },
+      "fingerprint": "8bd73e4c6f7e7db19866d663ae67f58a",
+      "gaps": [
+        "boundary:doc-missing"
+      ],
+      "id": "PRIVESC-067",
+      "legacy_ids": [],
+      "matched_actions": [
+        "iam:deleterolepermissionsboundary"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c09-boundary-capped",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "related_node_ids": [
+        "arn:aws:iam::123456789012:role/c09-boundary-capped"
+      ],
+      "remediation": "Deny iam:DeleteRolePermissionsBoundary and iam:PutRolePermissionsBoundary to the principals the boundary is meant to cap (a boundary-protection statement in the boundary itself)",
+      "rule_version": "2.1.0",
+      "severity": "MEDIUM",
+      "status": "open",
+      "targets": [
+        {
+          "decision": "conditional",
+          "node_id": "arn:aws:iam::123456789012:role/c09-boundary-capped",
+          "tier": "CRITICAL"
+        }
+      ],
+      "title": "Role permissions boundary removal: Can delete or replace the permissions boundary of a role that has one, lifting the cap on its identity policies"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "dangerous_permission",
+      "confidence": "conditional",
+      "description": "May call sts:AssumeRole on any role in the account; whether a role can actually be assumed is decided by its trust policy (see the CAN_ASSUME edges)",
+      "evidence": {
+        "condition_strength": "strong",
+        "decision": "conditional",
+        "steps": [
+          {
+            "decision": "conditional",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:role/*",
+            "rule_action": "sts:AssumeRole"
+          }
+        ]
+      },
+      "fingerprint": "ad4cc6c448c1aa6e3df207ead12330f9",
+      "gaps": [
+        "boundary:doc-missing"
+      ],
+      "id": "DANGER-005",
+      "legacy_ids": [],
+      "matched_actions": [
+        "sts:assumerole"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c09-boundary-capped",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#high-value-targets-to-hunt",
+      "remediation": "Restrict to specific actions and resource ARNs",
+      "rule_version": "2.1.0",
+      "severity": "LOW",
+      "status": "open",
+      "title": "May call sts:AssumeRole on any role (each role's trust policy decides)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "dangerous_permission",
+      "confidence": "conditional",
+      "description": "Can decrypt with any KMS key",
+      "evidence": {
+        "condition_strength": "strong",
+        "decision": "conditional",
+        "steps": [
+          {
+            "decision": "conditional",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:kms:*:123456789012:key/*",
+            "rule_action": "kms:Decrypt"
+          }
+        ]
+      },
+      "fingerprint": "e3c78a20648207c87879f0ecbf9b1f85",
+      "gaps": [
+        "boundary:doc-missing"
+      ],
+      "id": "DANGER-010",
+      "legacy_ids": [],
+      "matched_actions": [
+        "kms:decrypt"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c09-boundary-capped",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#high-value-targets-to-hunt",
+      "remediation": "Restrict to specific actions and resource ARNs",
+      "rule_version": "2.1.0",
+      "severity": "LOW",
+      "status": "open",
+      "title": "Can decrypt with any KMS key"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "LOW",
+      "category": "iam_hygiene",
+      "confidence": "definite",
+      "description": "The IAM password policy is below common baselines: password reuse prevention None < 24.",
+      "evidence": {
+        "configured": true,
+        "console_users": 0,
+        "weaknesses": [
+          "password reuse prevention None < 24"
+        ]
+      },
+      "fingerprint": "8324f653d46059d49f0e62bada4e6cf9",
+      "id": "IAM-PWPOL-001",
+      "legacy_ids": [],
+      "node_id": "aws-enumerator:account/123456789012",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-6--youre-external-no-foothold-yet",
+      "remediation": "Set an account password policy: length >= 14, all character classes, reuse prevention 24.",
+      "severity": "LOW",
+      "status": "open",
+      "title": "The account password policy is weak"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "privilege_escalation",
+      "confidence": "conditional",
+      "description": "Can delete one of another user's two access keys and create a new one for that user",
+      "evidence": {
+        "condition_strength": "strong",
+        "decision": "conditional",
+        "rule_class": "principal-access",
+        "steps": [
+          {
+            "decision": "conditional",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:user/~any~",
+            "rule_action": "iam:deleteaccesskey"
+          },
+          {
+            "decision": "conditional",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:user/~any~",
+            "rule_action": "iam:createaccesskey"
+          }
+        ],
+        "targets_detail": [
+          {
+            "arn": "arn:aws:iam::123456789012:user/~any~",
+            "decision": "conditional",
+            "node_id": null,
+            "probe": true,
+            "tier": "HIGH",
+            "tier_class": "probe"
+          }
+        ]
+      },
+      "fingerprint": "ab92fc0dfceef56f271a559f94b4d8fa",
+      "gaps": [
+        "boundary:doc-missing"
+      ],
+      "id": "PRIVESC-024",
+      "legacy_ids": [],
+      "matched_actions": [
+        "iam:createaccesskey",
+        "iam:deleteaccesskey"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c09-boundary-capped",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "remediation": "Restrict iam:CreateAccessKey and iam:DeleteAccessKey to the caller's own user (user/${aws:username})",
+      "rule_version": "2.1.0",
+      "severity": "LOW",
+      "status": "open",
+      "title": "CreateAccessKey+DeleteAccessKey: Can delete one of another user's two access keys and create a new one for that user"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "privilege_escalation",
+      "confidence": "conditional",
+      "description": "This principal holds the permissions of 7 take-over techniques (PRIVESC-057, PRIVESC-058, PRIVESC-059, PRIVESC-060, PRIVESC-061, PRIVESC-062, PRIVESC-063) on resource types that are not collected; whether any of them runs as a privileged role is unknown.",
+      "evidence": {
+        "collapsed": [
+          {
+            "fingerprint": "10c369df1ed99077bada9bfb3b141da6",
+            "id": "PRIVESC-061",
+            "resource_types": [
+              "bedrock_browser"
+            ]
+          },
+          {
+            "fingerprint": "6f5942602c828f98db4104d3d502e354",
+            "id": "PRIVESC-058",
+            "resource_types": [
+              "batch_job_definition"
+            ]
+          },
+          {
+            "fingerprint": "7188a268e44efb1706e3d29e6a313199",
+            "id": "PRIVESC-059",
+            "resource_types": [
+              "bedrock_code_interpreter"
+            ]
+          },
+          {
+            "fingerprint": "75f9fd631b090cb3b1b79a35c02db209",
+            "id": "PRIVESC-060",
+            "resource_types": [
+              "bedrock_agent_runtime"
+            ]
+          },
+          {
+            "fingerprint": "90047dc4d364e7768a9067e592221cb5",
+            "id": "PRIVESC-063",
+            "resource_types": [
+              "sfn_state_machine"
+            ]
+          },
+          {
+            "fingerprint": "ed5f36bd6f12f29e6f3a828333463f79",
+            "id": "PRIVESC-062",
+            "resource_types": [
+              "codedeploy_deployment_group"
+            ]
+          }
+        ],
+        "condition_strength": "weak",
+        "decision": "conditional",
+        "rule_class": "existing-passrole",
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "layer": "identity",
+                "not_actions": [
+                  "iam:*",
+                  "organizations:*",
+                  "account:*"
+                ],
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:apprunner:*:123456789012:service/*",
+            "rule_action": "apprunner:updateservice"
+          }
+        ],
+        "targets_detail": [
+          {
+            "arn": "arn:aws:apprunner:*:123456789012:service/~any~",
+            "decision": "conditional",
+            "node_id": null,
+            "probe": true,
+            "resource_type": "apprunner_service",
+            "tier": "MEDIUM",
+            "tier_class": "uncollected"
+          }
+        ]
+      },
+      "fingerprint": "b2e58a919e4222ee6cb85a04396b8cff",
+      "gaps": [
+        "apprunner_service:not-collected",
+        "batch_job_definition:not-collected",
+        "bedrock_agent_runtime:not-collected",
+        "bedrock_browser:not-collected",
+        "bedrock_code_interpreter:not-collected",
+        "codedeploy_deployment_group:not-collected",
+        "sfn_state_machine:not-collected"
+      ],
+      "id": "PRIVESC-057",
+      "legacy_ids": [],
+      "matched_actions": [
+        "apprunner:updateservice"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c02-poweruser-notaction",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "remediation": "Restrict the App Runner service actions to the resources each principal owns; aws-enumerator does not collect App Runner services, so review which roles they run as",
+      "rule_version": "2.1.0",
+      "severity": "LOW",
+      "status": "open",
+      "subsumes": [
+        "PRIVESC-058",
+        "PRIVESC-059",
+        "PRIVESC-060",
+        "PRIVESC-061",
+        "PRIVESC-062",
+        "PRIVESC-063"
+      ],
+      "title": "May take over resources aws-enumerator does not collect: AWS Batch job definition, App Runner service, Bedrock AgentCore browser, Bedrock AgentCore code interpreter, Bedrock AgentCore runtime, CodeDeploy deployment group, Step Functions state machine"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "dangerous_permission",
+      "confidence": "conditional",
+      "description": "Unrestricted PassRole (can pass any role to any service)",
+      "evidence": {
+        "condition_strength": "strong",
+        "decision": "conditional",
+        "steps": [
+          {
+            "decision": "conditional",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:role/*",
+            "rule_action": "iam:PassRole"
+          }
+        ]
+      },
+      "fingerprint": "bc2f12ce91698ccdb7880b9c6da42cff",
+      "gaps": [
+        "boundary:doc-missing"
+      ],
+      "id": "DANGER-006",
+      "legacy_ids": [],
+      "matched_actions": [
+        "iam:passrole"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c09-boundary-capped",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#high-value-targets-to-hunt",
+      "remediation": "Restrict to specific actions and resource ARNs",
+      "rule_version": "2.1.0",
+      "severity": "INFO",
+      "status": "open",
+      "title": "Unrestricted PassRole (can pass any role to any service)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "dangerous_permission",
+      "confidence": "conditional",
+      "description": "Can read all secrets",
+      "evidence": {
+        "condition_strength": "strong",
+        "decision": "conditional",
+        "steps": [
+          {
+            "decision": "conditional",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:secretsmanager:*:123456789012:secret:*",
+            "rule_action": "secretsmanager:GetSecretValue"
+          }
+        ]
+      },
+      "fingerprint": "70ff674f3cb3dc211f49e785391db0a8",
+      "gaps": [
+        "boundary:doc-missing"
+      ],
+      "id": "DANGER-008",
+      "legacy_ids": [],
+      "matched_actions": [
+        "secretsmanager:getsecretvalue"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c09-boundary-capped",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#high-value-targets-to-hunt",
+      "remediation": "Restrict to specific actions and resource ARNs",
+      "rule_version": "2.1.0",
+      "severity": "INFO",
+      "status": "open",
+      "title": "Can read all secrets"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "dangerous_permission",
+      "confidence": "conditional",
+      "description": "Can read all SSM parameters (may contain secrets)",
+      "evidence": {
+        "condition_strength": "strong",
+        "decision": "conditional",
+        "steps": [
+          {
+            "decision": "conditional",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:ssm:*:123456789012:parameter/*",
+            "rule_action": "ssm:GetParameter | ssm:GetParameters | ssm:GetParametersByPath"
+          }
+        ]
+      },
+      "fingerprint": "2242ae973d9ed4b96852d4769b121b18",
+      "gaps": [
+        "boundary:doc-missing"
+      ],
+      "id": "DANGER-009",
+      "legacy_ids": [],
+      "matched_actions": [
+        "ssm:getparameter",
+        "ssm:getparameters",
+        "ssm:getparametersbypath"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c09-boundary-capped",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#high-value-targets-to-hunt",
+      "remediation": "Restrict to specific actions and resource ARNs",
+      "rule_version": "2.1.0",
+      "severity": "INFO",
+      "status": "open",
+      "title": "Can read all SSM parameters (may contain secrets)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "INFO",
+      "category": "privilege_escalation",
+      "confidence": "definite",
+      "description": "Can pass privileged role to Lambda and execute arbitrary code, but no role that this principal may pass currently trusts lambda.amazonaws.com and is more privileged than the principal.",
+      "evidence": {
+        "decision": "allow",
+        "no_candidate": true,
+        "rule_class": "new-passrole",
+        "services": [
+          "lambda.amazonaws.com"
+        ],
+        "steps": [
+          {
+            "context": {
+              "iam:PassedToService": "lambda.amazonaws.com"
+            },
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "iam:passrole"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "arn:aws:iam::123456789012:role/low-priv-lambda"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:role/*",
+            "rule_action": "iam:passrole"
+          },
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "lambda:createfunction",
+                  "lambda:invokefunction"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 1
+              }
+            ],
+            "resource": "arn:aws:lambda:*:123456789012:function:*",
+            "rule_action": "lambda:createfunction"
+          },
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "lambda:createfunction",
+                  "lambda:invokefunction"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 1
+              }
+            ],
+            "resource": "arn:aws:lambda:*:123456789012:function:*",
+            "rule_action": "lambda:invokefunction"
+          }
+        ]
+      },
+      "fingerprint": "050eb5fa1178021d66075fd7bf3632cc",
+      "id": "PRIVESC-014",
+      "legacy_ids": [],
+      "matched_actions": [
+        "iam:passrole",
+        "lambda:createfunction",
+        "lambda:invokefunction"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c07-passrole-scoped",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs and add an iam:PassedToService condition",
+      "rule_version": "2.1.0",
+      "severity": "INFO",
+      "status": "open",
+      "title": "PassRole+Lambda: no passable role currently trusts lambda.amazonaws.com"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "INFO",
+      "category": "privilege_escalation",
+      "confidence": "conditional",
+      "description": "This principal holds 25 complete PassRole chains (PRIVESC-014, PRIVESC-016, PRIVESC-017, PRIVESC-018, PRIVESC-019, PRIVESC-020, PRIVESC-025, PRIVESC-027, PRIVESC-028, PRIVESC-030, PRIVESC-033, PRIVESC-035, PRIVESC-036, PRIVESC-038, PRIVESC-039, PRIVESC-040, PRIVESC-041, PRIVESC-042, PRIVESC-043, PRIVESC-044, PRIVESC-045, PRIVESC-046, PRIVESC-047, PRIVESC-048, PRIVESC-049) but no role it may pass trusts the service and is more privileged than the principal.",
+      "evidence": {
+        "collapsed": [
+          {
+            "fingerprint": "06f7e8caa2250c3e242ebe35d24c34ed",
+            "id": "PRIVESC-019",
+            "services": [
+              "codebuild.amazonaws.com"
+            ]
+          },
+          {
+            "fingerprint": "0924144f835a9f1c42a57c93c06d4669",
+            "id": "PRIVESC-039",
+            "services": [
+              "omics.amazonaws.com"
+            ]
+          },
+          {
+            "fingerprint": "11bb8ddc5aaf403e946ea5e3ecc93cc1",
+            "id": "PRIVESC-038",
+            "services": [
+              "kinesisanalytics.amazonaws.com"
+            ]
+          },
+          {
+            "fingerprint": "1ad16bdbd28f7e21a78f24837211fe6a",
+            "id": "PRIVESC-025",
+            "services": [
+              "lambda.amazonaws.com"
+            ]
+          },
+          {
+            "fingerprint": "1e8688aaf5cee09046c52beae66fa2b2",
+            "id": "PRIVESC-048",
+            "services": [
+              "bedrock-agentcore.amazonaws.com"
+            ]
+          },
+          {
+            "fingerprint": "2ead58f08de7ccc845d12160c10a4d89",
+            "id": "PRIVESC-016",
+            "services": [
+              "cloudformation.amazonaws.com"
+            ]
+          },
+          {
+            "fingerprint": "390d8b429734302d16b87e01bef6f1c7",
+            "id": "PRIVESC-046",
+            "services": [
+              "bedrock-agentcore.amazonaws.com"
+            ]
+          },
+          {
+            "fingerprint": "42451f5f036911c5dcec7d494b6baefa",
+            "id": "PRIVESC-043",
+            "services": [
+              "states.amazonaws.com"
+            ]
+          },
+          {
+            "fingerprint": "43cebff01c2345c629dcf8bcfe2793d8",
+            "id": "PRIVESC-033",
+            "services": [
+              "emr-serverless.amazonaws.com"
+            ]
+          },
+          {
+            "fingerprint": "4bfa1f20063150e776b42baccf3f4dca",
+            "id": "PRIVESC-028",
+            "services": [
+              "cloudformation.amazonaws.com"
+            ]
+          },
+          {
+            "fingerprint": "77cf6ee62b0afa423ac766da9e4c4e6c",
+            "id": "PRIVESC-017",
+            "services": [
+              "ecs-tasks.amazonaws.com"
+            ]
+          },
+          {
+            "fingerprint": "7bf3728a7f1b62ed3fe5c8a47a7b58e1",
+            "id": "PRIVESC-035",
+            "services": [
+              "glue.amazonaws.com"
+            ]
+          },
+          {
+            "fingerprint": "7f4b7b525f2ded0c25e2c260e4bb8536",
+            "id": "PRIVESC-041",
+            "services": [
+              "scheduler.amazonaws.com"
+            ]
+          },
+          {
+            "fingerprint": "96ca27f5393c0ca03e86550f3de239df",
+            "id": "PRIVESC-042",
+            "services": [
+              "ssm.amazonaws.com"
+            ]
+          },
+          {
+            "fingerprint": "99c7b1fa4efe3bbafcd17c8deee7e9f8",
+            "id": "PRIVESC-018",
+            "services": [
+              "glue.amazonaws.com"
+            ]
+          },
+          {
+            "fingerprint": "a652e23fd54f0d32e20865c2ee8735d3",
+            "id": "PRIVESC-047",
+            "services": [
+              "bedrock-agentcore.amazonaws.com"
+            ]
+          },
+          {
+            "fingerprint": "ae88e84608eba14b7700edb02189884b",
+            "id": "PRIVESC-020",
+            "services": [
+              "sagemaker.amazonaws.com"
+            ]
+          },
+          {
+            "fingerprint": "c1204ecb23069abe7cb93850a5e3ffd0",
+            "id": "PRIVESC-045",
+            "services": [
+              "batch.amazonaws.com",
+              "ecs-tasks.amazonaws.com"
+            ]
+          },
+          {
+            "fingerprint": "c5a411b32743365655c122a2fbcd1cd8",
+            "id": "PRIVESC-027",
+            "services": [
+              "cloudformation.amazonaws.com"
+            ]
+          },
+          {
+            "fingerprint": "c97a58839203d9baf1c5aff02147e586",
+            "id": "PRIVESC-036",
+            "services": [
+              "glue.amazonaws.com"
+            ]
+          },
+          {
+            "fingerprint": "e113a96d6ba798a8b8997cebaf682e37",
+            "id": "PRIVESC-049",
+            "services": [
+              "braket.amazonaws.com"
+            ]
+          },
+          {
+            "fingerprint": "faaf90207d83be1e83529e027da0c4bc",
+            "id": "PRIVESC-044",
+            "services": [
+              "tasks.apprunner.amazonaws.com"
+            ]
+          },
+          {
+            "fingerprint": "fbcf00063e6157bc82636a443162afaa",
+            "id": "PRIVESC-030",
+            "services": [
+              "cognito-identity.amazonaws.com"
+            ]
+          },
+          {
+            "fingerprint": "ffd29b9843045fd9366de41bf7b08e2a",
+            "id": "PRIVESC-040",
+            "services": [
+              "sagemaker.amazonaws.com"
+            ]
+          }
+        ],
+        "condition_strength": "strong",
+        "decision": "conditional",
+        "no_candidate": true,
+        "rule_class": "new-passrole",
+        "services": [
+          "batch.amazonaws.com",
+          "bedrock-agentcore.amazonaws.com",
+          "braket.amazonaws.com",
+          "cloudformation.amazonaws.com",
+          "codebuild.amazonaws.com",
+          "cognito-identity.amazonaws.com",
+          "ecs-tasks.amazonaws.com",
+          "emr-serverless.amazonaws.com",
+          "glue.amazonaws.com",
+          "kinesisanalytics.amazonaws.com",
+          "lambda.amazonaws.com",
+          "omics.amazonaws.com",
+          "sagemaker.amazonaws.com",
+          "scheduler.amazonaws.com",
+          "ssm.amazonaws.com",
+          "states.amazonaws.com",
+          "tasks.apprunner.amazonaws.com"
+        ],
+        "steps": [
+          {
+            "context": {
+              "iam:PassedToService": "lambda.amazonaws.com"
+            },
+            "decision": "conditional",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:role/*",
+            "rule_action": "iam:passrole"
+          },
+          {
+            "decision": "conditional",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:lambda:*:123456789012:function:*",
+            "rule_action": "lambda:createfunction"
+          },
+          {
+            "decision": "conditional",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:lambda:*:123456789012:function:*",
+            "rule_action": "lambda:invokefunction"
+          }
+        ]
+      },
+      "fingerprint": "a296f6c6a5d7709e2c7de8fc233ae3bc",
+      "gaps": [
+        "boundary:doc-missing"
+      ],
+      "id": "PRIVESC-014",
+      "legacy_ids": [],
+      "matched_actions": [
+        "iam:passrole",
+        "lambda:createfunction",
+        "lambda:invokefunction"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c09-boundary-capped",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs and add an iam:PassedToService condition",
+      "rule_version": "2.1.0",
+      "severity": "INFO",
+      "status": "open",
+      "subsumes": [
+        "PRIVESC-016",
+        "PRIVESC-017",
+        "PRIVESC-018",
+        "PRIVESC-019",
+        "PRIVESC-020",
+        "PRIVESC-025",
+        "PRIVESC-027",
+        "PRIVESC-028",
+        "PRIVESC-030",
+        "PRIVESC-033",
+        "PRIVESC-035",
+        "PRIVESC-036",
+        "PRIVESC-038",
+        "PRIVESC-039",
+        "PRIVESC-040",
+        "PRIVESC-041",
+        "PRIVESC-042",
+        "PRIVESC-043",
+        "PRIVESC-044",
+        "PRIVESC-045",
+        "PRIVESC-046",
+        "PRIVESC-047",
+        "PRIVESC-048",
+        "PRIVESC-049"
+      ],
+      "title": "PassRole chains without a passable role: no passable role currently trusts batch.amazonaws.com, bedrock-agentcore.amazonaws.com, braket.amazonaws.com, cloudformation.amazonaws.com, codebuild.amazonaws.com, cognito-identity.amazonaws.com, ecs-tasks.amazonaws.com, emr-serverless.amazonaws.com, glue.amazonaws.com, kinesisanalytics.amazonaws.com, lambda.amazonaws.com, omics.amazonaws.com, sagemaker.amazonaws.com, scheduler.amazonaws.com, ssm.amazonaws.com, states.amazonaws.com, tasks.apprunner.amazonaws.com"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "privilege_escalation",
+      "confidence": "conditional",
+      "description": "This principal holds the permissions of 7 take-over techniques (PRIVESC-057, PRIVESC-058, PRIVESC-059, PRIVESC-060, PRIVESC-061, PRIVESC-062, PRIVESC-063) on resource types that are not collected; whether any of them runs as a privileged role is unknown.",
+      "evidence": {
+        "collapsed": [
+          {
+            "fingerprint": "2d0b34e039e43bc46c9b21c5ba1ba302",
+            "id": "PRIVESC-058",
+            "resource_types": [
+              "batch_job_definition"
+            ]
+          },
+          {
+            "fingerprint": "70a94f61a92b0cb300064cf095b480ff",
+            "id": "PRIVESC-059",
+            "resource_types": [
+              "bedrock_code_interpreter"
+            ]
+          },
+          {
+            "fingerprint": "76c0dcfc06fd5d03ef2659813cac9a2d",
+            "id": "PRIVESC-062",
+            "resource_types": [
+              "codedeploy_deployment_group"
+            ]
+          },
+          {
+            "fingerprint": "84802b9cda02bf85074646a0b712a26a",
+            "id": "PRIVESC-063",
+            "resource_types": [
+              "sfn_state_machine"
+            ]
+          },
+          {
+            "fingerprint": "ae3256d945c1fe7c83a80d9f410120ec",
+            "id": "PRIVESC-060",
+            "resource_types": [
+              "bedrock_agent_runtime"
+            ]
+          },
+          {
+            "fingerprint": "fb11623c6aa4c85b5b1d6942c7bfa0d4",
+            "id": "PRIVESC-061",
+            "resource_types": [
+              "bedrock_browser"
+            ]
+          }
+        ],
+        "condition_strength": "strong",
+        "decision": "conditional",
+        "rule_class": "existing-passrole",
+        "steps": [
+          {
+            "decision": "conditional",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:apprunner:*:123456789012:service/*",
+            "rule_action": "apprunner:updateservice"
+          }
+        ],
+        "targets_detail": [
+          {
+            "arn": "arn:aws:apprunner:*:123456789012:service/~any~",
+            "decision": "conditional",
+            "node_id": null,
+            "probe": true,
+            "resource_type": "apprunner_service",
+            "tier": "MEDIUM",
+            "tier_class": "uncollected"
+          }
+        ]
+      },
+      "fingerprint": "05ffb2e82c757313bbb0104e7f855cf5",
+      "gaps": [
+        "apprunner_service:not-collected",
+        "batch_job_definition:not-collected",
+        "bedrock_agent_runtime:not-collected",
+        "bedrock_browser:not-collected",
+        "bedrock_code_interpreter:not-collected",
+        "boundary:doc-missing",
+        "codedeploy_deployment_group:not-collected",
+        "sfn_state_machine:not-collected"
+      ],
+      "id": "PRIVESC-057",
+      "legacy_ids": [],
+      "matched_actions": [
+        "apprunner:updateservice"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/c09-boundary-capped",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "remediation": "Restrict the App Runner service actions to the resources each principal owns; aws-enumerator does not collect App Runner services, so review which roles they run as",
+      "rule_version": "2.1.0",
+      "severity": "INFO",
+      "status": "open",
+      "subsumes": [
+        "PRIVESC-058",
+        "PRIVESC-059",
+        "PRIVESC-060",
+        "PRIVESC-061",
+        "PRIVESC-062",
+        "PRIVESC-063"
+      ],
+      "title": "May take over resources aws-enumerator does not collect: AWS Batch job definition, App Runner service, Bedrock AgentCore browser, Bedrock AgentCore code interpreter, Bedrock AgentCore runtime, CodeDeploy deployment group, Step Functions state machine"
+    }
+  ],
+  "generated_at": "<stripped>",
+  "mode": "legacy-single",
+  "partition": "aws",
+  "regions": [
+    "eu-west-2"
+  ],
+  "rules_version": "2.1.0",
+  "run_id": "legacy-eu-west-2",
+  "schema_version": "1.0.0",
+  "tool_version": "0.3.0"
+}

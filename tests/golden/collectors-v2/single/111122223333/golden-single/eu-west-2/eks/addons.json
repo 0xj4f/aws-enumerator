@@ -1,0 +1,25 @@
+{
+  "demo-cluster": [
+    {
+      "addonArn": "arn:aws:eks:eu-west-2:111122223333:addon/demo-cluster/demo-observability/abc",
+      "addonName": "demo-observability",
+      "addonVersion": "v1.0.0-eksbuild.1",
+      "clusterName": "demo-cluster",
+      "configurationValuesPresent": true,
+      "createdAt": "2024-01-03T10:00:00Z",
+      "modifiedAt": "2024-01-04T10:00:00Z",
+      "status": "ACTIVE"
+    },
+    {
+      "addonArn": "arn:aws:eks:eu-west-2:111122223333:addon/demo-cluster/vpc-cni/abc",
+      "addonName": "vpc-cni",
+      "addonVersion": "v1.16.0-eksbuild.1",
+      "clusterName": "demo-cluster",
+      "configurationValuesPresent": false,
+      "createdAt": "2024-01-03T10:00:00Z",
+      "modifiedAt": "2024-01-03T10:00:00Z",
+      "serviceAccountRoleArn": "arn:aws:iam::111122223333:role/demo-eks-node-role",
+      "status": "ACTIVE"
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+[
+  {
+    "Path": "/",
+    "RoleName": "example-single-stmt",
+    "RoleId": "AROAPEACLCLPOKAJBKKFO",
+    "Arn": "arn:aws:iam::123456789012:role/example-single-stmt",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "AssumeRolePolicyDocument": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "lambda.amazonaws.com"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "Description": "",
+    "MaxSessionDuration": 3600
+  },
+  {
+    "Path": "/",
+    "RoleName": "example-string-trust",
+    "RoleId": "AROAHGKHPCDMNBFKJNJEP",
+    "Arn": "arn:aws:iam::123456789012:role/example-string-trust",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "AssumeRolePolicyDocument": "{\"Version\": \"2012-10-17\", \"Statement\": [{\"Effect\": \"Allow\", \"Principal\": {\"AWS\": \"arn:aws:iam::123456789012:root\"}, \"Action\": \"sts:AssumeRole\"}]}",
+    "Description": "",
+    "MaxSessionDuration": 3600
+  },
+  {
+    "Path": "/",
+    "RoleName": "example-empty-trust",
+    "RoleId": "AROABFCNLJLFPBDINCICH",
+    "Arn": "arn:aws:iam::123456789012:role/example-empty-trust",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "AssumeRolePolicyDocument": {},
+    "Description": "",
+    "MaxSessionDuration": 3600
+  }
+]

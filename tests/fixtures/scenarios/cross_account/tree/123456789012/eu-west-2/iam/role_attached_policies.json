@@ -1,0 +1,32 @@
+{
+  "deploy": [
+    {
+      "PolicyName": "AdministratorAccess",
+      "PolicyArn": "arn:aws:iam::aws:policy/AdministratorAccess"
+    }
+  ],
+  "audit": [
+    {
+      "PolicyName": "ReadOnlyAccess",
+      "PolicyArn": "arn:aws:iam::aws:policy/ReadOnlyAccess"
+    }
+  ],
+  "same-account-root": [],
+  "gha-deploy": [
+    {
+      "PolicyName": "AdministratorAccess",
+      "PolicyArn": "arn:aws:iam::aws:policy/AdministratorAccess"
+    }
+  ],
+  "saml-admin": [
+    {
+      "PolicyName": "AdministratorAccess",
+      "PolicyArn": "arn:aws:iam::aws:policy/AdministratorAccess"
+    }
+  ],
+  "wildcard-org": [],
+  "wildcard-open": [],
+  "bare-account": [],
+  "multi-principal": [],
+  "string-trust": []
+}

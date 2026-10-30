@@ -1,0 +1,18 @@
+{
+  "Arn": "arn:aws:kms:eu-west-1:111122223333:key/2222bbbb-0000-4000-8000-0000000000b1",
+  "KeyId": "2222bbbb-0000-4000-8000-0000000000b1",
+  "Policy": {
+    "Statement": [
+      {
+        "Action": "kms:*",
+        "Effect": "Allow",
+        "Principal": {
+          "AWS": "arn:aws:iam::111122223333:root"
+        },
+        "Resource": "*",
+        "Sid": "Root"
+      }
+    ],
+    "Version": "2012-10-17"
+  }
+}

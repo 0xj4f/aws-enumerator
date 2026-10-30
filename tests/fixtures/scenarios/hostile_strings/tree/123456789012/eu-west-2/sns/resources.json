@@ -1,0 +1,18 @@
+[
+  {
+    "Type": "sns",
+    "Arn": "arn:aws:sns:eu-west-2:123456789012:<img src=x onerror=window.__aeXssCanary=1>",
+    "Name": "<img src=x onerror=window.__aeXssCanary=1>",
+    "Policy": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": "*",
+          "Action": "sns:Publish",
+          "Resource": "*"
+        }
+      ]
+    }
+  }
+]

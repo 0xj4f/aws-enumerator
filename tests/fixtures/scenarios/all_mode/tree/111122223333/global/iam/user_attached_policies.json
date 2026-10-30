@@ -1,0 +1,9 @@
+{
+  "dev": [],
+  "auditor": [
+    {
+      "PolicyName": "ReadOnlyAccess",
+      "PolicyArn": "arn:aws:iam::aws:policy/ReadOnlyAccess"
+    }
+  ]
+}

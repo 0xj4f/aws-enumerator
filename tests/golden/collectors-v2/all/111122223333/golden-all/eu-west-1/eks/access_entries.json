@@ -1,0 +1,27 @@
+{
+  "demo-denied-cluster": [],
+  "demo-west-cluster": [
+    {
+      "accessEntryArn": "arn:aws:eks:eu-west-1:111122223333:access-entry/demo-west-cluster/standard/demo-admin",
+      "associatedAccessPolicies": [
+        {
+          "accessScope": {
+            "namespaces": [],
+            "type": "cluster"
+          },
+          "associatedAt": "2024-01-04T10:00:00Z",
+          "modifiedAt": "2024-01-04T10:00:00Z",
+          "policyArn": "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+        }
+      ],
+      "clusterName": "demo-west-cluster",
+      "createdAt": "2024-01-04T10:00:00Z",
+      "kubernetesGroups": [],
+      "modifiedAt": "2024-01-04T10:00:00Z",
+      "principalArn": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "tags": {},
+      "type": "STANDARD",
+      "username": "demo-admin"
+    }
+  ]
+}

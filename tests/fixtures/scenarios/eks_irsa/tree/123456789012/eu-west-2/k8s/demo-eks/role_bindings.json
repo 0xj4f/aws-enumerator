@@ -1,0 +1,58 @@
+[
+  {
+    "api_version": null,
+    "kind": null,
+    "metadata": {
+      "name": "read-secrets",
+      "namespace": "payments",
+      "labels": null,
+      "annotations": null,
+      "uid": "8214aea0-aaaa-4bbb-8ccc-d297a9287d48",
+      "creation_timestamp": "2026-01-01 00:00:00+00:00",
+      "resource_version": "1000",
+      "owner_references": null,
+      "managed_fields": null
+    },
+    "role_ref": {
+      "api_group": "rbac.authorization.k8s.io",
+      "kind": "Role",
+      "name": "secret-reader"
+    },
+    "subjects": [
+      {
+        "api_group": null,
+        "kind": "ServiceAccount",
+        "name": "payments-sa",
+        "namespace": "payments"
+      }
+    ]
+  },
+  {
+    "api_version": null,
+    "kind": null,
+    "metadata": {
+      "name": "web-view",
+      "namespace": "web",
+      "labels": null,
+      "annotations": null,
+      "uid": "1d8e8cd9-aaaa-4bbb-8ccc-82916f75c7a7",
+      "creation_timestamp": "2026-01-01 00:00:00+00:00",
+      "resource_version": "1000",
+      "owner_references": null,
+      "managed_fields": null
+    },
+    "role_ref": {
+      "api_group": "rbac.authorization.k8s.io",
+      "kind": "ClusterRole",
+      "name": "view"
+    },
+    "subjects": [
+      {
+        "api_group": null,
+        "kind": "ServiceAccount",
+        "name": "web-sa",
+        "namespace": "web"
+      }
+    ]
+  }
+]

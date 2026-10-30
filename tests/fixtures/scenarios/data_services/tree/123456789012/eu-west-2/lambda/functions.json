@@ -1,0 +1,49 @@
+[
+  {
+    "FunctionName": "demo-etl",
+    "FunctionArn": "arn:aws:lambda:eu-west-2:123456789012:function:demo-etl",
+    "Runtime": "python3.12",
+    "Handler": "app.handler",
+    "Role": "arn:aws:iam::123456789012:role/demo-lambda-exec",
+    "MemorySize": 128,
+    "Timeout": 30,
+    "LastModified": "2026-01-01T00:00:00.000+0000",
+    "PackageType": "Zip",
+    "Layers": [],
+    "VpcConfig": {
+      "VpcId": null,
+      "SubnetIds": [],
+      "SecurityGroupIds": []
+    },
+    "EnvironmentVariableNames": [
+      "DB_HOST",
+      "STAGE"
+    ],
+    "FunctionUrl": {
+      "Url": "https://8980aca1047f4da6fee20535a871f652.lambda-url.eu-west-2.on.aws/",
+      "AuthType": "AWS_IAM"
+    }
+  },
+  {
+    "FunctionName": "demo-public-fn",
+    "FunctionArn": "arn:aws:lambda:eu-west-2:123456789012:function:demo-public-fn",
+    "Runtime": "python3.12",
+    "Handler": "app.handler",
+    "Role": "arn:aws:iam::123456789012:role/demo-lambda-exec",
+    "MemorySize": 128,
+    "Timeout": 30,
+    "LastModified": "2026-01-01T00:00:00.000+0000",
+    "PackageType": "Zip",
+    "Layers": [],
+    "VpcConfig": {
+      "VpcId": null,
+      "SubnetIds": [],
+      "SecurityGroupIds": []
+    },
+    "EnvironmentVariableNames": [],
+    "FunctionUrl": {
+      "Url": "https://b22c20213ab0a0dab3ea42e1fc4d9f0e.lambda-url.eu-west-2.on.aws/",
+      "AuthType": "NONE"
+    }
+  }
+]

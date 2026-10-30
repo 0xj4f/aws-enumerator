@@ -1,0 +1,15 @@
+{
+  "SecretArn": "arn:aws:secretsmanager:eu-west-2:123456789012:secret:demo/api-token-pjpkgm",
+  "SecretName": "demo/api-token",
+  "ResourcePolicy": {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Principal": "*",
+        "Action": "secretsmanager:GetSecretValue",
+        "Resource": "*"
+      }
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+[
+  {
+    "Type": "apigw",
+    "Arn": "arn:aws:apigateway:eu-west-2::/apis/k1l2m3n4o5",
+    "Name": "demo-open-api",
+    "Protocol": "HTTP",
+    "LambdaTargets": [
+      "arn:aws:lambda:eu-west-2:123456789012:function:demo-url-fn"
+    ],
+    "HasAuthorizer": false
+  }
+]

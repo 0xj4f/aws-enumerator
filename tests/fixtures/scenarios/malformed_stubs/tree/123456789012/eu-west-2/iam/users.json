@@ -1,0 +1,34 @@
+[
+  {
+    "UserName": "example-user",
+    "UserId": "AIDAPIDKIOJIMEMKCGMIB",
+    "Arn": "arn:aws:iam::123456789012:user/example-user",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "PasswordLastUsed": "",
+    "Path": "/",
+    "Tags": [],
+    "AccessKeys": [
+      {
+        "AccessKeyId": "AKIAEXAMPLEJLDFJBMIP",
+        "Status": "Active",
+        "CreateDate": "2026-01-01 00:00:00+00:00"
+      }
+    ],
+    "MFADevices": [],
+    "HasLoginProfile": false,
+    "PermissionsBoundary": null
+  },
+  {
+    "UserName": "example-user-noread",
+    "UserId": "AIDAGHOEJJEDHNFFJGMMB",
+    "Arn": "arn:aws:iam::123456789012:user/example-user-noread",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "PasswordLastUsed": "",
+    "Path": "/",
+    "Tags": [],
+    "PermissionsBoundary": null,
+    "AccessKeysError": "An error occurred (AccessDenied) when calling the ListAccessKeys operation: User: arn:aws:iam::123456789012:user/demo-operator is not authorized to perform: iam:ListAccessKeys",
+    "MFADevicesError": "An error occurred (AccessDenied) when calling the ListMFADevices operation: User: arn:aws:iam::123456789012:user/demo-operator is not authorized to perform: iam:ListMFADevices",
+    "LoginProfileError": "An error occurred (AccessDenied) when calling the GetLoginProfile operation: User: arn:aws:iam::123456789012:user/demo-operator is not authorized to perform: iam:GetLoginProfile"
+  }
+]

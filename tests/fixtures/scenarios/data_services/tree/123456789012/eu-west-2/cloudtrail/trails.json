@@ -1,0 +1,16 @@
+[
+  {
+    "Name": "demo-trail",
+    "S3BucketName": "demo-trail-logs",
+    "IsMultiRegionTrail": true,
+    "HomeRegion": "eu-west-2",
+    "TrailARN": "arn:aws:cloudtrail:eu-west-2:123456789012:trail/demo-trail",
+    "LogFileValidationEnabled": true,
+    "HasCustomEventSelectors": false,
+    "IsOrganizationTrail": false,
+    "Status": {
+      "IsLogging": true
+    },
+    "InsightSelectors": []
+  }
+]

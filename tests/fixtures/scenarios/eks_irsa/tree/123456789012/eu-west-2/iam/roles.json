@@ -1,0 +1,97 @@
+[
+  {
+    "Path": "/",
+    "RoleName": "demo-eks-cluster-role",
+    "RoleId": "AROAPHCGFGLOMGDJGBGMP",
+    "Arn": "arn:aws:iam::123456789012:role/demo-eks-cluster-role",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "AssumeRolePolicyDocument": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "eks.amazonaws.com"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "Description": "",
+    "MaxSessionDuration": 3600
+  },
+  {
+    "Path": "/",
+    "RoleName": "demo-eks-node-role",
+    "RoleId": "AROAEFIJMGGOCAJBGNNHN",
+    "Arn": "arn:aws:iam::123456789012:role/demo-eks-node-role",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "AssumeRolePolicyDocument": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "ec2.amazonaws.com"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "Description": "",
+    "MaxSessionDuration": 3600
+  },
+  {
+    "Path": "/",
+    "RoleName": "demo-irsa-admin",
+    "RoleId": "AROAOPKMKEKNIJCHNHKGF",
+    "Arn": "arn:aws:iam::123456789012:role/demo-irsa-admin",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "AssumeRolePolicyDocument": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Federated": "arn:aws:iam::123456789012:oidc-provider/oidc.eks.eu-west-2.amazonaws.com/id/OCCGIAFDPFCOIHAGDKHALDDCBBKOGLKK"
+          },
+          "Action": "sts:AssumeRoleWithWebIdentity",
+          "Condition": {
+            "StringEquals": {
+              "oidc.eks.eu-west-2.amazonaws.com/id/OCCGIAFDPFCOIHAGDKHALDDCBBKOGLKK:sub": "system:serviceaccount:payments:payments-sa",
+              "oidc.eks.eu-west-2.amazonaws.com/id/OCCGIAFDPFCOIHAGDKHALDDCBBKOGLKK:aud": "sts.amazonaws.com"
+            }
+          }
+        }
+      ]
+    },
+    "Description": "",
+    "MaxSessionDuration": 3600
+  },
+  {
+    "Path": "/",
+    "RoleName": "demo-irsa-reader",
+    "RoleId": "AROAGKEHKLFHAOKENABFA",
+    "Arn": "arn:aws:iam::123456789012:role/demo-irsa-reader",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "AssumeRolePolicyDocument": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Federated": "arn:aws:iam::123456789012:oidc-provider/oidc.eks.eu-west-2.amazonaws.com/id/OCCGIAFDPFCOIHAGDKHALDDCBBKOGLKK"
+          },
+          "Action": "sts:AssumeRoleWithWebIdentity",
+          "Condition": {
+            "StringLike": {
+              "oidc.eks.eu-west-2.amazonaws.com/id/OCCGIAFDPFCOIHAGDKHALDDCBBKOGLKK:sub": "system:serviceaccount:web:*"
+            }
+          }
+        }
+      ]
+    },
+    "Description": "",
+    "MaxSessionDuration": 3600
+  }
+]

@@ -1,0 +1,20 @@
+{
+  "RoleName": "AppRole",
+  "InlinePolicies": {
+    "p": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "secretsmanager:GetSecretValue",
+            "lambda:UpdateFunctionCode",
+            "ssm:GetParameter",
+            "kms:Decrypt"
+          ],
+          "Resource": "*"
+        }
+      ]
+    }
+  }
+}

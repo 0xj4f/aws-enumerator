@@ -1,0 +1,12 @@
+[
+  {
+    "Type": "ebssnapshot",
+    "Id": "snap-0a1b2c3d4e5f6bb01",
+    "Name": "snap-0a1b2c3d4e5f6bb01",
+    "Public": true,
+    "SharedAccounts": [],
+    "Encrypted": false,
+    "KmsKeyId": null,
+    "VolumeId": "vol-0a1b2c3d4e5faaa2"
+  }
+]

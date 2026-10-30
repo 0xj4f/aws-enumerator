@@ -1,0 +1,24 @@
+[
+  {
+    "kind": "RoleBinding",
+    "metadata": {
+      "annotations": null,
+      "labels": null,
+      "name": "demo-secret-reader-binding",
+      "namespace": "demo-apps"
+    },
+    "role_ref": {
+      "api_group": "rbac.authorization.k8s.io",
+      "kind": "Role",
+      "name": "demo-secret-reader"
+    },
+    "subjects": [
+      {
+        "api_group": null,
+        "kind": "ServiceAccount",
+        "name": "demo-api",
+        "namespace": "demo-apps"
+      }
+    ]
+  }
+]

@@ -1,0 +1,19 @@
+[
+  {
+    "name": "default",
+    "recordingGroup": {
+      "allSupported": true,
+      "includeGlobalResourceTypes": true
+    },
+    "roleARN": "arn:aws:iam::111122223333:role/aws-service-role/config.amazonaws.com/AWSServiceRoleForConfig",
+    "status": {
+      "lastErrorCode": null,
+      "lastErrorMessage": null,
+      "lastStartTime": "2024-01-01T10:00:00Z",
+      "lastStatus": "SUCCESS",
+      "lastStatusChangeTime": "2024-01-15T10:00:00Z",
+      "lastStopTime": null,
+      "recording": true
+    }
+  }
+]

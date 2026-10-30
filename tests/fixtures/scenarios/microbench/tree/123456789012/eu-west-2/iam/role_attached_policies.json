@@ -1,0 +1,12 @@
+{
+  "c01-admin": [],
+  "c02-poweruser-notaction": [],
+  "c03-putrolepolicy": [],
+  "c04-attachuserpolicy": [],
+  "c05-iam-notresource": [],
+  "c06-quarantined": [],
+  "c07-passrole-scoped": [],
+  "c08-self-service-keys": [],
+  "c09-boundary-capped": [],
+  "c10-readonly": []
+}

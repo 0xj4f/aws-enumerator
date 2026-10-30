@@ -1,0 +1,1664 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:aws-enumerator:schema:graph:1.1",
+  "title": "aws-enumerator graph.json 1.x",
+  "description": "Structural contract of analysis/graph.json (docs/contracts/graph-json.md). A document is valid when it passes this schema AND aws_enumerator.engine.graph.validate_graph(). 1.1 is 1.0 plus the additive merge keys (graph-json.md section 4.2): run.mode 'merge', run.sources[], coverage.modules[]/facets[]/denied_apis[].account, evaluation_gaps[].accounts, analyzer_status[].account. A 1.0 document is also a valid 1.1 document.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "generator",
+    "run",
+    "meta",
+    "node_types",
+    "edge_types",
+    "nodes",
+    "edges",
+    "findings",
+    "coverage",
+    "evaluation_gaps",
+    "analyzer_status"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "run": {
+            "properties": {
+              "mode": {
+                "const": "merge"
+              }
+            },
+            "required": [
+              "mode"
+            ]
+          }
+        },
+        "required": [
+          "run"
+        ]
+      },
+      "then": {
+        "properties": {
+          "coverage": {
+            "properties": {
+              "modules": {
+                "items": {
+                  "required": [
+                    "account"
+                  ]
+                }
+              },
+              "denied_apis": {
+                "items": {
+                  "required": [
+                    "account"
+                  ]
+                }
+              },
+              "facets": {
+                "items": {
+                  "required": [
+                    "account"
+                  ]
+                }
+              }
+            }
+          },
+          "evaluation_gaps": {
+            "items": {
+              "required": [
+                "accounts"
+              ]
+            }
+          },
+          "analyzer_status": {
+            "items": {
+              "required": [
+                "account"
+              ]
+            }
+          }
+        }
+      }
+    }
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^1\\.[0-9]+\\.[0-9]+$"
+    },
+    "generator": {
+      "$ref": "#/$defs/generator"
+    },
+    "run": {
+      "$ref": "#/$defs/run"
+    },
+    "meta": {
+      "$ref": "#/$defs/meta"
+    },
+    "node_types": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_]*$",
+        "not": {
+          "enum": [
+            "__proto__",
+            "constructor",
+            "prototype"
+          ]
+        }
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/nodeTypeEntry"
+      }
+    },
+    "edge_types": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[A-Z][A-Z0-9_]*$"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/edgeTypeEntry"
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/node"
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/edge"
+      }
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/finding"
+      }
+    },
+    "coverage": {
+      "$ref": "#/$defs/coverage"
+    },
+    "evaluation_gaps": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/evaluationGap"
+      }
+    },
+    "analyzer_status": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/analyzerStatus"
+      }
+    }
+  },
+  "$defs": {
+    "safeKey": {
+      "description": "Any key except the JavaScript prototype names (F-042).",
+      "type": "string",
+      "not": {
+        "enum": [
+          "__proto__",
+          "constructor",
+          "prototype"
+        ]
+      }
+    },
+    "safeValue": {
+      "description": "Any JSON value whose object keys (at any depth) are safe keys.",
+      "anyOf": [
+        {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/safeValue"
+          }
+        },
+        {
+          "$ref": "#/$defs/safeObject"
+        }
+      ]
+    },
+    "safeObject": {
+      "type": "object",
+      "propertyNames": {
+        "$ref": "#/$defs/safeKey"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/safeValue"
+      }
+    },
+    "fieldKey": {
+      "description": "Engine-defined snake_case key (props, evidence). Never derived from report data.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "not": {
+        "enum": [
+          "__proto__",
+          "constructor",
+          "prototype"
+        ]
+      }
+    },
+    "accountId": {
+      "type": "string",
+      "pattern": "^[0-9]{12}$"
+    },
+    "region": {
+      "type": "string",
+      "pattern": "^[a-z]{2}(-[a-z]+)+-[0-9]+$"
+    },
+    "partition": {
+      "type": "string",
+      "pattern": "^aws(-[a-z]+)*$"
+    },
+    "severity": {
+      "enum": [
+        "CRITICAL",
+        "HIGH",
+        "MEDIUM",
+        "LOW",
+        "INFO"
+      ]
+    },
+    "confidence": {
+      "enum": [
+        "definite",
+        "conditional"
+      ]
+    },
+    "nodeId": {
+      "description": "Opaque node id (docs/contracts/node-ids.md). The old principal:* placeholder is gone.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096,
+      "not": {
+        "pattern": "^principal:"
+      }
+    },
+    "edgeId": {
+      "type": "string",
+      "pattern": "^e:[0-9a-f]{20}$"
+    },
+    "fingerprint": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{32}$"
+    },
+    "findingId": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)*$"
+    },
+    "utcTimestamp": {
+      "description": "ISO 8601 UTC timestamp (F-171).",
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]+)?(Z|\\+00:00)$"
+    },
+    "httpsUrl": {
+      "type": "string",
+      "pattern": "^https://[^\\s]+$"
+    },
+    "stringList": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "evidence": {
+      "description": "Evidence of an edge or finding. Well-known keys are typed; other engine keys are free-form.",
+      "type": "object",
+      "propertyNames": {
+        "$ref": "#/$defs/fieldKey"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/safeValue"
+      },
+      "properties": {
+        "decision": {
+          "enum": [
+            "allow",
+            "conditional"
+          ]
+        },
+        "condition_strength": {
+          "enum": [
+            "none",
+            "weak",
+            "strong"
+          ]
+        },
+        "layers": {
+          "$ref": "#/$defs/safeObject"
+        },
+        "actions": {
+          "$ref": "#/$defs/stringList"
+        },
+        "statements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/safeObject"
+          }
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/safeValue"
+          }
+        },
+        "gaps": {
+          "$ref": "#/$defs/stringList"
+        },
+        "rule_ids": {
+          "$ref": "#/$defs/stringList"
+        },
+        "technique": {
+          "type": "string"
+        },
+        "via": {
+          "$ref": "#/$defs/stringList"
+        },
+        "chain": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/edgeId"
+          }
+        },
+        "weight_extra": {
+          "type": "number",
+          "minimum": 0
+        },
+        "demoted_by": {
+          "enum": [
+            "bridge-invariant"
+          ]
+        },
+        "traversable_rule": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "rule",
+            "holds"
+          ],
+          "properties": {
+            "rule": {
+              "type": "string"
+            },
+            "holds": {
+              "type": "boolean"
+            }
+          }
+        },
+        "legacy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "type",
+            "direction"
+          ],
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "direction": {
+              "enum": [
+                "forward",
+                "reversed"
+              ]
+            },
+            "file": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "finding": {
+      "description": "A finding (docs/contracts/finding-identity.md). Domain-specific data goes in evidence.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fingerprint",
+        "id",
+        "legacy_ids",
+        "severity",
+        "base_severity",
+        "confidence",
+        "node_id",
+        "title",
+        "description",
+        "evidence",
+        "remediation",
+        "reference",
+        "status"
+      ],
+      "properties": {
+        "fingerprint": {
+          "$ref": "#/$defs/fingerprint"
+        },
+        "id": {
+          "$ref": "#/$defs/findingId"
+        },
+        "legacy_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/findingId"
+          },
+          "uniqueItems": true
+        },
+        "rule_version": {
+          "type": "string"
+        },
+        "severity": {
+          "$ref": "#/$defs/severity"
+        },
+        "base_severity": {
+          "$ref": "#/$defs/severity"
+        },
+        "confidence": {
+          "$ref": "#/$defs/confidence"
+        },
+        "category": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string"
+        },
+        "node_id": {
+          "$ref": "#/$defs/nodeId"
+        },
+        "related_node_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/nodeId"
+          },
+          "uniqueItems": true
+        },
+        "account": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/accountId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "region": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/region"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "matched_actions": {
+          "$ref": "#/$defs/stringList"
+        },
+        "evidence": {
+          "$ref": "#/$defs/evidence"
+        },
+        "targets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "node_id"
+            ],
+            "properties": {
+              "node_id": {
+                "$ref": "#/$defs/nodeId"
+              },
+              "tier": {
+                "$ref": "#/$defs/severity"
+              },
+              "decision": {
+                "enum": [
+                  "allow",
+                  "conditional"
+                ]
+              }
+            }
+          }
+        },
+        "subsumes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/findingId"
+          },
+          "uniqueItems": true
+        },
+        "via_group": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "affected_members": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/nodeId"
+          },
+          "uniqueItems": true
+        },
+        "gaps": {
+          "$ref": "#/$defs/stringList"
+        },
+        "remediation": {
+          "type": "string"
+        },
+        "reference": {
+          "description": "Version-pinned documentation link; consumers still pass it through safeHref.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/httpsUrl"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "detection_hint": {
+          "$ref": "#/$defs/safeObject"
+        },
+        "validate_hint": {
+          "$ref": "#/$defs/safeObject"
+        },
+        "status": {
+          "enum": [
+            "open",
+            "suppressed"
+          ]
+        },
+        "suppression": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "reason",
+            "expires",
+            "match"
+          ],
+          "properties": {
+            "reason": {
+              "type": "string",
+              "minLength": 1
+            },
+            "expires": {
+              "type": "string",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+            },
+            "owner": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "match": {
+              "enum": [
+                "fingerprint",
+                "rule"
+              ]
+            }
+          }
+        },
+        "baseline_state": {
+          "enum": [
+            "new",
+            "unchanged",
+            "severity_changed"
+          ]
+        },
+        "entity": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "entity_arn": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "source_policy": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "source_type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "resource": {
+          "anyOf": [
+            {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            {
+              "$ref": "#/$defs/stringList"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "suppressed"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "required": [
+              "suppression"
+            ]
+          }
+        }
+      ]
+    },
+    "props": {
+      "description": "Node properties. Keys are engine-defined; AWS tags live in the node's tags list.",
+      "type": "object",
+      "propertyNames": {
+        "$ref": "#/$defs/fieldKey"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/safeValue"
+      },
+      "properties": {
+        "high_value": {
+          "type": "boolean"
+        },
+        "high_value_reason": {
+          "enum": [
+            "account-admin",
+            "admin-equivalent",
+            "crown-jewel",
+            "operator-marked"
+          ]
+        },
+        "external": {
+          "type": "boolean"
+        },
+        "entry_point": {
+          "type": "boolean"
+        },
+        "data_asset": {
+          "type": "boolean"
+        },
+        "placeholder": {
+          "type": "boolean"
+        },
+        "attached_policies_status": {
+          "enum": [
+            "complete",
+            "partial",
+            "denied",
+            "error",
+            "throttled",
+            "skipped",
+            "not-collected",
+            "legacy-unknown",
+            "not-applicable"
+          ]
+        },
+        "attached_policies_error": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "high_value": {
+                "const": true
+              }
+            },
+            "required": [
+              "high_value"
+            ]
+          },
+          "then": {
+            "required": [
+              "high_value_reason"
+            ]
+          }
+        }
+      ]
+    },
+    "node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "label",
+        "account",
+        "region",
+        "partition",
+        "props",
+        "tags",
+        "coverage",
+        "findings",
+        "inherited_findings",
+        "max_severity"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/nodeId"
+        },
+        "type": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "account": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/accountId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "region": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/region"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "partition": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/partition"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "props": {
+          "$ref": "#/$defs/props"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "key",
+              "value"
+            ],
+            "properties": {
+              "key": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "coverage": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "gaps"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "complete",
+                "partial",
+                "denied",
+                "error",
+                "throttled",
+                "skipped",
+                "not-collected",
+                "legacy-unknown",
+                "not-applicable"
+              ]
+            },
+            "gaps": {
+              "$ref": "#/$defs/stringList"
+            }
+          }
+        },
+        "findings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/fingerprint"
+          },
+          "uniqueItems": true
+        },
+        "inherited_findings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/fingerprint"
+          },
+          "uniqueItems": true
+        },
+        "max_severity": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/severity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "enum": [
+                  "user",
+                  "role",
+                  "group"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "props": {
+                "required": [
+                  "attached_policies_status"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "enum": [
+                  "external_account",
+                  "external_principal"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "props": {
+                "required": [
+                  "external"
+                ],
+                "properties": {
+                  "external": {
+                    "const": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "account_admin"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "props": {
+                "required": [
+                  "high_value",
+                  "high_value_reason"
+                ],
+                "properties": {
+                  "high_value": {
+                    "const": true
+                  },
+                  "high_value_reason": {
+                    "const": "account-admin"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "anonymous"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "id": {
+                "const": "aws-enumerator:anonymous"
+              },
+              "props": {
+                "required": [
+                  "entry_point"
+                ],
+                "properties": {
+                  "entry_point": {
+                    "const": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "edge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "source",
+        "target",
+        "type",
+        "category",
+        "traversal",
+        "traversable",
+        "weight",
+        "confidence",
+        "evidence"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/edgeId"
+        },
+        "source": {
+          "$ref": "#/$defs/nodeId"
+        },
+        "target": {
+          "$ref": "#/$defs/nodeId"
+        },
+        "type": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_]*$"
+        },
+        "category": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "traversal": {
+          "enum": [
+            "control",
+            "access",
+            "exposure",
+            "structural",
+            "info"
+          ]
+        },
+        "traversable": {
+          "type": "boolean"
+        },
+        "weight": {
+          "type": "number",
+          "minimum": 0
+        },
+        "confidence": {
+          "$ref": "#/$defs/confidence"
+        },
+        "evidence": {
+          "$ref": "#/$defs/evidence"
+        },
+        "props": {
+          "description": "Optional edge properties (cross_account, admits, technique ...).",
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/$defs/fieldKey"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/safeValue"
+          }
+        }
+      }
+    },
+    "nodeTypeEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "icon",
+        "group",
+        "order",
+        "is_compute_bridge",
+        "default_source",
+        "data_asset",
+        "synthetic",
+        "description"
+      ],
+      "properties": {
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "icon": {
+          "type": "string",
+          "pattern": "^[a-z0-9_-]+$"
+        },
+        "group": {
+          "type": "string"
+        },
+        "order": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "is_compute_bridge": {
+          "type": "boolean"
+        },
+        "default_source": {
+          "type": "boolean"
+        },
+        "data_asset": {
+          "type": "boolean"
+        },
+        "synthetic": {
+          "type": "boolean"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "edgeTypeEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "category",
+        "category_label",
+        "category_order",
+        "traversal",
+        "traversable",
+        "traversable_rule",
+        "base_weight",
+        "bridge",
+        "sources",
+        "targets",
+        "description",
+        "doc_anchor",
+        "legacy_name"
+      ],
+      "properties": {
+        "category": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "category_label": {
+          "type": "string"
+        },
+        "category_order": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "traversal": {
+          "enum": [
+            "control",
+            "access",
+            "exposure",
+            "structural",
+            "info"
+          ]
+        },
+        "traversable": {
+          "enum": [
+            true,
+            false,
+            "conditional"
+          ]
+        },
+        "traversable_rule": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "base_weight": {
+          "type": "number",
+          "minimum": 0
+        },
+        "bridge": {
+          "type": "boolean"
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "targets": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "description": {
+          "type": "string"
+        },
+        "doc_anchor": {
+          "type": "string",
+          "pattern": "^#[a-z0-9_]+$"
+        },
+        "legacy_name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "operator": {
+      "description": "The identity that ran the collection, mapped to a node (F-146). The only operator field.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "arn",
+        "node_id",
+        "resolution"
+      ],
+      "properties": {
+        "arn": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "node_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/nodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "resolution": {
+          "enum": [
+            "exact",
+            "assumed-role",
+            "sso",
+            "root",
+            "federated",
+            "not-in-graph",
+            "cross-account",
+            "unavailable"
+          ]
+        },
+        "redacted": {
+          "type": "boolean"
+        }
+      }
+    },
+    "generator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tool",
+        "version",
+        "engine_version",
+        "rules_version",
+        "git_sha"
+      ],
+      "properties": {
+        "tool": {
+          "const": "aws-enumerator"
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "engine_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rules_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "git_sha": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{7,40}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "run": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "run_id",
+        "account_id",
+        "partition",
+        "mode",
+        "regions",
+        "generated_at",
+        "source_manifest_sha256",
+        "operator"
+      ],
+      "properties": {
+        "run_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._-]{1,64}$"
+        },
+        "account_id": {
+          "$ref": "#/$defs/accountId"
+        },
+        "partition": {
+          "$ref": "#/$defs/partition"
+        },
+        "mode": {
+          "enum": [
+            "run",
+            "legacy-all",
+            "legacy-single",
+            "merge"
+          ]
+        },
+        "regions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/region"
+          },
+          "uniqueItems": true
+        },
+        "generated_at": {
+          "$ref": "#/$defs/utcTimestamp"
+        },
+        "source_manifest_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "operator": {
+          "$ref": "#/$defs/operator"
+        },
+        "sources": {
+          "description": "mode 'merge' only: the merged source runs, sorted by (account_id, run_id); account_id values are distinct and sources[0] is the primary account (run.account_id).",
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "$ref": "#/$defs/runSource"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "merge"
+              }
+            },
+            "required": [
+              "mode"
+            ]
+          },
+          "then": {
+            "required": [
+              "sources"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "sources"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "runSource": {
+      "description": "One merged source run: copied from that source's graph.json (run.*, generator) plus the SHA-256 of the source graph.json bytes.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "run_id",
+        "account_id",
+        "partition",
+        "mode",
+        "regions",
+        "generated_at",
+        "source_manifest_sha256",
+        "graph_sha256",
+        "generator",
+        "operator"
+      ],
+      "properties": {
+        "run_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._-]{1,64}$"
+        },
+        "account_id": {
+          "$ref": "#/$defs/accountId"
+        },
+        "partition": {
+          "$ref": "#/$defs/partition"
+        },
+        "mode": {
+          "enum": [
+            "run",
+            "legacy-all",
+            "legacy-single"
+          ]
+        },
+        "regions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/region"
+          },
+          "uniqueItems": true
+        },
+        "generated_at": {
+          "$ref": "#/$defs/utcTimestamp"
+        },
+        "source_manifest_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "graph_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "generator": {
+          "$ref": "#/$defs/generator"
+        },
+        "operator": {
+          "$ref": "#/$defs/operator"
+        }
+      }
+    },
+    "meta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "default_sources",
+        "default_targets"
+      ],
+      "properties": {
+        "default_sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/nodeId"
+          },
+          "uniqueItems": true
+        },
+        "default_targets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/nodeId"
+          },
+          "uniqueItems": true,
+          "minItems": 1
+        }
+      }
+    },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "status",
+        "modules"
+      ],
+      "properties": {
+        "source": {
+          "enum": [
+            "ledger",
+            "legacy-unknown"
+          ]
+        },
+        "status": {
+          "enum": [
+            "complete",
+            "partial",
+            "unknown"
+          ]
+        },
+        "modules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "module",
+              "region",
+              "status"
+            ],
+            "properties": {
+              "module": {
+                "type": "string"
+              },
+              "region": {
+                "type": "string"
+              },
+              "status": {
+                "enum": [
+                  "ok",
+                  "partial",
+                  "denied",
+                  "failed",
+                  "skipped",
+                  "interrupted",
+                  "not_run",
+                  "dependency_missing",
+                  "legacy-unknown"
+                ]
+              },
+              "error_code": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "detail": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "account": {
+                "$ref": "#/$defs/accountId"
+              }
+            }
+          }
+        },
+        "denied_apis": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "api",
+              "regions"
+            ],
+            "properties": {
+              "api": {
+                "type": "string"
+              },
+              "regions": {
+                "$ref": "#/$defs/stringList"
+              },
+              "account": {
+                "$ref": "#/$defs/accountId"
+              }
+            }
+          }
+        },
+        "facets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "facet",
+              "region",
+              "status"
+            ],
+            "properties": {
+              "facet": {
+                "type": "string"
+              },
+              "region": {
+                "type": "string"
+              },
+              "status": {
+                "enum": [
+                  "complete",
+                  "partial",
+                  "denied",
+                  "error",
+                  "throttled",
+                  "skipped",
+                  "not-collected",
+                  "legacy-unknown",
+                  "not-applicable"
+                ]
+              },
+              "detail": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "account": {
+                "$ref": "#/$defs/accountId"
+              }
+            }
+          }
+        }
+      }
+    },
+    "evaluationGap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "code",
+        "detail"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9:._-]*$"
+        },
+        "detail": {
+          "type": "string"
+        },
+        "count": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "accounts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/accountId"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "analyzerStatus": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "phase",
+        "status"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "phase": {
+          "enum": [
+            "context",
+            "load",
+            "principals",
+            "identity",
+            "resources",
+            "rules",
+            "closure",
+            "postprocess",
+            "write"
+          ]
+        },
+        "status": {
+          "enum": [
+            "ok",
+            "error",
+            "skipped",
+            "not_implemented"
+          ]
+        },
+        "duration_seconds": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "error": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "type",
+                "message"
+              ],
+              "properties": {
+                "type": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          ]
+        },
+        "inputs_missing": {
+          "$ref": "#/$defs/stringList"
+        },
+        "account": {
+          "$ref": "#/$defs/accountId"
+        }
+      }
+    }
+  }
+}

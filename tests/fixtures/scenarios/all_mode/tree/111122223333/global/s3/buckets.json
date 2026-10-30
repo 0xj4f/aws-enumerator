@@ -1,0 +1,12 @@
+[
+  {
+    "Name": "demo-all-mode-logs",
+    "CreationDate": "2026-01-01 00:00:00+00:00",
+    "Region": "eu-west-1"
+  },
+  {
+    "Name": "demo-all-mode-data",
+    "CreationDate": "2026-01-01 00:00:00+00:00",
+    "Region": "eu-west-2"
+  }
+]

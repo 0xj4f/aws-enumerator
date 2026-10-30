@@ -1,0 +1,44 @@
+[
+  {
+    "Path": "/",
+    "RoleName": "admin",
+    "RoleId": "AROAALHMNGDFOOONFEDII",
+    "Arn": "arn:aws:iam::111122223333:role/admin",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "AssumeRolePolicyDocument": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::111122223333:user/alice"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "Description": "",
+    "MaxSessionDuration": 3600
+  },
+  {
+    "Path": "/",
+    "RoleName": "app",
+    "RoleId": "AROALCIJOPDKEMNNBFCDO",
+    "Arn": "arn:aws:iam::111122223333:role/app",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "AssumeRolePolicyDocument": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "ec2.amazonaws.com"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "Description": "",
+    "MaxSessionDuration": 3600
+  }
+]

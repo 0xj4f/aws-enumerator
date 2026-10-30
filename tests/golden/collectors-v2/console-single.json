@@ -1,0 +1,21 @@
+{
+  "collector_warnings": [],
+  "module_failures": [
+    "cloudfront@global: partial",
+    "cognito@eu-west-2: partial",
+    "ebs@eu-west-2: partial",
+    "ecr@eu-west-2: partial",
+    "ecs@eu-west-2: partial",
+    "eks@eu-west-2: partial",
+    "elb@eu-west-2: partial",
+    "iam@global: partial",
+    "kms@eu-west-2: partial",
+    "lambda@eu-west-2: partial",
+    "rds@eu-west-2: partial",
+    "route53@global: partial",
+    "s3@global: partial",
+    "secretsmanager@eu-west-2: partial",
+    "sns@eu-west-2: partial",
+    "sqs@eu-west-2: partial"
+  ]
+}

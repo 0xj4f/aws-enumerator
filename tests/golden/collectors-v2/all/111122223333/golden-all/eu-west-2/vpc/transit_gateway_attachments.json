@@ -1,0 +1,26 @@
+[
+  {
+    "Association": {
+      "State": "associated",
+      "TransitGatewayRouteTableId": "tgw-rtb-0dec0000000000021"
+    },
+    "CreationTime": "2024-01-02T10:00:00Z",
+    "ResourceId": "vpc-0dec000000000002",
+    "ResourceOwnerId": "111122223333",
+    "ResourceType": "vpc",
+    "State": "available",
+    "TransitGatewayAttachmentId": "tgw-attach-0dec0000000000021",
+    "TransitGatewayId": "tgw-0dec0000000000002",
+    "TransitGatewayOwnerId": "111122223333"
+  },
+  {
+    "CreationTime": "2024-01-04T10:00:00Z",
+    "ResourceId": "vpc-0e87eaaa1000000009",
+    "ResourceOwnerId": "999999999999",
+    "ResourceType": "vpc",
+    "State": "available",
+    "TransitGatewayAttachmentId": "tgw-attach-0dec0000000000022",
+    "TransitGatewayId": "tgw-0dec0000000000002",
+    "TransitGatewayOwnerId": "111122223333"
+  }
+]

@@ -1,0 +1,9 @@
+[
+  {
+    "Path": "/",
+    "GroupName": "example-group",
+    "GroupId": "AGPAEENDBIHINCIJKKFKG",
+    "Arn": "arn:aws:iam::123456789012:group/example-group",
+    "CreateDate": "2026-01-01 00:00:00+00:00"
+  }
+]

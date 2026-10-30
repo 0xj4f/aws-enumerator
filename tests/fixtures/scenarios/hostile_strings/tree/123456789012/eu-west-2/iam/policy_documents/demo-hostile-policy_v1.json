@@ -1,0 +1,17 @@
+{
+  "PolicyName": "\" onfocus=\"window.__aeXssCanary=1\" autofocus=\"",
+  "PolicyArn": "arn:aws:iam::123456789012:policy/\" onfocus=\"window.__aeXssCanary=1\" autofocus=\"",
+  "VersionId": "v1",
+  "Document": {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "sqs:SendMessage"
+        ],
+        "Resource": "*"
+      }
+    ]
+  }
+}

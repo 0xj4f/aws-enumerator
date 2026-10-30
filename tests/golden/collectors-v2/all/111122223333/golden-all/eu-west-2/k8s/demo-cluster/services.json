@@ -1,0 +1,68 @@
+[
+  {
+    "metadata": {
+      "annotations": null,
+      "labels": null,
+      "name": "demo-api-lb",
+      "namespace": "demo-apps"
+    },
+    "spec": {
+      "cluster_ip": "172.20.10.10",
+      "external_i_ps": null,
+      "external_traffic_policy": null,
+      "load_balancer_class": null,
+      "load_balancer_source_ranges": null,
+      "ports": [
+        {
+          "name": "http",
+          "port": 80,
+          "protocol": "TCP",
+          "target_port": 8080
+        }
+      ],
+      "selector": {
+        "app": "demo-api"
+      },
+      "type": "LoadBalancer"
+    },
+    "status": {
+      "load_balancer": {
+        "ingress": [
+          {
+            "hostname": "demo-api-lb.eu-west-2.elb.amazonaws.com"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "metadata": {
+      "annotations": null,
+      "labels": null,
+      "name": "kubernetes",
+      "namespace": "default"
+    },
+    "spec": {
+      "cluster_ip": "172.20.0.1",
+      "external_i_ps": null,
+      "external_traffic_policy": null,
+      "load_balancer_class": null,
+      "load_balancer_source_ranges": null,
+      "ports": [
+        {
+          "name": "https",
+          "port": 443,
+          "protocol": "TCP",
+          "target_port": 443
+        }
+      ],
+      "selector": null,
+      "type": "ClusterIP"
+    },
+    "status": {
+      "load_balancer": {
+        "ingress": null
+      }
+    }
+  }
+]

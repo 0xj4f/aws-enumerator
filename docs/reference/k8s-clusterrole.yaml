@@ -1,0 +1,58 @@
+# aws-enumerator read-only Kubernetes access (aws-enumerator permissions --format k8s)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: aws-enumerator-read
+rules:
+  - apiGroups: [""]
+    resources: ["namespaces", "nodes", "pods", "serviceaccounts", "services"]
+    verbs: ["list"]
+  - apiGroups: ["authorization.k8s.io"]
+    resources: ["selfsubjectrulesreviews"]
+    verbs: ["create"]
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["ingresses"]
+    verbs: ["list"]
+  - apiGroups: ["rbac.authorization.k8s.io"]
+    resources: ["clusterrolebindings", "clusterroles", "rolebindings", "roles"]
+    verbs: ["list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: aws-enumerator-aws-auth
+  namespace: kube-system
+rules:
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    resourceNames: ["aws-auth"]
+    verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: aws-enumerator-read
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: aws-enumerator-read
+subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: Group
+    name: aws-enumerator-readers
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: aws-enumerator-aws-auth
+  namespace: kube-system
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: aws-enumerator-aws-auth
+subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: Group
+    name: aws-enumerator-readers
+# EKS access entry for the scanning role (example):
+#   aws eks create-access-entry --cluster-name <cluster> --principal-arn <role-arn> --kubernetes-groups aws-enumerator-readers

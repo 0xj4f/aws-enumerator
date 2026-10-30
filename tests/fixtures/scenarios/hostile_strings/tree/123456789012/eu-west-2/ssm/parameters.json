@@ -1,0 +1,24 @@
+[
+  {
+    "Name": "/demo/<img src=x onerror=window.__aeXssCanary=1>/password",
+    "ARN": "arn:aws:ssm:eu-west-2:123456789012:parameter/demo/<img src=x onerror=window.__aeXssCanary=1>/password",
+    "Type": "String",
+    "LastModifiedDate": "2026-01-01 00:00:00+00:00",
+    "LastModifiedUser": "arn:aws:iam::123456789012:user/demo-operator",
+    "Version": 1,
+    "Tier": "Standard",
+    "Policies": [],
+    "DataType": "text"
+  },
+  {
+    "Name": "/demo/\"><svg onload=window.__aeXssCanary=1>/password",
+    "ARN": "arn:aws:ssm:eu-west-2:123456789012:parameter/demo/\"><svg onload=window.__aeXssCanary=1>/password",
+    "Type": "String",
+    "LastModifiedDate": "2026-01-01 00:00:00+00:00",
+    "LastModifiedUser": "arn:aws:iam::123456789012:user/demo-operator",
+    "Version": 1,
+    "Tier": "Standard",
+    "Policies": [],
+    "DataType": "text"
+  }
+]

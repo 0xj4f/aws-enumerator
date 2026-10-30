@@ -1,0 +1,35 @@
+[
+  {
+    "ARN": "arn:aws:ssm:eu-west-2:111122223333:parameter/demo/app/endpoint",
+    "DataType": "text",
+    "KeyId": null,
+    "LastModifiedDate": "2024-01-05T10:00:00Z",
+    "Name": "/demo/app/endpoint",
+    "PolicyStatus": "absent",
+    "Tier": "Standard",
+    "Type": "String",
+    "Version": 3
+  },
+  {
+    "ARN": "arn:aws:ssm:eu-west-2:111122223333:parameter/demo/app/hosts",
+    "DataType": "text",
+    "KeyId": null,
+    "LastModifiedDate": "2024-01-05T10:00:00Z",
+    "Name": "/demo/app/hosts",
+    "PolicyStatus": "absent",
+    "Tier": "Standard",
+    "Type": "StringList",
+    "Version": 1
+  },
+  {
+    "ARN": "arn:aws:ssm:eu-west-2:111122223333:parameter/demo/db/password",
+    "DataType": "text",
+    "KeyId": "alias/demo-key",
+    "LastModifiedDate": "2024-01-06T10:00:00Z",
+    "Name": "/demo/db/password",
+    "PolicyStatus": "absent",
+    "Tier": "Standard",
+    "Type": "SecureString",
+    "Version": 2
+  }
+]

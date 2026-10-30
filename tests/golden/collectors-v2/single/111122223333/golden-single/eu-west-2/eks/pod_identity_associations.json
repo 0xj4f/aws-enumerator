@@ -1,0 +1,15 @@
+{
+  "demo-cluster": [
+    {
+      "associationArn": "arn:aws:eks:eu-west-2:111122223333:podidentityassociation/demo-cluster/a-dec0a55oc1a7e01",
+      "associationId": "a-dec0a55oc1a7e01",
+      "clusterName": "demo-cluster",
+      "createdAt": "2024-01-05T10:00:00Z",
+      "modifiedAt": "2024-01-05T10:00:00Z",
+      "namespace": "demo-apps",
+      "roleArn": "arn:aws:iam::111122223333:role/demo-app-role",
+      "serviceAccount": "demo-worker",
+      "tags": {}
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "api_version": null,
+    "kind": null,
+    "metadata": {
+      "name": "ci-deployer-admin",
+      "namespace": null,
+      "labels": null,
+      "annotations": null,
+      "uid": "4e3eff89-aaaa-4bbb-8ccc-f25401e1079e",
+      "creation_timestamp": "2026-01-01 00:00:00+00:00",
+      "resource_version": "1000",
+      "owner_references": null,
+      "managed_fields": null
+    },
+    "role_ref": {
+      "api_group": "rbac.authorization.k8s.io",
+      "kind": "ClusterRole",
+      "name": "cluster-admin"
+    },
+    "subjects": [
+      {
+        "api_group": null,
+        "kind": "ServiceAccount",
+        "name": "ci-deployer",
+        "namespace": "kube-system"
+      },
+      {
+        "api_group": null,
+        "kind": "User",
+        "name": "demo-admin@example.com"
+      }
+    ]
+  },
+  {
+    "api_version": null,
+    "kind": null,
+    "metadata": {
+      "name": "wildcard-binding",
+      "namespace": null,
+      "labels": null,
+      "annotations": null,
+      "uid": "bdf806dc-aaaa-4bbb-8ccc-24bc6d0f2879",
+      "creation_timestamp": "2026-01-01 00:00:00+00:00",
+      "resource_version": "1000",
+      "owner_references": null,
+      "managed_fields": null
+    },
+    "role_ref": {
+      "api_group": "rbac.authorization.k8s.io",
+      "kind": "ClusterRole",
+      "name": "demo-wildcard"
+    },
+    "subjects": [
+      {
+        "api_group": null,
+        "kind": "Group",
+        "name": "system:masters"
+      }
+    ]
+  }
+]

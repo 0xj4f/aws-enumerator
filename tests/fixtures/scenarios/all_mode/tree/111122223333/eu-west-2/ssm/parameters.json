@@ -1,0 +1,13 @@
+[
+  {
+    "Name": "/demo/eu-west-2/db_password",
+    "ARN": "arn:aws:ssm:eu-west-2:111122223333:parameter/demo/eu-west-2/db_password",
+    "Type": "String",
+    "LastModifiedDate": "2026-01-01 00:00:00+00:00",
+    "LastModifiedUser": "arn:aws:iam::111122223333:user/demo-operator",
+    "Version": 1,
+    "Tier": "Standard",
+    "Policies": [],
+    "DataType": "text"
+  }
+]

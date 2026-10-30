@@ -1,0 +1,40 @@
+[
+  {
+    "Type": "dynamodb",
+    "Arn": "arn:aws:dynamodb:eu-west-2:123456789012:table/demo-table",
+    "Name": "demo-table",
+    "Policy": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::999999999999:role/demo-partner"
+          },
+          "Action": [
+            "dynamodb:GetItem"
+          ],
+          "Resource": "arn:aws:dynamodb:eu-west-2:123456789012:table/demo-table"
+        }
+      ]
+    }
+  },
+  {
+    "Type": "dynamodb",
+    "Arn": "arn:aws:dynamodb:eu-west-2:123456789012:table/demo-open-table",
+    "Name": "demo-open-table",
+    "Policy": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": "*",
+          "Action": [
+            "dynamodb:Query"
+          ],
+          "Resource": "*"
+        }
+      ]
+    }
+  }
+]

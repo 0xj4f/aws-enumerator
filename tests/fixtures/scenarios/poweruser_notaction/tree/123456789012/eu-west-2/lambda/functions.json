@@ -1,0 +1,20 @@
+[
+  {
+    "FunctionName": "demo-na-fn",
+    "FunctionArn": "arn:aws:lambda:eu-west-2:123456789012:function:demo-na-fn",
+    "Runtime": "python3.12",
+    "Handler": "app.handler",
+    "Role": "arn:aws:iam::123456789012:role/demo-poweruser",
+    "MemorySize": 128,
+    "Timeout": 30,
+    "LastModified": "2026-01-01T00:00:00.000+0000",
+    "PackageType": "Zip",
+    "Layers": [],
+    "VpcConfig": {
+      "VpcId": null,
+      "SubnetIds": [],
+      "SecurityGroupIds": []
+    },
+    "EnvironmentVariableNames": []
+  }
+]

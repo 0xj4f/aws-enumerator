@@ -1,0 +1,1630 @@
+{
+  "analyzer_status": [
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "load:iam",
+      "phase": "load",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "org"
+      ],
+      "name": "load:org",
+      "phase": "load",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "load:s3",
+      "phase": "load",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "load:ec2",
+      "phase": "load",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "load:edge_services",
+      "phase": "load",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "load:posture",
+      "phase": "load",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "load:k8s",
+      "phase": "load",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "load:kms",
+      "phase": "load",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "load:secrets",
+      "phase": "load",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "load:data_stores",
+      "phase": "load",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "load:lambda",
+      "phase": "load",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "load:compute",
+      "phase": "load",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "load:messaging",
+      "phase": "load",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "principals",
+      "phase": "principals",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "permission-map",
+      "phase": "principals",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "iam-graph",
+      "phase": "principals",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "admin-equivalence",
+      "phase": "identity",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "trust",
+      "phase": "identity",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "assume",
+      "phase": "identity",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "iam-hygiene",
+      "phase": "identity",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "s3",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "ec2",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "edge_services",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "posture",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "network",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "k8s",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "kms",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "secrets",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "data_stores",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "lambda",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "compute",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "messaging",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "cognito",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "rules",
+      "phase": "rules",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "closure",
+      "phase": "closure",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "coverage"
+      ],
+      "name": "coverage-gaps",
+      "phase": "postprocess",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "severity",
+      "phase": "postprocess",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "subsume",
+      "phase": "postprocess",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "suppression",
+      "phase": "postprocess",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "baseline",
+      "phase": "postprocess",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "write",
+      "phase": "write",
+      "status": "ok"
+    }
+  ],
+  "coverage": {
+    "facets": [
+      {
+        "detail": null,
+        "facet": "cognito-identity:ListIdentityPools",
+        "region": "eu-west-2",
+        "status": "legacy-unknown"
+      },
+      {
+        "detail": null,
+        "facet": "ec2:DescribeInstances",
+        "region": "eu-west-2",
+        "status": "legacy-unknown"
+      },
+      {
+        "detail": null,
+        "facet": "ec2:DescribeInternetGateways",
+        "region": "eu-west-2",
+        "status": "legacy-unknown"
+      },
+      {
+        "detail": null,
+        "facet": "ec2:DescribeNetworkAcls",
+        "region": "eu-west-2",
+        "status": "legacy-unknown"
+      },
+      {
+        "detail": null,
+        "facet": "ec2:DescribeRouteTables",
+        "region": "eu-west-2",
+        "status": "legacy-unknown"
+      },
+      {
+        "detail": null,
+        "facet": "ec2:DescribeSecurityGroups",
+        "region": "eu-west-2",
+        "status": "legacy-unknown"
+      },
+      {
+        "detail": null,
+        "facet": "ec2:DescribeSnapshots",
+        "region": "eu-west-2",
+        "status": "legacy-unknown"
+      },
+      {
+        "detail": null,
+        "facet": "ec2:DescribeSubnets",
+        "region": "eu-west-2",
+        "status": "legacy-unknown"
+      },
+      {
+        "detail": null,
+        "facet": "ec2:DescribeVpcPeeringConnections",
+        "region": "eu-west-2",
+        "status": "legacy-unknown"
+      },
+      {
+        "detail": null,
+        "facet": "ec2:DescribeVpcs",
+        "region": "eu-west-2",
+        "status": "legacy-unknown"
+      },
+      {
+        "detail": null,
+        "facet": "route53:ListHostedZones",
+        "region": "global",
+        "status": "legacy-unknown"
+      },
+      {
+        "detail": null,
+        "facet": "s3:ListBuckets",
+        "region": "global",
+        "status": "legacy-unknown"
+      }
+    ],
+    "modules": [
+      {
+        "detail": null,
+        "error_code": null,
+        "module": "cognito",
+        "region": "global",
+        "status": "legacy-unknown"
+      },
+      {
+        "detail": null,
+        "error_code": null,
+        "module": "ebs",
+        "region": "global",
+        "status": "legacy-unknown"
+      },
+      {
+        "detail": null,
+        "error_code": null,
+        "module": "ec2",
+        "region": "global",
+        "status": "legacy-unknown"
+      },
+      {
+        "detail": null,
+        "error_code": null,
+        "module": "eks",
+        "region": "global",
+        "status": "legacy-unknown"
+      },
+      {
+        "detail": null,
+        "error_code": null,
+        "module": "elb",
+        "region": "global",
+        "status": "legacy-unknown"
+      },
+      {
+        "detail": null,
+        "error_code": null,
+        "module": "glue",
+        "region": "global",
+        "status": "legacy-unknown"
+      },
+      {
+        "detail": null,
+        "error_code": null,
+        "module": "iam",
+        "region": "global",
+        "status": "legacy-unknown"
+      },
+      {
+        "detail": null,
+        "error_code": null,
+        "module": "k8s",
+        "region": "global",
+        "status": "legacy-unknown"
+      },
+      {
+        "detail": null,
+        "error_code": null,
+        "module": "kms",
+        "region": "global",
+        "status": "legacy-unknown"
+      },
+      {
+        "detail": null,
+        "error_code": null,
+        "module": "lambda",
+        "region": "global",
+        "status": "legacy-unknown"
+      },
+      {
+        "detail": null,
+        "error_code": null,
+        "module": "rds",
+        "region": "global",
+        "status": "legacy-unknown"
+      },
+      {
+        "detail": null,
+        "error_code": null,
+        "module": "route53",
+        "region": "global",
+        "status": "legacy-unknown"
+      },
+      {
+        "detail": null,
+        "error_code": null,
+        "module": "s3",
+        "region": "global",
+        "status": "legacy-unknown"
+      },
+      {
+        "detail": null,
+        "error_code": null,
+        "module": "secretsmanager",
+        "region": "global",
+        "status": "legacy-unknown"
+      },
+      {
+        "detail": null,
+        "error_code": null,
+        "module": "sg",
+        "region": "global",
+        "status": "legacy-unknown"
+      },
+      {
+        "detail": null,
+        "error_code": null,
+        "module": "sns",
+        "region": "global",
+        "status": "legacy-unknown"
+      },
+      {
+        "detail": null,
+        "error_code": null,
+        "module": "sqs",
+        "region": "global",
+        "status": "legacy-unknown"
+      },
+      {
+        "detail": null,
+        "error_code": null,
+        "module": "ssm",
+        "region": "global",
+        "status": "legacy-unknown"
+      },
+      {
+        "detail": null,
+        "error_code": null,
+        "module": "vpc",
+        "region": "global",
+        "status": "legacy-unknown"
+      }
+    ],
+    "source": "legacy-unknown",
+    "status": "unknown"
+  },
+  "edge_types": {
+    "CAN_READ": {
+      "base_weight": 1,
+      "bridge": false,
+      "category": "s3",
+      "category_label": "S3",
+      "category_order": 7,
+      "description": "Get or list objects.",
+      "doc_anchor": "#can_read",
+      "legacy_name": "CAN_READ",
+      "sources": [
+        "user",
+        "role",
+        "group"
+      ],
+      "targets": [
+        "bucket"
+      ],
+      "traversable": true,
+      "traversable_rule": null,
+      "traversal": "access"
+    },
+    "CLUSTER_ROLE": {
+      "base_weight": 0,
+      "bridge": false,
+      "category": "eks",
+      "category_label": "EKS identity",
+      "category_order": 17,
+      "description": "EKS control-plane service role; workloads never get it.",
+      "doc_anchor": "#cluster_role",
+      "legacy_name": "CLUSTER_ROLE",
+      "sources": [
+        "cluster"
+      ],
+      "targets": [
+        "role"
+      ],
+      "traversable": false,
+      "traversable_rule": null,
+      "traversal": "info"
+    },
+    "GRANTS_PUBLIC": {
+      "base_weight": 0,
+      "bridge": false,
+      "category": "s3",
+      "category_label": "S3",
+      "category_order": 7,
+      "description": "Public bucket policy or public ACL (BPA-aware). Normalised anonymous \u2192 bucket.",
+      "doc_anchor": "#grants_public",
+      "legacy_name": "GRANTS_PUBLIC",
+      "sources": [
+        "anonymous"
+      ],
+      "targets": [
+        "bucket"
+      ],
+      "traversable": true,
+      "traversable_rule": null,
+      "traversal": "exposure"
+    },
+    "HAS_POLICY": {
+      "base_weight": 0,
+      "bridge": false,
+      "category": "iam",
+      "category_label": "IAM structure",
+      "category_order": 1,
+      "description": "Managed policy attached to the principal (ARN-keyed).",
+      "doc_anchor": "#has_policy",
+      "legacy_name": null,
+      "sources": [
+        "user",
+        "role",
+        "group"
+      ],
+      "targets": [
+        "policy"
+      ],
+      "traversable": false,
+      "traversable_rule": null,
+      "traversal": "structural"
+    },
+    "PUBLIC_INBOUND": {
+      "base_weight": 0,
+      "bridge": false,
+      "category": "network",
+      "category_label": "Network",
+      "category_order": 6,
+      "description": "Reachable from the internet (security groups, routes, NACLs, scheme, endpoint access). INTERNET_FACING is folded into props.igw_routed.",
+      "doc_anchor": "#public_inbound",
+      "legacy_name": "PUBLIC_INBOUND",
+      "sources": [
+        "anonymous"
+      ],
+      "targets": [
+        "instance",
+        "elb",
+        "k8sservice",
+        "cluster",
+        "rds",
+        "apigw",
+        "cloudfront"
+      ],
+      "traversable": false,
+      "traversable_rule": null,
+      "traversal": "exposure"
+    },
+    "SERVICE_CAN_ASSUME": {
+      "base_weight": 0,
+      "bridge": false,
+      "category": "trust",
+      "category_label": "Role assumption",
+      "category_order": 2,
+      "description": "The trust policy admits an AWS service principal (PassRole candidates, confused-deputy checks).",
+      "doc_anchor": "#service_can_assume",
+      "legacy_name": null,
+      "sources": [
+        "service_principal"
+      ],
+      "targets": [
+        "role"
+      ],
+      "traversable": false,
+      "traversable_rule": null,
+      "traversal": "info"
+    }
+  },
+  "edges": [
+    {
+      "category": "eks",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "technique": "eks-control-plane-role"
+      },
+      "id": "e:122d87de88e45d2518f9",
+      "source": "arn:aws:eks:eu-west-2:123456789012:cluster/demo-unreachable",
+      "target": "arn:aws:iam::123456789012:role/example-single-stmt",
+      "traversable": false,
+      "traversal": "info",
+      "type": "CLUSTER_ROLE",
+      "weight": 0
+    },
+    {
+      "category": "iam",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow"
+      },
+      "id": "e:129baede74ac7a338c3b",
+      "source": "arn:aws:iam::123456789012:role/example-string-trust",
+      "target": "arn:aws:iam::123456789012:policy/example-customer",
+      "traversable": false,
+      "traversal": "structural",
+      "type": "HAS_POLICY",
+      "weight": 0
+    },
+    {
+      "category": "s3",
+      "confidence": "conditional",
+      "evidence": {
+        "access_types": [
+          "CAN_READ"
+        ],
+        "actions": [
+          "s3:GetObject"
+        ],
+        "condition_strength": "weak",
+        "decision": "conditional",
+        "gaps": [
+          "iam:attached-unknown",
+          "iam:groups-unknown",
+          "iam:inline-unknown"
+        ],
+        "layers": {
+          "boundary": "n/a",
+          "identity": "true",
+          "rcp": "unknown",
+          "resource": "true",
+          "scp": "unknown"
+        },
+        "legacy": {
+          "direction": "forward",
+          "file": "s3_relationships.json",
+          "type": "CAN_READ"
+        },
+        "statements": [
+          {
+            "layer": "identity",
+            "policy_arn": null,
+            "policy_name": "p",
+            "sid": null,
+            "source_type": "inline",
+            "statement_index": 0,
+            "version_id": null,
+            "via_group": null
+          },
+          {
+            "layer": "resource",
+            "policy_arn": "arn:aws:s3:::example-malformed-bucket",
+            "policy_name": "BucketPolicy",
+            "sid": null,
+            "source_type": "resource",
+            "statement_index": 0,
+            "version_id": null,
+            "via_group": null
+          }
+        ]
+      },
+      "id": "e:824c7fd48f2806121e2a",
+      "source": "arn:aws:iam::123456789012:user/example-user",
+      "target": "arn:aws:s3:::example-malformed-bucket",
+      "traversable": true,
+      "traversal": "access",
+      "type": "CAN_READ",
+      "weight": 2
+    },
+    {
+      "category": "s3",
+      "confidence": "conditional",
+      "evidence": {
+        "access_types": [
+          "CAN_READ"
+        ],
+        "actions": [
+          "s3:GetObject"
+        ],
+        "condition_strength": "weak",
+        "decision": "conditional",
+        "gaps": [
+          "iam:attached-unknown",
+          "iam:groups-unknown",
+          "iam:inline-unknown"
+        ],
+        "layers": {
+          "boundary": "n/a",
+          "identity": "true",
+          "rcp": "unknown",
+          "resource": "n/a",
+          "scp": "unknown"
+        },
+        "legacy": {
+          "direction": "forward",
+          "file": "s3_relationships.json",
+          "type": "CAN_READ"
+        },
+        "statements": [
+          {
+            "layer": "identity",
+            "policy_arn": null,
+            "policy_name": "p",
+            "sid": null,
+            "source_type": "inline",
+            "statement_index": 0,
+            "version_id": null,
+            "via_group": null
+          }
+        ]
+      },
+      "id": "e:b25cc57863025fbb4db3",
+      "source": "arn:aws:iam::123456789012:user/example-user",
+      "target": "arn:aws:s3:::example-region-error",
+      "traversable": true,
+      "traversal": "access",
+      "type": "CAN_READ",
+      "weight": 2
+    },
+    {
+      "category": "s3",
+      "confidence": "conditional",
+      "evidence": {
+        "access_types": [
+          "CAN_READ"
+        ],
+        "actions": [
+          "s3:getobject"
+        ],
+        "condition_strength": "weak",
+        "decision": "conditional",
+        "gaps": [
+          "s3:account-public-access-block-unknown"
+        ],
+        "legacy": {
+          "direction": "reversed",
+          "file": "s3_relationships.json",
+          "type": "GRANTS_PUBLIC"
+        },
+        "sources": [
+          "bucket-policy"
+        ],
+        "statements": [
+          {
+            "layer": "resource",
+            "policy_arn": "arn:aws:s3:::example-malformed-bucket",
+            "policy_name": "BucketPolicy",
+            "sid": null,
+            "source_type": "resource",
+            "statement_index": 0,
+            "version_id": null,
+            "via_group": null
+          }
+        ]
+      },
+      "id": "e:333fc172dc5d0493b431",
+      "props": {
+        "auth": "none"
+      },
+      "source": "aws-enumerator:anonymous",
+      "target": "arn:aws:s3:::example-malformed-bucket",
+      "traversable": true,
+      "traversal": "exposure",
+      "type": "GRANTS_PUBLIC",
+      "weight": 1
+    },
+    {
+      "category": "network",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "endpoint_private_access": false,
+        "endpoint_public_access": true,
+        "public_access_cidrs": [
+          "0.0.0.0/0"
+        ]
+      },
+      "id": "e:f719607d7223279429c2",
+      "props": {
+        "technique": "eks-public-endpoint"
+      },
+      "source": "aws-enumerator:anonymous",
+      "target": "arn:aws:eks:eu-west-2:123456789012:cluster/demo-unreachable",
+      "traversable": false,
+      "traversal": "exposure",
+      "type": "PUBLIC_INBOUND",
+      "weight": 0
+    },
+    {
+      "category": "trust",
+      "confidence": "definite",
+      "evidence": {
+        "actions": [
+          "sts:AssumeRole"
+        ],
+        "decision": "allow",
+        "trust_statement": 0
+      },
+      "id": "e:d68307f167cec277af15",
+      "source": "svc:lambda.amazonaws.com",
+      "target": "arn:aws:iam::123456789012:role/example-single-stmt",
+      "traversable": false,
+      "traversal": "info",
+      "type": "SERVICE_CAN_ASSUME",
+      "weight": 0
+    }
+  ],
+  "evaluation_gaps": [
+    {
+      "code": "coverage-not-recorded",
+      "count": null,
+      "detail": "The report predates _coverage.json: denied or failed collection cannot be told apart from empty data."
+    },
+    {
+      "code": "external-identity",
+      "count": null,
+      "detail": "Identity policies of external principals are not visible; cross-account edges are conditional."
+    },
+    {
+      "code": "iam-hygiene:access-keys-unknown",
+      "count": 1,
+      "detail": "IAM credential hygiene could not be decided for some identities because the collector could not read the value (unknown, not compliant)."
+    },
+    {
+      "code": "iam-hygiene:root-keys-unknown",
+      "count": 1,
+      "detail": "IAM credential hygiene could not be decided for some identities because the collector could not read the value (unknown, not compliant)."
+    },
+    {
+      "code": "iam-hygiene:root-mfa-unknown",
+      "count": 1,
+      "detail": "IAM credential hygiene could not be decided for some identities because the collector could not read the value (unknown, not compliant)."
+    },
+    {
+      "code": "iam-hygiene:user-mfa-unknown",
+      "count": 1,
+      "detail": "IAM credential hygiene could not be decided for some identities because the collector could not read the value (unknown, not compliant)."
+    },
+    {
+      "code": "iam:legacy-layout",
+      "count": null,
+      "detail": "IAM was collected with the per-entity (d13c215) layout: no policy versions, no identity providers, boundaries and tags may be missing"
+    },
+    {
+      "code": "input:files-unreadable",
+      "count": 6,
+      "detail": "Data files that hold a collector error marker or are not readable; their resources are unknown, not absent: elb/resources.json:error"
+    },
+    {
+      "code": "org:rcp-unknown",
+      "count": null,
+      "detail": "Resource control policies are unknown (membership unknown)"
+    },
+    {
+      "code": "org:scp-unknown",
+      "count": null,
+      "detail": "Service control policies are unknown (membership unknown)"
+    },
+    {
+      "code": "runtime-conditions",
+      "count": null,
+      "detail": "Condition values known only at request time (source IP, MFA, tags in the request) are not evaluated; such decisions are conditional."
+    },
+    {
+      "code": "session-policies",
+      "count": null,
+      "detail": "Session policies passed at AssumeRole time can only narrow permissions and are not modelled."
+    }
+  ],
+  "findings": [
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "s3_public_access",
+      "confidence": "conditional",
+      "description": "S3 bucket 'example-malformed-bucket' gives anyone on the internet CAN_READ (actions: s3:getobject); not verified: s3:account-public-access-block-unknown.",
+      "entity": "bucket/example-malformed-bucket",
+      "entity_arn": "arn:aws:s3:::example-malformed-bucket",
+      "evidence": {
+        "access_types": [
+          "CAN_READ"
+        ],
+        "auth": "none",
+        "condition_strength": "none",
+        "decision": "allow",
+        "mitigated_by": [],
+        "source": "bucket-policy",
+        "statements": [
+          {
+            "layer": "resource",
+            "policy_arn": "arn:aws:s3:::example-malformed-bucket",
+            "policy_name": "BucketPolicy",
+            "sid": null,
+            "source_type": "resource",
+            "statement_index": 0,
+            "version_id": null,
+            "via_group": null
+          }
+        ]
+      },
+      "fingerprint": "a48d58410fc371bb2a5c5941e817841e",
+      "gaps": [
+        "s3:account-public-access-block-unknown"
+      ],
+      "id": "S3-PUBLIC-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "s3:getobject"
+      ],
+      "node_id": "arn:aws:s3:::example-malformed-bucket",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-5--you-have-access-to-an-s3-bucket",
+      "region": "eu-west-2",
+      "remediation": "Remove the wildcard Principal or scope it with a principal-restricting condition (aws:PrincipalOrgID, aws:SourceVpce, aws:SourceArn); keep Block Public Access (RestrictPublicBuckets) on at account level.",
+      "resource": [
+        "arn:aws:s3:::example-malformed-bucket"
+      ],
+      "severity": "HIGH",
+      "source_type": "s3_bucket_policy",
+      "status": "open",
+      "title": "Bucket 'example-malformed-bucket' is public through its bucket policy (CAN_READ)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "eks_exposure",
+      "confidence": "definite",
+      "description": "The Kubernetes API endpoint of cluster demo-unreachable (eu-west-2) is publicly accessible from 0.0.0.0/0. Authentication is still required, but any leaked kubeconfig, token or mapped IAM credential is usable from anywhere, and API-server vulnerabilities are exposed.",
+      "entity": "cluster/demo-unreachable",
+      "entity_arn": "arn:aws:eks:eu-west-2:123456789012:cluster/demo-unreachable",
+      "evidence": {
+        "endpoint_private_access": false,
+        "endpoint_public_access": true,
+        "public_access_cidrs": [
+          "0.0.0.0/0"
+        ]
+      },
+      "fingerprint": "3fef7dd77c573b076d35a7cf186304b9",
+      "id": "EKS-ENDPOINT-001",
+      "legacy_ids": [],
+      "node_id": "arn:aws:eks:eu-west-2:123456789012:cluster/demo-unreachable",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "region": "eu-west-2",
+      "remediation": "Disable public endpoint access, or restrict publicAccessCidrs to known administration networks.",
+      "resource": [
+        "arn:aws:eks:eu-west-2:123456789012:cluster/demo-unreachable"
+      ],
+      "severity": "MEDIUM",
+      "source_policy": "resourcesVpcConfig",
+      "source_type": "eks_cluster",
+      "status": "open",
+      "title": "EKS cluster demo-unreachable has a public API endpoint open to the internet"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "LOW",
+      "category": "iam_hygiene",
+      "confidence": "definite",
+      "description": "No password policy is set: console passwords only need the AWS defaults (0 user(s) with a console password).",
+      "evidence": {
+        "configured": false,
+        "console_users": 0
+      },
+      "fingerprint": "8324f653d46059d49f0e62bada4e6cf9",
+      "id": "IAM-PWPOL-001",
+      "legacy_ids": [],
+      "node_id": "aws-enumerator:account/123456789012",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-6--youre-external-no-foothold-yet",
+      "remediation": "Set an account password policy: length >= 14, all character classes, reuse prevention 24.",
+      "severity": "LOW",
+      "status": "open",
+      "title": "The account has no IAM password policy"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "INFO",
+      "category": "k8s_coverage",
+      "confidence": "definite",
+      "description": "The Kubernetes API was not enumerated for this cluster (no k8s data in the report) (cluster demo-err, eu-west-2). Pods, service accounts, RBAC and network objects of this cluster are unknown: the absence of Kubernetes edges and findings for it is not evidence of a safe cluster.",
+      "entity": "cluster/demo-err",
+      "entity_arn": "arn:aws:eks:eu-west-2:123456789012:cluster/demo-err",
+      "evidence": {
+        "coverage_status": "not-collected"
+      },
+      "fingerprint": "1e1c5619fedab5fad679f982b464d378",
+      "id": "K8S-AUTH-001",
+      "legacy_ids": [],
+      "node_id": "arn:aws:eks:eu-west-2:123456789012:cluster/demo-err",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-2--you-compromised-a-kubernetes-pod",
+      "region": "eu-west-2",
+      "remediation": "Give the collecting identity read access to the cluster (an access entry or aws-auth mapping with the read-only RBAC of 'aws-enumerator permissions --k8s'), or use --k8s-auth kubeconfig/token, and re-run.",
+      "resource": [
+        "arn:aws:eks:eu-west-2:123456789012:cluster/demo-err"
+      ],
+      "severity": "INFO",
+      "source_policy": "cluster_info.auth_status",
+      "source_type": "k8s_cluster",
+      "status": "open",
+      "title": "Kubernetes objects of cluster demo-err were not enumerated"
+    }
+  ],
+  "generator": {
+    "engine_version": "1.1.0",
+    "git_sha": null,
+    "rules_version": "2.1.0",
+    "tool": "aws-enumerator",
+    "version": "0.3.0"
+  },
+  "meta": {
+    "default_sources": [
+      "arn:aws:iam::123456789012:user/example-user",
+      "arn:aws:iam::123456789012:user/example-user-noread",
+      "aws-enumerator:anonymous"
+    ],
+    "default_targets": [
+      "aws-enumerator:account-admin/123456789012"
+    ]
+  },
+  "node_types": {
+    "account": {
+      "data_asset": false,
+      "default_source": false,
+      "description": "Anchor for account-wide findings (hygiene, posture, collection gaps).",
+      "group": "posture",
+      "icon": "account",
+      "is_compute_bridge": false,
+      "label": "Account",
+      "order": 11,
+      "synthetic": true
+    },
+    "account_admin": {
+      "data_asset": false,
+      "default_source": false,
+      "description": "Administrator of the assessed account; the default path target.",
+      "group": "synthetic",
+      "icon": "admin",
+      "is_compute_bridge": false,
+      "label": "Account administrator",
+      "order": 8,
+      "synthetic": true
+    },
+    "anonymous": {
+      "data_asset": false,
+      "default_source": true,
+      "description": "The internet / any AWS account. Source of every public exposure (F-037).",
+      "group": "synthetic",
+      "icon": "anonymous",
+      "is_compute_bridge": false,
+      "label": "Anyone",
+      "order": 7,
+      "synthetic": true
+    },
+    "bucket": {
+      "data_asset": true,
+      "default_source": false,
+      "description": "",
+      "group": "data",
+      "icon": "bucket",
+      "is_compute_bridge": false,
+      "label": "S3 bucket",
+      "order": 35,
+      "synthetic": false
+    },
+    "cluster": {
+      "data_asset": false,
+      "default_source": false,
+      "description": "",
+      "group": "kubernetes",
+      "icon": "cluster",
+      "is_compute_bridge": false,
+      "label": "EKS cluster",
+      "order": 49,
+      "synthetic": false
+    },
+    "group": {
+      "data_asset": false,
+      "default_source": false,
+      "description": "",
+      "group": "identity",
+      "icon": "group",
+      "is_compute_bridge": false,
+      "label": "IAM group",
+      "order": 3,
+      "synthetic": false
+    },
+    "policy": {
+      "data_asset": false,
+      "default_source": false,
+      "description": "Customer- or AWS-managed policy (ARN).",
+      "group": "identity",
+      "icon": "policy",
+      "is_compute_bridge": false,
+      "label": "Managed policy",
+      "order": 4,
+      "synthetic": false
+    },
+    "role": {
+      "data_asset": false,
+      "default_source": false,
+      "description": "",
+      "group": "identity",
+      "icon": "role",
+      "is_compute_bridge": false,
+      "label": "IAM role",
+      "order": 2,
+      "synthetic": false
+    },
+    "service_principal": {
+      "data_asset": false,
+      "default_source": false,
+      "description": "Context only (who may assume a role on behalf of a service).",
+      "group": "identity",
+      "icon": "service",
+      "is_compute_bridge": false,
+      "label": "AWS service principal",
+      "order": 6,
+      "synthetic": true
+    },
+    "user": {
+      "data_asset": false,
+      "default_source": true,
+      "description": "Long-term credentials: a leaked access key is a common entry point.",
+      "group": "identity",
+      "icon": "user",
+      "is_compute_bridge": false,
+      "label": "IAM user",
+      "order": 1,
+      "synthetic": false
+    }
+  },
+  "nodes": [
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [
+          "eks:DescribeCluster:error",
+          "eks:nodegroups:error",
+          "k8s:api:not-collected"
+        ],
+        "status": "not-collected"
+      },
+      "findings": [
+        "1e1c5619fedab5fad679f982b464d378"
+      ],
+      "id": "arn:aws:eks:eu-west-2:123456789012:cluster/demo-err",
+      "inherited_findings": [],
+      "label": "demo-err",
+      "max_severity": "INFO",
+      "partition": "aws",
+      "props": {
+        "name": "demo-err"
+      },
+      "region": "eu-west-2",
+      "tags": [],
+      "type": "cluster"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [
+          "eks:nodegroups:error",
+          "k8s:cluster_role_bindings:error",
+          "k8s:cluster_roles:error",
+          "k8s:ingresses:error",
+          "k8s:pods:error",
+          "k8s:role_bindings:error",
+          "k8s:roles:error",
+          "k8s:service_accounts:error",
+          "k8s:services:error"
+        ],
+        "status": "error"
+      },
+      "findings": [
+        "3fef7dd77c573b076d35a7cf186304b9"
+      ],
+      "id": "arn:aws:eks:eu-west-2:123456789012:cluster/demo-unreachable",
+      "inherited_findings": [],
+      "label": "demo-unreachable",
+      "max_severity": "MEDIUM",
+      "partition": "aws",
+      "props": {
+        "authentication_mode": "API_AND_CONFIG_MAP",
+        "endpoint_private_access": false,
+        "endpoint_public_access": true,
+        "k8s_auth_status": "ok",
+        "name": "demo-unreachable",
+        "oidc_issuer": "https://oidc.eks.eu-west-2.amazonaws.com/id/DMMJBMPJHPDOKHCKIHJCMOFKOHOPAJKJ",
+        "public_access_cidrs": [
+          "0.0.0.0/0"
+        ],
+        "status": "ACTIVE",
+        "version": "1.30"
+      },
+      "region": "eu-west-2",
+      "tags": [],
+      "type": "cluster"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [
+          "iam:attached-policies:denied"
+        ],
+        "status": "partial"
+      },
+      "findings": [],
+      "id": "arn:aws:iam::123456789012:group/example-group",
+      "inherited_findings": [],
+      "label": "example-group",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "attached_policies_error": "AccessDenied",
+        "attached_policies_status": "denied",
+        "path": "/"
+      },
+      "region": null,
+      "tags": [],
+      "type": "group"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "complete"
+      },
+      "findings": [],
+      "id": "arn:aws:iam::123456789012:policy/example-customer",
+      "inherited_findings": [],
+      "label": "example-customer",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "aws_managed": false,
+        "default_version": "v1",
+        "document_status": "complete",
+        "versions_collected": 1
+      },
+      "region": null,
+      "tags": [],
+      "type": "policy"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "complete"
+      },
+      "findings": [],
+      "id": "arn:aws:iam::123456789012:policy/example-denied",
+      "inherited_findings": [],
+      "label": "example-denied",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "aws_managed": false,
+        "default_version": null,
+        "document_status": "denied",
+        "versions_collected": 0
+      },
+      "region": null,
+      "tags": [],
+      "type": "policy"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "legacy-unknown"
+      },
+      "findings": [],
+      "id": "arn:aws:iam::123456789012:role/example-empty-trust",
+      "inherited_findings": [],
+      "label": "example-empty-trust",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "attached_policies_error": null,
+        "attached_policies_status": "complete",
+        "path": "/"
+      },
+      "region": null,
+      "tags": [],
+      "type": "role"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [
+          "iam:attached-policies:denied"
+        ],
+        "status": "partial"
+      },
+      "findings": [],
+      "id": "arn:aws:iam::123456789012:role/example-single-stmt",
+      "inherited_findings": [],
+      "label": "example-single-stmt",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "attached_policies_error": "AccessDenied",
+        "attached_policies_status": "denied",
+        "path": "/"
+      },
+      "region": null,
+      "tags": [],
+      "type": "role"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "legacy-unknown"
+      },
+      "findings": [],
+      "id": "arn:aws:iam::123456789012:role/example-string-trust",
+      "inherited_findings": [],
+      "label": "example-string-trust",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "attached_policies_error": null,
+        "attached_policies_status": "complete",
+        "path": "/"
+      },
+      "region": null,
+      "tags": [],
+      "type": "role"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [
+          "iam:attached-policies:denied",
+          "iam:groups-unknown",
+          "iam:inline-unknown"
+        ],
+        "status": "partial"
+      },
+      "findings": [],
+      "id": "arn:aws:iam::123456789012:user/example-user",
+      "inherited_findings": [],
+      "label": "example-user",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "attached_policies_error": "AccessDenied",
+        "attached_policies_status": "denied",
+        "credentials": "present",
+        "entry_point": true,
+        "path": "/"
+      },
+      "region": null,
+      "tags": [],
+      "type": "user"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "legacy-unknown"
+      },
+      "findings": [],
+      "id": "arn:aws:iam::123456789012:user/example-user-noread",
+      "inherited_findings": [],
+      "label": "example-user-noread",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "attached_policies_error": null,
+        "attached_policies_status": "complete",
+        "credentials": "unknown",
+        "entry_point": true,
+        "path": "/"
+      },
+      "region": null,
+      "tags": [],
+      "type": "user"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "legacy-unknown"
+      },
+      "findings": [
+        "a48d58410fc371bb2a5c5941e817841e"
+      ],
+      "id": "arn:aws:s3:::example-malformed-bucket",
+      "inherited_findings": [],
+      "label": "example-malformed-bucket",
+      "max_severity": "HIGH",
+      "partition": "aws",
+      "props": {
+        "block_public_access": {
+          "block_public_acls": null,
+          "block_public_policy": null,
+          "ignore_public_acls": null,
+          "restrict_public_buckets": null
+        },
+        "data_asset": true,
+        "mitigated_by": [],
+        "policy_status": "present",
+        "public": true,
+        "public_via": [
+          "bucket-policy"
+        ]
+      },
+      "region": "eu-west-2",
+      "tags": [],
+      "type": "bucket"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "legacy-unknown"
+      },
+      "findings": [],
+      "id": "arn:aws:s3:::example-region-error",
+      "inherited_findings": [],
+      "label": "example-region-error",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "block_public_access": {
+          "block_public_acls": null,
+          "block_public_policy": null,
+          "ignore_public_acls": null,
+          "restrict_public_buckets": null
+        },
+        "data_asset": true,
+        "mitigated_by": [],
+        "policy_status": "absent",
+        "public": null,
+        "public_via": []
+      },
+      "region": null,
+      "tags": [],
+      "type": "bucket"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "not-applicable"
+      },
+      "findings": [],
+      "id": "aws-enumerator:account-admin/123456789012",
+      "inherited_findings": [],
+      "label": "Administrator of 123456789012",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "high_value": true,
+        "high_value_reason": "account-admin"
+      },
+      "region": null,
+      "tags": [],
+      "type": "account_admin"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "not-applicable"
+      },
+      "findings": [
+        "8324f653d46059d49f0e62bada4e6cf9"
+      ],
+      "id": "aws-enumerator:account/123456789012",
+      "inherited_findings": [],
+      "label": "aws-enumerator:account/123456789012",
+      "max_severity": "LOW",
+      "partition": "aws",
+      "props": {},
+      "region": null,
+      "tags": [],
+      "type": "account"
+    },
+    {
+      "account": null,
+      "coverage": {
+        "gaps": [],
+        "status": "not-applicable"
+      },
+      "findings": [],
+      "id": "aws-enumerator:anonymous",
+      "inherited_findings": [],
+      "label": "Anyone (internet / any AWS account)",
+      "max_severity": null,
+      "partition": null,
+      "props": {
+        "entry_point": true
+      },
+      "region": null,
+      "tags": [],
+      "type": "anonymous"
+    },
+    {
+      "account": null,
+      "coverage": {
+        "gaps": [],
+        "status": "not-applicable"
+      },
+      "findings": [],
+      "id": "svc:lambda.amazonaws.com",
+      "inherited_findings": [],
+      "label": "lambda.amazonaws.com",
+      "max_severity": null,
+      "partition": null,
+      "props": {},
+      "region": null,
+      "tags": [],
+      "type": "service_principal"
+    }
+  ],
+  "run": {
+    "account_id": "123456789012",
+    "generated_at": "<stripped>",
+    "mode": "legacy-single",
+    "operator": {
+      "arn": "arn:aws:iam::123456789012:user/demo-operator",
+      "node_id": null,
+      "redacted": false,
+      "resolution": "not-in-graph"
+    },
+    "partition": "aws",
+    "regions": [
+      "eu-west-2"
+    ],
+    "run_id": "legacy-eu-west-2",
+    "source_manifest_sha256": "83809a4dbe4d14fee130bb6d690e5c11fac154e08c94c72ba19beaa44611bb6b"
+  },
+  "schema_version": "1.0.0"
+}

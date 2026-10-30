@@ -1,0 +1,139 @@
+[
+  {
+    "AccessKeys": [
+      {
+        "AccessKeyId": "AKIAEXAMPLEALICE0001",
+        "LastRotated": "2024-01-03T10:00:00Z",
+        "LastUsedDate": "2024-01-14T10:00:00Z",
+        "LastUsedRegion": "eu-west-2",
+        "LastUsedService": "s3",
+        "Status": "Active"
+      }
+    ],
+    "Arn": "arn:aws:iam::111122223333:user/demo-alice",
+    "CreateDate": "2024-01-02T10:00:00Z",
+    "HasLoginProfile": true,
+    "MFAActive": true,
+    "MFADevices": [
+      {
+        "SerialNumber": "arn:aws:iam::111122223333:mfa/demo-alice",
+        "Source": "virtual"
+      }
+    ],
+    "PasswordLastChanged": "2024-01-02T10:00:00Z",
+    "PasswordLastUsed": "2024-01-14T10:00:00Z",
+    "Path": "/",
+    "PermissionsBoundary": null,
+    "SSHPublicKeys": [
+      {
+        "SSHPublicKeyId": "APKAEXAMPLEALICESSH01",
+        "Status": "Active",
+        "UploadDate": "2024-01-04T10:00:00Z"
+      }
+    ],
+    "ServiceSpecificCredentials": [],
+    "SigningCertificates": [],
+    "Tags": [
+      {
+        "Key": "owner",
+        "Value": "demo-team"
+      },
+      {
+        "Key": "team",
+        "Value": "demo-dev"
+      }
+    ],
+    "UserId": "AIDAEXAMPLEALICE00001",
+    "UserName": "demo-alice"
+  },
+  {
+    "AccessKeys": [
+      {
+        "AccessKeyId": "AKIAEXAMPLEBOB000001",
+        "LastRotated": "2024-01-04T10:00:00Z",
+        "LastUsedDate": "2024-01-14T10:00:00Z",
+        "LastUsedRegion": "eu-west-2",
+        "LastUsedService": "s3",
+        "Status": "Active"
+      },
+      {
+        "AccessKeyId": "AKIAEXAMPLEBOB000002",
+        "LastRotated": "2024-01-05T10:00:00Z",
+        "LastUsedDate": null,
+        "LastUsedRegion": null,
+        "LastUsedService": null,
+        "Status": "Inactive"
+      }
+    ],
+    "Arn": "arn:aws:iam::111122223333:user/demo-bob",
+    "CollectionErrors": [
+      {
+        "api": "iam:ListSSHPublicKeys",
+        "error_code": "AccessDenied",
+        "status": "denied"
+      }
+    ],
+    "CreateDate": "2024-01-04T10:00:00Z",
+    "HasLoginProfile": false,
+    "MFAActive": false,
+    "MFADevices": [],
+    "PasswordLastChanged": null,
+    "PasswordLastUsed": null,
+    "Path": "/",
+    "PermissionsBoundary": null,
+    "SSHPublicKeys": null,
+    "ServiceSpecificCredentials": [],
+    "SigningCertificates": [
+      {
+        "CertificateId": "DEMOCERTBOB0000000000000000000001",
+        "Status": "Active",
+        "UploadDate": "2024-01-05T10:00:00Z"
+      }
+    ],
+    "Tags": [],
+    "UserId": "AIDAEXAMPLEBOB0000001",
+    "UserName": "demo-bob"
+  },
+  {
+    "AccessKeys": [
+      {
+        "AccessKeyId": "AKIAEXAMPLECI0000001",
+        "LastRotated": "2024-01-06T10:00:00Z",
+        "LastUsedDate": "2024-01-14T10:00:00Z",
+        "LastUsedRegion": "eu-west-2",
+        "LastUsedService": "s3",
+        "Status": "Active"
+      }
+    ],
+    "Arn": "arn:aws:iam::111122223333:user/demo-ci",
+    "CreateDate": "2024-01-06T10:00:00Z",
+    "HasLoginProfile": false,
+    "MFAActive": false,
+    "MFADevices": [],
+    "PasswordLastChanged": null,
+    "PasswordLastUsed": null,
+    "Path": "/",
+    "PermissionsBoundary": {
+      "PermissionsBoundaryArn": "arn:aws:iam::aws:policy/ReadOnlyAccess",
+      "PermissionsBoundaryType": "PermissionsBoundaryPolicy"
+    },
+    "SSHPublicKeys": [],
+    "ServiceSpecificCredentials": [
+      {
+        "CreateDate": "2024-01-05T10:00:00Z",
+        "ServiceName": "codecommit.amazonaws.com",
+        "ServiceSpecificCredentialId": "ACCAEXAMPLESERVICE001",
+        "Status": "Active"
+      }
+    ],
+    "SigningCertificates": [],
+    "Tags": [
+      {
+        "Key": "purpose",
+        "Value": "ci"
+      }
+    ],
+    "UserId": "AIDAEXAMPLECI00000001",
+    "UserName": "demo-ci"
+  }
+]

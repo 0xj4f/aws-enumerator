@@ -1,0 +1,63 @@
+[
+  {
+    "Arn": "arn:aws:ec2:eu-west-2:111122223333:launch-template/lt-0dec0eeb000000002",
+    "CreateTime": "2024-01-03T10:00:00Z",
+    "CreatedBy": "arn:aws:iam::111122223333:user/demo-alice",
+    "DefaultVersionNumber": 1,
+    "LatestVersionNumber": 2,
+    "LaunchTemplateId": "lt-0dec0eeb000000002",
+    "LaunchTemplateName": "demo-web-lt",
+    "Tags": [
+      {
+        "Key": "Name",
+        "Value": "demo-web-lt"
+      }
+    ],
+    "Versions": [
+      {
+        "DefaultVersion": false,
+        "IamInstanceProfile": {
+          "Arn": "arn:aws:iam::111122223333:instance-profile/demo-app-profile"
+        },
+        "ImageId": "ami-0dec0000000000002",
+        "InstanceType": "t3.small",
+        "KeyName": null,
+        "MetadataOptions": {
+          "HttpEndpoint": "enabled",
+          "HttpPutResponseHopLimit": 2,
+          "HttpTokens": "required"
+        },
+        "NetworkInterfaces": null,
+        "SecurityGroupIds": null,
+        "SecurityGroups": null,
+        "UserDataLength": 0,
+        "UserDataPresent": false,
+        "UserDataSha256": null,
+        "VersionNumber": 2
+      },
+      {
+        "DefaultVersion": true,
+        "IamInstanceProfile": {
+          "Arn": "arn:aws:iam::111122223333:instance-profile/demo-app-profile"
+        },
+        "ImageId": "ami-0dec0000000000002",
+        "InstanceType": "t3.micro",
+        "KeyName": null,
+        "MetadataOptions": {
+          "HttpEndpoint": "enabled",
+          "HttpPutResponseHopLimit": 1,
+          "HttpTokens": "optional"
+        },
+        "NetworkInterfaces": null,
+        "SecurityGroupIds": [
+          "sg-0dec0eeb000000002"
+        ],
+        "SecurityGroups": null,
+        "UserDataLength": 75,
+        "UserDataPresent": true,
+        "UserDataSha256": "5845ddb37704079ef709910949527880aef93df55c5e7bf8dac67b6b7c1663e7",
+        "VersionNumber": 1
+      }
+    ]
+  }
+]

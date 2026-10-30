@@ -1,0 +1,384 @@
+{
+  "breakers": [],
+  "calls": [
+    {
+      "api": "s3:GetBucketAcl",
+      "count": 2,
+      "error_code": "AccessDenied",
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 0,
+      "primary": false,
+      "status": "denied"
+    },
+    {
+      "api": "s3:GetBucketAcl",
+      "count": 3,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 3,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "s3:GetBucketCors",
+      "count": 1,
+      "error_code": "s3_subresources=basic",
+      "items": null,
+      "not_configured": false,
+      "optional": true,
+      "pages": 0,
+      "primary": false,
+      "status": "skipped"
+    },
+    {
+      "api": "s3:GetBucketEncryption",
+      "count": 1,
+      "error_code": "AccessDenied",
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 0,
+      "primary": false,
+      "status": "denied"
+    },
+    {
+      "api": "s3:GetBucketEncryption",
+      "count": 4,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 4,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "s3:GetBucketLogging",
+      "count": 1,
+      "error_code": "s3_subresources=basic",
+      "items": null,
+      "not_configured": false,
+      "optional": true,
+      "pages": 0,
+      "primary": false,
+      "status": "skipped"
+    },
+    {
+      "api": "s3:GetBucketNotificationConfiguration",
+      "count": 1,
+      "error_code": "AccessDenied",
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 0,
+      "primary": false,
+      "status": "denied"
+    },
+    {
+      "api": "s3:GetBucketNotificationConfiguration",
+      "count": 4,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 4,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "s3:GetBucketOwnershipControls",
+      "count": 1,
+      "error_code": "AccessDenied",
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 0,
+      "primary": false,
+      "status": "denied"
+    },
+    {
+      "api": "s3:GetBucketOwnershipControls",
+      "count": 1,
+      "error_code": "OwnershipControlsNotFoundError",
+      "items": null,
+      "not_configured": true,
+      "optional": false,
+      "pages": 0,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "s3:GetBucketOwnershipControls",
+      "count": 3,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 3,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "s3:GetBucketPolicy",
+      "count": 1,
+      "error_code": "NoSuchBucketPolicy",
+      "items": null,
+      "not_configured": true,
+      "optional": false,
+      "pages": 0,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "s3:GetBucketPolicy",
+      "count": 2,
+      "error_code": "AccessDenied",
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 0,
+      "primary": false,
+      "status": "denied"
+    },
+    {
+      "api": "s3:GetBucketPolicy",
+      "count": 2,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 2,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "s3:GetBucketPolicyStatus",
+      "count": 1,
+      "error_code": "AccessDenied",
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 0,
+      "primary": false,
+      "status": "denied"
+    },
+    {
+      "api": "s3:GetBucketPolicyStatus",
+      "count": 3,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 3,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "s3:GetBucketReplication",
+      "count": 1,
+      "error_code": "s3_subresources=basic",
+      "items": null,
+      "not_configured": false,
+      "optional": true,
+      "pages": 0,
+      "primary": false,
+      "status": "skipped"
+    },
+    {
+      "api": "s3:GetBucketTagging",
+      "count": 1,
+      "error_code": "s3_subresources=basic",
+      "items": null,
+      "not_configured": false,
+      "optional": true,
+      "pages": 0,
+      "primary": false,
+      "status": "skipped"
+    },
+    {
+      "api": "s3:GetBucketVersioning",
+      "count": 1,
+      "error_code": "s3_subresources=basic",
+      "items": null,
+      "not_configured": false,
+      "optional": true,
+      "pages": 0,
+      "primary": false,
+      "status": "skipped"
+    },
+    {
+      "api": "s3:GetBucketWebsite",
+      "count": 1,
+      "error_code": "s3_subresources=basic",
+      "items": null,
+      "not_configured": false,
+      "optional": true,
+      "pages": 0,
+      "primary": false,
+      "status": "skipped"
+    },
+    {
+      "api": "s3:GetPublicAccessBlock",
+      "count": 1,
+      "error_code": "AccessDenied",
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 0,
+      "primary": false,
+      "status": "denied"
+    },
+    {
+      "api": "s3:GetPublicAccessBlock",
+      "count": 2,
+      "error_code": "NoSuchPublicAccessBlockConfiguration",
+      "items": null,
+      "not_configured": true,
+      "optional": false,
+      "pages": 0,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "s3:GetPublicAccessBlock",
+      "count": 2,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 2,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "s3:ListBuckets",
+      "count": 1,
+      "error_code": null,
+      "items": 5,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": true,
+      "status": "ok"
+    },
+    {
+      "api": "s3control:GetPublicAccessBlock",
+      "count": 1,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    }
+  ],
+  "duration_seconds": "<stripped>",
+  "ended_at": "<stripped>",
+  "error": null,
+  "item_errors": [
+    {
+      "api": "s3:GetBucketAcl",
+      "error_code": "AccessDenied",
+      "resource": "arn:aws:s3:::demo-denied-bucket",
+      "status": "denied"
+    },
+    {
+      "api": "s3:GetBucketAcl",
+      "error_code": "AccessDenied",
+      "resource": "arn:aws:s3:::demo-legacy-eu-bucket",
+      "status": "denied"
+    },
+    {
+      "api": "s3:GetBucketEncryption",
+      "error_code": "AccessDenied",
+      "resource": "arn:aws:s3:::demo-denied-bucket",
+      "status": "denied"
+    },
+    {
+      "api": "s3:GetBucketNotificationConfiguration",
+      "error_code": "AccessDenied",
+      "resource": "arn:aws:s3:::demo-denied-bucket",
+      "status": "denied"
+    },
+    {
+      "api": "s3:GetBucketOwnershipControls",
+      "error_code": "AccessDenied",
+      "resource": "arn:aws:s3:::demo-denied-bucket",
+      "status": "denied"
+    },
+    {
+      "api": "s3:GetBucketPolicy",
+      "error_code": "AccessDenied",
+      "resource": "arn:aws:s3:::demo-denied-bucket",
+      "status": "denied"
+    },
+    {
+      "api": "s3:GetBucketPolicy",
+      "error_code": "AccessDenied",
+      "resource": "arn:aws:s3:::demo-legacy-eu-bucket",
+      "status": "denied"
+    },
+    {
+      "api": "s3:GetBucketPolicyStatus",
+      "error_code": "AccessDenied",
+      "resource": "arn:aws:s3:::demo-denied-bucket",
+      "status": "denied"
+    },
+    {
+      "api": "s3:GetPublicAccessBlock",
+      "error_code": "AccessDenied",
+      "resource": "arn:aws:s3:::demo-denied-bucket",
+      "status": "denied"
+    }
+  ],
+  "item_errors_truncated": false,
+  "module": "s3",
+  "protocol": "ctx",
+  "region": "global",
+  "schema_version": 1,
+  "sections": [
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "account_public_access_block",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "bucket_details",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "buckets",
+      "status": "ok"
+    }
+  ],
+  "services": [
+    "s3",
+    "s3control"
+  ],
+  "started_at": "<stripped>",
+  "status": "partial",
+  "status_reason": "s3:GetBucketPolicy denied (+8 more)",
+  "summary": {
+    "calls": 42,
+    "denied": 9,
+    "error": 0,
+    "item_errors": 9,
+    "not_configured": 4,
+    "ok": 27,
+    "skipped": 6,
+    "throttled": 0
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "EntityArn": "arn:aws:iam::111122223333:role/demo-lambda-role",
+  "InlinePolicies": {
+    "demo-lambda-inline": {
+      "Statement": [
+        {
+          "Action": [
+            "iam:CreateAccessKey"
+          ],
+          "Effect": "Allow",
+          "Resource": "*"
+        }
+      ],
+      "Version": "2012-10-17"
+    },
+    "demo-lambda-logs": {
+      "Statement": [
+        {
+          "Action": [
+            "logs:CreateLogStream",
+            "logs:PutLogEvents"
+          ],
+          "Effect": "Allow",
+          "Resource": "*"
+        }
+      ],
+      "Version": "2012-10-17"
+    }
+  },
+  "RoleName": "demo-lambda-role"
+}

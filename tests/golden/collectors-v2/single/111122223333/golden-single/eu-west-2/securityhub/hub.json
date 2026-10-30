@@ -1,0 +1,15 @@
+{
+  "AutoEnableControls": true,
+  "ControlFindingGenerator": null,
+  "Enabled": true,
+  "HubArn": "arn:aws:securityhub:eu-west-2:111122223333:hub/default",
+  "Standards": [
+    {
+      "StandardsArn": "arn:aws:securityhub:eu-west-2::standards/aws-foundational-security-best-practices/v/1.0.0",
+      "StandardsStatus": "READY",
+      "StandardsStatusReason": null,
+      "StandardsSubscriptionArn": "arn:aws:securityhub:eu-west-2:111122223333:subscription/aws-foundational-security-best-practices/v/1.0.0"
+    }
+  ],
+  "SubscribedAt": "2024-01-02T10:00:00.000Z"
+}

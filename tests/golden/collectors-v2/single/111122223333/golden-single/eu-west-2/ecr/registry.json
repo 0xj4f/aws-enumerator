@@ -1,0 +1,14 @@
+{
+  "RegistryId": "111122223333",
+  "ReplicationRules": [
+    {
+      "Destinations": [
+        {
+          "Region": "eu-west-1",
+          "RegistryId": "999999999999"
+        }
+      ],
+      "RepositoryFilters": []
+    }
+  ]
+}

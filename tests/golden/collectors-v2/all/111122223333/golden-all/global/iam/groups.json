@@ -1,0 +1,16 @@
+[
+  {
+    "Arn": "arn:aws:iam::111122223333:group/demo-admins",
+    "CreateDate": "2024-01-01T10:00:00Z",
+    "GroupId": "AGPAEXAMPLEADMINS0001",
+    "GroupName": "demo-admins",
+    "Path": "/"
+  },
+  {
+    "Arn": "arn:aws:iam::111122223333:group/demo-developers",
+    "CreateDate": "2024-01-01T10:00:00Z",
+    "GroupId": "AGPAEXAMPLEDEVS000001",
+    "GroupName": "demo-developers",
+    "Path": "/"
+  }
+]

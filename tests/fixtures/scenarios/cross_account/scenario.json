@@ -1,0 +1,17 @@
+{
+  "name": "cross_account",
+  "description": "Trusts to a same-named external role (F-039), external and same-account :root, ExternalId, GitHub OIDC, SAML, wildcard with and without conditions, a bare account-id principal and a JSON-string trust document; cross-account S3/Secrets/KMS grants.",
+  "account": "123456789012",
+  "layout": "single_region",
+  "regions": [
+    "eu-west-2"
+  ],
+  "report_dirs": [
+    "123456789012/eu-west-2"
+  ],
+  "scope_dirs": [
+    "123456789012/eu-west-2"
+  ],
+  "expect_exception": false,
+  "baseline": "d13c215"
+}

@@ -1,0 +1,74 @@
+[
+  {
+    "FunctionName": "<img src=x onerror=window.__aeXssCanary=1>",
+    "FunctionArn": "arn:aws:lambda:eu-west-2:123456789012:function:<img src=x onerror=window.__aeXssCanary=1>",
+    "Runtime": "python3.12",
+    "Handler": "app.handler",
+    "Role": "arn:aws:iam::123456789012:role/<img src=x onerror=window.__aeXssCanary=1>",
+    "MemorySize": 128,
+    "Timeout": 30,
+    "LastModified": "2026-01-01T00:00:00.000+0000",
+    "PackageType": "Zip",
+    "Layers": [],
+    "VpcConfig": {
+      "VpcId": null,
+      "SubnetIds": [],
+      "SecurityGroupIds": []
+    },
+    "EnvironmentVariableNames": [
+      "<img src=x onerror=window.__aeXssCanary=1>"
+    ],
+    "FunctionUrl": {
+      "Url": "https://dcb12e968aced6aaa091c269dbed20c7.lambda-url.eu-west-2.on.aws/",
+      "AuthType": "NONE"
+    }
+  },
+  {
+    "FunctionName": "\"><svg onload=window.__aeXssCanary=1>",
+    "FunctionArn": "arn:aws:lambda:eu-west-2:123456789012:function:\"><svg onload=window.__aeXssCanary=1>",
+    "Runtime": "python3.12",
+    "Handler": "app.handler",
+    "Role": "arn:aws:iam::123456789012:role/<img src=x onerror=window.__aeXssCanary=1>",
+    "MemorySize": 128,
+    "Timeout": 30,
+    "LastModified": "2026-01-01T00:00:00.000+0000",
+    "PackageType": "Zip",
+    "Layers": [],
+    "VpcConfig": {
+      "VpcId": null,
+      "SubnetIds": [],
+      "SecurityGroupIds": []
+    },
+    "EnvironmentVariableNames": [
+      "\"><svg onload=window.__aeXssCanary=1>"
+    ],
+    "FunctionUrl": {
+      "Url": "https://6a9e9452ca5286a64f752ecae22a1c35.lambda-url.eu-west-2.on.aws/",
+      "AuthType": "NONE"
+    }
+  },
+  {
+    "FunctionName": "</script><script>window.__aeXssCanary=1</script>",
+    "FunctionArn": "arn:aws:lambda:eu-west-2:123456789012:function:</script><script>window.__aeXssCanary=1</script>",
+    "Runtime": "python3.12",
+    "Handler": "app.handler",
+    "Role": "arn:aws:iam::123456789012:role/<img src=x onerror=window.__aeXssCanary=1>",
+    "MemorySize": 128,
+    "Timeout": 30,
+    "LastModified": "2026-01-01T00:00:00.000+0000",
+    "PackageType": "Zip",
+    "Layers": [],
+    "VpcConfig": {
+      "VpcId": null,
+      "SubnetIds": [],
+      "SecurityGroupIds": []
+    },
+    "EnvironmentVariableNames": [
+      "</script><script>window.__aeXssCanary=1</script>"
+    ],
+    "FunctionUrl": {
+      "Url": "https://82a36bf629f41764a7db684c964faff0.lambda-url.eu-west-2.on.aws/",
+      "AuthType": "NONE"
+    }
+  }
+]

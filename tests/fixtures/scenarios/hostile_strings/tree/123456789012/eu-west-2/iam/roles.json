@@ -1,0 +1,149 @@
+[
+  {
+    "Path": "/",
+    "RoleName": "<img src=x onerror=window.__aeXssCanary=1>",
+    "RoleId": "AROAMKMBEOIPLJFPMAJPC",
+    "Arn": "arn:aws:iam::123456789012:role/<img src=x onerror=window.__aeXssCanary=1>",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "AssumeRolePolicyDocument": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::123456789012:user/\"><svg onload=window.__aeXssCanary=1>"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "Description": "</script><script>window.__aeXssCanary=1</script>",
+    "MaxSessionDuration": 3600
+  },
+  {
+    "Path": "/javascript:window.__aeXssCanary=1/",
+    "RoleName": "demo-hostile-path",
+    "RoleId": "AROAEDFIFAEKEBBLHDDJA",
+    "Arn": "arn:aws:iam::123456789012:role/javascript:window.__aeXssCanary=1/demo-hostile-path",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "AssumeRolePolicyDocument": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "ec2.amazonaws.com"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "Description": "' onmouseover='window.__aeXssCanary=1' x='",
+    "MaxSessionDuration": 3600
+  },
+  {
+    "Path": "/",
+    "RoleName": "demo-hostile-attached",
+    "RoleId": "AROAKHBLODNNEAAABAICM",
+    "Arn": "arn:aws:iam::123456789012:role/demo-hostile-attached",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "AssumeRolePolicyDocument": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "ec2.amazonaws.com"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "Description": "",
+    "MaxSessionDuration": 3600
+  },
+  {
+    "Path": "/",
+    "RoleName": "constructor",
+    "RoleId": "AROAAOFPBIFAOALOFBPMO",
+    "Arn": "arn:aws:iam::123456789012:role/constructor",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "AssumeRolePolicyDocument": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::123456789012:user/constructor"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "Description": "",
+    "MaxSessionDuration": 3600
+  },
+  {
+    "Path": "/",
+    "RoleName": "__proto__",
+    "RoleId": "AROAHODCPJNNNKJNGDCCF",
+    "Arn": "arn:aws:iam::123456789012:role/__proto__",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "AssumeRolePolicyDocument": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::123456789012:user/__proto__"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "Description": "",
+    "MaxSessionDuration": 3600
+  },
+  {
+    "Path": "/",
+    "RoleName": "hasOwnProperty",
+    "RoleId": "AROAAAFJGEGBIBBJFEBNF",
+    "Arn": "arn:aws:iam::123456789012:role/hasOwnProperty",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "AssumeRolePolicyDocument": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::123456789012:user/hasOwnProperty"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "Description": "",
+    "MaxSessionDuration": 3600
+  },
+  {
+    "Path": "/",
+    "RoleName": "toString",
+    "RoleId": "AROAJKEJLIPFLBNGIDPIA",
+    "Arn": "arn:aws:iam::123456789012:role/toString",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "AssumeRolePolicyDocument": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::123456789012:user/toString"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "Description": "",
+    "MaxSessionDuration": 3600
+  }
+]

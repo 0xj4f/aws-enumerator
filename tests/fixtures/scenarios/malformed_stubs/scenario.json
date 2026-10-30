@@ -1,0 +1,17 @@
+{
+  "name": "malformed_stubs",
+  "description": "Same as malformed but with list-shaped Statements, so analyze() completes and the golden shows how the baseline treats {\"Error\"} stubs, error files and empty lists.",
+  "account": "123456789012",
+  "layout": "single_region",
+  "regions": [
+    "eu-west-2"
+  ],
+  "report_dirs": [
+    "123456789012/eu-west-2"
+  ],
+  "scope_dirs": [
+    "123456789012/eu-west-2"
+  ],
+  "expect_exception": false,
+  "baseline": "d13c215"
+}

@@ -1,0 +1,68 @@
+{
+  "breakers": [],
+  "calls": [
+    {
+      "api": "ec2:DescribeNetworkInterfaces",
+      "count": 1,
+      "error_code": null,
+      "items": 3,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "ec2:DescribeSecurityGroups",
+      "count": 1,
+      "error_code": null,
+      "items": 3,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": true,
+      "status": "ok"
+    }
+  ],
+  "duration_seconds": "<stripped>",
+  "ended_at": "<stripped>",
+  "error": null,
+  "item_errors": [],
+  "item_errors_truncated": false,
+  "module": "sg",
+  "protocol": "ctx",
+  "region": "eu-west-2",
+  "schema_version": 1,
+  "sections": [
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "network_interfaces",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "security_groups",
+      "status": "ok"
+    }
+  ],
+  "services": [
+    "ec2"
+  ],
+  "started_at": "<stripped>",
+  "status": "ok",
+  "status_reason": null,
+  "summary": {
+    "calls": 2,
+    "denied": 0,
+    "error": 0,
+    "item_errors": 0,
+    "not_configured": 0,
+    "ok": 2,
+    "skipped": 0,
+    "throttled": 0
+  }
+}

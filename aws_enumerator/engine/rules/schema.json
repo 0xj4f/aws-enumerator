@@ -1,0 +1,505 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/0xj4f/aws-enumerator/rules/schema.json",
+  "title": "aws-enumerator rule catalogue",
+  "description": "Data files under aws_enumerator/engine/rules/data/ (engine.md \u00a73.1-\u00a73.2). privesc.json holds step-set rules evaluated per target; dangerous.json holds unrestricted-capability probes.",
+  "type": "object",
+  "required": [
+    "rules_version",
+    "kind",
+    "rules"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "rules_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "kind": {
+      "enum": [
+        "privesc",
+        "dangerous"
+      ]
+    },
+    "rules": {
+      "type": "array",
+      "minItems": 1
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "privesc"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "rules": {
+            "items": {
+              "$ref": "#/$defs/privescRule"
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "dangerous"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "rules": {
+            "items": {
+              "$ref": "#/$defs/dangerRule"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "leafStep": {
+      "type": "object",
+      "required": [
+        "action"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+:[A-Za-z0-9*?]+$"
+        },
+        "resource": {
+          "type": "string",
+          "minLength": 1,
+          "description": "'$target' (the selected target ARN) or a template with {partition}/{account}"
+        },
+        "mode": {
+          "enum": [
+            "target",
+            "any"
+          ]
+        },
+        "context": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "step": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/leafStep"
+        },
+        {
+          "type": "object",
+          "required": [
+            "all"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "all": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/$defs/step"
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "any"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "any": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/$defs/step"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "target": {
+      "type": "object",
+      "required": [
+        "select"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "select": {
+          "enum": [
+            "self_or_principal",
+            "principal",
+            "group_membership",
+            "attached_customer_policy",
+            "passable_service_role",
+            "existing"
+          ]
+        },
+        "kind": {
+          "enum": [
+            "user",
+            "role",
+            "group"
+          ]
+        },
+        "service_principal": {
+          "type": "string",
+          "pattern": "^[a-z0-9.-]+\\.amazonaws\\.com(\\.cn)?$"
+        },
+        "resource_type": {
+          "enum": [
+            "apprunner_service",
+            "batch_job_definition",
+            "bedrock_agent_runtime",
+            "bedrock_browser",
+            "bedrock_code_interpreter",
+            "cfn_stack",
+            "cfn_stack_set",
+            "codebuild_project",
+            "codedeploy_deployment_group",
+            "ec2_instance",
+            "ec2_launch_template",
+            "ecs_exec_service",
+            "glue_dev_endpoint",
+            "lambda_function",
+            "sagemaker_notebook",
+            "sagemaker_user_profile",
+            "sfn_state_machine"
+          ]
+        },
+        "versions": {
+          "enum": [
+            "more_permissive_non_default"
+          ]
+        },
+        "login_profile": {
+          "enum": [
+            "absent",
+            "present"
+          ]
+        },
+        "access_keys": {
+          "enum": [
+            "below_limit",
+            "at_limit"
+          ]
+        },
+        "trusted_services": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9.-]+\\.amazonaws\\.com(\\.cn)?$"
+          }
+        },
+        "trust_protocol": {
+          "enum": [
+            "AWS",
+            "WebIdentity"
+          ]
+        },
+        "trusted_principal": {
+          "type": "string",
+          "minLength": 1
+        },
+        "condition_gap": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+:[a-z0-9-]+$"
+        },
+        "boundary": {
+          "enum": [
+            "present"
+          ]
+        },
+        "probe": {
+          "type": "boolean"
+        },
+        "instance_profile": {
+          "enum": [
+            "required"
+          ]
+        }
+      }
+    },
+    "privescRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "legacy_ids",
+        "name",
+        "title",
+        "description",
+        "class",
+        "base_severity",
+        "steps",
+        "target",
+        "emits",
+        "requires_inputs",
+        "references",
+        "remediation"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^PRIVESC-\\d{3}$"
+        },
+        "legacy_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          },
+          "uniqueItems": true
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "class": {
+          "enum": [
+            "policy-modification",
+            "principal-modification",
+            "principal-access",
+            "group-membership",
+            "new-passrole",
+            "existing-passrole",
+            "existing-resource"
+          ]
+        },
+        "base_severity": {
+          "anyOf": [
+            {
+              "enum": [
+                "CRITICAL",
+                "HIGH",
+                "MEDIUM",
+                "LOW",
+                "INFO"
+              ]
+            },
+            {
+              "const": "derived"
+            }
+          ]
+        },
+        "legacy_severity": {
+          "enum": [
+            "CRITICAL",
+            "HIGH",
+            "MEDIUM",
+            "LOW",
+            "INFO"
+          ]
+        },
+        "steps": {
+          "$ref": "#/$defs/step"
+        },
+        "target": {
+          "$ref": "#/$defs/target"
+        },
+        "emits": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "self": {
+              "enum": [
+                "CAN_ESCALATE",
+                "CAN_MODIFY_PERMISSIONS_OF",
+                "CAN_TAKEOVER",
+                "CAN_PASS_ROLE_TO",
+                "CAN_HIJACK",
+                "CAN_UPDATE_CODE",
+                "CAN_EXEC",
+                "CAN_CONNECT",
+                "CAN_MODIFY_USERDATA"
+              ]
+            },
+            "other": {
+              "enum": [
+                "CAN_ESCALATE",
+                "CAN_MODIFY_PERMISSIONS_OF",
+                "CAN_TAKEOVER",
+                "CAN_PASS_ROLE_TO",
+                "CAN_HIJACK",
+                "CAN_UPDATE_CODE",
+                "CAN_EXEC",
+                "CAN_CONNECT",
+                "CAN_MODIFY_USERDATA"
+              ]
+            },
+            "via": {
+              "type": "string"
+            }
+          }
+        },
+        "requires_inputs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "references": {
+          "type": "object",
+          "properties": {
+            "aws_docs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^https://"
+              }
+            },
+            "pathfinding_cloud": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[a-z0-9-]+-\\d{3}$"
+              }
+            }
+          }
+        },
+        "detection_hint": {
+          "type": "object"
+        },
+        "validate_hint": {
+          "type": "object"
+        },
+        "remediation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "policy_arn_probe": {
+          "type": "boolean"
+        },
+        "imported": {
+          "type": "boolean"
+        }
+      }
+    },
+    "dangerRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "legacy_ids",
+        "title",
+        "description",
+        "base_severity",
+        "capability",
+        "remediation"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^DANGER-\\d{3}$"
+        },
+        "legacy_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          },
+          "uniqueItems": true
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "base_severity": {
+          "enum": [
+            "CRITICAL",
+            "HIGH",
+            "MEDIUM",
+            "LOW",
+            "INFO"
+          ]
+        },
+        "legacy_severity": {
+          "enum": [
+            "CRITICAL",
+            "HIGH",
+            "MEDIUM",
+            "LOW",
+            "INFO"
+          ]
+        },
+        "capability": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "resource_template",
+            "mode"
+          ],
+          "properties": {
+            "resource_template": {
+              "type": "string",
+              "minLength": 1
+            },
+            "mode": {
+              "enum": [
+                "covers",
+                "overlaps"
+              ]
+            },
+            "action_glob": {
+              "type": "string",
+              "minLength": 1
+            },
+            "actions_any": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "oneOf": [
+            {
+              "required": [
+                "action_glob"
+              ]
+            },
+            {
+              "required": [
+                "actions_any"
+              ]
+            }
+          ]
+        },
+        "remediation": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

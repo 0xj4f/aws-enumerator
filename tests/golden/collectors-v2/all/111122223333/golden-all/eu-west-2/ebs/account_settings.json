@@ -1,0 +1,4 @@
+{
+  "EbsEncryptionByDefault": false,
+  "SnapshotBlockPublicAccessState": "unblocked"
+}

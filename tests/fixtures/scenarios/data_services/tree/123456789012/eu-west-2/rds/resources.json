@@ -1,0 +1,22 @@
+[
+  {
+    "Type": "rds",
+    "Kind": "instance",
+    "Arn": "arn:aws:rds:eu-west-2:123456789012:db:demo-db",
+    "Name": "demo-db",
+    "Public": false,
+    "Encrypted": true,
+    "KmsKeyId": "arn:aws:kms:eu-west-2:123456789012:key/4b2c1a3d-aaaa-4bbb-8ccc-1d2e3f4a5b6c",
+    "IAMAuth": true,
+    "Engine": "postgres"
+  },
+  {
+    "Type": "rds",
+    "Kind": "snapshot",
+    "Arn": "arn:aws:rds:eu-west-2:123456789012:snapshot:demo-db-snap",
+    "Name": "demo-db-snap",
+    "PublicSnapshot": false,
+    "Encrypted": true,
+    "KmsKeyId": "arn:aws:kms:eu-west-2:123456789012:key/4b2c1a3d-aaaa-4bbb-8ccc-1d2e3f4a5b6c"
+  }
+]

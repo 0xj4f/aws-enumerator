@@ -1,0 +1,4299 @@
+{
+  "analyzer_status": [
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "load:iam",
+      "phase": "load",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "org"
+      ],
+      "name": "load:org",
+      "phase": "load",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "load:s3",
+      "phase": "load",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "ec2"
+      ],
+      "name": "load:ec2",
+      "phase": "load",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "edge_services"
+      ],
+      "name": "load:edge_services",
+      "phase": "load",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "posture"
+      ],
+      "name": "load:posture",
+      "phase": "load",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "load:k8s",
+      "phase": "load",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "kms"
+      ],
+      "name": "load:kms",
+      "phase": "load",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "secrets"
+      ],
+      "name": "load:secrets",
+      "phase": "load",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "data_stores"
+      ],
+      "name": "load:data_stores",
+      "phase": "load",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "lambda"
+      ],
+      "name": "load:lambda",
+      "phase": "load",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "compute"
+      ],
+      "name": "load:compute",
+      "phase": "load",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "messaging"
+      ],
+      "name": "load:messaging",
+      "phase": "load",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "principals",
+      "phase": "principals",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "permission-map",
+      "phase": "principals",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "iam-graph",
+      "phase": "principals",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "admin-equivalence",
+      "phase": "identity",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "trust",
+      "phase": "identity",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "assume",
+      "phase": "identity",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "iam-hygiene",
+      "phase": "identity",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "s3",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "ec2.instances"
+      ],
+      "name": "ec2",
+      "phase": "resources",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "edge_services",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "posture",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "vpc"
+      ],
+      "name": "network",
+      "phase": "resources",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "k8s",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "kms",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "secrets",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "data_stores",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "lambda",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "compute",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "messaging",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "cognito",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "rules",
+      "phase": "rules",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "closure",
+      "phase": "closure",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "coverage"
+      ],
+      "name": "coverage-gaps",
+      "phase": "postprocess",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "severity",
+      "phase": "postprocess",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "subsume",
+      "phase": "postprocess",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "suppression",
+      "phase": "postprocess",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "baseline",
+      "phase": "postprocess",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "write",
+      "phase": "write",
+      "status": "ok"
+    }
+  ],
+  "coverage": {
+    "facets": [
+      {
+        "detail": null,
+        "facet": "s3:ListBuckets",
+        "region": "global",
+        "status": "legacy-unknown"
+      }
+    ],
+    "modules": [
+      {
+        "detail": null,
+        "error_code": null,
+        "module": "eks",
+        "region": "global",
+        "status": "legacy-unknown"
+      },
+      {
+        "detail": null,
+        "error_code": null,
+        "module": "iam",
+        "region": "global",
+        "status": "legacy-unknown"
+      },
+      {
+        "detail": null,
+        "error_code": null,
+        "module": "k8s",
+        "region": "global",
+        "status": "legacy-unknown"
+      },
+      {
+        "detail": null,
+        "error_code": null,
+        "module": "s3",
+        "region": "global",
+        "status": "legacy-unknown"
+      }
+    ],
+    "source": "legacy-unknown",
+    "status": "unknown"
+  },
+  "edge_types": {
+    "BOUND_TO": {
+      "base_weight": 0,
+      "bridge": false,
+      "category": "k8s",
+      "category_label": "Kubernetes",
+      "category_order": 18,
+      "description": "RoleBinding / ClusterRoleBinding subject.",
+      "doc_anchor": "#bound_to",
+      "legacy_name": "BOUND_TO",
+      "sources": [
+        "sa",
+        "k8sgroup",
+        "k8suser"
+      ],
+      "targets": [
+        "k8srole"
+      ],
+      "traversable": true,
+      "traversable_rule": null,
+      "traversal": "control"
+    },
+    "CAN_ASSUME_WEB_IDENTITY": {
+      "base_weight": 1,
+      "bridge": false,
+      "category": "trust",
+      "category_label": "Role assumption",
+      "category_order": 2,
+      "description": "AssumeRoleWithWebIdentity admitted by the trust policy; props.admits = any | pattern | specific.",
+      "doc_anchor": "#can_assume_web_identity",
+      "legacy_name": null,
+      "sources": [
+        "idp",
+        "anonymous"
+      ],
+      "targets": [
+        "role"
+      ],
+      "traversable": true,
+      "traversable_rule": null,
+      "traversal": "control"
+    },
+    "CAN_ESCALATE": {
+      "base_weight": 1,
+      "bridge": false,
+      "category": "privesc",
+      "category_label": "Privilege escalation",
+      "category_order": 3,
+      "description": "Self-escalation, or modification of a principal the source can already act as (closure, engine.md \u00a74.6); evidence.chain lists the edge ids.",
+      "doc_anchor": "#can_escalate",
+      "legacy_name": null,
+      "sources": [
+        "user",
+        "role",
+        "group"
+      ],
+      "targets": [
+        "account_admin"
+      ],
+      "traversable": true,
+      "traversable_rule": null,
+      "traversal": "control"
+    },
+    "CAN_MODIFY_PERMISSIONS_OF": {
+      "base_weight": 1,
+      "bridge": false,
+      "category": "privesc",
+      "category_label": "Privilege escalation",
+      "category_order": 3,
+      "description": "Put*/Attach*Policy, CreatePolicyVersion, SetDefaultPolicyVersion or boundary changes on another principal. Closure input: becomes CAN_ESCALATE when the target is reachable.",
+      "doc_anchor": "#can_modify_permissions_of",
+      "legacy_name": null,
+      "sources": [
+        "user",
+        "role",
+        "group"
+      ],
+      "targets": [
+        "user",
+        "role",
+        "group"
+      ],
+      "traversable": false,
+      "traversable_rule": null,
+      "traversal": "info"
+    },
+    "CAN_REACH_NODE_IMDS": {
+      "base_weight": 1,
+      "bridge": false,
+      "category": "eks",
+      "category_label": "EKS identity",
+      "category_order": 17,
+      "description": "The pod can reach the node's IMDS (hop limit, hostNetwork); Fargate excluded. evidence.weight_extra adds 0-2 by hop limit.",
+      "doc_anchor": "#can_reach_node_imds",
+      "legacy_name": null,
+      "sources": [
+        "pod"
+      ],
+      "targets": [
+        "nodegroup"
+      ],
+      "traversable": true,
+      "traversable_rule": null,
+      "traversal": "control"
+    },
+    "CAN_READ": {
+      "base_weight": 1,
+      "bridge": false,
+      "category": "s3",
+      "category_label": "S3",
+      "category_order": 7,
+      "description": "Get or list objects.",
+      "doc_anchor": "#can_read",
+      "legacy_name": "CAN_READ",
+      "sources": [
+        "user",
+        "role",
+        "group"
+      ],
+      "targets": [
+        "bucket"
+      ],
+      "traversable": true,
+      "traversable_rule": null,
+      "traversal": "access"
+    },
+    "CAN_RUN_AS_SA": {
+      "base_weight": 1,
+      "bridge": false,
+      "category": "k8s",
+      "category_label": "Kubernetes",
+      "category_order": 18,
+      "description": "The role can create pods or tokens in the service account's namespace.",
+      "doc_anchor": "#can_run_as_sa",
+      "legacy_name": null,
+      "sources": [
+        "k8srole"
+      ],
+      "targets": [
+        "sa"
+      ],
+      "traversable": true,
+      "traversable_rule": null,
+      "traversal": "control"
+    },
+    "CAN_TAKEOVER": {
+      "base_weight": 1,
+      "bridge": false,
+      "category": "privesc",
+      "category_label": "Privilege escalation",
+      "category_order": 3,
+      "description": "Credential or trust takeover of another principal: CreateAccessKey, Create/UpdateLoginProfile, UpdateAssumeRolePolicy, AddUserToGroup. Self is excluded.",
+      "doc_anchor": "#can_takeover",
+      "legacy_name": null,
+      "sources": [
+        "user",
+        "role",
+        "group"
+      ],
+      "targets": [
+        "user",
+        "role",
+        "group"
+      ],
+      "traversable": true,
+      "traversable_rule": null,
+      "traversal": "control"
+    },
+    "CLUSTER_ROLE": {
+      "base_weight": 0,
+      "bridge": false,
+      "category": "eks",
+      "category_label": "EKS identity",
+      "category_order": 17,
+      "description": "EKS control-plane service role; workloads never get it.",
+      "doc_anchor": "#cluster_role",
+      "legacy_name": "CLUSTER_ROLE",
+      "sources": [
+        "cluster"
+      ],
+      "targets": [
+        "role"
+      ],
+      "traversable": false,
+      "traversable_rule": null,
+      "traversal": "info"
+    },
+    "FULL_ACCESS": {
+      "base_weight": 0,
+      "bridge": false,
+      "category": "s3",
+      "category_label": "S3",
+      "category_order": 7,
+      "description": "s3:* (identity policy or same-account bucket-policy grant).",
+      "doc_anchor": "#full_access",
+      "legacy_name": "FULL_ACCESS",
+      "sources": [
+        "user",
+        "role",
+        "group"
+      ],
+      "targets": [
+        "bucket"
+      ],
+      "traversable": true,
+      "traversable_rule": null,
+      "traversal": "access"
+    },
+    "HAS_POLICY": {
+      "base_weight": 0,
+      "bridge": false,
+      "category": "iam",
+      "category_label": "IAM structure",
+      "category_order": 1,
+      "description": "Managed policy attached to the principal (ARN-keyed).",
+      "doc_anchor": "#has_policy",
+      "legacy_name": null,
+      "sources": [
+        "user",
+        "role",
+        "group"
+      ],
+      "targets": [
+        "policy"
+      ],
+      "traversable": false,
+      "traversable_rule": null,
+      "traversal": "structural"
+    },
+    "INGRESS_ROUTES_TO": {
+      "base_weight": 0,
+      "bridge": false,
+      "category": "k8s",
+      "category_label": "Kubernetes",
+      "category_order": 18,
+      "description": "Ingress rule routes to the service. Renamed from the K8s EXPOSES.",
+      "doc_anchor": "#ingress_routes_to",
+      "legacy_name": "EXPOSES",
+      "sources": [
+        "k8singress"
+      ],
+      "targets": [
+        "k8sservice"
+      ],
+      "traversable": false,
+      "traversable_rule": null,
+      "traversal": "info"
+    },
+    "IN_CLUSTER": {
+      "base_weight": 0,
+      "bridge": false,
+      "category": "k8s",
+      "category_label": "Kubernetes",
+      "category_order": 18,
+      "description": "Placement.",
+      "doc_anchor": "#in_cluster",
+      "legacy_name": "IN_CLUSTER",
+      "sources": [
+        "pod"
+      ],
+      "targets": [
+        "cluster"
+      ],
+      "traversable": false,
+      "traversable_rule": null,
+      "traversal": "structural"
+    },
+    "IRSA_BRIDGE": {
+      "base_weight": 0,
+      "bridge": true,
+      "category": "eks",
+      "category_label": "EKS identity",
+      "category_order": 17,
+      "description": "IRSA: the annotated role trusts this service account through the cluster's OIDC provider.",
+      "doc_anchor": "#irsa_bridge",
+      "legacy_name": "IRSA_BRIDGE",
+      "sources": [
+        "sa"
+      ],
+      "targets": [
+        "role"
+      ],
+      "traversable": "conditional",
+      "traversable_rule": "trust-verified",
+      "traversal": "control"
+    },
+    "IS_ADMIN_EQUIVALENT": {
+      "base_weight": 0,
+      "bridge": false,
+      "category": "privesc",
+      "category_label": "Privilege escalation",
+      "category_order": 3,
+      "description": "The principal is admin-equivalent (ADMIN-001), so reaching it means reaching the account admin.",
+      "doc_anchor": "#is_admin_equivalent",
+      "legacy_name": null,
+      "sources": [
+        "user",
+        "role",
+        "group"
+      ],
+      "targets": [
+        "account_admin"
+      ],
+      "traversable": true,
+      "traversable_rule": null,
+      "traversal": "control"
+    },
+    "MOUNTS_SECRET": {
+      "base_weight": 1,
+      "bridge": false,
+      "category": "k8s",
+      "category_label": "Kubernetes",
+      "category_order": 18,
+      "description": "Secret volume or env secretKeyRef.",
+      "doc_anchor": "#mounts_secret",
+      "legacy_name": "MOUNTS_SECRET",
+      "sources": [
+        "pod"
+      ],
+      "targets": [
+        "k8ssecret"
+      ],
+      "traversable": true,
+      "traversable_rule": null,
+      "traversal": "access"
+    },
+    "NODE_ROLE": {
+      "base_weight": 0,
+      "bridge": true,
+      "category": "eks",
+      "category_label": "EKS identity",
+      "category_order": 17,
+      "description": "Node instance role, reachable through node IMDS.",
+      "doc_anchor": "#node_role",
+      "legacy_name": "NODE_ROLE",
+      "sources": [
+        "nodegroup"
+      ],
+      "targets": [
+        "role"
+      ],
+      "traversable": true,
+      "traversable_rule": null,
+      "traversal": "control"
+    },
+    "PUBLIC_INBOUND": {
+      "base_weight": 0,
+      "bridge": false,
+      "category": "network",
+      "category_label": "Network",
+      "category_order": 6,
+      "description": "Reachable from the internet (security groups, routes, NACLs, scheme, endpoint access). INTERNET_FACING is folded into props.igw_routed.",
+      "doc_anchor": "#public_inbound",
+      "legacy_name": "PUBLIC_INBOUND",
+      "sources": [
+        "anonymous"
+      ],
+      "targets": [
+        "instance",
+        "elb",
+        "k8sservice",
+        "cluster",
+        "rds",
+        "apigw",
+        "cloudfront"
+      ],
+      "traversable": false,
+      "traversable_rule": null,
+      "traversal": "exposure"
+    },
+    "RUNS_AS": {
+      "base_weight": 0,
+      "bridge": true,
+      "category": "k8s",
+      "category_label": "Kubernetes",
+      "category_order": 18,
+      "description": "The pod mounts the service-account token (automount on).",
+      "doc_anchor": "#runs_as",
+      "legacy_name": "RUNS_AS",
+      "sources": [
+        "pod"
+      ],
+      "targets": [
+        "sa"
+      ],
+      "traversable": true,
+      "traversable_rule": null,
+      "traversal": "control"
+    },
+    "SELECTS": {
+      "base_weight": 0,
+      "bridge": false,
+      "category": "k8s",
+      "category_label": "Kubernetes",
+      "category_order": 18,
+      "description": "Service selector routes to the pod.",
+      "doc_anchor": "#selects",
+      "legacy_name": "SELECTS",
+      "sources": [
+        "k8sservice"
+      ],
+      "targets": [
+        "pod"
+      ],
+      "traversable": false,
+      "traversable_rule": null,
+      "traversal": "info"
+    },
+    "SERVICE_CAN_ASSUME": {
+      "base_weight": 0,
+      "bridge": false,
+      "category": "trust",
+      "category_label": "Role assumption",
+      "category_order": 2,
+      "description": "The trust policy admits an AWS service principal (PassRole candidates, confused-deputy checks).",
+      "doc_anchor": "#service_can_assume",
+      "legacy_name": null,
+      "sources": [
+        "service_principal"
+      ],
+      "targets": [
+        "role"
+      ],
+      "traversable": false,
+      "traversable_rule": null,
+      "traversal": "info"
+    }
+  },
+  "edges": [
+    {
+      "category": "eks",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "technique": "eks-control-plane-role"
+      },
+      "id": "e:357e72c0a38ac96c289a",
+      "source": "arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks",
+      "target": "arn:aws:iam::123456789012:role/demo-eks-cluster-role",
+      "traversable": false,
+      "traversal": "info",
+      "type": "CLUSTER_ROLE",
+      "weight": 0
+    },
+    {
+      "category": "eks",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "technique": "node-instance-role"
+      },
+      "id": "e:3700decf0d6f353bfb57",
+      "source": "arn:aws:eks:eu-west-2:123456789012:nodegroup/demo-eks/demo-ng/abcd",
+      "target": "arn:aws:iam::123456789012:role/demo-eks-node-role",
+      "traversable": true,
+      "traversal": "control",
+      "type": "NODE_ROLE",
+      "weight": 0
+    },
+    {
+      "category": "trust",
+      "confidence": "conditional",
+      "evidence": {
+        "actions": [
+          "sts:AssumeRoleWithWebIdentity"
+        ],
+        "condition_strength": "strong",
+        "decision": "conditional",
+        "provider": "eks",
+        "trust_statement": 0
+      },
+      "id": "e:81501e86d0e0b654eed2",
+      "props": {
+        "admits": "specific"
+      },
+      "source": "arn:aws:iam::123456789012:oidc-provider/oidc.eks.eu-west-2.amazonaws.com/id/OCCGIAFDPFCOIHAGDKHALDDCBBKOGLKK",
+      "target": "arn:aws:iam::123456789012:role/demo-irsa-admin",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_ASSUME_WEB_IDENTITY",
+      "weight": 4
+    },
+    {
+      "category": "trust",
+      "confidence": "conditional",
+      "evidence": {
+        "actions": [
+          "sts:AssumeRoleWithWebIdentity"
+        ],
+        "condition_strength": "weak",
+        "decision": "conditional",
+        "provider": "eks",
+        "trust_statement": 0
+      },
+      "id": "e:b63f868bf58acd3515fe",
+      "props": {
+        "admits": "pattern"
+      },
+      "source": "arn:aws:iam::123456789012:oidc-provider/oidc.eks.eu-west-2.amazonaws.com/id/OCCGIAFDPFCOIHAGDKHALDDCBBKOGLKK",
+      "target": "arn:aws:iam::123456789012:role/demo-irsa-reader",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_ASSUME_WEB_IDENTITY",
+      "weight": 2
+    },
+    {
+      "category": "iam",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow"
+      },
+      "id": "e:f227e3775794dc021a10",
+      "source": "arn:aws:iam::123456789012:role/demo-eks-cluster-role",
+      "target": "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy",
+      "traversable": false,
+      "traversal": "structural",
+      "type": "HAS_POLICY",
+      "weight": 0
+    },
+    {
+      "category": "iam",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow"
+      },
+      "id": "e:3671145db5f2ffbc443a",
+      "source": "arn:aws:iam::123456789012:role/demo-eks-node-role",
+      "target": "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
+      "traversable": false,
+      "traversal": "structural",
+      "type": "HAS_POLICY",
+      "weight": 0
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:putrolepolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-005",
+          "PRIVESC-008"
+        ]
+      },
+      "id": "e:4a0d1c497757ad0991de",
+      "source": "arn:aws:iam::123456789012:role/demo-irsa-admin",
+      "target": "aws-enumerator:account-admin/123456789012",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_ESCALATE",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:putrolepolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-005",
+          "PRIVESC-008"
+        ]
+      },
+      "id": "e:43a79e2470f6b7f623da",
+      "source": "arn:aws:iam::123456789012:role/demo-irsa-admin",
+      "target": "arn:aws:iam::123456789012:role/demo-eks-cluster-role",
+      "traversable": false,
+      "traversal": "info",
+      "type": "CAN_MODIFY_PERMISSIONS_OF",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:putrolepolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-005",
+          "PRIVESC-008"
+        ]
+      },
+      "id": "e:177f8a1807ddd936e110",
+      "source": "arn:aws:iam::123456789012:role/demo-irsa-admin",
+      "target": "arn:aws:iam::123456789012:role/demo-eks-node-role",
+      "traversable": false,
+      "traversal": "info",
+      "type": "CAN_MODIFY_PERMISSIONS_OF",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:putrolepolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-005",
+          "PRIVESC-008"
+        ]
+      },
+      "id": "e:b9214bb4a2996cb141b1",
+      "source": "arn:aws:iam::123456789012:role/demo-irsa-admin",
+      "target": "arn:aws:iam::123456789012:role/demo-irsa-reader",
+      "traversable": false,
+      "traversal": "info",
+      "type": "CAN_MODIFY_PERMISSIONS_OF",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:putuserpolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-003",
+          "PRIVESC-006"
+        ]
+      },
+      "id": "e:fc6a133a5232cc0d016b",
+      "source": "arn:aws:iam::123456789012:role/demo-irsa-admin",
+      "target": "arn:aws:iam::123456789012:user/demo-platform-engineer",
+      "traversable": false,
+      "traversal": "info",
+      "type": "CAN_MODIFY_PERMISSIONS_OF",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:updateassumerolepolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-013"
+        ]
+      },
+      "id": "e:343f7dd7f5fa27522a53",
+      "source": "arn:aws:iam::123456789012:role/demo-irsa-admin",
+      "target": "arn:aws:iam::123456789012:role/demo-eks-cluster-role",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_TAKEOVER",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:updateassumerolepolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-013"
+        ]
+      },
+      "id": "e:1051e2ae43c7958d3612",
+      "source": "arn:aws:iam::123456789012:role/demo-irsa-admin",
+      "target": "arn:aws:iam::123456789012:role/demo-eks-node-role",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_TAKEOVER",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:updateassumerolepolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-013"
+        ]
+      },
+      "id": "e:2071b37b56eb6e11451a",
+      "source": "arn:aws:iam::123456789012:role/demo-irsa-admin",
+      "target": "arn:aws:iam::123456789012:role/demo-irsa-reader",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_TAKEOVER",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:createaccesskey"
+        ],
+        "rule_ids": [
+          "PRIVESC-009",
+          "PRIVESC-010"
+        ]
+      },
+      "id": "e:1212017e9b579dc9d392",
+      "source": "arn:aws:iam::123456789012:role/demo-irsa-admin",
+      "target": "arn:aws:iam::123456789012:user/demo-platform-engineer",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_TAKEOVER",
+      "weight": 1
+    },
+    {
+      "category": "s3",
+      "confidence": "definite",
+      "evidence": {
+        "access_types": [
+          "CAN_ADMIN",
+          "CAN_READ",
+          "CAN_WRITE",
+          "FULL_ACCESS"
+        ],
+        "actions": [
+          "s3:*"
+        ],
+        "decision": "allow",
+        "layers": {
+          "boundary": "n/a",
+          "identity": "true",
+          "rcp": "unknown",
+          "resource": "n/a",
+          "scp": "unknown"
+        },
+        "legacy": {
+          "direction": "forward",
+          "file": "s3_relationships.json",
+          "type": "FULL_ACCESS"
+        },
+        "statements": [
+          {
+            "layer": "identity",
+            "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+            "policy_name": "AdministratorAccess",
+            "sid": null,
+            "source_type": "aws_managed",
+            "statement_index": 0,
+            "version_id": "v1",
+            "via_group": null
+          }
+        ]
+      },
+      "id": "e:62c1744794317e9fdab1",
+      "source": "arn:aws:iam::123456789012:role/demo-irsa-admin",
+      "target": "arn:aws:s3:::demo-eks-data",
+      "traversable": true,
+      "traversal": "access",
+      "type": "FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "category": "iam",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow"
+      },
+      "id": "e:62076205c60307633394",
+      "source": "arn:aws:iam::123456789012:role/demo-irsa-admin",
+      "target": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "traversable": false,
+      "traversal": "structural",
+      "type": "HAS_POLICY",
+      "weight": 0
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "basis": "evaluator",
+        "decision": "allow",
+        "layers": {
+          "boundary": "n/a",
+          "identity": "true",
+          "scp": "unknown"
+        },
+        "statements": [
+          {
+            "layer": "identity",
+            "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+            "policy_name": "AdministratorAccess",
+            "sid": null,
+            "source_type": "aws_managed",
+            "statement_index": 0,
+            "version_id": "v1",
+            "via_group": null
+          }
+        ]
+      },
+      "id": "e:68228b6f975da74094b0",
+      "source": "arn:aws:iam::123456789012:role/demo-irsa-admin",
+      "target": "aws-enumerator:account-admin/123456789012",
+      "traversable": true,
+      "traversal": "control",
+      "type": "IS_ADMIN_EQUIVALENT",
+      "weight": 0
+    },
+    {
+      "category": "s3",
+      "confidence": "definite",
+      "evidence": {
+        "access_types": [
+          "CAN_READ"
+        ],
+        "actions": [
+          "s3:GetObject",
+          "s3:ListBucket"
+        ],
+        "decision": "allow",
+        "layers": {
+          "boundary": "n/a",
+          "identity": "true",
+          "rcp": "unknown",
+          "resource": "n/a",
+          "scp": "unknown"
+        },
+        "legacy": {
+          "direction": "forward",
+          "file": "s3_relationships.json",
+          "type": "CAN_READ"
+        },
+        "statements": [
+          {
+            "layer": "identity",
+            "policy_arn": null,
+            "policy_name": "read",
+            "sid": null,
+            "source_type": "inline",
+            "statement_index": 0,
+            "version_id": null,
+            "via_group": null
+          }
+        ]
+      },
+      "id": "e:e90f590bd18812854736",
+      "source": "arn:aws:iam::123456789012:role/demo-irsa-reader",
+      "target": "arn:aws:s3:::demo-eks-data",
+      "traversable": true,
+      "traversal": "access",
+      "type": "CAN_READ",
+      "weight": 1
+    },
+    {
+      "category": "network",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "endpoint_private_access": false,
+        "endpoint_public_access": true,
+        "public_access_cidrs": [
+          "0.0.0.0/0"
+        ]
+      },
+      "id": "e:b0f2faadc81d128253d6",
+      "props": {
+        "technique": "eks-public-endpoint"
+      },
+      "source": "aws-enumerator:anonymous",
+      "target": "arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks",
+      "traversable": false,
+      "traversal": "exposure",
+      "type": "PUBLIC_INBOUND",
+      "weight": 0
+    },
+    {
+      "category": "network",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "load_balancer_source_ranges": [],
+        "scheme": "internet-facing",
+        "scheme_reason": "in-tree cloud provider default (internet-facing)"
+      },
+      "id": "e:5dd66479b073e4e09928",
+      "props": {
+        "technique": "k8s-load-balancer"
+      },
+      "source": "aws-enumerator:anonymous",
+      "target": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Service/web/web-lb",
+      "traversable": false,
+      "traversal": "exposure",
+      "type": "PUBLIC_INBOUND",
+      "weight": 0
+    },
+    {
+      "category": "k8s",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "rules_source": "collected",
+        "technique": "run-as-sa",
+        "via": [
+          "create apps/daemonsets",
+          "create apps/deployments",
+          "create apps/replicasets",
+          "create apps/statefulsets",
+          "create batch/cronjobs",
+          "create batch/jobs",
+          "create pods",
+          "create replicationcontrollers",
+          "create serviceaccounts/token",
+          "impersonate serviceaccounts",
+          "patch apps/daemonsets",
+          "patch apps/deployments",
+          "patch apps/replicasets",
+          "patch apps/statefulsets",
+          "patch batch/cronjobs",
+          "patch batch/jobs",
+          "patch replicationcontrollers",
+          "update apps/daemonsets",
+          "update apps/deployments",
+          "update apps/replicasets",
+          "update apps/statefulsets",
+          "update batch/cronjobs",
+          "update batch/jobs",
+          "update replicationcontrollers"
+        ]
+      },
+      "id": "e:044489ffd1f73446e633",
+      "source": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ClusterRole/_/cluster-admin",
+      "target": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ServiceAccount/default/default",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_RUN_AS_SA",
+      "weight": 1
+    },
+    {
+      "category": "k8s",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "rules_source": "collected",
+        "technique": "run-as-sa",
+        "via": [
+          "create apps/daemonsets",
+          "create apps/deployments",
+          "create apps/replicasets",
+          "create apps/statefulsets",
+          "create batch/cronjobs",
+          "create batch/jobs",
+          "create pods",
+          "create replicationcontrollers",
+          "create serviceaccounts/token",
+          "impersonate serviceaccounts",
+          "patch apps/daemonsets",
+          "patch apps/deployments",
+          "patch apps/replicasets",
+          "patch apps/statefulsets",
+          "patch batch/cronjobs",
+          "patch batch/jobs",
+          "patch replicationcontrollers",
+          "update apps/daemonsets",
+          "update apps/deployments",
+          "update apps/replicasets",
+          "update apps/statefulsets",
+          "update batch/cronjobs",
+          "update batch/jobs",
+          "update replicationcontrollers"
+        ]
+      },
+      "id": "e:59c626f8ac3c46d7413a",
+      "source": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ClusterRole/_/cluster-admin",
+      "target": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ServiceAccount/kube-system/ci-deployer",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_RUN_AS_SA",
+      "weight": 1
+    },
+    {
+      "category": "k8s",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "rules_source": "collected",
+        "technique": "run-as-sa",
+        "via": [
+          "create apps/daemonsets",
+          "create apps/deployments",
+          "create apps/replicasets",
+          "create apps/statefulsets",
+          "create batch/cronjobs",
+          "create batch/jobs",
+          "create pods",
+          "create replicationcontrollers",
+          "create serviceaccounts/token",
+          "impersonate serviceaccounts",
+          "patch apps/daemonsets",
+          "patch apps/deployments",
+          "patch apps/replicasets",
+          "patch apps/statefulsets",
+          "patch batch/cronjobs",
+          "patch batch/jobs",
+          "patch replicationcontrollers",
+          "update apps/daemonsets",
+          "update apps/deployments",
+          "update apps/replicasets",
+          "update apps/statefulsets",
+          "update batch/cronjobs",
+          "update batch/jobs",
+          "update replicationcontrollers"
+        ]
+      },
+      "id": "e:409c9e7371b83858b9a0",
+      "source": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ClusterRole/_/cluster-admin",
+      "target": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ServiceAccount/kube-system/default",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_RUN_AS_SA",
+      "weight": 1
+    },
+    {
+      "category": "k8s",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "rules_source": "collected",
+        "technique": "run-as-sa",
+        "via": [
+          "create apps/daemonsets",
+          "create apps/deployments",
+          "create apps/replicasets",
+          "create apps/statefulsets",
+          "create batch/cronjobs",
+          "create batch/jobs",
+          "create pods",
+          "create replicationcontrollers",
+          "create serviceaccounts/token",
+          "impersonate serviceaccounts",
+          "patch apps/daemonsets",
+          "patch apps/deployments",
+          "patch apps/replicasets",
+          "patch apps/statefulsets",
+          "patch batch/cronjobs",
+          "patch batch/jobs",
+          "patch replicationcontrollers",
+          "update apps/daemonsets",
+          "update apps/deployments",
+          "update apps/replicasets",
+          "update apps/statefulsets",
+          "update batch/cronjobs",
+          "update batch/jobs",
+          "update replicationcontrollers"
+        ]
+      },
+      "id": "e:f9988938aa35074c5628",
+      "source": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ClusterRole/_/cluster-admin",
+      "target": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ServiceAccount/payments/default",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_RUN_AS_SA",
+      "weight": 1
+    },
+    {
+      "category": "k8s",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "rules_source": "collected",
+        "technique": "run-as-sa",
+        "via": [
+          "create apps/daemonsets",
+          "create apps/deployments",
+          "create apps/replicasets",
+          "create apps/statefulsets",
+          "create batch/cronjobs",
+          "create batch/jobs",
+          "create pods",
+          "create replicationcontrollers",
+          "create serviceaccounts/token",
+          "impersonate serviceaccounts",
+          "patch apps/daemonsets",
+          "patch apps/deployments",
+          "patch apps/replicasets",
+          "patch apps/statefulsets",
+          "patch batch/cronjobs",
+          "patch batch/jobs",
+          "patch replicationcontrollers",
+          "update apps/daemonsets",
+          "update apps/deployments",
+          "update apps/replicasets",
+          "update apps/statefulsets",
+          "update batch/cronjobs",
+          "update batch/jobs",
+          "update replicationcontrollers"
+        ]
+      },
+      "id": "e:728242d739439a64d0fa",
+      "source": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ClusterRole/_/cluster-admin",
+      "target": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ServiceAccount/payments/payments-sa",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_RUN_AS_SA",
+      "weight": 1
+    },
+    {
+      "category": "k8s",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "rules_source": "collected",
+        "technique": "run-as-sa",
+        "via": [
+          "create apps/daemonsets",
+          "create apps/deployments",
+          "create apps/replicasets",
+          "create apps/statefulsets",
+          "create batch/cronjobs",
+          "create batch/jobs",
+          "create pods",
+          "create replicationcontrollers",
+          "create serviceaccounts/token",
+          "impersonate serviceaccounts",
+          "patch apps/daemonsets",
+          "patch apps/deployments",
+          "patch apps/replicasets",
+          "patch apps/statefulsets",
+          "patch batch/cronjobs",
+          "patch batch/jobs",
+          "patch replicationcontrollers",
+          "update apps/daemonsets",
+          "update apps/deployments",
+          "update apps/replicasets",
+          "update apps/statefulsets",
+          "update batch/cronjobs",
+          "update batch/jobs",
+          "update replicationcontrollers"
+        ]
+      },
+      "id": "e:cab9f784752436617de5",
+      "source": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ClusterRole/_/cluster-admin",
+      "target": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ServiceAccount/web/web-sa",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_RUN_AS_SA",
+      "weight": 1
+    },
+    {
+      "category": "k8s",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "rules_source": "collected",
+        "technique": "run-as-sa",
+        "via": [
+          "create pods",
+          "create replicationcontrollers",
+          "create serviceaccounts/token",
+          "impersonate serviceaccounts",
+          "patch replicationcontrollers",
+          "update replicationcontrollers"
+        ]
+      },
+      "id": "e:30f00845541dea412fbc",
+      "source": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ClusterRole/_/demo-wildcard",
+      "target": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ServiceAccount/default/default",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_RUN_AS_SA",
+      "weight": 1
+    },
+    {
+      "category": "k8s",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "rules_source": "collected",
+        "technique": "run-as-sa",
+        "via": [
+          "create pods",
+          "create replicationcontrollers",
+          "create serviceaccounts/token",
+          "impersonate serviceaccounts",
+          "patch replicationcontrollers",
+          "update replicationcontrollers"
+        ]
+      },
+      "id": "e:3e48fd70007b9a8115bf",
+      "source": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ClusterRole/_/demo-wildcard",
+      "target": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ServiceAccount/kube-system/ci-deployer",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_RUN_AS_SA",
+      "weight": 1
+    },
+    {
+      "category": "k8s",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "rules_source": "collected",
+        "technique": "run-as-sa",
+        "via": [
+          "create pods",
+          "create replicationcontrollers",
+          "create serviceaccounts/token",
+          "impersonate serviceaccounts",
+          "patch replicationcontrollers",
+          "update replicationcontrollers"
+        ]
+      },
+      "id": "e:a35b264ec039b0850d83",
+      "source": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ClusterRole/_/demo-wildcard",
+      "target": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ServiceAccount/kube-system/default",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_RUN_AS_SA",
+      "weight": 1
+    },
+    {
+      "category": "k8s",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "rules_source": "collected",
+        "technique": "run-as-sa",
+        "via": [
+          "create pods",
+          "create replicationcontrollers",
+          "create serviceaccounts/token",
+          "impersonate serviceaccounts",
+          "patch replicationcontrollers",
+          "update replicationcontrollers"
+        ]
+      },
+      "id": "e:15f2092ae0c84cac8cad",
+      "source": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ClusterRole/_/demo-wildcard",
+      "target": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ServiceAccount/payments/default",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_RUN_AS_SA",
+      "weight": 1
+    },
+    {
+      "category": "k8s",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "rules_source": "collected",
+        "technique": "run-as-sa",
+        "via": [
+          "create pods",
+          "create replicationcontrollers",
+          "create serviceaccounts/token",
+          "impersonate serviceaccounts",
+          "patch replicationcontrollers",
+          "update replicationcontrollers"
+        ]
+      },
+      "id": "e:74f0e6fd66e186ad2c41",
+      "source": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ClusterRole/_/demo-wildcard",
+      "target": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ServiceAccount/payments/payments-sa",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_RUN_AS_SA",
+      "weight": 1
+    },
+    {
+      "category": "k8s",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "rules_source": "collected",
+        "technique": "run-as-sa",
+        "via": [
+          "create pods",
+          "create replicationcontrollers",
+          "create serviceaccounts/token",
+          "impersonate serviceaccounts",
+          "patch replicationcontrollers",
+          "update replicationcontrollers"
+        ]
+      },
+      "id": "e:24ad20f6a729f78ba252",
+      "source": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ClusterRole/_/demo-wildcard",
+      "target": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ServiceAccount/web/web-sa",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_RUN_AS_SA",
+      "weight": 1
+    },
+    {
+      "category": "k8s",
+      "confidence": "definite",
+      "evidence": {
+        "binding": "system:masters (API server superuser)",
+        "binding_kind": "implicit",
+        "decision": "allow",
+        "role_kind": "ClusterRole",
+        "technique": "rbac-binding"
+      },
+      "id": "e:5ddeec518fd4963631fe",
+      "source": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Group/_/system:masters",
+      "target": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ClusterRole/_/cluster-admin",
+      "traversable": true,
+      "traversal": "control",
+      "type": "BOUND_TO",
+      "weight": 0
+    },
+    {
+      "category": "k8s",
+      "confidence": "definite",
+      "evidence": {
+        "binding": "wildcard-binding",
+        "binding_kind": "ClusterRoleBinding",
+        "decision": "allow",
+        "role_kind": "ClusterRole",
+        "technique": "rbac-binding"
+      },
+      "id": "e:172a6653a172487e9b64",
+      "source": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Group/_/system:masters",
+      "target": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ClusterRole/_/demo-wildcard",
+      "traversable": true,
+      "traversal": "control",
+      "type": "BOUND_TO",
+      "weight": 0
+    },
+    {
+      "category": "k8s",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "technique": "ingress-backend"
+      },
+      "id": "e:5f2def7d8ab0ee5f2e37",
+      "source": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Ingress/payments/payments-ingress",
+      "target": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Service/payments/payments-svc",
+      "traversable": false,
+      "traversal": "info",
+      "type": "INGRESS_ROUTES_TO",
+      "weight": 0
+    },
+    {
+      "category": "k8s",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "technique": "ingress-backend"
+      },
+      "id": "e:64eb575cd34da468c6ae",
+      "source": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Ingress/web/web-ingress",
+      "target": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Service/web/web-lb",
+      "traversable": false,
+      "traversal": "info",
+      "type": "INGRESS_ROUTES_TO",
+      "weight": 0
+    },
+    {
+      "category": "eks",
+      "confidence": "conditional",
+      "evidence": {
+        "condition_strength": "none",
+        "decision": "conditional",
+        "gaps": [
+          "k8s:node-nodegroup-inferred"
+        ],
+        "host_network": false,
+        "imds": "unknown",
+        "mapping": "single-nodegroup-inferred",
+        "node_names": [
+          "ip-10-0-1-10.demo.internal"
+        ],
+        "technique": "pod-to-node-imds",
+        "weight_extra": 2
+      },
+      "id": "e:2fbf788863fd60a6f7ac",
+      "source": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/default/legacy-app",
+      "target": "arn:aws:eks:eu-west-2:123456789012:nodegroup/demo-eks/demo-ng/abcd",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_REACH_NODE_IMDS",
+      "weight": 3
+    },
+    {
+      "category": "k8s",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "technique": "placement"
+      },
+      "id": "e:b03a4c76f74916c42b89",
+      "source": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/default/legacy-app",
+      "target": "arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks",
+      "traversable": false,
+      "traversal": "structural",
+      "type": "IN_CLUSTER",
+      "weight": 0
+    },
+    {
+      "category": "k8s",
+      "confidence": "definite",
+      "evidence": {
+        "api_token_mounted": true,
+        "decision": "allow",
+        "technique": "service-account-token",
+        "token_sources": [
+          "kube-api"
+        ]
+      },
+      "id": "e:cf22a2d44deb0f533183",
+      "source": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/default/legacy-app",
+      "target": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ServiceAccount/default/default",
+      "traversable": true,
+      "traversal": "control",
+      "type": "RUNS_AS",
+      "weight": 0
+    },
+    {
+      "category": "eks",
+      "confidence": "conditional",
+      "evidence": {
+        "condition_strength": "none",
+        "decision": "conditional",
+        "gaps": [
+          "k8s:node-nodegroup-inferred"
+        ],
+        "host_network": true,
+        "imds": "unknown",
+        "mapping": "single-nodegroup-inferred",
+        "node_names": [
+          "ip-10-0-1-10.demo.internal"
+        ],
+        "technique": "pod-to-node-imds"
+      },
+      "id": "e:3c7b30df7dd2e5fcd1d8",
+      "source": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/kube-system/node-debugger",
+      "target": "arn:aws:eks:eu-west-2:123456789012:nodegroup/demo-eks/demo-ng/abcd",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_REACH_NODE_IMDS",
+      "weight": 1
+    },
+    {
+      "category": "k8s",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "technique": "placement"
+      },
+      "id": "e:1e5c16ff0f60a857e73e",
+      "source": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/kube-system/node-debugger",
+      "target": "arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks",
+      "traversable": false,
+      "traversal": "structural",
+      "type": "IN_CLUSTER",
+      "weight": 0
+    },
+    {
+      "category": "k8s",
+      "confidence": "definite",
+      "evidence": {
+        "api_token_mounted": true,
+        "decision": "allow",
+        "technique": "service-account-token",
+        "token_sources": [
+          "kube-api"
+        ]
+      },
+      "id": "e:6f1351f61c5b157704c5",
+      "source": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/kube-system/node-debugger",
+      "target": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ServiceAccount/kube-system/default",
+      "traversable": true,
+      "traversal": "control",
+      "type": "RUNS_AS",
+      "weight": 0
+    },
+    {
+      "category": "eks",
+      "confidence": "conditional",
+      "evidence": {
+        "condition_strength": "none",
+        "decision": "conditional",
+        "gaps": [
+          "k8s:node-nodegroup-inferred"
+        ],
+        "host_network": false,
+        "imds": "unknown",
+        "mapping": "single-nodegroup-inferred",
+        "node_names": [
+          "ip-10-0-1-10.demo.internal"
+        ],
+        "technique": "pod-to-node-imds",
+        "weight_extra": 2
+      },
+      "id": "e:809ac5d4c1769b38e90a",
+      "source": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/payments/payments-api-0",
+      "target": "arn:aws:eks:eu-west-2:123456789012:nodegroup/demo-eks/demo-ng/abcd",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_REACH_NODE_IMDS",
+      "weight": 3
+    },
+    {
+      "category": "k8s",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "technique": "placement"
+      },
+      "id": "e:0d0c2658d44cec88e9e7",
+      "source": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/payments/payments-api-0",
+      "target": "arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks",
+      "traversable": false,
+      "traversal": "structural",
+      "type": "IN_CLUSTER",
+      "weight": 0
+    },
+    {
+      "category": "k8s",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "via": [
+          "env",
+          "volume"
+        ]
+      },
+      "id": "e:250eb951177239009567",
+      "source": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/payments/payments-api-0",
+      "target": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Secret/payments/db-creds",
+      "traversable": true,
+      "traversal": "access",
+      "type": "MOUNTS_SECRET",
+      "weight": 1
+    },
+    {
+      "category": "k8s",
+      "confidence": "definite",
+      "evidence": {
+        "api_token_mounted": true,
+        "decision": "allow",
+        "technique": "service-account-token",
+        "token_sources": [
+          "kube-api"
+        ]
+      },
+      "id": "e:56fdbc9766b12d785175",
+      "source": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/payments/payments-api-0",
+      "target": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ServiceAccount/payments/payments-sa",
+      "traversable": true,
+      "traversal": "control",
+      "type": "RUNS_AS",
+      "weight": 0
+    },
+    {
+      "category": "eks",
+      "confidence": "conditional",
+      "evidence": {
+        "condition_strength": "none",
+        "decision": "conditional",
+        "gaps": [
+          "k8s:node-nodegroup-inferred"
+        ],
+        "host_network": false,
+        "imds": "unknown",
+        "mapping": "single-nodegroup-inferred",
+        "node_names": [
+          "ip-10-0-1-10.demo.internal"
+        ],
+        "technique": "pod-to-node-imds",
+        "weight_extra": 2
+      },
+      "id": "e:688a1466caebc9a82076",
+      "source": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/web/web-frontend-0",
+      "target": "arn:aws:eks:eu-west-2:123456789012:nodegroup/demo-eks/demo-ng/abcd",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_REACH_NODE_IMDS",
+      "weight": 3
+    },
+    {
+      "category": "k8s",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "technique": "placement"
+      },
+      "id": "e:83686c3dae56b89bcd50",
+      "source": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/web/web-frontend-0",
+      "target": "arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks",
+      "traversable": false,
+      "traversal": "structural",
+      "type": "IN_CLUSTER",
+      "weight": 0
+    },
+    {
+      "category": "k8s",
+      "confidence": "definite",
+      "evidence": {
+        "api_token_mounted": true,
+        "decision": "allow",
+        "technique": "service-account-token",
+        "token_sources": [
+          "kube-api"
+        ]
+      },
+      "id": "e:7a82fdd2e1a745d3ed39",
+      "source": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/web/web-frontend-0",
+      "target": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ServiceAccount/web/web-sa",
+      "traversable": true,
+      "traversal": "control",
+      "type": "RUNS_AS",
+      "weight": 0
+    },
+    {
+      "category": "k8s",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "technique": "label-selector"
+      },
+      "id": "e:b07e388a94b727c65297",
+      "source": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Service/payments/payments-svc",
+      "target": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/payments/payments-api-0",
+      "traversable": false,
+      "traversal": "info",
+      "type": "SELECTS",
+      "weight": 0
+    },
+    {
+      "category": "k8s",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "technique": "label-selector"
+      },
+      "id": "e:2dfbb546923eec5d12cb",
+      "source": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Service/web/web-lb",
+      "target": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/web/web-frontend-0",
+      "traversable": false,
+      "traversal": "info",
+      "type": "SELECTS",
+      "weight": 0
+    },
+    {
+      "category": "k8s",
+      "confidence": "definite",
+      "evidence": {
+        "binding": "ci-deployer-admin",
+        "binding_kind": "ClusterRoleBinding",
+        "decision": "allow",
+        "role_kind": "ClusterRole",
+        "technique": "rbac-binding"
+      },
+      "id": "e:da7c4119369724647702",
+      "source": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ServiceAccount/kube-system/ci-deployer",
+      "target": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ClusterRole/_/cluster-admin",
+      "traversable": true,
+      "traversal": "control",
+      "type": "BOUND_TO",
+      "weight": 0
+    },
+    {
+      "category": "k8s",
+      "confidence": "definite",
+      "evidence": {
+        "binding": "read-secrets",
+        "binding_kind": "RoleBinding",
+        "decision": "allow",
+        "role_kind": "Role",
+        "technique": "rbac-binding"
+      },
+      "id": "e:64cd1d70ba3526427b1f",
+      "source": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ServiceAccount/payments/payments-sa",
+      "target": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Role/payments/secret-reader",
+      "traversable": true,
+      "traversal": "control",
+      "type": "BOUND_TO",
+      "weight": 0
+    },
+    {
+      "category": "eks",
+      "confidence": "definite",
+      "evidence": {
+        "audience": "sts.amazonaws.com",
+        "decision": "allow",
+        "layers": {
+          "boundary": "n/a",
+          "identity": "n/a",
+          "rcp": "n/a",
+          "scp": "n/a",
+          "trust": "true"
+        },
+        "mechanism": "irsa",
+        "oidc_provider": "arn:aws:iam::123456789012:oidc-provider/oidc.eks.eu-west-2.amazonaws.com/id/OCCGIAFDPFCOIHAGDKHALDDCBBKOGLKK",
+        "source": "annotation",
+        "statements": [
+          {
+            "layer": "trust",
+            "policy_arn": "arn:aws:iam::123456789012:role/demo-irsa-admin",
+            "policy_name": "trust",
+            "sid": null,
+            "source_type": "resource",
+            "statement_index": 0,
+            "version_id": null,
+            "via_group": null
+          }
+        ],
+        "technique": "irsa",
+        "token": "irsa-webhook",
+        "traversable_rule": {
+          "holds": true,
+          "rule": "trust-verified"
+        },
+        "trust_reason": "the role's trust policy admits the service account",
+        "trust_verified": true
+      },
+      "id": "e:78360eb95dba073b27ef",
+      "source": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ServiceAccount/payments/payments-sa",
+      "target": "arn:aws:iam::123456789012:role/demo-irsa-admin",
+      "traversable": true,
+      "traversal": "control",
+      "type": "IRSA_BRIDGE",
+      "weight": 0
+    },
+    {
+      "category": "k8s",
+      "confidence": "definite",
+      "evidence": {
+        "binding": "web-view",
+        "binding_kind": "RoleBinding",
+        "decision": "allow",
+        "role_kind": "BoundClusterRole",
+        "technique": "rbac-binding"
+      },
+      "id": "e:d29fd97b81beabef76a4",
+      "source": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ServiceAccount/web/web-sa",
+      "target": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Role/web/ClusterRole:view",
+      "traversable": true,
+      "traversal": "control",
+      "type": "BOUND_TO",
+      "weight": 0
+    },
+    {
+      "category": "eks",
+      "confidence": "definite",
+      "evidence": {
+        "audience": "sts.amazonaws.com",
+        "decision": "allow",
+        "layers": {
+          "boundary": "n/a",
+          "identity": "n/a",
+          "rcp": "n/a",
+          "scp": "n/a",
+          "trust": "true"
+        },
+        "mechanism": "irsa",
+        "oidc_provider": "arn:aws:iam::123456789012:oidc-provider/oidc.eks.eu-west-2.amazonaws.com/id/OCCGIAFDPFCOIHAGDKHALDDCBBKOGLKK",
+        "source": "annotation",
+        "statements": [
+          {
+            "layer": "trust",
+            "policy_arn": "arn:aws:iam::123456789012:role/demo-irsa-reader",
+            "policy_name": "trust",
+            "sid": null,
+            "source_type": "resource",
+            "statement_index": 0,
+            "version_id": null,
+            "via_group": null
+          }
+        ],
+        "technique": "irsa",
+        "token": "irsa-webhook",
+        "traversable_rule": {
+          "holds": true,
+          "rule": "trust-verified"
+        },
+        "trust_reason": "the role's trust policy admits the service account",
+        "trust_verified": true
+      },
+      "id": "e:5cace17e98ea0612bd68",
+      "source": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ServiceAccount/web/web-sa",
+      "target": "arn:aws:iam::123456789012:role/demo-irsa-reader",
+      "traversable": true,
+      "traversal": "control",
+      "type": "IRSA_BRIDGE",
+      "weight": 0
+    },
+    {
+      "category": "k8s",
+      "confidence": "definite",
+      "evidence": {
+        "binding": "ci-deployer-admin",
+        "binding_kind": "ClusterRoleBinding",
+        "decision": "allow",
+        "role_kind": "ClusterRole",
+        "technique": "rbac-binding"
+      },
+      "id": "e:c8f5f489d365904a0254",
+      "source": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/User/_/demo-admin@example.com",
+      "target": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ClusterRole/_/cluster-admin",
+      "traversable": true,
+      "traversal": "control",
+      "type": "BOUND_TO",
+      "weight": 0
+    },
+    {
+      "category": "trust",
+      "confidence": "definite",
+      "evidence": {
+        "actions": [
+          "sts:AssumeRole"
+        ],
+        "decision": "allow",
+        "trust_statement": 0
+      },
+      "id": "e:42cd15b7ba1f51a30f28",
+      "source": "svc:ec2.amazonaws.com",
+      "target": "arn:aws:iam::123456789012:role/demo-eks-node-role",
+      "traversable": false,
+      "traversal": "info",
+      "type": "SERVICE_CAN_ASSUME",
+      "weight": 0
+    },
+    {
+      "category": "trust",
+      "confidence": "definite",
+      "evidence": {
+        "actions": [
+          "sts:AssumeRole"
+        ],
+        "decision": "allow",
+        "trust_statement": 0
+      },
+      "id": "e:1f021cd9ac9807176640",
+      "source": "svc:eks.amazonaws.com",
+      "target": "arn:aws:iam::123456789012:role/demo-eks-cluster-role",
+      "traversable": false,
+      "traversal": "info",
+      "type": "SERVICE_CAN_ASSUME",
+      "weight": 0
+    }
+  ],
+  "evaluation_gaps": [
+    {
+      "code": "coverage-not-recorded",
+      "count": null,
+      "detail": "The report predates _coverage.json: denied or failed collection cannot be told apart from empty data."
+    },
+    {
+      "code": "external-identity",
+      "count": null,
+      "detail": "Identity policies of external principals are not visible; cross-account edges are conditional."
+    },
+    {
+      "code": "iam:legacy-layout",
+      "count": null,
+      "detail": "IAM was collected with the per-entity (d13c215) layout: no policy versions, no identity providers, boundaries and tags may be missing"
+    },
+    {
+      "code": "org:rcp-unknown",
+      "count": null,
+      "detail": "Resource control policies are unknown (membership unknown)"
+    },
+    {
+      "code": "org:scp-unknown",
+      "count": null,
+      "detail": "Service control policies are unknown (membership unknown)"
+    },
+    {
+      "code": "runtime-conditions",
+      "count": null,
+      "detail": "Condition values known only at request time (source IP, MFA, tags in the request) are not evaluated; such decisions are conditional."
+    },
+    {
+      "code": "session-policies",
+      "count": null,
+      "detail": "Session policies passed at AssumeRole time can only narrow permissions and are not modelled."
+    }
+  ],
+  "findings": [
+    {
+      "account": "123456789012",
+      "base_severity": "CRITICAL",
+      "category": "dangerous_permission",
+      "confidence": "definite",
+      "description": "This role is administrator-equivalent: its effective permissions allow every action on every resource. Its 64 individual privilege-escalation and dangerous-permission findings are summarised here.",
+      "evidence": {
+        "basis": "allow-star",
+        "rule_ids": [
+          "DANGER-001"
+        ],
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+                "policy_name": "AdministratorAccess",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "aws_managed",
+                "statement_index": 0,
+                "version_id": "v1"
+              }
+            ],
+            "resource": "*",
+            "rule_action": "*"
+          }
+        ],
+        "subsumed": [
+          {
+            "fingerprint": "057b2e7e4c5b83a0874412f838c77273",
+            "id": "PRIVESC-034",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "07a14d9b333ca2986886206635ea1cdc",
+            "id": "PRIVESC-010",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "07faedde4b976846c7b95cac30e8d87b",
+            "id": "PRIVESC-038",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "0a423f1664f6ba43cfef2449044fad1a",
+            "id": "PRIVESC-020",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "0c08d17363ee4e9855298fb377c4704c",
+            "id": "PRIVESC-004",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "1c83ff561917256880982b470698c084",
+            "id": "PRIVESC-011",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "20b61caeee6ad9fd4c8711f93c0395fa",
+            "id": "PRIVESC-049",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "21fb746ffcebbb961199275c20d82144",
+            "id": "PRIVESC-065",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "2440397331ed67ee52ce6b5846f39041",
+            "id": "PRIVESC-043",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "2481502822f2c14df5fa9d087d0093ab",
+            "id": "PRIVESC-008",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "252e684039f2f8f2807029df70b92469",
+            "id": "DANGER-009",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "2986192dc25874f39b4d901815839b80",
+            "id": "PRIVESC-005",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "2d5cce895978be7eb5f75225d85d69db",
+            "id": "PRIVESC-015",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "329a911e342cc933cd5d15ef9bf92fdb",
+            "id": "PRIVESC-044",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "32b28eafc14aa2bb1d9ab87081ad3129",
+            "id": "PRIVESC-061",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "32d8afaec5c8e60fcc8d85dce44aae11",
+            "id": "PRIVESC-024",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "350343aaa757b51ca89faaf7081c23ee",
+            "id": "PRIVESC-030",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "3bc16e89c6224a2ab7aae84970050eab",
+            "id": "PRIVESC-026",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "3c4478e813a99bce6e7de26aaa085469",
+            "id": "DANGER-005",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "4384f48c013a5696ae6509051ea0685a",
+            "id": "PRIVESC-025",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "44c9ff5d03d12881e7826f7aed16686f",
+            "id": "DANGER-001",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "47eec5248aca166aa5d6fc6225839744",
+            "id": "PRIVESC-007",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "4aa49cd2576333457b97c2d974f5f295",
+            "id": "DANGER-007",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "4cdeffeb4ca342db413977f31642595d",
+            "id": "PRIVESC-028",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "4d5146915f919aa29a440676aa6b37f4",
+            "id": "PRIVESC-031",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "4fc3df515b44eb4fd6e9104e7fa22102",
+            "id": "PRIVESC-013",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "528ed45dd48d2de3335230d3126f1beb",
+            "id": "PRIVESC-032",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "53b7efdf41a820aa2b5580d2916f2c8e",
+            "id": "PRIVESC-033",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "626473b204556a8e4edbc9b19d7a709e",
+            "id": "PRIVESC-058",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "673ad7f988444f06bcfd27cfe1bfb604",
+            "id": "PRIVESC-048",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "6dd4a10484a142331a4cbc0e545d947d",
+            "id": "PRIVESC-002",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "75a5e747f85f1e4a4db5447c6c5c786a",
+            "id": "PRIVESC-046",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "7cfd88e938896b72e2a0bdbe4d44ce3e",
+            "id": "PRIVESC-012",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "7ff63ed98d50bc85a2c1c545fd552cb5",
+            "id": "DANGER-003",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "808dfd4788f089221fc373d1ac676d3e",
+            "id": "PRIVESC-027",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "869b188e0a1a0ec6d4fbef1dd37912d3",
+            "id": "PRIVESC-036",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "8760c165e380ac8aa425f0ffc6312da4",
+            "id": "DANGER-004",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "89523c4f109db7d43b48e6c0e36ebc6a",
+            "id": "PRIVESC-047",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "8a1f96708d4c152c9296b52ab24abaf4",
+            "id": "PRIVESC-003",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "8c8fd36b052366026f80e303d9657625",
+            "id": "PRIVESC-064",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "993b4a479e626ff4eb0967023cdbecf3",
+            "id": "PRIVESC-019",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "a2359d7b313c8cd5c130ded3e5d7b6ce",
+            "id": "PRIVESC-040",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "a49e95b50e2941cf6cece9fdb4003247",
+            "id": "PRIVESC-014",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "a625a86eedb0eca249c034ab53e7c140",
+            "id": "DANGER-008",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "a8588d2133c4c1708eb8f4065626bad8",
+            "id": "PRIVESC-001",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "b79223dae5c4578eaed874a4637c4d47",
+            "id": "PRIVESC-006",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "b7a2fc15aecd3cf67a4e35146730bf20",
+            "id": "PRIVESC-060",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "bb49480337936f427a3dfd81ff83fff1",
+            "id": "PRIVESC-062",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "c11539d7cb532a09f01ae4280f6d5a23",
+            "id": "DANGER-006",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "c97b3e9132c1b84f513f18a4bcf30eb8",
+            "id": "PRIVESC-018",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "cc4a55927585c523e0494686af8d8358",
+            "id": "PRIVESC-016",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "cd09bb91ac0190f511f3dcd49a0108eb",
+            "id": "PRIVESC-035",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "d429e12a9429919d11835f41089e6c97",
+            "id": "PRIVESC-017",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "dfd0592b9f4baa447403c48d11d626af",
+            "id": "DANGER-002",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "e092ded57103ff90a0f8d62de2bc9529",
+            "id": "PRIVESC-045",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "e37f38c51e3c4ffc577d3f55d892c85b",
+            "id": "PRIVESC-042",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "e4468ea1d5a84f3c8242e4e0c5f36070",
+            "id": "PRIVESC-039",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "e50a1d3b72be412fd41713b8faa3ce95",
+            "id": "PRIVESC-059",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "e69ea95d80cd91655a9833ab3262fd9a",
+            "id": "DANGER-010",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "f004da0ed6d1542b77caff2877a53234",
+            "id": "PRIVESC-057",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "f395a6d7cb6ba1f298d4be5b032fca98",
+            "id": "PRIVESC-009",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "f9399065e105ce26fa33bea20f6bea9d",
+            "id": "PRIVESC-063",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "fb1d953df76d414baa8cda29ea913681",
+            "id": "PRIVESC-037",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "ffbfad2dcbd0050029511717feb002aa",
+            "id": "PRIVESC-041",
+            "severity": "INFO"
+          }
+        ],
+        "subsumed_count": 64
+      },
+      "fingerprint": "626186a9703febc8b351484498e7af0a",
+      "id": "ADMIN-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "*",
+        "ec2:*",
+        "iam:*",
+        "iam:passrole",
+        "kms:decrypt",
+        "lambda:*",
+        "s3:*",
+        "secretsmanager:getsecretvalue",
+        "ssm:getparameter",
+        "ssm:getparameters",
+        "ssm:getparametersbypath",
+        "sts:assumerole"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/demo-irsa-admin",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#high-value-targets-to-hunt",
+      "related_node_ids": [
+        "aws-enumerator:account-admin/123456789012"
+      ],
+      "remediation": "Treat this principal as an account administrator: limit who can use it (trust policy, group membership, credentials), require MFA, and replace broad grants (Action:* or iam:*) by the permissions it needs.",
+      "severity": "CRITICAL",
+      "status": "open",
+      "subsumes": [
+        "DANGER-001",
+        "DANGER-002",
+        "DANGER-003",
+        "DANGER-004",
+        "DANGER-005",
+        "DANGER-006",
+        "DANGER-007",
+        "DANGER-008",
+        "DANGER-009",
+        "DANGER-010",
+        "PRIVESC-001",
+        "PRIVESC-002",
+        "PRIVESC-003",
+        "PRIVESC-004",
+        "PRIVESC-005",
+        "PRIVESC-006",
+        "PRIVESC-007",
+        "PRIVESC-008",
+        "PRIVESC-009",
+        "PRIVESC-010",
+        "PRIVESC-011",
+        "PRIVESC-012",
+        "PRIVESC-013",
+        "PRIVESC-014",
+        "PRIVESC-015",
+        "PRIVESC-016",
+        "PRIVESC-017",
+        "PRIVESC-018",
+        "PRIVESC-019",
+        "PRIVESC-020",
+        "PRIVESC-024",
+        "PRIVESC-025",
+        "PRIVESC-026",
+        "PRIVESC-027",
+        "PRIVESC-028",
+        "PRIVESC-030",
+        "PRIVESC-031",
+        "PRIVESC-032",
+        "PRIVESC-033",
+        "PRIVESC-034",
+        "PRIVESC-035",
+        "PRIVESC-036",
+        "PRIVESC-037",
+        "PRIVESC-038",
+        "PRIVESC-039",
+        "PRIVESC-040",
+        "PRIVESC-041",
+        "PRIVESC-042",
+        "PRIVESC-043",
+        "PRIVESC-044",
+        "PRIVESC-045",
+        "PRIVESC-046",
+        "PRIVESC-047",
+        "PRIVESC-048",
+        "PRIVESC-049",
+        "PRIVESC-057",
+        "PRIVESC-058",
+        "PRIVESC-059",
+        "PRIVESC-060",
+        "PRIVESC-061",
+        "PRIVESC-062",
+        "PRIVESC-063",
+        "PRIVESC-064",
+        "PRIVESC-065"
+      ],
+      "title": "Administrator-equivalent principal"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "CRITICAL",
+      "category": "k8s_irsa",
+      "confidence": "definite",
+      "description": "Every pod running as service account payments/payments-sa can assume arn:aws:iam::123456789012:role/demo-irsa-admin, which is administrator-equivalent in AWS: compromising one such pod compromises the account.",
+      "entity": "sa/demo-eks/payments/payments-sa",
+      "entity_arn": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ServiceAccount/payments/payments-sa",
+      "evidence": {
+        "admin_confidence": "definite",
+        "mechanism": "irsa",
+        "role_arn": "arn:aws:iam::123456789012:role/demo-irsa-admin"
+      },
+      "fingerprint": "9cb55a7fd00b11e868c5ecd71c75ddbd",
+      "id": "K8S-IRSA-ADMIN",
+      "legacy_ids": [],
+      "node_id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ServiceAccount/payments/payments-sa",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-2--you-compromised-a-kubernetes-pod",
+      "region": "eu-west-2",
+      "related_node_ids": [
+        "arn:aws:iam::123456789012:role/demo-irsa-admin"
+      ],
+      "remediation": "Restrict the role to the permissions the workload needs, and scope its trust policy to this service account (exact sub and aud conditions).",
+      "resource": [
+        "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ServiceAccount/payments/payments-sa"
+      ],
+      "severity": "CRITICAL",
+      "source_policy": "irsa",
+      "source_type": "k8s_service_account",
+      "status": "open",
+      "title": "Service account can assume an admin IAM role through IRSA (payments/payments-sa, cluster demo-eks)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "CRITICAL",
+      "category": "k8s_rbac",
+      "confidence": "definite",
+      "description": "ClusterRoleBinding 'ci-deployer-admin' grants kube-system/ci-deployer every verb on every resource in the whole cluster. Every pod running as this service account controls the cluster.",
+      "entity": "serviceaccount/demo-eks/kube-system/ci-deployer",
+      "entity_arn": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ServiceAccount/kube-system/ci-deployer",
+      "evidence": {
+        "binding": "ci-deployer-admin",
+        "binding_kind": "ClusterRoleBinding",
+        "role": "cluster-admin",
+        "scope": "cluster"
+      },
+      "fingerprint": "7a9c111155275962280519d21fb0066c",
+      "id": "K8S-RBAC-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "*"
+      ],
+      "node_id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ServiceAccount/kube-system/ci-deployer",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-2--you-compromised-a-kubernetes-pod",
+      "region": "eu-west-2",
+      "remediation": "Use a more restrictive ClusterRole or a namespaced Role.",
+      "resource": [
+        "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ServiceAccount/kube-system/ci-deployer"
+      ],
+      "severity": "CRITICAL",
+      "source_policy": "ci-deployer-admin",
+      "source_type": "k8s_rbac",
+      "status": "open",
+      "title": "ServiceAccount kube-system/ci-deployer bound to cluster-admin (cluster demo-eks)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "k8s_workload",
+      "confidence": "definite",
+      "description": "The pod shares the host's network namespace (every node interface, the node's IMDS).",
+      "entity": "pod/demo-eks/kube-system/node-debugger",
+      "entity_arn": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/kube-system/node-debugger",
+      "evidence": {
+        "field": "hostNetwork",
+        "pod_count": 1,
+        "pods": [
+          "node-debugger"
+        ]
+      },
+      "fingerprint": "6dedf69695ae5d5f0abbbc4232968b24",
+      "id": "K8S-HOSTNET-001",
+      "legacy_ids": [],
+      "node_id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/kube-system/node-debugger",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-2--you-compromised-a-kubernetes-pod",
+      "region": "eu-west-2",
+      "remediation": "Remove hostNetwork: true.",
+      "resource": [
+        "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/kube-system/node-debugger"
+      ],
+      "severity": "HIGH",
+      "source_policy": "PodSpec.hostNetwork",
+      "source_type": "k8s_pod",
+      "status": "open",
+      "title": "Pod uses hostNetwork (kube-system/node-debugger, cluster demo-eks)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "k8s_workload",
+      "confidence": "definite",
+      "description": "The pod shares the host's PID namespace (it can see and signal every process on the node).",
+      "entity": "pod/demo-eks/kube-system/node-debugger",
+      "entity_arn": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/kube-system/node-debugger",
+      "evidence": {
+        "field": "hostPID",
+        "pod_count": 1,
+        "pods": [
+          "node-debugger"
+        ]
+      },
+      "fingerprint": "60519f9dc52106a7711a443128b87827",
+      "id": "K8S-HOSTPID-001",
+      "legacy_ids": [],
+      "node_id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/kube-system/node-debugger",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-2--you-compromised-a-kubernetes-pod",
+      "region": "eu-west-2",
+      "remediation": "Remove hostPID: true.",
+      "resource": [
+        "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/kube-system/node-debugger"
+      ],
+      "severity": "HIGH",
+      "source_policy": "PodSpec.hostPID",
+      "source_type": "k8s_pod",
+      "status": "open",
+      "title": "Pod uses hostPID (kube-system/node-debugger, cluster demo-eks)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "k8s_network",
+      "confidence": "definite",
+      "description": "Service web/web-lb of type LoadBalancer gets an internet-facing AWS load balancer (in-tree cloud provider default (internet-facing)), open to any source address.",
+      "entity": "k8sservice/demo-eks/web/web-lb",
+      "entity_arn": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Service/web/web-lb",
+      "evidence": {
+        "load_balancer_source_ranges": [],
+        "scheme": "internet-facing",
+        "scheme_reason": "in-tree cloud provider default (internet-facing)"
+      },
+      "fingerprint": "738c4a37dce1bbab9381a5bd2b4f6216",
+      "id": "K8S-NET-001",
+      "legacy_ids": [],
+      "node_id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Service/web/web-lb",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "region": "eu-west-2",
+      "remediation": "Use an internal load balancer (service.beta.kubernetes.io/aws-load-balancer-scheme: internal) or restrict loadBalancerSourceRanges.",
+      "resource": [
+        "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Service/web/web-lb"
+      ],
+      "severity": "HIGH",
+      "source_policy": "Service.spec.type",
+      "source_type": "k8s_service",
+      "status": "open",
+      "title": "Service web/web-lb is an internet-facing load balancer (cluster demo-eks)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "k8s_workload",
+      "confidence": "definite",
+      "description": "A privileged container (regular, init or ephemeral) has every capability and the host's devices: it can take over the node.",
+      "entity": "pod/demo-eks/kube-system/node-debugger",
+      "entity_arn": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/kube-system/node-debugger",
+      "evidence": {
+        "containers": [
+          "container main"
+        ],
+        "pod_count": 1,
+        "pods": [
+          "node-debugger"
+        ]
+      },
+      "fingerprint": "25a2c241b79c9b7fd15bbb008683251c",
+      "id": "K8S-PRIV-001",
+      "legacy_ids": [],
+      "node_id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/kube-system/node-debugger",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-2--you-compromised-a-kubernetes-pod",
+      "region": "eu-west-2",
+      "remediation": "Remove privileged: true (regular, init and ephemeral containers).",
+      "resource": [
+        "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/kube-system/node-debugger"
+      ],
+      "severity": "HIGH",
+      "source_policy": "securityContext.privileged",
+      "source_type": "k8s_pod",
+      "status": "open",
+      "title": "Privileged container (kube-system/node-debugger, cluster demo-eks)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "k8s_rbac",
+      "confidence": "definite",
+      "description": "ClusterRole 'demo-wildcard' allows every verb on every resource; whoever is bound to it has unrestricted access to the cluster.",
+      "entity": "k8srole/demo-eks/cluster/demo-wildcard",
+      "entity_arn": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ClusterRole/_/demo-wildcard",
+      "evidence": {
+        "role_kind": "ClusterRole"
+      },
+      "fingerprint": "638d96d8c3c30f0ab3cf2b8dd3abc448",
+      "id": "K8S-RBAC-002",
+      "legacy_ids": [],
+      "matched_actions": [
+        "*"
+      ],
+      "node_id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ClusterRole/_/demo-wildcard",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-2--you-compromised-a-kubernetes-pod",
+      "region": "eu-west-2",
+      "remediation": "Restrict verbs and resources to least privilege.",
+      "resource": [
+        "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ClusterRole/_/demo-wildcard"
+      ],
+      "severity": "HIGH",
+      "source_policy": "demo-wildcard",
+      "source_type": "k8s_rbac",
+      "status": "open",
+      "title": "ClusterRole demo-wildcard allows * on * (cluster demo-eks)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "eks_exposure",
+      "confidence": "definite",
+      "description": "The Kubernetes API endpoint of cluster demo-eks (eu-west-2) is publicly accessible from 0.0.0.0/0. Authentication is still required, but any leaked kubeconfig, token or mapped IAM credential is usable from anywhere, and API-server vulnerabilities are exposed.",
+      "entity": "cluster/demo-eks",
+      "entity_arn": "arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks",
+      "evidence": {
+        "endpoint_private_access": false,
+        "endpoint_public_access": true,
+        "public_access_cidrs": [
+          "0.0.0.0/0"
+        ]
+      },
+      "fingerprint": "3ec4e9da98eba72b14c0a8c697932988",
+      "id": "EKS-ENDPOINT-001",
+      "legacy_ids": [],
+      "node_id": "arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "region": "eu-west-2",
+      "remediation": "Disable public endpoint access, or restrict publicAccessCidrs to known administration networks.",
+      "resource": [
+        "arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks"
+      ],
+      "severity": "MEDIUM",
+      "source_policy": "resourcesVpcConfig",
+      "source_type": "eks_cluster",
+      "status": "open",
+      "title": "EKS cluster demo-eks has a public API endpoint open to the internet"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "trust_policy",
+      "confidence": "conditional",
+      "description": "Web identity provider arn:aws:iam::123456789012:oidc-provider/oidc.eks.eu-west-2.amazonaws.com/id/OCCGIAFDPFCOIHAGDKHALDDCBBKOGLKK can assume 'demo-irsa-reader'.",
+      "entity": "role/demo-irsa-reader",
+      "entity_arn": "arn:aws:iam::123456789012:role/demo-irsa-reader",
+      "evidence": {
+        "admits": "pattern",
+        "conditions": [
+          {
+            "key": "oidc.eks.eu-west-2.amazonaws.com/id/OCCGIAFDPFCOIHAGDKHALDDCBBKOGLKK:sub",
+            "operator": "StringLike",
+            "values": [
+              "system:serviceaccount:web:*"
+            ]
+          }
+        ],
+        "problems": [],
+        "provider": "eks",
+        "statement_index": 0
+      },
+      "fingerprint": "c68a12e590831ffe6f6385dbc7e22589",
+      "id": "TRUST-OIDC-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "sts:AssumeRoleWithWebIdentity"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/demo-irsa-reader",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-6--youre-external-no-foothold-yet",
+      "related_node_ids": [
+        "arn:aws:iam::123456789012:oidc-provider/oidc.eks.eu-west-2.amazonaws.com/id/OCCGIAFDPFCOIHAGDKHALDDCBBKOGLKK"
+      ],
+      "remediation": "Require the provider's audience (<host>:aud) and an exact subject (<host>:sub), e.g. repo:<org>/<repo>:ref:refs/heads/main for GitHub or system:serviceaccount:<ns>:<sa> for EKS.",
+      "resource": [
+        "arn:aws:iam::123456789012:role/demo-irsa-reader"
+      ],
+      "severity": "MEDIUM",
+      "source_policy": "AssumeRolePolicyDocument",
+      "source_type": "trust_policy",
+      "status": "open",
+      "title": "Role 'demo-irsa-reader' trusts eks identities (pattern subjects)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "LOW",
+      "category": "iam_hygiene",
+      "confidence": "definite",
+      "description": "The IAM password policy is below common baselines: password reuse prevention None < 24.",
+      "evidence": {
+        "configured": true,
+        "console_users": 0,
+        "weaknesses": [
+          "password reuse prevention None < 24"
+        ]
+      },
+      "fingerprint": "8324f653d46059d49f0e62bada4e6cf9",
+      "id": "IAM-PWPOL-001",
+      "legacy_ids": [],
+      "node_id": "aws-enumerator:account/123456789012",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-6--youre-external-no-foothold-yet",
+      "remediation": "Set an account password policy: length >= 14, all character classes, reuse prevention 24.",
+      "severity": "LOW",
+      "status": "open",
+      "title": "The account password policy is weak"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "LOW",
+      "category": "k8s_workload",
+      "confidence": "definite",
+      "description": "The pods mount the API token of their namespace's default service account. Use a dedicated service account, or set automountServiceAccountToken: false.",
+      "entity": "pod/demo-eks/default/legacy-app",
+      "entity_arn": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/default/legacy-app",
+      "evidence": {
+        "default_sa_has_rights": false,
+        "pod_count": 1,
+        "pods": [
+          "legacy-app"
+        ]
+      },
+      "fingerprint": "03bf269730a8e140e6744dc7e5bb3d56",
+      "id": "K8S-DEFAULT-SA",
+      "legacy_ids": [],
+      "node_id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/default/legacy-app",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-2--you-compromised-a-kubernetes-pod",
+      "region": "eu-west-2",
+      "remediation": "Create a dedicated ServiceAccount for this workload, or set automountServiceAccountToken: false.",
+      "resource": [
+        "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/default/legacy-app"
+      ],
+      "severity": "LOW",
+      "source_policy": "PodSpec.serviceAccountName",
+      "source_type": "k8s_pod",
+      "status": "open",
+      "title": "Workload runs as the default service account with its token mounted (default/legacy-app, cluster demo-eks)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "LOW",
+      "category": "k8s_workload",
+      "confidence": "definite",
+      "description": "The pods mount the API token of their namespace's default service account. Use a dedicated service account, or set automountServiceAccountToken: false.",
+      "entity": "pod/demo-eks/kube-system/node-debugger",
+      "entity_arn": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/kube-system/node-debugger",
+      "evidence": {
+        "default_sa_has_rights": false,
+        "pod_count": 1,
+        "pods": [
+          "node-debugger"
+        ]
+      },
+      "fingerprint": "6b44806de297daae06de8aa4f127dfbb",
+      "id": "K8S-DEFAULT-SA",
+      "legacy_ids": [],
+      "node_id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/kube-system/node-debugger",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-2--you-compromised-a-kubernetes-pod",
+      "region": "eu-west-2",
+      "remediation": "Create a dedicated ServiceAccount for this workload, or set automountServiceAccountToken: false.",
+      "resource": [
+        "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/kube-system/node-debugger"
+      ],
+      "severity": "LOW",
+      "source_policy": "PodSpec.serviceAccountName",
+      "source_type": "k8s_pod",
+      "status": "open",
+      "title": "Workload runs as the default service account with its token mounted (kube-system/node-debugger, cluster demo-eks)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "trust_policy",
+      "confidence": "conditional",
+      "description": "Web identity provider arn:aws:iam::123456789012:oidc-provider/oidc.eks.eu-west-2.amazonaws.com/id/OCCGIAFDPFCOIHAGDKHALDDCBBKOGLKK can assume 'demo-irsa-admin'.",
+      "entity": "role/demo-irsa-admin",
+      "entity_arn": "arn:aws:iam::123456789012:role/demo-irsa-admin",
+      "evidence": {
+        "admits": "specific",
+        "conditions": [
+          {
+            "key": "oidc.eks.eu-west-2.amazonaws.com/id/OCCGIAFDPFCOIHAGDKHALDDCBBKOGLKK:aud",
+            "operator": "StringEquals",
+            "values": [
+              "sts.amazonaws.com"
+            ]
+          },
+          {
+            "key": "oidc.eks.eu-west-2.amazonaws.com/id/OCCGIAFDPFCOIHAGDKHALDDCBBKOGLKK:sub",
+            "operator": "StringEquals",
+            "values": [
+              "system:serviceaccount:payments:payments-sa"
+            ]
+          }
+        ],
+        "problems": [],
+        "provider": "eks",
+        "statement_index": 0
+      },
+      "fingerprint": "7aed95ebce3a9c11941753be15793adc",
+      "id": "TRUST-OIDC-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "sts:AssumeRoleWithWebIdentity"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/demo-irsa-admin",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-6--youre-external-no-foothold-yet",
+      "related_node_ids": [
+        "arn:aws:iam::123456789012:oidc-provider/oidc.eks.eu-west-2.amazonaws.com/id/OCCGIAFDPFCOIHAGDKHALDDCBBKOGLKK"
+      ],
+      "remediation": "Require the provider's audience (<host>:aud) and an exact subject (<host>:sub), e.g. repo:<org>/<repo>:ref:refs/heads/main for GitHub or system:serviceaccount:<ns>:<sa> for EKS.",
+      "resource": [
+        "arn:aws:iam::123456789012:role/demo-irsa-admin"
+      ],
+      "severity": "INFO",
+      "source_policy": "AssumeRolePolicyDocument",
+      "source_type": "trust_policy",
+      "status": "open",
+      "title": "Role 'demo-irsa-admin' trusts eks identities (specific subjects)"
+    }
+  ],
+  "generator": {
+    "engine_version": "1.1.0",
+    "git_sha": null,
+    "rules_version": "2.1.0",
+    "tool": "aws-enumerator",
+    "version": "0.3.0"
+  },
+  "meta": {
+    "default_sources": [
+      "aws-enumerator:anonymous"
+    ],
+    "default_targets": [
+      "arn:aws:iam::123456789012:role/demo-irsa-admin",
+      "aws-enumerator:account-admin/123456789012"
+    ]
+  },
+  "node_types": {
+    "account": {
+      "data_asset": false,
+      "default_source": false,
+      "description": "Anchor for account-wide findings (hygiene, posture, collection gaps).",
+      "group": "posture",
+      "icon": "account",
+      "is_compute_bridge": false,
+      "label": "Account",
+      "order": 11,
+      "synthetic": true
+    },
+    "account_admin": {
+      "data_asset": false,
+      "default_source": false,
+      "description": "Administrator of the assessed account; the default path target.",
+      "group": "synthetic",
+      "icon": "admin",
+      "is_compute_bridge": false,
+      "label": "Account administrator",
+      "order": 8,
+      "synthetic": true
+    },
+    "anonymous": {
+      "data_asset": false,
+      "default_source": true,
+      "description": "The internet / any AWS account. Source of every public exposure (F-037).",
+      "group": "synthetic",
+      "icon": "anonymous",
+      "is_compute_bridge": false,
+      "label": "Anyone",
+      "order": 7,
+      "synthetic": true
+    },
+    "bucket": {
+      "data_asset": true,
+      "default_source": false,
+      "description": "",
+      "group": "data",
+      "icon": "bucket",
+      "is_compute_bridge": false,
+      "label": "S3 bucket",
+      "order": 35,
+      "synthetic": false
+    },
+    "cluster": {
+      "data_asset": false,
+      "default_source": false,
+      "description": "",
+      "group": "kubernetes",
+      "icon": "cluster",
+      "is_compute_bridge": false,
+      "label": "EKS cluster",
+      "order": 49,
+      "synthetic": false
+    },
+    "idp": {
+      "data_asset": false,
+      "default_source": true,
+      "description": "IAM OIDC or SAML provider, or a well-known web identity provider.",
+      "group": "identity",
+      "icon": "idp",
+      "is_compute_bridge": false,
+      "label": "Identity provider",
+      "order": 5,
+      "synthetic": false
+    },
+    "k8sgroup": {
+      "data_asset": false,
+      "default_source": false,
+      "description": "",
+      "group": "kubernetes",
+      "icon": "group",
+      "is_compute_bridge": false,
+      "label": "Kubernetes group",
+      "order": 54,
+      "synthetic": false
+    },
+    "k8singress": {
+      "data_asset": false,
+      "default_source": false,
+      "description": "",
+      "group": "kubernetes",
+      "icon": "k8singress",
+      "is_compute_bridge": false,
+      "label": "Kubernetes ingress",
+      "order": 58,
+      "synthetic": false
+    },
+    "k8srole": {
+      "data_asset": false,
+      "default_source": false,
+      "description": "",
+      "group": "kubernetes",
+      "icon": "k8srole",
+      "is_compute_bridge": false,
+      "label": "Kubernetes Role or ClusterRole",
+      "order": 53,
+      "synthetic": false
+    },
+    "k8ssecret": {
+      "data_asset": true,
+      "default_source": false,
+      "description": "",
+      "group": "kubernetes",
+      "icon": "k8ssecret",
+      "is_compute_bridge": false,
+      "label": "Kubernetes secret (metadata)",
+      "order": 56,
+      "synthetic": false
+    },
+    "k8sservice": {
+      "data_asset": false,
+      "default_source": false,
+      "description": "",
+      "group": "kubernetes",
+      "icon": "k8sservice",
+      "is_compute_bridge": false,
+      "label": "Kubernetes service",
+      "order": 57,
+      "synthetic": false
+    },
+    "k8suser": {
+      "data_asset": false,
+      "default_source": false,
+      "description": "",
+      "group": "kubernetes",
+      "icon": "user",
+      "is_compute_bridge": false,
+      "label": "Kubernetes user",
+      "order": 55,
+      "synthetic": false
+    },
+    "nodegroup": {
+      "data_asset": false,
+      "default_source": false,
+      "description": "",
+      "group": "kubernetes",
+      "icon": "nodegroup",
+      "is_compute_bridge": true,
+      "label": "EKS node group",
+      "order": 50,
+      "synthetic": false
+    },
+    "pod": {
+      "data_asset": false,
+      "default_source": false,
+      "description": "Pods are aggregated by owner where possible.",
+      "group": "kubernetes",
+      "icon": "pod",
+      "is_compute_bridge": true,
+      "label": "Kubernetes pod (or owner)",
+      "order": 51,
+      "synthetic": false
+    },
+    "policy": {
+      "data_asset": false,
+      "default_source": false,
+      "description": "Customer- or AWS-managed policy (ARN).",
+      "group": "identity",
+      "icon": "policy",
+      "is_compute_bridge": false,
+      "label": "Managed policy",
+      "order": 4,
+      "synthetic": false
+    },
+    "role": {
+      "data_asset": false,
+      "default_source": false,
+      "description": "",
+      "group": "identity",
+      "icon": "role",
+      "is_compute_bridge": false,
+      "label": "IAM role",
+      "order": 2,
+      "synthetic": false
+    },
+    "sa": {
+      "data_asset": false,
+      "default_source": false,
+      "description": "",
+      "group": "kubernetes",
+      "icon": "sa",
+      "is_compute_bridge": true,
+      "label": "Kubernetes service account",
+      "order": 52,
+      "synthetic": false
+    },
+    "service_principal": {
+      "data_asset": false,
+      "default_source": false,
+      "description": "Context only (who may assume a role on behalf of a service).",
+      "group": "identity",
+      "icon": "service",
+      "is_compute_bridge": false,
+      "label": "AWS service principal",
+      "order": 6,
+      "synthetic": true
+    },
+    "user": {
+      "data_asset": false,
+      "default_source": true,
+      "description": "Long-term credentials: a leaked access key is a common entry point.",
+      "group": "identity",
+      "icon": "user",
+      "is_compute_bridge": false,
+      "label": "IAM user",
+      "order": 1,
+      "synthetic": false
+    }
+  },
+  "nodes": [
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "complete"
+      },
+      "findings": [
+        "3ec4e9da98eba72b14c0a8c697932988"
+      ],
+      "id": "arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks",
+      "inherited_findings": [],
+      "label": "demo-eks",
+      "max_severity": "MEDIUM",
+      "partition": "aws",
+      "props": {
+        "authentication_mode": "API_AND_CONFIG_MAP",
+        "endpoint_private_access": false,
+        "endpoint_public_access": true,
+        "k8s_auth_status": "ok",
+        "name": "demo-eks",
+        "oidc_issuer": "https://oidc.eks.eu-west-2.amazonaws.com/id/OCCGIAFDPFCOIHAGDKHALDDCBBKOGLKK",
+        "public_access_cidrs": [
+          "0.0.0.0/0"
+        ],
+        "status": "ACTIVE",
+        "version": "1.30"
+      },
+      "region": "eu-west-2",
+      "tags": [],
+      "type": "cluster"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "complete"
+      },
+      "findings": [],
+      "id": "arn:aws:eks:eu-west-2:123456789012:nodegroup/demo-eks/demo-ng/abcd",
+      "inherited_findings": [],
+      "label": "demo-ng",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "capacity_type": "ON_DEMAND",
+        "cluster": "demo-eks"
+      },
+      "region": "eu-west-2",
+      "tags": [],
+      "type": "nodegroup"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "not-collected"
+      },
+      "findings": [],
+      "id": "arn:aws:iam::123456789012:oidc-provider/oidc.eks.eu-west-2.amazonaws.com/id/OCCGIAFDPFCOIHAGDKHALDDCBBKOGLKK",
+      "inherited_findings": [],
+      "label": "OCCGIAFDPFCOIHAGDKHALDDCBBKOGLKK",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "placeholder": true,
+        "provider": "eks",
+        "reaches_admin": "conditional"
+      },
+      "region": null,
+      "tags": [],
+      "type": "idp"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "legacy-unknown"
+      },
+      "findings": [],
+      "id": "arn:aws:iam::123456789012:role/demo-eks-cluster-role",
+      "inherited_findings": [],
+      "label": "demo-eks-cluster-role",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "attached_policies_error": null,
+        "attached_policies_status": "complete",
+        "path": "/"
+      },
+      "region": null,
+      "tags": [],
+      "type": "role"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "legacy-unknown"
+      },
+      "findings": [],
+      "id": "arn:aws:iam::123456789012:role/demo-eks-node-role",
+      "inherited_findings": [],
+      "label": "demo-eks-node-role",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "attached_policies_error": null,
+        "attached_policies_status": "complete",
+        "path": "/"
+      },
+      "region": null,
+      "tags": [],
+      "type": "role"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "legacy-unknown"
+      },
+      "findings": [
+        "626186a9703febc8b351484498e7af0a",
+        "7aed95ebce3a9c11941753be15793adc"
+      ],
+      "id": "arn:aws:iam::123456789012:role/demo-irsa-admin",
+      "inherited_findings": [],
+      "label": "demo-irsa-admin",
+      "max_severity": "CRITICAL",
+      "partition": "aws",
+      "props": {
+        "attached_policies_error": null,
+        "attached_policies_status": "complete",
+        "high_value": true,
+        "high_value_reason": "admin-equivalent",
+        "path": "/",
+        "reaches_admin": "definite"
+      },
+      "region": null,
+      "tags": [],
+      "type": "role"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "legacy-unknown"
+      },
+      "findings": [
+        "c68a12e590831ffe6f6385dbc7e22589"
+      ],
+      "id": "arn:aws:iam::123456789012:role/demo-irsa-reader",
+      "inherited_findings": [],
+      "label": "demo-irsa-reader",
+      "max_severity": "MEDIUM",
+      "partition": "aws",
+      "props": {
+        "attached_policies_error": null,
+        "attached_policies_status": "complete",
+        "path": "/"
+      },
+      "region": null,
+      "tags": [],
+      "type": "role"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "legacy-unknown"
+      },
+      "findings": [],
+      "id": "arn:aws:iam::123456789012:user/demo-platform-engineer",
+      "inherited_findings": [],
+      "label": "demo-platform-engineer",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "attached_policies_error": null,
+        "attached_policies_status": "complete",
+        "path": "/"
+      },
+      "region": null,
+      "tags": [],
+      "type": "user"
+    },
+    {
+      "account": null,
+      "coverage": {
+        "gaps": [],
+        "status": "complete"
+      },
+      "findings": [],
+      "id": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "inherited_findings": [],
+      "label": "AdministratorAccess",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "aws_managed": true,
+        "default_version": "v1",
+        "document_status": "complete",
+        "versions_collected": 1
+      },
+      "region": null,
+      "tags": [],
+      "type": "policy"
+    },
+    {
+      "account": null,
+      "coverage": {
+        "gaps": [],
+        "status": "complete"
+      },
+      "findings": [],
+      "id": "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy",
+      "inherited_findings": [],
+      "label": "AmazonEKSClusterPolicy",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "aws_managed": true,
+        "default_version": "v1",
+        "document_status": "complete",
+        "versions_collected": 1
+      },
+      "region": null,
+      "tags": [],
+      "type": "policy"
+    },
+    {
+      "account": null,
+      "coverage": {
+        "gaps": [],
+        "status": "complete"
+      },
+      "findings": [],
+      "id": "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
+      "inherited_findings": [],
+      "label": "AmazonEKSWorkerNodePolicy",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "aws_managed": true,
+        "default_version": "v1",
+        "document_status": "complete",
+        "versions_collected": 1
+      },
+      "region": null,
+      "tags": [],
+      "type": "policy"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "legacy-unknown"
+      },
+      "findings": [],
+      "id": "arn:aws:s3:::demo-eks-data",
+      "inherited_findings": [],
+      "label": "demo-eks-data",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "block_public_access": {
+          "block_public_acls": null,
+          "block_public_policy": null,
+          "ignore_public_acls": null,
+          "restrict_public_buckets": null
+        },
+        "data_asset": true,
+        "mitigated_by": [],
+        "policy_status": "absent",
+        "public": null,
+        "public_via": []
+      },
+      "region": "eu-west-2",
+      "tags": [],
+      "type": "bucket"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "not-applicable"
+      },
+      "findings": [],
+      "id": "aws-enumerator:account-admin/123456789012",
+      "inherited_findings": [],
+      "label": "Administrator of 123456789012",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "high_value": true,
+        "high_value_reason": "account-admin"
+      },
+      "region": null,
+      "tags": [],
+      "type": "account_admin"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "not-applicable"
+      },
+      "findings": [
+        "8324f653d46059d49f0e62bada4e6cf9"
+      ],
+      "id": "aws-enumerator:account/123456789012",
+      "inherited_findings": [],
+      "label": "aws-enumerator:account/123456789012",
+      "max_severity": "LOW",
+      "partition": "aws",
+      "props": {},
+      "region": null,
+      "tags": [],
+      "type": "account"
+    },
+    {
+      "account": null,
+      "coverage": {
+        "gaps": [],
+        "status": "not-applicable"
+      },
+      "findings": [],
+      "id": "aws-enumerator:anonymous",
+      "inherited_findings": [],
+      "label": "Anyone (internet / any AWS account)",
+      "max_severity": null,
+      "partition": null,
+      "props": {
+        "entry_point": true
+      },
+      "region": null,
+      "tags": [],
+      "type": "anonymous"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "complete"
+      },
+      "findings": [],
+      "id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ClusterRole/_/cluster-admin",
+      "inherited_findings": [],
+      "label": "cluster-admin",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "name": "cluster-admin",
+        "reaches_admin": "definite",
+        "role_kind": "ClusterRole",
+        "rules_source": "collected"
+      },
+      "region": "eu-west-2",
+      "tags": [],
+      "type": "k8srole"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "complete"
+      },
+      "findings": [
+        "638d96d8c3c30f0ab3cf2b8dd3abc448"
+      ],
+      "id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ClusterRole/_/demo-wildcard",
+      "inherited_findings": [],
+      "label": "demo-wildcard",
+      "max_severity": "HIGH",
+      "partition": "aws",
+      "props": {
+        "name": "demo-wildcard",
+        "reaches_admin": "definite",
+        "role_kind": "ClusterRole",
+        "rules_source": "collected"
+      },
+      "region": "eu-west-2",
+      "tags": [],
+      "type": "k8srole"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "complete"
+      },
+      "findings": [],
+      "id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ClusterRole/_/view",
+      "inherited_findings": [],
+      "label": "view",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "name": "view",
+        "role_kind": "ClusterRole",
+        "rules_source": "collected"
+      },
+      "region": "eu-west-2",
+      "tags": [],
+      "type": "k8srole"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "complete"
+      },
+      "findings": [],
+      "id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Group/_/system:masters",
+      "inherited_findings": [],
+      "label": "system:masters",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "name": "system:masters",
+        "reaches_admin": "definite"
+      },
+      "region": "eu-west-2",
+      "tags": [],
+      "type": "k8sgroup"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "complete"
+      },
+      "findings": [],
+      "id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Ingress/payments/payments-ingress",
+      "inherited_findings": [],
+      "label": "payments/payments-ingress",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "name": "payments-ingress",
+        "namespace": "payments"
+      },
+      "region": "eu-west-2",
+      "tags": [],
+      "type": "k8singress"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "complete"
+      },
+      "findings": [],
+      "id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Ingress/web/web-ingress",
+      "inherited_findings": [],
+      "label": "web/web-ingress",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "name": "web-ingress",
+        "namespace": "web"
+      },
+      "region": "eu-west-2",
+      "tags": [],
+      "type": "k8singress"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "complete"
+      },
+      "findings": [
+        "03bf269730a8e140e6744dc7e5bb3d56"
+      ],
+      "id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/default/legacy-app",
+      "inherited_findings": [],
+      "label": "default/legacy-app",
+      "max_severity": "LOW",
+      "partition": "aws",
+      "props": {
+        "namespace": "default",
+        "nodes": [
+          "ip-10-0-1-10.demo.internal"
+        ],
+        "pod_count": 1,
+        "pods": [
+          "legacy-app"
+        ],
+        "service_accounts": [
+          "default"
+        ]
+      },
+      "region": "eu-west-2",
+      "tags": [],
+      "type": "pod"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "complete"
+      },
+      "findings": [
+        "25a2c241b79c9b7fd15bbb008683251c",
+        "60519f9dc52106a7711a443128b87827",
+        "6b44806de297daae06de8aa4f127dfbb",
+        "6dedf69695ae5d5f0abbbc4232968b24"
+      ],
+      "id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/kube-system/node-debugger",
+      "inherited_findings": [],
+      "label": "kube-system/node-debugger",
+      "max_severity": "HIGH",
+      "partition": "aws",
+      "props": {
+        "namespace": "kube-system",
+        "nodes": [
+          "ip-10-0-1-10.demo.internal"
+        ],
+        "pod_count": 1,
+        "pods": [
+          "node-debugger"
+        ],
+        "service_accounts": [
+          "default"
+        ]
+      },
+      "region": "eu-west-2",
+      "tags": [],
+      "type": "pod"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "complete"
+      },
+      "findings": [],
+      "id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/payments/payments-api-0",
+      "inherited_findings": [],
+      "label": "payments/payments-api-0",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "namespace": "payments",
+        "nodes": [
+          "ip-10-0-1-10.demo.internal"
+        ],
+        "pod_count": 1,
+        "pods": [
+          "payments-api-0"
+        ],
+        "reaches_admin": "definite",
+        "service_accounts": [
+          "payments-sa"
+        ]
+      },
+      "region": "eu-west-2",
+      "tags": [],
+      "type": "pod"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "complete"
+      },
+      "findings": [],
+      "id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Pod/web/web-frontend-0",
+      "inherited_findings": [],
+      "label": "web/web-frontend-0",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "namespace": "web",
+        "nodes": [
+          "ip-10-0-1-10.demo.internal"
+        ],
+        "pod_count": 1,
+        "pods": [
+          "web-frontend-0"
+        ],
+        "service_accounts": [
+          "web-sa"
+        ]
+      },
+      "region": "eu-west-2",
+      "tags": [],
+      "type": "pod"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "complete"
+      },
+      "findings": [],
+      "id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Role/payments/secret-reader",
+      "inherited_findings": [],
+      "label": "payments/secret-reader",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "name": "secret-reader",
+        "namespace": "payments",
+        "role_kind": "Role",
+        "rules_source": "collected"
+      },
+      "region": "eu-west-2",
+      "tags": [],
+      "type": "k8srole"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "complete"
+      },
+      "findings": [],
+      "id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Role/web/ClusterRole:view",
+      "inherited_findings": [],
+      "label": "web/view (ClusterRole)",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "cluster_role": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ClusterRole/_/view",
+        "name": "view",
+        "namespace": "web",
+        "role_kind": "BoundClusterRole",
+        "rules_source": "collected"
+      },
+      "region": "eu-west-2",
+      "tags": [],
+      "type": "k8srole"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "complete"
+      },
+      "findings": [],
+      "id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Secret/payments/db-creds",
+      "inherited_findings": [],
+      "label": "payments/db-creds",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "data_asset": true,
+        "name": "db-creds",
+        "namespace": "payments",
+        "secret_type": "Opaque"
+      },
+      "region": "eu-west-2",
+      "tags": [],
+      "type": "k8ssecret"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "complete"
+      },
+      "findings": [],
+      "id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Service/payments/payments-svc",
+      "inherited_findings": [],
+      "label": "payments/payments-svc",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "name": "payments-svc",
+        "namespace": "payments",
+        "service_type": "ClusterIP"
+      },
+      "region": "eu-west-2",
+      "tags": [],
+      "type": "k8sservice"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "complete"
+      },
+      "findings": [
+        "738c4a37dce1bbab9381a5bd2b4f6216"
+      ],
+      "id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/Service/web/web-lb",
+      "inherited_findings": [],
+      "label": "web/web-lb",
+      "max_severity": "HIGH",
+      "partition": "aws",
+      "props": {
+        "lb_scheme": "internet-facing",
+        "lb_scheme_reason": "in-tree cloud provider default (internet-facing)",
+        "name": "web-lb",
+        "namespace": "web",
+        "service_type": "LoadBalancer"
+      },
+      "region": "eu-west-2",
+      "tags": [],
+      "type": "k8sservice"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "complete"
+      },
+      "findings": [],
+      "id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ServiceAccount/default/default",
+      "inherited_findings": [],
+      "label": "default/default",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "name": "default",
+        "namespace": "default"
+      },
+      "region": "eu-west-2",
+      "tags": [],
+      "type": "sa"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "complete"
+      },
+      "findings": [
+        "7a9c111155275962280519d21fb0066c"
+      ],
+      "id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ServiceAccount/kube-system/ci-deployer",
+      "inherited_findings": [],
+      "label": "kube-system/ci-deployer",
+      "max_severity": "CRITICAL",
+      "partition": "aws",
+      "props": {
+        "name": "ci-deployer",
+        "namespace": "kube-system",
+        "reaches_admin": "definite"
+      },
+      "region": "eu-west-2",
+      "tags": [],
+      "type": "sa"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "complete"
+      },
+      "findings": [],
+      "id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ServiceAccount/kube-system/default",
+      "inherited_findings": [],
+      "label": "kube-system/default",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "name": "default",
+        "namespace": "kube-system"
+      },
+      "region": "eu-west-2",
+      "tags": [],
+      "type": "sa"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "complete"
+      },
+      "findings": [],
+      "id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ServiceAccount/payments/default",
+      "inherited_findings": [],
+      "label": "payments/default",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "name": "default",
+        "namespace": "payments"
+      },
+      "region": "eu-west-2",
+      "tags": [],
+      "type": "sa"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "complete"
+      },
+      "findings": [
+        "9cb55a7fd00b11e868c5ecd71c75ddbd"
+      ],
+      "id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ServiceAccount/payments/payments-sa",
+      "inherited_findings": [],
+      "label": "payments/payments-sa",
+      "max_severity": "CRITICAL",
+      "partition": "aws",
+      "props": {
+        "irsa_role_arn": "arn:aws:iam::123456789012:role/demo-irsa-admin",
+        "name": "payments-sa",
+        "namespace": "payments",
+        "reaches_admin": "definite"
+      },
+      "region": "eu-west-2",
+      "tags": [],
+      "type": "sa"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "complete"
+      },
+      "findings": [],
+      "id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/ServiceAccount/web/web-sa",
+      "inherited_findings": [],
+      "label": "web/web-sa",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "irsa_role_arn": "arn:aws:iam::123456789012:role/demo-irsa-reader",
+        "name": "web-sa",
+        "namespace": "web"
+      },
+      "region": "eu-west-2",
+      "tags": [],
+      "type": "sa"
+    },
+    {
+      "account": "123456789012",
+      "coverage": {
+        "gaps": [],
+        "status": "complete"
+      },
+      "findings": [],
+      "id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-eks/User/_/demo-admin@example.com",
+      "inherited_findings": [],
+      "label": "demo-admin@example.com",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "name": "demo-admin@example.com",
+        "reaches_admin": "definite"
+      },
+      "region": "eu-west-2",
+      "tags": [],
+      "type": "k8suser"
+    },
+    {
+      "account": null,
+      "coverage": {
+        "gaps": [],
+        "status": "not-applicable"
+      },
+      "findings": [],
+      "id": "svc:ec2.amazonaws.com",
+      "inherited_findings": [],
+      "label": "ec2.amazonaws.com",
+      "max_severity": null,
+      "partition": null,
+      "props": {},
+      "region": null,
+      "tags": [],
+      "type": "service_principal"
+    },
+    {
+      "account": null,
+      "coverage": {
+        "gaps": [],
+        "status": "not-applicable"
+      },
+      "findings": [],
+      "id": "svc:eks.amazonaws.com",
+      "inherited_findings": [],
+      "label": "eks.amazonaws.com",
+      "max_severity": null,
+      "partition": null,
+      "props": {},
+      "region": null,
+      "tags": [],
+      "type": "service_principal"
+    }
+  ],
+  "run": {
+    "account_id": "123456789012",
+    "generated_at": "<stripped>",
+    "mode": "legacy-single",
+    "operator": {
+      "arn": "arn:aws:iam::123456789012:user/demo-operator",
+      "node_id": null,
+      "redacted": false,
+      "resolution": "not-in-graph"
+    },
+    "partition": "aws",
+    "regions": [
+      "eu-west-2"
+    ],
+    "run_id": "legacy-eu-west-2",
+    "source_manifest_sha256": "da4b25d6a329fa84a8eb73af142c9b2cb7360a24983f99592cfb14de9174f9e0"
+  },
+  "schema_version": "1.0.0"
+}
