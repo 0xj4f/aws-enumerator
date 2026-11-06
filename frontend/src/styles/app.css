@@ -289,3 +289,17 @@ dl.fields dd { margin: 0; word-break: break-word; }
 .vue-flow__controls-button { background: var(--card); border-bottom: 1px solid var(--border); fill: var(--text-2); }
 .vue-flow__controls-button:hover { background: var(--hover); }
 .vue-flow__background { background: var(--bg); }
+
+/* ATT&CK (D-58) */
+.tactics { display: inline-flex; flex-wrap: wrap; gap: 3px; align-items: center; }
+.tactic { font-size: 11px; line-height: 18px; padding: 0 6px; border-radius: 4px; background: #241c3d; color: #c7b8ff; border: 1px solid #3d2f6b; white-space: nowrap; }
+.tactic-arrow { color: var(--muted); font-size: 12px; }
+.techniques { display: inline-flex; flex-wrap: wrap; gap: 4px 10px; }
+.technique { font-size: 12px; color: var(--text-2); white-space: nowrap; }
+.technique a, .technique .mono { margin-right: 4px; }
+.hint-chip { font-size: 11px; color: var(--muted); border: 1px dashed var(--border-strong); border-radius: 4px; padding: 0 6px; white-space: nowrap; }
+.expected-badge { font-size: 11px; color: var(--ok); border: 1px solid #2f6b38; border-radius: 4px; padding: 0 6px; white-space: nowrap; }
+table.grid.compact td { padding: 4px 8px; }
+select { font: inherit; color: var(--text); background: var(--panel); border: 1px solid var(--border-strong); border-radius: var(--radius); padding: 3px 6px; }
+.section-tight { margin: 4px 0; }
+table.grid td .tactics { flex-wrap: nowrap; }

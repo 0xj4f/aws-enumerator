@@ -10,10 +10,14 @@
  * by content, several runs in one input show a run picker, legacy reports get the "analyze" banner.
  */
 import { computed, markRaw, reactive, shallowRef } from 'vue';
-import { C, JSZip, L, X } from '../core';
+import { A, C, JSZip, L, X } from '../core';
 import type { FileSet, Finding, Graph, Index, PathResult, Problem, RootDescription } from '../core';
-import { breachSearch, compareHypotheses, routeHypothesis, type EntryKind, type Hypothesis } from '../model/breaches';
+import { breachSearch, compareHypotheses, entryPoints, routeHypothesis, type EntryKind, type Hypothesis } from '../model/breaches';
 import { buildBrief, type Brief } from '../model/brief';
+import { groupFindings, type FindingGroup } from '../model/findings';
+import { dataRows, principalRows, type DataRow, type PrincipalRow } from '../model/inventory';
+import { plumbingHint } from '../model/plumbing';
+import { reachFrom } from '../model/reach';
 import { simplify, type Simplified } from '../model/simplify';
 import { cmp, plural, safeFileStem, severityRank, shown, SEVERITY_ORDER, type SeverityClass } from '../model/text';
 
@@ -30,6 +34,7 @@ export interface LoadMeta {
 const MAX_DROPPED_FILES = 100000;
 const STORAGE_REMEMBER = 'aws-enumerator.remember-owned';
 const STORAGE_OWNED_PREFIX = 'aws-enumerator.owned.';
+const DEFAULT_SEVERITIES: SeverityClass[] = ['critical', 'high', 'medium', 'low'];
 
 export const state = reactive({
   status: 'empty' as Status,
@@ -40,13 +45,19 @@ export const state = reactive({
   meta: { integrity: 'n/a', manifest: null, root: null, source: null } as LoadMeta,
   problems: [] as Problem[],
   owned: [] as string[],
+  /** Routes and entry points marked expected (D-58): "route:<hypothesis id>", "entry:<node id>". */
+  expected: [] as string[],
+  hideExpected: false,
   remember: false,
   includeConditional: true,
   generation: 0,
   breach: { running: false, done: 0, total: 0 },
   findings: {
-    severities: new Set<SeverityClass>(['critical', 'high', 'medium', 'low']),
+    severities: new Set<SeverityClass>(DEFAULT_SEVERITIES),
     text: '',
+    /** An ATT&CK tactic id, or '' for any. */
+    tactic: '',
+    grouped: true,
     sort: 'severity' as 'severity' | 'id' | 'title' | 'node' | 'type',
     dir: 1,
   },
@@ -67,11 +78,44 @@ let breachTimer: ReturnType<typeof setTimeout> | null = null;
 // Derived views
 // -------------------------------------------------------------------------------------------------
 
-export const allRoutes = computed<Hypothesis[]>(() => [...extraRoutes.value, ...hypotheses.value]);
+export const expectedSet = computed(() => new Set(state.expected));
+
+export function isExpected(h: Hypothesis): boolean {
+  return expectedSet.value.has('route:' + h.id) || expectedSet.value.has('entry:' + h.source);
+}
+
+/** Every route; the ones marked expected last (their own order kept). */
+export const allRoutes = computed<Hypothesis[]>(() => {
+  const list = [...extraRoutes.value, ...hypotheses.value];
+  return [...list.filter((h) => !isExpected(h)), ...list.filter((h) => isExpected(h))];
+});
+
+/** The AWS plumbing a route looks like (hint only), by route id. */
+export const plumbing = computed(() => new Map(allRoutes.value.map((h) => [h.id, plumbingHint(h.path)])));
+
+/** Sources of the reach columns: the entry points and your foothold (operator and owned nodes). */
+export const reachSources = computed<string[]>(() => {
+  const idx = index.value;
+  if (!idx) return [];
+  return [...new Set([...entryPoints(idx), ...(operator.value.id ? [operator.value.id] : []), ...state.owned])];
+});
+
+/** node id -> the entry points and footholds that reach it (lazy: computed when a page reads it). */
+export const reach = computed(() => {
+  const idx = index.value;
+  const s = simplified.value;
+  if (!idx || !s) return new Map<string, string[]>();
+  return reachFrom(idx, s, reachSources.value, state.includeConditional);
+});
+
+export const principals = computed<PrincipalRow[]>(() => (index.value && simplified.value ? principalRows(index.value, simplified.value, reach.value) : []));
+export const dataAssets = computed<DataRow[]>(() => (index.value && simplified.value ? dataRows(index.value, simplified.value, reach.value) : []));
 
 export const brief = computed<Brief | null>(() => {
   if (!index.value || !simplified.value) return null;
-  return buildBrief(index.value, simplified.value, hypotheses.value, operator.value.id);
+  const entries = new Set(index.value ? entryPoints(index.value) : []);
+  const dataReached = dataAssets.value.filter((r) => r.reachedFrom.some((src) => entries.has(src))).length;
+  return buildBrief(index.value, simplified.value, hypotheses.value, operator.value.id, { isExpected, dataReached });
 });
 
 export const ownedSet = computed(() => new Set(state.owned));
@@ -102,6 +146,7 @@ export const findingsView = computed<Finding[]>(() => {
   const keyOf = SORT_KEYS[v.sort];
   const rows = allFindings().map((f, i) => ({ f, i })).filter(({ f }) => {
     if (!v.severities.has(C.severityClass(f.severity))) return false;
+    if (v.tactic && !A.tacticsOf(A.findingTechniques(f.id)).some((t) => t.id === v.tactic)) return false;
     if (!text) return true;
     return [f.id, f.title, f.node_id, nodeLabel(f.node_id)].some((x) => String(x || '').toLowerCase().includes(text));
   });
@@ -114,6 +159,9 @@ export const findingsView = computed<Finding[]>(() => {
   });
   return rows.map((r) => r.f);
 });
+
+/** The findings view grouped by rule (finding id). */
+export const findingGroups = computed<FindingGroup[]>(() => groupFindings(findingsView.value));
 
 export function severityCounts(): Map<SeverityClass, number> {
   const counts = new Map<SeverityClass, number>(SEVERITY_ORDER.map((s) => [s, 0]));
@@ -159,9 +207,13 @@ export function resetAll(): void {
   state.meta = { integrity: 'n/a', manifest: null, root: null, source: null };
   state.problems = [];
   state.owned = [];
+  state.expected = [];
+  state.hideExpected = false;
   state.breach = { running: false, done: 0, total: 0 };
   state.findings.text = '';
-  state.findings.severities = new Set(['critical', 'high', 'medium', 'low']);
+  state.findings.tactic = '';
+  state.findings.grouped = true;
+  state.findings.severities = new Set(DEFAULT_SEVERITIES);
   state.findings.sort = 'severity';
   state.findings.dir = 1;
 }
@@ -417,6 +469,7 @@ function restoreRememberedOwned(): void {
     const parsed = X.parseSession(store.getItem(ownedKey()) || '', graph.value.run.run_id);
     const present = parsed.owned.filter((id) => index.value!.nodesById.has(id));
     if (present.length) state.owned = present;
+    state.expected = parsed.expected;
   } catch {
     state.remember = false;
   }
@@ -427,7 +480,7 @@ function persistOwned(): void {
   const store = storage();
   if (!store) return;
   try {
-    store.setItem(ownedKey(), X.sessionJson({ runId: graph.value.run.run_id, owned: state.owned, paths: [] }));
+    store.setItem(ownedKey(), X.sessionJson({ runId: graph.value.run.run_id, owned: state.owned, paths: [], expected: state.expected }));
   } catch (e) {
     addProblem('warning', 'storage', 'Owned marks could not be saved in this browser: ' + errText(e));
   }
@@ -470,6 +523,35 @@ export function toggleOwned(id: string): void {
   const i = state.owned.indexOf(id);
   setOwned(i >= 0 ? state.owned.filter((x) => x !== id) : state.owned.concat([id]));
 }
+
+// -------------------------------------------------------------------------------------------------
+// Expected marks (D-58): triage, not suppression. Expected routes stay listed, faded and last.
+// -------------------------------------------------------------------------------------------------
+
+export function setExpected(marks: string[]): void {
+  state.expected = [...new Set(marks.filter((m) => typeof m === 'string' && m.length > 0))];
+  persistOwned();
+}
+
+export function toggleExpected(mark: string): void {
+  setExpected(state.expected.includes(mark) ? state.expected.filter((m) => m !== mark) : [...state.expected, mark]);
+}
+
+export function routeMark(h: Hypothesis): string {
+  return 'route:' + h.id;
+}
+
+export function entryMark(nodeId: string): string {
+  return 'entry:' + nodeId;
+}
+
+/**
+ * What "Mark suggested expected" marks: routes that look like AWS plumbing, are not marked yet and go straight
+ * from the entry point into an admin-equivalent principal. A route that escalates through a non-admin foothold
+ * keeps its hint but is never bulk-marked: that escalation is a finding even inside plumbing.
+ */
+export const suggestedExpected = computed(() => allRoutes.value.filter((h) => !isExpected(h) && (plumbing.value.get(h.id) || []).length &&
+  !!simplified.value && h.path.slice(1, -1).every((id) => simplified.value!.admins.has(id))));
 
 // -------------------------------------------------------------------------------------------------
 // Custom routes (Find path, F-146) and sessions (F-094)
@@ -522,6 +604,7 @@ export function applySessionText(text: string): void {
   const searched = new Set(hypotheses.value.map((h) => h.id));
   const routes = paths.map((p) => routeHypothesis(idx, s, p, 'session' as EntryKind)).filter((h) => !searched.has(h.id));
   extraRoutes.value = markRaw(routes.sort(compareHypotheses));
+  if (parsed.expected.length) setExpected(parsed.expected);
   setOwned(parsed.owned);
 }
 
@@ -574,7 +657,7 @@ export function exportPaths(fmt: 'csv' | 'md' | 'json', routes?: Hypothesis[]): 
 export function exportSession(): void {
   const g = graph.value;
   if (!g) return addProblem('warning', 'export', 'Session export: open a report first.');
-  download(X.sessionJson({ runId: g.run.run_id, owned: state.owned, paths: routePaths() }), fileName('session', 'json'), 'application/json');
+  download(X.sessionJson({ runId: g.run.run_id, owned: state.owned, paths: routePaths(), expected: state.expected }), fileName('session', 'json'), 'application/json');
 }
 
 export function openSessionFile(file: File): void {
@@ -591,6 +674,7 @@ export function snapshot() {
     status: state.status,
     runId: graph.value ? graph.value.run.run_id : null,
     owned: state.owned.slice(),
+    expected: state.expected.slice(),
     operator: operator.value.id,
     routes: allRoutes.value.length,
     breachRunning: state.breach.running,
@@ -599,4 +683,4 @@ export function snapshot() {
 }
 
 export { severityRank, SEVERITY_ORDER };
-export type { Hypothesis, SeverityClass };
+export type { DataRow, FindingGroup, Hypothesis, PrincipalRow, SeverityClass };

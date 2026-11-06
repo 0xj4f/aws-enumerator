@@ -4,12 +4,14 @@ import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { K } from '../core';
 import type { Finding } from '../core';
+import { relatedEdges } from '../model/inventory';
 import { drawerContext, isAccountAdmin } from '../model/simplify';
 import { shown } from '../model/text';
 import { findRoute, index, operator, ownedSet, simplified, toggleOwned } from '../stores/report';
 import FieldList from './FieldList.vue';
 import FindingCard from './FindingCard.vue';
 import NodeLink from './NodeLink.vue';
+import RelationList from './RelationList.vue';
 
 const props = defineProps<{ id: string; tab: string }>();
 const emit = defineEmits<{ focus: [string] }>();
@@ -49,6 +51,10 @@ const props2 = computed(() => {
 const counts = computed(() => ({ out: index.value?.out.get(props.id)?.length || 0, in: index.value?.in.get(props.id)?.length || 0 }));
 const isAdmin = computed(() => !!simplified.value?.admins.has(props.id) || isAccountAdmin(n.value));
 const adminTarget = computed(() => index.value?.graph.nodes.find((x) => isAccountAdmin(x))?.id || null);
+/** The relations tabs: who can become (or run as) it, what it can become or reach, who can read it. */
+const becomeBy = computed(() => (index.value && simplified.value ? relatedEdges(index.value, simplified.value, props.id, 'in', ['control']) : []));
+const reaches = computed(() => (index.value && simplified.value ? relatedEdges(index.value, simplified.value, props.id, 'out', ['control', 'access', 'exposure']) : []));
+const readers = computed(() => (index.value && simplified.value ? relatedEdges(index.value, simplified.value, props.id, 'in', ['access', 'exposure']) : []));
 
 const alertMessage = ref('');
 function routeToAdmin() {
@@ -106,6 +112,18 @@ function routeToAdmin() {
       <p v-if="!findings.own.length && !findings.inherited.length" class="muted">No findings on this node.</p>
       <FindingCard v-for="f in findings.own" :key="(f.fingerprint || f.id) + 'o'" :finding="f" :show-evidence="true" />
       <FindingCard v-for="f in findings.inherited" :key="(f.fingerprint || f.id) + 'i'" :finding="f" :inherited="true" />
+    </template>
+    <template v-else-if="tab === 'become'">
+      <p class="muted section">Principals and resources that can become this node or run as it (attack steps into it; admin-equivalent principals, which can do anything, are not listed).</p>
+      <RelationList :edges="becomeBy" direction="in" empty="Nothing in the collected data can become this node directly." />
+    </template>
+    <template v-else-if="tab === 'reaches'">
+      <p class="muted section">What this node can become, run code as, or read directly.</p>
+      <RelationList :edges="reaches" direction="out" empty="No attack step starts at this node." />
+    </template>
+    <template v-else-if="tab === 'readers'">
+      <p class="muted section">Who can read or reach it directly. Every admin-equivalent principal ({{ simplified?.admins.size || 0 }}) can as well.</p>
+      <RelationList :edges="readers" direction="in" empty="No principal has a direct access edge to it." />
     </template>
     <template v-else-if="tab === 'props'">
       <FieldList v-if="props2.length" :items="props2" />

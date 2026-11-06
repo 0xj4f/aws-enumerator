@@ -168,6 +168,8 @@ describe('findings (F-005, F-074, F-006)', () => {
     await mountApp();
     await load(g);
     await go('/findings');
+    testid('one-per-resource')!.click();
+    await settle();
     expect(text()).toContain('unattached: arn:aws:iam::111122223333:role/not-in-graph');
     await go('/findings?sel=unattached-fp');
     expect(testid('drawer')!.textContent).toContain('names a node that is not in the graph');
@@ -227,7 +229,7 @@ describe('render safety (F-008, F-041, F-097)', () => {
     await go('/findings?sel=' + encodeURIComponent(fp0));
     expect(testid('drawer')!.textContent).toContain('Reference not linked');
     await go('/findings?sel=' + encodeURIComponent(fp1));
-    const a = testid('drawer')!.querySelector('a[href]') as HTMLAnchorElement;
+    const a = all('[data-testid="drawer"] a[href]').find((x) => x.textContent === 'Reference') as HTMLAnchorElement;
     expect(a.getAttribute('href')).toBe('https://example.com/ref');
     expect(a.getAttribute('rel')).toBe('noopener noreferrer');
     expect(a.getAttribute('referrerpolicy')).toBe('no-referrer');
@@ -388,3 +390,73 @@ describe('exports (F-165)', () => {
     expect(document.querySelectorAll('a[download]').length).toBe(0);
   });
 });
+
+describe('Phase 2: ATT&CK, expected marks, principals and data (D-58)', () => {
+  /** An external account and an AFT-looking principal that can assume admin-equivalent roles. */
+  function plumbed(): Raw {
+    const g = fixture('example');
+    const admin = g.nodes.find((n: Raw) => n.props.high_value_reason === 'admin-equivalent');
+    g.nodes.push({ id: 'arn:aws:iam::999999999999:role/AWSAFTAdmin', type: 'external_principal', label: 'AWSAFTAdmin',
+      props: { external: true }, tags: [], findings: [], inherited_findings: [] });
+    g.edges.push({ id: 'e:aft', source: 'arn:aws:iam::999999999999:role/AWSAFTAdmin', target: admin.id, type: 'CAN_ASSUME',
+      category: 'trust', traversal: 'control', traversable: true, weight: 1, confidence: 'conditional', evidence: {} });
+    return g;
+  }
+
+  it('shows the kill chain of each route and a plumbing hint, and marking a route expected moves it last', async () => {
+    await mountApp();
+    await load(plumbed());
+    await go('/paths');
+    expect(all('[data-testid="paths-table"] [data-testid="tactics"]').length).toBeGreaterThan(0);
+    expect(text()).toContain('Initial Access');
+    const hinted = store.allRoutes.value.find((h) => h.source.endsWith(':role/AWSAFTAdmin'))!;
+    expect(store.plumbing.value.get(hinted.id)).toEqual(['Account Factory for Terraform']);
+    expect(store.suggestedExpected.value.map((h) => h.id)).toContain(hinted.id);
+    testid('mark-suggested')!.click();
+    await settle();
+    expect(store.isExpected(hinted)).toBe(true);
+    expect(store.allRoutes.value[store.allRoutes.value.length - 1].id).toBe(hinted.id);
+    expect(store.brief.value!.top.some((h) => h.id === hinted.id)).toBe(false);
+    expect(store.brief.value!.expectedCount).toBeGreaterThan(0);
+    expect(Object.keys(localStorage)).toEqual([]);
+  });
+
+  it('[F-094] expected marks are kept with the owned marks (opt-in) and travel in a session', async () => {
+    await mountApp();
+    await load(plumbed());
+    const h = store.allRoutes.value[0];
+    store.toggleExpected(store.routeMark(h));
+    store.setRemember(true);
+    await load(plumbed());
+    expect(store.state.expected).toEqual([store.routeMark(h)]);
+    const session = X.sessionJson({ runId: '20260101T000000Z-a1b2c3', owned: [], paths: [], expected: ['entry:' + h.source] });
+    store.applySessionText(session);
+    expect(store.state.expected).toEqual(['entry:' + h.source]);
+  });
+
+  it('lists principals (admin filter) and data assets (public filter) with drawers', async () => {
+    await mountApp();
+    await load(fixture('example'));
+    await go('/principals?filter=admin');
+    const rows = all('[data-testid="principals-table"] tbody tr');
+    expect(rows.length).toBe(store.principals.value.filter((r) => r.admin).length);
+    rows[0].click();
+    await settle();
+    testid('drawer-tab-become')!.click();
+    await settle();
+    expect(testid('drawer')!.textContent).toContain('can become this node');
+    await go('/data?filter=public');
+    expect(all('[data-testid="data-table"] tbody tr').length).toBe(store.dataAssets.value.filter((r) => r.public).length);
+  });
+
+  it('groups findings by rule by default and lists every resource of a rule in its drawer', async () => {
+    await mountApp();
+    await load(fixture('example'));
+    await go('/findings');
+    expect(all('[data-testid="findings-table"] tbody tr').length).toBe(store.findingGroups.value.length);
+    const g = store.findingGroups.value[0];
+    await go('/findings?sel=' + encodeURIComponent('rule:' + g.id));
+    expect(all('[data-testid="group-resources"] tr').length).toBe(g.findings.length);
+  });
+});
+

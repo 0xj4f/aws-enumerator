@@ -12,7 +12,9 @@
 import { C } from '../core';
 import type { DiscoverEvent, Finding, GEdge, GNode, Index, PathResult } from '../core';
 import { ADMIN_EDGE, ENTRY_TYPES, isAccountAdmin, isAdminEquivalent, operatorActive, type Simplified } from './simplify';
+import { routeSteps, routeTactics, type StepTag } from './tactics';
 import { cmp, severityRank, shown, type SeverityClass } from './text';
+import type { AttackTactic } from '../core';
 
 export type EntryKind = 'internet' | 'cross-account' | 'federation' | 'entry' | 'foothold' | 'session' | 'custom';
 
@@ -50,6 +52,9 @@ export interface Hypothesis {
   findings: Finding[];
   maxSeverity: SeverityClass | null;
   reachesAdmin: boolean;
+  /** ATT&CK per step (techniques and the step's primary tactic) and the route's kill chain (D-58). */
+  steps: StepTag[];
+  tactics: AttackTactic[];
   /**
    * Other routes from the same source through the same foothold (the same path up to the first admin node),
    * ending at another admin-equivalent principal. The table shows one row per foothold; the drawer lists these.
@@ -205,6 +210,7 @@ export function toHypothesis(index: Index, s: Simplified, p: PathResult, kind: E
   const findings = pathFindings(index, p.path);
   const worst = findings.length ? C.severityClass(findings[0].severity) : null;
   const conditional = edges.some((e) => e && e.confidence === 'conditional');
+  const steps = routeSteps(kind, edges.filter((e): e is GEdge => !!e));
   const parts: string[] = [];
   edges.forEach((e, i) => {
     if (!e) return;
@@ -230,6 +236,8 @@ export function toHypothesis(index: Index, s: Simplified, p: PathResult, kind: E
     findings,
     maxSeverity: worst,
     reachesAdmin,
+    steps,
+    tactics: routeTactics(steps),
     alternatives: [],
   };
 }

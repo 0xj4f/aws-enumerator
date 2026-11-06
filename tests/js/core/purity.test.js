@@ -13,8 +13,8 @@ const H = require('./lib/helpers');
 const { stripJsComments } = require('../regressions/lib/markup');
 const { scanJs, SINK_RULES, HANDLER_RULES, NETWORK_RULES, NAME_MATCH_RULES } = require('../regressions/lib/scan');
 
-const FILES = ['catalog.js', 'graph-core.js', 'exports.js', 'loader.js'];
-const GLOBALS = { 'catalog.js': 'AECatalog', 'graph-core.js': 'AEGraphCore', 'exports.js': 'AEExports', 'loader.js': 'AELoader' };
+const FILES = ['catalog.js', 'graph-core.js', 'exports.js', 'loader.js', 'attack.js'];
+const GLOBALS = { 'catalog.js': 'AECatalog', 'graph-core.js': 'AEGraphCore', 'exports.js': 'AEExports', 'loader.js': 'AELoader', 'attack.js': 'AEAttack' };
 const sources = () => FILES.map(f => ({ file: `js/${f}`, text: H.moduleSource(f), lineOffset: 0 }));
 
 /** Loads the files as classic scripts into one fresh realm, in index.html order (P1), with no DOM. */

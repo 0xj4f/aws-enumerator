@@ -265,8 +265,8 @@ export interface ExportsApi {
   pathsCsv(paths: PathResult[], index: Index): string;
   pathsMarkdown(paths: PathResult[], index: Index): string;
   pathsJson(paths: PathResult[], index: Index, meta: { runId: string | null }): string;
-  sessionJson(s: { runId: string | null; owned: string[]; paths: PathResult[] }): string;
-  parseSession(text: string, runId: string | null): { owned: string[]; paths: PathResult[]; problems: string[] };
+  sessionJson(s: { runId: string | null; owned: string[]; paths: PathResult[]; expected?: string[] }): string;
+  parseSession(text: string, runId: string | null): { owned: string[]; paths: PathResult[]; expected: string[]; problems: string[] };
 }
 
 export interface TypeInfo {
@@ -289,4 +289,28 @@ export interface CatalogApi {
   severityInfo(sev: unknown): { label: string; color: string };
   iconUrl(key: string): string;
   typeOrder(types: Iterable<string>, nodeTypes: Map<string, NodeTypeEntry>): Map<string, number>;
+}
+
+export interface AttackTactic {
+  id: string;
+  shortname: string;
+  name: string;
+}
+
+export interface AttackTechnique {
+  id: string;
+  name: string;
+  tactics: readonly string[];
+}
+
+export interface AttackApi {
+  VERSION: string;
+  TACTICS: readonly AttackTactic[];
+  TECHNIQUE_IDS: readonly string[];
+  technique(id: unknown): AttackTechnique | null;
+  edgeTechniques(type: unknown): readonly string[];
+  findingTechniques(id: unknown): readonly string[];
+  tacticsOf(ids: readonly string[]): AttackTactic[];
+  tactic(key: unknown): AttackTactic | null;
+  url(id: string): string | null;
 }

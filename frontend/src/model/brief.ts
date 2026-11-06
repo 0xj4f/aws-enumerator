@@ -30,6 +30,8 @@ export interface Brief {
   tone: 'bad' | 'warn' | 'ok';
   tiles: Tile[];
   top: Hypothesis[];
+  /** Routes to admin marked expected (D-58): still counted in the verdict, left out of the top list. */
+  expectedCount: number;
   exposure: ExposureItem[];
   posture: Finding[];
   coverage: { status: string; notOk: number; gaps: number; note: string; tone: 'ok' | 'warn' | 'bad' };
@@ -47,7 +49,15 @@ function bySeverity(a: Finding, b: Finding): number {
   return severityRank(C.severityClass(a.severity)) - severityRank(C.severityClass(b.severity)) || cmp(a.id, b.id);
 }
 
-export function buildBrief(index: Index, s: Simplified, hyps: readonly Hypothesis[], operator: string | null): Brief {
+export interface BriefExtras {
+  isExpected?: (h: Hypothesis) => boolean;
+  /** Data assets an entry point reaches (from the reach columns), when computed. */
+  dataReached?: number;
+}
+
+export function buildBrief(index: Index, s: Simplified, hyps: readonly Hypothesis[], operator: string | null,
+  extras: BriefExtras = {}): Brief {
+  const isExpected = extras.isExpected || (() => false);
   const g = index.graph;
   const entries = entryPoints(index);
   const adminHyps = hyps.filter((h) => h.reachesAdmin);
@@ -110,9 +120,12 @@ export function buildBrief(index: Index, s: Simplified, hyps: readonly Hypothesi
     { key: 'shortest', label: 'Shortest breach', value: shortest === null ? '-' : plural(shortest, 'step'),
       hint: 'Fewest steps from an entry point to admin', tone: shortest !== null && shortest <= 2 ? 'bad' : shortest === null ? 'ok' : 'warn', route: '/paths' },
     { key: 'reach', label: 'Principals reaching admin', value: String(reach.definite + reach.conditional),
-      hint: `${reach.definite} definite, ${reach.conditional} conditional (engine closure)`, tone: reach.definite ? 'bad' : reach.conditional ? 'warn' : 'ok' },
+      hint: `${reach.definite} definite, ${reach.conditional} conditional (engine closure)`, tone: reach.definite ? 'bad' : reach.conditional ? 'warn' : 'ok',
+      route: '/principals?filter=reaches-admin' },
     { key: 'admins', label: 'Admin-equivalent principals', value: String(s.admins.size),
-      hint: 'Effective permissions allow every action', tone: s.admins.size > 3 ? 'warn' : 'neutral' },
+      hint: 'Effective permissions allow every action', tone: s.admins.size > 3 ? 'warn' : 'neutral', route: '/principals?filter=admin' },
+    ...(extras.dataReached === undefined ? [] : [{ key: 'data', label: 'Data assets an entry point reaches', value: String(extras.dataReached),
+      hint: 'Directly, without becoming admin first', tone: (extras.dataReached ? 'warn' : 'ok') as Tile['tone'], route: '/data?filter=reached' }]),
     { key: 'internet', label: 'Reachable from the internet', value: String(new Set(exposure.map((x) => x.target)).size),
       hint: 'Resources and roles anyone can reach directly', tone: exposure.length ? 'warn' : 'ok' },
     { key: 'findings', label: 'Critical and high findings', value: String((sev.get('critical') || 0) + (sev.get('high') || 0)),
@@ -123,7 +136,8 @@ export function buildBrief(index: Index, s: Simplified, hyps: readonly Hypothesi
     verdict,
     tone,
     tiles,
-    top: adminHyps.slice(0, 5),
+    top: adminHyps.filter((h) => !isExpected(h)).slice(0, 5),
+    expectedCount: adminHyps.filter(isExpected).length,
     exposure,
     posture: findings.filter(isPostureFinding).sort(bySeverity),
     coverage: { status: shown(covStatus), notOk, gaps, note: covNote, tone: covTone },

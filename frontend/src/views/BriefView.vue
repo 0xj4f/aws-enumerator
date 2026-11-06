@@ -2,12 +2,13 @@
 /* The landing page: the answer first (verdict, numbers, the top attack paths), then what to check next. */
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
-import { K } from '../core';
+import { A, K } from '../core';
 import type { Finding } from '../core';
 import { ENTRY_KIND_LABELS } from '../model/breaches';
 import { plural, shorten, shown } from '../model/text';
 import { brief, index, nodeLabel, operator, state } from '../stores/report';
 import SeverityBadge from '../ui/SeverityBadge.vue';
+import TacticChips from '../ui/TacticChips.vue';
 
 const router = useRouter();
 const b = computed(() => brief.value);
@@ -54,10 +55,15 @@ function findingKey(f: Finding): string {
             <div v-for="h in b.top" :key="h.id" class="list-row card" data-testid="top-path" @click="router.push({ name: 'paths', query: { sel: h.id } })">
               <span class="kind" :class="h.kind">{{ ENTRY_KIND_LABELS[h.kind] }}</span>
               <span class="grow ellipsis" :title="h.statement">{{ h.title }}</span>
+              <TacticChips :tactics="h.tactics" :chain="true" />
               <span class="muted nowrap">{{ plural(h.hops, 'step') }}</span>
               <span v-if="h.confidence === 'conditional'" class="badge warn" title="At least one step depends on a condition the analysis could not resolve">conditional</span>
             </div>
-            <p v-if="b.top.length" class="section"><RouterLink :to="{ name: 'paths' }">All attack paths →</RouterLink></p>
+            <p v-if="b.top.length || b.expectedCount" class="section">
+              <RouterLink :to="{ name: 'paths' }">All attack paths →</RouterLink>
+              <span v-if="b.expectedCount" class="muted"> · {{ plural(b.expectedCount, 'route') }} marked expected (not listed here)</span>
+            </p>
+            <p class="muted">Tactics from MITRE ATT&amp;CK Enterprise {{ A.VERSION }}.</p>
           </div>
 
           <div class="section">

@@ -195,3 +195,75 @@ describe('canvas models', () => {
     expect(m.links.map((l) => l.style)).toEqual(['control', 'admin']);
   });
 });
+
+describe('ATT&CK on routes (D-58)', () => {
+  it('tags the entry step with how the attacker gets in and each step with its edge technique', async () => {
+    const { columnTactics } = await import('./tactics');
+    const index = fanOut();
+    const s = simplify(index);
+    const [h] = findBreaches(index, s, { owned: [], operator: null });
+    expect(h.steps[0].techniques).toEqual(['T1199', 'T1548.005']);
+    expect(h.steps[1].techniques).toEqual([]);
+    expect(h.tactics.map((t) => t.name)).toEqual(['Initial Access', 'Privilege Escalation']);
+    const edges = h.edges.map((id) => index.edgesById.get(id)!);
+    expect(columnTactics(h.kind, edges)).toEqual(['Initial Access', 'Privilege Escalation', null]);
+  });
+});
+
+describe('plumbing hints', () => {
+  it('recognises AWS-managed roles by their whole ARN, never by a bare name', async () => {
+    const { plumbingHint, plumbingOf } = await import('./plumbing');
+    expect(plumbingOf('arn:aws:iam::111122223333:role/AWSControlTowerExecution')).toBe('AWS Control Tower');
+    expect(plumbingOf('arn:aws:iam::111122223333:role/aws-reserved/sso.amazonaws.com/eu-west-1/AWSReservedSSO_x_1')).toBe('IAM Identity Center permission set');
+    expect(plumbingOf('arn:aws:iam::999999999999:role/AWSAFTAdmin')).toBe('Account Factory for Terraform');
+    expect(plumbingOf('arn:aws:iam::111122223333:role/my-AWSControlTowerExecution-copy')).toBeNull();
+    expect(plumbingOf('AWSControlTowerExecution')).toBeNull();
+    expect(plumbingHint(['arn:aws:iam::1:role/AWSAFTAdmin', 'arn:aws:iam::2:role/AWSAFTExecution'])).toEqual(['Account Factory for Terraform']);
+  });
+});
+
+describe('reach, principals, data, finding groups', () => {
+  it('reaches over attack steps only, with the admin fan-out collapsed', async () => {
+    const { reachFrom } = await import('./reach');
+    const index = fanOut();
+    const reach = reachFrom(index, simplify(index), ['ext'], true);
+    expect(reach.get('admin-role')).toEqual(['ext']);
+    expect(reach.get('acct-admin')).toEqual(['ext']);
+    expect(reach.has('role-00')).toBe(false);
+  });
+
+  it('ranks admin-equivalent principals first and counts who can become them', async () => {
+    const { reachFrom } = await import('./reach');
+    const { principalRows } = await import('./inventory');
+    const index = fanOut();
+    const s = simplify(index);
+    const rows = principalRows(index, s, reachFrom(index, s, ['ext'], true));
+    expect(rows[0].id).toBe('admin-role');
+    expect(rows[0].admin).toBe(true);
+    expect(rows[0].becomeBy).toEqual(['ext']);
+    expect(rows[0].canBecome).toEqual([]);
+    expect(rows.find((r) => r.id === 'role-00')!.becomeBy).toEqual([]);
+  });
+
+  it('lists data assets with their exposure, readers and keys (example fixture)', async () => {
+    const { dataRows } = await import('./inventory');
+    const index = fixture('graph/example.json');
+    const rows = dataRows(index, simplify(index), new Map());
+    expect(rows.length).toBeGreaterThan(0);
+    expect(rows.every((r) => r.type === 'kms' || index.nodeTypes.get(r.type)?.data_asset === true)).toBe(true);
+    const pub = rows.filter((r) => r.public);
+    expect(pub.length).toBeGreaterThan(0);
+    expect(rows.indexOf(pub[0])).toBe(0);
+  });
+
+  it('groups findings by rule, worst severity first', async () => {
+    const { groupFindings } = await import('./findings');
+    const index = fixture('graph/example.json');
+    const all = index.graph.findings;
+    const groups = groupFindings(all);
+    expect(groups.length).toBe(new Set(all.map((f) => f.id)).size);
+    expect(groups.reduce((n, g) => n + g.findings.length, 0)).toBe(all.length);
+    const ranks = groups.map((g) => ['critical', 'high', 'medium', 'low', 'info'].indexOf(g.severity));
+    expect([...ranks].sort((a, b) => a - b)).toEqual(ranks);
+  });
+});

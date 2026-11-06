@@ -350,6 +350,10 @@
       owned: uniqueStrings(s.owned),
       paths: pathRows(s.paths)
     };
+    // Optional since D-58: the routes and entry points marked expected ("route:<id>", "entry:<node id>").
+    // Written only when there are some, so a session without marks is byte-identical to before.
+    var expected = uniqueStrings(s.expected);
+    if (expected.length) doc.expected = expected;
     return JSON.stringify(doc, null, 2) + '\n';
   }
 
@@ -389,7 +393,7 @@
    * owned/paths and at least one problem; otherwise invalid entries are dropped, one problem each.
    */
   function parseSession(text, runId) {
-    var result = { owned: [], paths: [], problems: [] };
+    var result = { owned: [], paths: [], expected: [], problems: [] };
     var doc;
     try {
       doc = JSON.parse(typeof text === 'string' ? text : '');
@@ -415,6 +419,16 @@
     (Array.isArray(paths) ? paths : []).forEach(function (p) {
       if (isWellFormedPath(p)) result.paths.push(pathRecord(p));
       else addProblem(result.problems, 'A malformed path was dropped.');
+    });
+    var expected = own(doc, 'expected');
+    if (expected !== undefined && !Array.isArray(expected)) addProblem(result.problems, 'The session "expected" is not a list; no expected marks were restored.');
+    var marks = new Set();
+    (Array.isArray(expected) ? expected : []).forEach(function (m) {
+      if (typeof m !== 'string' || m.length === 0) addProblem(result.problems, 'An expected mark that is not text was dropped.');
+      else if (!marks.has(m)) {
+        marks.add(m);
+        result.expected.push(m);
+      }
     });
     return result;
   }

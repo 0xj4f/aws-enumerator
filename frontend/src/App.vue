@@ -8,7 +8,7 @@ import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import HeaderBar from './ui/HeaderBar.vue';
 import LoadScreen from './ui/LoadScreen.vue';
-import { addProblem, allRoutes, errText, findingsView, graph, loadDropped, state } from './stores/report';
+import { addProblem, allRoutes, errText, findingGroups, graph, loadDropped, state } from './stores/report';
 
 const router = useRouter();
 const dragging = ref(false);
@@ -58,7 +58,9 @@ onBeforeUnmount(() => {
     <nav v-if="state.status === 'ready'" class="navbar" aria-label="Pages" data-testid="nav">
       <RouterLink :to="{ name: 'brief' }" data-testid="nav-brief">Brief</RouterLink>
       <RouterLink :to="{ name: 'paths' }" data-testid="nav-paths">Attack paths <span class="count">{{ pathsCount }}</span></RouterLink>
-      <RouterLink :to="{ name: 'findings' }" data-testid="nav-findings">Findings <span class="count">{{ findingsView.length }}</span></RouterLink>
+      <RouterLink :to="{ name: 'principals' }" data-testid="nav-principals">Principals</RouterLink>
+      <RouterLink :to="{ name: 'data' }" data-testid="nav-data">Data</RouterLink>
+      <RouterLink :to="{ name: 'findings' }" data-testid="nav-findings">Findings <span class="count">{{ findingGroups.length }} rules</span></RouterLink>
       <RouterLink :to="{ name: 'explore' }" data-testid="nav-explore">Explore</RouterLink>
       <RouterLink :to="{ name: 'health' }" data-testid="nav-health">Report health <span v-if="healthCount" class="count">{{ healthCount }}</span></RouterLink>
       <span class="spacer" />

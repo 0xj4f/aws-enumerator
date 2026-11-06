@@ -455,6 +455,11 @@ Selecting one opens its kill chain: the steps as cards, with the evidence and th
 
 ![Attack paths and the kill-chain drawer](docs/02.png)
 
+Two more pages list what the routes go through: **Principals** (every user, role, group and outside principal:
+admin-equivalent first, then who reaches admin, who can become each one and what it can become) and **Data**
+(secrets, keys, buckets, parameters, snapshots …: public or shared ones first, who can read each one). Routes and
+findings carry MITRE ATT&CK techniques and tactics, and **Findings** shows one row per rule.
+
 ## Documentation
 
 | Document | What it covers |

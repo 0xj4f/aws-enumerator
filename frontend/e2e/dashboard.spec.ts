@@ -52,7 +52,7 @@ test('[F-089] the built page loads under the server CSP with no violation on any
   expect(res?.headers()['content-security-policy']).toContain("script-src 'self'");
   await page.locator('#file-input').setInputFiles(FIX('graph/example.json'));
   await expect(page.getByTestId('verdict')).toBeVisible();
-  for (const nav of ['nav-paths', 'nav-findings', 'nav-explore', 'nav-health', 'nav-brief']) {
+  for (const nav of ['nav-paths', 'nav-principals', 'nav-data', 'nav-findings', 'nav-explore', 'nav-health', 'nav-brief']) {
     await page.getByTestId(nav).click();
   }
   await page.getByTestId('nav-paths').click();
@@ -157,6 +157,18 @@ test.describe('real report (E2E_REPORT)', () => {
     await page.getByTestId('nav-findings').click();
     await page.getByTestId('row').first().click();
     await page.screenshot({ path: resolve(SHOTS, '05-findings.png') });
+    await page.getByTestId('nav-principals').click();
+    await page.getByTestId('row').first().click();
+    await page.screenshot({ path: resolve(SHOTS, '06-principals.png') });
+    await page.getByTestId('nav-data').click();
+    await page.getByTestId('row').first().click();
+    await page.getByTestId('drawer-tab-readers').click();
+    await page.screenshot({ path: resolve(SHOTS, '07-data.png') });
+    await page.getByTestId('nav-paths').click();
+    if (await page.getByTestId('mark-suggested').count()) {
+      await page.getByTestId('mark-suggested').click();
+      await page.screenshot({ path: resolve(SHOTS, '08-paths-expected.png') });
+    }
     expect(await w.csp()).toEqual([]);
     expect(w.errors).toEqual([]);
   });

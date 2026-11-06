@@ -181,6 +181,8 @@ export default defineConfig({
     assetsInlineLimit: 0,
     sourcemap: false,
     reportCompressedSize: false,
+    // One classic bundle by design (no code splitting): the warning threshold is the bundle's size budget.
+    chunkSizeWarningLimit: 700,
     rollupOptions: {
       input: join(HERE, 'index.html'),
       output: {

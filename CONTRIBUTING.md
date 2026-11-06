@@ -143,6 +143,13 @@ npm run build          # typecheck, then build into ../aws_enumerator/dashboard/
 npm run e2e            # Playwright against the built page and the real server
 ```
 
+**MITRE ATT&CK tags** live in `aws_enumerator/engine/attack.py` (edge types and finding ids to techniques, and the
+pinned technique table). `frontend/src/core/attack.js` mirrors it for the dashboard and
+`tests/js/golden/attack-parity.test.js` keeps them equal: change both together. A new edge type or finding id gets a
+technique only when one fits. To move to a new ATT&CK release, download MITRE's `enterprise-attack-<version>.json`
+(github.com/mitre-attack/attack-stix-data), update the version, source hash and rows (`scripts/attack_catalog.py
+--stix FILE --emit T… ` prints them) and run `scripts/attack_catalog.py --stix FILE --check`.
+
 Rules for page code: report strings are rendered only as text (no `v-html` or `innerHTML`), links only through
 `safeHref`, report-keyed lookups through `Map`, and the graph and its index are held raw (`markRaw` /
 `shallowRef`), never in deep reactive proxies. `tests/js/static/page.test.js` checks the built page and the sources.

@@ -1,19 +1,22 @@
 <script setup lang="ts">
 /*
- * Attack paths: ranked breach hypotheses (entry or foothold -> ... -> admin), one row per foothold route.
- * Selecting a row opens the drawer: the kill-chain canvas, the steps with their evidence, the findings on the
- * path, and the other admin principals the same foothold reaches.
+ * Attack paths: ranked breach routes (entry or foothold -> ... -> admin), one row per foothold route, each with
+ * its ATT&CK kill chain (D-58). Routes that look like AWS plumbing get a hint; the user can mark a route, or an
+ * entry point with all its routes, as expected: expected routes stay listed, faded and last, or hidden.
+ * Selecting a row opens the drawer: the kill-chain canvas, the steps with their techniques and evidence, the
+ * findings on the path, and the other admin principals the same foothold reaches.
  */
 import { computed, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { C } from '../core';
+import { A, C } from '../core';
 import type { GEdge } from '../core';
 import { ENTRY_KIND_LABELS, ENTRY_KIND_ORDER, verbOf, type EntryKind, type Hypothesis } from '../model/breaches';
 import { pathCanvas } from '../model/canvas-model';
+import { columnTactics } from '../model/tactics';
 import { plural, shorten, shown } from '../model/text';
 import {
-  allRoutes, exportPaths, findRoute, graph, index, nodeLabel, operator, ownedSet, removeRoute, setIncludeConditional, simplified, state,
-  toggleOwned,
+  allRoutes, entryMark, exportPaths, findRoute, graph, index, isExpected, nodeLabel, operator, ownedSet, plumbing, removeRoute,
+  routeMark, setExpected, setIncludeConditional, simplified, state, suggestedExpected, toggleExpected, toggleOwned,
 } from '../stores/report';
 import BottomDrawer from '../ui/BottomDrawer.vue';
 import DataTable from '../ui/DataTable.vue';
@@ -22,25 +25,38 @@ import FindingCard from '../ui/FindingCard.vue';
 import GraphCanvas from '../ui/GraphCanvas.vue';
 import NodeLink from '../ui/NodeLink.vue';
 import SeverityBadge from '../ui/SeverityBadge.vue';
+import TacticChips from '../ui/TacticChips.vue';
+import TechniqueChips from '../ui/TechniqueChips.vue';
 
 const route = useRoute();
 const router = useRouter();
 const kind = ref<EntryKind | 'all'>('all');
+const tactic = ref('');
 const text = ref('');
 const tab = ref('path');
 const from = ref('');
 const to = ref('');
 const routeMessage = ref('');
 
+const expectedCount = computed(() => allRoutes.value.filter(isExpected).length);
+const visibleRoutes = computed(() => (state.hideExpected ? allRoutes.value.filter((h) => !isExpected(h)) : allRoutes.value));
+
 const kinds = computed(() => {
   const counts = new Map<EntryKind, number>();
-  for (const h of allRoutes.value) counts.set(h.kind, (counts.get(h.kind) || 0) + 1);
+  for (const h of visibleRoutes.value) counts.set(h.kind, (counts.get(h.kind) || 0) + 1);
   return ENTRY_KIND_ORDER.filter((k) => counts.has(k)).map((k) => ({ key: k, label: ENTRY_KIND_LABELS[k], count: counts.get(k) as number }));
+});
+
+/** Tactics that occur on some route, for the filter. */
+const tacticsPresent = computed(() => {
+  const ids = new Set(visibleRoutes.value.flatMap((h) => A.tacticsOf(h.steps.flatMap((s) => s.techniques)).map((t) => t.id)));
+  return A.TACTICS.filter((t) => ids.has(t.id));
 });
 
 const rows = computed(() => {
   const t = text.value.trim().toLowerCase();
-  return allRoutes.value.filter((h) => (kind.value === 'all' || h.kind === kind.value) &&
+  return visibleRoutes.value.filter((h) => (kind.value === 'all' || h.kind === kind.value) &&
+    (!tactic.value || A.tacticsOf(h.steps.flatMap((s) => s.techniques)).some((x) => x.id === tactic.value)) &&
     (!t || h.title.toLowerCase().includes(t) || h.statement.toLowerCase().includes(t)));
 });
 
@@ -56,6 +72,7 @@ const selected = computed<Hypothesis | null>(() => {
   return null;
 });
 const parent = computed(() => allRoutes.value.find((h) => h.alternatives.some((a) => a.id === selectedId.value)) || null);
+const selectedPlumbing = computed(() => (selected.value ? plumbing.value.get(selected.value.id) || [] : []));
 
 function select(id: string | null) {
   router.replace({ query: { ...route.query, sel: id || undefined } });
@@ -64,8 +81,7 @@ function select(id: string | null) {
 const columns = [
   { key: 'sev', label: 'Sev' },
   { key: 'title', label: 'Route' },
-  { key: 'kind', label: 'Entry' },
-  { key: 'steps', label: 'Steps' },
+  { key: 'chain', label: 'Kill chain (ATT&CK)' },
   { key: 'hops', label: 'Hops', class: 'num' },
   { key: 'confidence', label: 'Confidence' },
   { key: 'alt', label: 'Also reaches', class: 'num' },
@@ -73,11 +89,14 @@ const columns = [
 
 const canvasModel = computed(() => {
   const h = selected.value;
-  if (!h || !index.value || !simplified.value) return null;
-  return pathCanvas(index.value, simplified.value, h.path, h.edges, { owned: ownedSet.value, operator: operator.value.id }, ENTRY_KIND_LABELS[h.kind]);
+  const idx = index.value;
+  if (!h || !idx || !simplified.value) return null;
+  const edges = h.edges.map((id) => idx.edgesById.get(id)).filter((e): e is GEdge => !!e);
+  return pathCanvas(idx, simplified.value, h.path, h.edges, { owned: ownedSet.value, operator: operator.value.id }, ENTRY_KIND_LABELS[h.kind],
+    columnTactics(h.kind, edges));
 });
 
-interface StepView { edge: GEdge; from: string; to: string; description: string }
+interface StepView { edge: GEdge; from: string; to: string; description: string; techniques: string[] }
 const steps = computed<StepView[]>(() => {
   const h = selected.value;
   const idx = index.value;
@@ -85,7 +104,7 @@ const steps = computed<StepView[]>(() => {
   return h.edges.map((id, i) => {
     const e = idx.edgesById.get(id) as GEdge;
     const reg = idx.edgeTypes.get(e.type);
-    return { edge: e, from: h.path[i], to: h.path[i + 1], description: shown(reg?.description || '') };
+    return { edge: e, from: h.path[i], to: h.path[i + 1], description: shown(reg?.description || ''), techniques: h.steps[i]?.techniques || [] };
   });
 });
 
@@ -107,6 +126,10 @@ const tabs = computed(() => {
 watch(tabs, (list) => {
   if (list.length && !list.some((t) => t.key === tab.value)) tab.value = 'path';
 });
+
+function markSuggested() {
+  setExpected([...state.expected, ...suggestedExpected.value.map(routeMark)]);
+}
 
 function runFind() {
   const idx = index.value;
@@ -132,15 +155,27 @@ function runFind() {
   <div class="view" data-testid="view-paths">
     <div class="view-body">
       <div class="view-toolbar">
-        <button type="button" class="small" :class="{ active: kind === 'all' }" data-testid="kind-all" @click="kind = 'all'">All {{ allRoutes.length }}</button>
+        <button type="button" class="small" :class="{ active: kind === 'all' }" data-testid="kind-all" @click="kind = 'all'">All {{ visibleRoutes.length }}</button>
         <button v-for="k in kinds" :key="k.key" type="button" class="small" :class="{ active: kind === k.key }" :data-testid="'kind-' + k.key" @click="kind = k.key">
           {{ k.label }} {{ k.count }}
         </button>
+        <select v-model="tactic" aria-label="ATT&CK tactic" data-testid="tactic-filter">
+          <option value="">Any tactic</option>
+          <option v-for="t in tacticsPresent" :key="t.id" :value="t.id">{{ t.name }}</option>
+        </select>
         <input v-model="text" type="search" placeholder="Filter routes" aria-label="Filter routes" data-testid="paths-filter">
         <label class="check" title="Edges that depend on a condition the analysis could not resolve">
           <input type="checkbox" :checked="state.includeConditional" data-testid="include-conditional" @change="setIncludeConditional(($event.target as HTMLInputElement).checked)">
           Include conditional steps
         </label>
+        <label v-if="expectedCount" class="check" title="Routes you marked expected (still in exports and the Brief verdict)">
+          <input v-model="state.hideExpected" type="checkbox" data-testid="hide-expected"> Hide {{ plural(expectedCount, 'expected route') }}
+        </label>
+        <button v-if="suggestedExpected.length" type="button" class="small" data-testid="mark-suggested"
+          title="Mark the routes that go through AWS-managed plumbing (Control Tower, AFT, Identity Center ...) as expected"
+          @click="markSuggested">
+          Mark {{ plural(suggestedExpected.length, 'suggested route') }} expected
+        </button>
         <span class="grow" />
         <details class="pop" data-testid="find-route">
           <summary class="button small">Find a route…</summary>
@@ -164,17 +199,24 @@ function runFind() {
         :columns="columns"
         :row-key="(h: Hypothesis) => h.id"
         :selected="selectedId"
+        :row-class="(h: Hypothesis) => (isExpected(h) ? 'faded' : undefined)"
         :empty-text="state.breach.running ? 'Searching…' : 'No attack path from an entry point or your foothold to an administrator over the collected data.'"
         testid="paths-table"
         @select="select"
         @close="select(null)"
       >
         <template #cell-sev="{ row }"><SeverityBadge v-if="row.maxSeverity" :sev="row.maxSeverity" /></template>
-        <template #cell-title="{ row }"><span :title="row.statement">{{ row.title }}</span></template>
-        <template #cell-kind="{ row }"><span class="kind" :class="row.kind">{{ ENTRY_KIND_LABELS[row.kind as EntryKind] }}</span></template>
-        <template #cell-steps="{ row }">
-          <span class="row wrap"><span v-for="id in row.edges" :key="id" class="chip">{{ index?.edgesById.get(id)?.type }}</span></span>
+        <template #cell-title="{ row }">
+          <div class="row wrap">
+            <span class="kind" :class="row.kind">{{ ENTRY_KIND_LABELS[row.kind as EntryKind] }}</span>
+            <span :title="row.statement">{{ row.title }}</span>
+            <span v-if="isExpected(row)" class="expected-badge" data-testid="expected">expected</span>
+            <template v-else>
+              <span v-for="p in plumbing.get(row.id) || []" :key="p" class="hint-chip" data-testid="plumbing-hint" :title="'Looks like ' + p + ': often intended. Mark it expected if it is.'">{{ p }}?</span>
+            </template>
+          </div>
         </template>
+        <template #cell-chain="{ row }"><TacticChips :tactics="row.tactics" :chain="true" /></template>
         <template #cell-hops="{ row }">{{ row.hops }}</template>
         <template #cell-confidence="{ row }"><span :class="row.confidence === 'conditional' ? 'warn-text' : 'ok-text'">{{ row.confidence }}</span></template>
         <template #cell-alt="{ row }"><span class="muted">{{ row.alternatives.length ? '+' + row.alternatives.length : '' }}</span></template>
@@ -185,6 +227,13 @@ function runFind() {
       <template #badge><span class="kind" :class="selected.kind">{{ ENTRY_KIND_LABELS[selected.kind] }}</span></template>
       <template #actions>
         <button type="button" class="small" data-testid="open-canvas" @click="router.push({ name: 'explore', query: { node: selected.pivot || selected.target } })">Open in canvas</button>
+        <button type="button" class="small" :class="{ active: state.expected.includes(routeMark(selected)) }" data-testid="toggle-expected" @click="toggleExpected(routeMark(selected))">
+          {{ state.expected.includes(routeMark(selected)) ? 'Unmark expected' : 'Mark expected' }}
+        </button>
+        <button type="button" class="small" :class="{ active: state.expected.includes(entryMark(selected.source)) }" data-testid="toggle-entry-expected"
+          :title="'Every route from ' + nodeLabel(selected.source)" @click="toggleExpected(entryMark(selected.source))">
+          {{ state.expected.includes(entryMark(selected.source)) ? 'Unmark entry expected' : 'Entry expected' }}
+        </button>
         <button type="button" class="small" :class="{ active: ownedSet.has(selected.source) }" data-action="toggle-owned" :data-node-id="selected.source" @click="toggleOwned(selected.source)">
           {{ ownedSet.has(selected.source) ? 'Unmark entry owned' : 'Mark entry owned' }}
         </button>
@@ -195,6 +244,8 @@ function runFind() {
       <template v-if="tab === 'path' && canvasModel">
         <div class="canvas-toolbar">
           <span class="statement grow" data-testid="statement">{{ selected.statement }}</span>
+          <span v-if="selectedPlumbing.length" class="hint-chip">Looks like {{ selectedPlumbing.join(', ') }}</span>
+          <TacticChips :tactics="selected.tactics" :chain="true" />
           <span class="canvas-legend"><span><i class="control" />control</span><span><i class="access" />access</span><span><i class="admin" />admin</span></span>
         </div>
         <GraphCanvas :model="canvasModel" :edge-labels="true" :gap-x="selected.path.length > 4 ? 140 : 200" testid="path-canvas" @open="(id) => router.push({ name: 'explore', query: { node: id } })" />
@@ -203,7 +254,7 @@ function runFind() {
       <template v-else-if="tab === 'steps'">
         <p v-if="parent" class="muted section">Another admin principal reached through the foothold of: {{ parent.title }}</p>
         <ol class="steps" data-testid="steps">
-          <li v-for="s in steps" :key="s.edge.id">
+          <li v-for="(s, i) in steps" :key="s.edge.id">
             <div>
               <div class="row wrap">
                 <NodeLink :id="s.from" /><span class="secondary">{{ verbOf(s.edge.type) }}</span><NodeLink :id="s.to" />
@@ -211,11 +262,16 @@ function runFind() {
                 <span class="badge" :class="s.edge.confidence === 'conditional' ? 'warn' : 'ok'">{{ s.edge.confidence }}</span>
                 <span class="muted">weight {{ C.edgeWeight(s.edge) }}</span>
               </div>
+              <div v-if="s.techniques.length" class="row wrap section-tight">
+                <span class="muted">ATT&amp;CK{{ i === 0 && selected.kind !== 'foothold' ? ' (with the way in)' : '' }}:</span>
+                <TechniqueChips :ids="s.techniques" />
+              </div>
               <p v-if="s.description" class="muted">{{ s.description }}</p>
               <FieldList v-if="Object.keys(s.edge.evidence).length" :items="evidenceFields(s.edge)" />
             </div>
           </li>
         </ol>
+        <p class="muted">Techniques from MITRE ATT&amp;CK Enterprise {{ A.VERSION }}.</p>
       </template>
 
       <template v-else-if="tab === 'findings'">
@@ -227,6 +283,7 @@ function runFind() {
         <p class="muted section">The same foothold also reaches these admin-equivalent principals:</p>
         <div v-for="a in selected.alternatives" :key="a.id" class="list-row" @click="select(a.id)">
           <span class="grow ellipsis">{{ a.title }}</span>
+          <TacticChips :tactics="a.tactics" :chain="true" />
           <span class="muted">{{ plural(a.hops, 'step') }}</span>
         </div>
       </template>

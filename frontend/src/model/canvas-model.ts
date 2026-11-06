@@ -90,7 +90,8 @@ export function mergeLinks(edges: readonly GEdge[], idOf: (nodeId: string) => st
 }
 
 /** The kill-chain canvas of one path: one card per step, in order. */
-export function pathCanvas(index: Index, s: Simplified, path: readonly string[], edgeIds: readonly string[], ctx: { owned: ReadonlySet<string>; operator: string | null }, firstLabel: string): CanvasModel {
+export function pathCanvas(index: Index, s: Simplified, path: readonly string[], edgeIds: readonly string[], ctx: { owned: ReadonlySet<string>; operator: string | null }, firstLabel: string,
+  columnTactics: readonly (string | null)[] = []): CanvasModel {
   const cards = path.map((id, i) => nodeCard(index, s, id, i, ctx));
   const edges = edgeIds.map((id) => index.edgesById.get(id)).filter((e): e is GEdge => !!e);
   const columns = path.map((id, i) => {
@@ -100,7 +101,9 @@ export function pathCanvas(index: Index, s: Simplified, path: readonly string[],
     else if (isAccountAdmin(n)) label = 'Impact';
     else if (s.admins.has(id)) label = 'Admin-equivalent';
     else if (i === path.length - 1) label = 'Target';
-    return { column: i, label: `${i + 1}. ${label}` };
+    // The ATT&CK tactic of this column (how the attacker is in, then the step that gets here), when known.
+    const tactic = columnTactics[i] || null;
+    return { column: i, label: `${i + 1}. ${label}` + (tactic ? ` \u00b7 ${tactic}` : '') };
   });
   return { cards, links: mergeLinks(edges, (x) => x), columns, truncated: 0 };
 }

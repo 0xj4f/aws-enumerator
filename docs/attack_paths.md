@@ -47,6 +47,7 @@ In the dashboard, structural and context edges are hidden by default (Explore: *
 - **Sources.** The dashboard pre-marks the **operator** (the identity that ran the collection, when it is a node) as owned (**You** in the header). **Mark owned** in a node's details adds the nodes you control. **Attack paths** searches from the entry points (Anyone, identity providers, external accounts and principals, nodes marked as entry points) and from the owned nodes. Each row is one route, cut at the first admin-equivalent principal it reaches; **Also reaches** lists the other admin principals behind the same foothold. **Find a route…** goes from the node you name (else from the operator) to another; **Route to admin from here** in a node's details does the same towards the account administrator.
 - **Targets.** The account administrator node and the admin-equivalent principals (an "admin-equivalent" badge). For a data asset (bucket, secret, parameter, table …), open it in **Explore** to see who reaches it, or use **Find a route…**.
 - **Options.** Conditional edges are walked unless **Include conditional steps** is off. The Explore options only change what the canvas draws, never which paths exist.
+- **Expected routes.** A route through AWS-managed plumbing (Control Tower, AFT, IAM Identity Center, Organizations access roles) gets a hint. **Mark expected** (one route) or **Entry expected** (every route from that entry point) fades it and moves it last, and **Mark suggested routes expected** does so for the hinted routes that go straight into an admin principal; a route that escalates through a non-admin foothold is never marked for you. Expected is triage, not suppression: the route stays in the verdict and the exports, and the marks are kept only in a saved session or, when you opt in, in this browser.
 
 ### Path cost
 
@@ -63,6 +64,10 @@ A path's cost is the sum of its edge weights; **Find a route…** and the **Atta
 
 A conditional edge (the evaluator could not resolve a condition) adds 1 for a weak condition, 3 for a strong condition; `CAN_REACH_NODE_IMDS` adds 0-2 by the node's IMDS hop limit (`evidence.weight_extra`). Weight 0 is a real cost of zero. Edge types of class `structural` or `info`, and the types marked not traversable, are never path steps whatever their weight.
 <!-- END GENERATED:weights -->
+
+### ATT&CK tags
+
+Attack steps and findings carry MITRE ATT&CK Enterprise techniques (`aws_enumerator/engine/attack.py`, pinned to ATT&CK 20.1 and checked against MITRE's STIX data). Assuming or being passed a role is T1548.005 *Temporary Elevated Cloud Access*, rewriting policies T1098.003 *Additional Cloud Roles*, new keys or passwords T1098.001, instance metadata T1552.005, Lambda code T1648 *Serverless Execution*, S3 reads T1530, Secrets Manager and Parameter Store reads T1555.006, snapshot and AMI sharing T1537. The way in adds T1199 *Trusted Relationship* (another account), T1078.004 *Cloud Accounts* (federation, or a trust on `Principal: *`) or T1190 *Exploit Public-Facing Application* (the internet). Logging and detection gaps carry the ATT&CK 20 *Defense Impairment* techniques (T1685, T1685.002) whose effect is already in place. Steps with no fitting technique (KMS decrypt, messaging, DynamoDB, Cognito) carry none rather than a loose one. The dashboard shows each route's kill chain (one tactic per step), filters routes and findings by tactic, and links every technique to attack.mitre.org; the SARIF export tags its rules with them.
 
 ### Findings and their links
 
