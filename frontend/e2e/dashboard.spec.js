@@ -3,38 +3,44 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
 const REPO = resolve(__dirname, '..', '..');
-const FIX = (rel: string) => resolve(REPO, 'tests', 'fixtures', rel);
+const FIX = (rel) => resolve(REPO, 'tests', 'fixtures', rel);
 const REAL = process.env.E2E_REPORT || '';
 const SHOTS = resolve(__dirname, '..', 'test-results', 'shots');
 
 /** Every CSP violation and console error of the page, collected from the first script on. */
-async function watch(page: Page) {
-  const errors: string[] = [];
+async function watch(page) {
+  const errors = [];
   page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
   page.on('pageerror', (e) => errors.push(String(e)));
   await page.addInitScript(() => {
-    (window as unknown as { __csp: string[] }).__csp = [];
-    document.addEventListener('securitypolicyviolation', (e) => (window as unknown as { __csp: string[] }).__csp.push(e.violatedDirective + ' ' + e.blockedURI));
+    window.__csp = [];
+    document.addEventListener('securitypolicyviolation', (e) => window.__csp.push(e.violatedDirective + ' ' + e.blockedURI));
   });
   return {
     errors,
-    csp: () => page.evaluate(() => (window as unknown as { __csp: string[] }).__csp),
+    csp: () => page.evaluate(() => window.__csp),
   };
 }
 
-async function open(page: Page, file: string) {
+async function open(page, file) {
   await page.goto('index.html');
   await page.locator('#file-input').setInputFiles(file);
   await expect(page.getByTestId('nav')).toBeVisible();
   await expect(page.getByTestId('verdict')).toBeVisible();
-  await page.waitForFunction(() => !(window as unknown as { AEDashboard: { state(): { breachRunning: boolean } } }).AEDashboard.state().breachRunning);
+  await page.waitForFunction(() => !window.AEDashboard.state().breachRunning);
+}
+
+/** Opens a page from the nav; Audit and Report health sit under More. */
+async function nav(page, id) {
+  if (id === 'nav-audit' || id === 'nav-health') await page.getByTestId('nav-more').locator('summary').click();
+  await page.getByTestId(id).click();
 }
 
 /** True when no two visible cards of the canvas overlap. */
-async function cardsOverlap(page: Page, canvas: string) {
+async function cardsOverlap(page, canvas) {
   const boxes = await page.getByTestId(canvas).locator('.node-card').evaluateAll((els) => els.map((e) => e.getBoundingClientRect()).map((r) => ({ x: r.x, y: r.y, w: r.width, h: r.height })));
   for (let i = 0; i < boxes.length; i++) {
     for (let j = i + 1; j < boxes.length; j++) {
@@ -52,9 +58,13 @@ test('[F-089] the built page loads under the server CSP with no violation on any
   expect(res?.headers()['content-security-policy']).toContain("script-src 'self'");
   await page.locator('#file-input').setInputFiles(FIX('graph/example.json'));
   await expect(page.getByTestId('verdict')).toBeVisible();
-  for (const nav of ['nav-paths', 'nav-principals', 'nav-data', 'nav-findings', 'nav-explore', 'nav-health', 'nav-brief']) {
-    await page.getByTestId(nav).click();
+  for (const id of ['nav-paths', 'nav-map', 'nav-principals', 'nav-data', 'nav-findings', 'nav-explore', 'nav-audit', 'nav-health', 'nav-brief']) {
+    await nav(page, id);
   }
+  await nav(page, 'nav-map');
+  await expect(page.getByTestId('map-canvas').locator('.node-card').first()).toBeVisible();
+  await page.getByTestId('pivot').first().hover();
+  await expect(page.getByTestId('map-canvas').locator('.vue-flow__node.dim').first()).toBeAttached();
   await page.getByTestId('nav-paths').click();
   await page.getByTestId('row').first().click();
   await expect(page.getByTestId('path-canvas').locator('.node-card').first()).toBeVisible();
@@ -82,8 +92,10 @@ test('[F-008] a hostile report renders as inert text on every page and drawer', 
   for (let i = 0; i < Math.min(await frows.count(), 4); i++) await frows.nth(i).click();
   await page.getByTestId('nav-explore').click();
   await page.getByTestId('suggestion').first().click();
-  await page.getByTestId('nav-health').click();
-  const pwned = await page.evaluate(() => (window as unknown as { __aeXssCanary?: unknown }).__aeXssCanary);
+  await nav(page, 'nav-map');
+  await nav(page, 'nav-audit');
+  await nav(page, 'nav-health');
+  const pwned = await page.evaluate(() => window.__aeXssCanary);
   expect(pwned).toBeUndefined();
   const handlers = await page.evaluate(() => [...document.querySelectorAll('*')].flatMap((e) => [...e.attributes].filter((a) => /^on/i.test(a.name)).map((a) => e.localName + ' ' + a.name)));
   expect(handlers).toEqual([]);
@@ -100,7 +112,7 @@ test('[F-126] [F-146] a merged run folder shows both accounts, the merged view a
   await expect(page.getByTestId('integrity')).toHaveText('digest verified');
   await page.getByTestId('operator-menu').locator('summary').click();
   await expect(page.getByTestId('operator-menu')).toContainText('merged view');
-  await page.getByTestId('nav-health').click();
+  await nav(page, 'nav-health');
   await expect(page.locator('[data-role="source-runs"] tbody tr')).toHaveCount(2);
 });
 
@@ -120,6 +132,33 @@ test('[F-098] Clear returns to the welcome screen', async ({ page }) => {
 
 test.describe('real report (E2E_REPORT)', () => {
   test.skip(!REAL || !existsSync(REAL), 'set E2E_REPORT to a run zip');
+
+  test('the kill-chain map shows the whole surface within 150 cards, without overlap, and lights up a pivot', async ({ page }) => {
+    const w = await watch(page);
+    await open(page, REAL);
+    await nav(page, 'nav-map');
+    const map = page.getByTestId('map-canvas');
+    await expect(map.locator('.node-card').first()).toBeVisible();
+    await page.waitForTimeout(500);
+    expect(Number(await map.getAttribute('data-cards'))).toBeLessThanOrEqual(150);
+    expect(await cardsOverlap(page, 'map-canvas')).toBe(false);
+    await page.screenshot({ path: resolve(SHOTS, '09-map.png') });
+    await page.getByTestId('pivot').first().click();
+    await expect(map.locator('.vue-flow__node.hl').first()).toBeAttached();
+    await page.mouse.move(5, 5);
+    await page.waitForTimeout(200);
+    await page.screenshot({ path: resolve(SHOTS, '10-map-pivot.png') });
+    // A card opens its drawer, with the routes through it.
+    await map.locator('.vue-flow__node.hl .node-card').first().click();
+    await page.getByTestId('drawer-tab-routes').click();
+    await expect(page.getByTestId('route-through').first()).toBeVisible();
+    await page.screenshot({ path: resolve(SHOTS, '11-map-drawer.png') });
+    await nav(page, 'nav-audit');
+    await expect(page.getByTestId('detection-map')).toBeVisible();
+    await page.screenshot({ path: resolve(SHOTS, '12-audit.png'), fullPage: true });
+    expect(await w.csp()).toEqual([]);
+    expect(w.errors).toEqual([]);
+  });
 
   test('brief, attack paths, kill-chain drawer, snapping and explore stay readable', async ({ page }) => {
     const w = await watch(page);

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 /*
  * The bottom drawer: opens under the table of a view (the table stays visible above it), resizable by its
  * handle, closed with Esc or its close button. Its height is remembered in this browser (a convenience: the
@@ -6,13 +6,13 @@
  */
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 
-defineProps<{ title: string; tabs?: { key: string; label: string }[]; tab?: string; canvas?: boolean }>();
-const emit = defineEmits<{ close: []; 'update:tab': [string] }>();
+defineProps({ title: { type: String, required: true }, tabs: Array, tab: String, canvas: Boolean });
+const emit = defineEmits(['close', 'update:tab']);
 
 const KEY = 'aws-enumerator.drawer-height';
 const height = ref(readHeight());
 
-function readHeight(): number {
+function readHeight() {
   try {
     const v = Number(localStorage.getItem(KEY));
     if (Number.isFinite(v) && v >= 140) return v;
@@ -22,21 +22,21 @@ function readHeight(): number {
   return Math.round((typeof window !== 'undefined' ? window.innerHeight : 800) * 0.48);
 }
 
-function clamp(h: number): number {
+function clamp(h) {
   const max = (typeof window !== 'undefined' ? window.innerHeight : 800) - 180;
   return Math.max(140, Math.min(max, Math.round(h)));
 }
 
 let startY = 0;
 let startH = 0;
-function onPointerDown(e: PointerEvent) {
+function onPointerDown(e) {
   startY = e.clientY;
   startH = height.value;
-  (e.target as Element).setPointerCapture?.(e.pointerId);
+  e.target.setPointerCapture?.(e.pointerId);
   window.addEventListener('pointermove', onPointerMove);
   window.addEventListener('pointerup', onPointerUp, { once: true });
 }
-function onPointerMove(e: PointerEvent) {
+function onPointerMove(e) {
   height.value = clamp(startH + (startY - e.clientY));
 }
 function onPointerUp() {
@@ -48,9 +48,9 @@ function onPointerUp() {
   }
 }
 
-function onKey(e: KeyboardEvent) {
+function onKey(e) {
   if (e.key !== 'Escape') return;
-  const t = e.target as HTMLElement | null;
+  const t = e.target;
   if (t && (t.localName === 'input' || t.localName === 'textarea' || t.closest('details[open]'))) return;
   emit('close');
 }

@@ -1,12 +1,11 @@
-<script setup lang="ts">
+<script setup>
 /* One card on the canvas: icon, label, type and badges; a severity stripe on the left (allow-listed classes). */
 import { computed } from 'vue';
 import { Handle, Position } from '@vue-flow/core';
 import { C } from '../core';
-import type { CanvasCard } from '../model/canvas-model';
 
-const props = defineProps<{ data: CanvasCard & { focus?: boolean } }>();
-const BADGE_CLASS: Record<string, string> = {
+const props = defineProps({ data: { type: Object, required: true } });
+const BADGE_CLASS = {
   operator: 'b-operator', owned: 'b-owned', 'admin-equivalent': 'b-admin-equivalent', 'account admin': 'b-account-admin',
   external: 'b-external', 'entry point': 'b-entry-point',
 };

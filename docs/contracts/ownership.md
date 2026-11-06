@@ -214,7 +214,7 @@ every golden set with its test and gives the regeneration commands and the ledge
   (no markup sinks, no last-segment matching except in `js/loader.js`), but only Du flips them, because they
   stay red until Du replaces `index.html`.
 - `lib/common.js` is used by the UI tests too; a change Du needs there in Wave 2 is a change request (I1).
-- Since D-57 the page hooks are `data-testid` attributes tested in frontend/ (Vitest `src/**/*.test.ts`, Playwright
+- Since D-57 the page hooks are `data-testid` attributes tested in frontend/ (Vitest `src/**/*.test.js`, Playwright
   `e2e/`); dashboard-core-api.md §5 lists them. The UI regression suite of the hand-written page, its harness and
   fixtures, the legacy d13c215 characterisation (it needed the vendored Cytoscape) and the UI perf test were
   removed with that page; their findings are tested in frontend/.

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 /*
  * Explore: the neighbourhood canvas of one node (who reaches it | the node | what it reaches) under the
  * operator lens, with big groups collapsed into "+N" cards. Click a card for its details in the drawer;
@@ -7,7 +7,7 @@
 import { computed, reactive, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { neighbourhood } from '../model/canvas-model';
-import { OPERATOR_LENS, isAccountAdmin, type Lens } from '../model/simplify';
+import { OPERATOR_LENS, isAccountAdmin } from '../model/simplify';
 import { shorten } from '../model/text';
 import { allRoutes, graph, index, nodeLabel, operator, ownedSet, simplified, state } from '../stores/report';
 import BottomDrawer from '../ui/BottomDrawer.vue';
@@ -16,8 +16,8 @@ import NodeDetail from '../ui/NodeDetail.vue';
 
 const route = useRoute();
 const router = useRouter();
-const lens = reactive<Lens>({ ...OPERATOR_LENS });
-const expanded = ref(new Set<string>());
+const lens = reactive({ ...OPERATOR_LENS });
+const expanded = ref(new Set());
 const tab = ref('summary');
 
 const focus = computed(() => {
@@ -39,8 +39,8 @@ const suggestions = computed(() => {
   const idx = index.value;
   const s = simplified.value;
   if (!idx || !s) return [];
-  const groups: { title: string; ids: string[] }[] = [];
-  const you = [...new Set([operator.value.id, ...state.owned].filter((x): x is string => !!x))];
+  const groups = [];
+  const you = [...new Set([operator.value.id, ...state.owned].filter((x) => !!x))];
   if (you.length) groups.push({ title: 'You', ids: you });
   const entries = [...new Set(allRoutes.value.filter((h) => h.reachesAdmin && h.kind !== 'foothold').map((h) => h.source))];
   if (entries.length) groups.push({ title: 'Entry points that reach admin', ids: entries });
@@ -50,19 +50,20 @@ const suggestions = computed(() => {
   return groups;
 });
 
-function open(id: string) {
+function open(id) {
   router.replace({ query: { ...route.query, sel: id } });
 }
-function center(id: string) {
+function center(id) {
   router.push({ query: { node: id } });
 }
-function expand(key: string) {
+function expand(key) {
   const next = new Set(expanded.value);
   next.add(key);
   expanded.value = next;
 }
 const tabs = [
   { key: 'summary', label: 'Summary' },
+  { key: 'routes', label: 'Routes through it' },
   { key: 'findings', label: 'Findings' },
   { key: 'props', label: 'Properties' },
 ];

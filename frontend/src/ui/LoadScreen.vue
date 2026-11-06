@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 /* Welcome, busy, error, legacy-report and run-picker states (F-092, F-093, F-145). */
 import { computed } from 'vue';
 import { pickRun, state } from '../stores/report';

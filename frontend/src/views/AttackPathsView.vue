@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 /*
  * Attack paths: ranked breach routes (entry or foothold -> ... -> admin), one row per foothold route, each with
  * its ATT&CK kill chain (D-58). Routes that look like AWS plumbing get a hint; the user can mark a route, or an
@@ -9,8 +9,7 @@
 import { computed, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { A, C } from '../core';
-import type { GEdge } from '../core';
-import { ENTRY_KIND_LABELS, ENTRY_KIND_ORDER, verbOf, type EntryKind, type Hypothesis } from '../model/breaches';
+import { ENTRY_KIND_LABELS, ENTRY_KIND_ORDER, verbOf } from '../model/breaches';
 import { pathCanvas } from '../model/canvas-model';
 import { columnTactics } from '../model/tactics';
 import { plural, shorten, shown } from '../model/text';
@@ -30,7 +29,7 @@ import TechniqueChips from '../ui/TechniqueChips.vue';
 
 const route = useRoute();
 const router = useRouter();
-const kind = ref<EntryKind | 'all'>('all');
+const kind = ref('all');
 const tactic = ref('');
 const text = ref('');
 const tab = ref('path');
@@ -42,9 +41,9 @@ const expectedCount = computed(() => allRoutes.value.filter(isExpected).length);
 const visibleRoutes = computed(() => (state.hideExpected ? allRoutes.value.filter((h) => !isExpected(h)) : allRoutes.value));
 
 const kinds = computed(() => {
-  const counts = new Map<EntryKind, number>();
+  const counts = new Map();
   for (const h of visibleRoutes.value) counts.set(h.kind, (counts.get(h.kind) || 0) + 1);
-  return ENTRY_KIND_ORDER.filter((k) => counts.has(k)).map((k) => ({ key: k, label: ENTRY_KIND_LABELS[k], count: counts.get(k) as number }));
+  return ENTRY_KIND_ORDER.filter((k) => counts.has(k)).map((k) => ({ key: k, label: ENTRY_KIND_LABELS[k], count: counts.get(k) }));
 });
 
 /** Tactics that occur on some route, for the filter. */
@@ -61,7 +60,7 @@ const rows = computed(() => {
 });
 
 const selectedId = computed(() => (typeof route.query.sel === 'string' ? route.query.sel : null));
-const selected = computed<Hypothesis | null>(() => {
+const selected = computed(() => {
   const id = selectedId.value;
   if (!id) return null;
   for (const h of allRoutes.value) {
@@ -74,7 +73,7 @@ const selected = computed<Hypothesis | null>(() => {
 const parent = computed(() => allRoutes.value.find((h) => h.alternatives.some((a) => a.id === selectedId.value)) || null);
 const selectedPlumbing = computed(() => (selected.value ? plumbing.value.get(selected.value.id) || [] : []));
 
-function select(id: string | null) {
+function select(id) {
   router.replace({ query: { ...route.query, sel: id || undefined } });
 }
 
@@ -91,24 +90,23 @@ const canvasModel = computed(() => {
   const h = selected.value;
   const idx = index.value;
   if (!h || !idx || !simplified.value) return null;
-  const edges = h.edges.map((id) => idx.edgesById.get(id)).filter((e): e is GEdge => !!e);
+  const edges = h.edges.map((id) => idx.edgesById.get(id)).filter((e) => !!e);
   return pathCanvas(idx, simplified.value, h.path, h.edges, { owned: ownedSet.value, operator: operator.value.id }, ENTRY_KIND_LABELS[h.kind],
     columnTactics(h.kind, edges));
 });
 
-interface StepView { edge: GEdge; from: string; to: string; description: string; techniques: string[] }
-const steps = computed<StepView[]>(() => {
+const steps = computed(() => {
   const h = selected.value;
   const idx = index.value;
   if (!h || !idx) return [];
   return h.edges.map((id, i) => {
-    const e = idx.edgesById.get(id) as GEdge;
+    const e = idx.edgesById.get(id);
     const reg = idx.edgeTypes.get(e.type);
     return { edge: e, from: h.path[i], to: h.path[i + 1], description: shown(reg?.description || ''), techniques: h.steps[i]?.techniques || [] };
   });
 });
 
-function evidenceFields(e: GEdge) {
+function evidenceFields(e) {
   return Object.keys(e.evidence).sort().map((k) => ({ label: shown(k), value: e.evidence[k] }));
 }
 
@@ -134,11 +132,11 @@ function markSuggested() {
 function runFind() {
   const idx = index.value;
   if (!idx) return;
-  const resolve = (t: string): string | null => {
+  const resolve = (t) => {
     const v = t.trim();
     if (!v) return null;
     if (idx.nodesById.has(v)) return v;
-    const hits = graph.value!.nodes.filter((n) => n.label.toLowerCase() === v.toLowerCase());
+    const hits = graph.value.nodes.filter((n) => n.label.toLowerCase() === v.toLowerCase());
     return hits.length === 1 ? hits[0].id : null;
   };
   const src = from.value.trim() ? resolve(from.value) : null;
@@ -165,7 +163,7 @@ function runFind() {
         </select>
         <input v-model="text" type="search" placeholder="Filter routes" aria-label="Filter routes" data-testid="paths-filter">
         <label class="check" title="Edges that depend on a condition the analysis could not resolve">
-          <input type="checkbox" :checked="state.includeConditional" data-testid="include-conditional" @change="setIncludeConditional(($event.target as HTMLInputElement).checked)">
+          <input type="checkbox" :checked="state.includeConditional" data-testid="include-conditional" @change="setIncludeConditional($event.target.checked)">
           Include conditional steps
         </label>
         <label v-if="expectedCount" class="check" title="Routes you marked expected (still in exports and the Brief verdict)">
@@ -197,9 +195,9 @@ function runFind() {
       <DataTable
         :rows="rows"
         :columns="columns"
-        :row-key="(h: Hypothesis) => h.id"
+        :row-key="(h) => h.id"
         :selected="selectedId"
-        :row-class="(h: Hypothesis) => (isExpected(h) ? 'faded' : undefined)"
+        :row-class="(h) => (isExpected(h) ? 'faded' : undefined)"
         :empty-text="state.breach.running ? 'Searching…' : 'No attack path from an entry point or your foothold to an administrator over the collected data.'"
         testid="paths-table"
         @select="select"
@@ -208,7 +206,7 @@ function runFind() {
         <template #cell-sev="{ row }"><SeverityBadge v-if="row.maxSeverity" :sev="row.maxSeverity" /></template>
         <template #cell-title="{ row }">
           <div class="row wrap">
-            <span class="kind" :class="row.kind">{{ ENTRY_KIND_LABELS[row.kind as EntryKind] }}</span>
+            <span class="kind" :class="row.kind">{{ ENTRY_KIND_LABELS[row.kind] }}</span>
             <span :title="row.statement">{{ row.title }}</span>
             <span v-if="isExpected(row)" class="expected-badge" data-testid="expected">expected</span>
             <template v-else>

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 /*
  * Findings: severity tiles and filters (INFO hidden by default), an ATT&CK tactic filter, and two layouts:
  * one row per rule (the default: a rule found on 30 roles is one row, its resources in the drawer) or one row
@@ -7,9 +7,8 @@
 import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { A, K } from '../core';
-import type { Finding } from '../core';
-import type { FindingGroup } from '../model/findings';
-import { plural, shown, SEVERITY_ORDER, type SeverityClass } from '../model/text';
+import { categoryLabel } from '../model/audit';
+import { plural, shown, SEVERITY_ORDER } from '../model/text';
 import { allFindings, findingGroups, findingsView, index, nodeLabel, severityCounts, state } from '../stores/report';
 import BottomDrawer from '../ui/BottomDrawer.vue';
 import DataTable from '../ui/DataTable.vue';
@@ -25,8 +24,8 @@ const router = useRouter();
 
 /** A stable key per finding: the fingerprint, else id and node (and the position for exact duplicates). */
 const keys = computed(() => {
-  const out = new Map<Finding, string>();
-  const used = new Set<string>();
+  const out = new Map();
+  const used = new Set();
   allFindings().forEach((f, i) => {
     let k = f.fingerprint || f.id + '@' + (f.node_id || '');
     if (used.has(k)) k += '#' + i;
@@ -35,8 +34,8 @@ const keys = computed(() => {
   });
   return out;
 });
-const keyOf = (f: Finding) => keys.value.get(f) as string;
-const groupKey = (g: FindingGroup) => 'rule:' + g.id;
+const keyOf = (f) => keys.value.get(f);
+const groupKey = (g) => 'rule:' + g.id;
 const counts = computed(() => severityCounts());
 const unattached = computed(() => index.value?.unattachedFindings.length || 0);
 const selectedId = computed(() => (typeof route.query.sel === 'string' ? route.query.sel : null));
@@ -53,21 +52,21 @@ const tacticsPresent = computed(() => {
   return A.TACTICS.filter((t) => ids.has(t.id));
 });
 
-function select(id: string | null) {
+function select(id) {
   router.replace({ query: { ...route.query, sel: id || undefined } });
 }
-function toggle(s: SeverityClass) {
+function toggle(s) {
   const set = new Set(state.findings.severities);
   if (set.has(s)) set.delete(s);
   else set.add(s);
   state.findings.severities = set;
 }
-function sort(key: string) {
-  const k = key as typeof state.findings.sort;
+function sort(key) {
+  const k = key;
   if (state.findings.sort === k) state.findings.dir = -state.findings.dir;
   else { state.findings.sort = k; state.findings.dir = 1; }
 }
-function typeLabel(id: string | null) {
+function typeLabel(id) {
   const n = id ? index.value?.nodesById.get(id) : undefined;
   return n ? K.nodeTypeInfo(n.type, index.value?.nodeTypes.get(n.type)).label : '';
 }
@@ -121,6 +120,9 @@ const groupColumns = [
           <option v-for="t in tacticsPresent" :key="t.id" :value="t.id">{{ t.name }}</option>
         </select>
         <input v-model="state.findings.text" type="search" placeholder="Filter findings" aria-label="Filter findings" data-input="finding-search" data-testid="findings-filter">
+        <button v-if="state.findings.category" type="button" class="small active" title="Clear the category filter" data-testid="findings-category" @click="state.findings.category = ''">
+          {{ categoryLabel(state.findings.category) }} ×
+        </button>
       </div>
 
       <DataTable

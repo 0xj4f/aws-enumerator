@@ -1,9 +1,8 @@
-<script setup lang="ts">
+<script setup>
 /* The landing page: the answer first (verdict, numbers, the top attack paths), then what to check next. */
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { A, K } from '../core';
-import type { Finding } from '../core';
 import { ENTRY_KIND_LABELS } from '../model/breaches';
 import { plural, shorten, shown } from '../model/text';
 import { brief, index, nodeLabel, operator, state } from '../stores/report';
@@ -13,10 +12,10 @@ import TacticChips from '../ui/TacticChips.vue';
 const router = useRouter();
 const b = computed(() => brief.value);
 
-function typeLabel(type: string) {
+function typeLabel(type) {
   return K.nodeTypeInfo(type, index.value?.nodeTypes.get(type)).label;
 }
-function findingKey(f: Finding): string {
+function findingKey(f) {
   return f.fingerprint || f.id + '@' + (f.node_id || '');
 }
 </script>
@@ -61,6 +60,7 @@ function findingKey(f: Finding): string {
             </div>
             <p v-if="b.top.length || b.expectedCount" class="section">
               <RouterLink :to="{ name: 'paths' }">All attack paths →</RouterLink>
+              · <RouterLink :to="{ name: 'map' }" data-testid="brief-map-link">See the kill-chain map →</RouterLink>
               <span v-if="b.expectedCount" class="muted"> · {{ plural(b.expectedCount, 'route') }} marked expected (not listed here)</span>
             </p>
             <p class="muted">Tactics from MITRE ATT&amp;CK Enterprise {{ A.VERSION }}.</p>
@@ -79,12 +79,13 @@ function findingKey(f: Finding): string {
 
         <div>
           <div class="section">
-            <h3 class="section-title">What defenders can see</h3>
-            <p v-if="!b.posture.length" class="muted">No logging or detection gap was recorded (check Report health for coverage).</p>
+            <h3 class="section-title">What could detect you</h3>
+            <p v-if="!b.posture.length" class="muted">No detection control is reported off or missing: expect to be seen (check Report health for coverage).</p>
             <div v-for="f in b.posture" :key="findingKey(f)" class="list-row" data-testid="posture" @click="router.push({ name: 'findings', query: { sel: findingKey(f) } })">
               <SeverityBadge :sev="f.severity" />
               <span class="grow ellipsis" :title="shown(f.title)">{{ shown(f.title) }}</span>
             </div>
+            <p><RouterLink :to="{ name: 'audit' }" data-testid="brief-audit-link">Detection map, region by region →</RouterLink></p>
           </div>
           <div class="section">
             <h3 class="section-title">How complete is this picture</h3>

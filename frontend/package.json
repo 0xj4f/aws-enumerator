@@ -10,8 +10,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
-    "typecheck": "vue-tsc --noEmit",
+    "build": "vite build",
     "test": "vitest run",
     "e2e": "playwright test"
   },
@@ -23,13 +22,10 @@
   },
   "devDependencies": {
     "@playwright/test": "1.65.0",
-    "@types/node": "22.20.5",
     "@vitejs/plugin-vue": "5.2.4",
     "@vue/test-utils": "2.4.6",
     "jsdom": "26.1.0",
-    "typescript": "5.9.3",
     "vite": "6.4.5",
-    "vitest": "3.2.7",
-    "vue-tsc": "3.3.14"
+    "vitest": "3.2.7"
   }
 }

@@ -2,7 +2,7 @@
 // Static checks of the dashboard since the Vue build (DECISIONS.md D-57): the BUILT page in the dashboard
 // directory (npm run build in frontend/ writes it; it is committed) and the frontend/src sources.
 // They replace the old checks of the hand-written page (lint, vendor-sri, layout-css, regressions/static).
-// The behaviour of the page is tested in frontend/ (Vitest: src/**/*.test.ts; Playwright: e2e/).
+// The behaviour of the page is tested in frontend/ (Vitest: src/**/*.test.js; Playwright: e2e/).
 
 const { describe, test } = require('node:test');
 const assert = require('node:assert/strict');
@@ -26,7 +26,7 @@ function sources() {
     for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
       const p = path.join(dir, e.name);
       if (e.isDirectory()) walk(p);
-      else if (/\.(ts|vue|js)$/.test(e.name) && !/\.test\.ts$/.test(e.name) && !/\.d\.ts$/.test(e.name)) {
+      else if (/\.(vue|js)$/.test(e.name) && !/\.test\.js$/.test(e.name)) {
         out.push({ file: path.relative(targets.REPO_ROOT, p), text: fs.readFileSync(p, 'utf8') });
       }
     }

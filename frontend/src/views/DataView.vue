@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 /*
  * Data: the crown jewels (buckets, secrets, parameters, tables, snapshots, images, queues, Kubernetes secrets)
  * and the KMS keys that gate them, ranked: public first, then shared with another account, then reached from an
@@ -6,7 +6,6 @@
  */
 import { computed, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import type { DataRow } from '../model/inventory';
 import { plural } from '../model/text';
 import { dataAssets, nodeLabel, simplified } from '../stores/report';
 import BottomDrawer from '../ui/BottomDrawer.vue';
@@ -16,17 +15,16 @@ import NodeLink from '../ui/NodeLink.vue';
 import SeverityBadge from '../ui/SeverityBadge.vue';
 import TechniqueIds from '../ui/TechniqueIds.vue';
 
-type Filter = 'all' | 'public' | 'cross-account' | 'reached';
 const route = useRoute();
 const router = useRouter();
 const text = ref('');
 const type = ref('');
 const tab = ref('summary');
-const filter = computed<Filter>(() => {
+const filter = computed(() => {
   const f = route.query.filter;
   return f === 'public' || f === 'cross-account' || f === 'reached' ? f : 'all';
 });
-const FILTERS: { key: Filter; label: string; test: (r: DataRow) => boolean }[] = [
+const FILTERS = [
   { key: 'all', label: 'All', test: () => true },
   { key: 'public', label: 'Public', test: (r) => r.public },
   { key: 'cross-account', label: 'Shared with another account', test: (r) => r.crossAccount },
@@ -36,7 +34,7 @@ const counts = computed(() => new Map(FILTERS.map((f) => [f.key, dataAssets.valu
 const types = computed(() => [...new Set(dataAssets.value.map((r) => r.typeLabel))].sort());
 const rows = computed(() => {
   const t = text.value.trim().toLowerCase();
-  const test = FILTERS.find((f) => f.key === filter.value)!.test;
+  const test = FILTERS.find((f) => f.key === filter.value).test;
   return dataAssets.value.filter((r) => test(r) && (!type.value || r.typeLabel === type.value) &&
     (!t || r.label.toLowerCase().includes(t) || r.id.toLowerCase().includes(t)));
 });
@@ -44,10 +42,10 @@ const selectedId = computed(() => (typeof route.query.sel === 'string' ? route.q
 const selected = computed(() => dataAssets.value.find((r) => r.id === selectedId.value) || null);
 const admins = computed(() => simplified.value?.admins.size || 0);
 
-function setFilter(key: Filter) {
+function setFilter(key) {
   router.replace({ query: { ...route.query, filter: key === 'all' ? undefined : key } });
 }
-function select(id: string | null) {
+function select(id) {
   router.replace({ query: { ...route.query, sel: id || undefined } });
 }
 const columns = [
@@ -82,7 +80,7 @@ const tabs = [
         <span class="grow" />
         <span v-if="admins" class="muted">{{ plural(admins, 'admin-equivalent principal') }} can also read every asset</span>
       </div>
-      <DataTable :rows="rows" :columns="columns" :row-key="(r: DataRow) => r.id" :selected="selectedId" empty-text="No data asset matches." testid="data-table" @select="select" @close="select(null)">
+      <DataTable :rows="rows" :columns="columns" :row-key="(r) => r.id" :selected="selectedId" empty-text="No data asset matches." testid="data-table" @select="select" @close="select(null)">
         <template #cell-sev="{ row }"><SeverityBadge v-if="row.maxSeverity" :sev="row.maxSeverity" /></template>
         <template #cell-name="{ row }">
           <div class="row wrap"><span :title="row.id">{{ row.label }}</span><span class="muted">{{ row.typeLabel }}</span></div>

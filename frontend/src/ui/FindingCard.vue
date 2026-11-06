@@ -1,26 +1,28 @@
-<script setup lang="ts">
+<script setup>
+/*
+ * One finding: what it is, why it holds (the granting statements) and its reference. aws-enumerator is an
+ * offensive, observe-only tool: the engine's remediation text is never shown here (D-59).
+ */
 import { computed } from 'vue';
 import { C } from '../core';
-import type { Finding } from '../core';
 import { shown } from '../model/text';
 import SeverityBadge from './SeverityBadge.vue';
 
-const props = defineProps<{ finding: Finding; inherited?: boolean; showEvidence?: boolean }>();
+const props = defineProps({ finding: { type: Object, required: true }, inherited: Boolean, showEvidence: Boolean });
 
 /** References become links only when they are absolute https URLs (F-097). */
 const href = computed(() => (typeof props.finding.reference === 'string' && props.finding.reference ? C.safeHref(props.finding.reference) : null));
 const refused = computed(() => !!props.finding.reference && !href.value);
 
-interface Step { action: string; resource: string; decision: string; grants: string[] }
 /** The policy statements that grant each action of the finding (evidence.steps), as text. */
-const steps = computed<Step[]>(() => {
-  const ev = props.finding.evidence as Record<string, unknown> | undefined;
-  const list = ev && Array.isArray(ev.steps) ? (ev.steps as Record<string, unknown>[]) : [];
+const steps = computed(() => {
+  const ev = props.finding.evidence;
+  const list = ev && Array.isArray(ev.steps) ? (ev.steps) : [];
   return list.slice(0, 12).map((s) => ({
     action: shown(s.rule_action),
     resource: shown(s.resource),
     decision: shown(s.decision),
-    grants: (Array.isArray(s.granted) ? (s.granted as Record<string, unknown>[]) : []).slice(0, 6).map((g) =>
+    grants: (Array.isArray(s.granted) ? (s.granted) : []).slice(0, 6).map((g) =>
       [g.policy_name || g.policy_arn, g.sid ? 'sid ' + shown(g.sid) : null, g.layer].filter(Boolean).map(shown).join(' · ')),
   }));
 });
@@ -37,7 +39,6 @@ const steps = computed<Step[]>(() => {
       <span v-if="finding.confidence === 'conditional'" class="badge warn">conditional</span>
     </div>
     <p v-if="finding.description && finding.description !== finding.title">{{ shown(finding.description) }}</p>
-    <p v-if="finding.remediation"><strong>Fix:</strong> {{ shown(finding.remediation) }}</p>
     <div v-if="showEvidence && steps.length" class="section">
       <p class="muted">Why (granted by):</p>
       <ul class="bullets">

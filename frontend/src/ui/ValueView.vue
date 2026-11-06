@@ -1,8 +1,8 @@
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue';
 import { shown } from '../model/text';
 
-const props = defineProps<{ value: unknown }>();
+const props = defineProps({ value: null });
 const kind = computed(() => {
   const v = props.value;
   if (v === null || v === undefined) return 'null';
@@ -23,8 +23,8 @@ const json = computed(() => {
   <span v-if="kind === 'null'" class="muted">null</span>
   <span v-else-if="kind === 'scalar'">{{ shown(value) }}</span>
   <template v-else-if="kind === 'list'">
-    <ul v-if="(value as unknown[]).length" class="bullets">
-      <li v-for="(x, i) in (value as unknown[])" :key="i">{{ shown(x) }}</li>
+    <ul v-if="value.length" class="bullets">
+      <li v-for="(x, i) in value" :key="i">{{ shown(x) }}</li>
     </ul>
     <span v-else class="muted">none</span>
   </template>

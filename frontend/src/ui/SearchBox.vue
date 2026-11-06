@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 /* Find a node by label or id (press / to focus); Enter opens the first match on the Explore canvas. */
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
@@ -10,7 +10,7 @@ const router = useRouter();
 const text = ref('');
 const open = ref(false);
 const active = ref(0);
-const input = ref<HTMLInputElement | null>(null);
+const input = ref(null);
 
 const matches = computed(() => {
   const t = text.value.trim().toLowerCase();
@@ -23,25 +23,25 @@ const matches = computed(() => {
   return out;
 });
 
-function typeLabel(type: string) {
+function typeLabel(type) {
   return K.nodeTypeInfo(type, index.value?.nodeTypes.get(type)).label;
 }
 
-function choose(id: string) {
+function choose(id) {
   open.value = false;
   text.value = '';
   router.push({ name: 'explore', query: { node: id } });
 }
 
-function onKey(e: KeyboardEvent) {
+function onKey(e) {
   if (e.key === 'ArrowDown') { active.value = Math.min(matches.value.length - 1, active.value + 1); e.preventDefault(); }
   else if (e.key === 'ArrowUp') { active.value = Math.max(0, active.value - 1); e.preventDefault(); }
   else if (e.key === 'Enter' && matches.value.length) choose(matches.value[Math.min(active.value, matches.value.length - 1)].id);
   else if (e.key === 'Escape') { open.value = false; input.value?.blur(); }
 }
 
-function onGlobalKey(e: KeyboardEvent) {
-  const t = e.target as HTMLElement | null;
+function onGlobalKey(e) {
+  const t = e.target;
   if (e.key !== '/' || (t && (t.localName === 'input' || t.localName === 'textarea'))) return;
   e.preventDefault();
   input.value?.focus();

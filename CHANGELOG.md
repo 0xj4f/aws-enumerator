@@ -104,7 +104,12 @@ default.
   - CSV, Markdown, JSON and PNG downloads;
   - the operator pre-marked as owned;
   - a merged-view mode;
-  - `dashboard --host`, `--port 0` and `--allowed-host`.
+  - `dashboard --host`, `--port 0` and `--allowed-host`;
+  - pages for the operator, built from `frontend/` (Vue, plain JavaScript): the Brief, Attack paths with MITRE
+    ATT&CK kill chains and expected routes, the kill-chain map with its key pivots, Principals, Data, Findings
+    grouped by rule and Explore; under More, the operator's audit (where you would be seen, what is exposed) and
+    Report health;
+  - offensive and observe-only: the dashboard shows no remediation text and has no defender views.
 - **Documentation:** `SECURITY.md`, `CONTRIBUTING.md`, `docs/report-handling.md`, `docs/detection.md`,
   `docs/permissions.md` and the contracts under `docs/contracts/`.
 
@@ -146,7 +151,8 @@ This release addresses the 172 findings of the internal review. The main groups:
 - The repository's publishing workflow is unchanged in this release. It still publishes Docker images tagged
   `0.2.N` (and `latest`) on every push to `main`, with no test gate. Install from the `v0.3.0` tag, and build the
   image yourself or pin it by digest.
-- Opening the dashboard from `file://` is best-effort; use `aws-enumerator dashboard`.
+- The dashboard does not open from `file://` (browsers refuse its integrity-checked files there); use
+  `aws-enumerator dashboard`.
 
 ## 0.2.x
 

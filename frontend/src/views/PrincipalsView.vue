@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 /*
  * Principals: every IAM user, role and group, ranked for an operator: admin-equivalent first, then the ones that
  * reach admin (engine closure), then how many entry points and footholds reach them. The drawer has the node's
@@ -6,7 +6,6 @@
  */
 import { computed, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import type { PrincipalRow } from '../model/inventory';
 import { plural } from '../model/text';
 import { nodeLabel, principals, reachSources } from '../stores/report';
 import BottomDrawer from '../ui/BottomDrawer.vue';
@@ -15,16 +14,15 @@ import NodeDetail from '../ui/NodeDetail.vue';
 import SeverityBadge from '../ui/SeverityBadge.vue';
 import TechniqueIds from '../ui/TechniqueIds.vue';
 
-type Filter = 'all' | 'admin' | 'reaches-admin' | 'reached' | 'external';
 const route = useRoute();
 const router = useRouter();
 const text = ref('');
 const tab = ref('summary');
-const filter = computed<Filter>(() => {
+const filter = computed(() => {
   const f = route.query.filter;
   return f === 'admin' || f === 'reaches-admin' || f === 'reached' || f === 'external' ? f : 'all';
 });
-const FILTERS: { key: Filter; label: string; test: (r: PrincipalRow) => boolean }[] = [
+const FILTERS = [
   { key: 'all', label: 'All', test: () => true },
   { key: 'admin', label: 'Admin-equivalent', test: (r) => r.admin },
   { key: 'reaches-admin', label: 'Reaches admin', test: (r) => r.admin || r.reachesAdmin !== null },
@@ -34,16 +32,16 @@ const FILTERS: { key: Filter; label: string; test: (r: PrincipalRow) => boolean 
 const counts = computed(() => new Map(FILTERS.map((f) => [f.key, principals.value.filter(f.test).length])));
 const rows = computed(() => {
   const t = text.value.trim().toLowerCase();
-  const test = FILTERS.find((f) => f.key === filter.value)!.test;
+  const test = FILTERS.find((f) => f.key === filter.value).test;
   return principals.value.filter((r) => test(r) && (!t || r.label.toLowerCase().includes(t) || r.id.toLowerCase().includes(t)));
 });
 const selectedId = computed(() => (typeof route.query.sel === 'string' ? route.query.sel : null));
 const selected = computed(() => principals.value.find((r) => r.id === selectedId.value) || null);
 
-function setFilter(key: Filter) {
+function setFilter(key) {
   router.replace({ query: { ...route.query, filter: key === 'all' ? undefined : key } });
 }
-function select(id: string | null) {
+function select(id) {
   router.replace({ query: { ...route.query, sel: id || undefined } });
 }
 const columns = [
@@ -76,7 +74,7 @@ const tabs = [
         <span class="grow" />
         <span class="muted" :title="reachSources.map(nodeLabel).join(', ')">Reach counted from {{ plural(reachSources.length, 'entry point or foothold', 'entry points and footholds') }}</span>
       </div>
-      <DataTable :rows="rows" :columns="columns" :row-key="(r: PrincipalRow) => r.id" :selected="selectedId" empty-text="No principal matches." testid="principals-table" @select="select" @close="select(null)">
+      <DataTable :rows="rows" :columns="columns" :row-key="(r) => r.id" :selected="selectedId" empty-text="No principal matches." testid="principals-table" @select="select" @close="select(null)">
         <template #cell-sev="{ row }"><SeverityBadge v-if="row.maxSeverity" :sev="row.maxSeverity" /></template>
         <template #cell-name="{ row }">
           <div class="row wrap">

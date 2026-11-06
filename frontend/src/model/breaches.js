@@ -10,15 +10,11 @@
  * "entry -> ... -> admin-equivalent X -> account administrator".
  */
 import { C } from '../core';
-import type { DiscoverEvent, Finding, GEdge, GNode, Index, PathResult } from '../core';
-import { ADMIN_EDGE, ENTRY_TYPES, isAccountAdmin, isAdminEquivalent, operatorActive, type Simplified } from './simplify';
-import { routeSteps, routeTactics, type StepTag } from './tactics';
-import { cmp, severityRank, shown, type SeverityClass } from './text';
-import type { AttackTactic } from '../core';
+import { ADMIN_EDGE, ENTRY_TYPES, isAccountAdmin, isAdminEquivalent, operatorActive } from './simplify';
+import { routeSteps, routeTactics } from './tactics';
+import { cmp, severityRank, shown } from './text';
 
-export type EntryKind = 'internet' | 'cross-account' | 'federation' | 'entry' | 'foothold' | 'session' | 'custom';
-
-export const ENTRY_KIND_LABELS: Readonly<Record<EntryKind, string>> = Object.freeze({
+export const ENTRY_KIND_LABELS = Object.freeze({
   internet: 'Internet',
   'cross-account': 'Cross-account',
   federation: 'Federation',
@@ -29,40 +25,9 @@ export const ENTRY_KIND_LABELS: Readonly<Record<EntryKind, string>> = Object.fre
 });
 
 /** Order of the kinds in the table filter and in the ranking (outside-in first). */
-export const ENTRY_KIND_ORDER: readonly EntryKind[] = ['internet', 'cross-account', 'federation', 'entry', 'foothold', 'session', 'custom'];
+export const ENTRY_KIND_ORDER = ['internet', 'cross-account', 'federation', 'entry', 'foothold', 'session', 'custom'];
 
-export interface Hypothesis {
-  /** Stable id: source and edge ids. */
-  id: string;
-  kind: EntryKind;
-  source: string;
-  target: string;
-  /** The admin-equivalent node the path reaches (null when the target is not admin). */
-  pivot: string | null;
-  path: string[];
-  edges: string[];
-  hops: number;
-  cost: number;
-  confidence: 'definite' | 'conditional';
-  /** Short table title, the route: "<entry> -> <foothold> -> <pivot> -> admin". */
-  title: string;
-  /** One sentence: "<entry> can assume <role>, which is admin-equivalent." */
-  statement: string;
-  /** Findings on the nodes of the path (severity order, deduplicated by fingerprint). */
-  findings: Finding[];
-  maxSeverity: SeverityClass | null;
-  reachesAdmin: boolean;
-  /** ATT&CK per step (techniques and the step's primary tactic) and the route's kill chain (D-58). */
-  steps: StepTag[];
-  tactics: AttackTactic[];
-  /**
-   * Other routes from the same source through the same foothold (the same path up to the first admin node),
-   * ending at another admin-equivalent principal. The table shows one row per foothold; the drawer lists these.
-   */
-  alternatives: Hypothesis[];
-}
-
-const VERBS: Readonly<Record<string, string>> = Object.freeze({
+const VERBS = Object.freeze({
   CAN_ASSUME: 'can assume',
   CAN_ASSUME_SAML: 'can sign in through SAML as',
   CAN_ASSUME_WEB_IDENTITY: 'can federate into',
@@ -85,11 +50,11 @@ const VERBS: Readonly<Record<string, string>> = Object.freeze({
   CAN_READ_PARAM: 'can read',
 });
 
-export function verbOf(edgeType: string): string {
+export function verbOf(edgeType) {
   return VERBS[edgeType] || edgeType.toLowerCase().replace(/_/g, ' ');
 }
 
-export function entryKind(n: GNode, firstEdge: GEdge | undefined, owned: ReadonlySet<string>, operator: string | null): EntryKind {
+export function entryKind(n, firstEdge, owned, operator) {
   if (n.id === operator || owned.has(n.id)) return 'foothold';
   if (n.type === 'anonymous') return 'internet';
   if (n.type === 'idp' || (firstEdge && (firstEdge.type === 'CAN_ASSUME_SAML' || firstEdge.type === 'CAN_ASSUME_WEB_IDENTITY'))) return 'federation';
@@ -98,7 +63,7 @@ export function entryKind(n: GNode, firstEdge: GEdge | undefined, owned: Readonl
 }
 
 /** Entry points of the graph (not the owned set): the outside-in sources. */
-export function entryPoints(index: Index): string[] {
+export function entryPoints(index) {
   return index.graph.nodes
     .filter((n) => ENTRY_TYPES.has(n.type) || n.props.entry_point === true)
     .map((n) => n.id)
@@ -106,24 +71,18 @@ export function entryPoints(index: Index): string[] {
 }
 
 /** Account administrator nodes and admin-equivalent principals; the default targets when there are none. */
-export function breachTargets(index: Index, s: Simplified): string[] {
+export function breachTargets(index, s) {
   const admin = index.graph.nodes.filter((n) => isAccountAdmin(n)).map((n) => n.id);
   const targets = [...admin, ...[...s.admins].sort(cmp)];
   return targets.length ? targets : C.defaultTargets(index, {});
 }
 
-export interface BreachOptions {
-  owned: readonly string[];
-  operator: string | null;
-  includeConditional?: boolean;
-}
-
 /** discoverAll over the operator lens, from entries and footholds to the admin targets (yields progress). */
-export function* breachSearch(index: Index, s: Simplified, opts: BreachOptions): Generator<DiscoverEvent, Hypothesis[], unknown> {
+export function* breachSearch(index, s, opts) {
   const owned = opts.owned.filter((id) => index.nodesById.has(id));
-  const sources: string[] = [];
-  const seen = new Set<string>();
-  const add = (id: string | null) => {
+  const sources = [];
+  const seen = new Set();
+  const add = (id) => {
     if (!id || seen.has(id) || !index.nodesById.has(id) || s.admins.has(id) || isAccountAdmin(index.nodesById.get(id))) return;
     seen.add(id);
     sources.push(id);
@@ -147,19 +106,19 @@ export function* breachSearch(index: Index, s: Simplified, opts: BreachOptions):
 }
 
 /** Runs breachSearch to the end (tests, small graphs). */
-export function findBreaches(index: Index, s: Simplified, opts: BreachOptions): Hypothesis[] {
+export function findBreaches(index, s, opts) {
   const gen = breachSearch(index, s, opts);
   let step = gen.next();
   while (!step.done) step = gen.next();
   return step.value;
 }
 
-function adminExtension(index: Index, id: string): GEdge | undefined {
+function adminExtension(index, id) {
   return (index.out.get(id) || []).find((e) => e.type === ADMIN_EDGE && isAccountAdmin(index.nodesById.get(e.target)));
 }
 
 /** Cut a path at its first admin-equivalent or administrator node and append the IS_ADMIN_EQUIVALENT step. */
-export function normalisePath(index: Index, s: Simplified, p: PathResult): PathResult {
+export function normalisePath(index, s, p) {
   let path = p.path.slice();
   let edges = p.edges.slice();
   for (let i = 1; i < path.length; i++) {
@@ -178,13 +137,13 @@ export function normalisePath(index: Index, s: Simplified, p: PathResult): PathR
       edges.push(ext.id);
     }
   }
-  const cost = edges.reduce((sum, id) => sum + C.edgeWeight(index.edgesById.get(id) as GEdge), 0);
+  const cost = edges.reduce((sum, id) => sum + C.edgeWeight(index.edgesById.get(id)), 0);
   return { source: path[0], target: path[path.length - 1], cost, hops: edges.length, path, edges };
 }
 
-function pathFindings(index: Index, path: readonly string[]): Finding[] {
-  const out: Finding[] = [];
-  const seen = new Set<string>();
+function pathFindings(index, path) {
+  const out = [];
+  const seen = new Set();
   for (const id of path) {
     for (const f of index.findingsByNode.get(id) || []) {
       const key = f.fingerprint || f.id + '@' + id;
@@ -196,22 +155,22 @@ function pathFindings(index: Index, path: readonly string[]): Finding[] {
   return out.sort((a, b) => severityRank(C.severityClass(a.severity)) - severityRank(C.severityClass(b.severity)) || cmp(a.id, b.id));
 }
 
-function label(index: Index, id: string): string {
+function label(index, id) {
   const n = index.nodesById.get(id);
   return shown(n ? n.label : id);
 }
 
 /** A hypothesis from one (already normalised) path. */
-export function toHypothesis(index: Index, s: Simplified, p: PathResult, kind: EntryKind): Hypothesis {
-  const edges = p.edges.map((id) => index.edgesById.get(id) as GEdge);
+export function toHypothesis(index, s, p, kind) {
+  const edges = p.edges.map((id) => index.edgesById.get(id));
   const pivotId = p.path.find((id, i) => i > 0 && s.admins.has(id)) || null;
   const targetNode = index.nodesById.get(p.target);
   const reachesAdmin = !!pivotId || isAccountAdmin(targetNode) || isAdminEquivalent(targetNode);
   const findings = pathFindings(index, p.path);
   const worst = findings.length ? C.severityClass(findings[0].severity) : null;
   const conditional = edges.some((e) => e && e.confidence === 'conditional');
-  const steps = routeSteps(kind, edges.filter((e): e is GEdge => !!e));
-  const parts: string[] = [];
+  const steps = routeSteps(kind, edges.filter((e) => !!e));
+  const parts = [];
   edges.forEach((e, i) => {
     if (!e) return;
     if (e.type === ADMIN_EDGE) parts.push('which is admin-equivalent');
@@ -243,12 +202,12 @@ export function toHypothesis(index: Index, s: Simplified, p: PathResult, kind: E
 }
 
 /** Source plus the path before its first admin-equivalent or administrator node: one table row per foothold. */
-function routeKey(index: Index, s: Simplified, h: Hypothesis): string {
+function routeKey(index, s, h) {
   const cut = h.path.findIndex((id, i) => i > 0 && (s.admins.has(id) || isAccountAdmin(index.nodesById.get(id))));
   return (cut < 0 ? h.path : h.path.slice(0, cut)).join('\u0000');
 }
 
-export function compareHypotheses(a: Hypothesis, b: Hypothesis): number {
+export function compareHypotheses(a, b) {
   return (
     Number(b.reachesAdmin) - Number(a.reachesAdmin) ||
     (a.confidence === b.confidence ? 0 : a.confidence === 'definite' ? -1 : 1) ||
@@ -260,8 +219,8 @@ export function compareHypotheses(a: Hypothesis, b: Hypothesis): number {
   );
 }
 
-function toHypotheses(index: Index, s: Simplified, paths: PathResult[], owned: ReadonlySet<string>, operator: string | null): Hypothesis[] {
-  const byId = new Map<string, Hypothesis>();
+function toHypotheses(index, s, paths, owned, operator) {
+  const byId = new Map();
   for (const raw of paths) {
     const p = normalisePath(index, s, raw);
     const src = index.nodesById.get(p.source);
@@ -270,15 +229,15 @@ function toHypotheses(index: Index, s: Simplified, paths: PathResult[], owned: R
     const prev = byId.get(h.id);
     if (!prev || compareHypotheses(h, prev) < 0) byId.set(h.id, h);
   }
-  const groups = new Map<string, Hypothesis[]>();
+  const groups = new Map();
   for (const h of [...byId.values()].sort(compareHypotheses)) {
     const key = routeKey(index, s, h);
-    (groups.get(key) || groups.set(key, []).get(key)!).push(h);
+    (groups.get(key) || groups.set(key, []).get(key)).push(h);
   }
   return [...groups.values()].map(([best, ...rest]) => ({ ...best, alternatives: rest })).sort(compareHypotheses);
 }
 
 /** A hypothesis for an arbitrary route (custom Find path, a session path). */
-export function routeHypothesis(index: Index, s: Simplified, p: PathResult, kind: EntryKind): Hypothesis {
+export function routeHypothesis(index, s, p, kind) {
   return toHypothesis(index, s, p, kind);
 }

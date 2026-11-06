@@ -35,6 +35,11 @@ These rules are not negotiable. Reviews and tests enforce them.
    `null`), never as an empty list or `false`.
 7. **Claims follow code.** Documentation describes shipped behaviour. Generated catalogues are regenerated, never
    edited by hand, and a drift test fails when docs and code disagree.
+8. **Offensive and observe-only.** aws-enumerator maps privilege escalation and attack paths for the operator.
+   Features that fix, harden or defend the account (remediation plans, choke-point "fix first" lists, what-if
+   simulation, defender or compliance views) are out of scope. An audit belongs only when it answers the
+   operator's questions: where you would be seen, where you are blind, what is exposed for you to use (DECISIONS.md
+   D-59).
 
 ## Development setup
 
@@ -63,7 +68,7 @@ Run the checks through `scripts/check.sh` (or `make <target>`):
 | `setup` | prints the hash-locked dev install above; `scripts/check.sh setup --yes` runs it (needs the network) |
 | `doctor` | offline environment check: `.venv` against `requirements-dev.txt` and the build requirement, and local commits that add paths that must never be pushed. Warnings only, unless `DOCTOR_STRICT=1` |
 | `lint` | `ruff check aws_enumerator tests scripts`, `node --check` on the dashboard JS, the static JS tests |
-| `ui` | the dashboard in `frontend/`: `npm ci`, typecheck, Vitest, `npm run build`, and a check that the committed build in `aws_enumerator/dashboard/` matches the sources |
+| `ui` | the dashboard in `frontend/`: `npm ci`, Vitest, `npm run build`, and a check that the committed build in `aws_enumerator/dashboard/` matches the sources |
 | `e2e` | Playwright against the built page and the real server (installed Google Chrome; `E2E_REPORT=run.zip` adds a real report) |
 | `py` | `pytest -m "not perf and not golden"` |
 | `js` | `node --test tests/js` |
@@ -117,18 +122,21 @@ The dashboard reads `graph.json` only. It contains no edge derivation.
 
 ### The dashboard (`frontend/`)
 
-The page is a Vue 3 + TypeScript app built with Vite (DECISIONS.md D-57). `npm run build` writes it into
-`aws_enumerator/dashboard/`, and that build is committed, so users of the Python package never need Node.
+The page is a Vue 3 app in plain JavaScript (ES modules and `<script setup>` components, no TypeScript), built
+with Vite (DECISIONS.md D-57, D-59). `npm run build` writes it into `aws_enumerator/dashboard/`, and that build is
+committed, so users of the Python package never need Node.
 
 ```
 frontend/
   src/core/       graph-core, loader, exports, catalog: the pure UMD modules (dashboard-core-api.md §1-§4),
                   also required by tests/js; the app imports them through the `ae-umd` transform
   src/model/      framework-free view models: the operator lens (simplify), breach routes, the Brief,
-                  the canvas models (path, neighbourhood) and the grid layout
+                  the canvas models (path, neighbourhood, the kill-chain map), the operator's audit and the
+                  grid layout
   src/stores/     the loaded report and what the user did with it (loading pipeline, owned marks, exports)
   src/ui/         shell, table, bottom drawer, GraphCanvas (the only Vue Flow user), cards
-  src/views/      Brief, Attack paths, Findings, Explore, Report health
+  src/views/      Brief, Attack paths, Map, Principals, Data, Findings, Explore; under More: Audit, Report
+                  health
   vendor/         JSZip, vendored byte for byte (VENDOR.md)
   public/icons/   node-type icons
   e2e/            Playwright tests of the built page
@@ -139,7 +147,7 @@ cd frontend
 npm ci                 # exact versions from package-lock.json
 npm run dev            # live-reload server (no CSP), loads tests/fixtures by file picker or drop
 npm test               # Vitest: model and page tests
-npm run build          # typecheck, then build into ../aws_enumerator/dashboard/ (commit the result)
+npm run build          # build into ../aws_enumerator/dashboard/ (commit the result)
 npm run e2e            # Playwright against the built page and the real server
 ```
 
@@ -247,7 +255,7 @@ Take the SQS collector (`aws_enumerator/collectors/sqs.py`) and its tests as the
 | Engine | `tests/python/engine/{eval,core,domains/<x>,bench}/` | evaluator vectors (each citing the AWS page it encodes), pipeline, builder, per-domain analyzers, benchmarks |
 | CLI and orchestration | `tests/python/cli/`, `tests/python/orchestration/` | parser, exit codes, signals, resume, layout, permissions, an end-to-end fake account (collect → zip → dashboard loader) |
 | Exports | `tests/python/exports/` | SARIF, CSV, Markdown, ASFF, OpenGraph |
-| Dashboard | `tests/python/dashboard/`, `tests/js/{core,static,golden}/`, `frontend/src/**/*.test.ts`, `frontend/e2e/` | server hardening, graph core and loader, static safety scans of the built page, the page's behaviour (Vitest) and a real browser under the server's CSP (Playwright) |
+| Dashboard | `tests/python/dashboard/`, `tests/js/{core,static,golden}/`, `frontend/src/**/*.test.js`, `frontend/e2e/` | server hardening, graph core and loader, static safety scans of the built page, the page's behaviour (Vitest) and a real browser under the server's CSP (Playwright) |
 | Docs | `tests/python/docs/` | drift tests: README, security docs, generated catalogues |
 | Regressions | `tests/python/regressions/`, `tests/js/regressions/` | one or more tests per verified finding |
 | Goldens | `tests/golden/{v1,collectors-v2}/` | canonicalised outputs of the synthetic scenarios |

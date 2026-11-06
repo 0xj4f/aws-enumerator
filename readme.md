@@ -6,8 +6,13 @@ evaluates the IAM and resource policies it collected, and writes a **directed at
 what you control to the account's high-value targets.
 
 The idea comes from [BloodHound](https://github.com/BloodHoundAD/BloodHound); this project is not affiliated with
-it. Use it for authorised offensive assessments (an assumed-breach starting point or a set of leaked keys) and for
-defensive reviews of the same account.
+it. Use it for authorised offensive assessments: an assumed-breach starting point or a set of leaked keys.
+
+**Offensive and observe-only.** aws-enumerator is an offensive enumeration tool. It observes the account and maps
+privilege escalation: who can become whom, how, and what that reaches. It never fixes, hardens or defends
+anything, and it has no defender mode: no remediation plans, no "fix first" lists, no what-if simulation, no
+compliance score. Its audit is the operator's audit: where you would be seen, where you are blind, and what the
+account exposes for you to use.
 
 What it is **not**:
 
@@ -16,6 +21,9 @@ What it is **not**:
   or parameter values, or Kubernetes Secret data.
 - **Not a compromise assessment.** It does not read CloudTrail events, logs or security-service findings, so it
   cannot tell you whether an account has been breached.
+- **Not a remediation or hardening tool.** It does not tell you how to fix the account. The engine keeps each
+  finding's `remediation` field because the report formats carry it (`findings.json`, the ASFF export), but the
+  dashboard never shows it.
 - **Not a complete IAM simulator.** The graph shows what the collected policies allow, as far as the evaluator
   models them; see [Known limitations](#known-limitations). Treat every path as a lead to confirm by hand.
 
@@ -441,7 +449,7 @@ These images are generated from a **synthetic** report: placeholder accounts and
 image.
 
 **Brief**: the answer first. Who can reach the account administrator and in how many steps, what anyone on the
-internet reaches, what defenders can see, and how complete the collection was.
+internet reaches, what could detect you, and how complete the collection was.
 
 ![Brief](docs/00.png)
 
@@ -454,6 +462,13 @@ findings, attached policies and trusted services in the drawer below.
 Selecting one opens its kill chain: the steps as cards, with the evidence and the findings on the path.
 
 ![Attack paths and the kill-chain drawer](docs/02.png)
+
+**Map**: the kill-chain map, the whole attack surface on one canvas. Ways in, footholds, escalation, the
+admin-equivalent principals, the account administrator and the data the ways in reach, in ATT&CK order, at most 150
+cards (large groups collapse into one card). The **key pivots** beside it rank the principals the routes run
+through; hover one to light up its routes. **From your foothold** narrows it to what you already control reaches.
+Under **More**, the **Audit** is the operator's: where you would be seen (each detection control per region:
+watching, blind or unknown) and what the account exposes for you to use, by category and severity.
 
 Two more pages list what the routes go through: **Principals** (every user, role, group and outside principal:
 admin-equivalent first, then who reaches admin, who can become each one and what it can become) and **Data**

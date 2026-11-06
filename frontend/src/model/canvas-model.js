@@ -3,56 +3,21 @@
  * in columns, and edges with every parallel edge of a pair merged into one.
  */
 import { K } from '../core';
-import type { GEdge, Index } from '../core';
-import { ADMIN_EDGE, edgeVisible, isAccountAdmin, isAdminEquivalent, isEntryPoint, nodeVisible, type Lens, type Simplified } from './simplify';
+import { ADMIN_EDGE, edgeVisible, isAccountAdmin, isAdminEquivalent, isEntryPoint, nodeVisible } from './simplify';
 import { cmp, shown } from './text';
 
-export type EdgeStyle = 'control' | 'access' | 'exposure' | 'context' | 'admin';
+const STYLE_RANK = { admin: 0, control: 1, exposure: 2, access: 3, context: 4 };
 
-export interface CanvasCard {
-  id: string;
-  column: number;
-  kind: 'node' | 'group';
-  nodeId: string | null;
-  type: string;
-  label: string;
-  sub: string;
-  iconUrl: string;
-  severity: string | null;
-  badges: string[];
-  count: number;
-  groupKey: string | null;
-}
-
-export interface CanvasLink {
-  id: string;
-  source: string;
-  target: string;
-  types: string[];
-  style: EdgeStyle;
-  conditional: boolean;
-  edgeIds: string[];
-}
-
-export interface CanvasModel {
-  cards: CanvasCard[];
-  links: CanvasLink[];
-  columns: { column: number; label: string }[];
-  truncated: number;
-}
-
-const STYLE_RANK: Record<EdgeStyle, number> = { admin: 0, control: 1, exposure: 2, access: 3, context: 4 };
-
-export function edgeStyle(e: GEdge): EdgeStyle {
+export function edgeStyle(e) {
   if (e.type === ADMIN_EDGE) return 'admin';
   if (e.traversal === 'control' || e.traversal === 'access' || e.traversal === 'exposure') return e.traversal;
   return 'context';
 }
 
-export function nodeCard(index: Index, s: Simplified, id: string, column: number, ctx: { owned: ReadonlySet<string>; operator: string | null }): CanvasCard {
+export function nodeCard(index, s, id, column, ctx) {
   const n = index.nodesById.get(id);
   const info = K.nodeTypeInfo(n ? n.type : '', n ? index.nodeTypes.get(n.type) : undefined);
-  const badges: string[] = [];
+  const badges = [];
   if (n && id === ctx.operator) badges.push('operator');
   if (n && ctx.owned.has(id) && id !== ctx.operator) badges.push('owned');
   if (n && (isAdminEquivalent(n) || s.admins.has(id))) badges.push('admin-equivalent');
@@ -67,8 +32,8 @@ export function nodeCard(index: Index, s: Simplified, id: string, column: number
 }
 
 /** Merge parallel edges (same source and target) into one link, in first-seen order. */
-export function mergeLinks(edges: readonly GEdge[], idOf: (nodeId: string) => string): CanvasLink[] {
-  const byPair = new Map<string, CanvasLink>();
+export function mergeLinks(edges, idOf) {
+  const byPair = new Map();
   for (const e of edges) {
     const source = idOf(e.source);
     const target = idOf(e.target);
@@ -90,10 +55,9 @@ export function mergeLinks(edges: readonly GEdge[], idOf: (nodeId: string) => st
 }
 
 /** The kill-chain canvas of one path: one card per step, in order. */
-export function pathCanvas(index: Index, s: Simplified, path: readonly string[], edgeIds: readonly string[], ctx: { owned: ReadonlySet<string>; operator: string | null }, firstLabel: string,
-  columnTactics: readonly (string | null)[] = []): CanvasModel {
+export function pathCanvas(index, s, path, edgeIds, ctx, firstLabel, columnTactics = []) {
   const cards = path.map((id, i) => nodeCard(index, s, id, i, ctx));
-  const edges = edgeIds.map((id) => index.edgesById.get(id)).filter((e): e is GEdge => !!e);
+  const edges = edgeIds.map((id) => index.edgesById.get(id)).filter((e) => !!e);
   const columns = path.map((id, i) => {
     const n = index.nodesById.get(id);
     let label = 'Pivot';
@@ -116,26 +80,25 @@ export const MAX_CARDS = 150;
  * (right). More than GROUP_LIMIT neighbours of one type on one side collapse into a group card unless the
  * group was expanded. At most MAX_CARDS cards.
  */
-export function neighbourhood(index: Index, s: Simplified, lens: Lens, focus: string, expanded: ReadonlySet<string>,
-  ctx: { owned: ReadonlySet<string>; operator: string | null }): CanvasModel {
+export function neighbourhood(index, s, lens, focus, expanded, ctx) {
   const outEdges = (index.out.get(focus) || []).filter((e) => e.target !== focus && edgeVisible(e, index, s, lens));
   const inEdges = (index.in.get(focus) || []).filter((e) => e.source !== focus && edgeVisible(e, index, s, lens));
   const outIds = new Set(outEdges.map((e) => e.target));
   const inIds = new Set([...inEdges.map((e) => e.source)].filter((id) => !outIds.has(id)));
-  const cards: CanvasCard[] = [nodeCard(index, s, focus, 1, ctx)];
-  const idOf = new Map<string, string>([[focus, focus]]);
+  const cards = [nodeCard(index, s, focus, 1, ctx)];
+  const idOf = new Map([[focus, focus]]);
   let truncated = 0;
 
-  const place = (ids: Set<string>, column: number, side: 'in' | 'out') => {
-    const byType = new Map<string, string[]>();
+  const place = (ids, column, side) => {
+    const byType = new Map();
     for (const id of ids) {
       const n = index.nodesById.get(id);
       if (!n || !nodeVisible(n, lens)) continue;
-      (byType.get(n.type) || byType.set(n.type, []).get(n.type)!).push(id);
+      (byType.get(n.type) || byType.set(n.type, []).get(n.type)).push(id);
     }
     const types = [...byType.keys()].sort(cmp);
     for (const t of types) {
-      const list = byType.get(t)!.sort((a, b) => cmp(index.nodesById.get(a)!.label, index.nodesById.get(b)!.label) || cmp(a, b));
+      const list = byType.get(t).sort((a, b) => cmp(index.nodesById.get(a).label, index.nodesById.get(b).label) || cmp(a, b));
       const key = side + ':' + t;
       if (list.length > GROUP_LIMIT && !expanded.has(key)) {
         const info = K.nodeTypeInfo(t, index.nodeTypes.get(t));
@@ -160,7 +123,7 @@ export function neighbourhood(index: Index, s: Simplified, lens: Lens, focus: st
   const edges = [...inEdges, ...outEdges].filter((e) => idOf.has(e.source) && idOf.has(e.target));
   return {
     cards,
-    links: mergeLinks(edges, (id) => idOf.get(id) as string),
+    links: mergeLinks(edges, (id) => idOf.get(id)),
     columns: [{ column: 0, label: 'Who reaches it' }, { column: 1, label: 'Focus' }, { column: 2, label: 'What it reaches' }],
     truncated,
   };

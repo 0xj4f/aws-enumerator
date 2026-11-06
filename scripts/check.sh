@@ -9,7 +9,7 @@
 #   lint      ruff on the package, tests and scripts; node --check on dashboard JS
 #   py        pytest -m "not perf and not golden" (the goldens are the `golden` target)
 #   js        node --test tests/js
-#   ui        the dashboard (frontend/, DECISIONS.md D-57): npm ci, typecheck, Vitest, npm run build, then fail when
+#   ui        the dashboard (frontend/, DECISIONS.md D-57, D-59): npm ci, Vitest, npm run build, then fail when
 #             the committed build in aws_enumerator/dashboard/ differs from what the sources produce
 #   e2e       Playwright against the built page and the real server (uses the installed Google Chrome;
 #             E2E_REPORT=/path/to/run.zip adds a real report)
@@ -110,8 +110,8 @@ t_ui() {
   local rc=0
   say "ui: npm ci (frontend/)"
   (cd frontend && npm ci --no-audit --no-fund) || return 1
-  say "ui: typecheck, Vitest"
-  (cd frontend && npx vue-tsc --noEmit && npx vitest run) || rc=1
+  say "ui: Vitest"
+  (cd frontend && npx vitest run) || rc=1
   say "ui: npm run build (writes aws_enumerator/dashboard/)"
   (cd frontend && npx vite build) || return 1
   say "ui: the committed build matches the sources"

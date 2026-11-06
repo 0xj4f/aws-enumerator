@@ -1,6 +1,6 @@
 # AWS Attack Paths — Field Guide
 
-A scenario-based guide to the attack graph that `aws-enumerator` writes to `analysis/graph.json` and the dashboard draws. Use it next to the dashboard to turn graph edges and findings into attack chains you can test, or fix.
+A scenario-based guide to the attack graph that `aws-enumerator` writes to `analysis/graph.json` and the dashboard draws. Use it next to the dashboard to turn graph edges and findings into attack chains you can test.
 
 > **These are guidelines, not a checklist.** The graph describes what the collected *configuration* allows. It is not proof of exploitability: conditions the evaluator cannot resolve, data the collector could not read and runtime controls all matter. Validate every path manually before you report it.
 >
@@ -33,6 +33,16 @@ Every edge type has exactly one class. Only some classes are attack steps:
 A path walks an edge only when its record says `traversable: true`. Some control types decide that per edge: `MEMBER_OF` only when the member's own boundary and denies leave the group's grants intact, `IRSA_BRIDGE` / `POD_IDENTITY` only when the role's trust policy really admits the service account, `POOL_AUTH_ROLE` / `POOL_MAPPED_ROLE` only when anyone can get authenticated identities from the pool. A compute node (instance, function, task, stack, job, pod, service account, Cognito pool …) can only be entered through a `control` edge: invoking a function (`CAN_INVOKE`) never gives you its role, updating its code (`CAN_UPDATE_CODE`) does.
 
 In the dashboard, structural and context edges are hidden by default (Explore: **Hide context edges**), conditional steps are drawn dashed, and the out-edges of admin-equivalent principals are collapsed (Explore: **Collapse admin fan-out**): an admin-equivalent principal can already do everything, so only its `IS_ADMIN_EQUIVALENT` edge is drawn. Managed policies and AWS service principals are listed in a node's details instead of being drawn.
+
+### The kill-chain map
+
+The dashboard's **Map** puts every route on one canvas, in kill-chain order: **Ways in** (the route sources, and any
+entry point that reaches data), **Footholds** (the first hop), **Escalation** (later hops), **Admin-equivalent**,
+**Account admin**, and **Data reached** (one card per asset type; click to expand). A node sits in the lowest column
+any route gives it, each column is labelled with the ATT&CK tactic of the steps into it, and more than 12 cards of
+one type in a column collapse into a group card. **Key pivots** rank the nodes the routes run through: the one with
+the most routes through it is where to aim first. **From your foothold** keeps only the routes from the operator and
+the nodes marked owned; routes marked expected are left out unless **Include expected routes** is on.
 
 ### Special nodes
 

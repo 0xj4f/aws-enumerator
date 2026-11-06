@@ -1,16 +1,19 @@
-<script setup lang="ts">
+<script setup>
 /*
- * The page: header, the page tabs, and the current view (or the load screen until a report is open).
+ * The page: header, the page tabs, and the current view (or the load screen until a report is open). The
+ * operator's pages come first; the operator's audit and Report health sit under More.
  * Files can be dropped anywhere. Script errors, rejected promises and CSP violations are reported in
  * Report health instead of failing silently (F-092).
  */
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import HeaderBar from './ui/HeaderBar.vue';
 import LoadScreen from './ui/LoadScreen.vue';
 import { addProblem, allRoutes, errText, findingGroups, graph, loadDropped, state } from './stores/report';
 
 const router = useRouter();
+const route = useRoute();
+const MORE = new Set(['audit', 'health']);
 const dragging = ref(false);
 const pathsCount = computed(() => (state.breach.running ? '…' : String(allRoutes.value.length)));
 const healthCount = computed(() => {
@@ -19,11 +22,11 @@ const healthCount = computed(() => {
   return g.coverage.modules.filter((m) => m.status !== 'ok').length + g.evaluationGaps.length + state.problems.length;
 });
 
-function onDragOver(e: DragEvent) {
+function onDragOver(e) {
   e.preventDefault();
   dragging.value = true;
 }
-function onDrop(e: DragEvent) {
+function onDrop(e) {
   e.preventDefault();
   dragging.value = false;
   if (e.dataTransfer) {
@@ -31,13 +34,17 @@ function onDrop(e: DragEvent) {
     router.push({ name: 'brief' });
   }
 }
-function onError(e: ErrorEvent) {
+function closeMore(e) {
+  const d = e.target.closest('details');
+  if (d) d.removeAttribute('open');
+}
+function onError(e) {
   addProblem('error', 'script-error', 'Unexpected error: ' + errText(e.error || e.message));
 }
-function onRejection(e: PromiseRejectionEvent) {
+function onRejection(e) {
   addProblem('error', 'unhandled-rejection', 'Unexpected error: ' + errText(e.reason));
 }
-function onCsp(e: SecurityPolicyViolationEvent) {
+function onCsp(e) {
   addProblem('error', 'csp-violation', 'The browser blocked ' + (e.blockedURI || 'an inline resource') + ' (' + (e.violatedDirective || e.effectiveDirective || 'policy') + ').');
 }
 onMounted(() => {
@@ -58,11 +65,18 @@ onBeforeUnmount(() => {
     <nav v-if="state.status === 'ready'" class="navbar" aria-label="Pages" data-testid="nav">
       <RouterLink :to="{ name: 'brief' }" data-testid="nav-brief">Brief</RouterLink>
       <RouterLink :to="{ name: 'paths' }" data-testid="nav-paths">Attack paths <span class="count">{{ pathsCount }}</span></RouterLink>
+      <RouterLink :to="{ name: 'map' }" data-testid="nav-map">Map</RouterLink>
       <RouterLink :to="{ name: 'principals' }" data-testid="nav-principals">Principals</RouterLink>
       <RouterLink :to="{ name: 'data' }" data-testid="nav-data">Data</RouterLink>
       <RouterLink :to="{ name: 'findings' }" data-testid="nav-findings">Findings <span class="count">{{ findingGroups.length }} rules</span></RouterLink>
       <RouterLink :to="{ name: 'explore' }" data-testid="nav-explore">Explore</RouterLink>
-      <RouterLink :to="{ name: 'health' }" data-testid="nav-health">Report health <span v-if="healthCount" class="count">{{ healthCount }}</span></RouterLink>
+      <details class="pop left" :class="{ current: MORE.has(String(route.name)) }" data-testid="nav-more">
+        <summary>More ▾ <span v-if="healthCount" class="count">{{ healthCount }}</span></summary>
+        <div class="pop-body menu" @click="closeMore">
+          <RouterLink :to="{ name: 'audit' }" data-testid="nav-audit">Audit: detection and exposure</RouterLink>
+          <RouterLink :to="{ name: 'health' }" data-testid="nav-health">Report health <span v-if="healthCount" class="count">{{ healthCount }}</span></RouterLink>
+        </div>
+      </details>
       <span class="spacer" />
       <span v-if="state.breach.running" class="status">Searching attack paths… {{ state.breach.done }} / {{ state.breach.total || '?' }}</span>
     </nav>

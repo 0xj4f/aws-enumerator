@@ -23,7 +23,7 @@ Each row is machine-checked: size in bytes, SHA-256 in hex, and the SRI value (`
 
 - `jszip.min.js`: `sha512-XMVd28F1oH/O71fzwBnV7HucLxVwtxf26XV8P4wPk26EDxuGZ91N8bsOttmnomcCD3CS5ZMRL50H0GgOHvegtg==`
 
-**In the page (since D-57):** `frontend/src/core/index.ts` imports this file (the `ae-umd` transform of `frontend/vite.config.ts`), so it is part of `js/app.js`, whose SRI value `npm run build` writes into `index.html`.
+**In the page (since D-57):** `frontend/src/core/index.js` imports this file (the `ae-umd` transform of `frontend/vite.config.js`), so it is part of `js/app.js`, whose SRI value `npm run build` writes into `index.html`.
 
 ## Sources
 

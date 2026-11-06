@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 /*
  * The global header: brand, the run (details in a popover), integrity and coverage badges, the operator
  * context (who "you" are: the operator and the owned nodes, which are the sources of the attack paths),
@@ -40,11 +40,11 @@ const coverage = computed(() => {
   const status = cov.status || 'unknown';
   return { cls: status === 'complete' ? 'ok' : status === 'partial' ? 'warn' : '', text: 'coverage ' + status + (notOk ? ` (${plural(notOk, 'module')} not ok)` : '') };
 });
-const metadata = computed<[string, string][]>(() => {
+const metadata = computed(() => {
   const r = run.value;
   const g = gen.value;
   if (!r || !g) return [];
-  const rows: [string, string | null | undefined][] = [
+  const rows = [
     ['Run', r.run_id], ['Mode', r.mode === 'merge' ? 'merge (merged view)' : r.mode], ['Regions', r.regions.length ? r.regions.join(', ') : 'none'],
     ['Generated', r.generated_at], ['aws-enumerator', g.version], ['engine', g.engine_version], ['rules', g.rules_version], ['git', g.git_sha],
     ['graph.json', graph.value?.schemaVersion], ['Operator', operatorText.value],
@@ -52,8 +52,8 @@ const metadata = computed<[string, string][]>(() => {
   return rows.map(([k, v]) => [k, shown(v || 'unknown')]);
 });
 
-function onFiles(e: Event, folder: boolean) {
-  const input = e.target as HTMLInputElement;
+function onFiles(e, folder) {
+  const input = e.target;
   const files = input.files ? Array.from(input.files) : [];
   if (files.length) {
     loadFiles(files, { folder });
@@ -61,17 +61,17 @@ function onFiles(e: Event, folder: boolean) {
   }
   try { input.value = ''; } catch { /* some browsers refuse; picking the same file again then needs a reload */ }
 }
-function onSession(e: Event) {
-  const input = e.target as HTMLInputElement;
+function onSession(e) {
+  const input = e.target;
   const file = input.files && input.files[0];
   try { input.value = ''; } catch { /* see onFiles */ }
   if (file && graph.value) openSessionFile(file);
 }
-function closeMenus(e: Event) {
-  const d = (e.target as HTMLElement).closest('details');
+function closeMenus(e) {
+  const d = e.target.closest('details');
   if (d) d.removeAttribute('open');
 }
-function onClear(e: Event) {
+function onClear(e) {
   closeMenus(e);
   clearAll();
   router.push({ name: 'brief' });
@@ -117,7 +117,7 @@ function onClear(e: Event) {
           <p v-if="!state.owned.length" class="muted">Nothing is marked owned. Mark a node from its details (Explore).</p>
           <button v-if="state.owned.length" type="button" class="small" @click="setOwned([])">Unmark all</button>
           <div class="sep" />
-          <label class="check"><input type="checkbox" :checked="state.remember" data-testid="remember" @change="setRemember(($event.target as HTMLInputElement).checked)"> Remember owned marks in this browser (per run)</label>
+          <label class="check"><input type="checkbox" :checked="state.remember" data-testid="remember" @change="setRemember($event.target.checked)"> Remember owned marks in this browser (per run)</label>
         </div>
       </details>
       <span class="grow" />

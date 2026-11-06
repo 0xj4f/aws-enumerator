@@ -1,15 +1,19 @@
-<script setup lang="ts">
+<script setup>
 /* A node's related edges as a list: the other node (opens it), the edge type, its ATT&CK techniques. */
 import { computed } from 'vue';
 import { A } from '../core';
-import type { GEdge } from '../core';
 import { index } from '../stores/report';
 import NodeLink from './NodeLink.vue';
 
-const props = defineProps<{ edges: readonly GEdge[]; direction: 'in' | 'out'; empty: string; limit?: number }>();
+const props = defineProps({
+  edges: { type: Array, required: true },
+  direction: { type: String, required: true }, // 'in' or 'out'
+  empty: { type: String, required: true },
+  limit: Number,
+});
 const shown = computed(() => props.edges.slice(0, props.limit || 200));
-const other = (e: GEdge) => (props.direction === 'in' ? e.source : e.target);
-const typeLabel = (id: string) => {
+const other = (e) => (props.direction === 'in' ? e.source : e.target);
+const typeLabel = (id) => {
   const n = index.value?.nodesById.get(id);
   return n ? n.type : '';
 };

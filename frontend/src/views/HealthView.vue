@@ -1,11 +1,11 @@
-<script setup lang="ts">
+<script setup>
 /* Report health: coverage (per source run for merged graphs), evaluation gaps, denied APIs, analyzers, problems (D-28, F-126). */
 import { computed } from 'vue';
 import { plural, shown } from '../model/text';
 import { graph, state } from '../stores/report';
 
 const COMPLETE = new Set(['ok', 'skipped', 'dependency_missing']);
-const g = computed(() => graph.value!);
+const g = computed(() => graph.value);
 const merge = computed(() => g.value.run.mode === 'merge');
 const notOk = computed(() => g.value.coverage.modules.filter((m) => m.status !== 'ok'));
 const analyzers = computed(() => g.value.analyzerStatus.filter((a) => a.status !== 'ok'));
@@ -17,7 +17,7 @@ const sources = computed(() => g.value.run.sources.map((s) => {
   return { s, status, bad, op };
 }));
 const errors = computed(() => state.problems.filter((p) => p.level === 'error').length);
-const prefix = (account: string | null) => (merge.value ? '[' + shown(account || 'unknown') + '] ' : '');
+const prefix = (account) => (merge.value ? '[' + shown(account || 'unknown') + '] ' : '');
 </script>
 
 <template>

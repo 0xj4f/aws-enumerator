@@ -1,6 +1,6 @@
 /*
- * The pure core modules (graph-core, loader, exports, catalog, attack) and the vendored JSZip, typed. They are the
- * same UMD files the node:test suites require(); vite.config.ts (`ae-umd`) turns them into ES modules here.
+ * The pure core modules (graph-core, loader, exports, catalog, attack) and the vendored JSZip. They are the same
+ * UMD files the node:test suites require(); vite.config.js (`ae-umd`) turns them into ES modules here.
  */
 import attack from './attack.js';
 import catalog from './catalog.js';
@@ -15,4 +15,3 @@ export const X = exportsApi;
 export const K = catalog;
 export const A = attack;
 export { JSZip };
-export type * from './types';

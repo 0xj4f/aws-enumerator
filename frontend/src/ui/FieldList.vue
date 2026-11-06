@@ -1,12 +1,7 @@
-<script setup lang="ts">
+<script setup>
 import ValueView from './ValueView.vue';
 
-export interface Field {
-  label: string;
-  value: unknown;
-  mono?: boolean;
-}
-defineProps<{ items: (Field | null | false)[] }>();
+defineProps({ items: { type: Array, required: true } });
 </script>
 
 <template>

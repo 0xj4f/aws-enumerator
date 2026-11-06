@@ -10,43 +10,29 @@
  * - Context edges: structural and info edges (traversal classes the catalogue hides by default).
  */
 import { C, K } from '../core';
-import type { Active, GEdge, GNode, Index } from '../core';
 
-export interface Lens {
-  collapseAdmin: boolean;
-  hideContextNodes: boolean;
-  hideContextEdges: boolean;
-}
+export const OPERATOR_LENS = Object.freeze({ collapseAdmin: true, hideContextNodes: true, hideContextEdges: true });
 
-export const OPERATOR_LENS: Readonly<Lens> = Object.freeze({ collapseAdmin: true, hideContextNodes: true, hideContextEdges: true });
-
-export const CONTEXT_NODE_TYPES: ReadonlySet<string> = new Set(['policy', 'service_principal']);
+export const CONTEXT_NODE_TYPES = new Set(['policy', 'service_principal']);
 export const ADMIN_EDGE = 'IS_ADMIN_EQUIVALENT';
 /** Node types an attacker starts from without a credential in the account. */
-export const ENTRY_TYPES: ReadonlySet<string> = new Set(['anonymous', 'external_account', 'external_principal', 'idp']);
+export const ENTRY_TYPES = new Set(['anonymous', 'external_account', 'external_principal', 'idp']);
 
-export function isAdminEquivalent(n: GNode | undefined): boolean {
+export function isAdminEquivalent(n) {
   return !!n && n.props.high_value_reason === 'admin-equivalent';
 }
 
-export function isAccountAdmin(n: GNode | undefined): boolean {
+export function isAccountAdmin(n) {
   return !!n && n.type === 'account_admin';
 }
 
-export function isEntryPoint(n: GNode | undefined): boolean {
+export function isEntryPoint(n) {
   return !!n && (ENTRY_TYPES.has(n.type) || n.props.entry_point === true);
 }
 
-export interface Simplified {
-  /** Ids of admin-equivalent nodes. */
-  admins: Set<string>;
-  /** Ids of the out-edges the admin fan-out collapse removes. */
-  collapsed: Set<string>;
-}
-
-export function simplify(index: Index): Simplified {
-  const admins = new Set<string>();
-  const collapsed = new Set<string>();
+export function simplify(index) {
+  const admins = new Set();
+  const collapsed = new Set();
   for (const n of index.graph.nodes) {
     if (!isAdminEquivalent(n)) continue;
     admins.add(n.id);
@@ -56,7 +42,7 @@ export function simplify(index: Index): Simplified {
 }
 
 /** Whether an edge is drawn under `lens` (endpoint visibility included). */
-export function edgeVisible(e: GEdge, index: Index, s: Simplified, lens: Lens): boolean {
+export function edgeVisible(e, index, s, lens) {
   if (lens.collapseAdmin && s.collapsed.has(e.id)) return false;
   if (lens.hideContextEdges && K.traversalInfo(e.traversal).hiddenByDefault) return false;
   if (lens.hideContextNodes) {
@@ -67,30 +53,25 @@ export function edgeVisible(e: GEdge, index: Index, s: Simplified, lens: Lens): 
   return true;
 }
 
-export function nodeVisible(n: GNode, lens: Lens): boolean {
+export function nodeVisible(n, lens) {
   return !(lens.hideContextNodes && CONTEXT_NODE_TYPES.has(n.type));
 }
 
 /** Path finding over the operator lens: the core's active subgraph minus the collapsed admin fan-out. */
-export function operatorActive(index: Index, s: Simplified, opts: { includeConditional?: boolean } = {}): Active {
+export function operatorActive(index, s, opts = {}) {
   const base = C.activeSubgraph(index, { includeConditional: opts.includeConditional !== false });
   return Object.freeze({
     opts: base.opts,
     index: base.index,
     nodeAllowed: base.nodeAllowed,
-    edgeAllowed: (edge: GEdge) => base.edgeAllowed(edge) && !s.collapsed.has(edge.id),
+    edgeAllowed: (edge) => base.edgeAllowed(edge) && !s.collapsed.has(edge.id),
   });
 }
 
-export interface DrawerContext {
-  policies: { id: string; label: string; edge: string }[];
-  services: { id: string; label: string }[];
-}
-
 /** The context nodes around one node, for the drawer: attached policies and the services that can assume it. */
-export function drawerContext(index: Index, id: string): DrawerContext {
-  const policies: DrawerContext['policies'] = [];
-  const services: DrawerContext['services'] = [];
+export function drawerContext(index, id) {
+  const policies = [];
+  const services = [];
   for (const e of index.out.get(id) || []) {
     const t = index.nodesById.get(e.target);
     if (t && t.type === 'policy') policies.push({ id: t.id, label: t.label, edge: e.type });

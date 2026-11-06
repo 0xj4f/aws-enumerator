@@ -1,39 +1,29 @@
-<script setup lang="ts" generic="T">
+<script setup>
 /*
  * A sortable table whose rows open the drawer: click a row, or move with j/k (or the arrow keys) and Enter.
  * Esc asks the view to close the drawer. Rows are rendered in pages ("Show more") so a large report stays fast.
  */
 import { nextTick, ref, watch } from 'vue';
 
-export interface Column {
-  key: string;
-  label: string;
-  sortable?: boolean;
-  class?: string;
-}
-
-const props = withDefaults(
-  defineProps<{
-    rows: T[];
-    columns: Column[];
-    rowKey: (row: T) => string;
-    selected: string | null;
-    sortKey?: string;
-    sortDir?: number;
-    rowClass?: (row: T) => string | undefined;
-    page?: number;
-    emptyText?: string;
-    testid?: string;
-  }>(),
-  { sortKey: '', sortDir: 1, rowClass: undefined, page: 200, emptyText: 'Nothing to show.', testid: 'table' },
-);
-const emit = defineEmits<{ select: [string]; sort: [string]; close: [] }>();
+const props = defineProps({
+  rows: { type: Array, required: true },
+  columns: { type: Array, required: true },
+  rowKey: { type: Function, required: true },
+  selected: { type: String, default: null },
+  sortKey: { type: String, default: '' },
+  sortDir: { type: Number, default: 1 },
+  rowClass: { type: Function, default: undefined },
+  page: { type: Number, default: 200 },
+  emptyText: { type: String, default: 'Nothing to show.' },
+  testid: { type: String, default: 'table' },
+});
+const emit = defineEmits(['select', 'sort', 'close']);
 
 const limit = ref(props.page);
-const root = ref<HTMLElement | null>(null);
+const root = ref(null);
 watch(() => props.rows, () => { limit.value = Math.max(props.page, limit.value); });
 
-function move(delta: number) {
+function move(delta) {
   if (!props.rows.length) return;
   const keys = props.rows.map(props.rowKey);
   const i = props.selected === null ? -1 : keys.indexOf(props.selected);
@@ -42,8 +32,8 @@ function move(delta: number) {
   emit('select', keys[next]);
 }
 
-function onKey(e: KeyboardEvent) {
-  const t = e.target as HTMLElement | null;
+function onKey(e) {
+  const t = e.target;
   if (t && (t.localName === 'input' || t.localName === 'button' || t.localName === 'a')) return;
   if (e.key === 'j' || e.key === 'ArrowDown') { e.preventDefault(); move(1); }
   else if (e.key === 'k' || e.key === 'ArrowUp') { e.preventDefault(); move(-1); }
@@ -54,7 +44,7 @@ function onKey(e: KeyboardEvent) {
 watch(() => props.selected, async (key) => {
   if (key === null) return;
   await nextTick();
-  const row = root.value?.querySelector('tr.selected') as HTMLElement | null;
+  const row = root.value?.querySelector('tr.selected');
   if (row && typeof row.scrollIntoView === 'function') row.scrollIntoView({ block: 'nearest' });
 });
 

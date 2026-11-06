@@ -1,20 +1,21 @@
-<script setup lang="ts">
+<script setup>
 /* A node in the drawer: what it is, what you can do from it, its findings and its context (policies, services). */
 import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { K } from '../core';
-import type { Finding } from '../core';
+import { ENTRY_KIND_LABELS } from '../model/breaches';
 import { relatedEdges } from '../model/inventory';
+import { routesThrough } from '../model/overview';
 import { drawerContext, isAccountAdmin } from '../model/simplify';
-import { shown } from '../model/text';
-import { findRoute, index, operator, ownedSet, simplified, toggleOwned } from '../stores/report';
+import { plural, shorten, shown } from '../model/text';
+import { allRoutes, findRoute, index, isExpected, operator, ownedSet, simplified, toggleOwned } from '../stores/report';
 import FieldList from './FieldList.vue';
 import FindingCard from './FindingCard.vue';
 import NodeLink from './NodeLink.vue';
 import RelationList from './RelationList.vue';
 
-const props = defineProps<{ id: string; tab: string }>();
-const emit = defineEmits<{ focus: [string] }>();
+const props = defineProps({ id: { type: String, required: true }, tab: { type: String, required: true } });
+const emit = defineEmits(['focus']);
 const router = useRouter();
 
 const STATUS_UNKNOWN = new Set(['denied', 'error', 'throttled']);
@@ -24,10 +25,10 @@ const ctx = computed(() => (index.value ? drawerContext(index.value, props.id) :
 const findings = computed(() => {
   const idx = index.value;
   const node = n.value;
-  if (!idx || !node) return { own: [] as Finding[], inherited: [] as Finding[] };
+  if (!idx || !node) return { own: [], inherited: [] };
   const own = idx.findingsByNode.get(node.id) || [];
   const ownSet = new Set(own);
-  const inherited: Finding[] = [];
+  const inherited = [];
   for (const fp of node.inherited_findings) {
     const f = idx.findingsByFingerprint.get(fp);
     if (f && !ownSet.has(f)) inherited.push(f);
@@ -54,6 +55,8 @@ const adminTarget = computed(() => index.value?.graph.nodes.find((x) => isAccoun
 /** The relations tabs: who can become (or run as) it, what it can become or reach, who can read it. */
 const becomeBy = computed(() => (index.value && simplified.value ? relatedEdges(index.value, simplified.value, props.id, 'in', ['control']) : []));
 const reaches = computed(() => (index.value && simplified.value ? relatedEdges(index.value, simplified.value, props.id, 'out', ['control', 'access', 'exposure']) : []));
+/** The attack routes this node is on (the kill-chain map's "Routes through it"). */
+const onRoutes = computed(() => routesThrough(allRoutes.value, props.id));
 const readers = computed(() => (index.value && simplified.value ? relatedEdges(index.value, simplified.value, props.id, 'in', ['access', 'exposure']) : []));
 
 const alertMessage = ref('');
@@ -120,6 +123,15 @@ function routeToAdmin() {
     <template v-else-if="tab === 'reaches'">
       <p class="muted section">What this node can become, run code as, or read directly.</p>
       <RelationList :edges="reaches" direction="out" empty="No attack step starts at this node." />
+    </template>
+    <template v-else-if="tab === 'routes'">
+      <p class="muted section">The attack routes this node is on: {{ plural(onRoutes.length, 'route') }}. Open one on Attack paths.</p>
+      <p v-if="!onRoutes.length" class="muted">No attack route runs through this node.</p>
+      <div v-for="r in onRoutes" :key="r.route.id" class="list-row" data-testid="route-through" @click="router.push({ name: 'paths', query: { sel: r.route.id } })">
+        <span class="chip">{{ ENTRY_KIND_LABELS[r.route.kind] }}</span>
+        <span class="grow ellipsis" :class="{ faded: isExpected(r.route) }" :title="r.route.title">{{ shorten(r.route.title, 110) }}</span>
+        <span class="muted">{{ r.role }} · {{ plural(r.route.hops, 'step') }}</span>
+      </div>
     </template>
     <template v-else-if="tab === 'readers'">
       <p class="muted section">Who can read or reach it directly. Every admin-equivalent principal ({{ simplified?.admins.size || 0 }}) can as well.</p>

@@ -1,62 +1,24 @@
 /*
  * The Brief: the answer first. A verdict, headline numbers, the top hypotheses, what anyone on the internet
- * reaches directly, what defenders can see (detection posture), and how far to trust the picture (coverage).
+ * reaches directly, what could detect you (detection posture), and how far to trust the picture (coverage).
  */
 import { C } from '../core';
-import type { Finding, Index } from '../core';
-import { entryPoints, type Hypothesis } from './breaches';
-import { isAccountAdmin, type Simplified } from './simplify';
-import { cmp, plural, severityRank, shown, type SeverityClass } from './text';
+import { entryPoints } from './breaches';
+import { isAccountAdmin } from './simplify';
+import { cmp, plural, severityRank, shown } from './text';
 
-export interface Tile {
-  key: string;
-  label: string;
-  value: string;
-  hint: string;
-  tone: 'bad' | 'warn' | 'ok' | 'neutral';
-  route?: string;
-}
-
-export interface ExposureItem {
-  edge: string;
-  type: string;
-  target: string;
-  label: string;
-  targetType: string;
-}
-
-export interface Brief {
-  verdict: string;
-  tone: 'bad' | 'warn' | 'ok';
-  tiles: Tile[];
-  top: Hypothesis[];
-  /** Routes to admin marked expected (D-58): still counted in the verdict, left out of the top list. */
-  expectedCount: number;
-  exposure: ExposureItem[];
-  posture: Finding[];
-  coverage: { status: string; notOk: number; gaps: number; note: string; tone: 'ok' | 'warn' | 'bad' };
-  operatorIsAdmin: boolean;
-}
-
-/** Finding ids that describe what defenders can see (logging and detection posture). */
+/** Finding ids that describe what could detect the operator (logging and detection posture). */
 const POSTURE_ID = /^(CLOUDTRAIL|GUARDDUTY|CONFIG|SECURITYHUB|FLOWLOGS|ACCESSANALYZER|WAF)-/;
 
-export function isPostureFinding(f: Finding): boolean {
+export function isPostureFinding(f) {
   return POSTURE_ID.test(f.id) || (typeof f.category === 'string' && f.category.startsWith('posture_'));
 }
 
-function bySeverity(a: Finding, b: Finding): number {
+function bySeverity(a, b) {
   return severityRank(C.severityClass(a.severity)) - severityRank(C.severityClass(b.severity)) || cmp(a.id, b.id);
 }
 
-export interface BriefExtras {
-  isExpected?: (h: Hypothesis) => boolean;
-  /** Data assets an entry point reaches (from the reach columns), when computed. */
-  dataReached?: number;
-}
-
-export function buildBrief(index: Index, s: Simplified, hyps: readonly Hypothesis[], operator: string | null,
-  extras: BriefExtras = {}): Brief {
+export function buildBrief(index, s, hyps, operator, extras = {}) {
   const isExpected = extras.isExpected || (() => false);
   const g = index.graph;
   const entries = entryPoints(index);
@@ -70,8 +32,8 @@ export function buildBrief(index: Index, s: Simplified, hyps: readonly Hypothesi
     else if (n.props.reaches_admin === 'conditional') reach.conditional++;
   }
   const findings = g.findings.concat(g.unattachedFindings);
-  const sev = new Map<SeverityClass, number>();
-  const rules = new Set<string>();
+  const sev = new Map();
+  const rules = new Set();
   for (const f of findings) {
     const c = C.severityClass(f.severity);
     sev.set(c, (sev.get(c) || 0) + 1);
@@ -79,7 +41,7 @@ export function buildBrief(index: Index, s: Simplified, hyps: readonly Hypothesi
   }
   const operatorIsAdmin = !!operator && (s.admins.has(operator) || isAccountAdmin(index.nodesById.get(operator)));
 
-  const exposure: ExposureItem[] = [];
+  const exposure = [];
   for (const n of g.nodes) {
     if (n.type !== 'anonymous') continue;
     for (const e of index.out.get(n.id) || []) {
@@ -98,8 +60,8 @@ export function buildBrief(index: Index, s: Simplified, hyps: readonly Hypothesi
     ? 'Every collector finished: a missing path here is likely really missing.'
     : 'Some data was not collected or could not be evaluated: paths can be missing (false negatives).';
 
-  let verdict: string;
-  let tone: Brief['tone'];
+  let verdict;
+  let tone;
   if (entriesReaching.size) {
     verdict = `Account administrator is reachable from ${entriesReaching.size} of ${plural(entries.length, 'entry point')}` +
       (shortest !== null ? `, the shortest in ${plural(shortest, 'step')}.` : '.');
@@ -114,7 +76,7 @@ export function buildBrief(index: Index, s: Simplified, hyps: readonly Hypothesi
     tone = 'ok';
   }
 
-  const tiles: Tile[] = [
+  const tiles = [
     { key: 'entries', label: 'Entry points reaching admin', value: `${entriesReaching.size} of ${entries.length}`,
       hint: 'External accounts and principals, identity providers and the internet', tone: entriesReaching.size ? 'bad' : 'ok', route: '/paths' },
     { key: 'shortest', label: 'Shortest breach', value: shortest === null ? '-' : plural(shortest, 'step'),
@@ -125,7 +87,7 @@ export function buildBrief(index: Index, s: Simplified, hyps: readonly Hypothesi
     { key: 'admins', label: 'Admin-equivalent principals', value: String(s.admins.size),
       hint: 'Effective permissions allow every action', tone: s.admins.size > 3 ? 'warn' : 'neutral', route: '/principals?filter=admin' },
     ...(extras.dataReached === undefined ? [] : [{ key: 'data', label: 'Data assets an entry point reaches', value: String(extras.dataReached),
-      hint: 'Directly, without becoming admin first', tone: (extras.dataReached ? 'warn' : 'ok') as Tile['tone'], route: '/data?filter=reached' }]),
+      hint: 'Directly, without becoming admin first', tone: (extras.dataReached ? 'warn' : 'ok'), route: '/data?filter=reached' }]),
     { key: 'internet', label: 'Reachable from the internet', value: String(new Set(exposure.map((x) => x.target)).size),
       hint: 'Resources and roles anyone can reach directly', tone: exposure.length ? 'warn' : 'ok' },
     { key: 'findings', label: 'Critical and high findings', value: String((sev.get('critical') || 0) + (sev.get('high') || 0)),

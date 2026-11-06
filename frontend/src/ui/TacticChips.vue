@@ -1,8 +1,6 @@
-<script setup lang="ts">
+<script setup>
 /* ATT&CK tactics as small chips (a kill chain when `chain` is set: arrows between them). */
-import type { AttackTactic } from '../core';
-
-withDefaults(defineProps<{ tactics: readonly AttackTactic[]; chain?: boolean }>(), { chain: false });
+defineProps({ tactics: { type: Array, required: true }, chain: Boolean });
 </script>
 
 <template>

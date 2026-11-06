@@ -2,64 +2,32 @@
  * The Principals and Data pages: one row per principal or data asset, with what an operator sorts by.
  */
 import { A, C, K } from '../core';
-import type { Finding, GEdge, Index } from '../core';
-import { ADMIN_EDGE, CONTEXT_NODE_TYPES, type Simplified } from './simplify';
-import { cmp, severityRank, shown, type SeverityClass } from './text';
+import { ADMIN_EDGE, CONTEXT_NODE_TYPES } from './simplify';
+import { cmp, severityRank, shown } from './text';
 
-export const PRINCIPAL_TYPES: ReadonlySet<string> = new Set(['user', 'role', 'group']);
+export const PRINCIPAL_TYPES = new Set(['user', 'role', 'group']);
 /** Principals from outside the account: they are listed on the Principals page too. */
-export const OUTSIDE_PRINCIPAL_TYPES: ReadonlySet<string> = new Set(['external_principal', 'external_account', 'idp']);
+export const OUTSIDE_PRINCIPAL_TYPES = new Set(['external_principal', 'external_account', 'idp']);
 /** Data assets (node_types data_asset) and the KMS keys that gate them. */
-export const DATA_GATE_TYPES: ReadonlySet<string> = new Set(['kms']);
+export const DATA_GATE_TYPES = new Set(['kms']);
 
-interface Base {
-  id: string;
-  label: string;
-  type: string;
-  typeLabel: string;
-  findings: Finding[];
-  maxSeverity: SeverityClass | null;
-  techniques: string[];
-  reachedFrom: string[];
-}
-
-export interface PrincipalRow extends Base {
-  admin: boolean;
-  reachesAdmin: 'definite' | 'conditional' | null;
-  external: boolean;
-  /** Distinct principals or resources with a control edge into it (who can become it), admin fan-out excluded. */
-  becomeBy: string[];
-  /** Distinct nodes it can become or run as (control edges out). */
-  canBecome: string[];
-}
-
-export interface DataRow extends Base {
-  public: boolean;
-  crossAccount: boolean;
-  /** Principals with a direct access edge (admin-equivalents excluded: they read everything). */
-  readers: string[];
-  keys: string[];
-  /** 0 = most sensitive (see sensitivity()). */
-  sensitivity: number;
-}
-
-function findingsOf(index: Index, id: string): { list: Finding[]; worst: SeverityClass | null; techniques: string[] } {
+function findingsOf(index, id) {
   const list = index.findingsByNode.get(id) || [];
   const worst = list.length ? list.map((f) => C.severityClass(f.severity)).sort((a, b) => severityRank(a) - severityRank(b))[0] : null;
   const techniques = [...new Set(list.flatMap((f) => [...A.findingTechniques(f.id)]))].sort();
   return { list, worst, techniques };
 }
 
-function typeLabel(index: Index, type: string): string {
+function typeLabel(index, type) {
   return K.nodeTypeInfo(type, index.nodeTypes.get(type)).label;
 }
 
-function isCollapsed(s: Simplified, e: GEdge): boolean {
+function isCollapsed(s, e) {
   return s.collapsed.has(e.id);
 }
 
-export function principalRows(index: Index, s: Simplified, reach: ReadonlyMap<string, string[]>): PrincipalRow[] {
-  const rows: PrincipalRow[] = [];
+export function principalRows(index, s, reach) {
+  const rows = [];
   for (const n of index.graph.nodes) {
     if (!PRINCIPAL_TYPES.has(n.type) && !OUTSIDE_PRINCIPAL_TYPES.has(n.type)) continue;
     const f = findingsOf(index, n.id);
@@ -74,12 +42,12 @@ export function principalRows(index: Index, s: Simplified, reach: ReadonlyMap<st
       becomeBy: [...new Set(into.map((e) => e.source))], canBecome: [...new Set(outOf.map((e) => e.target))],
     });
   }
-  const rank = (r: PrincipalRow) => (r.admin ? 0 : r.reachesAdmin === 'definite' ? 1 : r.reachesAdmin === 'conditional' ? 2 : 3);
+  const rank = (r) => (r.admin ? 0 : r.reachesAdmin === 'definite' ? 1 : r.reachesAdmin === 'conditional' ? 2 : 3);
   return rows.sort((a, b) => rank(a) - rank(b) || b.reachedFrom.length - a.reachedFrom.length ||
     (a.maxSeverity ? severityRank(a.maxSeverity) : 9) - (b.maxSeverity ? severityRank(b.maxSeverity) : 9) || cmp(a.label, b.label) || cmp(a.id, b.id));
 }
 
-export function isDataNode(index: Index, type: string, props: Record<string, unknown>): boolean {
+export function isDataNode(index, type, props) {
   return DATA_GATE_TYPES.has(type) || index.nodeTypes.get(type)?.data_asset === true || props.data_asset === true;
 }
 
@@ -87,7 +55,7 @@ export function isDataNode(index: Index, type: string, props: Record<string, unk
  * How sensitive an asset usually is (0 most): secrets first, then customer-managed keys, data stores and SecureString
  * parameters, then images and queues; plain String parameters and AWS-managed keys last.
  */
-export function sensitivity(type: string, props: Record<string, unknown>): number {
+export function sensitivity(type, props) {
   if (type === 'secret' || type === 'k8ssecret') return 0;
   if (type === 'ssmparam') return props.param_type === 'SecureString' ? 1 : 4;
   if (type === 'kms') return props.aws_managed === true ? 4 : 1;
@@ -95,13 +63,13 @@ export function sensitivity(type: string, props: Record<string, unknown>): numbe
   return 3;
 }
 
-export function dataRows(index: Index, s: Simplified, reach: ReadonlyMap<string, string[]>): DataRow[] {
-  const rows: DataRow[] = [];
+export function dataRows(index, s, reach) {
+  const rows = [];
   for (const n of index.graph.nodes) {
     if (!isDataNode(index, n.type, n.props)) continue;
     const f = findingsOf(index, n.id);
     const ins = (index.in.get(n.id) || []).filter((e) => (e.traversal === 'access' || e.traversal === 'exposure') && !isCollapsed(s, e));
-    const sourceType = (e: GEdge) => index.nodesById.get(e.source)?.type || '';
+    const sourceType = (e) => index.nodesById.get(e.source)?.type || '';
     const readers = [...new Set(ins.filter((e) => PRINCIPAL_TYPES.has(sourceType(e)) && !s.admins.has(e.source)).map((e) => e.source))];
     const keys = (index.out.get(n.id) || []).filter((e) => e.category === 'encryption').map((e) => e.target);
     const techniques = [...new Set([...f.techniques, ...ins.flatMap((e) => [...A.edgeTechniques(e.type)])])].sort();
@@ -113,13 +81,13 @@ export function dataRows(index: Index, s: Simplified, reach: ReadonlyMap<string,
       readers, keys: [...new Set(keys)], sensitivity: sensitivity(n.type, n.props),
     });
   }
-  const rank = (r: DataRow) => (r.public ? 0 : r.crossAccount ? 1 : 2);
+  const rank = (r) => (r.public ? 0 : r.crossAccount ? 1 : 2);
   return rows.sort((a, b) => rank(a) - rank(b) || a.sensitivity - b.sensitivity || b.reachedFrom.length - a.reachedFrom.length || b.readers.length - a.readers.length ||
     cmp(a.typeLabel, b.typeLabel) || cmp(a.label, b.label) || cmp(a.id, b.id));
 }
 
 /** A node's edges of the given traversal classes, for the drawer (admin fan-out and context nodes left out). */
-export function relatedEdges(index: Index, s: Simplified, id: string, direction: 'in' | 'out', classes: readonly string[]): GEdge[] {
+export function relatedEdges(index, s, id, direction, classes) {
   const list = direction === 'in' ? index.in.get(id) || [] : index.out.get(id) || [];
   return list.filter((e) => {
     if (!classes.includes(e.traversal) || isCollapsed(s, e) || e.source === e.target) return false;
