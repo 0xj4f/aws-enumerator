@@ -31,6 +31,7 @@ def test_runtime_schemas_and_dashboard_js():
     assert targets.schemas_dir() == targets.SCHEMAS_DIR
     assert targets.dashboard_js_path("graph-core.js").is_file()
     assert targets.dashboard_js_dir() == targets.dashboard_dir() / "js"
+    assert (targets.dashboard_js_dir() / "app.js").is_file()
 
 
 def test_engine_contract_modules_and_schemas():

@@ -78,3 +78,4 @@ Temporary Items
 .coverage
 htmlcov/
 node_modules/
+graphify-out

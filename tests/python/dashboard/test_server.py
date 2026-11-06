@@ -305,7 +305,7 @@ def test_only_the_page_assets_are_served_and_nothing_is_listed():
         assert request(port, "/index.html")[0] == 200
         assert request(port, "/")[0] == 200
         assert request(port, "/index.html?x=1")[0] == 200
-        for ok in ("/css/app.css", "/js/ui.js", "/js/graph-core.js", "/vendor/jszip.min.js", "/icons/role.svg",
+        for ok in ("/css/app.css", "/js/app.js", "/vendor/LICENSE-third-party.txt", "/icons/role.svg",
                    "/icons/generic.svg", "/vendor/LICENSE-pako.txt"):
             assert request(port, ok)[0] == 200, ok
         for refused in ("/icons/", "/js/", "/css", "/vendor/", "/server.py", "/__init__.py", "/__pycache__/",
@@ -323,7 +323,7 @@ def test_assets_carry_their_content_types():
     with live_server() as (_httpd, port):
         expect = {
             "/index.html": "text/html; charset=utf-8", "/css/app.css": "text/css; charset=utf-8",
-            "/js/ui.js": "text/javascript; charset=utf-8", "/vendor/cytoscape.min.js": "text/javascript; charset=utf-8",
+            "/js/app.js": "text/javascript; charset=utf-8",
             "/icons/anonymous.svg": "image/svg+xml", "/vendor/LICENSE-jszip.txt": "text/plain; charset=utf-8",
         }
         for path, ctype in expect.items():
@@ -373,7 +373,7 @@ def _with_smuggled_body(method: str, path: str, host: str, port: int) -> bytes:
 @pytest.mark.finding("F-139")
 @pytest.mark.parametrize(("method", "path", "host", "status"), [
     ("POST", "/index.html", "default", 405),      # security-browser observation: was [405, 404] on one connection
-    ("PUT", "/js/ui.js", "default", 405),
+    ("PUT", "/js/app.js", "default", 405),
     ("GET", "/index.html", "default", 200),       # a GET that carries a body had the same flaw ([200, 404])
     ("HEAD", "/icons/role.svg", "default", 200),
     ("POST", "/index.html", "evil.example", 421),  # early refusals close too
@@ -440,7 +440,7 @@ def test_keep_alive_still_serves_several_requests_on_one_connection():
     with live_server() as (_httpd, port):
         conn = http.client.HTTPConnection("127.0.0.1", port, timeout=5)
         try:
-            for path in ("/index.html", "/icons/role.svg", "/js/ui.js"):
+            for path in ("/index.html", "/icons/role.svg", "/js/app.js"):
                 conn.request("GET", path)
                 resp = conn.getresponse()
                 assert resp.status == 200 and resp.read()
@@ -482,7 +482,7 @@ def test_the_asset_map_is_an_allow_list(tmp_path):
 @pytest.mark.finding("F-139")
 def test_the_packaged_asset_map_never_exposes_python_or_vendor_notes():
     assets = server.asset_map()
-    assert "/index.html" in assets and "/js/ui.js" in assets and "/icons/generic.svg" in assets
+    assert "/index.html" in assets and "/js/app.js" in assets and "/icons/generic.svg" in assets
     for url in assets:
         assert not url.endswith((".py", ".pyc", ".md")), url
         assert "__pycache__" not in url
@@ -524,7 +524,7 @@ def test_the_header_policy_is_the_page_policy_plus_frame_ancestors():
 @pytest.mark.finding("F-089")
 def test_every_response_carries_the_security_headers():
     with live_server() as (_httpd, port):
-        probes = [("/index.html", "GET", "default", 200), ("/js/ui.js", "HEAD", "default", 200),
+        probes = [("/index.html", "GET", "default", 200), ("/js/app.js", "HEAD", "default", 200),
                   ("/nope", "GET", "default", 404), ("/index.html", "GET", "evil.example", 421),
                   ("/index.html", "POST", "default", 405)]
         for path, method, host, want in probes:
@@ -541,17 +541,18 @@ def test_every_response_carries_the_security_headers():
 @pytest.mark.finding("F-089", "F-139")
 def test_static_icons_and_vendor_libraries_may_be_cached_privately_everything_else_is_no_store():
     with live_server() as (_httpd, port):
-        cached = [("/icons/role.svg", "GET"), ("/icons/generic.svg", "HEAD"), ("/vendor/cytoscape.min.js", "GET"),
-                  ("/vendor/jszip.min.js", "HEAD"), ("/vendor/LICENSE-pako.txt", "GET")]
+        cached = [("/icons/role.svg", "GET"), ("/icons/generic.svg", "HEAD"),
+                  ("/vendor/LICENSE-third-party.txt", "GET"), ("/vendor/LICENSE-jszip.txt", "HEAD"),
+                  ("/vendor/LICENSE-pako.txt", "GET")]
         for path, method in cached:
             status, headers, _body = request(port, path, method=method)
             assert (status, headers["cache-control"]) == (200, "private, max-age=3600"), path
             assert headers["content-security-policy"] == server.HEADER_CONTENT_SECURITY_POLICY, path
         never = [("/", "GET", "default"), ("/index.html", "GET", "default"), ("/index.html", "HEAD", "default"),
-                 ("/js/ui.js", "GET", "default"), ("/css/app.css", "GET", "default"),
+                 ("/js/app.js", "GET", "default"), ("/css/app.css", "GET", "default"),
                  ("/icons/nope.svg", "GET", "default"), ("/icons/", "GET", "default"),
                  ("/icons/role.svg", "GET", "evil.example"), ("/icons/role.svg", "POST", "default"),
-                 ("/vendor/jszip.min.js", "GET", None)]
+                 ("/vendor/LICENSE-jszip.txt", "GET", None)]
         for path, method, host in never:
             status, headers, _body = request(port, path, method=method, host=host,
                                              body=b"x" if method == "POST" else None)
@@ -565,7 +566,7 @@ def test_the_cache_policy_covers_exactly_the_immutable_assets():
     static = {url for url in assets if server.cache_control(url) == server.CACHE_STATIC}
     assert static == {url for url in assets if url.startswith(("/icons/", "/vendor/"))}
     assert any(url.startswith("/icons/") for url in static) and any(url.startswith("/vendor/") for url in static)
-    for url in ("/", "/index.html", "/js/ui.js", "/js/catalog.js", "/css/app.css"):
+    for url in ("/", "/index.html", "/js/app.js", "/css/app.css"):
         assert server.cache_control(url) == server.CACHE_NO_STORE == "no-store", url
     assert server.CACHE_STATIC == "private, max-age=3600"
     assert "Cache-Control" not in server.SECURITY_HEADERS   # sent once per response, by end_headers

@@ -1,6 +1,6 @@
 'use strict';
 // Loads the vendored (owner-approved, integrity-verified) UMD libraries into Node.
-// Both files are pinned by scripts/vendor_dashboard_libs.py and VENDOR.md; the
+// The file is pinned by scripts/vendor_dashboard_libs.py and VENDOR.md; the
 // helpers self-test checks the pins before anything relies on them.
 //
 // Every loader returns {ok, lib, reason}; callers turn `reason` into a node:test
@@ -11,7 +11,6 @@ const path = require('path');
 const targets = require('./targets');
 
 const LIBS = Object.freeze({
-  cytoscape: { file: 'cytoscape.min.js', version: '3.30.4', versionOf: (lib) => lib && lib.version },
   jszip: { file: 'jszip.min.js', version: '3.10.1', versionOf: (lib) => lib && lib.version },
 });
 
@@ -28,7 +27,10 @@ function loadVendored(name) {
     result = { ok: false, lib: null, path: abs, reason: `vendored ${name} missing at ${rel} (run scripts/vendor_dashboard_libs.py --verify)` };
   } else {
     try {
-      const lib = require(abs);
+      // Evaluated as the CommonJS file it is (frontend/ is an ES-module package, so require() would refuse it).
+      const mod = { exports: {} };
+      new Function('module', 'exports', fs.readFileSync(abs, 'utf8'))(mod, mod.exports); // eslint-disable-line no-new-func
+      const lib = mod.exports;
       const got = spec.versionOf(lib);
       result = got === spec.version
         ? { ok: true, lib, path: abs, version: got, reason: null }

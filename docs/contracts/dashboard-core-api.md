@@ -2,7 +2,7 @@
 
 **Status:** frozen for Waves 1 and 2 (stream contracts-runtime; revised at the Wave 0/1 sync by contract-arbiter, 2026-10-16: §2.2–§2.9, §3, §4 precisions and the new §5 UI hooks contract; at the Wave 1/2 sync a note on merged graphs in §2.9; every change is listed in [DECISIONS.md](DECISIONS.md); Wave 3a (I1, i1-runtime): §2.2 and §2.9 describe the graph 1.1 reading, additive fields only, no API change, D-41). Change it only through a change request.
 **Stub:** `aws_enumerator/dashboard/js/graph-core.js`. `safeHref`, `severityClass` and `edgeWeight` are implemented; every other function throws `new Error('NotImplemented: <name>')`, so xfail-first tests fail for the right reason until the Dc stream lands. `loader.js` and `exports.js` have no stub yet (Dc creates them against §3 and §4).
-**Implemented by:** Dc (`dashboard/js/{graph-core,loader,exports,catalog}.js`, `tests/js/core/**`). **Used by:** Du (`ui.js`, `dom.js`, which implement §5), the JS tests, the end-to-end test (`tests/js/helpers/load-zip-cli.js`).
+**Implemented by:** Dc (`frontend/src/core/{graph-core,loader,exports,catalog}.js` since D-57, `dashboard/js/` before; `tests/js/core/**`). **Used by:** the Vue page (`frontend/src`, which implements §5), the JS tests, the end-to-end test (`tests/js/helpers/load-zip-cli.js`).
 **Input contract:** `analysis/graph.json` as defined by the engine's `docs/contracts/graph-json.md` and `aws_enumerator/engine/graph/edge_types.py` (node and edge types, traversal classes). Where this document names a `graph.json` field, graph-json.md is authoritative.
 **Shared vectors:** `tests/fixtures/graph/path_cases.json` (path semantics; `dijkstra` must reproduce every vector, §2.4–§2.5), `tests/fixtures/graph/hostile.json` (a **valid** graph full of XSS canaries and prototype names, for the render-safety tests), `tests/fixtures/graph-invalid/` with `expectations.json` (documents to reject).
 **Regression tests:** `tests/js/regressions/` (xfail-first; ownership and flipping in [ownership.md](ownership.md) §4). The tests' readings of the open points of this contract are confirmed in [DECISIONS.md](DECISIONS.md) D-06 to D-14.
@@ -12,7 +12,7 @@
 
 ## 1. Conventions for all three modules
 
-- **UMD, classic scripts.** Each file is `(function (root, factory) { ... }(typeof self !== 'undefined' ? self : this, function () { 'use strict'; ... }))`. In the browser it sets `window.AEGraphCore`, `window.AELoader`, `window.AEExports`; under node it sets `module.exports`. No ES modules (so `file://` stays possible), no bundler, no npm dependencies.
+- **UMD, classic scripts.** Each file is `(function (root, factory) { ... }(typeof self !== 'undefined' ? self : this, function () { 'use strict'; ... }))`. As a classic script it sets `window.AEGraphCore`, `window.AELoader`, `window.AEExports`; under node it sets `module.exports`. No npm dependencies. Since D-57 the page imports the files through the `ae-umd` transform of `frontend/vite.config.ts` (it gives the factory a CommonJS `module` and exports what it assigns), so the files stay byte-for-byte what node:test requires.
 - **Pure.** No DOM, no `window`/`document` access, no network, no timers (the UI drives chunking), no `eval`/`new Function`. `loader.js` receives JSZip and `crypto.subtle` by injection.
 - **Exports are frozen** (`Object.freeze({...})`).
 - **Prototype safety (F-042).** Report objects are never spread (`{...x}`) or `Object.assign`ed. All lookups keyed by report data use `Map`/`Set`; any object built from report data is `Object.create(null)`. IDs or labels such as `constructor`, `__proto__`, `toString`, `hasOwnProperty` behave like any other string.
@@ -207,24 +207,29 @@ parseSession(text, runId) -> { owned, paths, problems }   // schema-checked; ref
 - **`sessionJson({ runId, owned, paths })`** returns `{ "version": 1, "run_id": runId, "owned": [...ids], "paths": [...] }`. **`parseSession(text, runId)`** never throws: malformed JSON, a non-object, a `version` other than `1` (a missing one included), a `run_id` other than `runId`, or a non-array `owned` gives `{ owned: [], paths: [], problems: [≥ 1 message] }`; otherwise `owned` keeps the string entries and `paths` the well-formed path records, and each dropped entry adds a problem. Parsed objects are read through own-property checks into `Map`s and arrays, so keys such as `__proto__` or `constructor` are inert data (F-042).
 - Downloads (Blob, `<a download>`, revoked object URLs) and PNG export (`cy.png`) live in `ui.js`.
 
-## 5. UI hooks contract (`ui.js`, `dom.js`, `index.html`; Du)
+## 5. UI hooks contract (the Vue page, D-57)
 
-Not an API of the three pure modules, but the contract between the page and its tests (adopted at the Wave 0/1 sync from `requests/regressions-js-1.md`). The UI regression tests (`tests/js/regressions/ui.test.js`) drive the real page through `tests/js/regressions/lib/ui-harness.js`; its `PROTOCOL` constant is the machine-readable copy of this section and must stay equal to it (a name changes in both places in the same change, by the owner of both, Du).
+Since D-57 the page is the Vue app in `frontend/src`; the hooks below replace P1–P8 of the hand-written page. The
+Vitest suites (`frontend/src/**/*.test.ts`), the Playwright suite (`frontend/e2e/`) and the static checks
+(`tests/js/static/page.test.js`) use them.
 
 | # | Hook |
 |---|---|
-| P1 | `index.html` loads every script with a **relative** `src`, in the order `vendor/jszip.min.js`, `vendor/cytoscape.min.js`, `js/catalog.js`, `js/graph-core.js`, `js/exports.js`, `js/loader.js`, `js/dom.js`, `js/ui.js` (dashboard-docs-tests.md A1), as **classic** scripts (no `type="module"`; `defer` allowed). `js/ui.js` publishes `window.AEUI`; the core modules publish `window.AEGraphCore`, `window.AELoader`, `window.AEExports` (§1). |
-| P2 | Nothing initialises while `document.readyState === 'loading'` except from a `DOMContentLoaded` listener: `ui.js` boots with `if (document.readyState === 'loading') addEventListener('DOMContentLoaded', boot) else boot()`. Tests never fire `DOMContentLoaded`; they call `AEUI.init({ document, window, cytoscape, JSZip })` themselves (it may return a promise). After `init`, `ui.js` uses only the injected `document`, `window`, `cytoscape` and `JSZip`, and reaches the core modules through the injected `window`. |
-| P3 | `AEUI.loadGraphObject(raw, meta?)` returns a promise that settles once the graph is shown or the failure is visible. It may reject, but only after the error is shown. Every load starts with the same `resetAll()` as Clear (F-094, F-098). |
-| P4 | Cytoscape element ids are the `graph.json` node and edge ids (looked up with `cy.getElementById`, never a selector string). Clicking a graph element is Cytoscape's `tap` event on it; that opens the detail panel. |
-| P5 | Panels carry `data-panel`: `header`, `overlay`, `problems`, `findings`, `coverage`, `detail`, `owned`, `path`, `discover`, `filters`, `legend`. |
-| P6 | Controls are `[data-action]` elements handled by **one delegated `click` listener** (A2). Node-scoped actions carry `data-node-id` (set through `dataset`, so the id round-trips exactly): `focus`, `toggle-owned`, `path-from`, `path-to`; the detail panel offers them for the node it shows, and each owned-list entry has a `focus` action. Other actions: `find-path`, `clear-path`, `discover-all`, `show-more`, `select-path` (one per discovered path shown), `select-finding` (one per finding row), `play`, `stop`, `clear`. Without a chosen source, `find-path` starts at the operator node (§2.9, F-146). |
-| P7 | Filters are `input[type=checkbox][data-filter-kind][data-filter-value]` with kinds `node-type`, `category`, `traversal`, generated from the loaded graph only (`typesPresent`, `categoriesPresent`, `traversalClassesPresent`) and toggled by a `change` event, which re-applies §2.4 to the shown path (F-096). Legend entries are `[data-legend-kind][data-legend-value]` for node types and traversal classes. |
-| P8 | File pickers: one `input[type=file]` without `webkitdirectory` (a zip or a bare `graph.json`) and one `input[type=file][webkitdirectory]` (a folder); loading starts on `change`. |
+| H1 | The built `index.html` has the CSP `<meta>` of server.py before anything it loads, then one stylesheet (`css/app.css`) and one classic deferred script (`js/app.js`), both with `integrity="sha384-..."`. No inline script or style, no `style=""`, no `on*=` attribute. |
+| H2 | `window.AEDashboard` is a frozen, read-only handle: `state()` (status, run id, owned ids, operator, route count, whether the breach search is running, problems) and `loadGraphObject(raw)`, which resolves once the graph or the error is shown and starts with the same reset as Clear (F-094, F-098). |
+| H3 | File pickers: `#file-input` (a zip or a bare `graph.json`; the content decides, F-145) and `#folder-input` (`webkitdirectory`); `#session-input` opens a session. Loading starts on `change`; files can also be dropped anywhere on the page. |
+| H4 | Routes (hash history): `#/` Brief, `#/paths` Attack paths, `#/findings`, `#/explore?node=<id>`, `#/health`. The selected row of a page is `?sel=<id>` and opens the bottom drawer. |
+| H5 | `data-testid` hooks: `header`, `run-meta`, `integrity`, `coverage-badge`, `operator-menu`, `open-menu`, `export-menu`, `clear`, `search`, `nav` and `nav-<page>`, `load-screen` (with `data-status` empty / busy / error / legacy / picker), `verdict`, `tile-<key>`, `top-path`, `exposure`, `posture`, `paths-table`, `findings-table`, `row`, `drawer`, `drawer-title`, `drawer-tab-<key>`, `drawer-close`, `path-canvas`, `explore-canvas` (with `data-cards`), `card`, `node-detail`, `sev-<severity>`, `findings-filter`, `include-conditional`, `lens-admin`, `lens-context-nodes`, `lens-context-edges`. Run-picker entries carry `data-action="pick-run"` and `data-root`. |
+| H6 | Rows are opened by click, or with `j`/`k` (or the arrow keys) and Enter while the table has focus; Esc closes the drawer. |
 
-Further page rules the tests rely on (from dashboard-docs-tests.md A2/A5, restated so there is one place to look):
+Page rules the tests rely on (unchanged in substance):
 
-- **Text only.** Report strings reach the DOM only through `textContent`, `dataset`, allow-listed `className` (`severityClass`) and `safeHref` links; no `innerHTML`, inline handlers or `style` attributes (the strict dom-stub throws on them).
-- **Coverage panel.** One row per `graph.coverage.modules` entry whose `status` is not `ok` (the module-status vocabulary of graph-json.md §10.1 / coverage-schema.md §4.1: `partial`, `denied`, `failed`, `skipped`, `interrupted`, `not_run`, `legacy-unknown`), showing `module`, `region`, `status` and `detail` as text, plus every `evaluation_gaps` entry. There is no `error` module status.
-- **Findings panel.** Shows the count and "N unattached" (§2.2), severities including LOW and INFO.
-- **CSP.** `index.html` carries the A2 policy as a `<meta>`: every directive exactly as A2 lists it, except `style-src`, which must contain `'self'` and may add hashes or `'unsafe-inline'` until the owner decides how Cytoscape's injected `<style>` is handled (checked in the Wave 3 browser verification). No host sources, and no scheme source other than A2's `data:` in `img-src`; no inline `<script>`/`<style>` blocks.
+- **Text only.** Report strings reach the DOM only as text (Vue template interpolation), allow-listed classes
+  (`severityClass`, fixed badge and edge classes) and `safeHref` links (`rel="noopener noreferrer"`,
+  `referrerpolicy="no-referrer"`); no `v-html`, `innerHTML`, inline handlers or `eval` in the page code.
+- **Coverage.** Report health lists every `graph.coverage.modules` entry whose `status` is not `ok`, every
+  `evaluation_gaps` entry, the denied APIs and the analyzers that are not ok, with the account of each in a merged
+  graph and one row per source run.
+- **Findings.** The Findings page shows a tile per severity (LOW and INFO included; INFO starts hidden), the total
+  and "N unattached" (§2.2).
+- **CSP.** Exactly server.py's policy; no host sources and no scheme source other than `data:` in `img-src`.

@@ -173,20 +173,21 @@ def test_path_semantics_statements_match_the_table(prose):
 
 @pytest.mark.finding("F-067")
 def test_dashboard_controls_named_in_the_guide_exist():
-    """Owned / operator sources, directed path finding and the filter options are real dashboard controls."""
-    dash = REPO / "aws_enumerator" / "dashboard"
-    ui = (dash / "js" / "ui.js").read_text(encoding="utf-8") + (dash / "index.html").read_text(encoding="utf-8")
+    """Owned / operator sources, directed path finding and the options are real dashboard controls."""
+    src = REPO / "frontend" / "src"
+    ui = "".join(p.read_text(encoding="utf-8") for p in sorted(src.rglob("*")) if p.suffix in (".vue", ".ts"))
     text = GUIDE.read_text(encoding="utf-8")
-    for label in ("Discover all paths", "Find path", "Mark owned", "Path from here", "Path to here", "Focus",
-                  "Show more", "Play", "Hidden types and classes restrict paths", "Include conditional edges",
-                  "Data assets are Discover targets", "Reference", "high value", "Coverage", "Findings", "Details",
-                  "Filters"):
+    for label in ("Attack paths", "Find a route", "Mark owned", "Route to admin from here", "Also reaches",
+                  "Include conditional steps", "Collapse admin fan-out", "Hide context edges", "Explore",
+                  "Reference", "admin-equivalent", "Findings"):
         assert label in ui, label
         assert label in text, label
-    core = (dash / "js" / "graph-core.js").read_text(encoding="utf-8")
+    core = (src / "core" / "graph-core.js").read_text(encoding="utf-8")
     assert "if (ownedPresent.length > 0) return ownedPresent;" in core      # owned nodes are the sources
-    assert "S.owned = S.operator.id ? [S.operator.id] : [];" in ui          # the operator is pre-marked owned
-    assert "var source = S.path.source || S.operator.id;" in ui             # Find path defaults to the operator
+    store = (src / "stores" / "report.ts").read_text(encoding="utf-8")
+    # the operator is pre-marked owned, and Find a route starts at the operator
+    assert "state.owned = operator.value.id ? [operator.value.id] : [];" in store
+    assert "const from = source || operator.value.id;" in store
 
 
 @pytest.mark.finding("F-067")

@@ -9,17 +9,21 @@
 #   lint      ruff on the package, tests and scripts; node --check on dashboard JS
 #   py        pytest -m "not perf and not golden" (the goldens are the `golden` target)
 #   js        node --test tests/js
+#   ui        the dashboard (frontend/, DECISIONS.md D-57): npm ci, typecheck, Vitest, npm run build, then fail when
+#             the committed build in aws_enumerator/dashboard/ differs from what the sources produce
+#   e2e       Playwright against the built page and the real server (uses the installed Google Chrome;
+#             E2E_REPORT=/path/to/run.zip adds a real report)
 #   golden    pytest -m golden (tests/golden/v1 and tests/golden/collectors-v2)
 #   docs      scripts/gen_docs.py --check (no-op until it exists)
-#   perf      pytest -m perf and PERF=1 node --test tests/js/perf
-#   findings  per-finding coverage (pytest --finding-report + node TAP); fails when pytest, node or the coverage
+#   perf      pytest -m perf (and PERF=1 node --test tests/js/perf when it exists)
+#   findings  per-finding coverage (pytest --finding-report + node TAP + Vitest TAP); fails when a suite or the coverage
 #             check fails. FINDINGS_REQUIRE_ALL=0 reports only (coverage gaps and test failures are printed)
 #   scan      scripts/scan_sensitive.py
 #   matrix    `py` and `golden` (pytest -m "not perf") in every .venvs/py3.1x that exists
 #   doctor    offline environment check: .venv against requirements-dev.txt and the pyproject build requirement,
 #             and local commits not on origin/main that add never-push paths (internal-docs/, docs/features.md,
 #             reports, local files). Warnings only; --strict or DOCTOR_STRICT=1 makes a warning fail
-#   all       doctor (advisory) then lint py js golden docs perf findings scan
+#   all       doctor (advisory) then lint py js ui golden docs perf findings scan
 #
 # Exit status is non-zero when any step fails.
 set -u -o pipefail
@@ -97,6 +101,35 @@ t_js() {
   node --test tests/js
 }
 
+need_npm() {
+  if ! command -v npm >/dev/null 2>&1; then echo "ui: npm not found (Node 20.17 or later)" >&2; return 1; fi
+}
+
+t_ui() {
+  need_npm || return 1
+  local rc=0
+  say "ui: npm ci (frontend/)"
+  (cd frontend && npm ci --no-audit --no-fund) || return 1
+  say "ui: typecheck, Vitest"
+  (cd frontend && npx vue-tsc --noEmit && npx vitest run) || rc=1
+  say "ui: npm run build (writes aws_enumerator/dashboard/)"
+  (cd frontend && npx vite build) || return 1
+  say "ui: the committed build matches the sources"
+  if [ -n "$(git status --porcelain -- "$PKG/dashboard")" ]; then
+    git status --short -- "$PKG/dashboard"
+    echo "ui: aws_enumerator/dashboard/ differs from the build of frontend/: commit the new build" >&2
+    rc=1
+  fi
+  return $rc
+}
+
+t_e2e() {
+  need_npm || return 1
+  [ -d frontend/node_modules ] || (cd frontend && npm ci --no-audit --no-fund) || return 1
+  say "e2e: playwright test (frontend/e2e)"
+  (cd frontend && npx playwright test "$@")
+}
+
 t_golden() {
   need_python
   say "golden: pytest -m golden $*"
@@ -152,6 +185,17 @@ t_findings() {
       [ "$report_only" -eq 1 ] || rc=1
     fi
     taps=(--tap "$tmpd/js.tap")
+  fi
+  if command -v npm >/dev/null 2>&1 && [ -d frontend/node_modules ]; then
+    say "findings: vitest run --reporter=tap (frontend/)"
+    (cd frontend && npx vitest run --reporter=tap) >"$tmpd/vitest.tap" 2>&1
+    local vrc=$?
+    echo "vitest exit status: $vrc (TAP: $tmpd/vitest.tap)"
+    if [ "$vrc" -ne 0 ]; then
+      grep -E '^[[:space:]]*not ok' "$tmpd/vitest.tap" | head -n 25
+      [ "$report_only" -eq 1 ] || rc=1
+    fi
+    taps+=(--tap "$tmpd/vitest.tap")
   fi
   local req=(--require-all)
   [ "$report_only" -eq 1 ] && req=()
@@ -294,7 +338,7 @@ t_all() {
   local failed=() t
   # Advisory: doctor only warns, unless DOCTOR_STRICT=1 asks it to fail.
   t_doctor || failed+=("doctor")
-  for t in lint py js golden docs perf findings scan; do
+  for t in lint py js ui golden docs perf findings scan; do
     "t_$t" || failed+=("$t")
   done
   if [ ${#failed[@]} -gt 0 ]; then
@@ -307,7 +351,7 @@ t_all() {
 target="${1:-}"
 [ $# -gt 0 ] && shift
 case "$target" in
-  setup|lint|py|js|golden|docs|perf|findings|scan|matrix|doctor|all) "t_$target" "$@" ;;
+  setup|lint|py|js|ui|e2e|golden|docs|perf|findings|scan|matrix|doctor|all) "t_$target" "$@" ;;
   *)
     awk 'NR > 1 && /^#/ { print; next } NR > 1 { exit }' "$0" | sed 's/^# \{0,1\}//'
     exit 64

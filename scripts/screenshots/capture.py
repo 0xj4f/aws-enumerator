@@ -9,18 +9,18 @@ Nothing here is shipped and the dashboard has no demo code path. The script:
    blocked (``--host-resolver-rules``, a dead ``--proxy-server``, background networking off);
 3. drives the page over the Chrome DevTools protocol (``websocket-client``, already a dependency of the
    ``kubernetes`` client in the venv): it opens the synthetic run zip through the page's own
-   "Open zip or graph.json" file input (``DOM.setFileInputFiles``), exactly as a user would, then types
-   into the page's search box and presses its buttons ("Mark owned", "Discover all paths", a path row);
+   "Open zip or graph.json" file input (``DOM.setFileInputFiles``), exactly as a user would, then uses the
+   page's tabs, search box and table rows;
 4. saves one PNG per view and re-encodes it without ancillary chunks (no text / time / colour-profile
    metadata, see :func:`strip_png`).
 
 The only thing added to the page is a fixed-seed ``Math.random`` (:data:`SEEDED_RANDOM`, installed through
-DevTools before the page's scripts run) so that the force-directed layout, and therefore the images, are the
-same on every run.
+DevTools before the page's scripts run). The dashboard's grid layout is deterministic without it (DECISIONS.md
+D-57); it stays as a guard for any library that jitters.
 
-Views: ``overview`` (graph, legend and findings list), ``detail`` (a node's details with its findings),
-``path`` (the partner account marked owned, "Discover all paths", and its path to the account administrator
-selected).
+Views: ``overview`` (the Brief page), ``detail`` (Explore: a node's neighbourhood on the canvas and its details
+in the drawer), ``path`` (Attack paths: the partner account's route to the account administrator, with its
+kill-chain canvas in the drawer).
 
 It fails when the page reports a problem (a script error, a CSP violation, a load failure) or when Chrome
 requested anything other than the dashboard origin. Run it through ``capture.sh``::
@@ -329,51 +329,45 @@ def open_page(cdp: Cdp, url: str, zip_path: Path, seed: int = LAYOUT_SEED) -> Pa
     page.call("Page.addScriptToEvaluateOnNewDocument", {"source": SEEDED_RANDOM.replace("%SEED%", str(int(seed)))})
     page.call("Page.navigate", {"url": url})
     cdp.wait_event("Page.loadEventFired", session)
-    page.wait_for("!!(window.AEUI && AEUI.state())", what="the dashboard to boot")
+    page.wait_for("!!(window.AEDashboard && AEDashboard.state())", what="the dashboard to boot")
     page.call("DOM.setFileInputFiles", {"files": [str(zip_path)], "nodeId": page.node("#file-input")})
-    page.wait_for("AEUI.state().loaded", what="the run zip to load")
+    page.wait_for("AEDashboard.state().status === 'ready' && !AEDashboard.state().breachRunning",
+                  what="the run zip to load and the attack paths to be searched")
     time.sleep(1.0)  # layout and fonts settle
     return page
 
 
-def drive(page: Page, view: str, layout: Optional[str] = None) -> None:
-    if layout:
-        page.select("#layout-select", layout)
-        time.sleep(0.5)
+def drive(page: Page, view: str) -> None:
     if view == "overview":
+        page.wait_for("!!document.querySelector('[data-testid=\"verdict\"]')", what="the Brief")
         return
     if view == "detail":
-        page.type_into("#search-input", DETAIL_NODE)
-        page.wait_for("!document.getElementById('detail-panel').hidden", what="the detail panel")
-        page.eval("document.getElementById('detail-panel').scrollTop = 0")
+        # search the node (as a user would) and open the first match: Explore centres on it, the drawer shows it
+        page.call("DOM.focus", {"nodeId": page.node('[data-testid="search"]')})
+        page.call("Input.insertText", {"text": DETAIL_NODE})
+        page.wait_for("!!document.querySelector('[data-testid=\"search-results\"] button')", what="the search results")
+        page.click('[data-testid="search-results"] button')
+        page.wait_for("!!document.querySelector('[data-testid=\"node-detail\"]')", what="the node details")
+        page.wait_for("document.querySelectorAll('[data-testid=\"explore-canvas\"] .node-card').length > 1",
+                      what="the neighbourhood canvas")
         return
     if view == "path":
-        # mark the partner account as owned from its details, then "Discover all paths" and pick its path
-        page.type_into("#search-input", PATH_SOURCE)
-        page.wait_for("!document.getElementById('detail-panel').hidden", what="the detail panel")
-        page.click('#detail-panel [data-action="toggle-owned"]')
-        page.wait_for("AEUI.state().owned.length === 2", what="the owned mark")
-        page.clear_input("#search-input")
-        page.click('[data-action="discover-all"]')
-        rows = "#discover-body [data-action=\"select-path\"]"
-        page.wait_for(f"document.querySelectorAll({json.dumps(rows)}).length > 0", what="the discovered paths")
-        source, target = json.dumps(PATH_SOURCE), json.dumps(PATH_TARGET)
+        page.click('[data-testid="nav-paths"]')
+        rows = '[data-testid="paths-table"] tbody tr'
+        page.wait_for(f"document.querySelectorAll({json.dumps(rows)}).length > 0", what="the attack paths")
+        source = json.dumps(PATH_SOURCE)
         index = page.eval(f"""(function () {{
             var rows = document.querySelectorAll({json.dumps(rows)});
             for (var i = 0; i < rows.length; i++) {{
-              var route = rows[i].querySelector('.ap-route').textContent;
-              if (route.indexOf({source}) === 0 && route.slice(-{target}.length) === {target})
-                return rows[i].dataset.pathIndex;
+              if (rows[i].textContent.indexOf({source}) >= 0 && rows[i].textContent.indexOf('admin') >= 0) return i + 1;
             }}
             return null;
         }})()""")
         if index is None:
-            raise CaptureError(f"Discover found no path from {PATH_SOURCE} to {PATH_TARGET}")
-        row = f'#discover-body [data-path-index="{index}"]'
-        page.click(row)
-        page.wait_for(f"document.querySelector({json.dumps(row)}).classList.contains('active')",
-                      what="the selected path")
-        page.eval("document.getElementById('sidebar').scrollTop = 0")
+            raise CaptureError(f"Attack paths lists no route from {PATH_SOURCE} to the account administrator")
+        page.click(f"{rows}:nth-child({index})")
+        page.wait_for("document.querySelectorAll('[data-testid=\"path-canvas\"] .node-card').length > 1",
+                      what="the kill-chain canvas")
         return
     raise CaptureError(f"unknown view {view!r}")
 
@@ -381,7 +375,7 @@ def drive(page: Page, view: str, layout: Optional[str] = None) -> None:
 def page_problems(page: Page, cdp: Cdp, origin: str) -> List[str]:
     """Script errors, CSP violations and failed loads the page recorded, plus any non-dashboard request."""
     problems = []
-    state = page.eval("AEUI.state()") or {}
+    state = page.eval("AEDashboard.state()") or {}
     for p in state.get("problems", []):
         if p.get("level") in ("error", "warning"):
             problems.append(f"page problem {p.get('code')}: {p.get('message')}")
@@ -405,8 +399,7 @@ def page_problems(page: Page, cdp: Cdp, origin: str) -> List[str]:
     return problems
 
 
-def capture(zip_path: Path, out_dir: Path, chrome: str, views: Sequence[str],
-            layouts: Optional[Dict[str, str]] = None, seed: int = LAYOUT_SEED) -> List[Path]:
+def capture(zip_path: Path, out_dir: Path, chrome: str, views: Sequence[str], seed: int = LAYOUT_SEED) -> List[Path]:
     if not Path(chrome).exists():
         raise CaptureError(f"Chrome not found at {chrome} (pass --chrome)")
     profile = Path(tempfile.mkdtemp(prefix="aws-enumerator-shots-chrome-"))
@@ -420,7 +413,7 @@ def capture(zip_path: Path, out_dir: Path, chrome: str, views: Sequence[str],
         cdp = Cdp(ws_url)
         for view in views:
             page = open_page(cdp, url, zip_path, seed)
-            drive(page, view, (layouts or {}).get(view))
+            drive(page, view)
             time.sleep(0.8)
             problems = page_problems(page, cdp, origin)
             if problems:
@@ -448,7 +441,6 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     ap.add_argument("--chrome", default=os.environ.get("CHROME", CHROME_DEFAULT))
     ap.add_argument("--view", action="append", choices=VIEWS, help="only these views (repeatable)")
     ap.add_argument("--seed", type=int, default=LAYOUT_SEED, help="seed of the harness's Math.random (layout)")
-    ap.add_argument("--layout", help="pick this graph layout in every view (default: the page's own choice)")
     args = ap.parse_args(argv)
     zip_path = Path(args.zip).resolve()
     if not zip_path.is_file():
@@ -458,8 +450,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     out_dir.mkdir(parents=True, exist_ok=True)
     try:
         views = args.view or VIEWS
-        capture(zip_path, out_dir, args.chrome, views, {v: args.layout for v in views} if args.layout else None,
-                args.seed)
+        capture(zip_path, out_dir, args.chrome, views, args.seed)
     except CaptureError as exc:
         print(f"capture: {exc}", file=sys.stderr)
         return 1

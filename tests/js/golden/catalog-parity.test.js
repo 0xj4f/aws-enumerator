@@ -32,7 +32,7 @@ function engine() {
 }
 
 function iconFiles() {
-  const dir = path.join(H.targets.dashboardDir(), 'icons');
+  const dir = H.targets.iconsDir();
   return new Set(fs.readdirSync(dir).filter(f => f.endsWith('.svg')).map(f => f.slice(0, -4)));
 }
 

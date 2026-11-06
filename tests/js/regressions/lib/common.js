@@ -52,7 +52,8 @@ const NOT_IMPLEMENTED = /^NotImplemented: [A-Za-z]+$/;
 function dashboardDir() {
   return process.env.AE_REGRESSIONS_DASHBOARD_DIR ? path.resolve(process.env.AE_REGRESSIONS_DASHBOARD_DIR) : targets.dashboardDir();
 }
-const dashboardJsFile = (file) => path.join(dashboardDir(), 'js', file);
+// The core modules live in frontend/src/core (D-57); AE_REGRESSIONS_DASHBOARD_DIR keeps its old meaning (<dir>/js/<file>).
+const dashboardJsFile = (file) => (process.env.AE_REGRESSIONS_DASHBOARD_DIR ? path.join(dashboardDir(), 'js', file) : targets.dashboardJsFile(file));
 
 /**
  * `raises` matcher: requiring `js/<file>` failed because the module does not exist.
