@@ -1,0 +1,303 @@
+[
+  {
+    "account": "111122223333",
+    "actions": [
+      "sts:AssumeRole"
+    ],
+    "admits": null,
+    "category": "same-account-principal",
+    "condition_strength": "none",
+    "conditions": null,
+    "denied": "no",
+    "guard": "none",
+    "is_cross_account": false,
+    "is_wildcard": false,
+    "normalised_principal": "arn:aws:iam::111122223333:user/demo-alice",
+    "principal_type": "AWS",
+    "provider": null,
+    "role_arn": "arn:aws:iam::111122223333:role/demo-admin-role",
+    "role_name": "demo-admin-role",
+    "sid": null,
+    "statement_index": 0,
+    "trusted_principal": "arn:aws:iam::111122223333:user/demo-alice"
+  },
+  {
+    "account": "999999999999",
+    "actions": [
+      "sts:AssumeRole"
+    ],
+    "admits": null,
+    "category": "cross-account-root",
+    "condition_strength": "weak",
+    "conditions": {
+      "StringEquals": {
+        "sts:ExternalId": "demo-external-id"
+      }
+    },
+    "denied": "no",
+    "guard": "external-id",
+    "is_cross_account": true,
+    "is_wildcard": false,
+    "normalised_principal": "arn:aws:iam::999999999999:root",
+    "principal_type": "AWS",
+    "provider": null,
+    "role_arn": "arn:aws:iam::111122223333:role/demo-cross-account-role",
+    "role_name": "demo-cross-account-role",
+    "sid": null,
+    "statement_index": 0,
+    "trusted_principal": "arn:aws:iam::999999999999:root"
+  },
+  {
+    "account": null,
+    "actions": [
+      "sts:AssumeRole"
+    ],
+    "admits": null,
+    "category": "service",
+    "condition_strength": "none",
+    "conditions": null,
+    "denied": "no",
+    "guard": "none",
+    "is_cross_account": false,
+    "is_wildcard": false,
+    "normalised_principal": "svc:cloudformation.amazonaws.com",
+    "principal_type": "Service",
+    "provider": null,
+    "role_arn": "arn:aws:iam::111122223333:role/demo-cfn-role",
+    "role_name": "demo-cfn-role",
+    "sid": null,
+    "statement_index": 0,
+    "trusted_principal": "cloudformation.amazonaws.com"
+  },
+  {
+    "account": null,
+    "actions": [
+      "sts:AssumeRole"
+    ],
+    "admits": null,
+    "category": "service",
+    "condition_strength": "none",
+    "conditions": null,
+    "denied": "no",
+    "guard": "none",
+    "is_cross_account": false,
+    "is_wildcard": false,
+    "normalised_principal": "svc:codebuild.amazonaws.com",
+    "principal_type": "Service",
+    "provider": null,
+    "role_arn": "arn:aws:iam::111122223333:role/demo-build-role",
+    "role_name": "demo-build-role",
+    "sid": null,
+    "statement_index": 0,
+    "trusted_principal": "codebuild.amazonaws.com"
+  },
+  {
+    "account": null,
+    "actions": [
+      "sts:AssumeRole"
+    ],
+    "admits": null,
+    "category": "service",
+    "condition_strength": "none",
+    "conditions": null,
+    "denied": "no",
+    "guard": "none",
+    "is_cross_account": false,
+    "is_wildcard": false,
+    "normalised_principal": "svc:ec2.amazonaws.com",
+    "principal_type": "Service",
+    "provider": null,
+    "role_arn": "arn:aws:iam::111122223333:role/demo-app-role",
+    "role_name": "demo-app-role",
+    "sid": null,
+    "statement_index": 0,
+    "trusted_principal": "ec2.amazonaws.com"
+  },
+  {
+    "account": null,
+    "actions": [
+      "sts:AssumeRole"
+    ],
+    "admits": null,
+    "category": "service",
+    "condition_strength": "none",
+    "conditions": null,
+    "denied": "no",
+    "guard": "none",
+    "is_cross_account": false,
+    "is_wildcard": false,
+    "normalised_principal": "svc:ec2.amazonaws.com",
+    "principal_type": "Service",
+    "provider": null,
+    "role_arn": "arn:aws:iam::111122223333:role/demo-eks-node-role",
+    "role_name": "demo-eks-node-role",
+    "sid": null,
+    "statement_index": 0,
+    "trusted_principal": "ec2.amazonaws.com"
+  },
+  {
+    "account": null,
+    "actions": [
+      "sts:AssumeRole"
+    ],
+    "admits": null,
+    "category": "service",
+    "condition_strength": "none",
+    "conditions": null,
+    "denied": "no",
+    "guard": "none",
+    "is_cross_account": false,
+    "is_wildcard": false,
+    "normalised_principal": "svc:ecs-tasks.amazonaws.com",
+    "principal_type": "Service",
+    "provider": null,
+    "role_arn": "arn:aws:iam::111122223333:role/demo-ecs-task-role",
+    "role_name": "demo-ecs-task-role",
+    "sid": null,
+    "statement_index": 0,
+    "trusted_principal": "ecs-tasks.amazonaws.com"
+  },
+  {
+    "account": null,
+    "actions": [
+      "sts:AssumeRole"
+    ],
+    "admits": null,
+    "category": "service",
+    "condition_strength": "none",
+    "conditions": null,
+    "denied": "no",
+    "guard": "none",
+    "is_cross_account": false,
+    "is_wildcard": false,
+    "normalised_principal": "svc:eks.amazonaws.com",
+    "principal_type": "Service",
+    "provider": null,
+    "role_arn": "arn:aws:iam::111122223333:role/demo-eks-cluster-role",
+    "role_name": "demo-eks-cluster-role",
+    "sid": null,
+    "statement_index": 0,
+    "trusted_principal": "eks.amazonaws.com"
+  },
+  {
+    "account": null,
+    "actions": [
+      "sts:AssumeRole"
+    ],
+    "admits": null,
+    "category": "service",
+    "condition_strength": "none",
+    "conditions": null,
+    "denied": "no",
+    "guard": "none",
+    "is_cross_account": false,
+    "is_wildcard": false,
+    "normalised_principal": "svc:glue.amazonaws.com",
+    "principal_type": "Service",
+    "provider": null,
+    "role_arn": "arn:aws:iam::111122223333:role/demo-glue-role",
+    "role_name": "demo-glue-role",
+    "sid": null,
+    "statement_index": 0,
+    "trusted_principal": "glue.amazonaws.com"
+  },
+  {
+    "account": null,
+    "actions": [
+      "sts:AssumeRole"
+    ],
+    "admits": null,
+    "category": "service",
+    "condition_strength": "none",
+    "conditions": null,
+    "denied": "no",
+    "guard": "none",
+    "is_cross_account": false,
+    "is_wildcard": false,
+    "normalised_principal": "svc:lambda.amazonaws.com",
+    "principal_type": "Service",
+    "provider": null,
+    "role_arn": "arn:aws:iam::111122223333:role/demo-lambda-role",
+    "role_name": "demo-lambda-role",
+    "sid": null,
+    "statement_index": 0,
+    "trusted_principal": "lambda.amazonaws.com"
+  },
+  {
+    "account": null,
+    "actions": [
+      "sts:AssumeRole"
+    ],
+    "admits": null,
+    "category": "service",
+    "condition_strength": "none",
+    "conditions": null,
+    "denied": "no",
+    "guard": "none",
+    "is_cross_account": false,
+    "is_wildcard": false,
+    "normalised_principal": "svc:sagemaker.amazonaws.com",
+    "principal_type": "Service",
+    "provider": null,
+    "role_arn": "arn:aws:iam::111122223333:role/demo-sagemaker-role",
+    "role_name": "demo-sagemaker-role",
+    "sid": null,
+    "statement_index": 0,
+    "trusted_principal": "sagemaker.amazonaws.com"
+  },
+  {
+    "account": null,
+    "actions": [
+      "sts:AssumeRoleWithWebIdentity"
+    ],
+    "admits": "specific",
+    "category": "federated",
+    "condition_strength": "weak",
+    "conditions": {
+      "ForAnyValue:StringLike": {
+        "cognito-identity.amazonaws.com:amr": "unauthenticated"
+      },
+      "StringEquals": {
+        "cognito-identity.amazonaws.com:aud": "eu-west-2:11111111-2222-4333-8444-55555555555a"
+      }
+    },
+    "denied": "no",
+    "guard": "other",
+    "is_cross_account": false,
+    "is_wildcard": false,
+    "normalised_principal": "aws-enumerator:idp/cognito-identity.amazonaws.com",
+    "principal_type": "Federated",
+    "provider": "cognito",
+    "role_arn": "arn:aws:iam::111122223333:role/demo-cognito-unauth-role",
+    "role_name": "demo-cognito-unauth-role",
+    "sid": null,
+    "statement_index": 0,
+    "trusted_principal": "cognito-identity.amazonaws.com"
+  },
+  {
+    "account": null,
+    "actions": [
+      "sts:AssumeRoleWithWebIdentity"
+    ],
+    "admits": "specific",
+    "category": "federated",
+    "condition_strength": "weak",
+    "conditions": {
+      "StringEquals": {
+        "oidc.eks.eu-west-2.amazonaws.com/id/DEMO0000000000000000000000000002:sub": "system:serviceaccount:demo-apps:demo-api"
+      }
+    },
+    "denied": "no",
+    "guard": "other",
+    "is_cross_account": false,
+    "is_wildcard": false,
+    "normalised_principal": "arn:aws:iam::111122223333:oidc-provider/oidc.eks.eu-west-2.amazonaws.com/id/DEMO0000000000000000000000000002",
+    "principal_type": "Federated",
+    "provider": "eks",
+    "role_arn": "arn:aws:iam::111122223333:role/demo-irsa-role",
+    "role_name": "demo-irsa-role",
+    "sid": null,
+    "statement_index": 0,
+    "trusted_principal": "arn:aws:iam::111122223333:oidc-provider/oidc.eks.eu-west-2.amazonaws.com/id/DEMO0000000000000000000000000002"
+  }
+]

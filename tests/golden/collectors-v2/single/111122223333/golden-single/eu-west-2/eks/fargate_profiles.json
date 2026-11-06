@@ -1,0 +1,23 @@
+{
+  "demo-cluster": [
+    {
+      "clusterName": "demo-cluster",
+      "createdAt": "2024-01-03T10:00:00Z",
+      "fargateProfileArn": "arn:aws:eks:eu-west-2:111122223333:fargateprofile/demo-cluster/demo-fp/abc",
+      "fargateProfileName": "demo-fp",
+      "podExecutionRoleArn": "arn:aws:iam::111122223333:role/demo-eks-node-role",
+      "selectors": [
+        {
+          "labels": {
+            "runtime": "fargate"
+          },
+          "namespace": "demo-batch"
+        }
+      ],
+      "status": "ACTIVE",
+      "subnets": [
+        "subnet-0dec0ba1b000002"
+      ]
+    }
+  ]
+}

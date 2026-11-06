@@ -1,0 +1,10 @@
+{
+  "demo-app-role": [],
+  "demo-lambda-exec": [],
+  "demo-ecs-exec": [],
+  "demo-cfn-role": [],
+  "demo-glue-role": [],
+  "demo-codebuild-role": [],
+  "demo-sagemaker-role": [],
+  "demo-cognito-auth": []
+}

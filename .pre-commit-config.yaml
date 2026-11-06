@@ -1,0 +1,24 @@
+# Pre-commit hooks (F-066): lint, secret scanning with the repository's gitleaks rules (12-digit account ids and
+# ARNs outside the placeholder accounts), and a local hook that refuses report data, local engagement files and
+# the owner's notes (docs/features.md, internal-docs/), by path.
+# Setup: pip install pre-commit && pre-commit install
+# Run on everything once: pre-commit run --all-files
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.17.0  # same ruff as requirements-dev.txt
+    hooks:
+      - id: ruff
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.21.2
+    hooks:
+      # Default rules plus the account-id / ARN rules of scripts/hooks/gitleaks.toml.
+      - id: gitleaks
+        args: ["--config", "scripts/hooks/gitleaks.toml"]
+  - repo: local
+    hooks:
+      - id: reject-report-artifacts
+        name: reject reports, archives, local engagement files and owner notes
+        entry: python3 scripts/hooks/reject_report_artifacts.py
+        language: system
+        pass_filenames: true
+        stages: [pre-commit, pre-push]

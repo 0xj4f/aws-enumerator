@@ -1,0 +1,17 @@
+{
+  "name": "poweruser_notaction",
+  "description": "PowerUserAccess-shaped NotAction grants (role and via group), NotResource, explicit Deny quarantine and Deny iam:*, a read-only permission boundary (roles.json key + permission_boundaries/ file), and a condition-gated PassRole; plus resources that NotAction grants would reach (F-001 shape).",
+  "account": "123456789012",
+  "layout": "single_region",
+  "regions": [
+    "eu-west-2"
+  ],
+  "report_dirs": [
+    "123456789012/eu-west-2"
+  ],
+  "scope_dirs": [
+    "123456789012/eu-west-2"
+  ],
+  "expect_exception": false,
+  "baseline": "d13c215"
+}

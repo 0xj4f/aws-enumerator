@@ -1,0 +1,11 @@
+{
+  "name": "demo-eks-west2",
+  "endpoint": "https://NFIGCMNFCHGFFLPAMIIPFLDDKELKLDBH.gr7.eu-west-2.eks.amazonaws.com",
+  "auth_status": "ok",
+  "version": {
+    "major": "1",
+    "minor": "30",
+    "git_version": "v1.30.0-eks",
+    "platform": "linux/amd64"
+  }
+}

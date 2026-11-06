@@ -1,0 +1,225 @@
+[
+  {
+    "api_version": null,
+    "kind": null,
+    "metadata": {
+      "name": "payments-api-0",
+      "namespace": "payments",
+      "labels": {
+        "app": "payments"
+      },
+      "annotations": null,
+      "uid": "f69812bb-aaaa-4bbb-8ccc-91ca4dff98f8",
+      "creation_timestamp": "2026-01-01 00:00:00+00:00",
+      "resource_version": "1000",
+      "owner_references": null,
+      "managed_fields": null
+    },
+    "spec": {
+      "containers": [
+        {
+          "name": "main",
+          "image": "public.ecr.aws/docker/library/busybox:1.36",
+          "command": null,
+          "args": null,
+          "env": [
+            {
+              "name": "DB_PASSWORD",
+              "value": "AE-ENV-CANARY-not-a-real-secret",
+              "value_from": null
+            },
+            {
+              "name": "API_TOKEN",
+              "value": null,
+              "value_from": {
+                "secret_key_ref": {
+                  "name": "db-creds",
+                  "key": "token"
+                }
+              }
+            }
+          ],
+          "env_from": null,
+          "ports": null,
+          "security_context": null,
+          "volume_mounts": [
+            {
+              "name": "db-creds",
+              "mount_path": "/var/run/db-creds",
+              "read_only": true
+            }
+          ]
+        }
+      ],
+      "init_containers": null,
+      "ephemeral_containers": null,
+      "service_account_name": "payments-sa",
+      "service_account": "payments-sa",
+      "automount_service_account_token": null,
+      "host_network": null,
+      "host_pid": null,
+      "host_ipc": null,
+      "node_name": "ip-10-0-1-10.demo.internal",
+      "security_context": {},
+      "volumes": [
+        {
+          "name": "db-creds",
+          "secret": {
+            "secret_name": "db-creds",
+            "default_mode": 420
+          }
+        }
+      ]
+    },
+    "status": {
+      "phase": "Running",
+      "pod_ip": "10.0.1.20",
+      "host_ip": "10.0.1.10"
+    }
+  },
+  {
+    "api_version": null,
+    "kind": null,
+    "metadata": {
+      "name": "web-frontend-0",
+      "namespace": "web",
+      "labels": {
+        "app": "web"
+      },
+      "annotations": null,
+      "uid": "9027c50c-aaaa-4bbb-8ccc-7a867d68141e",
+      "creation_timestamp": "2026-01-01 00:00:00+00:00",
+      "resource_version": "1000",
+      "owner_references": null,
+      "managed_fields": null
+    },
+    "spec": {
+      "containers": [
+        {
+          "name": "main",
+          "image": "public.ecr.aws/docker/library/busybox:1.36",
+          "command": null,
+          "args": null,
+          "env": null,
+          "env_from": null,
+          "ports": null,
+          "security_context": null,
+          "volume_mounts": null
+        }
+      ],
+      "init_containers": null,
+      "ephemeral_containers": null,
+      "service_account_name": "web-sa",
+      "service_account": "web-sa",
+      "automount_service_account_token": null,
+      "host_network": null,
+      "host_pid": null,
+      "host_ipc": null,
+      "node_name": "ip-10-0-1-10.demo.internal",
+      "security_context": {},
+      "volumes": null
+    },
+    "status": {
+      "phase": "Running",
+      "pod_ip": "10.0.1.20",
+      "host_ip": "10.0.1.10"
+    }
+  },
+  {
+    "api_version": null,
+    "kind": null,
+    "metadata": {
+      "name": "node-debugger",
+      "namespace": "kube-system",
+      "labels": null,
+      "annotations": null,
+      "uid": "4d4b0003-aaaa-4bbb-8ccc-0bea9123b9ea",
+      "creation_timestamp": "2026-01-01 00:00:00+00:00",
+      "resource_version": "1000",
+      "owner_references": null,
+      "managed_fields": null
+    },
+    "spec": {
+      "containers": [
+        {
+          "name": "main",
+          "image": "public.ecr.aws/docker/library/busybox:1.36",
+          "command": null,
+          "args": null,
+          "env": null,
+          "env_from": null,
+          "ports": null,
+          "security_context": {
+            "privileged": true,
+            "run_as_user": null
+          },
+          "volume_mounts": null
+        }
+      ],
+      "init_containers": null,
+      "ephemeral_containers": null,
+      "service_account_name": null,
+      "service_account": null,
+      "automount_service_account_token": null,
+      "host_network": true,
+      "host_pid": true,
+      "host_ipc": null,
+      "node_name": "ip-10-0-1-10.demo.internal",
+      "security_context": {},
+      "volumes": null
+    },
+    "status": {
+      "phase": "Running",
+      "pod_ip": "10.0.1.20",
+      "host_ip": "10.0.1.10"
+    }
+  },
+  {
+    "api_version": null,
+    "kind": null,
+    "metadata": {
+      "name": "legacy-app",
+      "namespace": "default",
+      "labels": {
+        "app": "legacy"
+      },
+      "annotations": null,
+      "uid": "3e75a092-aaaa-4bbb-8ccc-1b36daa34311",
+      "creation_timestamp": "2026-01-01 00:00:00+00:00",
+      "resource_version": "1000",
+      "owner_references": null,
+      "managed_fields": null
+    },
+    "spec": {
+      "containers": [
+        {
+          "name": "main",
+          "image": "public.ecr.aws/docker/library/busybox:1.36",
+          "command": null,
+          "args": null,
+          "env": null,
+          "env_from": null,
+          "ports": null,
+          "security_context": null,
+          "volume_mounts": null
+        }
+      ],
+      "init_containers": null,
+      "ephemeral_containers": null,
+      "service_account_name": "default",
+      "service_account": "default",
+      "automount_service_account_token": null,
+      "host_network": null,
+      "host_pid": null,
+      "host_ipc": null,
+      "node_name": "ip-10-0-1-10.demo.internal",
+      "security_context": {},
+      "volumes": null
+    },
+    "status": {
+      "phase": "Running",
+      "pod_ip": "10.0.1.20",
+      "host_ip": "10.0.1.10"
+    }
+  }
+]

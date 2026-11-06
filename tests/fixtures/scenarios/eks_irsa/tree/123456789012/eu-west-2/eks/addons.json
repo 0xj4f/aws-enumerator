@@ -1,0 +1,10 @@
+{
+  "demo-eks": [
+    {
+      "addonName": "vpc-cni",
+      "clusterName": "demo-eks",
+      "status": "ACTIVE",
+      "addonVersion": "v1.18.0-eksbuild.1"
+    }
+  ]
+}

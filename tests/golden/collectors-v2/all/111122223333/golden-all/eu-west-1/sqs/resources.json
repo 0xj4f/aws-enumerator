@@ -1,0 +1,12 @@
+[
+  {
+    "Arn": "arn:aws:sqs:eu-west-1:111122223333:demo-west-queue",
+    "KmsMasterKeyId": null,
+    "Name": "demo-west-queue",
+    "Policy": null,
+    "PolicyStatus": "absent",
+    "SqsManagedSseEnabled": null,
+    "Type": "sqs",
+    "Url": "https://sqs.eu-west-1.amazonaws.com/111122223333/demo-west-queue"
+  }
+]

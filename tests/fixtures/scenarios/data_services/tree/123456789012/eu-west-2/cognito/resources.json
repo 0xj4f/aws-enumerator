@@ -1,0 +1,17 @@
+[
+  {
+    "Type": "cognito",
+    "Kind": "identity_pool",
+    "Id": "eu-west-2:5e6f7a8b-aaaa-4bbb-8ccc-9d0e1f2a3b4c",
+    "Name": "demo_pool",
+    "AuthRole": "arn:aws:iam::123456789012:role/demo-cognito-auth",
+    "UnauthRole": null,
+    "AllowUnauth": false
+  },
+  {
+    "Type": "cognito",
+    "Kind": "user_pool",
+    "Id": "eu-west-2_EXAMPLEab",
+    "Name": "demo-users"
+  }
+]

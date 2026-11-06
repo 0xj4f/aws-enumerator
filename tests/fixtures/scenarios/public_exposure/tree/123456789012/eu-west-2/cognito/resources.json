@@ -1,0 +1,11 @@
+[
+  {
+    "Type": "cognito",
+    "Kind": "identity_pool",
+    "Id": "eu-west-2:6f7a8b9c-aaaa-4bbb-8ccc-0d1e2f3a4b5c",
+    "Name": "demo_guest_pool",
+    "AuthRole": null,
+    "UnauthRole": "arn:aws:iam::123456789012:role/demo-guest-role",
+    "AllowUnauth": true
+  }
+]

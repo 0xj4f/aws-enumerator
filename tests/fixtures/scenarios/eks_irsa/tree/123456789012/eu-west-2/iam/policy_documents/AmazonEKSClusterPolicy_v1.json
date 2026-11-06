@@ -1,0 +1,18 @@
+{
+  "PolicyName": "AmazonEKSClusterPolicy",
+  "PolicyArn": "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy",
+  "VersionId": "v1",
+  "Document": {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "ec2:Describe*",
+          "elasticloadbalancing:*"
+        ],
+        "Resource": "*"
+      }
+    ]
+  }
+}

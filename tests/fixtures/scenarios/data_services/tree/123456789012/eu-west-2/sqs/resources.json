@@ -1,0 +1,26 @@
+[
+  {
+    "Type": "sqs",
+    "Arn": "arn:aws:sqs:eu-west-2:123456789012:demo-queue",
+    "Name": "demo-queue",
+    "Policy": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": "*",
+          "Action": "sqs:SendMessage",
+          "Resource": "arn:aws:sqs:eu-west-2:123456789012:demo-queue"
+        }
+      ]
+    }
+  },
+  {
+    "Type": "sqs",
+    "Arn": "arn:aws:sqs:eu-west-2:123456789012:demo-raw-policy",
+    "Name": "demo-raw-policy",
+    "Policy": {
+      "_raw": "not-json"
+    }
+  }
+]

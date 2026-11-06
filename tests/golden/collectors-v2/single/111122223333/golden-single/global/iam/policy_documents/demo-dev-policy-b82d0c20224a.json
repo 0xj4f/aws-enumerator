@@ -1,0 +1,75 @@
+{
+  "DefaultVersionId": "v2",
+  "Document": {
+    "Statement": [
+      {
+        "Action": "iam:PassRole",
+        "Effect": "Allow",
+        "Resource": "arn:aws:iam::111122223333:role/demo-app-role"
+      },
+      {
+        "Action": "s3:GetObject",
+        "Effect": "Allow",
+        "Resource": "arn:aws:s3:::demo-data-bucket/*"
+      },
+      {
+        "Action": [
+          "ec2:Describe*",
+          "ec2:RunInstances"
+        ],
+        "Effect": "Allow",
+        "Resource": "*"
+      }
+    ],
+    "Version": "2012-10-17"
+  },
+  "PolicyArn": "arn:aws:iam::111122223333:policy/demo-dev-policy",
+  "PolicyName": "demo-dev-policy",
+  "PolicyType": "Local",
+  "VersionId": "v2",
+  "Versions": [
+    {
+      "CreateDate": "2024-01-09T10:00:00Z",
+      "Document": {
+        "Statement": [
+          {
+            "Action": "ec2:Describe*",
+            "Effect": "Allow",
+            "Resource": "*"
+          }
+        ],
+        "Version": "2012-10-17"
+      },
+      "IsDefaultVersion": false,
+      "VersionId": "v1"
+    },
+    {
+      "CreateDate": "2024-01-09T10:00:00Z",
+      "Document": {
+        "Statement": [
+          {
+            "Action": "iam:PassRole",
+            "Effect": "Allow",
+            "Resource": "arn:aws:iam::111122223333:role/demo-app-role"
+          },
+          {
+            "Action": "s3:GetObject",
+            "Effect": "Allow",
+            "Resource": "arn:aws:s3:::demo-data-bucket/*"
+          },
+          {
+            "Action": [
+              "ec2:Describe*",
+              "ec2:RunInstances"
+            ],
+            "Effect": "Allow",
+            "Resource": "*"
+          }
+        ],
+        "Version": "2012-10-17"
+      },
+      "IsDefaultVersion": true,
+      "VersionId": "v2"
+    }
+  ]
+}

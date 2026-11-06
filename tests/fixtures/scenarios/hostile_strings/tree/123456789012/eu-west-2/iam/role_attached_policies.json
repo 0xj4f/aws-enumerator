@@ -1,0 +1,19 @@
+{
+  "<img src=x onerror=window.__aeXssCanary=1>": [
+    {
+      "PolicyName": "AdministratorAccess",
+      "PolicyArn": "arn:aws:iam::aws:policy/AdministratorAccess"
+    }
+  ],
+  "demo-hostile-path": [],
+  "demo-hostile-attached": [
+    {
+      "PolicyName": "\" onfocus=\"window.__aeXssCanary=1\" autofocus=\"",
+      "PolicyArn": "arn:aws:iam::123456789012:policy/\" onfocus=\"window.__aeXssCanary=1\" autofocus=\""
+    }
+  ],
+  "constructor": [],
+  "__proto__": [],
+  "hasOwnProperty": [],
+  "toString": []
+}

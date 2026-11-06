@@ -1,0 +1,5081 @@
+{
+  "analyzer_status": [
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "load:iam",
+      "phase": "load",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "org"
+      ],
+      "name": "load:org",
+      "phase": "load",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "load:s3",
+      "phase": "load",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "ec2"
+      ],
+      "name": "load:ec2",
+      "phase": "load",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "edge_services"
+      ],
+      "name": "load:edge_services",
+      "phase": "load",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "posture"
+      ],
+      "name": "load:posture",
+      "phase": "load",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "k8s"
+      ],
+      "name": "load:k8s",
+      "phase": "load",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "kms"
+      ],
+      "name": "load:kms",
+      "phase": "load",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "secrets"
+      ],
+      "name": "load:secrets",
+      "phase": "load",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "data_stores"
+      ],
+      "name": "load:data_stores",
+      "phase": "load",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "load:lambda",
+      "phase": "load",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "compute"
+      ],
+      "name": "load:compute",
+      "phase": "load",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "messaging"
+      ],
+      "name": "load:messaging",
+      "phase": "load",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "principals",
+      "phase": "principals",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "permission-map",
+      "phase": "principals",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "iam-graph",
+      "phase": "principals",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "admin-equivalence",
+      "phase": "identity",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "trust",
+      "phase": "identity",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "assume",
+      "phase": "identity",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "iam-hygiene",
+      "phase": "identity",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "s3",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "ec2.instances"
+      ],
+      "name": "ec2",
+      "phase": "resources",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "edge_services",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "posture",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "vpc"
+      ],
+      "name": "network",
+      "phase": "resources",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "k8s",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "kms",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "secrets",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "data_stores",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "lambda",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "compute",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "messaging",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "cognito",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "rules",
+      "phase": "rules",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "closure",
+      "phase": "closure",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "coverage"
+      ],
+      "name": "coverage-gaps",
+      "phase": "postprocess",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "severity",
+      "phase": "postprocess",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "subsume",
+      "phase": "postprocess",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "suppression",
+      "phase": "postprocess",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "baseline",
+      "phase": "postprocess",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "write",
+      "phase": "write",
+      "status": "ok"
+    }
+  ],
+  "coverage": {
+    "facets": [
+      {
+        "detail": null,
+        "facet": "s3:ListBuckets",
+        "region": "global",
+        "status": "legacy-unknown"
+      }
+    ],
+    "modules": [
+      {
+        "detail": null,
+        "error_code": null,
+        "module": "iam",
+        "region": "global",
+        "status": "legacy-unknown"
+      },
+      {
+        "detail": null,
+        "error_code": null,
+        "module": "lambda",
+        "region": "global",
+        "status": "legacy-unknown"
+      },
+      {
+        "detail": null,
+        "error_code": null,
+        "module": "s3",
+        "region": "global",
+        "status": "legacy-unknown"
+      }
+    ],
+    "source": "legacy-unknown",
+    "status": "unknown"
+  },
+  "edge_types": {
+    "CAN_ASSUME": {
+      "base_weight": 1,
+      "bridge": false,
+      "category": "trust",
+      "category_label": "Role assumption",
+      "category_order": 2,
+      "description": "sts:AssumeRole is allowed by the role's trust policy and, where needed, the caller's identity policy (same-account root trust, cross-account, wildcard). Replaces CAN_ASSUME_CROSS.",
+      "doc_anchor": "#can_assume",
+      "legacy_name": null,
+      "sources": [
+        "user",
+        "role",
+        "external_account",
+        "external_principal",
+        "anonymous"
+      ],
+      "targets": [
+        "role"
+      ],
+      "traversable": true,
+      "traversable_rule": null,
+      "traversal": "control"
+    },
+    "CAN_ASSUME_WEB_IDENTITY": {
+      "base_weight": 1,
+      "bridge": false,
+      "category": "trust",
+      "category_label": "Role assumption",
+      "category_order": 2,
+      "description": "AssumeRoleWithWebIdentity admitted by the trust policy; props.admits = any | pattern | specific.",
+      "doc_anchor": "#can_assume_web_identity",
+      "legacy_name": null,
+      "sources": [
+        "idp",
+        "anonymous"
+      ],
+      "targets": [
+        "role"
+      ],
+      "traversable": true,
+      "traversable_rule": null,
+      "traversal": "control"
+    },
+    "CAN_ESCALATE": {
+      "base_weight": 1,
+      "bridge": false,
+      "category": "privesc",
+      "category_label": "Privilege escalation",
+      "category_order": 3,
+      "description": "Self-escalation, or modification of a principal the source can already act as (closure, engine.md \u00a74.6); evidence.chain lists the edge ids.",
+      "doc_anchor": "#can_escalate",
+      "legacy_name": null,
+      "sources": [
+        "user",
+        "role",
+        "group"
+      ],
+      "targets": [
+        "account_admin"
+      ],
+      "traversable": true,
+      "traversable_rule": null,
+      "traversal": "control"
+    },
+    "CAN_MODIFY_PERMISSIONS_OF": {
+      "base_weight": 1,
+      "bridge": false,
+      "category": "privesc",
+      "category_label": "Privilege escalation",
+      "category_order": 3,
+      "description": "Put*/Attach*Policy, CreatePolicyVersion, SetDefaultPolicyVersion or boundary changes on another principal. Closure input: becomes CAN_ESCALATE when the target is reachable.",
+      "doc_anchor": "#can_modify_permissions_of",
+      "legacy_name": null,
+      "sources": [
+        "user",
+        "role",
+        "group"
+      ],
+      "targets": [
+        "user",
+        "role",
+        "group"
+      ],
+      "traversable": false,
+      "traversable_rule": null,
+      "traversal": "info"
+    },
+    "CAN_READ": {
+      "base_weight": 1,
+      "bridge": false,
+      "category": "s3",
+      "category_label": "S3",
+      "category_order": 7,
+      "description": "Get or list objects.",
+      "doc_anchor": "#can_read",
+      "legacy_name": "CAN_READ",
+      "sources": [
+        "user",
+        "role",
+        "group"
+      ],
+      "targets": [
+        "bucket"
+      ],
+      "traversable": true,
+      "traversable_rule": null,
+      "traversal": "access"
+    },
+    "CAN_TAKEOVER": {
+      "base_weight": 1,
+      "bridge": false,
+      "category": "privesc",
+      "category_label": "Privilege escalation",
+      "category_order": 3,
+      "description": "Credential or trust takeover of another principal: CreateAccessKey, Create/UpdateLoginProfile, UpdateAssumeRolePolicy, AddUserToGroup. Self is excluded.",
+      "doc_anchor": "#can_takeover",
+      "legacy_name": null,
+      "sources": [
+        "user",
+        "role",
+        "group"
+      ],
+      "targets": [
+        "user",
+        "role",
+        "group"
+      ],
+      "traversable": true,
+      "traversable_rule": null,
+      "traversal": "control"
+    },
+    "CAN_UPDATE_CODE": {
+      "base_weight": 1,
+      "bridge": false,
+      "category": "lambda",
+      "category_label": "Lambda",
+      "category_order": 9,
+      "description": "lambda:UpdateFunctionCode: code execution as the execution role.",
+      "doc_anchor": "#can_update_code",
+      "legacy_name": "CAN_UPDATE_CODE",
+      "sources": [
+        "user",
+        "role",
+        "group"
+      ],
+      "targets": [
+        "lambda"
+      ],
+      "traversable": true,
+      "traversable_rule": null,
+      "traversal": "control"
+    },
+    "FULL_ACCESS": {
+      "base_weight": 0,
+      "bridge": false,
+      "category": "s3",
+      "category_label": "S3",
+      "category_order": 7,
+      "description": "s3:* (identity policy or same-account bucket-policy grant).",
+      "doc_anchor": "#full_access",
+      "legacy_name": "FULL_ACCESS",
+      "sources": [
+        "user",
+        "role",
+        "group"
+      ],
+      "targets": [
+        "bucket"
+      ],
+      "traversable": true,
+      "traversable_rule": null,
+      "traversal": "access"
+    },
+    "HAS_POLICY": {
+      "base_weight": 0,
+      "bridge": false,
+      "category": "iam",
+      "category_label": "IAM structure",
+      "category_order": 1,
+      "description": "Managed policy attached to the principal (ARN-keyed).",
+      "doc_anchor": "#has_policy",
+      "legacy_name": null,
+      "sources": [
+        "user",
+        "role",
+        "group"
+      ],
+      "targets": [
+        "policy"
+      ],
+      "traversable": false,
+      "traversable_rule": null,
+      "traversal": "structural"
+    },
+    "IS_ADMIN_EQUIVALENT": {
+      "base_weight": 0,
+      "bridge": false,
+      "category": "privesc",
+      "category_label": "Privilege escalation",
+      "category_order": 3,
+      "description": "The principal is admin-equivalent (ADMIN-001), so reaching it means reaching the account admin.",
+      "doc_anchor": "#is_admin_equivalent",
+      "legacy_name": null,
+      "sources": [
+        "user",
+        "role",
+        "group"
+      ],
+      "targets": [
+        "account_admin"
+      ],
+      "traversable": true,
+      "traversable_rule": null,
+      "traversal": "control"
+    },
+    "MEMBER_OF": {
+      "base_weight": 0,
+      "bridge": false,
+      "category": "iam",
+      "category_label": "IAM structure",
+      "category_order": 1,
+      "description": "The user inherits the group's grants; group capability edges start at the group node.",
+      "doc_anchor": "#member_of",
+      "legacy_name": null,
+      "sources": [
+        "user"
+      ],
+      "targets": [
+        "group"
+      ],
+      "traversable": "conditional",
+      "traversable_rule": "member-not-reduced",
+      "traversal": "control"
+    },
+    "SERVICE_CAN_ASSUME": {
+      "base_weight": 0,
+      "bridge": false,
+      "category": "trust",
+      "category_label": "Role assumption",
+      "category_order": 2,
+      "description": "The trust policy admits an AWS service principal (PassRole candidates, confused-deputy checks).",
+      "doc_anchor": "#service_can_assume",
+      "legacy_name": null,
+      "sources": [
+        "service_principal"
+      ],
+      "targets": [
+        "role"
+      ],
+      "traversable": false,
+      "traversable_rule": null,
+      "traversal": "info"
+    },
+    "USES_ROLE": {
+      "base_weight": 0,
+      "bridge": true,
+      "category": "compute",
+      "category_label": "Compute to role",
+      "category_order": 4,
+      "description": "The compute resource runs as the role (Lambda execution role, ECS task role, stack service role, job role). The ECS execution role is EXECUTION_ROLE.",
+      "doc_anchor": "#uses_role",
+      "legacy_name": "USES_ROLE",
+      "sources": [
+        "lambda",
+        "ecstask",
+        "ecsservice",
+        "cfnstack",
+        "stackset",
+        "gluejob",
+        "gluedevendpoint",
+        "codebuild",
+        "sagemaker",
+        "sagemakerdomain"
+      ],
+      "targets": [
+        "role"
+      ],
+      "traversable": true,
+      "traversable_rule": null,
+      "traversal": "control"
+    }
+  },
+  "edges": [
+    {
+      "category": "trust",
+      "confidence": "definite",
+      "evidence": {
+        "actions": [
+          "sts:AssumeRoleWithWebIdentity"
+        ],
+        "decision": "allow",
+        "provider": "github",
+        "trust_statement": 0
+      },
+      "id": "e:e8febdfb7c2d7f92fdd1",
+      "props": {
+        "admits": "any"
+      },
+      "source": "arn:aws:iam::000000000000:oidc-provider/token.actions.githubusercontent.com",
+      "target": "arn:aws:iam::000000000000:role/gha-deploy",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_ASSUME_WEB_IDENTITY",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:putrolepolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-005",
+          "PRIVESC-008"
+        ]
+      },
+      "id": "e:0e060058b18b0ae4f391",
+      "source": "arn:aws:iam::000000000000:role/admin-role",
+      "target": "aws-enumerator:account-admin/000000000000",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_ESCALATE",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:putgrouppolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-004",
+          "PRIVESC-007"
+        ]
+      },
+      "id": "e:c6e3e123bac2d6b46a83",
+      "source": "arn:aws:iam::000000000000:role/admin-role",
+      "target": "arn:aws:iam::000000000000:group/devs",
+      "traversable": false,
+      "traversal": "info",
+      "type": "CAN_MODIFY_PERMISSIONS_OF",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:putrolepolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-005",
+          "PRIVESC-008"
+        ]
+      },
+      "id": "e:98b534fd74160d0d6411",
+      "source": "arn:aws:iam::000000000000:role/admin-role",
+      "target": "arn:aws:iam::000000000000:role/fn-admin-role",
+      "traversable": false,
+      "traversal": "info",
+      "type": "CAN_MODIFY_PERMISSIONS_OF",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:putrolepolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-005",
+          "PRIVESC-008"
+        ]
+      },
+      "id": "e:6dcfd39270feaaeb63b1",
+      "source": "arn:aws:iam::000000000000:role/admin-role",
+      "target": "arn:aws:iam::000000000000:role/gha-deploy",
+      "traversable": false,
+      "traversal": "info",
+      "type": "CAN_MODIFY_PERMISSIONS_OF",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:putuserpolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-003",
+          "PRIVESC-006"
+        ]
+      },
+      "id": "e:efb372e0c3af4123b298",
+      "source": "arn:aws:iam::000000000000:role/admin-role",
+      "target": "arn:aws:iam::000000000000:user/admin-user",
+      "traversable": false,
+      "traversal": "info",
+      "type": "CAN_MODIFY_PERMISSIONS_OF",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:putuserpolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-003",
+          "PRIVESC-006"
+        ]
+      },
+      "id": "e:d17c7989a630644b271e",
+      "source": "arn:aws:iam::000000000000:role/admin-role",
+      "target": "arn:aws:iam::000000000000:user/leaked-user",
+      "traversable": false,
+      "traversal": "info",
+      "type": "CAN_MODIFY_PERMISSIONS_OF",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:addusertogroup"
+        ],
+        "rule_ids": [
+          "PRIVESC-012"
+        ]
+      },
+      "id": "e:65153a87ac1a60e2f94b",
+      "source": "arn:aws:iam::000000000000:role/admin-role",
+      "target": "arn:aws:iam::000000000000:group/devs",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_TAKEOVER",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:updateassumerolepolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-013"
+        ]
+      },
+      "id": "e:627fea6db4eab0bbd7f6",
+      "source": "arn:aws:iam::000000000000:role/admin-role",
+      "target": "arn:aws:iam::000000000000:role/fn-admin-role",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_TAKEOVER",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:updateassumerolepolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-013"
+        ]
+      },
+      "id": "e:64ab0dace47cc8196fa0",
+      "source": "arn:aws:iam::000000000000:role/admin-role",
+      "target": "arn:aws:iam::000000000000:role/gha-deploy",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_TAKEOVER",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:createaccesskey"
+        ],
+        "rule_ids": [
+          "PRIVESC-009",
+          "PRIVESC-011"
+        ]
+      },
+      "id": "e:9b3ea7b12836908fccf2",
+      "source": "arn:aws:iam::000000000000:role/admin-role",
+      "target": "arn:aws:iam::000000000000:user/admin-user",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_TAKEOVER",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:createaccesskey"
+        ],
+        "rule_ids": [
+          "PRIVESC-009",
+          "PRIVESC-011"
+        ]
+      },
+      "id": "e:f6e40b51fff0480b6f11",
+      "source": "arn:aws:iam::000000000000:role/admin-role",
+      "target": "arn:aws:iam::000000000000:user/leaked-user",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_TAKEOVER",
+      "weight": 1
+    },
+    {
+      "category": "lambda",
+      "confidence": "definite",
+      "evidence": {
+        "actions": [
+          "lambda:UpdateFunctionCode"
+        ],
+        "decision": "allow",
+        "layers": {
+          "boundary": "n/a",
+          "identity": "true",
+          "rcp": "n/a",
+          "resource": "unknown",
+          "scp": "unknown"
+        },
+        "matched_actions": [
+          "lambda:updatefunctioncode"
+        ],
+        "rule_ids": [
+          "PRIVESC-021"
+        ],
+        "statements": [
+          {
+            "layer": "identity",
+            "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+            "policy_name": "AdministratorAccess",
+            "sid": null,
+            "source_type": "aws_managed",
+            "statement_index": 0,
+            "version_id": "v1",
+            "via_group": null
+          }
+        ]
+      },
+      "id": "e:1e3cf2fb01d3a3ed9530",
+      "source": "arn:aws:iam::000000000000:role/admin-role",
+      "target": "arn:aws:lambda:eu-west-2:000000000000:function:etl",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_UPDATE_CODE",
+      "weight": 1
+    },
+    {
+      "category": "s3",
+      "confidence": "definite",
+      "evidence": {
+        "access_types": [
+          "CAN_ADMIN",
+          "CAN_READ",
+          "CAN_WRITE",
+          "FULL_ACCESS"
+        ],
+        "actions": [
+          "s3:*"
+        ],
+        "decision": "allow",
+        "layers": {
+          "boundary": "n/a",
+          "identity": "true",
+          "rcp": "unknown",
+          "resource": "n/a",
+          "scp": "unknown"
+        },
+        "legacy": {
+          "direction": "forward",
+          "file": "s3_relationships.json",
+          "type": "FULL_ACCESS"
+        },
+        "statements": [
+          {
+            "layer": "identity",
+            "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+            "policy_name": "AdministratorAccess",
+            "sid": null,
+            "source_type": "aws_managed",
+            "statement_index": 0,
+            "version_id": "v1",
+            "via_group": null
+          }
+        ]
+      },
+      "id": "e:0b8ab0480ff7afa8e3bd",
+      "source": "arn:aws:iam::000000000000:role/admin-role",
+      "target": "arn:aws:s3:::data-bucket",
+      "traversable": true,
+      "traversal": "access",
+      "type": "FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "category": "s3",
+      "confidence": "definite",
+      "evidence": {
+        "access_types": [
+          "CAN_ADMIN",
+          "CAN_READ",
+          "CAN_WRITE",
+          "FULL_ACCESS"
+        ],
+        "actions": [
+          "s3:*"
+        ],
+        "decision": "allow",
+        "layers": {
+          "boundary": "n/a",
+          "identity": "true",
+          "rcp": "unknown",
+          "resource": "n/a",
+          "scp": "unknown"
+        },
+        "legacy": {
+          "direction": "forward",
+          "file": "s3_relationships.json",
+          "type": "FULL_ACCESS"
+        },
+        "statements": [
+          {
+            "layer": "identity",
+            "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+            "policy_name": "AdministratorAccess",
+            "sid": null,
+            "source_type": "aws_managed",
+            "statement_index": 0,
+            "version_id": "v1",
+            "via_group": null
+          }
+        ]
+      },
+      "id": "e:4a9dc4a4baf9c362443f",
+      "source": "arn:aws:iam::000000000000:role/admin-role",
+      "target": "arn:aws:s3:::other-bucket",
+      "traversable": true,
+      "traversal": "access",
+      "type": "FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "category": "iam",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow"
+      },
+      "id": "e:bb2e745e43858c89d56c",
+      "source": "arn:aws:iam::000000000000:role/admin-role",
+      "target": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "traversable": false,
+      "traversal": "structural",
+      "type": "HAS_POLICY",
+      "weight": 0
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "basis": "evaluator",
+        "decision": "allow",
+        "layers": {
+          "boundary": "n/a",
+          "identity": "true",
+          "scp": "unknown"
+        },
+        "statements": [
+          {
+            "layer": "identity",
+            "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+            "policy_name": "AdministratorAccess",
+            "sid": null,
+            "source_type": "aws_managed",
+            "statement_index": 0,
+            "version_id": "v1",
+            "via_group": null
+          }
+        ]
+      },
+      "id": "e:96f5dbb0e323d76d1128",
+      "source": "arn:aws:iam::000000000000:role/admin-role",
+      "target": "aws-enumerator:account-admin/000000000000",
+      "traversable": true,
+      "traversal": "control",
+      "type": "IS_ADMIN_EQUIVALENT",
+      "weight": 0
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:putrolepolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-005",
+          "PRIVESC-008"
+        ]
+      },
+      "id": "e:36ffdc3d10a85d2a40b3",
+      "source": "arn:aws:iam::000000000000:role/fn-admin-role",
+      "target": "aws-enumerator:account-admin/000000000000",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_ESCALATE",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:putgrouppolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-004",
+          "PRIVESC-007"
+        ]
+      },
+      "id": "e:fb432cb387198ee45aa3",
+      "source": "arn:aws:iam::000000000000:role/fn-admin-role",
+      "target": "arn:aws:iam::000000000000:group/devs",
+      "traversable": false,
+      "traversal": "info",
+      "type": "CAN_MODIFY_PERMISSIONS_OF",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:putrolepolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-005",
+          "PRIVESC-008"
+        ]
+      },
+      "id": "e:dfb3faaf58edbce5c723",
+      "source": "arn:aws:iam::000000000000:role/fn-admin-role",
+      "target": "arn:aws:iam::000000000000:role/admin-role",
+      "traversable": false,
+      "traversal": "info",
+      "type": "CAN_MODIFY_PERMISSIONS_OF",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:putrolepolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-005",
+          "PRIVESC-008"
+        ]
+      },
+      "id": "e:0fc6895f6193894ab520",
+      "source": "arn:aws:iam::000000000000:role/fn-admin-role",
+      "target": "arn:aws:iam::000000000000:role/gha-deploy",
+      "traversable": false,
+      "traversal": "info",
+      "type": "CAN_MODIFY_PERMISSIONS_OF",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:putuserpolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-003",
+          "PRIVESC-006"
+        ]
+      },
+      "id": "e:bbf106b45728ba60f2d0",
+      "source": "arn:aws:iam::000000000000:role/fn-admin-role",
+      "target": "arn:aws:iam::000000000000:user/admin-user",
+      "traversable": false,
+      "traversal": "info",
+      "type": "CAN_MODIFY_PERMISSIONS_OF",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:putuserpolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-003",
+          "PRIVESC-006"
+        ]
+      },
+      "id": "e:c2fc4e6aa5c1905ddc3c",
+      "source": "arn:aws:iam::000000000000:role/fn-admin-role",
+      "target": "arn:aws:iam::000000000000:user/leaked-user",
+      "traversable": false,
+      "traversal": "info",
+      "type": "CAN_MODIFY_PERMISSIONS_OF",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:addusertogroup"
+        ],
+        "rule_ids": [
+          "PRIVESC-012"
+        ]
+      },
+      "id": "e:607ed3d90fb33cbdf716",
+      "source": "arn:aws:iam::000000000000:role/fn-admin-role",
+      "target": "arn:aws:iam::000000000000:group/devs",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_TAKEOVER",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:updateassumerolepolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-013"
+        ]
+      },
+      "id": "e:567cb8b2fed8247b7f90",
+      "source": "arn:aws:iam::000000000000:role/fn-admin-role",
+      "target": "arn:aws:iam::000000000000:role/admin-role",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_TAKEOVER",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:updateassumerolepolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-013"
+        ]
+      },
+      "id": "e:a8425a2db0f2cd458fd0",
+      "source": "arn:aws:iam::000000000000:role/fn-admin-role",
+      "target": "arn:aws:iam::000000000000:role/gha-deploy",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_TAKEOVER",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:createaccesskey"
+        ],
+        "rule_ids": [
+          "PRIVESC-009",
+          "PRIVESC-011"
+        ]
+      },
+      "id": "e:f0509e5bf79cc29b5adb",
+      "source": "arn:aws:iam::000000000000:role/fn-admin-role",
+      "target": "arn:aws:iam::000000000000:user/admin-user",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_TAKEOVER",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:createaccesskey"
+        ],
+        "rule_ids": [
+          "PRIVESC-009",
+          "PRIVESC-011"
+        ]
+      },
+      "id": "e:c820b1de5d11dbbe953b",
+      "source": "arn:aws:iam::000000000000:role/fn-admin-role",
+      "target": "arn:aws:iam::000000000000:user/leaked-user",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_TAKEOVER",
+      "weight": 1
+    },
+    {
+      "category": "lambda",
+      "confidence": "definite",
+      "evidence": {
+        "actions": [
+          "lambda:UpdateFunctionCode"
+        ],
+        "decision": "allow",
+        "layers": {
+          "boundary": "n/a",
+          "identity": "true",
+          "rcp": "n/a",
+          "resource": "unknown",
+          "scp": "unknown"
+        },
+        "statements": [
+          {
+            "layer": "identity",
+            "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+            "policy_name": "AdministratorAccess",
+            "sid": null,
+            "source_type": "aws_managed",
+            "statement_index": 0,
+            "version_id": "v1",
+            "via_group": null
+          }
+        ]
+      },
+      "id": "e:4a29c785d406f5db6399",
+      "source": "arn:aws:iam::000000000000:role/fn-admin-role",
+      "target": "arn:aws:lambda:eu-west-2:000000000000:function:etl",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_UPDATE_CODE",
+      "weight": 1
+    },
+    {
+      "category": "s3",
+      "confidence": "definite",
+      "evidence": {
+        "access_types": [
+          "CAN_ADMIN",
+          "CAN_READ",
+          "CAN_WRITE",
+          "FULL_ACCESS"
+        ],
+        "actions": [
+          "s3:*"
+        ],
+        "decision": "allow",
+        "layers": {
+          "boundary": "n/a",
+          "identity": "true",
+          "rcp": "unknown",
+          "resource": "n/a",
+          "scp": "unknown"
+        },
+        "legacy": {
+          "direction": "forward",
+          "file": "s3_relationships.json",
+          "type": "FULL_ACCESS"
+        },
+        "statements": [
+          {
+            "layer": "identity",
+            "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+            "policy_name": "AdministratorAccess",
+            "sid": null,
+            "source_type": "aws_managed",
+            "statement_index": 0,
+            "version_id": "v1",
+            "via_group": null
+          }
+        ]
+      },
+      "id": "e:40b1cc8fe0bc7f8d85f4",
+      "source": "arn:aws:iam::000000000000:role/fn-admin-role",
+      "target": "arn:aws:s3:::data-bucket",
+      "traversable": true,
+      "traversal": "access",
+      "type": "FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "category": "s3",
+      "confidence": "definite",
+      "evidence": {
+        "access_types": [
+          "CAN_ADMIN",
+          "CAN_READ",
+          "CAN_WRITE",
+          "FULL_ACCESS"
+        ],
+        "actions": [
+          "s3:*"
+        ],
+        "decision": "allow",
+        "layers": {
+          "boundary": "n/a",
+          "identity": "true",
+          "rcp": "unknown",
+          "resource": "n/a",
+          "scp": "unknown"
+        },
+        "legacy": {
+          "direction": "forward",
+          "file": "s3_relationships.json",
+          "type": "FULL_ACCESS"
+        },
+        "statements": [
+          {
+            "layer": "identity",
+            "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+            "policy_name": "AdministratorAccess",
+            "sid": null,
+            "source_type": "aws_managed",
+            "statement_index": 0,
+            "version_id": "v1",
+            "via_group": null
+          }
+        ]
+      },
+      "id": "e:9635b8f3abee7a1f43c2",
+      "source": "arn:aws:iam::000000000000:role/fn-admin-role",
+      "target": "arn:aws:s3:::other-bucket",
+      "traversable": true,
+      "traversal": "access",
+      "type": "FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "category": "iam",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow"
+      },
+      "id": "e:da74cc4cd89f211165b2",
+      "source": "arn:aws:iam::000000000000:role/fn-admin-role",
+      "target": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "traversable": false,
+      "traversal": "structural",
+      "type": "HAS_POLICY",
+      "weight": 0
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "basis": "evaluator",
+        "decision": "allow",
+        "layers": {
+          "boundary": "n/a",
+          "identity": "true",
+          "scp": "unknown"
+        },
+        "statements": [
+          {
+            "layer": "identity",
+            "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+            "policy_name": "AdministratorAccess",
+            "sid": null,
+            "source_type": "aws_managed",
+            "statement_index": 0,
+            "version_id": "v1",
+            "via_group": null
+          }
+        ]
+      },
+      "id": "e:4de4acd7eb6522d7e0ed",
+      "source": "arn:aws:iam::000000000000:role/fn-admin-role",
+      "target": "aws-enumerator:account-admin/000000000000",
+      "traversable": true,
+      "traversal": "control",
+      "type": "IS_ADMIN_EQUIVALENT",
+      "weight": 0
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:putrolepolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-005",
+          "PRIVESC-008"
+        ]
+      },
+      "id": "e:cb2fdd72e170ec266218",
+      "source": "arn:aws:iam::000000000000:role/gha-deploy",
+      "target": "aws-enumerator:account-admin/000000000000",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_ESCALATE",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:putgrouppolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-004",
+          "PRIVESC-007"
+        ]
+      },
+      "id": "e:b511a1fb5624e44ff86d",
+      "source": "arn:aws:iam::000000000000:role/gha-deploy",
+      "target": "arn:aws:iam::000000000000:group/devs",
+      "traversable": false,
+      "traversal": "info",
+      "type": "CAN_MODIFY_PERMISSIONS_OF",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:putrolepolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-005",
+          "PRIVESC-008"
+        ]
+      },
+      "id": "e:7ad2646acc62511115db",
+      "source": "arn:aws:iam::000000000000:role/gha-deploy",
+      "target": "arn:aws:iam::000000000000:role/admin-role",
+      "traversable": false,
+      "traversal": "info",
+      "type": "CAN_MODIFY_PERMISSIONS_OF",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:putrolepolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-005",
+          "PRIVESC-008"
+        ]
+      },
+      "id": "e:54ecd8364dfb624cd69a",
+      "source": "arn:aws:iam::000000000000:role/gha-deploy",
+      "target": "arn:aws:iam::000000000000:role/fn-admin-role",
+      "traversable": false,
+      "traversal": "info",
+      "type": "CAN_MODIFY_PERMISSIONS_OF",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:putuserpolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-003",
+          "PRIVESC-006"
+        ]
+      },
+      "id": "e:3b609608a7b8849da8f0",
+      "source": "arn:aws:iam::000000000000:role/gha-deploy",
+      "target": "arn:aws:iam::000000000000:user/admin-user",
+      "traversable": false,
+      "traversal": "info",
+      "type": "CAN_MODIFY_PERMISSIONS_OF",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:putuserpolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-003",
+          "PRIVESC-006"
+        ]
+      },
+      "id": "e:f4d4f2d41aa9d1a2a449",
+      "source": "arn:aws:iam::000000000000:role/gha-deploy",
+      "target": "arn:aws:iam::000000000000:user/leaked-user",
+      "traversable": false,
+      "traversal": "info",
+      "type": "CAN_MODIFY_PERMISSIONS_OF",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:addusertogroup"
+        ],
+        "rule_ids": [
+          "PRIVESC-012"
+        ]
+      },
+      "id": "e:606b4dc97adc7512befc",
+      "source": "arn:aws:iam::000000000000:role/gha-deploy",
+      "target": "arn:aws:iam::000000000000:group/devs",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_TAKEOVER",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:updateassumerolepolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-013"
+        ]
+      },
+      "id": "e:87deda07cc5f250a5963",
+      "source": "arn:aws:iam::000000000000:role/gha-deploy",
+      "target": "arn:aws:iam::000000000000:role/admin-role",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_TAKEOVER",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:updateassumerolepolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-013"
+        ]
+      },
+      "id": "e:58af7eb0efff7397a800",
+      "source": "arn:aws:iam::000000000000:role/gha-deploy",
+      "target": "arn:aws:iam::000000000000:role/fn-admin-role",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_TAKEOVER",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:createaccesskey"
+        ],
+        "rule_ids": [
+          "PRIVESC-009",
+          "PRIVESC-011"
+        ]
+      },
+      "id": "e:acb153cdfe1911aa0e11",
+      "source": "arn:aws:iam::000000000000:role/gha-deploy",
+      "target": "arn:aws:iam::000000000000:user/admin-user",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_TAKEOVER",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:createaccesskey"
+        ],
+        "rule_ids": [
+          "PRIVESC-009",
+          "PRIVESC-011"
+        ]
+      },
+      "id": "e:22e14e4d84506835b3c5",
+      "source": "arn:aws:iam::000000000000:role/gha-deploy",
+      "target": "arn:aws:iam::000000000000:user/leaked-user",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_TAKEOVER",
+      "weight": 1
+    },
+    {
+      "category": "lambda",
+      "confidence": "definite",
+      "evidence": {
+        "actions": [
+          "lambda:UpdateFunctionCode"
+        ],
+        "decision": "allow",
+        "layers": {
+          "boundary": "n/a",
+          "identity": "true",
+          "rcp": "n/a",
+          "resource": "unknown",
+          "scp": "unknown"
+        },
+        "matched_actions": [
+          "lambda:updatefunctioncode"
+        ],
+        "rule_ids": [
+          "PRIVESC-021"
+        ],
+        "statements": [
+          {
+            "layer": "identity",
+            "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+            "policy_name": "AdministratorAccess",
+            "sid": null,
+            "source_type": "aws_managed",
+            "statement_index": 0,
+            "version_id": "v1",
+            "via_group": null
+          }
+        ]
+      },
+      "id": "e:5ecf18bf2ed325f65a32",
+      "source": "arn:aws:iam::000000000000:role/gha-deploy",
+      "target": "arn:aws:lambda:eu-west-2:000000000000:function:etl",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_UPDATE_CODE",
+      "weight": 1
+    },
+    {
+      "category": "s3",
+      "confidence": "definite",
+      "evidence": {
+        "access_types": [
+          "CAN_ADMIN",
+          "CAN_READ",
+          "CAN_WRITE",
+          "FULL_ACCESS"
+        ],
+        "actions": [
+          "s3:*"
+        ],
+        "decision": "allow",
+        "layers": {
+          "boundary": "n/a",
+          "identity": "true",
+          "rcp": "unknown",
+          "resource": "n/a",
+          "scp": "unknown"
+        },
+        "legacy": {
+          "direction": "forward",
+          "file": "s3_relationships.json",
+          "type": "FULL_ACCESS"
+        },
+        "statements": [
+          {
+            "layer": "identity",
+            "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+            "policy_name": "AdministratorAccess",
+            "sid": null,
+            "source_type": "aws_managed",
+            "statement_index": 0,
+            "version_id": "v1",
+            "via_group": null
+          }
+        ]
+      },
+      "id": "e:6d8e2ef31c58134e5f25",
+      "source": "arn:aws:iam::000000000000:role/gha-deploy",
+      "target": "arn:aws:s3:::data-bucket",
+      "traversable": true,
+      "traversal": "access",
+      "type": "FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "category": "s3",
+      "confidence": "definite",
+      "evidence": {
+        "access_types": [
+          "CAN_ADMIN",
+          "CAN_READ",
+          "CAN_WRITE",
+          "FULL_ACCESS"
+        ],
+        "actions": [
+          "s3:*"
+        ],
+        "decision": "allow",
+        "layers": {
+          "boundary": "n/a",
+          "identity": "true",
+          "rcp": "unknown",
+          "resource": "n/a",
+          "scp": "unknown"
+        },
+        "legacy": {
+          "direction": "forward",
+          "file": "s3_relationships.json",
+          "type": "FULL_ACCESS"
+        },
+        "statements": [
+          {
+            "layer": "identity",
+            "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+            "policy_name": "AdministratorAccess",
+            "sid": null,
+            "source_type": "aws_managed",
+            "statement_index": 0,
+            "version_id": "v1",
+            "via_group": null
+          }
+        ]
+      },
+      "id": "e:9c78f9c3656a238f4569",
+      "source": "arn:aws:iam::000000000000:role/gha-deploy",
+      "target": "arn:aws:s3:::other-bucket",
+      "traversable": true,
+      "traversal": "access",
+      "type": "FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "category": "iam",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow"
+      },
+      "id": "e:25507194e0b47f9c5774",
+      "source": "arn:aws:iam::000000000000:role/gha-deploy",
+      "target": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "traversable": false,
+      "traversal": "structural",
+      "type": "HAS_POLICY",
+      "weight": 0
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "basis": "evaluator",
+        "decision": "allow",
+        "layers": {
+          "boundary": "n/a",
+          "identity": "true",
+          "scp": "unknown"
+        },
+        "statements": [
+          {
+            "layer": "identity",
+            "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+            "policy_name": "AdministratorAccess",
+            "sid": null,
+            "source_type": "aws_managed",
+            "statement_index": 0,
+            "version_id": "v1",
+            "via_group": null
+          }
+        ]
+      },
+      "id": "e:3e54a060a905ca9d4c43",
+      "source": "arn:aws:iam::000000000000:role/gha-deploy",
+      "target": "aws-enumerator:account-admin/000000000000",
+      "traversable": true,
+      "traversal": "control",
+      "type": "IS_ADMIN_EQUIVALENT",
+      "weight": 0
+    },
+    {
+      "category": "trust",
+      "confidence": "definite",
+      "evidence": {
+        "actions": [
+          "sts:AssumeRole"
+        ],
+        "basis": "evaluator",
+        "decision": "allow",
+        "layers": {
+          "boundary": "n/a",
+          "identity": "true",
+          "rcp": "n/a",
+          "scp": "unknown",
+          "trust": "true"
+        },
+        "statements": [
+          {
+            "layer": "identity",
+            "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+            "policy_name": "AdministratorAccess",
+            "sid": null,
+            "source_type": "aws_managed",
+            "statement_index": 0,
+            "version_id": "v1",
+            "via_group": null
+          },
+          {
+            "layer": "trust",
+            "policy_arn": "arn:aws:iam::000000000000:role/admin-role",
+            "policy_name": "trust",
+            "sid": null,
+            "source_type": "resource",
+            "statement_index": 0,
+            "version_id": null,
+            "via_group": null
+          }
+        ],
+        "trust": "explicit-principal",
+        "trust_statement": 0
+      },
+      "id": "e:845f0d566758dbbf4b5d",
+      "source": "arn:aws:iam::000000000000:user/admin-user",
+      "target": "arn:aws:iam::000000000000:role/admin-role",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_ASSUME",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:putuserpolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-003",
+          "PRIVESC-004",
+          "PRIVESC-006",
+          "PRIVESC-007"
+        ]
+      },
+      "id": "e:ba8e78bd541575fe36ef",
+      "source": "arn:aws:iam::000000000000:user/admin-user",
+      "target": "aws-enumerator:account-admin/000000000000",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_ESCALATE",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:putrolepolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-005",
+          "PRIVESC-008"
+        ]
+      },
+      "id": "e:ed6ac0789594444e4610",
+      "source": "arn:aws:iam::000000000000:user/admin-user",
+      "target": "arn:aws:iam::000000000000:role/admin-role",
+      "traversable": false,
+      "traversal": "info",
+      "type": "CAN_MODIFY_PERMISSIONS_OF",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:putrolepolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-005",
+          "PRIVESC-008"
+        ]
+      },
+      "id": "e:dcc0c029f8f65938fb95",
+      "source": "arn:aws:iam::000000000000:user/admin-user",
+      "target": "arn:aws:iam::000000000000:role/fn-admin-role",
+      "traversable": false,
+      "traversal": "info",
+      "type": "CAN_MODIFY_PERMISSIONS_OF",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:putrolepolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-005",
+          "PRIVESC-008"
+        ]
+      },
+      "id": "e:881b9cd8441c023d7000",
+      "source": "arn:aws:iam::000000000000:user/admin-user",
+      "target": "arn:aws:iam::000000000000:role/gha-deploy",
+      "traversable": false,
+      "traversal": "info",
+      "type": "CAN_MODIFY_PERMISSIONS_OF",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:putuserpolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-003",
+          "PRIVESC-006"
+        ]
+      },
+      "id": "e:5a4b0689a027e64405b7",
+      "source": "arn:aws:iam::000000000000:user/admin-user",
+      "target": "arn:aws:iam::000000000000:user/leaked-user",
+      "traversable": false,
+      "traversal": "info",
+      "type": "CAN_MODIFY_PERMISSIONS_OF",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:updateassumerolepolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-013"
+        ]
+      },
+      "id": "e:21852782e6404a7dec9d",
+      "source": "arn:aws:iam::000000000000:user/admin-user",
+      "target": "arn:aws:iam::000000000000:role/admin-role",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_TAKEOVER",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:updateassumerolepolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-013"
+        ]
+      },
+      "id": "e:56d4dff605698a83a677",
+      "source": "arn:aws:iam::000000000000:user/admin-user",
+      "target": "arn:aws:iam::000000000000:role/fn-admin-role",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_TAKEOVER",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:updateassumerolepolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-013"
+        ]
+      },
+      "id": "e:97a10bb319a9cee82631",
+      "source": "arn:aws:iam::000000000000:user/admin-user",
+      "target": "arn:aws:iam::000000000000:role/gha-deploy",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_TAKEOVER",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:createaccesskey"
+        ],
+        "rule_ids": [
+          "PRIVESC-009",
+          "PRIVESC-011"
+        ]
+      },
+      "id": "e:9b8c3cbfb847fd9eccc3",
+      "source": "arn:aws:iam::000000000000:user/admin-user",
+      "target": "arn:aws:iam::000000000000:user/leaked-user",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_TAKEOVER",
+      "weight": 1
+    },
+    {
+      "category": "lambda",
+      "confidence": "definite",
+      "evidence": {
+        "actions": [
+          "lambda:UpdateFunctionCode"
+        ],
+        "decision": "allow",
+        "layers": {
+          "boundary": "n/a",
+          "identity": "true",
+          "rcp": "n/a",
+          "resource": "unknown",
+          "scp": "unknown"
+        },
+        "matched_actions": [
+          "lambda:updatefunctioncode"
+        ],
+        "rule_ids": [
+          "PRIVESC-021"
+        ],
+        "statements": [
+          {
+            "layer": "identity",
+            "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+            "policy_name": "AdministratorAccess",
+            "sid": null,
+            "source_type": "aws_managed",
+            "statement_index": 0,
+            "version_id": "v1",
+            "via_group": null
+          }
+        ]
+      },
+      "id": "e:36113474256cb537be41",
+      "source": "arn:aws:iam::000000000000:user/admin-user",
+      "target": "arn:aws:lambda:eu-west-2:000000000000:function:etl",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_UPDATE_CODE",
+      "weight": 1
+    },
+    {
+      "category": "s3",
+      "confidence": "definite",
+      "evidence": {
+        "access_types": [
+          "CAN_ADMIN",
+          "CAN_READ",
+          "CAN_WRITE",
+          "FULL_ACCESS"
+        ],
+        "actions": [
+          "s3:*"
+        ],
+        "decision": "allow",
+        "layers": {
+          "boundary": "n/a",
+          "identity": "true",
+          "rcp": "unknown",
+          "resource": "n/a",
+          "scp": "unknown"
+        },
+        "legacy": {
+          "direction": "forward",
+          "file": "s3_relationships.json",
+          "type": "FULL_ACCESS"
+        },
+        "statements": [
+          {
+            "layer": "identity",
+            "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+            "policy_name": "AdministratorAccess",
+            "sid": null,
+            "source_type": "aws_managed",
+            "statement_index": 0,
+            "version_id": "v1",
+            "via_group": null
+          }
+        ]
+      },
+      "id": "e:fd2bb350fb858810295e",
+      "source": "arn:aws:iam::000000000000:user/admin-user",
+      "target": "arn:aws:s3:::data-bucket",
+      "traversable": true,
+      "traversal": "access",
+      "type": "FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "category": "s3",
+      "confidence": "definite",
+      "evidence": {
+        "access_types": [
+          "CAN_ADMIN",
+          "CAN_READ",
+          "CAN_WRITE",
+          "FULL_ACCESS"
+        ],
+        "actions": [
+          "s3:*"
+        ],
+        "decision": "allow",
+        "layers": {
+          "boundary": "n/a",
+          "identity": "true",
+          "rcp": "unknown",
+          "resource": "n/a",
+          "scp": "unknown"
+        },
+        "legacy": {
+          "direction": "forward",
+          "file": "s3_relationships.json",
+          "type": "FULL_ACCESS"
+        },
+        "statements": [
+          {
+            "layer": "identity",
+            "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+            "policy_name": "AdministratorAccess",
+            "sid": null,
+            "source_type": "aws_managed",
+            "statement_index": 0,
+            "version_id": "v1",
+            "via_group": null
+          }
+        ]
+      },
+      "id": "e:1da43346fab9c5229dd8",
+      "source": "arn:aws:iam::000000000000:user/admin-user",
+      "target": "arn:aws:s3:::other-bucket",
+      "traversable": true,
+      "traversal": "access",
+      "type": "FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "category": "iam",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow"
+      },
+      "id": "e:de065896ae15ceb277b7",
+      "source": "arn:aws:iam::000000000000:user/admin-user",
+      "target": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "traversable": false,
+      "traversal": "structural",
+      "type": "HAS_POLICY",
+      "weight": 0
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "basis": "evaluator",
+        "decision": "allow",
+        "layers": {
+          "boundary": "n/a",
+          "identity": "true",
+          "scp": "unknown"
+        },
+        "statements": [
+          {
+            "layer": "identity",
+            "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+            "policy_name": "AdministratorAccess",
+            "sid": null,
+            "source_type": "aws_managed",
+            "statement_index": 0,
+            "version_id": "v1",
+            "via_group": null
+          }
+        ]
+      },
+      "id": "e:8a819ddb682c7be69095",
+      "source": "arn:aws:iam::000000000000:user/admin-user",
+      "target": "aws-enumerator:account-admin/000000000000",
+      "traversable": true,
+      "traversal": "control",
+      "type": "IS_ADMIN_EQUIVALENT",
+      "weight": 0
+    },
+    {
+      "category": "iam",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "traversable_rule": {
+          "holds": true,
+          "rule": "member-not-reduced"
+        }
+      },
+      "id": "e:a62398bd5aa03bafcc52",
+      "source": "arn:aws:iam::000000000000:user/admin-user",
+      "target": "arn:aws:iam::000000000000:group/devs",
+      "traversable": true,
+      "traversal": "control",
+      "type": "MEMBER_OF",
+      "weight": 0
+    },
+    {
+      "category": "s3",
+      "confidence": "definite",
+      "evidence": {
+        "access_types": [
+          "CAN_READ"
+        ],
+        "actions": [
+          "s3:GetObject",
+          "s3:ListBucket"
+        ],
+        "decision": "allow",
+        "layers": {
+          "boundary": "n/a",
+          "identity": "true",
+          "rcp": "unknown",
+          "resource": "n/a",
+          "scp": "unknown"
+        },
+        "legacy": {
+          "direction": "forward",
+          "file": "s3_relationships.json",
+          "type": "CAN_READ"
+        },
+        "statements": [
+          {
+            "layer": "identity",
+            "policy_arn": null,
+            "policy_name": "dev",
+            "sid": null,
+            "source_type": "inline",
+            "statement_index": 1,
+            "version_id": null,
+            "via_group": null
+          }
+        ]
+      },
+      "id": "e:90e044e5964930389ffd",
+      "source": "arn:aws:iam::000000000000:user/leaked-user",
+      "target": "arn:aws:s3:::data-bucket",
+      "traversable": true,
+      "traversal": "access",
+      "type": "CAN_READ",
+      "weight": 1
+    },
+    {
+      "category": "lambda",
+      "confidence": "definite",
+      "evidence": {
+        "actions": [
+          "lambda:UpdateFunctionCode"
+        ],
+        "decision": "allow",
+        "layers": {
+          "boundary": "n/a",
+          "identity": "true",
+          "rcp": "n/a",
+          "resource": "unknown",
+          "scp": "unknown"
+        },
+        "matched_actions": [
+          "lambda:updatefunctioncode"
+        ],
+        "rule_ids": [
+          "PRIVESC-021"
+        ],
+        "statements": [
+          {
+            "layer": "identity",
+            "policy_arn": null,
+            "policy_name": "dev",
+            "sid": null,
+            "source_type": "inline",
+            "statement_index": 0,
+            "version_id": null,
+            "via_group": null
+          }
+        ]
+      },
+      "id": "e:1d87b008ade5a1db982a",
+      "source": "arn:aws:iam::000000000000:user/leaked-user",
+      "target": "arn:aws:lambda:eu-west-2:000000000000:function:etl",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_UPDATE_CODE",
+      "weight": 1
+    },
+    {
+      "category": "iam",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "traversable_rule": {
+          "holds": true,
+          "rule": "member-not-reduced"
+        }
+      },
+      "id": "e:7378ef1960728989aae5",
+      "source": "arn:aws:iam::000000000000:user/leaked-user",
+      "target": "arn:aws:iam::000000000000:group/devs",
+      "traversable": true,
+      "traversal": "control",
+      "type": "MEMBER_OF",
+      "weight": 0
+    },
+    {
+      "category": "compute",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "technique": "execution-role"
+      },
+      "id": "e:8f802c6611aec229b790",
+      "source": "arn:aws:lambda:eu-west-2:000000000000:function:etl",
+      "target": "arn:aws:iam::000000000000:role/fn-admin-role",
+      "traversable": true,
+      "traversal": "control",
+      "type": "USES_ROLE",
+      "weight": 0
+    },
+    {
+      "category": "trust",
+      "confidence": "definite",
+      "evidence": {
+        "actions": [
+          "sts:AssumeRoleWithWebIdentity"
+        ],
+        "decision": "allow",
+        "provider": "github",
+        "trust_statement": 0
+      },
+      "id": "e:07974b739fe002f6d3f1",
+      "props": {
+        "admits": "any",
+        "technique": "github-oidc-any-repository"
+      },
+      "source": "aws-enumerator:anonymous",
+      "target": "arn:aws:iam::000000000000:role/gha-deploy",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_ASSUME_WEB_IDENTITY",
+      "weight": 1
+    },
+    {
+      "category": "trust",
+      "confidence": "definite",
+      "evidence": {
+        "actions": [
+          "sts:AssumeRole"
+        ],
+        "decision": "allow",
+        "trust_statement": 0
+      },
+      "id": "e:aeb19255030097a2facf",
+      "source": "svc:lambda.amazonaws.com",
+      "target": "arn:aws:iam::000000000000:role/fn-admin-role",
+      "traversable": false,
+      "traversal": "info",
+      "type": "SERVICE_CAN_ASSUME",
+      "weight": 0
+    }
+  ],
+  "evaluation_gaps": [
+    {
+      "code": "coverage-not-recorded",
+      "count": null,
+      "detail": "The report predates _coverage.json: denied or failed collection cannot be told apart from empty data."
+    },
+    {
+      "code": "external-identity",
+      "count": null,
+      "detail": "Identity policies of external principals are not visible; cross-account edges are conditional."
+    },
+    {
+      "code": "iam:legacy-layout",
+      "count": null,
+      "detail": "IAM was collected with the per-entity (d13c215) layout: no policy versions, no identity providers, boundaries and tags may be missing"
+    },
+    {
+      "code": "org:rcp-unknown",
+      "count": null,
+      "detail": "Resource control policies are unknown (membership unknown)"
+    },
+    {
+      "code": "org:scp-unknown",
+      "count": null,
+      "detail": "Service control policies are unknown (membership unknown)"
+    },
+    {
+      "code": "runtime-conditions",
+      "count": null,
+      "detail": "Condition values known only at request time (source IP, MFA, tags in the request) are not evaluated; such decisions are conditional."
+    },
+    {
+      "code": "session-policies",
+      "count": null,
+      "detail": "Session policies passed at AssumeRole time can only narrow permissions and are not modelled."
+    }
+  ],
+  "findings": [
+    {
+      "account": "000000000000",
+      "base_severity": "CRITICAL",
+      "category": "dangerous_permission",
+      "confidence": "definite",
+      "description": "This role is administrator-equivalent: its effective permissions allow every action on every resource. Its 65 individual privilege-escalation and dangerous-permission findings are summarised here.",
+      "evidence": {
+        "basis": "allow-star",
+        "rule_ids": [
+          "DANGER-001"
+        ],
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+                "policy_name": "AdministratorAccess",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "aws_managed",
+                "statement_index": 0,
+                "version_id": "v1"
+              }
+            ],
+            "resource": "*",
+            "rule_action": "*"
+          }
+        ],
+        "subsumed": [
+          {
+            "fingerprint": "023ce0c08cc2d5e533eb4e477400992b",
+            "id": "PRIVESC-021",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "03fee14628a08f8e9bc4d02f2ccaa39f",
+            "id": "PRIVESC-024",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "083c22d98706f96ccc1359ac7e1f1fd3",
+            "id": "PRIVESC-007",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "08a2d04db119c3d0d547e309912a8f5e",
+            "id": "DANGER-005",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "12b1068f499e3eb635e8a073926fc1a5",
+            "id": "PRIVESC-008",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "15353d38da5b8f5fc9ac0bbc5ea17fea",
+            "id": "PRIVESC-028",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "1893685bac622c3d8a31f533e5fba1e2",
+            "id": "PRIVESC-038",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "26997d37a2696f4dee9f8ec141d2b0cc",
+            "id": "PRIVESC-045",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "282e1419827d56ac343fad9b649b8549",
+            "id": "PRIVESC-059",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "2e2569ce14b8c336f3fb50483be63176",
+            "id": "PRIVESC-034",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "2eb3b122105ea27c69f65e3648bc2fc1",
+            "id": "PRIVESC-060",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "2fa6c0b4ee8014a72ceb82ecbae9b329",
+            "id": "PRIVESC-042",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "315e9194233f3979b193665e7b0ecfec",
+            "id": "PRIVESC-019",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "316ea3e374784defd2539457ed7c6714",
+            "id": "PRIVESC-041",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "327b5aa771a07defe868c12e646aa087",
+            "id": "DANGER-010",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "32c8123601669b2938731e4211e02426",
+            "id": "PRIVESC-018",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "37af21068d61051745f1e47bdf51828d",
+            "id": "PRIVESC-033",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "475c7eb13e52999b890635b009af2d27",
+            "id": "PRIVESC-065",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "4a765865f41deac31d336cdc7f308280",
+            "id": "PRIVESC-047",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "5004379cb6c24d1888a8c4f1264415c0",
+            "id": "PRIVESC-011",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "501806a93792014da478bad98d80003f",
+            "id": "PRIVESC-057",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "51f41997e6cffed7b885644ccda65cd4",
+            "id": "PRIVESC-017",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "531a237e03140e3ad44f06467f521025",
+            "id": "PRIVESC-010",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "5b29e51d69f6af0902b20469d69d69d9",
+            "id": "PRIVESC-020",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "60cd8c996ab6f00d820875e43f4c6f7a",
+            "id": "PRIVESC-013",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "62fe7336199d8619518161e53dab5b61",
+            "id": "PRIVESC-004",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "67dbeeae356a8fb665d5dfcbc0d6a81b",
+            "id": "PRIVESC-035",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "69c75dcb4cba0d73fa69b94e6185bae0",
+            "id": "PRIVESC-001",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "6bbe97b6104d87176486edcff84bc0c5",
+            "id": "PRIVESC-030",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "6e5e6bdc25b95980089c6be69da7289d",
+            "id": "PRIVESC-014",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "70deabf948b14f231bfaf9f16c8bb4ce",
+            "id": "PRIVESC-044",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "7662eadfd17746c691f966887c4c4640",
+            "id": "PRIVESC-061",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "7aed99772c6d34ef21000113fe22853a",
+            "id": "DANGER-009",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "7ce27e29f6bcb2ab41ef2b34ac3a8741",
+            "id": "PRIVESC-016",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "7d17a248a2abe99462e14f2ef8f3c955",
+            "id": "PRIVESC-032",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "7d19bd81d4af2586ed50e01aabe0471f",
+            "id": "DANGER-007",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "7fc7390354a2fa9e1c8aa204f60f078b",
+            "id": "PRIVESC-040",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "8b1787a75ff15afec26b8720646934b8",
+            "id": "PRIVESC-049",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "8eb47ffcca2de50e8744e640756f9405",
+            "id": "PRIVESC-043",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "9231e4ef4b152f95599daf8ab89da45f",
+            "id": "PRIVESC-063",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "9375b0fd145dc57f725a96b54c64cb2a",
+            "id": "PRIVESC-015",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "9b8bd7ecf754a3e5bbc664b91a8bff0b",
+            "id": "DANGER-004",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "9c47b41b5040d41cb263309a56a4c721",
+            "id": "PRIVESC-062",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "9e267bb634ba86cc8b33cb21ce02e80e",
+            "id": "DANGER-002",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "9fa33d42838b97e2cbe8e385e9d1ada8",
+            "id": "PRIVESC-048",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "a5db8b10f32b59b9c957efbcd00d4929",
+            "id": "PRIVESC-025",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "a8381225c3db1fb1a3148aeb52080b9d",
+            "id": "DANGER-006",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "a852cc6f7b9751115842bdb8e186bd1d",
+            "id": "PRIVESC-005",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "b82a5711f412ff9560908fc2632e34ff",
+            "id": "PRIVESC-026",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "be6b25a6b34becf20d307d0ce0180ee5",
+            "id": "PRIVESC-002",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "c065039a7cb67030e82de37e7a248280",
+            "id": "DANGER-001",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "c127c85069d19f1abf82084de2464fe5",
+            "id": "PRIVESC-027",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "c1dd5f115ddc770889a4ec1eeb2aaea6",
+            "id": "DANGER-003",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "c527b6a600dc966d4ff874388bd34934",
+            "id": "PRIVESC-037",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "c65e5bb17b8aee3510bb7a2e9fbee91b",
+            "id": "PRIVESC-064",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "c71827fe6c4e613a08612de8f16dda29",
+            "id": "DANGER-008",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "d0229056725ee4d443b9804fbe50b7d9",
+            "id": "PRIVESC-031",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "d89fc0003fd81f46abbc279e40248dcb",
+            "id": "PRIVESC-046",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "db46fa6e3376af7da5171d2340a48fda",
+            "id": "PRIVESC-012",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "dd727c930ceaf536832e65a284d25ae1",
+            "id": "PRIVESC-039",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "e354d26a7e6b472ffe8821da2bc4ae7d",
+            "id": "PRIVESC-058",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "e8dc85c6a2f5aab9ae719c36e9d118e4",
+            "id": "PRIVESC-036",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "eaf0747dabe1bb23f5288760092d5522",
+            "id": "PRIVESC-009",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "f4648d877bd2fced1b5f486031a5505e",
+            "id": "PRIVESC-003",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "f956197bd9af3e5bdb0e0a34ca748017",
+            "id": "PRIVESC-006",
+            "severity": "CRITICAL"
+          }
+        ],
+        "subsumed_count": 65
+      },
+      "fingerprint": "9904cfd74a406bb4b069091fe5e8cb67",
+      "id": "ADMIN-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "*",
+        "ec2:*",
+        "iam:*",
+        "iam:passrole",
+        "kms:decrypt",
+        "lambda:*",
+        "s3:*",
+        "secretsmanager:getsecretvalue",
+        "ssm:getparameter",
+        "ssm:getparameters",
+        "ssm:getparametersbypath",
+        "sts:assumerole"
+      ],
+      "node_id": "arn:aws:iam::000000000000:role/admin-role",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#high-value-targets-to-hunt",
+      "related_node_ids": [
+        "aws-enumerator:account-admin/000000000000"
+      ],
+      "remediation": "Treat this principal as an account administrator: limit who can use it (trust policy, group membership, credentials), require MFA, and replace broad grants (Action:* or iam:*) by the permissions it needs.",
+      "severity": "CRITICAL",
+      "status": "open",
+      "subsumes": [
+        "DANGER-001",
+        "DANGER-002",
+        "DANGER-003",
+        "DANGER-004",
+        "DANGER-005",
+        "DANGER-006",
+        "DANGER-007",
+        "DANGER-008",
+        "DANGER-009",
+        "DANGER-010",
+        "PRIVESC-001",
+        "PRIVESC-002",
+        "PRIVESC-003",
+        "PRIVESC-004",
+        "PRIVESC-005",
+        "PRIVESC-006",
+        "PRIVESC-007",
+        "PRIVESC-008",
+        "PRIVESC-009",
+        "PRIVESC-010",
+        "PRIVESC-011",
+        "PRIVESC-012",
+        "PRIVESC-013",
+        "PRIVESC-014",
+        "PRIVESC-015",
+        "PRIVESC-016",
+        "PRIVESC-017",
+        "PRIVESC-018",
+        "PRIVESC-019",
+        "PRIVESC-020",
+        "PRIVESC-021",
+        "PRIVESC-024",
+        "PRIVESC-025",
+        "PRIVESC-026",
+        "PRIVESC-027",
+        "PRIVESC-028",
+        "PRIVESC-030",
+        "PRIVESC-031",
+        "PRIVESC-032",
+        "PRIVESC-033",
+        "PRIVESC-034",
+        "PRIVESC-035",
+        "PRIVESC-036",
+        "PRIVESC-037",
+        "PRIVESC-038",
+        "PRIVESC-039",
+        "PRIVESC-040",
+        "PRIVESC-041",
+        "PRIVESC-042",
+        "PRIVESC-043",
+        "PRIVESC-044",
+        "PRIVESC-045",
+        "PRIVESC-046",
+        "PRIVESC-047",
+        "PRIVESC-048",
+        "PRIVESC-049",
+        "PRIVESC-057",
+        "PRIVESC-058",
+        "PRIVESC-059",
+        "PRIVESC-060",
+        "PRIVESC-061",
+        "PRIVESC-062",
+        "PRIVESC-063",
+        "PRIVESC-064",
+        "PRIVESC-065"
+      ],
+      "title": "Administrator-equivalent principal"
+    },
+    {
+      "account": "000000000000",
+      "base_severity": "CRITICAL",
+      "category": "dangerous_permission",
+      "confidence": "definite",
+      "description": "This role is administrator-equivalent: its effective permissions allow every action on every resource. Its 64 individual privilege-escalation and dangerous-permission findings are summarised here.",
+      "evidence": {
+        "basis": "allow-star",
+        "rule_ids": [
+          "DANGER-001"
+        ],
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+                "policy_name": "AdministratorAccess",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "aws_managed",
+                "statement_index": 0,
+                "version_id": "v1"
+              }
+            ],
+            "resource": "*",
+            "rule_action": "*"
+          }
+        ],
+        "subsumed": [
+          {
+            "fingerprint": "046d252ddeab0f9d67353f521151f086",
+            "id": "PRIVESC-043",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "09abbc7ef8b51f131743d0bdefa567a2",
+            "id": "PRIVESC-020",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "0d21132cb8ecfb6c84657f4ca6a74356",
+            "id": "PRIVESC-009",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "143e19033f2c1d1846b4b716193a2fe6",
+            "id": "DANGER-001",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "184c0f5a15c1492d5976faff2f079a76",
+            "id": "DANGER-003",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "20df2e5e30a6be8f15f2dfc09b64ad5c",
+            "id": "PRIVESC-018",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "2a3331c6f550837f7ff4d5be3adea61f",
+            "id": "PRIVESC-017",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "2aa6db3abdf05c9e39576b415e4d60d9",
+            "id": "PRIVESC-042",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "2bc200623851e906b041c0e09e566a43",
+            "id": "PRIVESC-010",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "2c0613bc664971dab6ff2bfaff04a1b7",
+            "id": "PRIVESC-028",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "2e02a6e4f3e9977d06ff194d9a8f3d51",
+            "id": "PRIVESC-024",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "2e8308c89bc045d17fbc8729aaf4376c",
+            "id": "PRIVESC-049",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "2ff1547feb7d1b810d8f88490cf9731f",
+            "id": "PRIVESC-026",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "316ba0cea1c857d672aaefed5053d8b9",
+            "id": "PRIVESC-019",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "336302085553c83af8c524ad388423f9",
+            "id": "PRIVESC-060",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "34a974f86570c17714bdf795d947ffa2",
+            "id": "PRIVESC-044",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "3ec63e768b4f66f8326a81a4206248e0",
+            "id": "PRIVESC-027",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "4863bbe3383a4199c1b8f55a0c1a9307",
+            "id": "PRIVESC-036",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "497745946298d7c7f435dd44eebbd735",
+            "id": "PRIVESC-045",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "50fd4a67c429213029db030caa338ccc",
+            "id": "PRIVESC-038",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "5452131f67dce2043189887bc92e1216",
+            "id": "PRIVESC-057",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "5a79b0c542071c4a71ac797dd56211bc",
+            "id": "PRIVESC-013",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "5d79d44637de893f1254bd48844250b8",
+            "id": "DANGER-006",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "63d8af3724736c75ff66af7ef187d223",
+            "id": "PRIVESC-037",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "6548ebb84700883c7b7be85caad3cc58",
+            "id": "PRIVESC-040",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "655fba2916deb37fe92821d84ad11e5e",
+            "id": "PRIVESC-008",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "6e83bb49e663bcc8942460232a6be8df",
+            "id": "PRIVESC-032",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "714f79a80ec832c14f1be4cd8c72eb19",
+            "id": "DANGER-008",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "74413ae114e9a9913e8e0fa6909c344b",
+            "id": "PRIVESC-007",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "754178db4faee1e24cb97d3ecf465a23",
+            "id": "PRIVESC-030",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "78891560f7bde67f6592581ef9e35f96",
+            "id": "DANGER-004",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "7dea56dd2b46b5bb3663ffd72635f9bc",
+            "id": "PRIVESC-002",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "7e2c39c7588229f0c04b9fba3f0ed5b2",
+            "id": "PRIVESC-011",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "815a2e6ad2323afab6ef57ce2e7ff898",
+            "id": "DANGER-002",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "825ded77dd8247b3a2a3ac7686699195",
+            "id": "PRIVESC-001",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "917ca5a8164617a28af0c6112244c080",
+            "id": "PRIVESC-003",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "93eafeb6ee119239986a0f20121dc566",
+            "id": "PRIVESC-061",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "98b35cebe9b9cc055a954182cdea62b8",
+            "id": "PRIVESC-006",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "a0c4d4dcff1d9dd1f0f963ecde129f94",
+            "id": "PRIVESC-004",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "a2a034ea8dd546e801b25126c022b459",
+            "id": "DANGER-010",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "ade4653640fcae9e2b96db3110e38f31",
+            "id": "PRIVESC-012",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "b040ce61fe680d7369be394e9eb48baf",
+            "id": "PRIVESC-064",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "b0b4c2e8c17ad806f7364cac6e05f4c7",
+            "id": "PRIVESC-033",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "b22cb67d201372aedf7ddb52e72e16ba",
+            "id": "PRIVESC-014",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "b8d51e1dfd33566c39835579ad978511",
+            "id": "PRIVESC-059",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "b9c6f444ac5d13814c652eadede062fa",
+            "id": "DANGER-005",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "bfa3e6daeed431957cdfbe2bf0bb3277",
+            "id": "PRIVESC-031",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "c50b60aa475bc88390a91f7ed43f78ec",
+            "id": "DANGER-009",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "c608c984b3d82b7d3adf34a6aca10b87",
+            "id": "PRIVESC-005",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "c8fbd05f17d176a386430185434c4f6f",
+            "id": "PRIVESC-062",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "ce2d16d9c07770ffc958ebd838cf344b",
+            "id": "DANGER-007",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "cf0449526431b759c88162c35a047768",
+            "id": "PRIVESC-015",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "da1838661c1d9a7c263d95898e8541d8",
+            "id": "PRIVESC-025",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "dcf4ab5a500c4ecfcb1eedea7e12b0c4",
+            "id": "PRIVESC-065",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "eb0a6cba523e10466f508b351260b249",
+            "id": "PRIVESC-063",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "ed10fd28e9eeb727db915c7a86fd60d4",
+            "id": "PRIVESC-035",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "ee03fb2707d0643859f180a18528181b",
+            "id": "PRIVESC-041",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "efd12d8d9ab68c93e18672ccd99ea4ba",
+            "id": "PRIVESC-039",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "f13206a59b8af53cd372eb850eeef122",
+            "id": "PRIVESC-058",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "f22a0982f3f6e89d2d4af85d4b8c807a",
+            "id": "PRIVESC-048",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "f640a4b88a39c2271cffad1d420bea65",
+            "id": "PRIVESC-016",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "f82b6cab72df405e8cfc9d2536df3033",
+            "id": "PRIVESC-046",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "fc845b98c33f9cc50bd7fffbe0160d8f",
+            "id": "PRIVESC-034",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "fcdb820e114e305bab1718f2a8245bf3",
+            "id": "PRIVESC-047",
+            "severity": "INFO"
+          }
+        ],
+        "subsumed_count": 64
+      },
+      "fingerprint": "09628f98bff97f54429ea29accbed95a",
+      "id": "ADMIN-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "*",
+        "ec2:*",
+        "iam:*",
+        "iam:passrole",
+        "kms:decrypt",
+        "lambda:*",
+        "s3:*",
+        "secretsmanager:getsecretvalue",
+        "ssm:getparameter",
+        "ssm:getparameters",
+        "ssm:getparametersbypath",
+        "sts:assumerole"
+      ],
+      "node_id": "arn:aws:iam::000000000000:role/fn-admin-role",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#high-value-targets-to-hunt",
+      "related_node_ids": [
+        "aws-enumerator:account-admin/000000000000"
+      ],
+      "remediation": "Treat this principal as an account administrator: limit who can use it (trust policy, group membership, credentials), require MFA, and replace broad grants (Action:* or iam:*) by the permissions it needs.",
+      "severity": "CRITICAL",
+      "status": "open",
+      "subsumes": [
+        "DANGER-001",
+        "DANGER-002",
+        "DANGER-003",
+        "DANGER-004",
+        "DANGER-005",
+        "DANGER-006",
+        "DANGER-007",
+        "DANGER-008",
+        "DANGER-009",
+        "DANGER-010",
+        "PRIVESC-001",
+        "PRIVESC-002",
+        "PRIVESC-003",
+        "PRIVESC-004",
+        "PRIVESC-005",
+        "PRIVESC-006",
+        "PRIVESC-007",
+        "PRIVESC-008",
+        "PRIVESC-009",
+        "PRIVESC-010",
+        "PRIVESC-011",
+        "PRIVESC-012",
+        "PRIVESC-013",
+        "PRIVESC-014",
+        "PRIVESC-015",
+        "PRIVESC-016",
+        "PRIVESC-017",
+        "PRIVESC-018",
+        "PRIVESC-019",
+        "PRIVESC-020",
+        "PRIVESC-024",
+        "PRIVESC-025",
+        "PRIVESC-026",
+        "PRIVESC-027",
+        "PRIVESC-028",
+        "PRIVESC-030",
+        "PRIVESC-031",
+        "PRIVESC-032",
+        "PRIVESC-033",
+        "PRIVESC-034",
+        "PRIVESC-035",
+        "PRIVESC-036",
+        "PRIVESC-037",
+        "PRIVESC-038",
+        "PRIVESC-039",
+        "PRIVESC-040",
+        "PRIVESC-041",
+        "PRIVESC-042",
+        "PRIVESC-043",
+        "PRIVESC-044",
+        "PRIVESC-045",
+        "PRIVESC-046",
+        "PRIVESC-047",
+        "PRIVESC-048",
+        "PRIVESC-049",
+        "PRIVESC-057",
+        "PRIVESC-058",
+        "PRIVESC-059",
+        "PRIVESC-060",
+        "PRIVESC-061",
+        "PRIVESC-062",
+        "PRIVESC-063",
+        "PRIVESC-064",
+        "PRIVESC-065"
+      ],
+      "title": "Administrator-equivalent principal"
+    },
+    {
+      "account": "000000000000",
+      "base_severity": "CRITICAL",
+      "category": "dangerous_permission",
+      "confidence": "definite",
+      "description": "This role is administrator-equivalent: its effective permissions allow every action on every resource. Its 65 individual privilege-escalation and dangerous-permission findings are summarised here.",
+      "evidence": {
+        "basis": "allow-star",
+        "rule_ids": [
+          "DANGER-001"
+        ],
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+                "policy_name": "AdministratorAccess",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "aws_managed",
+                "statement_index": 0,
+                "version_id": "v1"
+              }
+            ],
+            "resource": "*",
+            "rule_action": "*"
+          }
+        ],
+        "subsumed": [
+          {
+            "fingerprint": "071400ccbd8ab9ad84cb8a8c65556697",
+            "id": "PRIVESC-006",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "0f30dfb4900c68ec21bc4641720eece2",
+            "id": "PRIVESC-011",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "15853f037937bab4a7e5bcbdf9954446",
+            "id": "PRIVESC-021",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "17d5d1c72485369b1b7536b9c6512945",
+            "id": "PRIVESC-038",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "1b41a043b16a52752f408c22f6fceb4e",
+            "id": "PRIVESC-005",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "1e8a2723f36c060c845372f871d163f8",
+            "id": "DANGER-003",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "20b1560d0439c41ea6ce80a806c9e3a6",
+            "id": "PRIVESC-060",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "2521dc063743b959edc9c2015d839b84",
+            "id": "DANGER-006",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "25bc2bf65eb30cafa3a49c2e354424b1",
+            "id": "PRIVESC-035",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "292bb8ee20c1fb6730ceba48de692d3e",
+            "id": "PRIVESC-009",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "2d519ddf584a8e04786e57ab346d04bf",
+            "id": "PRIVESC-042",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "2e7f515a23e9e6bab68ed64acd111a01",
+            "id": "PRIVESC-045",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "2ed768ff2cde6f06983efb01df0469eb",
+            "id": "DANGER-009",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "319092214db979f4ae78fad2faf24d7a",
+            "id": "PRIVESC-034",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "32580d463011ae45d160cbc73c3d2cce",
+            "id": "PRIVESC-032",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "360d669c941715df957f3a624424c461",
+            "id": "PRIVESC-037",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "3c8f5e736590ac97681c9454957b19f3",
+            "id": "PRIVESC-058",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "3d9aaf068b30857778f72a8a7fb318fc",
+            "id": "PRIVESC-030",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "3fbc02baf032480e72d596d13c015ca3",
+            "id": "PRIVESC-043",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "40f20ed22fadb2d4c8a92b90b00d5ed2",
+            "id": "DANGER-010",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "41322d1aa77eccc4a187472854ed3348",
+            "id": "DANGER-002",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "4b4a161d8e58d24b4f738972a5138803",
+            "id": "PRIVESC-019",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "4d94708f0ff6fc731c389a77caa7c3c5",
+            "id": "PRIVESC-047",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "4fa38f6388d107b019a4e9031c360137",
+            "id": "PRIVESC-040",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "567b849d53ed3617219fd4db1b7cc5ff",
+            "id": "PRIVESC-061",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "57e0e95ac4e24201b9b7f8b32b957594",
+            "id": "PRIVESC-031",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "58a8a7c0d31d5d365e4420b1ba083311",
+            "id": "PRIVESC-033",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "5eac8608db7fcd69b45f767523c52a54",
+            "id": "PRIVESC-012",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "611888b356d829ea060c360e908c62ed",
+            "id": "PRIVESC-025",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "63148e1c7bcab9bbdda7cdd4520a92f6",
+            "id": "PRIVESC-044",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "635e2f2cf304737d411e8aa1099ea21b",
+            "id": "PRIVESC-017",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "673a74356eb2400b5406f087709fa424",
+            "id": "PRIVESC-062",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "6a1dfe36a5aa46a3c6343640b4d2fb4c",
+            "id": "PRIVESC-020",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "7425d754101845162cd4cefd4be94e1a",
+            "id": "DANGER-008",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "7e2abf27ec12ea140b82fabe0baa46f0",
+            "id": "PRIVESC-059",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "805aae97deaa4c019ece7b37c2d2bf87",
+            "id": "PRIVESC-002",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "84dd4499bfc9441b907c6a04e4d0445d",
+            "id": "PRIVESC-046",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "85e6853242d7027345b3a8a6bdd12887",
+            "id": "DANGER-005",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "8796cdb15e820f2380059bff80c07fb4",
+            "id": "PRIVESC-026",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "89b2db8bd0cd4ab81331de7a6626ce0e",
+            "id": "PRIVESC-064",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "998cc2108ed27cad7d3778ec78239b22",
+            "id": "PRIVESC-048",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "9a0f481b39688148d03cedcffc6157fd",
+            "id": "PRIVESC-027",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "9c9159c6c8af5827cb659b95d84487cb",
+            "id": "PRIVESC-010",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "9cff2af803b901b4f3a85b1f0b571be8",
+            "id": "PRIVESC-063",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "a15ae4d233d587abaabac60054096e56",
+            "id": "PRIVESC-003",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "a2a1a138f8531d716db7a97b50f6bb61",
+            "id": "PRIVESC-065",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "ab0f2be54719e18867fc6e5072c6ece4",
+            "id": "PRIVESC-057",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "ae8124e98d4a9c19c9e6725bec7d61a5",
+            "id": "PRIVESC-039",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "af3614aae63a294bdfcc89deb36287ff",
+            "id": "PRIVESC-015",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "b5557f9e17a9809e96c3697ccd4fd943",
+            "id": "PRIVESC-001",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "be5a5de9514374a0aa57279a24616988",
+            "id": "PRIVESC-018",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "c25c5febeb8fd44ea757795c1ebbd282",
+            "id": "PRIVESC-049",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "c5c9e7ab6b70e57dbf9a6b917bd1a665",
+            "id": "PRIVESC-013",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "d10e2a2d289cb97e2ac359a1d854225d",
+            "id": "PRIVESC-016",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "d21ab28daf18e5a503743b2046826045",
+            "id": "DANGER-007",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "d9ac371f777e958fe366fac6bff279c7",
+            "id": "PRIVESC-041",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "da1a5d68f835218db3cff79ddcaf47b0",
+            "id": "PRIVESC-008",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "de6cc77c12adc775f4f132535c0e613f",
+            "id": "PRIVESC-024",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "e8efd8cfd28fc290d5bd3bddc398fdc3",
+            "id": "DANGER-001",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "eaf318bdf480185eb7722fc978174751",
+            "id": "PRIVESC-036",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "eefb2e6bef386eb634792be6c4a3c47e",
+            "id": "DANGER-004",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "f3a8b4736cb82bca7611a0fbb1f2925d",
+            "id": "PRIVESC-004",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "fbd8d1fb5f5b39762eded34ae97b8539",
+            "id": "PRIVESC-028",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "fc3da723737f09a8aa11ca199156b6f6",
+            "id": "PRIVESC-007",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "ff8961d333dd5a7c928ab050c2f1dcae",
+            "id": "PRIVESC-014",
+            "severity": "INFO"
+          }
+        ],
+        "subsumed_count": 65
+      },
+      "fingerprint": "ba8e7e123d27824b5ae51e64665dc32d",
+      "id": "ADMIN-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "*",
+        "ec2:*",
+        "iam:*",
+        "iam:passrole",
+        "kms:decrypt",
+        "lambda:*",
+        "s3:*",
+        "secretsmanager:getsecretvalue",
+        "ssm:getparameter",
+        "ssm:getparameters",
+        "ssm:getparametersbypath",
+        "sts:assumerole"
+      ],
+      "node_id": "arn:aws:iam::000000000000:role/gha-deploy",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#high-value-targets-to-hunt",
+      "related_node_ids": [
+        "aws-enumerator:account-admin/000000000000"
+      ],
+      "remediation": "Treat this principal as an account administrator: limit who can use it (trust policy, group membership, credentials), require MFA, and replace broad grants (Action:* or iam:*) by the permissions it needs.",
+      "severity": "CRITICAL",
+      "status": "open",
+      "subsumes": [
+        "DANGER-001",
+        "DANGER-002",
+        "DANGER-003",
+        "DANGER-004",
+        "DANGER-005",
+        "DANGER-006",
+        "DANGER-007",
+        "DANGER-008",
+        "DANGER-009",
+        "DANGER-010",
+        "PRIVESC-001",
+        "PRIVESC-002",
+        "PRIVESC-003",
+        "PRIVESC-004",
+        "PRIVESC-005",
+        "PRIVESC-006",
+        "PRIVESC-007",
+        "PRIVESC-008",
+        "PRIVESC-009",
+        "PRIVESC-010",
+        "PRIVESC-011",
+        "PRIVESC-012",
+        "PRIVESC-013",
+        "PRIVESC-014",
+        "PRIVESC-015",
+        "PRIVESC-016",
+        "PRIVESC-017",
+        "PRIVESC-018",
+        "PRIVESC-019",
+        "PRIVESC-020",
+        "PRIVESC-021",
+        "PRIVESC-024",
+        "PRIVESC-025",
+        "PRIVESC-026",
+        "PRIVESC-027",
+        "PRIVESC-028",
+        "PRIVESC-030",
+        "PRIVESC-031",
+        "PRIVESC-032",
+        "PRIVESC-033",
+        "PRIVESC-034",
+        "PRIVESC-035",
+        "PRIVESC-036",
+        "PRIVESC-037",
+        "PRIVESC-038",
+        "PRIVESC-039",
+        "PRIVESC-040",
+        "PRIVESC-041",
+        "PRIVESC-042",
+        "PRIVESC-043",
+        "PRIVESC-044",
+        "PRIVESC-045",
+        "PRIVESC-046",
+        "PRIVESC-047",
+        "PRIVESC-048",
+        "PRIVESC-049",
+        "PRIVESC-057",
+        "PRIVESC-058",
+        "PRIVESC-059",
+        "PRIVESC-060",
+        "PRIVESC-061",
+        "PRIVESC-062",
+        "PRIVESC-063",
+        "PRIVESC-064",
+        "PRIVESC-065"
+      ],
+      "title": "Administrator-equivalent principal"
+    },
+    {
+      "account": "000000000000",
+      "base_severity": "CRITICAL",
+      "category": "dangerous_permission",
+      "confidence": "definite",
+      "description": "This user is administrator-equivalent: its effective permissions allow every action on every resource. Its 65 individual privilege-escalation and dangerous-permission findings are summarised here.",
+      "evidence": {
+        "basis": "allow-star",
+        "rule_ids": [
+          "DANGER-001"
+        ],
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+                "policy_name": "AdministratorAccess",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "aws_managed",
+                "statement_index": 0,
+                "version_id": "v1"
+              }
+            ],
+            "resource": "*",
+            "rule_action": "*"
+          }
+        ],
+        "subsumed": [
+          {
+            "fingerprint": "05c53ab388c0d60398688acc04752361",
+            "id": "PRIVESC-057",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "0771251be45e13a7d7282ca5be691da3",
+            "id": "PRIVESC-038",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "09b507e473d68220becb0959ca17e81a",
+            "id": "PRIVESC-021",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "158de03bd89aca1340095ab98d6e4027",
+            "id": "PRIVESC-002",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "166be40dab52a3755b6f5f297f95e49b",
+            "id": "PRIVESC-009",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "17e3cc33a3777c3958bc1de44686137c",
+            "id": "PRIVESC-036",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "1b43adf615ad04a96b752e2bd95d21f8",
+            "id": "DANGER-004",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "204ba65003fc88e584a6599df758f4f9",
+            "id": "PRIVESC-044",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "2d4b0c94e3fcb85bcf45c29f9e997ea2",
+            "id": "PRIVESC-020",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "35088120a1d7323ee6afcea1a789ecfe",
+            "id": "PRIVESC-005",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "355fe815b9576aa2c9d4bbf88065e1e1",
+            "id": "PRIVESC-026",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "36ae431905370d5f51033953cc6e2f69",
+            "id": "PRIVESC-035",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "36b20d99941e93d203deda0438e079e5",
+            "id": "PRIVESC-039",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "37ff94c2801cf66dbbd811461f98aaa8",
+            "id": "PRIVESC-001",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "3c138f4eecc2569a365d55e40a776c71",
+            "id": "PRIVESC-027",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "4181e67358990cf457458e3b18ac9c6e",
+            "id": "PRIVESC-028",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "4588822adb2270ff9999944192910681",
+            "id": "PRIVESC-014",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "4820501c378e5e73e900283d17074403",
+            "id": "PRIVESC-058",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "48d983cfae5efbfd98263c83c7f7d1f8",
+            "id": "PRIVESC-013",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "4a32732eb7876917633b2d71a4eb8f80",
+            "id": "PRIVESC-060",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "4a52a7238a88ce134396468121025a2a",
+            "id": "PRIVESC-034",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "51c4c7f74d8d1683e5239e0e7849f269",
+            "id": "PRIVESC-062",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "603712b73d47772759aac69b0079a63b",
+            "id": "PRIVESC-065",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "65e48c6a35ca3a1ed2d9193c8e770bd3",
+            "id": "PRIVESC-018",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "6ae8a0a29b304862c1c801853498da4f",
+            "id": "PRIVESC-003",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "707ee6b62a45f456e03919df7b604ae4",
+            "id": "PRIVESC-032",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "78c58ad44b877de513833ae37fc7d7b3",
+            "id": "PRIVESC-049",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "7987b8dcf8cd6086237ee9059e5a2750",
+            "id": "PRIVESC-006",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "7b762c7a741942d4f1300941ecff8b6d",
+            "id": "PRIVESC-047",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "7f48a01c939c5d1969387e02c169ed1b",
+            "id": "PRIVESC-007",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "86fe73b275906ded663ae6419bab593b",
+            "id": "PRIVESC-015",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "8755f171715088c0ed3a31aacf052f3b",
+            "id": "PRIVESC-017",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "87b5edc71d94c077c8ccd77780d08b35",
+            "id": "PRIVESC-042",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "8b322556c56cbdfd78e62a6ad1991b11",
+            "id": "DANGER-005",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "8dd26b09547ea863ddeba629805dff06",
+            "id": "PRIVESC-048",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "920dffc43efcbf70d27978691dc9b3f9",
+            "id": "PRIVESC-010",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "947caa78fa977fc3d1e1a65ef4341ecb",
+            "id": "PRIVESC-043",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "951a8881e027d5ef6784dafa99e6b0c4",
+            "id": "PRIVESC-019",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "97ac94485d0ba8846d64310b6db23085",
+            "id": "PRIVESC-011",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "9875b45f8c259894a2269f1e0ba580b9",
+            "id": "PRIVESC-004",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "9a4486fc695a7c4f735130bfbf495486",
+            "id": "PRIVESC-024",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "9cf54d34943b848d79afa6663cbab09f",
+            "id": "PRIVESC-061",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "a3464e895ac0a169f7053a1ef7c0c384",
+            "id": "DANGER-007",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "a353cf1d87428223f50e37b6b67ad88a",
+            "id": "PRIVESC-033",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "a485e90c83a000659d90ccbf08b73e22",
+            "id": "PRIVESC-012",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "a4b772e9ed2d203eeac5408a3911aa63",
+            "id": "PRIVESC-030",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "abd90b05d38c177451625e4e2931cb8b",
+            "id": "PRIVESC-041",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "b190ced31d614f22ed1d162d1617d6f8",
+            "id": "PRIVESC-045",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "b5d84d2ede296050c071fe5ff9a430c2",
+            "id": "DANGER-010",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "b760c8f107834d5fe15aacfc088eb7bb",
+            "id": "PRIVESC-016",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "c64e6d67ef52a1881a7e67dc22bf9c0f",
+            "id": "DANGER-002",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "cc6946c74bc17f3c7aacbd49f7cb119b",
+            "id": "DANGER-001",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "d0d8a3fb79cceb6a9d87d059ac3b9d9c",
+            "id": "DANGER-009",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "d7850af64f5377d362277bd9ceb42266",
+            "id": "DANGER-003",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "da6afc310228d901fbab6664625b380d",
+            "id": "PRIVESC-063",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "dc6d79e4381b6e1a6e54745e3326b6f2",
+            "id": "DANGER-006",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "dd8c505285dab12cca2e3d8a4468d17f",
+            "id": "PRIVESC-046",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "df339e0e8dcc2d844bd042205d101ac4",
+            "id": "PRIVESC-008",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "e2f71f04b8c067672ab1ebabca95c355",
+            "id": "PRIVESC-059",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "ea9b73a193b916a61780fecca5c78de8",
+            "id": "DANGER-008",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "eacc6398a8f287cf017629c9fb5433af",
+            "id": "PRIVESC-040",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "ed9677819fcc248fa227ff319e6e7729",
+            "id": "PRIVESC-025",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "f6f588ca4daaf7977858e9f6dc807001",
+            "id": "PRIVESC-064",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "fb1a004cf689bc72585e15c05e43ac45",
+            "id": "PRIVESC-031",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "ff8856000f4442e57ef1b262eb305319",
+            "id": "PRIVESC-037",
+            "severity": "INFO"
+          }
+        ],
+        "subsumed_count": 65
+      },
+      "fingerprint": "271505cf0c6b91f70c93eff49e6bb2f2",
+      "id": "ADMIN-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "*",
+        "ec2:*",
+        "iam:*",
+        "iam:passrole",
+        "kms:decrypt",
+        "lambda:*",
+        "s3:*",
+        "secretsmanager:getsecretvalue",
+        "ssm:getparameter",
+        "ssm:getparameters",
+        "ssm:getparametersbypath",
+        "sts:assumerole"
+      ],
+      "node_id": "arn:aws:iam::000000000000:user/admin-user",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#high-value-targets-to-hunt",
+      "related_node_ids": [
+        "aws-enumerator:account-admin/000000000000"
+      ],
+      "remediation": "Treat this principal as an account administrator: limit who can use it (trust policy, group membership, credentials), require MFA, and replace broad grants (Action:* or iam:*) by the permissions it needs.",
+      "severity": "CRITICAL",
+      "status": "open",
+      "subsumes": [
+        "DANGER-001",
+        "DANGER-002",
+        "DANGER-003",
+        "DANGER-004",
+        "DANGER-005",
+        "DANGER-006",
+        "DANGER-007",
+        "DANGER-008",
+        "DANGER-009",
+        "DANGER-010",
+        "PRIVESC-001",
+        "PRIVESC-002",
+        "PRIVESC-003",
+        "PRIVESC-004",
+        "PRIVESC-005",
+        "PRIVESC-006",
+        "PRIVESC-007",
+        "PRIVESC-008",
+        "PRIVESC-009",
+        "PRIVESC-010",
+        "PRIVESC-011",
+        "PRIVESC-012",
+        "PRIVESC-013",
+        "PRIVESC-014",
+        "PRIVESC-015",
+        "PRIVESC-016",
+        "PRIVESC-017",
+        "PRIVESC-018",
+        "PRIVESC-019",
+        "PRIVESC-020",
+        "PRIVESC-021",
+        "PRIVESC-024",
+        "PRIVESC-025",
+        "PRIVESC-026",
+        "PRIVESC-027",
+        "PRIVESC-028",
+        "PRIVESC-030",
+        "PRIVESC-031",
+        "PRIVESC-032",
+        "PRIVESC-033",
+        "PRIVESC-034",
+        "PRIVESC-035",
+        "PRIVESC-036",
+        "PRIVESC-037",
+        "PRIVESC-038",
+        "PRIVESC-039",
+        "PRIVESC-040",
+        "PRIVESC-041",
+        "PRIVESC-042",
+        "PRIVESC-043",
+        "PRIVESC-044",
+        "PRIVESC-045",
+        "PRIVESC-046",
+        "PRIVESC-047",
+        "PRIVESC-048",
+        "PRIVESC-049",
+        "PRIVESC-057",
+        "PRIVESC-058",
+        "PRIVESC-059",
+        "PRIVESC-060",
+        "PRIVESC-061",
+        "PRIVESC-062",
+        "PRIVESC-063",
+        "PRIVESC-064",
+        "PRIVESC-065"
+      ],
+      "title": "Administrator-equivalent principal"
+    },
+    {
+      "account": "000000000000",
+      "base_severity": "CRITICAL",
+      "category": "privilege_escalation",
+      "confidence": "definite",
+      "description": "Can replace the code of an existing Lambda function; the code runs as the function's execution role",
+      "evidence": {
+        "decision": "allow",
+        "rule_class": "existing-resource",
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "lambda:updatefunctioncode",
+                  "lambda:getfunction"
+                ],
+                "layer": "identity",
+                "policy_name": "dev",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:lambda:eu-west-2:000000000000:function:etl",
+            "rule_action": "lambda:updatefunctioncode"
+          }
+        ],
+        "targets_detail": [
+          {
+            "arn": "arn:aws:lambda:eu-west-2:000000000000:function:etl",
+            "decision": "allow",
+            "node_id": "arn:aws:lambda:eu-west-2:000000000000:function:etl",
+            "resource_type": "lambda_function",
+            "role": "arn:aws:iam::000000000000:role/fn-admin-role",
+            "tier": "CRITICAL",
+            "tier_class": "admin"
+          }
+        ]
+      },
+      "fingerprint": "d44536b5268232cf6b2a1d3eaa034094",
+      "id": "PRIVESC-021",
+      "legacy_ids": [],
+      "matched_actions": [
+        "lambda:updatefunctioncode"
+      ],
+      "node_id": "arn:aws:iam::000000000000:user/leaked-user",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "related_node_ids": [
+        "arn:aws:iam::000000000000:role/fn-admin-role",
+        "arn:aws:lambda:eu-west-2:000000000000:function:etl"
+      ],
+      "remediation": "Restrict lambda:UpdateFunctionCode to specific functions whose roles are not more privileged",
+      "rule_version": "2.1.0",
+      "severity": "CRITICAL",
+      "status": "open",
+      "targets": [
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:lambda:eu-west-2:000000000000:function:etl",
+          "tier": "CRITICAL"
+        }
+      ],
+      "title": "UpdateFunctionCode: Can replace the code of an existing Lambda function; the code runs as the function's execution role"
+    },
+    {
+      "account": "000000000000",
+      "base_severity": "CRITICAL",
+      "category": "trust_policy",
+      "confidence": "definite",
+      "description": "Web identity provider arn:aws:iam::000000000000:oidc-provider/token.actions.githubusercontent.com can assume 'gha-deploy'.",
+      "entity": "role/gha-deploy",
+      "entity_arn": "arn:aws:iam::000000000000:role/gha-deploy",
+      "evidence": {
+        "admits": "any",
+        "conditions": [
+          {
+            "key": "token.actions.githubusercontent.com:sub",
+            "operator": "StringLike",
+            "values": [
+              "repo:*"
+            ]
+          }
+        ],
+        "problems": [],
+        "provider": "github",
+        "statement_index": 0
+      },
+      "fingerprint": "faa668e3c70dcbfa35a53da46e731246",
+      "id": "TRUST-OIDC-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "sts:AssumeRoleWithWebIdentity"
+      ],
+      "node_id": "arn:aws:iam::000000000000:role/gha-deploy",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-6--youre-external-no-foothold-yet",
+      "related_node_ids": [
+        "arn:aws:iam::000000000000:oidc-provider/token.actions.githubusercontent.com"
+      ],
+      "remediation": "Require the provider's audience (<host>:aud) and an exact subject (<host>:sub), e.g. repo:<org>/<repo>:ref:refs/heads/main for GitHub or system:serviceaccount:<ns>:<sa> for EKS.",
+      "resource": [
+        "arn:aws:iam::000000000000:role/gha-deploy"
+      ],
+      "severity": "CRITICAL",
+      "source_policy": "AssumeRolePolicyDocument",
+      "source_type": "trust_policy",
+      "status": "open",
+      "title": "Role 'gha-deploy' trusts github identities (any subjects)"
+    },
+    {
+      "account": "000000000000",
+      "base_severity": "MEDIUM",
+      "category": "iam_hygiene",
+      "confidence": "definite",
+      "description": "The user has a console password and no MFA device: a phished or reused password is enough to act as this user.",
+      "evidence": {
+        "console_password": true,
+        "mfa_active": false
+      },
+      "fingerprint": "09febac57d6db05de3d79c1ff6a3757e",
+      "id": "IAM-USER-MFA-001",
+      "legacy_ids": [],
+      "node_id": "arn:aws:iam::000000000000:user/admin-user",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-6--youre-external-no-foothold-yet",
+      "remediation": "Require MFA for every console user (an MFA device plus a policy denying actions without aws:MultiFactorAuthPresent), or move people to IAM Identity Center.",
+      "severity": "MEDIUM",
+      "status": "open",
+      "title": "IAM user 'admin-user' can sign in to the console without MFA"
+    },
+    {
+      "account": "000000000000",
+      "base_severity": "MEDIUM",
+      "category": "iam_hygiene",
+      "confidence": "definite",
+      "description": "The user has a console password and no MFA device: a phished or reused password is enough to act as this user.",
+      "evidence": {
+        "console_password": true,
+        "mfa_active": false
+      },
+      "fingerprint": "b517251c2a5ee1150e3d1c240113c36c",
+      "id": "IAM-USER-MFA-001",
+      "legacy_ids": [],
+      "node_id": "arn:aws:iam::000000000000:user/leaked-user",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-6--youre-external-no-foothold-yet",
+      "remediation": "Require MFA for every console user (an MFA device plus a policy denying actions without aws:MultiFactorAuthPresent), or move people to IAM Identity Center.",
+      "severity": "MEDIUM",
+      "status": "open",
+      "title": "IAM user 'leaked-user' can sign in to the console without MFA"
+    },
+    {
+      "account": "000000000000",
+      "base_severity": "LOW",
+      "category": "iam_hygiene",
+      "confidence": "definite",
+      "description": "The IAM password policy is below common baselines: password reuse prevention None < 24.",
+      "evidence": {
+        "configured": true,
+        "console_users": 2,
+        "weaknesses": [
+          "password reuse prevention None < 24"
+        ]
+      },
+      "fingerprint": "242df0434b5550dc6b1aa34c551f83db",
+      "id": "IAM-PWPOL-001",
+      "legacy_ids": [],
+      "node_id": "aws-enumerator:account/000000000000",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-6--youre-external-no-foothold-yet",
+      "remediation": "Set an account password policy: length >= 14, all character classes, reuse prevention 24.",
+      "severity": "LOW",
+      "status": "open",
+      "title": "The account password policy is weak"
+    }
+  ],
+  "generator": {
+    "engine_version": "1.1.0",
+    "git_sha": null,
+    "rules_version": "2.1.0",
+    "tool": "aws-enumerator",
+    "version": "0.3.0"
+  },
+  "meta": {
+    "default_sources": [
+      "arn:aws:iam::000000000000:user/admin-user",
+      "arn:aws:iam::000000000000:user/leaked-user",
+      "aws-enumerator:anonymous"
+    ],
+    "default_targets": [
+      "arn:aws:iam::000000000000:role/admin-role",
+      "arn:aws:iam::000000000000:role/fn-admin-role",
+      "arn:aws:iam::000000000000:role/gha-deploy",
+      "arn:aws:iam::000000000000:user/admin-user",
+      "aws-enumerator:account-admin/000000000000"
+    ]
+  },
+  "node_types": {
+    "account": {
+      "data_asset": false,
+      "default_source": false,
+      "description": "Anchor for account-wide findings (hygiene, posture, collection gaps).",
+      "group": "posture",
+      "icon": "account",
+      "is_compute_bridge": false,
+      "label": "Account",
+      "order": 11,
+      "synthetic": true
+    },
+    "account_admin": {
+      "data_asset": false,
+      "default_source": false,
+      "description": "Administrator of the assessed account; the default path target.",
+      "group": "synthetic",
+      "icon": "admin",
+      "is_compute_bridge": false,
+      "label": "Account administrator",
+      "order": 8,
+      "synthetic": true
+    },
+    "anonymous": {
+      "data_asset": false,
+      "default_source": true,
+      "description": "The internet / any AWS account. Source of every public exposure (F-037).",
+      "group": "synthetic",
+      "icon": "anonymous",
+      "is_compute_bridge": false,
+      "label": "Anyone",
+      "order": 7,
+      "synthetic": true
+    },
+    "bucket": {
+      "data_asset": true,
+      "default_source": false,
+      "description": "",
+      "group": "data",
+      "icon": "bucket",
+      "is_compute_bridge": false,
+      "label": "S3 bucket",
+      "order": 35,
+      "synthetic": false
+    },
+    "group": {
+      "data_asset": false,
+      "default_source": false,
+      "description": "",
+      "group": "identity",
+      "icon": "group",
+      "is_compute_bridge": false,
+      "label": "IAM group",
+      "order": 3,
+      "synthetic": false
+    },
+    "idp": {
+      "data_asset": false,
+      "default_source": true,
+      "description": "IAM OIDC or SAML provider, or a well-known web identity provider.",
+      "group": "identity",
+      "icon": "idp",
+      "is_compute_bridge": false,
+      "label": "Identity provider",
+      "order": 5,
+      "synthetic": false
+    },
+    "lambda": {
+      "data_asset": false,
+      "default_source": false,
+      "description": "Unqualified function; versions and aliases are in props.qualifiers.",
+      "group": "compute",
+      "icon": "lambda",
+      "is_compute_bridge": true,
+      "label": "Lambda function",
+      "order": 15,
+      "synthetic": false
+    },
+    "policy": {
+      "data_asset": false,
+      "default_source": false,
+      "description": "Customer- or AWS-managed policy (ARN).",
+      "group": "identity",
+      "icon": "policy",
+      "is_compute_bridge": false,
+      "label": "Managed policy",
+      "order": 4,
+      "synthetic": false
+    },
+    "role": {
+      "data_asset": false,
+      "default_source": false,
+      "description": "",
+      "group": "identity",
+      "icon": "role",
+      "is_compute_bridge": false,
+      "label": "IAM role",
+      "order": 2,
+      "synthetic": false
+    },
+    "service_principal": {
+      "data_asset": false,
+      "default_source": false,
+      "description": "Context only (who may assume a role on behalf of a service).",
+      "group": "identity",
+      "icon": "service",
+      "is_compute_bridge": false,
+      "label": "AWS service principal",
+      "order": 6,
+      "synthetic": true
+    },
+    "user": {
+      "data_asset": false,
+      "default_source": true,
+      "description": "Long-term credentials: a leaked access key is a common entry point.",
+      "group": "identity",
+      "icon": "user",
+      "is_compute_bridge": false,
+      "label": "IAM user",
+      "order": 1,
+      "synthetic": false
+    }
+  },
+  "nodes": [
+    {
+      "account": "000000000000",
+      "coverage": {
+        "gaps": [],
+        "status": "legacy-unknown"
+      },
+      "findings": [],
+      "id": "arn:aws:iam::000000000000:group/devs",
+      "inherited_findings": [],
+      "label": "devs",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "attached_policies_error": null,
+        "attached_policies_status": "complete",
+        "path": "/"
+      },
+      "region": null,
+      "tags": [],
+      "type": "group"
+    },
+    {
+      "account": "000000000000",
+      "coverage": {
+        "gaps": [],
+        "status": "not-collected"
+      },
+      "findings": [],
+      "id": "arn:aws:iam::000000000000:oidc-provider/token.actions.githubusercontent.com",
+      "inherited_findings": [],
+      "label": "token.actions.githubusercontent.com",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "placeholder": true,
+        "provider": "github",
+        "reaches_admin": "definite"
+      },
+      "region": null,
+      "tags": [],
+      "type": "idp"
+    },
+    {
+      "account": "000000000000",
+      "coverage": {
+        "gaps": [],
+        "status": "legacy-unknown"
+      },
+      "findings": [
+        "9904cfd74a406bb4b069091fe5e8cb67"
+      ],
+      "id": "arn:aws:iam::000000000000:role/admin-role",
+      "inherited_findings": [],
+      "label": "admin-role",
+      "max_severity": "CRITICAL",
+      "partition": "aws",
+      "props": {
+        "attached_policies_error": null,
+        "attached_policies_status": "complete",
+        "high_value": true,
+        "high_value_reason": "admin-equivalent",
+        "path": "/",
+        "reaches_admin": "definite"
+      },
+      "region": null,
+      "tags": [],
+      "type": "role"
+    },
+    {
+      "account": "000000000000",
+      "coverage": {
+        "gaps": [],
+        "status": "legacy-unknown"
+      },
+      "findings": [
+        "09628f98bff97f54429ea29accbed95a"
+      ],
+      "id": "arn:aws:iam::000000000000:role/fn-admin-role",
+      "inherited_findings": [],
+      "label": "fn-admin-role",
+      "max_severity": "CRITICAL",
+      "partition": "aws",
+      "props": {
+        "attached_policies_error": null,
+        "attached_policies_status": "complete",
+        "high_value": true,
+        "high_value_reason": "admin-equivalent",
+        "path": "/",
+        "reaches_admin": "definite"
+      },
+      "region": null,
+      "tags": [],
+      "type": "role"
+    },
+    {
+      "account": "000000000000",
+      "coverage": {
+        "gaps": [],
+        "status": "legacy-unknown"
+      },
+      "findings": [
+        "ba8e7e123d27824b5ae51e64665dc32d",
+        "faa668e3c70dcbfa35a53da46e731246"
+      ],
+      "id": "arn:aws:iam::000000000000:role/gha-deploy",
+      "inherited_findings": [],
+      "label": "gha-deploy",
+      "max_severity": "CRITICAL",
+      "partition": "aws",
+      "props": {
+        "attached_policies_error": null,
+        "attached_policies_status": "complete",
+        "high_value": true,
+        "high_value_reason": "admin-equivalent",
+        "path": "/",
+        "reaches_admin": "definite"
+      },
+      "region": null,
+      "tags": [],
+      "type": "role"
+    },
+    {
+      "account": "000000000000",
+      "coverage": {
+        "gaps": [],
+        "status": "legacy-unknown"
+      },
+      "findings": [
+        "09febac57d6db05de3d79c1ff6a3757e",
+        "271505cf0c6b91f70c93eff49e6bb2f2"
+      ],
+      "id": "arn:aws:iam::000000000000:user/admin-user",
+      "inherited_findings": [],
+      "label": "admin-user",
+      "max_severity": "CRITICAL",
+      "partition": "aws",
+      "props": {
+        "attached_policies_error": null,
+        "attached_policies_status": "complete",
+        "credentials": "present",
+        "entry_point": true,
+        "high_value": true,
+        "high_value_reason": "admin-equivalent",
+        "path": "/",
+        "reaches_admin": "definite"
+      },
+      "region": null,
+      "tags": [],
+      "type": "user"
+    },
+    {
+      "account": "000000000000",
+      "coverage": {
+        "gaps": [],
+        "status": "legacy-unknown"
+      },
+      "findings": [
+        "b517251c2a5ee1150e3d1c240113c36c",
+        "d44536b5268232cf6b2a1d3eaa034094"
+      ],
+      "id": "arn:aws:iam::000000000000:user/leaked-user",
+      "inherited_findings": [],
+      "label": "leaked-user",
+      "max_severity": "CRITICAL",
+      "partition": "aws",
+      "props": {
+        "attached_policies_error": null,
+        "attached_policies_status": "complete",
+        "credentials": "present",
+        "entry_point": true,
+        "path": "/",
+        "reaches_admin": "definite"
+      },
+      "region": null,
+      "tags": [],
+      "type": "user"
+    },
+    {
+      "account": null,
+      "coverage": {
+        "gaps": [],
+        "status": "complete"
+      },
+      "findings": [],
+      "id": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "inherited_findings": [],
+      "label": "AdministratorAccess",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "aws_managed": true,
+        "default_version": "v1",
+        "document_status": "complete",
+        "versions_collected": 1
+      },
+      "region": null,
+      "tags": [],
+      "type": "policy"
+    },
+    {
+      "account": "000000000000",
+      "coverage": {
+        "gaps": [],
+        "status": "legacy-unknown"
+      },
+      "findings": [],
+      "id": "arn:aws:lambda:eu-west-2:000000000000:function:etl",
+      "inherited_findings": [],
+      "label": "etl",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "policy_status": "unknown",
+        "reaches_admin": "definite",
+        "runtime": "python3.12"
+      },
+      "region": "eu-west-2",
+      "tags": [],
+      "type": "lambda"
+    },
+    {
+      "account": "000000000000",
+      "coverage": {
+        "gaps": [],
+        "status": "legacy-unknown"
+      },
+      "findings": [],
+      "id": "arn:aws:s3:::data-bucket",
+      "inherited_findings": [],
+      "label": "data-bucket",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "block_public_access": {
+          "block_public_acls": null,
+          "block_public_policy": null,
+          "ignore_public_acls": null,
+          "restrict_public_buckets": null
+        },
+        "data_asset": true,
+        "mitigated_by": [],
+        "policy_status": "absent",
+        "public": null,
+        "public_via": []
+      },
+      "region": "eu-west-2",
+      "tags": [],
+      "type": "bucket"
+    },
+    {
+      "account": "000000000000",
+      "coverage": {
+        "gaps": [],
+        "status": "legacy-unknown"
+      },
+      "findings": [],
+      "id": "arn:aws:s3:::other-bucket",
+      "inherited_findings": [],
+      "label": "other-bucket",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "block_public_access": {
+          "block_public_acls": null,
+          "block_public_policy": null,
+          "ignore_public_acls": null,
+          "restrict_public_buckets": null
+        },
+        "data_asset": true,
+        "mitigated_by": [],
+        "policy_status": "absent",
+        "public": null,
+        "public_via": []
+      },
+      "region": "eu-west-2",
+      "tags": [],
+      "type": "bucket"
+    },
+    {
+      "account": "000000000000",
+      "coverage": {
+        "gaps": [],
+        "status": "not-applicable"
+      },
+      "findings": [],
+      "id": "aws-enumerator:account-admin/000000000000",
+      "inherited_findings": [],
+      "label": "Administrator of 000000000000",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "high_value": true,
+        "high_value_reason": "account-admin"
+      },
+      "region": null,
+      "tags": [],
+      "type": "account_admin"
+    },
+    {
+      "account": "000000000000",
+      "coverage": {
+        "gaps": [],
+        "status": "not-applicable"
+      },
+      "findings": [
+        "242df0434b5550dc6b1aa34c551f83db"
+      ],
+      "id": "aws-enumerator:account/000000000000",
+      "inherited_findings": [],
+      "label": "aws-enumerator:account/000000000000",
+      "max_severity": "LOW",
+      "partition": "aws",
+      "props": {},
+      "region": null,
+      "tags": [],
+      "type": "account"
+    },
+    {
+      "account": null,
+      "coverage": {
+        "gaps": [],
+        "status": "not-applicable"
+      },
+      "findings": [],
+      "id": "aws-enumerator:anonymous",
+      "inherited_findings": [],
+      "label": "Anyone (internet / any AWS account)",
+      "max_severity": null,
+      "partition": null,
+      "props": {
+        "entry_point": true,
+        "reaches_admin": "definite"
+      },
+      "region": null,
+      "tags": [],
+      "type": "anonymous"
+    },
+    {
+      "account": null,
+      "coverage": {
+        "gaps": [],
+        "status": "not-applicable"
+      },
+      "findings": [],
+      "id": "svc:lambda.amazonaws.com",
+      "inherited_findings": [],
+      "label": "lambda.amazonaws.com",
+      "max_severity": null,
+      "partition": null,
+      "props": {},
+      "region": null,
+      "tags": [],
+      "type": "service_principal"
+    }
+  ],
+  "run": {
+    "account_id": "000000000000",
+    "generated_at": "<stripped>",
+    "mode": "legacy-single",
+    "operator": {
+      "arn": "arn:aws:iam::000000000000:user/demo-operator",
+      "node_id": null,
+      "redacted": false,
+      "resolution": "not-in-graph"
+    },
+    "partition": "aws",
+    "regions": [
+      "eu-west-2"
+    ],
+    "run_id": "legacy-eu-west-2",
+    "source_manifest_sha256": "c388dc75b72934097b5782e1cef8577d1fab11394a5445c0d9d977332b6d3202"
+  },
+  "schema_version": "1.0.0"
+}

@@ -1,0 +1,14 @@
+[
+  {
+    "PolicyName": "\" onfocus=\"window.__aeXssCanary=1\" autofocus=\"",
+    "PolicyId": "ANPAKAJOJGBPDJNBFCOFB",
+    "Arn": "arn:aws:iam::123456789012:policy/\" onfocus=\"window.__aeXssCanary=1\" autofocus=\"",
+    "Path": "/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 1,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "UpdateDate": "2026-01-01 00:00:00+00:00"
+  }
+]

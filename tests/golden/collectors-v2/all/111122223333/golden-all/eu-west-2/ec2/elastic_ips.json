@@ -1,0 +1,31 @@
+[
+  {
+    "AllocationId": "eipalloc-0dec0000002",
+    "AssociationId": "eipassoc-0dec0000002",
+    "Domain": "vpc",
+    "NetworkBorderGroup": "eu-west-2",
+    "NetworkInterfaceId": "eni-0dec0a7a0000002",
+    "PrivateIpAddress": "10.20.1.5",
+    "PublicIp": "203.0.113.20",
+    "PublicIpv4Pool": "amazon",
+    "Tags": [
+      {
+        "Key": "Name",
+        "Value": "demo-nat-eip"
+      }
+    ]
+  },
+  {
+    "AllocationId": "eipalloc-0dec0000003",
+    "Domain": "vpc",
+    "NetworkBorderGroup": "eu-west-2",
+    "PublicIp": "198.51.100.20",
+    "PublicIpv4Pool": "amazon",
+    "Tags": [
+      {
+        "Key": "Name",
+        "Value": "demo-unused-eip"
+      }
+    ]
+  }
+]

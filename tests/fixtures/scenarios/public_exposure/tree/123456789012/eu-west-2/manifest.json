@@ -1,0 +1,143 @@
+{
+  "tool": "aws-enumerator",
+  "version": "0.2.0",
+  "author": "0xj4f",
+  "run_metadata": {
+    "account_id": "123456789012",
+    "mode": "single_region",
+    "region": "eu-west-2",
+    "regions_enumerated": [],
+    "caller_arn": "arn:aws:iam::123456789012:user/demo-operator",
+    "caller_user_id": "AIDAIOFJECGLDECPDLLDA",
+    "timestamp_start": "2026-01-01T00:00:00",
+    "timestamp_end": "2026-01-01T00:00:00",
+    "duration_seconds": 0.0
+  },
+  "modules_executed": [
+    {
+      "name": "apigateway",
+      "path": "apigateway/",
+      "file_count": 1,
+      "files": [
+        "resources.json"
+      ]
+    },
+    {
+      "name": "cognito",
+      "path": "cognito/",
+      "file_count": 1,
+      "files": [
+        "resources.json"
+      ]
+    },
+    {
+      "name": "ebs",
+      "path": "ebs/",
+      "file_count": 1,
+      "files": [
+        "resources.json"
+      ]
+    },
+    {
+      "name": "ec2",
+      "path": "ec2/",
+      "file_count": 1,
+      "files": [
+        "instances.json"
+      ]
+    },
+    {
+      "name": "elb",
+      "path": "elb/",
+      "file_count": 1,
+      "files": [
+        "resources.json"
+      ]
+    },
+    {
+      "name": "iam",
+      "path": "iam/",
+      "file_count": 14,
+      "files": [
+        "account_password_policy.json",
+        "account_summary.json",
+        "group_attached_policies.json",
+        "groups.json",
+        "inline_policies/roles/demo-guest-role.json",
+        "inline_policies/roles/demo-web-role.json",
+        "inline_policies/users/demo-ops.json",
+        "instance_profiles.json",
+        "policies.json",
+        "role_attached_policies.json",
+        "roles.json",
+        "user_attached_policies.json",
+        "user_group_memberships.json",
+        "users.json"
+      ]
+    },
+    {
+      "name": "lambda",
+      "path": "lambda/",
+      "file_count": 2,
+      "files": [
+        "functions.json",
+        "resource_policies/demo-url-fn.json"
+      ]
+    },
+    {
+      "name": "rds",
+      "path": "rds/",
+      "file_count": 1,
+      "files": [
+        "resources.json"
+      ]
+    },
+    {
+      "name": "route53",
+      "path": "route53/",
+      "file_count": 1,
+      "files": [
+        "resources.json"
+      ]
+    },
+    {
+      "name": "s3",
+      "path": "s3/",
+      "file_count": 8,
+      "files": [
+        "acls/demo-public-bucket.json",
+        "buckets.json",
+        "encryption/demo-private-bucket.json",
+        "logging/demo-private-bucket.json",
+        "notifications/demo-private-bucket.json",
+        "policies/demo-public-bucket.json",
+        "policies/demo-vpce-bucket.json",
+        "public_access_block/demo-public-bucket.json"
+      ]
+    },
+    {
+      "name": "sg",
+      "path": "sg/",
+      "file_count": 1,
+      "files": [
+        "security_groups.json"
+      ]
+    },
+    {
+      "name": "vpc",
+      "path": "vpc/",
+      "file_count": 9,
+      "files": [
+        "dhcp_options.json",
+        "internet_gateways.json",
+        "nacls.json",
+        "nat_gateways.json",
+        "route_tables.json",
+        "subnets.json",
+        "vpc_endpoints.json",
+        "vpc_peering_connections.json",
+        "vpcs.json"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+[
+  {
+    "FirewallArn": "arn:aws:network-firewall:eu-west-2:111122223333:firewall/demo-egress-fw",
+    "FirewallName": "demo-egress-fw"
+  }
+]

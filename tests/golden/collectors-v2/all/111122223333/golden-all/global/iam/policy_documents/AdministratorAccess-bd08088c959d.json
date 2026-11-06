@@ -1,0 +1,18 @@
+{
+  "DefaultVersionId": "v1",
+  "Document": {
+    "Statement": [
+      {
+        "Action": "*",
+        "Effect": "Allow",
+        "Resource": "*"
+      }
+    ],
+    "Version": "2012-10-17"
+  },
+  "PolicyArn": "arn:aws:iam::aws:policy/AdministratorAccess",
+  "PolicyName": "AdministratorAccess",
+  "PolicyType": "AWS",
+  "VersionId": "v1",
+  "Versions": []
+}

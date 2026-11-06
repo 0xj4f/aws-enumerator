@@ -1,0 +1,352 @@
+{
+  "edges": [
+    {
+      "category": "messaging",
+      "edge_id": "e:27aa8c3d783cd4d7cf88",
+      "matched_actions": [
+        "sns:SetTopicAttributes"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "target": "sns:arn:aws:sns:eu-west-2:111122223333:demo-alerts",
+      "type": "CAN_ADMIN_MSG",
+      "weight": 1
+    },
+    {
+      "category": "messaging",
+      "edge_id": "e:65e1d1c911843f9a387a",
+      "matched_actions": [
+        "sns:SetTopicAttributes"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "target": "sns:arn:aws:sns:eu-west-2:111122223333:demo-events",
+      "type": "CAN_ADMIN_MSG",
+      "weight": 1
+    },
+    {
+      "category": "messaging",
+      "edge_id": "e:3480d789d63dfacde7ad",
+      "matched_actions": [
+        "sqs:SetQueueAttributes"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "target": "sqs:arn:aws:sqs:eu-west-1:111122223333:demo-west-queue",
+      "type": "CAN_ADMIN_MSG",
+      "weight": 1
+    },
+    {
+      "category": "messaging",
+      "edge_id": "e:eafb34dda6db33233fa0",
+      "matched_actions": [
+        "sqs:SetQueueAttributes"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "target": "sqs:arn:aws:sqs:eu-west-2:111122223333:demo-denied-queue",
+      "type": "CAN_ADMIN_MSG",
+      "weight": 1
+    },
+    {
+      "category": "messaging",
+      "edge_id": "e:c92482e7002e69ecfd58",
+      "matched_actions": [
+        "sqs:SetQueueAttributes"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "target": "sqs:arn:aws:sqs:eu-west-2:111122223333:demo-dlq",
+      "type": "CAN_ADMIN_MSG",
+      "weight": 1
+    },
+    {
+      "category": "messaging",
+      "edge_id": "e:43758feed94a60a13577",
+      "matched_actions": [
+        "sqs:SetQueueAttributes"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "target": "sqs:arn:aws:sqs:eu-west-2:111122223333:demo-queue",
+      "type": "CAN_ADMIN_MSG",
+      "weight": 1
+    },
+    {
+      "category": "messaging",
+      "edge_id": "e:df23cdd2c7bc33308629",
+      "matched_actions": [
+        "sqs:SendMessage"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-app-role",
+      "target": "sqs:arn:aws:sqs:eu-west-2:111122223333:demo-queue",
+      "type": "CAN_SEND",
+      "weight": 1
+    },
+    {
+      "category": "messaging",
+      "edge_id": "e:b8b487c2a957b1575270",
+      "matched_actions": [
+        "sns:SetTopicAttributes"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "target": "sns:arn:aws:sns:eu-west-2:111122223333:demo-alerts",
+      "type": "CAN_ADMIN_MSG",
+      "weight": 1
+    },
+    {
+      "category": "messaging",
+      "edge_id": "e:6a9fbcf4c06879c2c5fb",
+      "matched_actions": [
+        "sns:SetTopicAttributes"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "target": "sns:arn:aws:sns:eu-west-2:111122223333:demo-events",
+      "type": "CAN_ADMIN_MSG",
+      "weight": 1
+    },
+    {
+      "category": "messaging",
+      "edge_id": "e:c82a3e741c67d2da2c8b",
+      "matched_actions": [
+        "sqs:SetQueueAttributes"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "target": "sqs:arn:aws:sqs:eu-west-1:111122223333:demo-west-queue",
+      "type": "CAN_ADMIN_MSG",
+      "weight": 1
+    },
+    {
+      "category": "messaging",
+      "edge_id": "e:85e2cafa6277c91dcace",
+      "matched_actions": [
+        "sqs:SetQueueAttributes"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "target": "sqs:arn:aws:sqs:eu-west-2:111122223333:demo-denied-queue",
+      "type": "CAN_ADMIN_MSG",
+      "weight": 1
+    },
+    {
+      "category": "messaging",
+      "edge_id": "e:e6b6affd0a932a0ba0b9",
+      "matched_actions": [
+        "sqs:SetQueueAttributes"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "target": "sqs:arn:aws:sqs:eu-west-2:111122223333:demo-dlq",
+      "type": "CAN_ADMIN_MSG",
+      "weight": 1
+    },
+    {
+      "category": "messaging",
+      "edge_id": "e:6ba325e912d6c4094e27",
+      "matched_actions": [
+        "sqs:SetQueueAttributes"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "target": "sqs:arn:aws:sqs:eu-west-2:111122223333:demo-queue",
+      "type": "CAN_ADMIN_MSG",
+      "weight": 1
+    },
+    {
+      "category": "messaging",
+      "edge_id": "e:670b36aca2501122ff84",
+      "matched_actions": [
+        "sns:SetTopicAttributes"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "target": "sns:arn:aws:sns:eu-west-2:111122223333:demo-alerts",
+      "type": "CAN_ADMIN_MSG",
+      "weight": 1
+    },
+    {
+      "category": "messaging",
+      "edge_id": "e:d6287750539a413d2735",
+      "matched_actions": [
+        "sns:SetTopicAttributes"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "target": "sns:arn:aws:sns:eu-west-2:111122223333:demo-events",
+      "type": "CAN_ADMIN_MSG",
+      "weight": 1
+    },
+    {
+      "category": "messaging",
+      "edge_id": "e:d8104f52f49a3f7eda42",
+      "matched_actions": [
+        "sqs:SetQueueAttributes"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "target": "sqs:arn:aws:sqs:eu-west-1:111122223333:demo-west-queue",
+      "type": "CAN_ADMIN_MSG",
+      "weight": 1
+    },
+    {
+      "category": "messaging",
+      "edge_id": "e:1e50d21ab5fbc27981b1",
+      "matched_actions": [
+        "sqs:SetQueueAttributes"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "target": "sqs:arn:aws:sqs:eu-west-2:111122223333:demo-denied-queue",
+      "type": "CAN_ADMIN_MSG",
+      "weight": 1
+    },
+    {
+      "category": "messaging",
+      "edge_id": "e:fafe0392fbe241a975f0",
+      "matched_actions": [
+        "sqs:SetQueueAttributes"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "target": "sqs:arn:aws:sqs:eu-west-2:111122223333:demo-dlq",
+      "type": "CAN_ADMIN_MSG",
+      "weight": 1
+    },
+    {
+      "category": "messaging",
+      "edge_id": "e:a2adeee40083baac5f2c",
+      "matched_actions": [
+        "sqs:SetQueueAttributes"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "target": "sqs:arn:aws:sqs:eu-west-2:111122223333:demo-queue",
+      "type": "CAN_ADMIN_MSG",
+      "weight": 1
+    },
+    {
+      "category": "messaging",
+      "edge_id": "e:47c4b1ffde123e895f85",
+      "matched_actions": [
+        "sqs:ReceiveMessage"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-ecs-task-role",
+      "target": "sqs:arn:aws:sqs:eu-west-1:111122223333:demo-west-queue",
+      "type": "CAN_RECEIVE",
+      "weight": 1
+    },
+    {
+      "category": "messaging",
+      "edge_id": "e:2856975b3c2458648e13",
+      "matched_actions": [
+        "sqs:ReceiveMessage"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-ecs-task-role",
+      "target": "sqs:arn:aws:sqs:eu-west-2:111122223333:demo-denied-queue",
+      "type": "CAN_RECEIVE",
+      "weight": 1
+    },
+    {
+      "category": "messaging",
+      "edge_id": "e:91d164d18567b051d776",
+      "matched_actions": [
+        "sqs:ReceiveMessage"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-ecs-task-role",
+      "target": "sqs:arn:aws:sqs:eu-west-2:111122223333:demo-dlq",
+      "type": "CAN_RECEIVE",
+      "weight": 1
+    },
+    {
+      "category": "messaging",
+      "edge_id": "e:493dc737f1b7f368dbd4",
+      "matched_actions": [
+        "sqs:ReceiveMessage"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-ecs-task-role",
+      "target": "sqs:arn:aws:sqs:eu-west-2:111122223333:demo-queue",
+      "type": "CAN_RECEIVE",
+      "weight": 1
+    },
+    {
+      "category": "messaging",
+      "edge_id": "e:0cd820f81394fd9df451",
+      "matched_actions": [
+        "sns:SetTopicAttributes"
+      ],
+      "source": "arn:aws:iam::111122223333:user/demo-bob",
+      "target": "sns:arn:aws:sns:eu-west-2:111122223333:demo-alerts",
+      "type": "CAN_ADMIN_MSG",
+      "weight": 1
+    },
+    {
+      "category": "messaging",
+      "edge_id": "e:0b341c542cfb390274e8",
+      "matched_actions": [
+        "sns:SetTopicAttributes"
+      ],
+      "source": "arn:aws:iam::111122223333:user/demo-bob",
+      "target": "sns:arn:aws:sns:eu-west-2:111122223333:demo-events",
+      "type": "CAN_ADMIN_MSG",
+      "weight": 1
+    },
+    {
+      "category": "messaging",
+      "edge_id": "e:336c1900d3674f75f93f",
+      "matched_actions": [
+        "sqs:SetQueueAttributes"
+      ],
+      "source": "arn:aws:iam::111122223333:user/demo-bob",
+      "target": "sqs:arn:aws:sqs:eu-west-1:111122223333:demo-west-queue",
+      "type": "CAN_ADMIN_MSG",
+      "weight": 1
+    },
+    {
+      "category": "messaging",
+      "edge_id": "e:5f9dfc9fe0193e300743",
+      "matched_actions": [
+        "sqs:SetQueueAttributes"
+      ],
+      "source": "arn:aws:iam::111122223333:user/demo-bob",
+      "target": "sqs:arn:aws:sqs:eu-west-2:111122223333:demo-denied-queue",
+      "type": "CAN_ADMIN_MSG",
+      "weight": 1
+    },
+    {
+      "category": "messaging",
+      "edge_id": "e:21e762a601fd6282471e",
+      "matched_actions": [
+        "sqs:SetQueueAttributes"
+      ],
+      "source": "arn:aws:iam::111122223333:user/demo-bob",
+      "target": "sqs:arn:aws:sqs:eu-west-2:111122223333:demo-dlq",
+      "type": "CAN_ADMIN_MSG",
+      "weight": 1
+    },
+    {
+      "category": "messaging",
+      "edge_id": "e:d412b2ea50f6d19b3003",
+      "matched_actions": [
+        "sqs:SetQueueAttributes"
+      ],
+      "source": "arn:aws:iam::111122223333:user/demo-bob",
+      "target": "sqs:arn:aws:sqs:eu-west-2:111122223333:demo-queue",
+      "type": "CAN_ADMIN_MSG",
+      "weight": 1
+    },
+    {
+      "category": "messaging",
+      "edge_id": "e:ff54b0d6b9fe313cf40d",
+      "is_cross_account": true,
+      "matched_actions": [
+        "sns:publish"
+      ],
+      "source": "sns:arn:aws:sns:eu-west-2:111122223333:demo-alerts",
+      "target": "arn:aws:iam::999999999999:root",
+      "type": "MSG_GRANTS_CROSS_ACCOUNT",
+      "weight": 2
+    }
+  ],
+  "findings": [
+    {
+      "category": "messaging_cross_account",
+      "description": "The SNS policy lets arn:aws:iam::999999999999:root (account 999999999999) perform sns:publish.",
+      "entity_arn": "arn:aws:sns:eu-west-2:111122223333:demo-alerts",
+      "fingerprint": "fb19096a42f601a55a75d88da7b662c8",
+      "id": "MSG-XACCT-001",
+      "matched_actions": [
+        "sns:publish"
+      ],
+      "node_id": "arn:aws:sns:eu-west-2:111122223333:demo-alerts",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "remediation": "Verify cross-account access is intended.",
+      "severity": "MEDIUM",
+      "title": "SNS 'demo-alerts' grants access to account 999999999999"
+    }
+  ]
+}

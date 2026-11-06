@@ -1,0 +1,55 @@
+# Docker build context: only what the image needs (Dockerfile COPYs requirements*.txt, pyproject.toml,
+# readme.md, LICENSE and aws_enumerator/). Everything below stays out of the context (F-066, F-132).
+
+# VCS and local tooling state
+.git
+.github
+.gitignore
+.venv
+.venvs
+venv
+env
+.claude
+.DS_Store
+**/.DS_Store
+**/__pycache__
+**/*.py[cod]
+.pytest_cache
+.ruff_cache
+.mypy_cache
+.coverage
+htmlcov
+node_modules
+build
+dist
+*.egg-info
+
+# Credentials and local environment files, at the root and under aws_enumerator/ (which the Dockerfile COPYs)
+.env
+.env.*
+**/.env
+**/.env.*
+
+# Engagement data and the owner's local files: never in a build context
+reports
+/reports
+out
+/out
+tmp
+/tmp
+enum.sh
+*.local.sh
+*.zip
+*.age
+*.gpg
+*.asc
+*.minisig
+internal-docs
+
+# Not needed in the image
+tests
+docs
+examples
+scripts
+Makefile
+.pre-commit-config.yaml

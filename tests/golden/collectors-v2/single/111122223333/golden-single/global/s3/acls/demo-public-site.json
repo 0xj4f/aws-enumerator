@@ -1,0 +1,15 @@
+{
+  "Grants": [
+    {
+      "Grantee": {
+        "Type": "Group",
+        "URI": "http://acs.amazonaws.com/groups/global/AllUsers"
+      },
+      "Permission": "READ"
+    }
+  ],
+  "Owner": {
+    "DisplayName": "demo-owner",
+    "ID": "0000000000000000000000000000000000000000000000000000000000000000"
+  }
+}

@@ -1,0 +1,13 @@
+[
+  {
+    "PolicyDocument": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Action\":\"*\",\"Resource\":\"*\",\"Principal\":\"*\"}]}",
+    "RouteTableIds": [
+      "rtb-0dec0ca1a000002"
+    ],
+    "ServiceName": "com.amazonaws.eu-west-2.s3",
+    "State": "available",
+    "VpcEndpointId": "vpce-0dec0000000002",
+    "VpcEndpointType": "Gateway",
+    "VpcId": "vpc-0dec000000000002"
+  }
+]

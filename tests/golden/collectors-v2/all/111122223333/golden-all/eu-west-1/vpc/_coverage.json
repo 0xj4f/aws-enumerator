@@ -1,0 +1,303 @@
+{
+  "breakers": [],
+  "calls": [
+    {
+      "api": "ec2:DescribeDhcpOptions",
+      "count": 1,
+      "error_code": null,
+      "items": 0,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "ec2:DescribeInternetGateways",
+      "count": 1,
+      "error_code": null,
+      "items": 1,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "ec2:DescribeManagedPrefixLists",
+      "count": 1,
+      "error_code": null,
+      "items": 0,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "ec2:DescribeNatGateways",
+      "count": 1,
+      "error_code": "EndpointConnectionError",
+      "items": 0,
+      "not_configured": false,
+      "optional": false,
+      "pages": 0,
+      "primary": false,
+      "status": "error"
+    },
+    {
+      "api": "ec2:DescribeNetworkAcls",
+      "count": 1,
+      "error_code": null,
+      "items": 0,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "ec2:DescribeRouteTables",
+      "count": 1,
+      "error_code": null,
+      "items": 1,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "ec2:DescribeSubnets",
+      "count": 1,
+      "error_code": null,
+      "items": 1,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "ec2:DescribeTransitGatewayAttachments",
+      "count": 1,
+      "error_code": null,
+      "items": 0,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "ec2:DescribeTransitGateways",
+      "count": 1,
+      "error_code": null,
+      "items": 0,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "ec2:DescribeVpcEndpoints",
+      "count": 1,
+      "error_code": null,
+      "items": 0,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "ec2:DescribeVpcPeeringConnections",
+      "count": 1,
+      "error_code": "UnauthorizedOperation",
+      "items": 0,
+      "not_configured": false,
+      "optional": false,
+      "pages": 0,
+      "primary": false,
+      "status": "denied"
+    },
+    {
+      "api": "ec2:DescribeVpcs",
+      "count": 1,
+      "error_code": null,
+      "items": 1,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": true,
+      "status": "ok"
+    },
+    {
+      "api": "ec2:DescribeVpnConnections",
+      "count": 1,
+      "error_code": null,
+      "items": 0,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "ec2:DescribeVpnGateways",
+      "count": 1,
+      "error_code": null,
+      "items": 0,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "network-firewall:ListFirewalls",
+      "count": 1,
+      "error_code": null,
+      "items": 0,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    }
+  ],
+  "duration_seconds": "<stripped>",
+  "ended_at": "<stripped>",
+  "error": null,
+  "item_errors": [],
+  "item_errors_truncated": false,
+  "module": "vpc",
+  "protocol": "ctx",
+  "region": "eu-west-1",
+  "schema_version": 1,
+  "sections": [
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "dhcp_options",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "internet_gateways",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "managed_prefix_lists",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "nacls",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "nat_gateways",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "network_firewalls",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "route_tables",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "subnets",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "transit_gateway_attachments",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "transit_gateways",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "vpc_endpoints",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "vpc_peering_connections",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "vpcs",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "vpn_connections",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "vpn_gateways",
+      "status": "ok"
+    }
+  ],
+  "services": [
+    "ec2",
+    "network-firewall"
+  ],
+  "started_at": "<stripped>",
+  "status": "partial",
+  "status_reason": "ec2:DescribeNatGateways error (+1 more)",
+  "summary": {
+    "calls": 15,
+    "denied": 1,
+    "error": 1,
+    "item_errors": 0,
+    "not_configured": 0,
+    "ok": 13,
+    "skipped": 0,
+    "throttled": 0
+  }
+}

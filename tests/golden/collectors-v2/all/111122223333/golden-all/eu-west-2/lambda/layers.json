@@ -1,0 +1,39 @@
+[
+  {
+    "LayerArn": "arn:aws:lambda:eu-west-2:111122223333:layer:demo-deps",
+    "LayerName": "demo-deps",
+    "Versions": [
+      {
+        "CompatibleRuntimes": [
+          "python3.11"
+        ],
+        "LayerVersionArn": "arn:aws:lambda:eu-west-2:111122223333:layer:demo-deps:2",
+        "Policy": null,
+        "PolicyStatus": "absent",
+        "Public": false,
+        "Version": 2
+      },
+      {
+        "CompatibleRuntimes": [
+          "python3.12"
+        ],
+        "LayerVersionArn": "arn:aws:lambda:eu-west-2:111122223333:layer:demo-deps:3",
+        "Policy": {
+          "Statement": [
+            {
+              "Action": "lambda:GetLayerVersion",
+              "Effect": "Allow",
+              "Principal": "*",
+              "Resource": "arn:aws:lambda:eu-west-2:111122223333:layer:demo-deps:3",
+              "Sid": "PublicLayer"
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "PolicyStatus": "present",
+        "Public": true,
+        "Version": 3
+      }
+    ]
+  }
+]

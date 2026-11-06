@@ -1,0 +1,16 @@
+{
+  "EntityArn": "arn:aws:iam::111122223333:role/demo-cognito-unauth-role",
+  "InlinePolicies": {
+    "demo-cognito-s3": {
+      "Statement": [
+        {
+          "Action": "s3:GetObject",
+          "Effect": "Allow",
+          "Resource": "arn:aws:s3:::demo-public-site/*"
+        }
+      ],
+      "Version": "2012-10-17"
+    }
+  },
+  "RoleName": "demo-cognito-unauth-role"
+}

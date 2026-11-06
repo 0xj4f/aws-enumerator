@@ -1,0 +1,30 @@
+{
+  "EntityArn": "arn:aws:iam::111122223333:role/demo-app-role",
+  "InlinePolicies": {
+    "demo-app-secrets-inline": {
+      "Statement": [
+        {
+          "Action": "secretsmanager:GetSecretValue",
+          "Effect": "Allow",
+          "Resource": "arn:aws:secretsmanager:eu-west-2:111122223333:secret:demo/*"
+        },
+        {
+          "Action": [
+            "kms:Decrypt"
+          ],
+          "Effect": "Allow",
+          "Resource": "arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a1"
+        },
+        {
+          "Action": [
+            "ssm:GetParameter"
+          ],
+          "Effect": "Allow",
+          "Resource": "arn:aws:ssm:eu-west-2:111122223333:parameter/demo/*"
+        }
+      ],
+      "Version": "2012-10-17"
+    }
+  },
+  "RoleName": "demo-app-role"
+}

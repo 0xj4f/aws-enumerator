@@ -1,0 +1,420 @@
+{
+  "description": "Shared group + shared policy + shared bucket together, as in the F-007 repro (6 discovered paths).",
+  "directedComparison": [
+    {
+      "directed": "unreachable",
+      "from": "arn:aws:iam::111122223333:user/demo-dev-user",
+      "to": "arn:aws:iam::111122223333:user/demo-admin-user",
+      "undirected": 2
+    },
+    {
+      "directed": "unreachable",
+      "from": "arn:aws:iam::111122223333:user/demo-dev-user",
+      "to": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "undirected": 2
+    },
+    {
+      "directed": 2,
+      "from": "arn:aws:iam::111122223333:role/demo-app-role",
+      "to": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "undirected": 2
+    },
+    {
+      "directed": "unreachable",
+      "from": "arn:aws:iam::111122223333:user/demo-admin-user",
+      "to": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "undirected": 4
+    },
+    {
+      "directed": "unreachable",
+      "from": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "to": "arn:aws:iam::111122223333:user/demo-admin-user",
+      "undirected": 4
+    },
+    {
+      "directed": "unreachable",
+      "from": "arn:aws:iam::111122223333:role/demo-app-role",
+      "to": "arn:aws:iam::111122223333:user/demo-admin-user",
+      "undirected": 6
+    }
+  ],
+  "discoverAll": {
+    "falsePathCount": 6,
+    "pathCount": 6,
+    "paths": [
+      {
+        "authoredCost": 0,
+        "directedValid": false,
+        "distance": 2,
+        "edges": [
+          {
+            "type": "MEMBER_OF",
+            "walked": "forward",
+            "weight": 0
+          },
+          {
+            "type": "MEMBER_OF",
+            "walked": "reversed",
+            "weight": 0
+          }
+        ],
+        "hops": 2,
+        "reversedEdgeTypes": [
+          "MEMBER_OF"
+        ],
+        "route": "[user]demo-dev-user -MEMBER_OF(w=0)- [group]demo-devs -MEMBER_OF(w=0)- [user]demo-admin-user",
+        "source": "arn:aws:iam::111122223333:user/demo-dev-user",
+        "target": "arn:aws:iam::111122223333:user/demo-admin-user",
+        "traversesGrantEdge": false
+      },
+      {
+        "authoredCost": 0,
+        "directedValid": false,
+        "distance": 2,
+        "edges": [
+          {
+            "type": "HAS_POLICY",
+            "walked": "forward",
+            "weight": 0
+          },
+          {
+            "type": "HAS_POLICY",
+            "walked": "reversed",
+            "weight": 0
+          }
+        ],
+        "hops": 2,
+        "reversedEdgeTypes": [
+          "HAS_POLICY"
+        ],
+        "route": "[user]demo-dev-user -HAS_POLICY(w=0)- [policy]demo-shared-policy -HAS_POLICY(w=0)- [role]demo-admin-role",
+        "source": "arn:aws:iam::111122223333:user/demo-dev-user",
+        "target": "arn:aws:iam::111122223333:role/demo-admin-role",
+        "traversesGrantEdge": false
+      },
+      {
+        "authoredCost": 2,
+        "directedValid": true,
+        "distance": 2,
+        "edges": [
+          {
+            "type": "CAN_READ",
+            "walked": "forward",
+            "weight": 1
+          },
+          {
+            "type": "GRANTS_ACCESS",
+            "walked": "forward",
+            "weight": 1
+          }
+        ],
+        "hops": 2,
+        "reversedEdgeTypes": [],
+        "route": "[role]demo-app-role -CAN_READ(w=1)- [bucket]demo-logs -GRANTS_ACCESS(w=1)- [role]demo-admin-role",
+        "source": "arn:aws:iam::111122223333:role/demo-app-role",
+        "target": "arn:aws:iam::111122223333:role/demo-admin-role",
+        "traversesGrantEdge": true
+      },
+      {
+        "authoredCost": 0,
+        "directedValid": false,
+        "distance": 4,
+        "edges": [
+          {
+            "type": "MEMBER_OF",
+            "walked": "forward",
+            "weight": 0
+          },
+          {
+            "type": "MEMBER_OF",
+            "walked": "reversed",
+            "weight": 0
+          },
+          {
+            "type": "HAS_POLICY",
+            "walked": "forward",
+            "weight": 0
+          },
+          {
+            "type": "HAS_POLICY",
+            "walked": "reversed",
+            "weight": 0
+          }
+        ],
+        "hops": 4,
+        "reversedEdgeTypes": [
+          "MEMBER_OF",
+          "HAS_POLICY"
+        ],
+        "route": "[user]demo-admin-user -MEMBER_OF(w=0)- [group]demo-devs -MEMBER_OF(w=0)- [user]demo-dev-user -HAS_POLICY(w=0)- [policy]demo-shared-policy -HAS_POLICY(w=0)- [role]demo-admin-role",
+        "source": "arn:aws:iam::111122223333:user/demo-admin-user",
+        "target": "arn:aws:iam::111122223333:role/demo-admin-role",
+        "traversesGrantEdge": false
+      },
+      {
+        "authoredCost": 0,
+        "directedValid": false,
+        "distance": 4,
+        "edges": [
+          {
+            "type": "HAS_POLICY",
+            "walked": "forward",
+            "weight": 0
+          },
+          {
+            "type": "HAS_POLICY",
+            "walked": "reversed",
+            "weight": 0
+          },
+          {
+            "type": "MEMBER_OF",
+            "walked": "forward",
+            "weight": 0
+          },
+          {
+            "type": "MEMBER_OF",
+            "walked": "reversed",
+            "weight": 0
+          }
+        ],
+        "hops": 4,
+        "reversedEdgeTypes": [
+          "HAS_POLICY",
+          "MEMBER_OF"
+        ],
+        "route": "[role]demo-admin-role -HAS_POLICY(w=0)- [policy]demo-shared-policy -HAS_POLICY(w=0)- [user]demo-dev-user -MEMBER_OF(w=0)- [group]demo-devs -MEMBER_OF(w=0)- [user]demo-admin-user",
+        "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+        "target": "arn:aws:iam::111122223333:user/demo-admin-user",
+        "traversesGrantEdge": false
+      },
+      {
+        "authoredCost": 2,
+        "directedValid": false,
+        "distance": 6,
+        "edges": [
+          {
+            "type": "CAN_READ",
+            "walked": "forward",
+            "weight": 1
+          },
+          {
+            "type": "GRANTS_ACCESS",
+            "walked": "forward",
+            "weight": 1
+          },
+          {
+            "type": "HAS_POLICY",
+            "walked": "forward",
+            "weight": 0
+          },
+          {
+            "type": "HAS_POLICY",
+            "walked": "reversed",
+            "weight": 0
+          },
+          {
+            "type": "MEMBER_OF",
+            "walked": "forward",
+            "weight": 0
+          },
+          {
+            "type": "MEMBER_OF",
+            "walked": "reversed",
+            "weight": 0
+          }
+        ],
+        "hops": 6,
+        "reversedEdgeTypes": [
+          "HAS_POLICY",
+          "MEMBER_OF"
+        ],
+        "route": "[role]demo-app-role -CAN_READ(w=1)- [bucket]demo-logs -GRANTS_ACCESS(w=1)- [role]demo-admin-role -HAS_POLICY(w=0)- [policy]demo-shared-policy -HAS_POLICY(w=0)- [user]demo-dev-user -MEMBER_OF(w=0)- [group]demo-devs -MEMBER_OF(w=0)- [user]demo-admin-user",
+        "source": "arn:aws:iam::111122223333:role/demo-app-role",
+        "target": "arn:aws:iam::111122223333:user/demo-admin-user",
+        "traversesGrantEdge": true
+      }
+    ],
+    "status": "6 paths found (4 sources -> 2 targets)"
+  },
+  "findPath": [
+    {
+      "cost": "2.0",
+      "from": "arn:aws:iam::111122223333:user/demo-dev-user",
+      "hops": "2 edges, 3 nodes",
+      "to": "arn:aws:iam::111122223333:user/demo-admin-user"
+    },
+    {
+      "cost": "2.0",
+      "from": "arn:aws:iam::111122223333:user/demo-dev-user",
+      "hops": "2 edges, 3 nodes",
+      "to": "arn:aws:iam::111122223333:role/demo-admin-role"
+    },
+    {
+      "cost": "2.0",
+      "from": "arn:aws:iam::111122223333:role/demo-app-role",
+      "hops": "2 edges, 3 nodes",
+      "to": "arn:aws:iam::111122223333:role/demo-admin-role"
+    },
+    {
+      "cost": "4.0",
+      "from": "arn:aws:iam::111122223333:user/demo-admin-user",
+      "hops": "4 edges, 5 nodes",
+      "to": "arn:aws:iam::111122223333:role/demo-admin-role"
+    },
+    {
+      "cost": "4.0",
+      "from": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "hops": "4 edges, 5 nodes",
+      "to": "arn:aws:iam::111122223333:user/demo-admin-user"
+    },
+    {
+      "cost": "6.0",
+      "from": "arn:aws:iam::111122223333:role/demo-app-role",
+      "hops": "6 edges, 7 nodes",
+      "to": "arn:aws:iam::111122223333:user/demo-admin-user"
+    }
+  ],
+  "graph": {
+    "duplicateIds": [],
+    "edgeCount": 6,
+    "edges": [
+      {
+        "category": "structural",
+        "id": "arn:aws:iam::111122223333:role/demo-admin-role->arn:aws:iam::111122223333:policy/demo-shared-policy:HAS_POLICY",
+        "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+        "target": "arn:aws:iam::111122223333:policy/demo-shared-policy",
+        "type": "HAS_POLICY",
+        "weight": 0
+      },
+      {
+        "category": "s3_access",
+        "id": "arn:aws:iam::111122223333:role/demo-app-role->bucket:demo-logs:CAN_READ",
+        "source": "arn:aws:iam::111122223333:role/demo-app-role",
+        "target": "bucket:demo-logs",
+        "type": "CAN_READ",
+        "weight": 1
+      },
+      {
+        "category": "structural",
+        "id": "arn:aws:iam::111122223333:user/demo-admin-user->arn:aws:iam::111122223333:group/demo-devs:MEMBER_OF",
+        "source": "arn:aws:iam::111122223333:user/demo-admin-user",
+        "target": "arn:aws:iam::111122223333:group/demo-devs",
+        "type": "MEMBER_OF",
+        "weight": 0
+      },
+      {
+        "category": "structural",
+        "id": "arn:aws:iam::111122223333:user/demo-dev-user->arn:aws:iam::111122223333:group/demo-devs:MEMBER_OF",
+        "source": "arn:aws:iam::111122223333:user/demo-dev-user",
+        "target": "arn:aws:iam::111122223333:group/demo-devs",
+        "type": "MEMBER_OF",
+        "weight": 0
+      },
+      {
+        "category": "structural",
+        "id": "arn:aws:iam::111122223333:user/demo-dev-user->arn:aws:iam::111122223333:policy/demo-shared-policy:HAS_POLICY",
+        "source": "arn:aws:iam::111122223333:user/demo-dev-user",
+        "target": "arn:aws:iam::111122223333:policy/demo-shared-policy",
+        "type": "HAS_POLICY",
+        "weight": 0
+      },
+      {
+        "category": "s3_grant",
+        "id": "bucket:demo-logs->arn:aws:iam::111122223333:role/demo-admin-role:GRANTS_ACCESS",
+        "source": "bucket:demo-logs",
+        "target": "arn:aws:iam::111122223333:role/demo-admin-role",
+        "type": "GRANTS_ACCESS",
+        "weight": 1
+      }
+    ],
+    "elementsPassedToCytoscape": 13,
+    "graphInfoText": "7 nodes, 6 edges",
+    "nodeCount": 7,
+    "nodes": [
+      {
+        "id": "arn:aws:iam::111122223333:group/demo-devs",
+        "isHighValue": null,
+        "label": "demo-devs",
+        "maxSeverity": null,
+        "type": "group"
+      },
+      {
+        "id": "arn:aws:iam::111122223333:policy/demo-shared-policy",
+        "isHighValue": null,
+        "label": "demo-shared-policy",
+        "maxSeverity": null,
+        "type": "policy"
+      },
+      {
+        "id": "arn:aws:iam::111122223333:role/demo-admin-role",
+        "isHighValue": true,
+        "label": "demo-admin-role",
+        "maxSeverity": null,
+        "type": "role"
+      },
+      {
+        "id": "arn:aws:iam::111122223333:role/demo-app-role",
+        "isHighValue": false,
+        "label": "demo-app-role",
+        "maxSeverity": null,
+        "type": "role"
+      },
+      {
+        "id": "arn:aws:iam::111122223333:user/demo-admin-user",
+        "isHighValue": true,
+        "label": "demo-admin-user",
+        "maxSeverity": "CRITICAL",
+        "type": "user"
+      },
+      {
+        "id": "arn:aws:iam::111122223333:user/demo-dev-user",
+        "isHighValue": false,
+        "label": "demo-dev-user",
+        "maxSeverity": null,
+        "type": "user"
+      },
+      {
+        "id": "bucket:demo-logs",
+        "isHighValue": null,
+        "label": "demo-logs",
+        "maxSeverity": null,
+        "type": "bucket"
+      }
+    ]
+  },
+  "harness": "tests/js/helpers/legacy-harness.js (DOM stub + Cytoscape-semantics stub; equal-cost routes may differ from a browser)",
+  "legacy": {
+    "commit": "d13c215",
+    "path": "app/dashboard/index.html"
+  },
+  "note": "Informational characterisation of the legacy dashboard; the paths below are known to be wrong (F-007, F-040). Not a specification.",
+  "pathFinding": {
+    "dijkstraCallsByDiscoverAll": 4,
+    "directedFlags": [
+      false
+    ],
+    "effectiveWeights": [
+      {
+        "authored": 1,
+        "effective": 1,
+        "type": "CAN_READ"
+      },
+      {
+        "authored": 1,
+        "effective": 1,
+        "type": "GRANTS_ACCESS"
+      },
+      {
+        "authored": 0,
+        "effective": 1,
+        "type": "HAS_POLICY"
+      },
+      {
+        "authored": 0,
+        "effective": 1,
+        "type": "MEMBER_OF"
+      }
+    ]
+  },
+  "scenario": "f007-combined"
+}

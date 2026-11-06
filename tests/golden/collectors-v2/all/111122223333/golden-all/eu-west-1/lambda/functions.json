@@ -1,0 +1,25 @@
+[
+  {
+    "Aliases": [],
+    "EnvironmentVariableNames": [],
+    "FunctionArn": "arn:aws:lambda:eu-west-1:111122223333:function:demo-west-fn",
+    "FunctionName": "demo-west-fn",
+    "FunctionUrl": null,
+    "FunctionUrls": [],
+    "Handler": "main.handler",
+    "KMSKeyArn": null,
+    "LastModified": "2024-01-15T10:00:00.000+0000",
+    "Layers": [],
+    "MemorySize": 128,
+    "PackageType": "Zip",
+    "PolicyStatus": "absent",
+    "Role": "arn:aws:iam::111122223333:role/demo-lambda-role",
+    "Runtime": "python3.11",
+    "Timeout": 3,
+    "VpcConfig": {
+      "SecurityGroupIds": [],
+      "SubnetIds": [],
+      "VpcId": null
+    }
+  }
+]

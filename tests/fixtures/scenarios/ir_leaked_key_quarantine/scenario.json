@@ -1,0 +1,17 @@
+{
+  "name": "ir_leaked_key_quarantine",
+  "description": "ir_leaked_key with an explicit Deny * quarantine statement on leaked-user (the baseline ignores Deny).",
+  "account": "000000000000",
+  "layout": "single_region",
+  "regions": [
+    "eu-west-2"
+  ],
+  "report_dirs": [
+    "000000000000/eu-west-2"
+  ],
+  "scope_dirs": [
+    "000000000000/eu-west-2"
+  ],
+  "expect_exception": false,
+  "baseline": "d13c215"
+}

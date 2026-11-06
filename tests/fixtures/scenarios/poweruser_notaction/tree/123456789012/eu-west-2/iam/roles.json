@@ -1,0 +1,153 @@
+[
+  {
+    "Path": "/",
+    "RoleName": "demo-poweruser",
+    "RoleId": "AROAONDLIOLANIKIIDMKK",
+    "Arn": "arn:aws:iam::123456789012:role/demo-poweruser",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "AssumeRolePolicyDocument": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "ec2.amazonaws.com"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "Description": "",
+    "MaxSessionDuration": 3600
+  },
+  {
+    "Path": "/",
+    "RoleName": "demo-quarantined",
+    "RoleId": "AROAFBNGPPLHEKOOLJHJN",
+    "Arn": "arn:aws:iam::123456789012:role/demo-quarantined",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "AssumeRolePolicyDocument": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "ec2.amazonaws.com"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "Description": "",
+    "MaxSessionDuration": 3600
+  },
+  {
+    "Path": "/",
+    "RoleName": "demo-deny-iam",
+    "RoleId": "AROAMMJFDEOEKAJPMDMEE",
+    "Arn": "arn:aws:iam::123456789012:role/demo-deny-iam",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "AssumeRolePolicyDocument": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "ec2.amazonaws.com"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "Description": "",
+    "MaxSessionDuration": 3600
+  },
+  {
+    "Path": "/",
+    "RoleName": "demo-boundary-capped",
+    "RoleId": "AROAMKPDJPLKLBMBBGFIJ",
+    "Arn": "arn:aws:iam::123456789012:role/demo-boundary-capped",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "AssumeRolePolicyDocument": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "ec2.amazonaws.com"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "Description": "",
+    "MaxSessionDuration": 3600,
+    "PermissionsBoundary": {
+      "PermissionsBoundaryType": "Policy",
+      "PermissionsBoundaryArn": "arn:aws:iam::aws:policy/ReadOnlyAccess"
+    }
+  },
+  {
+    "Path": "/",
+    "RoleName": "demo-passrole-gated",
+    "RoleId": "AROAIMGPIPGMHNBJMADDK",
+    "Arn": "arn:aws:iam::123456789012:role/demo-passrole-gated",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "AssumeRolePolicyDocument": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "ec2.amazonaws.com"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "Description": "",
+    "MaxSessionDuration": 3600
+  },
+  {
+    "Path": "/",
+    "RoleName": "demo-iam-notresource",
+    "RoleId": "AROACDKOFFDEJLBIPIIDC",
+    "Arn": "arn:aws:iam::123456789012:role/demo-iam-notresource",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "AssumeRolePolicyDocument": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "ec2.amazonaws.com"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "Description": "",
+    "MaxSessionDuration": 3600
+  },
+  {
+    "Path": "/",
+    "RoleName": "demo-star-notresource",
+    "RoleId": "AROAEILDDKBIIIHFNKLBP",
+    "Arn": "arn:aws:iam::123456789012:role/demo-star-notresource",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "AssumeRolePolicyDocument": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "ec2.amazonaws.com"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "Description": "",
+    "MaxSessionDuration": 3600
+  }
+]

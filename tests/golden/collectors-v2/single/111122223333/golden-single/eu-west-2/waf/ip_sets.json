@@ -1,0 +1,14 @@
+[
+  {
+    "ARN": "arn:aws:wafv2:eu-west-2:111122223333:regional/ipset/demo-blocklist/a1a1a1a1-0000-4000-8000-0000000000a4",
+    "Addresses": [
+      "198.51.100.7/32",
+      "203.0.113.0/24"
+    ],
+    "Description": null,
+    "IPAddressVersion": "IPV4",
+    "Id": "a1a1a1a1-0000-4000-8000-0000000000a4",
+    "Name": "demo-blocklist",
+    "Scope": "REGIONAL"
+  }
+]

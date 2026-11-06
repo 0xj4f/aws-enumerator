@@ -1,0 +1,54 @@
+{
+  "DefaultVersionId": "v1",
+  "Document": {
+    "Statement": [
+      {
+        "Action": [
+          "s3:GetObject",
+          "s3:PutObject"
+        ],
+        "Effect": "Allow",
+        "Resource": "arn:aws:s3:::demo-data-bucket/*"
+      },
+      {
+        "Action": [
+          "sqs:SendMessage"
+        ],
+        "Effect": "Allow",
+        "Resource": "arn:aws:sqs:eu-west-2:111122223333:demo-queue"
+      }
+    ],
+    "Version": "2012-10-17"
+  },
+  "PolicyArn": "arn:aws:iam::111122223333:policy/demo-app-policy",
+  "PolicyName": "demo-app-policy",
+  "PolicyType": "Local",
+  "VersionId": "v1",
+  "Versions": [
+    {
+      "CreateDate": "2024-01-09T10:00:00Z",
+      "Document": {
+        "Statement": [
+          {
+            "Action": [
+              "s3:GetObject",
+              "s3:PutObject"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:s3:::demo-data-bucket/*"
+          },
+          {
+            "Action": [
+              "sqs:SendMessage"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:sqs:eu-west-2:111122223333:demo-queue"
+          }
+        ],
+        "Version": "2012-10-17"
+      },
+      "IsDefaultVersion": true,
+      "VersionId": "v1"
+    }
+  ]
+}

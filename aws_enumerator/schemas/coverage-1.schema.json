@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/0xj4f/aws-enumerator/schemas/coverage-1.schema.json",
+  "title": "aws-enumerator module coverage (_coverage.json), schema_version 1",
+  "description": "What one collector module could and could not read in one run unit. Contract: docs/contracts/coverage-schema.md. Rendered by aws_enumerator.coverage.Coverage.to_json().",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "module", "region", "services", "protocol", "status", "status_reason",
+    "started_at", "ended_at", "duration_seconds", "summary", "calls", "sections", "breakers",
+    "item_errors", "item_errors_truncated", "error"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "module": {"type": "string", "pattern": "^[a-z][a-z0-9_]{0,39}$"},
+    "region": {
+      "type": "string",
+      "description": "\"global\" for the global unit, else the AWS region name",
+      "pattern": "^(global|[a-z]{2}(-[a-z]+)+-[0-9]+)$"
+    },
+    "services": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "protocol": {
+      "enum": ["ctx", "legacy-observed"],
+      "description": "ctx: calls made through ctx.call/ctx.paginate (primary/item/optional known). legacy-observed: calls observed through botocore events from an old-style collector (best effort; never 'denied' at module level)."
+    },
+    "status": {"$ref": "#/$defs/module_status"},
+    "status_reason": {"type": ["string", "null"]},
+    "started_at": {"$ref": "#/$defs/utc_or_null"},
+    "ended_at": {"$ref": "#/$defs/utc_or_null"},
+    "duration_seconds": {"type": ["number", "null"], "minimum": 0},
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["calls", "ok", "denied", "error", "throttled", "skipped", "not_configured", "item_errors"],
+      "properties": {
+        "calls": {"type": "integer", "minimum": 0},
+        "ok": {"type": "integer", "minimum": 0},
+        "denied": {"type": "integer", "minimum": 0},
+        "error": {"type": "integer", "minimum": 0},
+        "throttled": {"type": "integer", "minimum": 0},
+        "skipped": {"type": "integer", "minimum": 0},
+        "not_configured": {"type": "integer", "minimum": 0, "description": "subset of ok"},
+        "item_errors": {"type": "integer", "minimum": 0, "description": "total, including entries beyond the item_errors cap"}
+      }
+    },
+    "calls": {
+      "type": "array",
+      "description": "Aggregated call rows, one per (api, status, error_code, not_configured, primary, optional); sorted by those keys.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["api", "status", "count", "items", "pages", "error_code", "not_configured", "primary", "optional"],
+        "properties": {
+          "api": {"$ref": "#/$defs/api"},
+          "status": {"$ref": "#/$defs/call_status"},
+          "count": {"type": "integer", "minimum": 1},
+          "items": {"type": ["integer", "null"], "minimum": 0, "description": "result items returned by ctx.paginate calls in this row; null for single calls"},
+          "pages": {"type": "integer", "minimum": 0},
+          "error_code": {"type": ["string", "null"], "description": "AWS Error.Code, botocore exception class name, CircuitOpen:AccessDenied / CircuitOpen:Throttling, or a skip reason"},
+          "not_configured": {"type": "boolean"},
+          "primary": {"type": "boolean"},
+          "optional": {"type": "boolean"}
+        },
+        "allOf": [
+          {"if": {"properties": {"not_configured": {"const": true}}}, "then": {"properties": {"status": {"const": "ok"}, "error_code": {"type": "string"}}}},
+          {"if": {"properties": {"status": {"enum": ["denied", "error", "throttled", "skipped"]}}}, "then": {"properties": {"error_code": {"type": "string"}}}}
+        ]
+      }
+    },
+    "sections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "status", "error_type", "error_code", "message"],
+        "properties": {
+          "name": {"type": "string", "minLength": 1},
+          "status": {"enum": ["ok", "error", "interrupted"]},
+          "error_type": {"type": ["string", "null"]},
+          "error_code": {"type": ["string", "null"]},
+          "message": {"type": ["string", "null"], "maxLength": 200, "description": "only for non-AWS exceptions; AWS error messages are never recorded"}
+        }
+      }
+    },
+    "breakers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["api", "kind", "reason", "opened_after", "skipped"],
+        "properties": {
+          "api": {"$ref": "#/$defs/api"},
+          "kind": {"enum": ["deny", "throttle"]},
+          "reason": {"enum": ["CircuitOpen:AccessDenied", "CircuitOpen:Throttling"]},
+          "opened_after": {"type": "integer", "minimum": 1},
+          "skipped": {"type": "integer", "minimum": 0}
+        }
+      }
+    },
+    "item_errors": {
+      "type": "array",
+      "description": "Per-resource failures, capped (default 500); sorted by (api, resource, status, error_code).",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["resource", "api", "status", "error_code"],
+        "properties": {
+          "resource": {"type": "string"},
+          "api": {"$ref": "#/$defs/api"},
+          "status": {"enum": ["denied", "error", "throttled", "skipped"]},
+          "error_code": {"type": ["string", "null"]}
+        }
+      }
+    },
+    "item_errors_truncated": {"type": "boolean"},
+    "error": {
+      "description": "Unhandled exception outside any section (status failed), or the fatal credential error that aborted the run",
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "code", "message"],
+          "properties": {
+            "type": {"type": "string"},
+            "code": {"type": ["string", "null"]},
+            "message": {"type": ["string", "null"], "maxLength": 200}
+          }
+        }
+      ]
+    }
+  },
+  "$defs": {
+    "api": {
+      "type": "string",
+      "description": "<botocore service name>:<OperationName>, e.g. s3:GetBucketPolicy (an API operation, not an IAM action)",
+      "pattern": "^[a-z0-9-]+:[A-Za-z0-9]+$"
+    },
+    "call_status": {"enum": ["ok", "denied", "error", "throttled", "skipped"]},
+    "module_status": {"enum": ["ok", "partial", "denied", "failed", "skipped", "interrupted", "not_run"]},
+    "utc_or_null": {"type": ["string", "null"], "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]+)?Z$"}
+  }
+}

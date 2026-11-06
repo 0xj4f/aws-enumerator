@@ -1,0 +1,8 @@
+{
+  "EntityType": "Role",
+  "EntityName": "demo-boundary-capped",
+  "PermissionsBoundary": {
+    "PermissionsBoundaryType": "Policy",
+    "PermissionsBoundaryArn": "arn:aws:iam::aws:policy/ReadOnlyAccess"
+  }
+}

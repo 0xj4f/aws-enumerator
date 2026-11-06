@@ -1,0 +1,26 @@
+[
+  {
+    "UserName": "demo-ops",
+    "UserId": "AIDAPDDMBJDGCKDBLIGJP",
+    "Arn": "arn:aws:iam::123456789012:user/demo-ops",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "PasswordLastUsed": "",
+    "Path": "/",
+    "Tags": [],
+    "AccessKeys": [
+      {
+        "AccessKeyId": "AKIAEXAMPLELEAMMMKHL",
+        "Status": "Active",
+        "CreateDate": "2026-01-01 00:00:00+00:00"
+      },
+      {
+        "AccessKeyId": "AKIAEXAMPLEJOMEKONEJ",
+        "Status": "Active",
+        "CreateDate": "2026-01-01 00:00:00+00:00"
+      }
+    ],
+    "MFADevices": [],
+    "HasLoginProfile": false,
+    "PermissionsBoundary": null
+  }
+]

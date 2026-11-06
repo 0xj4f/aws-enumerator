@@ -1,0 +1,17 @@
+{
+  "name": "malformed",
+  "description": "Single-object Statement in a trust policy and a bucket policy, {\"Error\"} stubs in every attached-policy map, error files and empty lists. The baseline engine raises (F-002).",
+  "account": "123456789012",
+  "layout": "single_region",
+  "regions": [
+    "eu-west-2"
+  ],
+  "report_dirs": [
+    "123456789012/eu-west-2"
+  ],
+  "scope_dirs": [
+    "123456789012/eu-west-2"
+  ],
+  "expect_exception": true,
+  "baseline": "d13c215"
+}

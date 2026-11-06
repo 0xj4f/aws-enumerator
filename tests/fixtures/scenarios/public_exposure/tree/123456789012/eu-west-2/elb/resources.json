@@ -1,0 +1,20 @@
+[
+  {
+    "Type": "elb",
+    "Arn": "arn:aws:elasticloadbalancing:eu-west-2:123456789012:loadbalancer/app/demo-public-alb/5de55021ac0f7f70",
+    "Name": "demo-public-alb",
+    "Scheme": "internet-facing",
+    "DNSName": "demo-public-alb.eu-west-2.elb.amazonaws.com",
+    "LBType": "application",
+    "Targets": [
+      {
+        "kind": "instance",
+        "id": "i-0a1b2c3d4e5f6eb01"
+      },
+      {
+        "kind": "lambda",
+        "id": "arn:aws:lambda:eu-west-2:123456789012:function:demo-url-fn"
+      }
+    ]
+  }
+]

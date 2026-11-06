@@ -1,0 +1,27 @@
+[
+  {
+    "AssociatedResources": null,
+    "Description": "demo west",
+    "GroupId": "sg-0dec0ee5700000001",
+    "GroupName": "demo-west",
+    "InboundRules": [
+      {
+        "FromPort": 3389,
+        "IpProtocol": "tcp",
+        "IpRanges": [
+          {
+            "CidrIp": "0.0.0.0/0"
+          }
+        ],
+        "Ipv6Ranges": [],
+        "PrefixListIds": [],
+        "ToPort": 3389,
+        "UserIdGroupPairs": []
+      }
+    ],
+    "OutboundRules": [],
+    "OwnerId": "111122223333",
+    "Tags": [],
+    "VpcId": "vpc-0dec000000000001"
+  }
+]

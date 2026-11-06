@@ -1,0 +1,131 @@
+[
+  {
+    "AssociatedResources": [],
+    "Description": "default VPC security group",
+    "GroupId": "sg-0dec0defa01700002",
+    "GroupName": "default",
+    "InboundRules": [],
+    "OutboundRules": [],
+    "OwnerId": "111122223333",
+    "Tags": [],
+    "VpcId": "vpc-0dec000000000002"
+  },
+  {
+    "AssociatedResources": [
+      {
+        "Attachment": null,
+        "Description": "ELB app/demo-public-alb/0123456789abcdef",
+        "InstanceId": null,
+        "InterfaceType": null,
+        "NetworkInterfaceId": "eni-0dec0a1b0000002",
+        "PrivateIpAddress": "10.20.1.20",
+        "PublicIp": null
+      },
+      {
+        "Attachment": {
+          "AttachTime": "2024-01-03T10:00:00Z",
+          "AttachmentId": "eni-attach-0dec00002a",
+          "DeviceIndex": 0,
+          "InstanceId": "i-0dec0eeb000000002",
+          "Status": "attached"
+        },
+        "Description": "demo web instance",
+        "InstanceId": "i-0dec0eeb000000002",
+        "InterfaceType": null,
+        "NetworkInterfaceId": "eni-0dec0eeb0000002",
+        "PrivateIpAddress": "10.20.1.10",
+        "PublicIp": null
+      }
+    ],
+    "Description": "demo web tier",
+    "GroupId": "sg-0dec0eeb000000002",
+    "GroupName": "demo-web",
+    "InboundRules": [
+      {
+        "FromPort": 22,
+        "IpProtocol": "tcp",
+        "IpRanges": [
+          {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "ssh from anywhere"
+          }
+        ],
+        "Ipv6Ranges": [],
+        "PrefixListIds": [],
+        "ToPort": 22,
+        "UserIdGroupPairs": []
+      },
+      {
+        "FromPort": 443,
+        "IpProtocol": "tcp",
+        "IpRanges": [],
+        "Ipv6Ranges": [
+          {
+            "CidrIpv6": "::/0"
+          }
+        ],
+        "PrefixListIds": [],
+        "ToPort": 443,
+        "UserIdGroupPairs": []
+      }
+    ],
+    "OutboundRules": [
+      {
+        "IpProtocol": "-1",
+        "IpRanges": [
+          {
+            "CidrIp": "0.0.0.0/0"
+          }
+        ],
+        "Ipv6Ranges": [],
+        "PrefixListIds": [],
+        "UserIdGroupPairs": []
+      }
+    ],
+    "OwnerId": "111122223333",
+    "Tags": [],
+    "VpcId": "vpc-0dec000000000002"
+  },
+  {
+    "AssociatedResources": [
+      {
+        "Attachment": {
+          "AttachTime": "2024-01-03T10:00:00Z",
+          "AttachmentId": "eni-attach-0dec00002b",
+          "DeviceIndex": 0,
+          "InstanceId": "i-0dec0abb000000002",
+          "Status": "attached"
+        },
+        "Description": "demo app instance",
+        "InstanceId": "i-0dec0abb000000002",
+        "InterfaceType": null,
+        "NetworkInterfaceId": "eni-0dec0abb0000002",
+        "PrivateIpAddress": "10.20.2.10",
+        "PublicIp": null
+      }
+    ],
+    "Description": "demo app tier",
+    "GroupId": "sg-0dec0abb000000002",
+    "GroupName": "demo-app",
+    "InboundRules": [
+      {
+        "FromPort": 8080,
+        "IpProtocol": "tcp",
+        "IpRanges": [],
+        "Ipv6Ranges": [],
+        "PrefixListIds": [],
+        "ToPort": 8080,
+        "UserIdGroupPairs": [
+          {
+            "GroupId": "sg-0dec0eeb000000002",
+            "UserId": "111122223333"
+          }
+        ]
+      }
+    ],
+    "OutboundRules": [],
+    "OwnerId": "111122223333",
+    "Tags": [],
+    "VpcId": "vpc-0dec000000000002"
+  }
+]

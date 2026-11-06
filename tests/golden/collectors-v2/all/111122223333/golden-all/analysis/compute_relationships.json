@@ -1,0 +1,925 @@
+{
+  "edges": [
+    {
+      "category": "compute",
+      "edge_id": "e:ee61d14c1ec0ed8ae6d7",
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "target": "cfnstack:arn:aws:cloudformation:eu-west-2:111122223333:stack/demo-app-stack/00000000-0000-4000-8000-0000000000f1",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:8a68ea204a6134e418d9",
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "target": "codebuild:arn:aws:codebuild:eu-west-2:111122223333:project/demo-build",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:6c3302eab4b33d60a5b1",
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "target": "codebuild:arn:aws:codebuild:eu-west-2:111122223333:project/demo-deploy",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:1ee1805cc327985e928d",
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "target": "ecsservice:arn:aws:ecs:eu-west-2:111122223333:service/demo-ecs/demo-api-svc",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:3382f3cf6cb5e9191f51",
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "target": "gluedevendpoint:arn:aws:glue:eu-west-2:111122223333:devEndpoint/demo-dev-endpoint",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:7ed7b8574616a49b54fe",
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "target": "sagemaker:arn:aws:sagemaker:eu-west-2:111122223333:notebook-instance/demo-notebook",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:dc375df1ef4bc97651fd",
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "target": "sagemaker:arn:aws:sagemaker:eu-west-2:111122223333:notebook-instance/demo-notebook",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:c15c415ccf493957d674",
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "target": "sagemakerdomain:arn:aws:sagemaker:eu-west-2:111122223333:user-profile/d-0dec0a1b2c3d4/demo-analyst",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:dbb73ef9dae9bf06a6ab",
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "target": "sagemakerdomain:arn:aws:sagemaker:eu-west-2:111122223333:user-profile/d-0dec0a1b2c3d4/demo-default-user",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:bcf990a675a1973e3248",
+      "matched_actions": [
+        "cloudformation:UpdateStack"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "target": "cfnstack:arn:aws:cloudformation:eu-west-2:111122223333:stack/demo-app-stack/00000000-0000-4000-8000-0000000000f1",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:9a154c9666ffa9a4ff5a",
+      "matched_actions": [
+        "cloudformation:UpdateStack"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "target": "cfnstack:arn:aws:cloudformation:eu-west-2:111122223333:stack/demo-network-stack/00000000-0000-4000-8000-0000000000f1",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:413b8d246f936a5a887d",
+      "matched_actions": [
+        "codebuild:StartBuild"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "target": "codebuild:arn:aws:codebuild:eu-west-2:111122223333:project/demo-build",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:d3f8547dd811b82db7e1",
+      "matched_actions": [
+        "codebuild:StartBuild"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "target": "codebuild:arn:aws:codebuild:eu-west-2:111122223333:project/demo-deploy",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:b1faaf7509c12152ac52",
+      "matched_actions": [
+        "ecs:ExecuteCommand"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "target": "ecsservice:arn:aws:ecs:eu-west-2:111122223333:service/demo-ecs/demo-api-svc",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:7c1608c759b0a843888f",
+      "matched_actions": [
+        "ecs:RunTask",
+        "iam:PassRole"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "target": "ecstask:arn:aws:ecs:eu-west-2:111122223333:task-definition/demo-api",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:1f59d4399ab6aa706d2d",
+      "matched_actions": [
+        "ecs:RunTask"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "target": "ecstask:arn:aws:ecs:eu-west-2:111122223333:task-definition/demo-batch",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:723d2e4da994a3319b2c",
+      "matched_actions": [
+        "glue:UpdateDevEndpoint"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "target": "gluedevendpoint:arn:aws:glue:eu-west-2:111122223333:devEndpoint/demo-dev-endpoint",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:451f7ab6851a9afe21a7",
+      "matched_actions": [
+        "glue:StartJobRun",
+        "glue:UpdateJob",
+        "iam:PassRole"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "target": "gluejob:arn:aws:glue:eu-west-1:111122223333:job/demo-west-job",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:0a3b4af34a6766a7b00b",
+      "matched_actions": [
+        "glue:StartJobRun",
+        "glue:UpdateJob",
+        "iam:PassRole"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "target": "gluejob:arn:aws:glue:eu-west-2:111122223333:job/demo-etl-job",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:33ab526b69bac3360baa",
+      "matched_actions": [
+        "sagemaker:CreateNotebookInstanceLifecycleConfig",
+        "sagemaker:StartNotebookInstance",
+        "sagemaker:StopNotebookInstance",
+        "sagemaker:UpdateNotebookInstance"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "target": "sagemaker:arn:aws:sagemaker:eu-west-2:111122223333:notebook-instance/demo-notebook",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:653b6f75e05ddd0e3f6d",
+      "matched_actions": [
+        "sagemaker:CreatePresignedNotebookInstanceUrl"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "target": "sagemaker:arn:aws:sagemaker:eu-west-2:111122223333:notebook-instance/demo-notebook",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:c4fd6f05a1f0fa1506da",
+      "matched_actions": [
+        "sagemaker:CreatePresignedDomainUrl",
+        "sagemaker:CreateUserProfile"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "target": "sagemakerdomain:arn:aws:sagemaker:eu-west-2:111122223333:domain/d-0dec0a1b2c3d4",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:cf217dbf5ec5d430040d",
+      "matched_actions": [
+        "sagemaker:CreatePresignedDomainUrl"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "target": "sagemakerdomain:arn:aws:sagemaker:eu-west-2:111122223333:user-profile/d-0dec0a1b2c3d4/demo-analyst",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:ac8f465ec298862b2daf",
+      "matched_actions": [
+        "sagemaker:CreatePresignedDomainUrl"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "target": "sagemakerdomain:arn:aws:sagemaker:eu-west-2:111122223333:user-profile/d-0dec0a1b2c3d4/demo-default-user",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:e5c019829b76e7895eb1",
+      "matched_actions": [
+        "cloudformation:UpdateStackSet",
+        "iam:PassRole"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "target": "stackset:arn:aws:cloudformation:eu-west-2:111122223333:stackset/demo-baseline:dec0dec0-0000-4000-8000-0000000000c5",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:b08bffe496f193fdd0fb",
+      "matched_actions": [
+        "cloudformation:UpdateStack"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "target": "cfnstack:arn:aws:cloudformation:eu-west-2:111122223333:stack/demo-app-stack/00000000-0000-4000-8000-0000000000f1",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:5fe016657701e904ec98",
+      "matched_actions": [
+        "cloudformation:UpdateStack"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "target": "cfnstack:arn:aws:cloudformation:eu-west-2:111122223333:stack/demo-network-stack/00000000-0000-4000-8000-0000000000f1",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:6fae5987260d74da8efb",
+      "matched_actions": [
+        "codebuild:StartBuild"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "target": "codebuild:arn:aws:codebuild:eu-west-2:111122223333:project/demo-build",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:0b1a5feee90aec4f6b1f",
+      "matched_actions": [
+        "codebuild:StartBuild"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "target": "codebuild:arn:aws:codebuild:eu-west-2:111122223333:project/demo-deploy",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:4d0a0f8d8dedc7c2b19b",
+      "matched_actions": [
+        "ecs:ExecuteCommand"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "target": "ecsservice:arn:aws:ecs:eu-west-2:111122223333:service/demo-ecs/demo-api-svc",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:0f08150a8992d0ce03cd",
+      "matched_actions": [
+        "ecs:RunTask",
+        "iam:PassRole"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "target": "ecstask:arn:aws:ecs:eu-west-2:111122223333:task-definition/demo-api",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:0ef56a75b043a5b1816f",
+      "matched_actions": [
+        "ecs:RunTask"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "target": "ecstask:arn:aws:ecs:eu-west-2:111122223333:task-definition/demo-batch",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:320a236e8c7be67700f8",
+      "matched_actions": [
+        "glue:UpdateDevEndpoint"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "target": "gluedevendpoint:arn:aws:glue:eu-west-2:111122223333:devEndpoint/demo-dev-endpoint",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:7292b2b89c135a97a37f",
+      "matched_actions": [
+        "glue:StartJobRun",
+        "glue:UpdateJob",
+        "iam:PassRole"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "target": "gluejob:arn:aws:glue:eu-west-1:111122223333:job/demo-west-job",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:3710435c0055b4d36218",
+      "matched_actions": [
+        "glue:StartJobRun",
+        "glue:UpdateJob",
+        "iam:PassRole"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "target": "gluejob:arn:aws:glue:eu-west-2:111122223333:job/demo-etl-job",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:53ac8a8a9f05c21c7ad0",
+      "matched_actions": [
+        "sagemaker:CreateNotebookInstanceLifecycleConfig",
+        "sagemaker:StartNotebookInstance",
+        "sagemaker:StopNotebookInstance",
+        "sagemaker:UpdateNotebookInstance"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "target": "sagemaker:arn:aws:sagemaker:eu-west-2:111122223333:notebook-instance/demo-notebook",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:ebfb60e36dac618764a3",
+      "matched_actions": [
+        "sagemaker:CreatePresignedNotebookInstanceUrl"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "target": "sagemaker:arn:aws:sagemaker:eu-west-2:111122223333:notebook-instance/demo-notebook",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:3caaef3d4003e410f192",
+      "matched_actions": [
+        "sagemaker:CreatePresignedDomainUrl",
+        "sagemaker:CreateUserProfile"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "target": "sagemakerdomain:arn:aws:sagemaker:eu-west-2:111122223333:domain/d-0dec0a1b2c3d4",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:4fa3580e2c33e6981d33",
+      "matched_actions": [
+        "sagemaker:CreatePresignedDomainUrl"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "target": "sagemakerdomain:arn:aws:sagemaker:eu-west-2:111122223333:user-profile/d-0dec0a1b2c3d4/demo-analyst",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:73769382cd7f62008b44",
+      "matched_actions": [
+        "sagemaker:CreatePresignedDomainUrl"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "target": "sagemakerdomain:arn:aws:sagemaker:eu-west-2:111122223333:user-profile/d-0dec0a1b2c3d4/demo-default-user",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:ef01403c17e5c7bb8cc0",
+      "matched_actions": [
+        "cloudformation:UpdateStackSet",
+        "iam:PassRole"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "target": "stackset:arn:aws:cloudformation:eu-west-2:111122223333:stackset/demo-baseline:dec0dec0-0000-4000-8000-0000000000c5",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:206739409aed9bc1207a",
+      "matched_actions": [
+        "cloudformation:UpdateStack"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "target": "cfnstack:arn:aws:cloudformation:eu-west-2:111122223333:stack/demo-app-stack/00000000-0000-4000-8000-0000000000f1",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:2272e4648ee4a08ed78f",
+      "matched_actions": [
+        "cloudformation:UpdateStack"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "target": "cfnstack:arn:aws:cloudformation:eu-west-2:111122223333:stack/demo-network-stack/00000000-0000-4000-8000-0000000000f1",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:6664013f9f0153e1b3c9",
+      "matched_actions": [
+        "codebuild:StartBuild"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "target": "codebuild:arn:aws:codebuild:eu-west-2:111122223333:project/demo-build",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:8b8fac4d9d8fa3d44a1a",
+      "matched_actions": [
+        "codebuild:StartBuild"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "target": "codebuild:arn:aws:codebuild:eu-west-2:111122223333:project/demo-deploy",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:a325bc346d0fdc7e8020",
+      "matched_actions": [
+        "ecs:ExecuteCommand"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "target": "ecsservice:arn:aws:ecs:eu-west-2:111122223333:service/demo-ecs/demo-api-svc",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:80f6ca1a89631a9dad97",
+      "matched_actions": [
+        "ecs:RunTask",
+        "iam:PassRole"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "target": "ecstask:arn:aws:ecs:eu-west-2:111122223333:task-definition/demo-api",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:12d1e76c3491966e3c05",
+      "matched_actions": [
+        "ecs:RunTask"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "target": "ecstask:arn:aws:ecs:eu-west-2:111122223333:task-definition/demo-batch",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:17231a9f89788b6a853b",
+      "matched_actions": [
+        "glue:UpdateDevEndpoint"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "target": "gluedevendpoint:arn:aws:glue:eu-west-2:111122223333:devEndpoint/demo-dev-endpoint",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:351d5ff2961ffe2d2b0e",
+      "matched_actions": [
+        "glue:StartJobRun",
+        "glue:UpdateJob",
+        "iam:PassRole"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "target": "gluejob:arn:aws:glue:eu-west-1:111122223333:job/demo-west-job",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:bf13211cc698ce6f0213",
+      "matched_actions": [
+        "glue:StartJobRun",
+        "glue:UpdateJob",
+        "iam:PassRole"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "target": "gluejob:arn:aws:glue:eu-west-2:111122223333:job/demo-etl-job",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:3f39995e1e1410ee5eaa",
+      "matched_actions": [
+        "sagemaker:CreatePresignedNotebookInstanceUrl"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "target": "sagemaker:arn:aws:sagemaker:eu-west-2:111122223333:notebook-instance/demo-notebook",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:4c1fe5fc10363ba93d9f",
+      "matched_actions": [
+        "sagemaker:CreateNotebookInstanceLifecycleConfig",
+        "sagemaker:StartNotebookInstance",
+        "sagemaker:StopNotebookInstance",
+        "sagemaker:UpdateNotebookInstance"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "target": "sagemaker:arn:aws:sagemaker:eu-west-2:111122223333:notebook-instance/demo-notebook",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:735a9ab6fe7e451a5520",
+      "matched_actions": [
+        "sagemaker:CreatePresignedDomainUrl",
+        "sagemaker:CreateUserProfile"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "target": "sagemakerdomain:arn:aws:sagemaker:eu-west-2:111122223333:domain/d-0dec0a1b2c3d4",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:8c0ef8ffaa14279a7b62",
+      "matched_actions": [
+        "sagemaker:CreatePresignedDomainUrl"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "target": "sagemakerdomain:arn:aws:sagemaker:eu-west-2:111122223333:user-profile/d-0dec0a1b2c3d4/demo-analyst",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:c7c293aaed01156863cb",
+      "matched_actions": [
+        "sagemaker:CreatePresignedDomainUrl"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "target": "sagemakerdomain:arn:aws:sagemaker:eu-west-2:111122223333:user-profile/d-0dec0a1b2c3d4/demo-default-user",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:513b15345aa4e8db8c05",
+      "matched_actions": [
+        "cloudformation:UpdateStackSet",
+        "iam:PassRole"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "target": "stackset:arn:aws:cloudformation:eu-west-2:111122223333:stackset/demo-baseline:dec0dec0-0000-4000-8000-0000000000c5",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:6f767dab35f63f46d64d",
+      "matched_actions": [
+        "cloudformation:UpdateStack"
+      ],
+      "source": "arn:aws:iam::111122223333:user/demo-bob",
+      "target": "cfnstack:arn:aws:cloudformation:eu-west-2:111122223333:stack/demo-app-stack/00000000-0000-4000-8000-0000000000f1",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:c0c12686cad8fd7a7a8a",
+      "matched_actions": [
+        "cloudformation:UpdateStack"
+      ],
+      "source": "arn:aws:iam::111122223333:user/demo-bob",
+      "target": "cfnstack:arn:aws:cloudformation:eu-west-2:111122223333:stack/demo-network-stack/00000000-0000-4000-8000-0000000000f1",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:71b49ac47abba7f717c3",
+      "matched_actions": [
+        "codebuild:StartBuild"
+      ],
+      "source": "arn:aws:iam::111122223333:user/demo-bob",
+      "target": "codebuild:arn:aws:codebuild:eu-west-2:111122223333:project/demo-build",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:bfbd659fd131224694bf",
+      "matched_actions": [
+        "codebuild:StartBuild"
+      ],
+      "source": "arn:aws:iam::111122223333:user/demo-bob",
+      "target": "codebuild:arn:aws:codebuild:eu-west-2:111122223333:project/demo-deploy",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:bf1bb7079b27358bf418",
+      "matched_actions": [
+        "ecs:ExecuteCommand"
+      ],
+      "source": "arn:aws:iam::111122223333:user/demo-bob",
+      "target": "ecsservice:arn:aws:ecs:eu-west-2:111122223333:service/demo-ecs/demo-api-svc",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:5cab446b11c3fc4efc9c",
+      "matched_actions": [
+        "ecs:RunTask",
+        "iam:PassRole"
+      ],
+      "source": "arn:aws:iam::111122223333:user/demo-bob",
+      "target": "ecstask:arn:aws:ecs:eu-west-2:111122223333:task-definition/demo-api",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:e4c925dd93af1d2ba176",
+      "matched_actions": [
+        "ecs:RunTask"
+      ],
+      "source": "arn:aws:iam::111122223333:user/demo-bob",
+      "target": "ecstask:arn:aws:ecs:eu-west-2:111122223333:task-definition/demo-batch",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:7197ac8a91cdea135d0c",
+      "matched_actions": [
+        "glue:UpdateDevEndpoint"
+      ],
+      "source": "arn:aws:iam::111122223333:user/demo-bob",
+      "target": "gluedevendpoint:arn:aws:glue:eu-west-2:111122223333:devEndpoint/demo-dev-endpoint",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:300c9304a6c655db4a85",
+      "matched_actions": [
+        "glue:StartJobRun",
+        "glue:UpdateJob",
+        "iam:PassRole"
+      ],
+      "source": "arn:aws:iam::111122223333:user/demo-bob",
+      "target": "gluejob:arn:aws:glue:eu-west-1:111122223333:job/demo-west-job",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:829b2d398c8b08c7c6bb",
+      "matched_actions": [
+        "glue:StartJobRun",
+        "glue:UpdateJob",
+        "iam:PassRole"
+      ],
+      "source": "arn:aws:iam::111122223333:user/demo-bob",
+      "target": "gluejob:arn:aws:glue:eu-west-2:111122223333:job/demo-etl-job",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:5bac4adfd3132edf2141",
+      "matched_actions": [
+        "sagemaker:CreateNotebookInstanceLifecycleConfig",
+        "sagemaker:StartNotebookInstance",
+        "sagemaker:StopNotebookInstance",
+        "sagemaker:UpdateNotebookInstance"
+      ],
+      "source": "arn:aws:iam::111122223333:user/demo-bob",
+      "target": "sagemaker:arn:aws:sagemaker:eu-west-2:111122223333:notebook-instance/demo-notebook",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:a04c99150d8261cadfc9",
+      "matched_actions": [
+        "sagemaker:CreatePresignedNotebookInstanceUrl"
+      ],
+      "source": "arn:aws:iam::111122223333:user/demo-bob",
+      "target": "sagemaker:arn:aws:sagemaker:eu-west-2:111122223333:notebook-instance/demo-notebook",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:1413437eba5b147f92fb",
+      "matched_actions": [
+        "sagemaker:CreatePresignedDomainUrl",
+        "sagemaker:CreateUserProfile"
+      ],
+      "source": "arn:aws:iam::111122223333:user/demo-bob",
+      "target": "sagemakerdomain:arn:aws:sagemaker:eu-west-2:111122223333:domain/d-0dec0a1b2c3d4",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:e78ced3777740a0d9e03",
+      "matched_actions": [
+        "sagemaker:CreatePresignedDomainUrl"
+      ],
+      "source": "arn:aws:iam::111122223333:user/demo-bob",
+      "target": "sagemakerdomain:arn:aws:sagemaker:eu-west-2:111122223333:user-profile/d-0dec0a1b2c3d4/demo-analyst",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:c81f46675b19d3b3dae0",
+      "matched_actions": [
+        "sagemaker:CreatePresignedDomainUrl"
+      ],
+      "source": "arn:aws:iam::111122223333:user/demo-bob",
+      "target": "sagemakerdomain:arn:aws:sagemaker:eu-west-2:111122223333:user-profile/d-0dec0a1b2c3d4/demo-default-user",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:43d240b7e34bf13d7b71",
+      "matched_actions": [
+        "cloudformation:UpdateStackSet",
+        "iam:PassRole"
+      ],
+      "source": "arn:aws:iam::111122223333:user/demo-bob",
+      "target": "stackset:arn:aws:cloudformation:eu-west-2:111122223333:stackset/demo-baseline:dec0dec0-0000-4000-8000-0000000000c5",
+      "type": "CAN_MODIFY",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:309ec0c7528b054c3ef2",
+      "source": "cfnstack:arn:aws:cloudformation:eu-west-2:111122223333:stack/demo-app-stack/00000000-0000-4000-8000-0000000000f1",
+      "target": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "type": "USES_ROLE",
+      "weight": 0
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:b97ae7265f6c3834197e",
+      "source": "codebuild:arn:aws:codebuild:eu-west-2:111122223333:project/demo-build",
+      "target": "arn:aws:iam::111122223333:role/demo-build-role",
+      "type": "USES_ROLE",
+      "weight": 0
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:d886a4ed11574673f84b",
+      "source": "codebuild:arn:aws:codebuild:eu-west-2:111122223333:project/demo-deploy",
+      "target": "arn:aws:iam::111122223333:role/demo-build-role",
+      "type": "USES_ROLE",
+      "weight": 0
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:340c2320cbf3d4dab2dc",
+      "source": "ecsservice:arn:aws:ecs:eu-west-2:111122223333:service/demo-ecs/demo-api-svc",
+      "target": "arn:aws:iam::111122223333:role/demo-ecs-task-role",
+      "type": "USES_ROLE",
+      "weight": 0
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:e94bfea319b76556b097",
+      "source": "ecstask:arn:aws:ecs:eu-west-2:111122223333:task-definition/demo-api",
+      "target": "arn:aws:iam::111122223333:role/demo-ecs-task-role",
+      "type": "USES_ROLE",
+      "weight": 0
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:2b65effb022e5dd714f3",
+      "source": "gluedevendpoint:arn:aws:glue:eu-west-2:111122223333:devEndpoint/demo-dev-endpoint",
+      "target": "arn:aws:iam::111122223333:role/demo-glue-role",
+      "type": "USES_ROLE",
+      "weight": 0
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:af5893602cf42c7ebe9c",
+      "source": "gluejob:arn:aws:glue:eu-west-1:111122223333:job/demo-west-job",
+      "target": "arn:aws:iam::111122223333:role/demo-glue-role",
+      "type": "USES_ROLE",
+      "weight": 0
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:f63a1f08436464b67730",
+      "source": "gluejob:arn:aws:glue:eu-west-2:111122223333:job/demo-etl-job",
+      "target": "arn:aws:iam::111122223333:role/demo-glue-role",
+      "type": "USES_ROLE",
+      "weight": 0
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:19e9f278223f3a10ddd8",
+      "source": "sagemaker:arn:aws:sagemaker:eu-west-2:111122223333:notebook-instance/demo-notebook",
+      "target": "arn:aws:iam::111122223333:role/demo-sagemaker-role",
+      "type": "USES_ROLE",
+      "weight": 0
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:44b97d49c2074abf4f95",
+      "source": "sagemakerdomain:arn:aws:sagemaker:eu-west-2:111122223333:domain/d-0dec0a1b2c3d4",
+      "target": "arn:aws:iam::111122223333:role/demo-sagemaker-role",
+      "type": "USES_ROLE",
+      "weight": 0
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:2f62f2ac27648a1d616d",
+      "source": "sagemakerdomain:arn:aws:sagemaker:eu-west-2:111122223333:user-profile/d-0dec0a1b2c3d4/demo-analyst",
+      "target": "arn:aws:iam::111122223333:role/demo-app-role",
+      "type": "USES_ROLE",
+      "weight": 0
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:8578d971467e2c7d3235",
+      "source": "sagemakerdomain:arn:aws:sagemaker:eu-west-2:111122223333:user-profile/d-0dec0a1b2c3d4/demo-default-user",
+      "target": "arn:aws:iam::111122223333:role/demo-sagemaker-role",
+      "type": "USES_ROLE",
+      "weight": 0
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:5c268594f7ea4be4f2db",
+      "source": "stackset:arn:aws:cloudformation:eu-west-2:111122223333:stackset/demo-baseline:dec0dec0-0000-4000-8000-0000000000c5",
+      "target": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "type": "USES_ROLE",
+      "weight": 0
+    }
+  ],
+  "findings": []
+}

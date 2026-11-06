@@ -1,0 +1,47 @@
+[
+  {
+    "Name": "/demo/db/password",
+    "ARN": "arn:aws:ssm:eu-west-2:123456789012:parameter/demo/db/password",
+    "Type": "String",
+    "LastModifiedDate": "2026-01-01 00:00:00+00:00",
+    "LastModifiedUser": "arn:aws:iam::123456789012:user/demo-operator",
+    "Version": 1,
+    "Tier": "Standard",
+    "Policies": [],
+    "DataType": "text"
+  },
+  {
+    "Name": "/demo/app/config",
+    "ARN": "arn:aws:ssm:eu-west-2:123456789012:parameter/demo/app/config",
+    "Type": "SecureString",
+    "LastModifiedDate": "2026-01-01 00:00:00+00:00",
+    "LastModifiedUser": "arn:aws:iam::123456789012:user/demo-operator",
+    "Version": 1,
+    "Tier": "Standard",
+    "Policies": [],
+    "DataType": "text",
+    "KeyId": "alias/aws/ssm"
+  },
+  {
+    "Name": "/demo/api_key",
+    "ARN": "arn:aws:ssm:eu-west-2:123456789012:parameter/demo/api_key",
+    "Type": "String",
+    "LastModifiedDate": "2026-01-01 00:00:00+00:00",
+    "LastModifiedUser": "arn:aws:iam::123456789012:user/demo-operator",
+    "Version": 1,
+    "Tier": "Standard",
+    "Policies": [],
+    "DataType": "text"
+  },
+  {
+    "Name": "/other/feature-flags",
+    "ARN": "arn:aws:ssm:eu-west-2:123456789012:parameter/other/feature-flags",
+    "Type": "StringList",
+    "LastModifiedDate": "2026-01-01 00:00:00+00:00",
+    "LastModifiedUser": "arn:aws:iam::123456789012:user/demo-operator",
+    "Version": 1,
+    "Tier": "Standard",
+    "Policies": [],
+    "DataType": "text"
+  }
+]

@@ -1,0 +1,9 @@
+{
+  "EntityArn": "arn:aws:iam::111122223333:user/demo-ci",
+  "EntityName": "demo-ci",
+  "EntityType": "User",
+  "PermissionsBoundary": {
+    "PermissionsBoundaryArn": "arn:aws:iam::aws:policy/ReadOnlyAccess",
+    "PermissionsBoundaryType": "PermissionsBoundaryPolicy"
+  }
+}

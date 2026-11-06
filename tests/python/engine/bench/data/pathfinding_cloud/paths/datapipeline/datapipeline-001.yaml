@@ -1,0 +1,257 @@
+id: datapipeline-001
+name: iam:PassRole + datapipeline:CreatePipeline + datapipeline:PutPipelineDefinition
+  + datapipeline:ActivatePipeline
+category: new-passrole
+services:
+- iam
+- datapipeline
+description: A principal with `iam:PassRole`, `datapipeline:CreatePipeline`, `datapipeline:PutPipelineDefinition`,
+  and `datapipeline:ActivatePipeline` can create a new Data Pipeline that executes
+  arbitrary code with the permissions of a passed IAM role. Data Pipeline can run
+  shell commands on EC2 instances or EMR clusters, allowing privilege escalation.
+  The level of access gained depends on the permissions of the available roles.
+prerequisites:
+  admin:
+  - A role must exist that trusts datapipeline.amazonaws.com or elasticmapreduce.amazonaws.com
+  - The role must have administrative permissions (e.g., AdministratorAccess)
+  lateral:
+  - A role must exist that trusts datapipeline.amazonaws.com or elasticmapreduce.amazonaws.com
+exploitationSteps:
+  awscli:
+  - step: 1
+    command: 'aws datapipeline create-pipeline --name privesc-pipeline --unique-id
+      privesc-$(date +%s)
+
+      '
+    description: Create a new Data Pipeline
+  - step: 2
+    command: |
+      aws datapipeline put-pipeline-definition --pipeline-id PIPELINE_ID \
+        --pipeline-definition file://malicious-pipeline.json
+    description: Define a pipeline that runs arbitrary shell commands with the privileged
+      role
+  - step: 3
+    command: aws datapipeline activate-pipeline --pipeline-id PIPELINE_ID
+    description: Activate the pipeline to execute the malicious code
+recommendation: |
+  High powered service roles + overly permissive `iam:PassRole` is what makes this privilege escalation path exploitable and impactful.
+
+  - **Avoid administrative service roles** - Very rarely does a Data Pipeline need administrative access. Use the principle of least privilege.
+  - **Avoid granting `iam:PassRole` on all resources** - Whenever possible, restrict `iam:PassRole` to specific roles or specific services.
+
+  Use IAM policy conditions to restrict which roles can be passed and to which services:
+
+  ```json
+  {
+    "Effect": "Allow",
+    "Action": "iam:PassRole",
+    "Resource": "arn:aws:iam::ACCOUNT_ID:role/SpecificDataPipelineRole",
+    "Condition": {
+      "StringEquals": {
+        "iam:PassedToService": ["datapipeline.amazonaws.com", "elasticmapreduce.amazonaws.com"]
+      }
+    }
+  }
+  ```
+
+  - Monitor CloudTrail for unusual Data Pipeline creation followed by immediate activation
+  - Monitor CloudTrail for pipeline creation by principals who do not usually create pipelines
+  - Monitor CloudTrail for roles being passed to Data Pipeline that haven't been used before
+  - Monitor and alert on Data Pipeline creation with privileged roles
+  - Regularly audit Data Pipelines for excessive IAM permissions
+  - Regularly audit all IAM roles that trust the Data Pipeline service and down-scope any roles with administrative access
+limitations: 'This path provides administrative access only if the passed role has
+  administrative permissions (e.g., AdministratorAccess or an equivalent custom policy).
+  If only limited roles are available, you gain access limited to those permissions.
+  However, even limited access may enable multi-hop attacks or access to sensitive
+  data.
+
+  '
+discoveryAttribution:
+  firstDocumented:
+    author: Spencer Gietzen
+    organization: Rhino Security Labs
+    date: 2018
+    link: https://rhinosecuritylabs.com/aws/aws-privilege-escalation-methods-mitigation/
+references:
+- title: AWS Privilege Escalation Methods and Mitigation
+  url: https://rhinosecuritylabs.com/aws/aws-privilege-escalation-methods-mitigation/
+- title: HackingTheCloud - PassRole + DataPipeline Privilege Escalation
+  url: https://hackingthe.cloud/aws/exploitation/iam_privilege_escalation/#iampassrole-datapipelineactivatepipeline-datapipelinecreatepipeline-datapipelineputpipelinedefinition
+- title: IAM Vulnerable - DataPipeline PassRole
+  url: https://github.com/BishopFox/iam-vulnerable
+- title: HackTricks - AWS - Datapipeline Privesc
+  url: https://cloud.hacktricks.wiki/en/pentesting-cloud/aws-security/aws-privilege-escalation/aws-datapipeline-privesc/index.html#iampassrole-datapipelinecreatepipeline-datapipelineputpipelinedefinition-datapipelineactivatepipeline
+relatedPaths:
+- ec2-001
+- lambda-001
+learningEnvironments:
+  iam-vulnerable:
+    type: open-source
+    githubLink: https://github.com/BishopFox/iam-vulnerable
+    scenario: DataPipeline-PassExistingRoleToNewDataPipeline
+    description: Deploy Terraform into your own AWS account and practice individual
+      exploitation paths
+permissions:
+  required:
+  - permission: iam:PassRole
+    resourceConstraints: Target role ARN must be in the Resource section
+  - permission: datapipeline:CreatePipeline
+    resourceConstraints: Must have permission to create Data Pipeline pipelines
+  - permission: datapipeline:PutPipelineDefinition
+    resourceConstraints: Must have permission to define pipeline activities
+  - permission: datapipeline:ActivatePipeline
+    resourceConstraints: Must have permission to activate pipelines
+  additional:
+  - permission: iam:ListRoles
+    resourceConstraints: Helpful for discovering available roles to pass
+  - permission: iam:GetRole
+    resourceConstraints: Useful for viewing role trust policies and attached permissions
+detectionTools:
+  prowler: https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L191
+  cloudsplaining: https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L154
+attackVisualization:
+  nodes:
+  - id: start
+    label: Starting Principal
+    type: principal
+    description: 'The starting principal (user or role) with `iam:PassRole`, `datapipeline:CreatePipeline`,
+      `datapipeline:PutPipelineDefinition`, and `datapipeline:ActivatePipeline` permissions.
+      This principal will create a Data Pipeline with a privileged role attached and
+      activate it to execute arbitrary code with elevated privileges.
+
+      '
+  - id: data_pipeline
+    label: New Data Pipeline
+    type: resource
+    description: 'The newly created Data Pipeline with a malicious pipeline definition.
+      Data Pipeline can execute shell commands on EC2 instances or EMR clusters as
+      part of pipeline activities. The pipeline is configured to run arbitrary commands
+      with the permissions of the passed IAM role.
+
+      '
+  - id: target_role
+    label: Existing Role That Trusts the datapipeline or elasticmapreduce Service
+    type: principal
+    description: 'The privileged IAM role that is passed to the Data Pipeline during
+      creation. This role must trust datapipeline.amazonaws.com or elasticmapreduce.amazonaws.com
+      as a principal in its trust policy. When the pipeline executes, shell commands
+      run with this role''s permissions on the underlying compute resources (EC2 or
+      EMR).
+
+      '
+  - id: exfiltrate
+    label: Execute shell commands
+    type: payload
+    color: '#99ccff'
+    description: 'The Data Pipeline executes with the target role''s permissions.
+      The pipeline definition includes shell commands that can retrieve temporary
+      credentials from the instance metadata service, perform privileged API calls,
+      or exfiltrate data. Common actions include creating access keys for the starting
+      principal, attaching admin policies, or sending credentials to an attacker-controlled
+      server.
+
+      '
+  - id: admin_outcome
+    label: Effective Administrator
+    type: outcome
+    description: 'If the target role has administrative permissions (AdministratorAccess
+      or equivalent), the attacker gains full administrative access to the AWS account
+      by using the credentials or executing privileged commands through the Data Pipeline.
+
+      '
+  - id: partial_outcome
+    label: Some additional access
+    type: outcome
+    color: '#ffeb99'
+    description: 'If the target role has some elevated permissions but not full admin,
+      the attacker gains partial privilege escalation. This could include access to
+      sensitive data (S3, RDS, DynamoDB) or permissions that enable additional escalation
+      paths.
+
+      '
+  - id: minimal_outcome
+    label: No additional access
+    type: outcome
+    color: '#cccccc'
+    description: 'If the target role only has minimal permissions, the privilege escalation
+      may not provide meaningful additional access to the attacker. The Data Pipeline
+      can still execute but with limited capabilities.
+
+      '
+  edges:
+  - from: start
+    to: data_pipeline
+    label: iam:PassRole + datapipeline:CreatePipeline + datapipeline:PutPipelineDefinition
+    description: |
+      The attacker creates a new Data Pipeline and passes a privileged role to it. The pipeline definition includes malicious shell commands that will execute when the pipeline is activated.
+
+      Commands:
+      ```bash
+      aws datapipeline create-pipeline \
+        --name privesc-pipeline \
+        --unique-id privesc-$(date +%s)
+      ```
+
+      Then define the pipeline with a malicious configuration:
+      ```bash
+      aws datapipeline put-pipeline-definition \
+        --pipeline-id PIPELINE_ID \
+        --pipeline-definition file://malicious-pipeline.json
+      ```
+
+      The malicious-pipeline.json contains ShellCommandActivity objects with commands to exfiltrate credentials or perform privileged actions.
+  - from: data_pipeline
+    to: target_role
+    label: Pipeline assumes role
+    description: 'When the Data Pipeline is activated, it launches EC2 instances or
+      EMR clusters that automatically assume the target role. The shell commands defined
+      in the pipeline execute with the permissions granted to this role.
+
+      '
+  - from: target_role
+    to: exfiltrate
+    label: datapipeline:ActivatePipeline
+    description: |
+      The attacker activates the Data Pipeline, which executes the malicious shell commands with the target role's permissions. The commands can retrieve credentials from the instance metadata service or directly perform privileged API calls.
+
+      Command:
+      ```bash
+      aws datapipeline activate-pipeline \
+        --pipeline-id PIPELINE_ID
+      ```
+
+      The pipeline executes on the underlying compute resources (EC2 or EMR) with the target role's credentials available via the instance metadata service.
+  - from: exfiltrate
+    to: admin_outcome
+    label: If role has admin permissions
+    branch: A
+    condition: admin
+    description: 'If the target role has AdministratorAccess or equivalent administrative
+      permissions, the attacker gains full control over the AWS account. The shell
+      commands can create access keys, attach admin policies, or exfiltrate credentials
+      for direct use.
+
+      '
+  - from: exfiltrate
+    to: partial_outcome
+    label: If role has some permissions
+    branch: B
+    condition: some_permissions
+    description: 'If the target role has elevated but non-administrative permissions,
+      the attacker gains partial privilege escalation. This might include access to
+      sensitive data stores (S3 buckets, RDS databases, DynamoDB tables) or permissions
+      that enable additional privilege escalation techniques.
+
+      '
+  - from: exfiltrate
+    to: minimal_outcome
+    label: If role has minimal permissions
+    branch: C
+    condition: no_permissions
+    description: 'If the target role only has minimal or non-sensitive permissions,
+      the privilege escalation may not yield meaningful additional access. However,
+      even limited access could be useful for reconnaissance or as part of a multi-step
+      attack chain.
+
+      '

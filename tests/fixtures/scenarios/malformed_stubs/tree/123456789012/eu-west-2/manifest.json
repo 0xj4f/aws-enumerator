@@ -1,0 +1,208 @@
+{
+  "tool": "aws-enumerator",
+  "version": "0.2.0",
+  "author": "0xj4f",
+  "run_metadata": {
+    "account_id": "123456789012",
+    "mode": "single_region",
+    "region": "eu-west-2",
+    "regions_enumerated": [],
+    "caller_arn": "arn:aws:iam::123456789012:user/demo-operator",
+    "caller_user_id": "AIDAIOFJECGLDECPDLLDA",
+    "timestamp_start": "2026-01-01T00:00:00",
+    "timestamp_end": "2026-01-01T00:00:00",
+    "duration_seconds": 0.0
+  },
+  "modules_executed": [
+    {
+      "name": "cognito",
+      "path": "cognito/",
+      "file_count": 1,
+      "files": [
+        "resources.json"
+      ]
+    },
+    {
+      "name": "ebs",
+      "path": "ebs/",
+      "file_count": 1,
+      "files": [
+        "resources.json"
+      ]
+    },
+    {
+      "name": "ec2",
+      "path": "ec2/",
+      "file_count": 1,
+      "files": [
+        "instances.json"
+      ]
+    },
+    {
+      "name": "eks",
+      "path": "eks/",
+      "file_count": 4,
+      "files": [
+        "addons.json",
+        "clusters.json",
+        "fargate_profiles.json",
+        "nodegroups.json"
+      ]
+    },
+    {
+      "name": "elb",
+      "path": "elb/",
+      "file_count": 1,
+      "files": [
+        "resources.json"
+      ]
+    },
+    {
+      "name": "glue",
+      "path": "glue/",
+      "file_count": 1,
+      "files": [
+        "resources.json"
+      ]
+    },
+    {
+      "name": "iam",
+      "path": "iam/",
+      "file_count": 16,
+      "files": [
+        "account_password_policy.json",
+        "account_summary.json",
+        "group_attached_policies.json",
+        "groups.json",
+        "inline_policies/groups/example-group.json",
+        "inline_policies/roles/example-single-stmt.json",
+        "inline_policies/users/example-user.json",
+        "instance_profiles.json",
+        "policies.json",
+        "policy_documents/example-customer_v1.json",
+        "policy_documents/example-denied_error.json",
+        "role_attached_policies.json",
+        "roles.json",
+        "user_attached_policies.json",
+        "user_group_memberships.json",
+        "users.json"
+      ]
+    },
+    {
+      "name": "k8s",
+      "path": "k8s/",
+      "file_count": 11,
+      "files": [
+        "demo-unreachable/cluster_info.json",
+        "demo-unreachable/cluster_role_bindings.json",
+        "demo-unreachable/cluster_roles.json",
+        "demo-unreachable/ingresses.json",
+        "demo-unreachable/namespaces.json",
+        "demo-unreachable/pods.json",
+        "demo-unreachable/role_bindings.json",
+        "demo-unreachable/roles.json",
+        "demo-unreachable/secrets.json",
+        "demo-unreachable/service_accounts.json",
+        "demo-unreachable/services.json"
+      ]
+    },
+    {
+      "name": "kms",
+      "path": "kms/",
+      "file_count": 1,
+      "files": [
+        "keys.json"
+      ]
+    },
+    {
+      "name": "lambda",
+      "path": "lambda/",
+      "file_count": 1,
+      "files": [
+        "functions.json"
+      ]
+    },
+    {
+      "name": "rds",
+      "path": "rds/",
+      "file_count": 1,
+      "files": [
+        "resources.json"
+      ]
+    },
+    {
+      "name": "route53",
+      "path": "route53/",
+      "file_count": 1,
+      "files": [
+        "resources.json"
+      ]
+    },
+    {
+      "name": "s3",
+      "path": "s3/",
+      "file_count": 3,
+      "files": [
+        "buckets.json",
+        "encryption/example-region-error.json",
+        "policies/example-malformed-bucket.json"
+      ]
+    },
+    {
+      "name": "secretsmanager",
+      "path": "secretsmanager/",
+      "file_count": 1,
+      "files": [
+        "secrets.json"
+      ]
+    },
+    {
+      "name": "sg",
+      "path": "sg/",
+      "file_count": 1,
+      "files": [
+        "security_groups.json"
+      ]
+    },
+    {
+      "name": "sns",
+      "path": "sns/",
+      "file_count": 1,
+      "files": [
+        "resources.json"
+      ]
+    },
+    {
+      "name": "sqs",
+      "path": "sqs/",
+      "file_count": 1,
+      "files": [
+        "resources.json"
+      ]
+    },
+    {
+      "name": "ssm",
+      "path": "ssm/",
+      "file_count": 1,
+      "files": [
+        "parameters.json"
+      ]
+    },
+    {
+      "name": "vpc",
+      "path": "vpc/",
+      "file_count": 9,
+      "files": [
+        "dhcp_options.json",
+        "internet_gateways.json",
+        "nacls.json",
+        "nat_gateways.json",
+        "route_tables.json",
+        "subnets.json",
+        "vpc_endpoints.json",
+        "vpc_peering_connections.json",
+        "vpcs.json"
+      ]
+    }
+  ]
+}

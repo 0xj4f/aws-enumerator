@@ -1,0 +1,211 @@
+{
+  "description": "Two workloads in one cluster; the path hops pod -> cluster -> other pod via IN_CLUSTER (undirected), weight-0 edges cost 1.",
+  "directedComparison": [
+    {
+      "directed": "unreachable",
+      "from": "arn:aws:iam::111122223333:role/demo-irsa-a",
+      "to": "arn:aws:iam::111122223333:role/demo-irsa-b",
+      "undirected": 6
+    }
+  ],
+  "discoverAll": {
+    "falsePathCount": 1,
+    "pathCount": 1,
+    "paths": [
+      {
+        "authoredCost": 2,
+        "directedValid": false,
+        "distance": 6,
+        "edges": [
+          {
+            "type": "IRSA_BRIDGE",
+            "walked": "reversed",
+            "weight": 1
+          },
+          {
+            "type": "RUNS_AS",
+            "walked": "reversed",
+            "weight": 0
+          },
+          {
+            "type": "IN_CLUSTER",
+            "walked": "forward",
+            "weight": 0
+          },
+          {
+            "type": "IN_CLUSTER",
+            "walked": "reversed",
+            "weight": 0
+          },
+          {
+            "type": "RUNS_AS",
+            "walked": "forward",
+            "weight": 0
+          },
+          {
+            "type": "IRSA_BRIDGE",
+            "walked": "forward",
+            "weight": 1
+          }
+        ],
+        "hops": 6,
+        "reversedEdgeTypes": [
+          "IRSA_BRIDGE",
+          "RUNS_AS",
+          "IN_CLUSTER"
+        ],
+        "route": "[role]demo-irsa-a -IRSA_BRIDGE(w=1)- [sa]demo-sa-a -RUNS_AS(w=0)- [pod]demo-pod-1 -IN_CLUSTER(w=0)- [cluster]demo-cluster -IN_CLUSTER(w=0)- [pod]demo-pod-2 -RUNS_AS(w=0)- [sa]demo-sa-b -IRSA_BRIDGE(w=1)- [role]demo-irsa-b",
+        "source": "arn:aws:iam::111122223333:role/demo-irsa-a",
+        "target": "arn:aws:iam::111122223333:role/demo-irsa-b",
+        "traversesGrantEdge": false
+      }
+    ],
+    "status": "1 paths found (2 sources -> 1 targets)"
+  },
+  "findPath": [
+    {
+      "cost": "6.0",
+      "from": "arn:aws:iam::111122223333:role/demo-irsa-a",
+      "hops": "6 edges, 7 nodes",
+      "to": "arn:aws:iam::111122223333:role/demo-irsa-b"
+    }
+  ],
+  "graph": {
+    "duplicateIds": [],
+    "edgeCount": 6,
+    "edges": [
+      {
+        "category": "k8s_structural",
+        "id": "pod:demo-cluster/demo-ns/demo-pod-1->cluster:demo-cluster:IN_CLUSTER",
+        "source": "pod:demo-cluster/demo-ns/demo-pod-1",
+        "target": "cluster:demo-cluster",
+        "type": "IN_CLUSTER",
+        "weight": 0
+      },
+      {
+        "category": "k8s_workload",
+        "id": "pod:demo-cluster/demo-ns/demo-pod-1->sa:demo-cluster/demo-ns/demo-sa-a:RUNS_AS",
+        "source": "pod:demo-cluster/demo-ns/demo-pod-1",
+        "target": "sa:demo-cluster/demo-ns/demo-sa-a",
+        "type": "RUNS_AS",
+        "weight": 0
+      },
+      {
+        "category": "k8s_structural",
+        "id": "pod:demo-cluster/demo-ns/demo-pod-2->cluster:demo-cluster:IN_CLUSTER",
+        "source": "pod:demo-cluster/demo-ns/demo-pod-2",
+        "target": "cluster:demo-cluster",
+        "type": "IN_CLUSTER",
+        "weight": 0
+      },
+      {
+        "category": "k8s_workload",
+        "id": "pod:demo-cluster/demo-ns/demo-pod-2->sa:demo-cluster/demo-ns/demo-sa-b:RUNS_AS",
+        "source": "pod:demo-cluster/demo-ns/demo-pod-2",
+        "target": "sa:demo-cluster/demo-ns/demo-sa-b",
+        "type": "RUNS_AS",
+        "weight": 0
+      },
+      {
+        "category": "k8s_irsa",
+        "id": "sa:demo-cluster/demo-ns/demo-sa-a->arn:aws:iam::111122223333:role/demo-irsa-a:IRSA_BRIDGE",
+        "source": "sa:demo-cluster/demo-ns/demo-sa-a",
+        "target": "arn:aws:iam::111122223333:role/demo-irsa-a",
+        "type": "IRSA_BRIDGE",
+        "weight": 1
+      },
+      {
+        "category": "k8s_irsa",
+        "id": "sa:demo-cluster/demo-ns/demo-sa-b->arn:aws:iam::111122223333:role/demo-irsa-b:IRSA_BRIDGE",
+        "source": "sa:demo-cluster/demo-ns/demo-sa-b",
+        "target": "arn:aws:iam::111122223333:role/demo-irsa-b",
+        "type": "IRSA_BRIDGE",
+        "weight": 1
+      }
+    ],
+    "elementsPassedToCytoscape": 13,
+    "graphInfoText": "7 nodes, 6 edges",
+    "nodeCount": 7,
+    "nodes": [
+      {
+        "id": "arn:aws:iam::111122223333:role/demo-irsa-a",
+        "isHighValue": false,
+        "label": "demo-irsa-a",
+        "maxSeverity": null,
+        "type": "role"
+      },
+      {
+        "id": "arn:aws:iam::111122223333:role/demo-irsa-b",
+        "isHighValue": true,
+        "label": "demo-irsa-b",
+        "maxSeverity": null,
+        "type": "role"
+      },
+      {
+        "id": "cluster:demo-cluster",
+        "isHighValue": null,
+        "label": "demo-cluster",
+        "maxSeverity": null,
+        "type": "cluster"
+      },
+      {
+        "id": "pod:demo-cluster/demo-ns/demo-pod-1",
+        "isHighValue": null,
+        "label": "demo-pod-1",
+        "maxSeverity": null,
+        "type": "pod"
+      },
+      {
+        "id": "pod:demo-cluster/demo-ns/demo-pod-2",
+        "isHighValue": null,
+        "label": "demo-pod-2",
+        "maxSeverity": null,
+        "type": "pod"
+      },
+      {
+        "id": "sa:demo-cluster/demo-ns/demo-sa-a",
+        "isHighValue": null,
+        "label": "demo-sa-a",
+        "maxSeverity": null,
+        "type": "sa"
+      },
+      {
+        "id": "sa:demo-cluster/demo-ns/demo-sa-b",
+        "isHighValue": null,
+        "label": "demo-sa-b",
+        "maxSeverity": null,
+        "type": "sa"
+      }
+    ]
+  },
+  "harness": "tests/js/helpers/legacy-harness.js (DOM stub + Cytoscape-semantics stub; equal-cost routes may differ from a browser)",
+  "legacy": {
+    "commit": "d13c215",
+    "path": "app/dashboard/index.html"
+  },
+  "note": "Informational characterisation of the legacy dashboard; the paths below are known to be wrong (F-007, F-040). Not a specification.",
+  "pathFinding": {
+    "dijkstraCallsByDiscoverAll": 2,
+    "directedFlags": [
+      false
+    ],
+    "effectiveWeights": [
+      {
+        "authored": 0,
+        "effective": 1,
+        "type": "IN_CLUSTER"
+      },
+      {
+        "authored": 1,
+        "effective": 1,
+        "type": "IRSA_BRIDGE"
+      },
+      {
+        "authored": 0,
+        "effective": 1,
+        "type": "RUNS_AS"
+      }
+    ]
+  },
+  "scenario": "k8s-cross-workload"
+}

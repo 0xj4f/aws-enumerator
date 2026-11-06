@@ -1,0 +1,2437 @@
+{
+  "analyzer_status": [
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "load:iam",
+      "phase": "load",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "org"
+      ],
+      "name": "load:org",
+      "phase": "load",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "s3"
+      ],
+      "name": "load:s3",
+      "phase": "load",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "load:ec2",
+      "phase": "load",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "edge_services"
+      ],
+      "name": "load:edge_services",
+      "phase": "load",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "posture"
+      ],
+      "name": "load:posture",
+      "phase": "load",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "k8s"
+      ],
+      "name": "load:k8s",
+      "phase": "load",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "kms"
+      ],
+      "name": "load:kms",
+      "phase": "load",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "secrets"
+      ],
+      "name": "load:secrets",
+      "phase": "load",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "data_stores"
+      ],
+      "name": "load:data_stores",
+      "phase": "load",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "lambda"
+      ],
+      "name": "load:lambda",
+      "phase": "load",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "compute"
+      ],
+      "name": "load:compute",
+      "phase": "load",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "messaging"
+      ],
+      "name": "load:messaging",
+      "phase": "load",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "principals",
+      "phase": "principals",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "permission-map",
+      "phase": "principals",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "iam-graph",
+      "phase": "principals",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "admin-equivalence",
+      "phase": "identity",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "trust",
+      "phase": "identity",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "assume",
+      "phase": "identity",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "iam-hygiene",
+      "phase": "identity",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "s3.buckets"
+      ],
+      "name": "s3",
+      "phase": "resources",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "ec2",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "edge_services",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "posture",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "vpc"
+      ],
+      "name": "network",
+      "phase": "resources",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "k8s",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "kms",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "secrets",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "data_stores",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "lambda",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "compute",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "messaging",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "cognito",
+      "phase": "resources",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "rules",
+      "phase": "rules",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "closure",
+      "phase": "closure",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [
+        "coverage"
+      ],
+      "name": "coverage-gaps",
+      "phase": "postprocess",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "severity",
+      "phase": "postprocess",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "subsume",
+      "phase": "postprocess",
+      "status": "ok"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "suppression",
+      "phase": "postprocess",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "baseline",
+      "phase": "postprocess",
+      "status": "skipped"
+    },
+    {
+      "duration_seconds": "<stripped>",
+      "error": null,
+      "inputs_missing": [],
+      "name": "write",
+      "phase": "write",
+      "status": "ok"
+    }
+  ],
+  "coverage": {
+    "facets": [
+      {
+        "detail": null,
+        "facet": "ec2:DescribeInstances",
+        "region": "eu-west-2",
+        "status": "legacy-unknown"
+      }
+    ],
+    "modules": [
+      {
+        "detail": null,
+        "error_code": null,
+        "module": "ec2",
+        "region": "global",
+        "status": "legacy-unknown"
+      },
+      {
+        "detail": null,
+        "error_code": null,
+        "module": "iam",
+        "region": "global",
+        "status": "legacy-unknown"
+      }
+    ],
+    "source": "legacy-unknown",
+    "status": "unknown"
+  },
+  "edge_types": {
+    "CAN_ASSUME": {
+      "base_weight": 1,
+      "bridge": false,
+      "category": "trust",
+      "category_label": "Role assumption",
+      "category_order": 2,
+      "description": "sts:AssumeRole is allowed by the role's trust policy and, where needed, the caller's identity policy (same-account root trust, cross-account, wildcard). Replaces CAN_ASSUME_CROSS.",
+      "doc_anchor": "#can_assume",
+      "legacy_name": null,
+      "sources": [
+        "user",
+        "role",
+        "external_account",
+        "external_principal",
+        "anonymous"
+      ],
+      "targets": [
+        "role"
+      ],
+      "traversable": true,
+      "traversable_rule": null,
+      "traversal": "control"
+    },
+    "CAN_CONNECT": {
+      "base_weight": 0.5,
+      "bridge": false,
+      "category": "ec2",
+      "category_label": "EC2 control",
+      "category_order": 5,
+      "description": "ssm:StartSession / SendCommand or ec2-instance-connect:SendSSHPublicKey.",
+      "doc_anchor": "#can_connect",
+      "legacy_name": "CAN_CONNECT",
+      "sources": [
+        "user",
+        "role",
+        "group"
+      ],
+      "targets": [
+        "instance"
+      ],
+      "traversable": true,
+      "traversable_rule": null,
+      "traversal": "control"
+    },
+    "CAN_ESCALATE": {
+      "base_weight": 1,
+      "bridge": false,
+      "category": "privesc",
+      "category_label": "Privilege escalation",
+      "category_order": 3,
+      "description": "Self-escalation, or modification of a principal the source can already act as (closure, engine.md \u00a74.6); evidence.chain lists the edge ids.",
+      "doc_anchor": "#can_escalate",
+      "legacy_name": null,
+      "sources": [
+        "user",
+        "role",
+        "group"
+      ],
+      "targets": [
+        "account_admin"
+      ],
+      "traversable": true,
+      "traversable_rule": null,
+      "traversal": "control"
+    },
+    "CAN_MODIFY_PERMISSIONS_OF": {
+      "base_weight": 1,
+      "bridge": false,
+      "category": "privesc",
+      "category_label": "Privilege escalation",
+      "category_order": 3,
+      "description": "Put*/Attach*Policy, CreatePolicyVersion, SetDefaultPolicyVersion or boundary changes on another principal. Closure input: becomes CAN_ESCALATE when the target is reachable.",
+      "doc_anchor": "#can_modify_permissions_of",
+      "legacy_name": null,
+      "sources": [
+        "user",
+        "role",
+        "group"
+      ],
+      "targets": [
+        "user",
+        "role",
+        "group"
+      ],
+      "traversable": false,
+      "traversable_rule": null,
+      "traversal": "info"
+    },
+    "CAN_MODIFY_USERDATA": {
+      "base_weight": 1,
+      "bridge": false,
+      "category": "ec2",
+      "category_label": "EC2 control",
+      "category_order": 5,
+      "description": "ModifyInstanceAttribute (userData) plus StopInstances and StartInstances.",
+      "doc_anchor": "#can_modify_userdata",
+      "legacy_name": "CAN_MANAGE",
+      "sources": [
+        "user",
+        "role",
+        "group"
+      ],
+      "targets": [
+        "instance"
+      ],
+      "traversable": true,
+      "traversable_rule": null,
+      "traversal": "control"
+    },
+    "CAN_TAKEOVER": {
+      "base_weight": 1,
+      "bridge": false,
+      "category": "privesc",
+      "category_label": "Privilege escalation",
+      "category_order": 3,
+      "description": "Credential or trust takeover of another principal: CreateAccessKey, Create/UpdateLoginProfile, UpdateAssumeRolePolicy, AddUserToGroup. Self is excluded.",
+      "doc_anchor": "#can_takeover",
+      "legacy_name": null,
+      "sources": [
+        "user",
+        "role",
+        "group"
+      ],
+      "targets": [
+        "user",
+        "role",
+        "group"
+      ],
+      "traversable": true,
+      "traversable_rule": null,
+      "traversal": "control"
+    },
+    "EC2_FULL_ACCESS": {
+      "base_weight": 0,
+      "bridge": false,
+      "category": "ec2",
+      "category_label": "EC2 control",
+      "category_order": 5,
+      "description": "ec2:* on the instance: user-data change plus stop/start gives code execution.",
+      "doc_anchor": "#ec2_full_access",
+      "legacy_name": "EC2_FULL_ACCESS",
+      "sources": [
+        "user",
+        "role",
+        "group"
+      ],
+      "targets": [
+        "instance"
+      ],
+      "traversable": true,
+      "traversable_rule": null,
+      "traversal": "control"
+    },
+    "HAS_POLICY": {
+      "base_weight": 0,
+      "bridge": false,
+      "category": "iam",
+      "category_label": "IAM structure",
+      "category_order": 1,
+      "description": "Managed policy attached to the principal (ARN-keyed).",
+      "doc_anchor": "#has_policy",
+      "legacy_name": null,
+      "sources": [
+        "user",
+        "role",
+        "group"
+      ],
+      "targets": [
+        "policy"
+      ],
+      "traversable": false,
+      "traversable_rule": null,
+      "traversal": "structural"
+    },
+    "INSTANCE_ROLE": {
+      "base_weight": 0,
+      "bridge": true,
+      "category": "compute",
+      "category_label": "Compute to role",
+      "category_order": 4,
+      "description": "Code on the instance gets the instance-profile role's credentials from IMDS. ARN-resolved; the dashboard's name-matched copy is removed.",
+      "doc_anchor": "#instance_role",
+      "legacy_name": "INSTANCE_ROLE",
+      "sources": [
+        "instance"
+      ],
+      "targets": [
+        "role"
+      ],
+      "traversable": true,
+      "traversable_rule": null,
+      "traversal": "control"
+    },
+    "IS_ADMIN_EQUIVALENT": {
+      "base_weight": 0,
+      "bridge": false,
+      "category": "privesc",
+      "category_label": "Privilege escalation",
+      "category_order": 3,
+      "description": "The principal is admin-equivalent (ADMIN-001), so reaching it means reaching the account admin.",
+      "doc_anchor": "#is_admin_equivalent",
+      "legacy_name": null,
+      "sources": [
+        "user",
+        "role",
+        "group"
+      ],
+      "targets": [
+        "account_admin"
+      ],
+      "traversable": true,
+      "traversable_rule": null,
+      "traversal": "control"
+    },
+    "SERVICE_CAN_ASSUME": {
+      "base_weight": 0,
+      "bridge": false,
+      "category": "trust",
+      "category_label": "Role assumption",
+      "category_order": 2,
+      "description": "The trust policy admits an AWS service principal (PassRole candidates, confused-deputy checks).",
+      "doc_anchor": "#service_can_assume",
+      "legacy_name": null,
+      "sources": [
+        "service_principal"
+      ],
+      "targets": [
+        "role"
+      ],
+      "traversable": false,
+      "traversable_rule": null,
+      "traversal": "info"
+    }
+  },
+  "edges": [
+    {
+      "category": "compute",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "gaps": [],
+        "instance_profile_arn": "arn:aws:iam::111122223333:instance-profile/app",
+        "legacy": {
+          "direction": "forward",
+          "file": "ec2_relationships.json",
+          "type": "INSTANCE_ROLE"
+        },
+        "match_method": "arn"
+      },
+      "id": "e:7251c8474adf2d0bd28a",
+      "source": "arn:aws:ec2:eu-west-2:111122223333:instance/i-0a1b2c3d4e5f60000",
+      "target": "arn:aws:iam::111122223333:role/app",
+      "traversable": true,
+      "traversal": "control",
+      "type": "INSTANCE_ROLE",
+      "weight": 0
+    },
+    {
+      "category": "compute",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "gaps": [],
+        "instance_profile_arn": "arn:aws:iam::111122223333:instance-profile/app",
+        "legacy": {
+          "direction": "forward",
+          "file": "ec2_relationships.json",
+          "type": "INSTANCE_ROLE"
+        },
+        "match_method": "arn"
+      },
+      "id": "e:8fc19d083ab1c54c2d73",
+      "source": "arn:aws:ec2:eu-west-2:111122223333:instance/i-0a1b2c3d4e5f60001",
+      "target": "arn:aws:iam::111122223333:role/app",
+      "traversable": true,
+      "traversal": "control",
+      "type": "INSTANCE_ROLE",
+      "weight": 0
+    },
+    {
+      "category": "compute",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "gaps": [],
+        "instance_profile_arn": "arn:aws:iam::111122223333:instance-profile/app",
+        "legacy": {
+          "direction": "forward",
+          "file": "ec2_relationships.json",
+          "type": "INSTANCE_ROLE"
+        },
+        "match_method": "arn"
+      },
+      "id": "e:7ce3185d80261767e06b",
+      "source": "arn:aws:ec2:eu-west-2:111122223333:instance/i-0a1b2c3d4e5f60002",
+      "target": "arn:aws:iam::111122223333:role/app",
+      "traversable": true,
+      "traversal": "control",
+      "type": "INSTANCE_ROLE",
+      "weight": 0
+    },
+    {
+      "category": "ec2",
+      "confidence": "definite",
+      "evidence": {
+        "access_types": [
+          "CAN_CONNECT",
+          "CAN_MANAGE",
+          "CAN_MODIFY_USERDATA",
+          "CAN_TERMINATE",
+          "EC2_FULL_ACCESS"
+        ],
+        "actions": [
+          "ec2-instance-connect:SendSSHPublicKey",
+          "ssm:SendCommand",
+          "ssm:StartSession"
+        ],
+        "decision": "allow",
+        "layers": {
+          "boundary": "n/a",
+          "identity": "true",
+          "rcp": "n/a",
+          "resource": "n/a",
+          "scp": "unknown"
+        },
+        "legacy": {
+          "direction": "forward",
+          "file": "ec2_relationships.json",
+          "type": "CAN_CONNECT"
+        },
+        "matched_actions": [
+          "ssm:startsession"
+        ],
+        "rule_ids": [
+          "PRIVESC-050"
+        ],
+        "statements": [
+          {
+            "layer": "identity",
+            "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+            "policy_name": "AdministratorAccess",
+            "sid": null,
+            "source_type": "aws_managed",
+            "statement_index": 0,
+            "version_id": "v1",
+            "via_group": null
+          }
+        ]
+      },
+      "id": "e:a1ac789ce25b3c6c694a",
+      "source": "arn:aws:iam::111122223333:role/admin",
+      "target": "arn:aws:ec2:eu-west-2:111122223333:instance/i-0a1b2c3d4e5f60000",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_CONNECT",
+      "weight": 0.5
+    },
+    {
+      "category": "ec2",
+      "confidence": "definite",
+      "evidence": {
+        "access_types": [
+          "CAN_CONNECT",
+          "CAN_MANAGE",
+          "CAN_MODIFY_USERDATA",
+          "CAN_TERMINATE",
+          "EC2_FULL_ACCESS"
+        ],
+        "actions": [
+          "ec2-instance-connect:SendSSHPublicKey",
+          "ssm:SendCommand",
+          "ssm:StartSession"
+        ],
+        "decision": "allow",
+        "layers": {
+          "boundary": "n/a",
+          "identity": "true",
+          "rcp": "n/a",
+          "resource": "n/a",
+          "scp": "unknown"
+        },
+        "legacy": {
+          "direction": "forward",
+          "file": "ec2_relationships.json",
+          "type": "CAN_CONNECT"
+        },
+        "matched_actions": [
+          "ssm:startsession"
+        ],
+        "rule_ids": [
+          "PRIVESC-050"
+        ],
+        "statements": [
+          {
+            "layer": "identity",
+            "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+            "policy_name": "AdministratorAccess",
+            "sid": null,
+            "source_type": "aws_managed",
+            "statement_index": 0,
+            "version_id": "v1",
+            "via_group": null
+          }
+        ]
+      },
+      "id": "e:41437b853f3f3942fc0b",
+      "source": "arn:aws:iam::111122223333:role/admin",
+      "target": "arn:aws:ec2:eu-west-2:111122223333:instance/i-0a1b2c3d4e5f60001",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_CONNECT",
+      "weight": 0.5
+    },
+    {
+      "category": "ec2",
+      "confidence": "definite",
+      "evidence": {
+        "access_types": [
+          "CAN_CONNECT",
+          "CAN_MANAGE",
+          "CAN_MODIFY_USERDATA",
+          "CAN_TERMINATE",
+          "EC2_FULL_ACCESS"
+        ],
+        "actions": [
+          "ec2-instance-connect:SendSSHPublicKey",
+          "ssm:SendCommand",
+          "ssm:StartSession"
+        ],
+        "decision": "allow",
+        "layers": {
+          "boundary": "n/a",
+          "identity": "true",
+          "rcp": "n/a",
+          "resource": "n/a",
+          "scp": "unknown"
+        },
+        "legacy": {
+          "direction": "forward",
+          "file": "ec2_relationships.json",
+          "type": "CAN_CONNECT"
+        },
+        "matched_actions": [
+          "ssm:startsession"
+        ],
+        "rule_ids": [
+          "PRIVESC-050"
+        ],
+        "statements": [
+          {
+            "layer": "identity",
+            "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+            "policy_name": "AdministratorAccess",
+            "sid": null,
+            "source_type": "aws_managed",
+            "statement_index": 0,
+            "version_id": "v1",
+            "via_group": null
+          }
+        ]
+      },
+      "id": "e:367dee2888eca77d8070",
+      "source": "arn:aws:iam::111122223333:role/admin",
+      "target": "arn:aws:ec2:eu-west-2:111122223333:instance/i-0a1b2c3d4e5f60002",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_CONNECT",
+      "weight": 0.5
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:putrolepolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-005",
+          "PRIVESC-008"
+        ]
+      },
+      "id": "e:9fb9968ec8cf6abe3213",
+      "source": "arn:aws:iam::111122223333:role/admin",
+      "target": "aws-enumerator:account-admin/111122223333",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_ESCALATE",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:putrolepolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-005",
+          "PRIVESC-008"
+        ]
+      },
+      "id": "e:73ddbe96449174fbbdfe",
+      "source": "arn:aws:iam::111122223333:role/admin",
+      "target": "arn:aws:iam::111122223333:role/app",
+      "traversable": false,
+      "traversal": "info",
+      "type": "CAN_MODIFY_PERMISSIONS_OF",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:putuserpolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-003",
+          "PRIVESC-006"
+        ]
+      },
+      "id": "e:87ba438aadee1b25b9d1",
+      "source": "arn:aws:iam::111122223333:role/admin",
+      "target": "arn:aws:iam::111122223333:user/alice",
+      "traversable": false,
+      "traversal": "info",
+      "type": "CAN_MODIFY_PERMISSIONS_OF",
+      "weight": 1
+    },
+    {
+      "category": "ec2",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "ec2:modifyinstanceattribute",
+          "ec2:startinstances",
+          "ec2:stopinstances"
+        ],
+        "rule_ids": [
+          "PRIVESC-051"
+        ]
+      },
+      "id": "e:581e2e6c9e720ca0e4fa",
+      "source": "arn:aws:iam::111122223333:role/admin",
+      "target": "arn:aws:ec2:eu-west-2:111122223333:instance/i-0a1b2c3d4e5f60000",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_MODIFY_USERDATA",
+      "weight": 1
+    },
+    {
+      "category": "ec2",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "ec2:modifyinstanceattribute",
+          "ec2:startinstances",
+          "ec2:stopinstances"
+        ],
+        "rule_ids": [
+          "PRIVESC-051"
+        ]
+      },
+      "id": "e:842ce319b39ec24609d1",
+      "source": "arn:aws:iam::111122223333:role/admin",
+      "target": "arn:aws:ec2:eu-west-2:111122223333:instance/i-0a1b2c3d4e5f60001",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_MODIFY_USERDATA",
+      "weight": 1
+    },
+    {
+      "category": "ec2",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "ec2:modifyinstanceattribute",
+          "ec2:startinstances",
+          "ec2:stopinstances"
+        ],
+        "rule_ids": [
+          "PRIVESC-051"
+        ]
+      },
+      "id": "e:6d7c810ad62050d31699",
+      "source": "arn:aws:iam::111122223333:role/admin",
+      "target": "arn:aws:ec2:eu-west-2:111122223333:instance/i-0a1b2c3d4e5f60002",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_MODIFY_USERDATA",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:updateassumerolepolicy"
+        ],
+        "rule_ids": [
+          "PRIVESC-013"
+        ]
+      },
+      "id": "e:6e3733b1ef9226f909e4",
+      "source": "arn:aws:iam::111122223333:role/admin",
+      "target": "arn:aws:iam::111122223333:role/app",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_TAKEOVER",
+      "weight": 1
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "matched_actions": [
+          "iam:createaccesskey"
+        ],
+        "rule_ids": [
+          "PRIVESC-009",
+          "PRIVESC-010"
+        ]
+      },
+      "id": "e:88c6458f7aad45443890",
+      "source": "arn:aws:iam::111122223333:role/admin",
+      "target": "arn:aws:iam::111122223333:user/alice",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_TAKEOVER",
+      "weight": 1
+    },
+    {
+      "category": "ec2",
+      "confidence": "definite",
+      "evidence": {
+        "access_types": [
+          "CAN_CONNECT",
+          "CAN_MANAGE",
+          "CAN_MODIFY_USERDATA",
+          "CAN_TERMINATE",
+          "EC2_FULL_ACCESS"
+        ],
+        "actions": [
+          "ec2:*",
+          "ec2:ModifyInstanceAttribute",
+          "ec2:StartInstances",
+          "ec2:StopInstances"
+        ],
+        "decision": "allow",
+        "layers": {
+          "boundary": "n/a",
+          "identity": "true",
+          "rcp": "n/a",
+          "resource": "n/a",
+          "scp": "unknown"
+        },
+        "legacy": {
+          "direction": "forward",
+          "file": "ec2_relationships.json",
+          "type": "EC2_FULL_ACCESS"
+        },
+        "statements": [
+          {
+            "layer": "identity",
+            "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+            "policy_name": "AdministratorAccess",
+            "sid": null,
+            "source_type": "aws_managed",
+            "statement_index": 0,
+            "version_id": "v1",
+            "via_group": null
+          }
+        ]
+      },
+      "id": "e:732017984abfe54ca462",
+      "source": "arn:aws:iam::111122223333:role/admin",
+      "target": "arn:aws:ec2:eu-west-2:111122223333:instance/i-0a1b2c3d4e5f60000",
+      "traversable": true,
+      "traversal": "control",
+      "type": "EC2_FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "category": "ec2",
+      "confidence": "definite",
+      "evidence": {
+        "access_types": [
+          "CAN_CONNECT",
+          "CAN_MANAGE",
+          "CAN_MODIFY_USERDATA",
+          "CAN_TERMINATE",
+          "EC2_FULL_ACCESS"
+        ],
+        "actions": [
+          "ec2:*",
+          "ec2:ModifyInstanceAttribute",
+          "ec2:StartInstances",
+          "ec2:StopInstances"
+        ],
+        "decision": "allow",
+        "layers": {
+          "boundary": "n/a",
+          "identity": "true",
+          "rcp": "n/a",
+          "resource": "n/a",
+          "scp": "unknown"
+        },
+        "legacy": {
+          "direction": "forward",
+          "file": "ec2_relationships.json",
+          "type": "EC2_FULL_ACCESS"
+        },
+        "statements": [
+          {
+            "layer": "identity",
+            "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+            "policy_name": "AdministratorAccess",
+            "sid": null,
+            "source_type": "aws_managed",
+            "statement_index": 0,
+            "version_id": "v1",
+            "via_group": null
+          }
+        ]
+      },
+      "id": "e:4c648be7eb481f9b7cd8",
+      "source": "arn:aws:iam::111122223333:role/admin",
+      "target": "arn:aws:ec2:eu-west-2:111122223333:instance/i-0a1b2c3d4e5f60001",
+      "traversable": true,
+      "traversal": "control",
+      "type": "EC2_FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "category": "ec2",
+      "confidence": "definite",
+      "evidence": {
+        "access_types": [
+          "CAN_CONNECT",
+          "CAN_MANAGE",
+          "CAN_MODIFY_USERDATA",
+          "CAN_TERMINATE",
+          "EC2_FULL_ACCESS"
+        ],
+        "actions": [
+          "ec2:*",
+          "ec2:ModifyInstanceAttribute",
+          "ec2:StartInstances",
+          "ec2:StopInstances"
+        ],
+        "decision": "allow",
+        "layers": {
+          "boundary": "n/a",
+          "identity": "true",
+          "rcp": "n/a",
+          "resource": "n/a",
+          "scp": "unknown"
+        },
+        "legacy": {
+          "direction": "forward",
+          "file": "ec2_relationships.json",
+          "type": "EC2_FULL_ACCESS"
+        },
+        "statements": [
+          {
+            "layer": "identity",
+            "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+            "policy_name": "AdministratorAccess",
+            "sid": null,
+            "source_type": "aws_managed",
+            "statement_index": 0,
+            "version_id": "v1",
+            "via_group": null
+          }
+        ]
+      },
+      "id": "e:c5dce55063ccb769f35f",
+      "source": "arn:aws:iam::111122223333:role/admin",
+      "target": "arn:aws:ec2:eu-west-2:111122223333:instance/i-0a1b2c3d4e5f60002",
+      "traversable": true,
+      "traversal": "control",
+      "type": "EC2_FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "category": "iam",
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow"
+      },
+      "id": "e:597f04a60c5e71d52245",
+      "source": "arn:aws:iam::111122223333:role/admin",
+      "target": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "traversable": false,
+      "traversal": "structural",
+      "type": "HAS_POLICY",
+      "weight": 0
+    },
+    {
+      "category": "privesc",
+      "confidence": "definite",
+      "evidence": {
+        "basis": "evaluator",
+        "decision": "allow",
+        "layers": {
+          "boundary": "n/a",
+          "identity": "true",
+          "scp": "unknown"
+        },
+        "statements": [
+          {
+            "layer": "identity",
+            "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+            "policy_name": "AdministratorAccess",
+            "sid": null,
+            "source_type": "aws_managed",
+            "statement_index": 0,
+            "version_id": "v1",
+            "via_group": null
+          }
+        ]
+      },
+      "id": "e:8e002a31a41b072bdf8d",
+      "source": "arn:aws:iam::111122223333:role/admin",
+      "target": "aws-enumerator:account-admin/111122223333",
+      "traversable": true,
+      "traversal": "control",
+      "type": "IS_ADMIN_EQUIVALENT",
+      "weight": 0
+    },
+    {
+      "category": "trust",
+      "confidence": "definite",
+      "evidence": {
+        "actions": [
+          "sts:AssumeRole"
+        ],
+        "basis": "evaluator",
+        "decision": "allow",
+        "layers": {
+          "boundary": "n/a",
+          "identity": "false",
+          "rcp": "n/a",
+          "scp": "unknown",
+          "trust": "true"
+        },
+        "statements": [
+          {
+            "layer": "trust",
+            "policy_arn": "arn:aws:iam::111122223333:role/admin",
+            "policy_name": "trust",
+            "sid": null,
+            "source_type": "resource",
+            "statement_index": 0,
+            "version_id": null,
+            "via_group": null
+          }
+        ],
+        "trust": "explicit-principal",
+        "trust_statement": 0
+      },
+      "id": "e:665cae1b2e2cf5f344a2",
+      "source": "arn:aws:iam::111122223333:user/alice",
+      "target": "arn:aws:iam::111122223333:role/admin",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_ASSUME",
+      "weight": 1
+    },
+    {
+      "category": "ec2",
+      "confidence": "definite",
+      "evidence": {
+        "access_types": [
+          "CAN_CONNECT"
+        ],
+        "actions": [
+          "ssm:StartSession"
+        ],
+        "decision": "allow",
+        "layers": {
+          "boundary": "n/a",
+          "identity": "true",
+          "rcp": "n/a",
+          "resource": "n/a",
+          "scp": "unknown"
+        },
+        "legacy": {
+          "direction": "forward",
+          "file": "ec2_relationships.json",
+          "type": "CAN_CONNECT"
+        },
+        "matched_actions": [
+          "ssm:startsession"
+        ],
+        "rule_ids": [
+          "PRIVESC-050"
+        ],
+        "statements": [
+          {
+            "layer": "identity",
+            "policy_arn": null,
+            "policy_name": "p",
+            "sid": null,
+            "source_type": "inline",
+            "statement_index": 0,
+            "version_id": null,
+            "via_group": null
+          }
+        ]
+      },
+      "id": "e:7d76f424d7b78df11a9c",
+      "source": "arn:aws:iam::111122223333:user/alice",
+      "target": "arn:aws:ec2:eu-west-2:111122223333:instance/i-0a1b2c3d4e5f60000",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_CONNECT",
+      "weight": 0.5
+    },
+    {
+      "category": "ec2",
+      "confidence": "definite",
+      "evidence": {
+        "access_types": [
+          "CAN_CONNECT"
+        ],
+        "actions": [
+          "ssm:StartSession"
+        ],
+        "decision": "allow",
+        "layers": {
+          "boundary": "n/a",
+          "identity": "true",
+          "rcp": "n/a",
+          "resource": "n/a",
+          "scp": "unknown"
+        },
+        "legacy": {
+          "direction": "forward",
+          "file": "ec2_relationships.json",
+          "type": "CAN_CONNECT"
+        },
+        "matched_actions": [
+          "ssm:startsession"
+        ],
+        "rule_ids": [
+          "PRIVESC-050"
+        ],
+        "statements": [
+          {
+            "layer": "identity",
+            "policy_arn": null,
+            "policy_name": "p",
+            "sid": null,
+            "source_type": "inline",
+            "statement_index": 0,
+            "version_id": null,
+            "via_group": null
+          }
+        ]
+      },
+      "id": "e:267a2bdfa2b882172639",
+      "source": "arn:aws:iam::111122223333:user/alice",
+      "target": "arn:aws:ec2:eu-west-2:111122223333:instance/i-0a1b2c3d4e5f60001",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_CONNECT",
+      "weight": 0.5
+    },
+    {
+      "category": "ec2",
+      "confidence": "definite",
+      "evidence": {
+        "access_types": [
+          "CAN_CONNECT"
+        ],
+        "actions": [
+          "ssm:StartSession"
+        ],
+        "decision": "allow",
+        "layers": {
+          "boundary": "n/a",
+          "identity": "true",
+          "rcp": "n/a",
+          "resource": "n/a",
+          "scp": "unknown"
+        },
+        "legacy": {
+          "direction": "forward",
+          "file": "ec2_relationships.json",
+          "type": "CAN_CONNECT"
+        },
+        "matched_actions": [
+          "ssm:startsession"
+        ],
+        "rule_ids": [
+          "PRIVESC-050"
+        ],
+        "statements": [
+          {
+            "layer": "identity",
+            "policy_arn": null,
+            "policy_name": "p",
+            "sid": null,
+            "source_type": "inline",
+            "statement_index": 0,
+            "version_id": null,
+            "via_group": null
+          }
+        ]
+      },
+      "id": "e:375eb2d5aae20fc65204",
+      "source": "arn:aws:iam::111122223333:user/alice",
+      "target": "arn:aws:ec2:eu-west-2:111122223333:instance/i-0a1b2c3d4e5f60002",
+      "traversable": true,
+      "traversal": "control",
+      "type": "CAN_CONNECT",
+      "weight": 0.5
+    },
+    {
+      "category": "trust",
+      "confidence": "definite",
+      "evidence": {
+        "actions": [
+          "sts:AssumeRole"
+        ],
+        "decision": "allow",
+        "trust_statement": 0
+      },
+      "id": "e:181350a829eaf2bcceb5",
+      "source": "svc:ec2.amazonaws.com",
+      "target": "arn:aws:iam::111122223333:role/app",
+      "traversable": false,
+      "traversal": "info",
+      "type": "SERVICE_CAN_ASSUME",
+      "weight": 0
+    }
+  ],
+  "evaluation_gaps": [
+    {
+      "code": "coverage-not-recorded",
+      "count": null,
+      "detail": "The report predates _coverage.json: denied or failed collection cannot be told apart from empty data."
+    },
+    {
+      "code": "external-identity",
+      "count": null,
+      "detail": "Identity policies of external principals are not visible; cross-account edges are conditional."
+    },
+    {
+      "code": "iam:legacy-layout",
+      "count": null,
+      "detail": "IAM was collected with the per-entity (d13c215) layout: no policy versions, no identity providers, boundaries and tags may be missing"
+    },
+    {
+      "code": "org:rcp-unknown",
+      "count": null,
+      "detail": "Resource control policies are unknown (membership unknown)"
+    },
+    {
+      "code": "org:scp-unknown",
+      "count": null,
+      "detail": "Service control policies are unknown (membership unknown)"
+    },
+    {
+      "code": "runtime-conditions",
+      "count": null,
+      "detail": "Condition values known only at request time (source IP, MFA, tags in the request) are not evaluated; such decisions are conditional."
+    },
+    {
+      "code": "session-policies",
+      "count": null,
+      "detail": "Session policies passed at AssumeRole time can only narrow permissions and are not modelled."
+    }
+  ],
+  "findings": [
+    {
+      "account": "111122223333",
+      "base_severity": "CRITICAL",
+      "category": "dangerous_permission",
+      "confidence": "definite",
+      "description": "This role is administrator-equivalent: its effective permissions allow every action on every resource. Its 66 individual privilege-escalation and dangerous-permission findings are summarised here.",
+      "evidence": {
+        "basis": "allow-star",
+        "rule_ids": [
+          "DANGER-001"
+        ],
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+                "policy_name": "AdministratorAccess",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "aws_managed",
+                "statement_index": 0,
+                "version_id": "v1"
+              }
+            ],
+            "resource": "*",
+            "rule_action": "*"
+          }
+        ],
+        "subsumed": [
+          {
+            "fingerprint": "04c12e745cfd6550887c0ec8b9d15de7",
+            "id": "PRIVESC-043",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "0dd50620818e71afafe7f5802494e1e7",
+            "id": "PRIVESC-016",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "0e7316c5e0b904a3b7b307529dcecfcc",
+            "id": "PRIVESC-039",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "153dadc65342273f045006b6dff5e388",
+            "id": "PRIVESC-051",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "154a261e9e96b107df9c0d30352fae43",
+            "id": "PRIVESC-060",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "1938de774597893ad760577bb6b3dbff",
+            "id": "PRIVESC-064",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "23f35993b9026edaa5b845fe98e48ea4",
+            "id": "PRIVESC-063",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "25d3489b050374bc4b1218f8b8ffd427",
+            "id": "DANGER-005",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "2b60b2be9ae7f826c77a9a972fa33893",
+            "id": "PRIVESC-049",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "2d398be5d13c7e3a0d33633475a1bf3f",
+            "id": "PRIVESC-040",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "2fff11a129a85afb97648d05bcb37b57",
+            "id": "PRIVESC-012",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "33bbddf5fd3ca79d4f745f1144a6de81",
+            "id": "PRIVESC-033",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "34b2136713462e80787e2c6ddb51e7b8",
+            "id": "PRIVESC-009",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "36fc0c6fdf8860a32494aaffc3f19d39",
+            "id": "PRIVESC-032",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "37e2b087fb97b074d307111e50848876",
+            "id": "PRIVESC-019",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "3cf0c3e640d43de8e6e0777375ff4d26",
+            "id": "PRIVESC-017",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "3f87f117a676ba1c932749badeee07a6",
+            "id": "PRIVESC-047",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "4347db3942795aaedc2e1d503a5158c4",
+            "id": "PRIVESC-031",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "451d55bd5ec7a01d8d27dda95a271936",
+            "id": "PRIVESC-034",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "51591861fa764c6f3bd7b8b5bb9c323b",
+            "id": "DANGER-003",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "54d7947da7cf2fd11448ddd4a85021f2",
+            "id": "PRIVESC-006",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "56d74be444b63d840a1a9f6b37be5cd9",
+            "id": "DANGER-001",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "637ab7663cff1fd598b44930c060af38",
+            "id": "PRIVESC-013",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "639911b6a418dbf9b4e4b3bc4de805f8",
+            "id": "PRIVESC-037",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "67c0313be2899dcf228d52b0723fa815",
+            "id": "PRIVESC-050",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "71a0146b7e7d6677df2fea553d2f8fdf",
+            "id": "PRIVESC-024",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "73a3777510a726cf37b6638eb97a67ea",
+            "id": "PRIVESC-046",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "74f285c9d7fa636a1513a7ccce7e1da0",
+            "id": "DANGER-006",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "77dd1594a66193f660a832805929c6ab",
+            "id": "DANGER-002",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "78af1f3042dcfce6efea70714a78593b",
+            "id": "PRIVESC-008",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "8634d4760d8899f7982aae883ab69f86",
+            "id": "PRIVESC-035",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "941209b0afc94a414f14067d9c0c36b0",
+            "id": "PRIVESC-065",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "945f98b48bc7c28978c7eba66e08f217",
+            "id": "PRIVESC-058",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "9ae0de00fcae0d53fa81ab12769d3260",
+            "id": "PRIVESC-028",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "a091d2a18f70c48bc4a518b5774b5c8a",
+            "id": "PRIVESC-011",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "a77ebe5056bfc69562d5c4ab759428ee",
+            "id": "PRIVESC-045",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "ad9e18f421b5815d5be6036989076449",
+            "id": "PRIVESC-038",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "af37216b8dc3f50a749bb3c6c2cfa3d3",
+            "id": "PRIVESC-003",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "afd8dab3a08686af00883c8b0c5be048",
+            "id": "PRIVESC-020",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "b3fabc8fe51e5f2c58657002340c2d78",
+            "id": "DANGER-010",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "c1d316a9ee47f4e8c6592cda0c84d511",
+            "id": "PRIVESC-048",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "c282620095ffbc1fd2a0fdc181a69a61",
+            "id": "PRIVESC-061",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "c3461ad6b874952a615fd3be01d895d2",
+            "id": "PRIVESC-014",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "c3e1191adeaad03fb71aa9b8bf8c1f23",
+            "id": "PRIVESC-005",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "c5e544bd214e87d9bbe4d2a9d6d718b4",
+            "id": "PRIVESC-007",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "c80fcebf4048f516ab42c6ebe917146b",
+            "id": "PRIVESC-044",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "c8faf282b03f9f6e21360c6edf630aed",
+            "id": "PRIVESC-018",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "cd41988372eafacd3839a5acba1eacd5",
+            "id": "PRIVESC-036",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "ce4c1bc84446f8ce8a69159dfc6398e6",
+            "id": "PRIVESC-026",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "d197a1a63054f8fd3f67bbc2b0850016",
+            "id": "PRIVESC-057",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "d5883512e5c763713a3bcb599a2ec84d",
+            "id": "PRIVESC-041",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "d6e805d66924c37a0a47720dcd6fae67",
+            "id": "PRIVESC-010",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "d828e83b1003387f4c09420e92c7073f",
+            "id": "DANGER-004",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "d92256263f3a4dca867c9d24d86bd48b",
+            "id": "DANGER-007",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "dbb3dc80e956e25c7fcbb010d02fc75e",
+            "id": "PRIVESC-042",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "dec95903bbb5fe21980116a73e70a50b",
+            "id": "PRIVESC-059",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "e592b2850a08d213360a9c1c9baef4ea",
+            "id": "PRIVESC-025",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "e771979cbf26130b50eeb831893e3c68",
+            "id": "PRIVESC-030",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "edf01820e1d3bb70de23f4e2ab1fe879",
+            "id": "PRIVESC-004",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "f002de258885ea3140ebb0d4564b2f7b",
+            "id": "PRIVESC-002",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "f2555ac3514b81b02896454a9f5c8d79",
+            "id": "PRIVESC-001",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "f6d212c2245aad153b98a2043ffa5576",
+            "id": "DANGER-008",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "f6d2b35c6ebf9a26d889775e12ff773a",
+            "id": "PRIVESC-062",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "f6e49c68229e600bdb93802b577e7a25",
+            "id": "PRIVESC-015",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "fa603bf31d3080216e646a778f1dfb18",
+            "id": "DANGER-009",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "fb5b972afba0cc02314b99689e196ba7",
+            "id": "PRIVESC-027",
+            "severity": "INFO"
+          }
+        ],
+        "subsumed_count": 66
+      },
+      "fingerprint": "3bbd9bbb4aac93fc2c0d6f8e0a4a85df",
+      "id": "ADMIN-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "*",
+        "ec2:*",
+        "iam:*",
+        "iam:passrole",
+        "kms:decrypt",
+        "lambda:*",
+        "s3:*",
+        "secretsmanager:getsecretvalue",
+        "ssm:getparameter",
+        "ssm:getparameters",
+        "ssm:getparametersbypath",
+        "sts:assumerole"
+      ],
+      "node_id": "arn:aws:iam::111122223333:role/admin",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#high-value-targets-to-hunt",
+      "related_node_ids": [
+        "aws-enumerator:account-admin/111122223333"
+      ],
+      "remediation": "Treat this principal as an account administrator: limit who can use it (trust policy, group membership, credentials), require MFA, and replace broad grants (Action:* or iam:*) by the permissions it needs.",
+      "severity": "CRITICAL",
+      "status": "open",
+      "subsumes": [
+        "DANGER-001",
+        "DANGER-002",
+        "DANGER-003",
+        "DANGER-004",
+        "DANGER-005",
+        "DANGER-006",
+        "DANGER-007",
+        "DANGER-008",
+        "DANGER-009",
+        "DANGER-010",
+        "PRIVESC-001",
+        "PRIVESC-002",
+        "PRIVESC-003",
+        "PRIVESC-004",
+        "PRIVESC-005",
+        "PRIVESC-006",
+        "PRIVESC-007",
+        "PRIVESC-008",
+        "PRIVESC-009",
+        "PRIVESC-010",
+        "PRIVESC-011",
+        "PRIVESC-012",
+        "PRIVESC-013",
+        "PRIVESC-014",
+        "PRIVESC-015",
+        "PRIVESC-016",
+        "PRIVESC-017",
+        "PRIVESC-018",
+        "PRIVESC-019",
+        "PRIVESC-020",
+        "PRIVESC-024",
+        "PRIVESC-025",
+        "PRIVESC-026",
+        "PRIVESC-027",
+        "PRIVESC-028",
+        "PRIVESC-030",
+        "PRIVESC-031",
+        "PRIVESC-032",
+        "PRIVESC-033",
+        "PRIVESC-034",
+        "PRIVESC-035",
+        "PRIVESC-036",
+        "PRIVESC-037",
+        "PRIVESC-038",
+        "PRIVESC-039",
+        "PRIVESC-040",
+        "PRIVESC-041",
+        "PRIVESC-042",
+        "PRIVESC-043",
+        "PRIVESC-044",
+        "PRIVESC-045",
+        "PRIVESC-046",
+        "PRIVESC-047",
+        "PRIVESC-048",
+        "PRIVESC-049",
+        "PRIVESC-050",
+        "PRIVESC-051",
+        "PRIVESC-057",
+        "PRIVESC-058",
+        "PRIVESC-059",
+        "PRIVESC-060",
+        "PRIVESC-061",
+        "PRIVESC-062",
+        "PRIVESC-063",
+        "PRIVESC-064",
+        "PRIVESC-065"
+      ],
+      "title": "Administrator-equivalent principal"
+    },
+    {
+      "account": "111122223333",
+      "base_severity": "MEDIUM",
+      "category": "privilege_escalation",
+      "confidence": "definite",
+      "description": "Can take over an existing EC2 instance with an instance profile and run code or API calls as the role it runs as",
+      "evidence": {
+        "decision": "allow",
+        "rule_class": "existing-passrole",
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "ssm:startsession"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:ec2:eu-west-2:111122223333:instance/i-0a1b2c3d4e5f60000",
+            "rule_action": "ssm:startsession"
+          }
+        ],
+        "targets_detail": [
+          {
+            "arn": "arn:aws:ec2:eu-west-2:111122223333:instance/i-0a1b2c3d4e5f60000",
+            "decision": "allow",
+            "node_id": "arn:aws:ec2:eu-west-2:111122223333:instance/i-0a1b2c3d4e5f60000",
+            "resource_type": "ec2_instance",
+            "role": "arn:aws:iam::111122223333:role/app",
+            "tier": "MEDIUM",
+            "tier_class": "medium"
+          },
+          {
+            "arn": "arn:aws:ec2:eu-west-2:111122223333:instance/i-0a1b2c3d4e5f60001",
+            "decision": "allow",
+            "node_id": "arn:aws:ec2:eu-west-2:111122223333:instance/i-0a1b2c3d4e5f60001",
+            "resource_type": "ec2_instance",
+            "role": "arn:aws:iam::111122223333:role/app",
+            "tier": "MEDIUM",
+            "tier_class": "medium"
+          },
+          {
+            "arn": "arn:aws:ec2:eu-west-2:111122223333:instance/i-0a1b2c3d4e5f60002",
+            "decision": "allow",
+            "node_id": "arn:aws:ec2:eu-west-2:111122223333:instance/i-0a1b2c3d4e5f60002",
+            "resource_type": "ec2_instance",
+            "role": "arn:aws:iam::111122223333:role/app",
+            "tier": "MEDIUM",
+            "tier_class": "medium"
+          }
+        ]
+      },
+      "fingerprint": "fddcf9364dc740b786ecda5a239e72bc",
+      "id": "PRIVESC-050",
+      "legacy_ids": [],
+      "matched_actions": [
+        "ssm:startsession"
+      ],
+      "node_id": "arn:aws:iam::111122223333:user/alice",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "related_node_ids": [
+        "arn:aws:ec2:eu-west-2:111122223333:instance/i-0a1b2c3d4e5f60000",
+        "arn:aws:ec2:eu-west-2:111122223333:instance/i-0a1b2c3d4e5f60001",
+        "arn:aws:ec2:eu-west-2:111122223333:instance/i-0a1b2c3d4e5f60002",
+        "arn:aws:iam::111122223333:role/app"
+      ],
+      "remediation": "Restrict ssm:StartSession / ssm:SendCommand / ec2-instance-connect:SendSSHPublicKey to specific instances (tags or ARNs) and keep privileged instance profiles off shared instances",
+      "rule_version": "2.1.0",
+      "severity": "MEDIUM",
+      "status": "open",
+      "targets": [
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:ec2:eu-west-2:111122223333:instance/i-0a1b2c3d4e5f60000",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:ec2:eu-west-2:111122223333:instance/i-0a1b2c3d4e5f60001",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:ec2:eu-west-2:111122223333:instance/i-0a1b2c3d4e5f60002",
+          "tier": "MEDIUM"
+        }
+      ],
+      "title": "Instance command execution: Can take over an existing EC2 instance with an instance profile and run code or API calls as the role it runs as"
+    },
+    {
+      "account": "111122223333",
+      "base_severity": "LOW",
+      "category": "iam_hygiene",
+      "confidence": "definite",
+      "description": "The IAM password policy is below common baselines: password reuse prevention None < 24.",
+      "evidence": {
+        "configured": true,
+        "console_users": 0,
+        "weaknesses": [
+          "password reuse prevention None < 24"
+        ]
+      },
+      "fingerprint": "e147bf6d2f023537022c55627f95bcdc",
+      "id": "IAM-PWPOL-001",
+      "legacy_ids": [],
+      "node_id": "aws-enumerator:account/111122223333",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-6--youre-external-no-foothold-yet",
+      "remediation": "Set an account password policy: length >= 14, all character classes, reuse prevention 24.",
+      "severity": "LOW",
+      "status": "open",
+      "title": "The account password policy is weak"
+    }
+  ],
+  "generator": {
+    "engine_version": "1.1.0",
+    "git_sha": null,
+    "rules_version": "2.1.0",
+    "tool": "aws-enumerator",
+    "version": "0.3.0"
+  },
+  "meta": {
+    "default_sources": [
+      "aws-enumerator:anonymous"
+    ],
+    "default_targets": [
+      "arn:aws:iam::111122223333:role/admin",
+      "aws-enumerator:account-admin/111122223333"
+    ]
+  },
+  "node_types": {
+    "account": {
+      "data_asset": false,
+      "default_source": false,
+      "description": "Anchor for account-wide findings (hygiene, posture, collection gaps).",
+      "group": "posture",
+      "icon": "account",
+      "is_compute_bridge": false,
+      "label": "Account",
+      "order": 11,
+      "synthetic": true
+    },
+    "account_admin": {
+      "data_asset": false,
+      "default_source": false,
+      "description": "Administrator of the assessed account; the default path target.",
+      "group": "synthetic",
+      "icon": "admin",
+      "is_compute_bridge": false,
+      "label": "Account administrator",
+      "order": 8,
+      "synthetic": true
+    },
+    "anonymous": {
+      "data_asset": false,
+      "default_source": true,
+      "description": "The internet / any AWS account. Source of every public exposure (F-037).",
+      "group": "synthetic",
+      "icon": "anonymous",
+      "is_compute_bridge": false,
+      "label": "Anyone",
+      "order": 7,
+      "synthetic": true
+    },
+    "instance": {
+      "data_asset": false,
+      "default_source": false,
+      "description": "",
+      "group": "compute",
+      "icon": "instance",
+      "is_compute_bridge": true,
+      "label": "EC2 instance",
+      "order": 14,
+      "synthetic": false
+    },
+    "policy": {
+      "data_asset": false,
+      "default_source": false,
+      "description": "Customer- or AWS-managed policy (ARN).",
+      "group": "identity",
+      "icon": "policy",
+      "is_compute_bridge": false,
+      "label": "Managed policy",
+      "order": 4,
+      "synthetic": false
+    },
+    "role": {
+      "data_asset": false,
+      "default_source": false,
+      "description": "",
+      "group": "identity",
+      "icon": "role",
+      "is_compute_bridge": false,
+      "label": "IAM role",
+      "order": 2,
+      "synthetic": false
+    },
+    "service_principal": {
+      "data_asset": false,
+      "default_source": false,
+      "description": "Context only (who may assume a role on behalf of a service).",
+      "group": "identity",
+      "icon": "service",
+      "is_compute_bridge": false,
+      "label": "AWS service principal",
+      "order": 6,
+      "synthetic": true
+    },
+    "user": {
+      "data_asset": false,
+      "default_source": true,
+      "description": "Long-term credentials: a leaked access key is a common entry point.",
+      "group": "identity",
+      "icon": "user",
+      "is_compute_bridge": false,
+      "label": "IAM user",
+      "order": 1,
+      "synthetic": false
+    }
+  },
+  "nodes": [
+    {
+      "account": "111122223333",
+      "coverage": {
+        "gaps": [],
+        "status": "legacy-unknown"
+      },
+      "findings": [],
+      "id": "arn:aws:ec2:eu-west-2:111122223333:instance/i-0a1b2c3d4e5f60000",
+      "inherited_findings": [],
+      "label": "i-0a1b2c3d4e5f60000",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "ami_id": "ami-0a1b2c3d4e5f6abcd",
+        "imds_endpoint": true,
+        "imds_hop_limit": 1,
+        "imds_v1": false,
+        "instance_type": "t3.micro",
+        "public": false,
+        "public_ip": false,
+        "state": "running",
+        "subnet_id": "subnet-0a1b2c3d4e5f6aaaa",
+        "vpc_id": "vpc-0a1b2c3d4e5f6aaaa"
+      },
+      "region": "eu-west-2",
+      "tags": [],
+      "type": "instance"
+    },
+    {
+      "account": "111122223333",
+      "coverage": {
+        "gaps": [],
+        "status": "legacy-unknown"
+      },
+      "findings": [],
+      "id": "arn:aws:ec2:eu-west-2:111122223333:instance/i-0a1b2c3d4e5f60001",
+      "inherited_findings": [],
+      "label": "i-0a1b2c3d4e5f60001",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "ami_id": "ami-0a1b2c3d4e5f6abcd",
+        "imds_endpoint": true,
+        "imds_hop_limit": 1,
+        "imds_v1": false,
+        "instance_type": "t3.micro",
+        "public": false,
+        "public_ip": false,
+        "state": "running",
+        "subnet_id": "subnet-0a1b2c3d4e5f6aaaa",
+        "vpc_id": "vpc-0a1b2c3d4e5f6aaaa"
+      },
+      "region": "eu-west-2",
+      "tags": [],
+      "type": "instance"
+    },
+    {
+      "account": "111122223333",
+      "coverage": {
+        "gaps": [],
+        "status": "legacy-unknown"
+      },
+      "findings": [],
+      "id": "arn:aws:ec2:eu-west-2:111122223333:instance/i-0a1b2c3d4e5f60002",
+      "inherited_findings": [],
+      "label": "i-0a1b2c3d4e5f60002",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "ami_id": "ami-0a1b2c3d4e5f6abcd",
+        "imds_endpoint": true,
+        "imds_hop_limit": 1,
+        "imds_v1": false,
+        "instance_type": "t3.micro",
+        "public": false,
+        "public_ip": false,
+        "state": "running",
+        "subnet_id": "subnet-0a1b2c3d4e5f6aaaa",
+        "vpc_id": "vpc-0a1b2c3d4e5f6aaaa"
+      },
+      "region": "eu-west-2",
+      "tags": [],
+      "type": "instance"
+    },
+    {
+      "account": "111122223333",
+      "coverage": {
+        "gaps": [],
+        "status": "legacy-unknown"
+      },
+      "findings": [
+        "3bbd9bbb4aac93fc2c0d6f8e0a4a85df"
+      ],
+      "id": "arn:aws:iam::111122223333:role/admin",
+      "inherited_findings": [],
+      "label": "admin",
+      "max_severity": "CRITICAL",
+      "partition": "aws",
+      "props": {
+        "attached_policies_error": null,
+        "attached_policies_status": "complete",
+        "high_value": true,
+        "high_value_reason": "admin-equivalent",
+        "path": "/",
+        "reaches_admin": "definite"
+      },
+      "region": null,
+      "tags": [],
+      "type": "role"
+    },
+    {
+      "account": "111122223333",
+      "coverage": {
+        "gaps": [],
+        "status": "legacy-unknown"
+      },
+      "findings": [],
+      "id": "arn:aws:iam::111122223333:role/app",
+      "inherited_findings": [],
+      "label": "app",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "attached_policies_error": null,
+        "attached_policies_status": "complete",
+        "path": "/"
+      },
+      "region": null,
+      "tags": [],
+      "type": "role"
+    },
+    {
+      "account": "111122223333",
+      "coverage": {
+        "gaps": [],
+        "status": "legacy-unknown"
+      },
+      "findings": [
+        "fddcf9364dc740b786ecda5a239e72bc"
+      ],
+      "id": "arn:aws:iam::111122223333:user/alice",
+      "inherited_findings": [],
+      "label": "alice",
+      "max_severity": "MEDIUM",
+      "partition": "aws",
+      "props": {
+        "attached_policies_error": null,
+        "attached_policies_status": "complete",
+        "path": "/",
+        "reaches_admin": "definite"
+      },
+      "region": null,
+      "tags": [],
+      "type": "user"
+    },
+    {
+      "account": null,
+      "coverage": {
+        "gaps": [],
+        "status": "complete"
+      },
+      "findings": [],
+      "id": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "inherited_findings": [],
+      "label": "AdministratorAccess",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "aws_managed": true,
+        "default_version": "v1",
+        "document_status": "complete",
+        "versions_collected": 1
+      },
+      "region": null,
+      "tags": [],
+      "type": "policy"
+    },
+    {
+      "account": "111122223333",
+      "coverage": {
+        "gaps": [],
+        "status": "not-applicable"
+      },
+      "findings": [],
+      "id": "aws-enumerator:account-admin/111122223333",
+      "inherited_findings": [],
+      "label": "Administrator of 111122223333",
+      "max_severity": null,
+      "partition": "aws",
+      "props": {
+        "high_value": true,
+        "high_value_reason": "account-admin"
+      },
+      "region": null,
+      "tags": [],
+      "type": "account_admin"
+    },
+    {
+      "account": "111122223333",
+      "coverage": {
+        "gaps": [],
+        "status": "not-applicable"
+      },
+      "findings": [
+        "e147bf6d2f023537022c55627f95bcdc"
+      ],
+      "id": "aws-enumerator:account/111122223333",
+      "inherited_findings": [],
+      "label": "aws-enumerator:account/111122223333",
+      "max_severity": "LOW",
+      "partition": "aws",
+      "props": {},
+      "region": null,
+      "tags": [],
+      "type": "account"
+    },
+    {
+      "account": null,
+      "coverage": {
+        "gaps": [],
+        "status": "not-applicable"
+      },
+      "findings": [],
+      "id": "aws-enumerator:anonymous",
+      "inherited_findings": [],
+      "label": "Anyone (internet / any AWS account)",
+      "max_severity": null,
+      "partition": null,
+      "props": {
+        "entry_point": true
+      },
+      "region": null,
+      "tags": [],
+      "type": "anonymous"
+    },
+    {
+      "account": null,
+      "coverage": {
+        "gaps": [],
+        "status": "not-applicable"
+      },
+      "findings": [],
+      "id": "svc:ec2.amazonaws.com",
+      "inherited_findings": [],
+      "label": "ec2.amazonaws.com",
+      "max_severity": null,
+      "partition": null,
+      "props": {},
+      "region": null,
+      "tags": [],
+      "type": "service_principal"
+    }
+  ],
+  "run": {
+    "account_id": "111122223333",
+    "generated_at": "<stripped>",
+    "mode": "legacy-single",
+    "operator": {
+      "arn": "arn:aws:iam::111122223333:user/demo-operator",
+      "node_id": null,
+      "redacted": false,
+      "resolution": "not-in-graph"
+    },
+    "partition": "aws",
+    "regions": [
+      "eu-west-2"
+    ],
+    "run_id": "legacy-eu-west-2",
+    "source_manifest_sha256": "25811803feac9641a35268b3ed4c84b77ce4f32a244e95f5b38405d59d6c05cc"
+  },
+  "schema_version": "1.0.0"
+}

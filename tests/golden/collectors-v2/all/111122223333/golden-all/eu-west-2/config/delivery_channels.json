@@ -1,0 +1,7 @@
+[
+  {
+    "name": "default",
+    "s3BucketName": "demo-logs-bucket",
+    "s3KeyPrefix": "config"
+  }
+]

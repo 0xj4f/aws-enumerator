@@ -1,0 +1,13 @@
+[
+  {
+    "ARN": "arn:aws:wafv2:us-east-1:111122223333:global/ipset/demo-cf-allowlist/c0c0c0c0-0000-4000-8000-0000000000c2",
+    "Addresses": [
+      "192.0.2.0/24"
+    ],
+    "Description": null,
+    "IPAddressVersion": "IPV4",
+    "Id": "c0c0c0c0-0000-4000-8000-0000000000c2",
+    "Name": "demo-cf-allowlist",
+    "Scope": "CLOUDFRONT"
+  }
+]

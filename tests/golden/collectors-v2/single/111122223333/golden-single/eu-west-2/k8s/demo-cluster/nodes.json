@@ -1,0 +1,25 @@
+[
+  {
+    "capacity_type": null,
+    "compute_type": null,
+    "instance_id": "i-0dec0abb000000002",
+    "metadata": {
+      "annotations": null,
+      "labels": {
+        "eks.amazonaws.com/nodegroup": "demo-ng"
+      },
+      "name": "ip-10-20-2-10.eu-west-2.compute.internal"
+    },
+    "nodegroup": "demo-ng",
+    "provider_id": "aws:///eu-west-2b/i-0dec0abb000000002",
+    "spec": {
+      "provider_id": "aws:///eu-west-2b/i-0dec0abb000000002",
+      "taints": null,
+      "unschedulable": null
+    },
+    "status": {
+      "node_info": null
+    },
+    "zone": "eu-west-2b"
+  }
+]

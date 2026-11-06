@@ -1,0 +1,179 @@
+{
+  "edges": [
+    {
+      "category": "cognito",
+      "edge_id": "e:12d4769925ced0e99955",
+      "source": "cognito:eu-west-2:11111111-2222-4333-8444-55555555555a",
+      "target": "arn:aws:iam::111122223333:role/demo-cognito-unauth-role",
+      "type": "POOL_UNAUTH_ROLE",
+      "weight": 0
+    },
+    {
+      "category": "ebs",
+      "edge_id": "e:ddaa7af3b32855600eb2",
+      "is_cross_account": true,
+      "source": "ebssnapshot:snap-0dec054aaed000022",
+      "target": "arn:aws:iam::999999999999:root",
+      "type": "EBS_SHARED_CROSS_ACCOUNT",
+      "weight": 2
+    },
+    {
+      "category": "kms",
+      "edge_id": "e:90e6384fe88280b072d7",
+      "source": "ebssnapshot:snap-0dec054aaed000022",
+      "target": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a1",
+      "type": "EBS_ENCRYPTED_BY",
+      "weight": 3
+    },
+    {
+      "category": "ebs",
+      "edge_id": "e:e9887fb80f06cc2453cd",
+      "source": "ebssnapshot:snap-0dec0b0b11c000021",
+      "target": "principal:*",
+      "type": "EBS_SHARED_PUBLIC",
+      "weight": 0
+    },
+    {
+      "category": "kms",
+      "edge_id": "e:feb5cb80ca752df6b09f",
+      "source": "ebssnapshot:snap-0dec0ba1ba7e00023",
+      "target": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a1",
+      "type": "EBS_ENCRYPTED_BY",
+      "weight": 3
+    },
+    {
+      "category": "elb",
+      "edge_id": "e:030c1524d5c3bb2b0f6a",
+      "source": "elb:arn:aws:elasticloadbalancing:eu-west-2:111122223333:loadbalancer/app/demo-public-alb/0123456789abcdef",
+      "target": "i-0dec0eeb000000002",
+      "type": "EXPOSES",
+      "weight": 1
+    },
+    {
+      "category": "elb",
+      "edge_id": "e:3889e514aae719848290",
+      "source": "elb:arn:aws:elasticloadbalancing:eu-west-2:111122223333:loadbalancer/app/demo-public-alb/0123456789abcdef",
+      "target": "lambda:arn:aws:lambda:eu-west-2:111122223333:function:demo-processor",
+      "type": "EXPOSES",
+      "weight": 1
+    },
+    {
+      "category": "elb",
+      "edge_id": "e:023ae223ec310e27e204",
+      "source": "elb:arn:aws:elasticloadbalancing:eu-west-2:111122223333:loadbalancer/demo-classic-elb",
+      "target": "i-0dec0eeb000000002",
+      "type": "EXPOSES",
+      "weight": 1
+    }
+  ],
+  "findings": [
+    {
+      "category": "ebs_public",
+      "description": "The snapshot's createVolumePermission includes the 'all' group: anyone can create a volume from it and read the data.",
+      "entity": "ebssnapshot/snap-0dec0b0b11c000021",
+      "entity_arn": "arn:aws:ec2:eu-west-2::snapshot/snap-0dec0b0b11c000021",
+      "fingerprint": "298a1ec24e0087d1f348440a6843c904",
+      "id": "EBS-PUB-001",
+      "matched_actions": [],
+      "node_id": "arn:aws:ec2:eu-west-2::snapshot/snap-0dec0b0b11c000021",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "remediation": "Remove the public createVolumePermission and set snapshot Block Public Access to block-all-sharing.",
+      "resource": [
+        "arn:aws:ec2:eu-west-2::snapshot/snap-0dec0b0b11c000021"
+      ],
+      "severity": "HIGH",
+      "source_type": "ebs_config",
+      "title": "EBS snapshot 'snap-0dec0b0b11c000021' is shared publicly"
+    },
+    {
+      "category": "ebs_cross_account",
+      "description": "Account 999999999999 can create volumes from the snapshot (createVolumePermission).",
+      "entity": "ebssnapshot/snap-0dec054aaed000022",
+      "entity_arn": "arn:aws:ec2:eu-west-2::snapshot/snap-0dec054aaed000022",
+      "fingerprint": "cfeb70d2ec094305f324a9b992de0859",
+      "id": "EBS-XACCT-001",
+      "matched_actions": [],
+      "node_id": "arn:aws:ec2:eu-west-2::snapshot/snap-0dec054aaed000022",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "remediation": "Verify the cross-account sharing is intended.",
+      "resource": [
+        "arn:aws:ec2:eu-west-2::snapshot/snap-0dec054aaed000022"
+      ],
+      "severity": "MEDIUM",
+      "source_type": "ebs_config",
+      "title": "EBS snapshot 'snap-0dec054aaed000022' is shared with account 999999999999"
+    },
+    {
+      "category": "elb_public",
+      "description": "The load balancer scheme is 'internet-facing': its listeners are reachable from the internet and forward to its targets.",
+      "entity": "elb/demo-classic-elb",
+      "entity_arn": "arn:aws:elasticloadbalancing:eu-west-2:111122223333:loadbalancer/demo-classic-elb",
+      "fingerprint": "d71809b0a4b01fd80f958a786b0b3ad1",
+      "id": "ELB-PUB-001",
+      "matched_actions": [],
+      "node_id": "arn:aws:elasticloadbalancing:eu-west-2:111122223333:loadbalancer/demo-classic-elb",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "remediation": "Confirm the public exposure is intended; otherwise use an internal scheme, and protect it with a WAF web ACL.",
+      "resource": [
+        "arn:aws:elasticloadbalancing:eu-west-2:111122223333:loadbalancer/demo-classic-elb"
+      ],
+      "severity": "MEDIUM",
+      "source_type": "elb_config",
+      "title": "Load balancer 'demo-classic-elb' is internet-facing"
+    },
+    {
+      "category": "elb_public",
+      "description": "The load balancer scheme is 'internet-facing': its listeners (22/tcp, 443/tcp) are reachable from the internet and forward to its targets.",
+      "entity": "elb/demo-public-alb",
+      "entity_arn": "arn:aws:elasticloadbalancing:eu-west-2:111122223333:loadbalancer/app/demo-public-alb/0123456789abcdef",
+      "fingerprint": "e11b0edf50871222468a0ebe5e20d82b",
+      "id": "ELB-PUB-001",
+      "matched_actions": [],
+      "node_id": "arn:aws:elasticloadbalancing:eu-west-2:111122223333:loadbalancer/app/demo-public-alb/0123456789abcdef",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "remediation": "Confirm the public exposure is intended; otherwise use an internal scheme, and protect it with a WAF web ACL.",
+      "resource": [
+        "arn:aws:elasticloadbalancing:eu-west-2:111122223333:loadbalancer/app/demo-public-alb/0123456789abcdef"
+      ],
+      "severity": "MEDIUM",
+      "source_type": "elb_config",
+      "title": "Load balancer 'demo-public-alb' is internet-facing"
+    },
+    {
+      "category": "route53_dangling",
+      "description": "Record 'old.example.com.' (CNAME) points at 'demo-old-site.s3-website-eu-west-1.amazonaws.com' (s3-website, takeover likely): no bucket 'demo-old-site' in this account: anyone may create it.",
+      "entity": "route53/example.com.",
+      "entity_arn": "arn:aws:route53:::hostedzone/Z0DEMOPUBLIC00001",
+      "fingerprint": "6ecedf46557944c876388fe858298cba",
+      "id": "ROUTE53-DANGLING-001",
+      "matched_actions": [],
+      "node_id": "arn:aws:route53:::hostedzone/Z0DEMOPUBLIC00001",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "remediation": "Verify the target resource still exists and belongs to you; remove the record if not.",
+      "resource": [
+        "old.example.com."
+      ],
+      "severity": "MEDIUM",
+      "source_type": "route53_record",
+      "title": "Potential dangling DNS record: old.example.com."
+    },
+    {
+      "category": "route53_dangling",
+      "description": "Record 'www.example.com.' (CNAME) points at 'd111111abcdef8.cloudfront.net' (cloudfront, takeover info): cloudfront target (info to be claimable).",
+      "entity": "route53/example.com.",
+      "entity_arn": "arn:aws:route53:::hostedzone/Z0DEMOPUBLIC00001",
+      "fingerprint": "cd54c892c194ded5f8adbc33e77554d8",
+      "id": "ROUTE53-DANGLING-001",
+      "matched_actions": [],
+      "node_id": "arn:aws:route53:::hostedzone/Z0DEMOPUBLIC00001",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "remediation": "Verify the target resource still exists and belongs to you; remove the record if not.",
+      "resource": [
+        "www.example.com."
+      ],
+      "severity": "INFO",
+      "source_type": "route53_record",
+      "title": "Potential dangling DNS record: www.example.com."
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+[
+  {
+    "CidrBlock": "10.20.0.0/16",
+    "DhcpOptionsId": "dopt-0dec00000000002",
+    "InstanceTenancy": "default",
+    "IsDefault": false,
+    "OwnerId": "111122223333",
+    "State": "available",
+    "Tags": [
+      {
+        "Key": "Name",
+        "Value": "demo-vpc"
+      }
+    ],
+    "VpcId": "vpc-0dec000000000002"
+  }
+]

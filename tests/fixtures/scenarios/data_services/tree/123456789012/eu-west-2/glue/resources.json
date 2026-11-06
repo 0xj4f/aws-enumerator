@@ -1,0 +1,18 @@
+[
+  {
+    "Type": "gluejob",
+    "Arn": "demo-glue-job",
+    "Name": "demo-glue-job",
+    "Roles": [
+      "demo-glue-role"
+    ]
+  },
+  {
+    "Type": "gluejob",
+    "Arn": "demo-dev-endpoint",
+    "Name": "demo-dev-endpoint",
+    "Roles": [
+      "arn:aws:iam::123456789012:role/demo-glue-role"
+    ]
+  }
+]

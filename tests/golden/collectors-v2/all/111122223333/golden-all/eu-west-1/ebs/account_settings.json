@@ -1,0 +1,4 @@
+{
+  "EbsEncryptionByDefault": true,
+  "SnapshotBlockPublicAccessState": "block-all-sharing"
+}

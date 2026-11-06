@@ -1,0 +1,2427 @@
+{
+  "analyze_calls": [
+    {
+      "path": "reports/<date>/111122223333/golden-all",
+      "regional_dirs_present": [
+        "eu-west-1",
+        "eu-west-2"
+      ]
+    }
+  ],
+  "aws": {
+    "<orchestrator>": {
+      "sts:GetCallerIdentity": {
+        "calls": 1,
+        "outcomes": {
+          "ok": 1
+        },
+        "param_keys": [],
+        "regions": [
+          "us-east-1"
+        ]
+      }
+    },
+    "accessanalyzer": {
+      "accessanalyzer:ListAnalyzers": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "maxResults"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      }
+    },
+    "apigateway": {
+      "apigateway:GetAuthorizers": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "restApiId"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "apigateway:GetResources": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "embed",
+          "limit",
+          "restApiId"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "apigateway:GetRestApis": {
+        "calls": 2,
+        "outcomes": {
+          "AccessDeniedException": 1,
+          "ok": 1
+        },
+        "param_keys": [
+          "limit"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "apigateway:GetStages": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "restApiId"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "apigatewayv2:GetApis": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "MaxResults"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "apigatewayv2:GetAuthorizers": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "ApiId"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "apigatewayv2:GetIntegrations": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "ApiId"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "apigatewayv2:GetRoutes": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "ApiId"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "apigatewayv2:GetStages": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "ApiId"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      }
+    },
+    "cloudformation": {
+      "cloudformation:DescribeStackSet": {
+        "calls": 1,
+        "outcomes": {
+          "ok": 1
+        },
+        "param_keys": [
+          "StackSetName"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "cloudformation:DescribeStacks": {
+        "calls": 2,
+        "outcomes": {
+          "AccessDenied": 1,
+          "ok": 1
+        },
+        "param_keys": [],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "cloudformation:ListStackSets": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "MaxResults",
+          "Status"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      }
+    },
+    "cloudfront": {
+      "cloudfront:GetDistributionConfig": {
+        "calls": 2,
+        "outcomes": {
+          "AccessDenied": 1,
+          "ok": 1
+        },
+        "param_keys": [
+          "Id"
+        ],
+        "regions": [
+          "aws-global"
+        ]
+      },
+      "cloudfront:ListDistributions": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "Marker"
+        ],
+        "regions": [
+          "aws-global"
+        ]
+      }
+    },
+    "cloudtrail": {
+      "cloudtrail:DescribeTrails": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "cloudtrail:GetEventSelectors": {
+        "calls": 1,
+        "outcomes": {
+          "ok": 1
+        },
+        "param_keys": [
+          "TrailName"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "cloudtrail:GetInsightSelectors": {
+        "calls": 1,
+        "outcomes": {
+          "ok": 1
+        },
+        "param_keys": [
+          "TrailName"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "cloudtrail:GetTrailStatus": {
+        "calls": 1,
+        "outcomes": {
+          "ok": 1
+        },
+        "param_keys": [
+          "Name"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "cloudtrail:ListEventDataStores": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "MaxResults"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      }
+    },
+    "codebuild": {
+      "codebuild:BatchGetProjects": {
+        "calls": 1,
+        "outcomes": {
+          "ok": 1
+        },
+        "param_keys": [
+          "names"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "codebuild:ListProjects": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "codebuild:ListSourceCredentials": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      }
+    },
+    "cognito": {
+      "cognito-identity:DescribeIdentityPool": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "IdentityPoolId"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "cognito-identity:GetIdentityPoolRoles": {
+        "calls": 2,
+        "outcomes": {
+          "AccessDeniedException": 1,
+          "ok": 1
+        },
+        "param_keys": [
+          "IdentityPoolId"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "cognito-identity:ListIdentityPools": {
+        "calls": 2,
+        "outcomes": {
+          "AccessDeniedException": 1,
+          "ok": 1
+        },
+        "param_keys": [
+          "MaxResults"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "cognito-idp:DescribeUserPool": {
+        "calls": 1,
+        "outcomes": {
+          "ok": 1
+        },
+        "param_keys": [
+          "UserPoolId"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "cognito-idp:ListUserPoolClients": {
+        "calls": 1,
+        "outcomes": {
+          "ok": 1
+        },
+        "param_keys": [
+          "MaxResults",
+          "UserPoolId"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "cognito-idp:ListUserPools": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "MaxResults"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      }
+    },
+    "config_service": {
+      "config:DescribeConfigurationRecorderStatus": {
+        "calls": 1,
+        "outcomes": {
+          "ok": 1
+        },
+        "param_keys": [],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "config:DescribeConfigurationRecorders": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "config:DescribeDeliveryChannels": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      }
+    },
+    "dynamodb": {
+      "dynamodb:GetResourcePolicy": {
+        "calls": 3,
+        "outcomes": {
+          "PolicyNotFoundException": 2,
+          "ok": 1
+        },
+        "param_keys": [
+          "ResourceArn"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "dynamodb:ListTables": {
+        "calls": 3,
+        "outcomes": {
+          "ok": 3
+        },
+        "param_keys": [
+          "ExclusiveStartTableName",
+          "Limit"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      }
+    },
+    "ebs": {
+      "ec2:DescribeSnapshotAttribute": {
+        "calls": 3,
+        "outcomes": {
+          "UnauthorizedOperation": 1,
+          "ok": 2
+        },
+        "param_keys": [
+          "Attribute",
+          "SnapshotId"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "ec2:DescribeSnapshots": {
+        "calls": 3,
+        "outcomes": {
+          "UnauthorizedOperation": 1,
+          "ok": 2
+        },
+        "param_keys": [
+          "MaxResults",
+          "OwnerIds",
+          "RestorableByUserIds"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "ec2:GetEbsEncryptionByDefault": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "ec2:GetSnapshotBlockPublicAccessState": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      }
+    },
+    "ec2": {
+      "ec2:DescribeAddresses": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "ec2:DescribeImageAttribute": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "Attribute",
+          "ImageId"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "ec2:DescribeImages": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "MaxResults",
+          "Owners"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "ec2:DescribeInstances": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "MaxResults"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "ec2:DescribeLaunchTemplateVersions": {
+        "calls": 1,
+        "outcomes": {
+          "ok": 1
+        },
+        "param_keys": [
+          "LaunchTemplateId",
+          "Versions"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "ec2:DescribeLaunchTemplates": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "MaxResults"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "ec2:GetImageBlockPublicAccessState": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      }
+    },
+    "ecr": {
+      "ecr:DescribeRegistry": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "ecr:DescribeRepositories": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "maxResults"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "ecr:GetRegistryPolicy": {
+        "calls": 2,
+        "outcomes": {
+          "RegistryPolicyNotFoundException": 1,
+          "ok": 1
+        },
+        "param_keys": [],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "ecr:GetRepositoryPolicy": {
+        "calls": 2,
+        "outcomes": {
+          "ThrottlingException": 1,
+          "ok": 1
+        },
+        "param_keys": [
+          "registryId",
+          "repositoryName"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      }
+    },
+    "ecs": {
+      "ecs:DescribeServices": {
+        "calls": 1,
+        "outcomes": {
+          "ok": 1
+        },
+        "param_keys": [
+          "cluster",
+          "services"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "ecs:DescribeTaskDefinition": {
+        "calls": 3,
+        "outcomes": {
+          "AccessDeniedException": 1,
+          "ok": 2
+        },
+        "param_keys": [
+          "taskDefinition"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "ecs:ListClusters": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "maxResults"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "ecs:ListServices": {
+        "calls": 1,
+        "outcomes": {
+          "ok": 1
+        },
+        "param_keys": [
+          "cluster",
+          "maxResults"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "ecs:ListTaskDefinitionFamilies": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "maxResults",
+          "status"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "ecs:ListTaskDefinitions": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "familyPrefix",
+          "maxResults",
+          "sort",
+          "status"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      }
+    },
+    "eks": {
+      "eks:DescribeAccessEntry": {
+        "calls": 4,
+        "outcomes": {
+          "AccessDeniedException": 1,
+          "ok": 3
+        },
+        "param_keys": [
+          "clusterName",
+          "principalArn"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "eks:DescribeAddon": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "addonName",
+          "clusterName"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "eks:DescribeCluster": {
+        "calls": 3,
+        "outcomes": {
+          "AccessDeniedException": 1,
+          "ok": 2
+        },
+        "param_keys": [
+          "name"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "eks:DescribeFargateProfile": {
+        "calls": 1,
+        "outcomes": {
+          "ok": 1
+        },
+        "param_keys": [
+          "clusterName",
+          "fargateProfileName"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "eks:DescribeNodegroup": {
+        "calls": 1,
+        "outcomes": {
+          "ok": 1
+        },
+        "param_keys": [
+          "clusterName",
+          "nodegroupName"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "eks:DescribePodIdentityAssociation": {
+        "calls": 1,
+        "outcomes": {
+          "ok": 1
+        },
+        "param_keys": [
+          "associationId",
+          "clusterName"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "eks:ListAccessEntries": {
+        "calls": 4,
+        "outcomes": {
+          "InvalidRequestException": 1,
+          "ok": 3
+        },
+        "param_keys": [
+          "clusterName",
+          "maxResults",
+          "nextToken"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "eks:ListAddons": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "clusterName",
+          "maxResults"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "eks:ListAssociatedAccessPolicies": {
+        "calls": 4,
+        "outcomes": {
+          "ok": 4
+        },
+        "param_keys": [
+          "clusterName",
+          "maxResults",
+          "principalArn"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "eks:ListClusters": {
+        "calls": 3,
+        "outcomes": {
+          "ok": 3
+        },
+        "param_keys": [
+          "maxResults",
+          "nextToken"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "eks:ListFargateProfiles": {
+        "calls": 2,
+        "outcomes": {
+          "AccessDeniedException": 1,
+          "ok": 1
+        },
+        "param_keys": [
+          "clusterName",
+          "maxResults"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "eks:ListNodegroups": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "clusterName",
+          "maxResults"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "eks:ListPodIdentityAssociations": {
+        "calls": 3,
+        "outcomes": {
+          "ok": 3
+        },
+        "param_keys": [
+          "clusterName",
+          "maxResults"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      }
+    },
+    "elb": {
+      "elb:DescribeLoadBalancers": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "PageSize"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "elbv2:DescribeListeners": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "LoadBalancerArn",
+          "PageSize"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "elbv2:DescribeLoadBalancers": {
+        "calls": 2,
+        "outcomes": {
+          "AccessDenied": 1,
+          "ok": 1
+        },
+        "param_keys": [
+          "PageSize"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "elbv2:DescribeTargetGroups": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "LoadBalancerArn",
+          "PageSize"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "elbv2:DescribeTargetHealth": {
+        "calls": 3,
+        "outcomes": {
+          "AccessDenied": 1,
+          "ok": 2
+        },
+        "param_keys": [
+          "TargetGroupArn"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      }
+    },
+    "flowlogs": {
+      "ec2:DescribeFlowLogs": {
+        "calls": 3,
+        "outcomes": {
+          "ok": 2,
+          "raise:ReadTimeoutError": 1
+        },
+        "param_keys": [
+          "MaxResults",
+          "NextToken"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      }
+    },
+    "glue": {
+      "glue:GetDevEndpoints": {
+        "calls": 2,
+        "outcomes": {
+          "AccessDeniedException": 1,
+          "ok": 1
+        },
+        "param_keys": [
+          "MaxResults"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "glue:GetJobs": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "MaxResults"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      }
+    },
+    "guardduty": {
+      "guardduty:GetDetector": {
+        "calls": 1,
+        "outcomes": {
+          "ok": 1
+        },
+        "param_keys": [
+          "DetectorId"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "guardduty:ListDetectors": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "MaxResults"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      }
+    },
+    "iam": {
+      "iam:GenerateCredentialReport": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [],
+        "regions": [
+          "aws-global"
+        ]
+      },
+      "iam:GetAccountAuthorizationDetails": {
+        "calls": 3,
+        "outcomes": {
+          "ok": 3
+        },
+        "param_keys": [
+          "Filter",
+          "Marker",
+          "MaxItems"
+        ],
+        "regions": [
+          "aws-global"
+        ]
+      },
+      "iam:GetAccountPasswordPolicy": {
+        "calls": 1,
+        "outcomes": {
+          "NoSuchEntity": 1
+        },
+        "param_keys": [],
+        "regions": [
+          "aws-global"
+        ]
+      },
+      "iam:GetAccountSummary": {
+        "calls": 1,
+        "outcomes": {
+          "ok": 1
+        },
+        "param_keys": [],
+        "regions": [
+          "aws-global"
+        ]
+      },
+      "iam:GetCredentialReport": {
+        "calls": 1,
+        "outcomes": {
+          "ok": 1
+        },
+        "param_keys": [],
+        "regions": [
+          "aws-global"
+        ]
+      },
+      "iam:GetOpenIDConnectProvider": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "OpenIDConnectProviderArn"
+        ],
+        "regions": [
+          "aws-global"
+        ]
+      },
+      "iam:ListAccessKeys": {
+        "calls": 3,
+        "outcomes": {
+          "ok": 3
+        },
+        "param_keys": [
+          "MaxItems",
+          "UserName"
+        ],
+        "regions": [
+          "aws-global"
+        ]
+      },
+      "iam:ListOpenIDConnectProviders": {
+        "calls": 1,
+        "outcomes": {
+          "ok": 1
+        },
+        "param_keys": [],
+        "regions": [
+          "aws-global"
+        ]
+      },
+      "iam:ListRoles": {
+        "calls": 3,
+        "outcomes": {
+          "ok": 3
+        },
+        "param_keys": [
+          "Marker",
+          "MaxItems"
+        ],
+        "regions": [
+          "aws-global"
+        ]
+      },
+      "iam:ListSAMLProviders": {
+        "calls": 1,
+        "outcomes": {
+          "ok": 1
+        },
+        "param_keys": [],
+        "regions": [
+          "aws-global"
+        ]
+      },
+      "iam:ListSSHPublicKeys": {
+        "calls": 3,
+        "outcomes": {
+          "AccessDenied": 1,
+          "ok": 2
+        },
+        "param_keys": [
+          "MaxItems",
+          "UserName"
+        ],
+        "regions": [
+          "aws-global"
+        ]
+      },
+      "iam:ListServiceSpecificCredentials": {
+        "calls": 3,
+        "outcomes": {
+          "ok": 3
+        },
+        "param_keys": [
+          "UserName"
+        ],
+        "regions": [
+          "aws-global"
+        ]
+      },
+      "iam:ListSigningCertificates": {
+        "calls": 3,
+        "outcomes": {
+          "ok": 3
+        },
+        "param_keys": [
+          "MaxItems",
+          "UserName"
+        ],
+        "regions": [
+          "aws-global"
+        ]
+      },
+      "iam:ListVirtualMFADevices": {
+        "calls": 1,
+        "outcomes": {
+          "ok": 1
+        },
+        "param_keys": [
+          "AssignmentStatus",
+          "MaxItems"
+        ],
+        "regions": [
+          "aws-global"
+        ]
+      }
+    },
+    "kms": {
+      "kms:DescribeKey": {
+        "calls": 5,
+        "outcomes": {
+          "AccessDeniedException": 1,
+          "ok": 4
+        },
+        "param_keys": [
+          "KeyId"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "kms:GetKeyPolicy": {
+        "calls": 4,
+        "outcomes": {
+          "AccessDeniedException": 1,
+          "ok": 3
+        },
+        "param_keys": [
+          "KeyId",
+          "PolicyName"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "kms:ListAliases": {
+        "calls": 3,
+        "outcomes": {
+          "AccessDeniedException": 1,
+          "ok": 2
+        },
+        "param_keys": [
+          "Limit",
+          "Marker"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "kms:ListGrants": {
+        "calls": 5,
+        "outcomes": {
+          "AccessDeniedException": 1,
+          "ok": 4
+        },
+        "param_keys": [
+          "KeyId"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "kms:ListKeys": {
+        "calls": 3,
+        "outcomes": {
+          "ok": 3
+        },
+        "param_keys": [
+          "Limit",
+          "Marker"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      }
+    },
+    "lambda_": {
+      "lambda:GetLayerVersionPolicy": {
+        "calls": 2,
+        "outcomes": {
+          "ResourceNotFoundException": 1,
+          "ok": 1
+        },
+        "param_keys": [
+          "LayerName",
+          "VersionNumber"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "lambda:GetPolicy": {
+        "calls": 6,
+        "outcomes": {
+          "ResourceNotFoundException": 3,
+          "ok": 3
+        },
+        "param_keys": [
+          "FunctionName",
+          "Qualifier"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "lambda:ListAliases": {
+        "calls": 4,
+        "outcomes": {
+          "ok": 4
+        },
+        "param_keys": [
+          "FunctionName"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "lambda:ListEventSourceMappings": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "MaxItems"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "lambda:ListFunctionUrlConfigs": {
+        "calls": 4,
+        "outcomes": {
+          "AccessDeniedException": 1,
+          "ok": 3
+        },
+        "param_keys": [
+          "FunctionName"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "lambda:ListFunctions": {
+        "calls": 3,
+        "outcomes": {
+          "ok": 3
+        },
+        "param_keys": [
+          "Marker",
+          "MaxItems"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "lambda:ListLayerVersions": {
+        "calls": 1,
+        "outcomes": {
+          "ok": 1
+        },
+        "param_keys": [
+          "LayerName"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "lambda:ListLayers": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "MaxItems"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      }
+    },
+    "organizations": {
+      "organizations:DescribeOrganization": {
+        "calls": 1,
+        "outcomes": {
+          "ok": 1
+        },
+        "param_keys": [],
+        "regions": [
+          "aws-global"
+        ]
+      },
+      "organizations:DescribeOrganizationalUnit": {
+        "calls": 1,
+        "outcomes": {
+          "ok": 1
+        },
+        "param_keys": [
+          "OrganizationalUnitId"
+        ],
+        "regions": [
+          "aws-global"
+        ]
+      },
+      "organizations:DescribePolicy": {
+        "calls": 4,
+        "outcomes": {
+          "ok": 4
+        },
+        "param_keys": [
+          "PolicyId"
+        ],
+        "regions": [
+          "aws-global"
+        ]
+      },
+      "organizations:ListParents": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "ChildId"
+        ],
+        "regions": [
+          "aws-global"
+        ]
+      },
+      "organizations:ListPoliciesForTarget": {
+        "calls": 6,
+        "outcomes": {
+          "ok": 6
+        },
+        "param_keys": [
+          "Filter",
+          "TargetId"
+        ],
+        "regions": [
+          "aws-global"
+        ]
+      }
+    },
+    "rds": {
+      "rds:DescribeDBClusterSnapshotAttributes": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "DBClusterSnapshotIdentifier"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "rds:DescribeDBClusterSnapshots": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "MaxRecords",
+          "SnapshotType"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "rds:DescribeDBClusters": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "MaxRecords"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "rds:DescribeDBInstances": {
+        "calls": 2,
+        "outcomes": {
+          "AccessDenied": 1,
+          "ok": 1
+        },
+        "param_keys": [
+          "MaxRecords"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "rds:DescribeDBSnapshotAttributes": {
+        "calls": 3,
+        "outcomes": {
+          "AccessDenied": 1,
+          "ok": 2
+        },
+        "param_keys": [
+          "DBSnapshotIdentifier"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "rds:DescribeDBSnapshots": {
+        "calls": 2,
+        "outcomes": {
+          "AccessDenied": 1,
+          "ok": 1
+        },
+        "param_keys": [
+          "MaxRecords",
+          "SnapshotType"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      }
+    },
+    "route53": {
+      "route53:ListHostedZones": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "Marker"
+        ],
+        "regions": [
+          "aws-global"
+        ]
+      },
+      "route53:ListResourceRecordSets": {
+        "calls": 2,
+        "outcomes": {
+          "AccessDenied": 1,
+          "ok": 1
+        },
+        "param_keys": [
+          "HostedZoneId"
+        ],
+        "regions": [
+          "aws-global"
+        ]
+      }
+    },
+    "s3": {
+      "s3:GetBucketAcl": {
+        "calls": 5,
+        "outcomes": {
+          "AccessDenied": 2,
+          "ok": 3
+        },
+        "param_keys": [
+          "Bucket"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2",
+          "us-east-1"
+        ]
+      },
+      "s3:GetBucketEncryption": {
+        "calls": 5,
+        "outcomes": {
+          "AccessDenied": 1,
+          "ok": 4
+        },
+        "param_keys": [
+          "Bucket"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2",
+          "us-east-1"
+        ]
+      },
+      "s3:GetBucketNotificationConfiguration": {
+        "calls": 5,
+        "outcomes": {
+          "AccessDenied": 1,
+          "ok": 4
+        },
+        "param_keys": [
+          "Bucket"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2",
+          "us-east-1"
+        ]
+      },
+      "s3:GetBucketOwnershipControls": {
+        "calls": 5,
+        "outcomes": {
+          "AccessDenied": 1,
+          "OwnershipControlsNotFoundError": 1,
+          "ok": 3
+        },
+        "param_keys": [
+          "Bucket"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2",
+          "us-east-1"
+        ]
+      },
+      "s3:GetBucketPolicy": {
+        "calls": 5,
+        "outcomes": {
+          "AccessDenied": 2,
+          "NoSuchBucketPolicy": 1,
+          "ok": 2
+        },
+        "param_keys": [
+          "Bucket"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2",
+          "us-east-1"
+        ]
+      },
+      "s3:GetBucketPolicyStatus": {
+        "calls": 4,
+        "outcomes": {
+          "AccessDenied": 1,
+          "ok": 3
+        },
+        "param_keys": [
+          "Bucket"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "s3:GetPublicAccessBlock": {
+        "calls": 5,
+        "outcomes": {
+          "AccessDenied": 1,
+          "NoSuchPublicAccessBlockConfiguration": 2,
+          "ok": 2
+        },
+        "param_keys": [
+          "Bucket"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2",
+          "us-east-1"
+        ]
+      },
+      "s3:ListBuckets": {
+        "calls": 1,
+        "outcomes": {
+          "ok": 1
+        },
+        "param_keys": [
+          "MaxBuckets"
+        ],
+        "regions": [
+          "us-east-1"
+        ]
+      },
+      "s3control:GetPublicAccessBlock": {
+        "calls": 1,
+        "outcomes": {
+          "ok": 1
+        },
+        "param_keys": [
+          "AccountId"
+        ],
+        "regions": [
+          "us-east-1"
+        ]
+      }
+    },
+    "sagemaker": {
+      "sagemaker:DescribeDomain": {
+        "calls": 1,
+        "outcomes": {
+          "ok": 1
+        },
+        "param_keys": [
+          "DomainId"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "sagemaker:DescribeNotebookInstance": {
+        "calls": 1,
+        "outcomes": {
+          "ok": 1
+        },
+        "param_keys": [
+          "NotebookInstanceName"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "sagemaker:DescribeUserProfile": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "DomainId",
+          "UserProfileName"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "sagemaker:ListDomains": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "MaxResults"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "sagemaker:ListNotebookInstances": {
+        "calls": 2,
+        "outcomes": {
+          "AccessDeniedException": 1,
+          "ok": 1
+        },
+        "param_keys": [
+          "MaxResults"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "sagemaker:ListUserProfiles": {
+        "calls": 1,
+        "outcomes": {
+          "ok": 1
+        },
+        "param_keys": [
+          "MaxResults"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      }
+    },
+    "secretsmanager": {
+      "secretsmanager:GetResourcePolicy": {
+        "calls": 4,
+        "outcomes": {
+          "AccessDeniedException": 1,
+          "ok": 3
+        },
+        "param_keys": [
+          "SecretId"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "secretsmanager:ListSecrets": {
+        "calls": 4,
+        "outcomes": {
+          "AccessDeniedException": 1,
+          "ok": 3
+        },
+        "param_keys": [
+          "IncludePlannedDeletion",
+          "MaxResults",
+          "NextToken"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      }
+    },
+    "securityhub": {
+      "securityhub:DescribeHub": {
+        "calls": 2,
+        "outcomes": {
+          "InvalidAccessException": 1,
+          "ok": 1
+        },
+        "param_keys": [],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "securityhub:GetEnabledStandards": {
+        "calls": 1,
+        "outcomes": {
+          "ok": 1
+        },
+        "param_keys": [
+          "MaxResults"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      }
+    },
+    "sg": {
+      "ec2:DescribeNetworkInterfaces": {
+        "calls": 2,
+        "outcomes": {
+          "UnauthorizedOperation": 1,
+          "ok": 1
+        },
+        "param_keys": [
+          "MaxResults"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "ec2:DescribeSecurityGroups": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "MaxResults"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      }
+    },
+    "sns": {
+      "sns:GetTopicAttributes": {
+        "calls": 2,
+        "outcomes": {
+          "AccessDenied": 1,
+          "ok": 1
+        },
+        "param_keys": [
+          "TopicArn"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "sns:ListSubscriptionsByTopic": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "TopicArn"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "sns:ListTopics": {
+        "calls": 3,
+        "outcomes": {
+          "ok": 3
+        },
+        "param_keys": [
+          "NextToken"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      }
+    },
+    "sqs": {
+      "sqs:GetQueueAttributes": {
+        "calls": 4,
+        "outcomes": {
+          "AccessDenied": 1,
+          "ok": 3
+        },
+        "param_keys": [
+          "AttributeNames",
+          "QueueUrl"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "sqs:ListQueues": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "MaxResults"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      }
+    },
+    "ssm": {
+      "ssm:DescribeDocumentPermission": {
+        "calls": 3,
+        "outcomes": {
+          "ok": 3
+        },
+        "param_keys": [
+          "Name",
+          "PermissionType"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "ssm:DescribeInstanceInformation": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "MaxResults"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "ssm:DescribeParameters": {
+        "calls": 5,
+        "outcomes": {
+          "ok": 5
+        },
+        "param_keys": [
+          "MaxResults",
+          "NextToken",
+          "Shared"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "ssm:ListDocuments": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "Filters",
+          "MaxResults"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      }
+    },
+    "vpc": {
+      "ec2:DescribeDhcpOptions": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "MaxResults"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "ec2:DescribeInternetGateways": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "MaxResults"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "ec2:DescribeManagedPrefixLists": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "MaxResults"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "ec2:DescribeNatGateways": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 1,
+          "raise:EndpointConnectionError": 1
+        },
+        "param_keys": [
+          "MaxResults"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "ec2:DescribeNetworkAcls": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "MaxResults"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "ec2:DescribeRouteTables": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "MaxResults"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "ec2:DescribeSubnets": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "MaxResults"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "ec2:DescribeTransitGatewayAttachments": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "MaxResults"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "ec2:DescribeTransitGateways": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "MaxResults"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "ec2:DescribeVpcEndpoints": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "MaxResults"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "ec2:DescribeVpcPeeringConnections": {
+        "calls": 2,
+        "outcomes": {
+          "UnauthorizedOperation": 1,
+          "ok": 1
+        },
+        "param_keys": [
+          "MaxResults"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "ec2:DescribeVpcs": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "MaxResults"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "ec2:DescribeVpnConnections": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "ec2:DescribeVpnGateways": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "ec2:GetManagedPrefixListEntries": {
+        "calls": 1,
+        "outcomes": {
+          "ok": 1
+        },
+        "param_keys": [
+          "MaxResults",
+          "PrefixListId"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "network-firewall:ListFirewalls": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "MaxResults"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      }
+    },
+    "waf": {
+      "wafv2:GetIPSet": {
+        "calls": 2,
+        "outcomes": {
+          "ok": 2
+        },
+        "param_keys": [
+          "Id",
+          "Name",
+          "Scope"
+        ],
+        "regions": [
+          "eu-west-2",
+          "us-east-1"
+        ]
+      },
+      "wafv2:GetRuleGroup": {
+        "calls": 1,
+        "outcomes": {
+          "ok": 1
+        },
+        "param_keys": [
+          "Id",
+          "Name",
+          "Scope"
+        ],
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      "wafv2:GetWebACL": {
+        "calls": 4,
+        "outcomes": {
+          "ok": 4
+        },
+        "param_keys": [
+          "Id",
+          "Name",
+          "Scope"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2",
+          "us-east-1"
+        ]
+      },
+      "wafv2:ListIPSets": {
+        "calls": 3,
+        "outcomes": {
+          "ok": 3
+        },
+        "param_keys": [
+          "Limit",
+          "Scope"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2",
+          "us-east-1"
+        ]
+      },
+      "wafv2:ListLoggingConfigurations": {
+        "calls": 3,
+        "outcomes": {
+          "ok": 3
+        },
+        "param_keys": [
+          "Limit",
+          "Scope"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2",
+          "us-east-1"
+        ]
+      },
+      "wafv2:ListResourcesForWebACL": {
+        "calls": 21,
+        "outcomes": {
+          "ok": 21
+        },
+        "param_keys": [
+          "ResourceType",
+          "WebACLArn"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2"
+        ]
+      },
+      "wafv2:ListRuleGroups": {
+        "calls": 3,
+        "outcomes": {
+          "AccessDeniedException": 1,
+          "ok": 2
+        },
+        "param_keys": [
+          "Limit",
+          "Scope"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2",
+          "us-east-1"
+        ]
+      },
+      "wafv2:ListWebACLs": {
+        "calls": 4,
+        "outcomes": {
+          "ok": 4
+        },
+        "param_keys": [
+          "Limit",
+          "NextMarker",
+          "Scope"
+        ],
+        "regions": [
+          "eu-west-1",
+          "eu-west-2",
+          "us-east-1"
+        ]
+      }
+    },
+    "waf_cloudfront": {
+      "cloudfront:ListDistributionsByWebACLId": {
+        "calls": 1,
+        "outcomes": {
+          "ok": 1
+        },
+        "param_keys": [
+          "MaxItems",
+          "WebACLId"
+        ],
+        "regions": [
+          "aws-global"
+        ]
+      }
+    }
+  },
+  "kubernetes": {
+    "api_clients": [
+      {
+        "auth_scheme": "Bearer",
+        "ca_file_existed": true,
+        "host": "https://DEMO0000000000000000000000000001.gr7.eu-west-1.eks.amazonaws.com",
+        "token_prefix": "k8s-aws-v1.",
+        "verify_ssl": true
+      },
+      {
+        "auth_scheme": "Bearer",
+        "ca_file_existed": true,
+        "host": "https://DEMO0000000000000000000000000002.gr7.eu-west-2.eks.amazonaws.com",
+        "token_prefix": "k8s-aws-v1.",
+        "verify_ssl": true
+      }
+    ],
+    "calls": {
+      "demo-cluster": {
+        "cluster_role_bindings": {
+          "ok": 1
+        },
+        "cluster_roles": {
+          "ok": 1
+        },
+        "config_maps": {
+          "ok": 1
+        },
+        "ingresses": {
+          "ok": 1
+        },
+        "namespaces": {
+          "ok": 1
+        },
+        "nodes": {
+          "ok": 1
+        },
+        "pods": {
+          "ok": 1
+        },
+        "role_bindings": {
+          "ok": 1
+        },
+        "roles": {
+          "ok": 1
+        },
+        "selfsubjectrulesreviews": {
+          "ok": 3
+        },
+        "service_accounts": {
+          "ok": 1
+        },
+        "services": {
+          "ok": 1
+        },
+        "version": {
+          "ok": 1
+        }
+      },
+      "demo-west-cluster": {
+        "version": {
+          "ApiException:401": 1
+        }
+      }
+    }
+  },
+  "region_discovery_calls": [
+    "us-east-1"
+  ]
+}

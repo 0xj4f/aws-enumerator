@@ -1,0 +1,19 @@
+{
+  "EntityArn": "arn:aws:iam::111122223333:group/demo-developers",
+  "GroupName": "demo-developers",
+  "InlinePolicies": {
+    "demo-dev-ssm-inline": {
+      "Statement": [
+        {
+          "Action": [
+            "ssm:SendCommand",
+            "ssm:StartSession"
+          ],
+          "Effect": "Allow",
+          "Resource": "*"
+        }
+      ],
+      "Version": "2012-10-17"
+    }
+  }
+}

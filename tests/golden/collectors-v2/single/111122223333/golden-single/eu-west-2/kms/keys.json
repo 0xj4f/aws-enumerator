@@ -1,0 +1,103 @@
+[
+  {
+    "Aliases": [
+      "alias/aws/s3"
+    ],
+    "Arn": "arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a2",
+    "Description": "Default key that protects my S3 objects when no other key is defined",
+    "Enabled": true,
+    "Grants": [],
+    "KeyId": "1111aaaa-0000-4000-8000-0000000000a2",
+    "KeyManager": "AWS",
+    "KeySpec": "SYMMETRIC_DEFAULT",
+    "KeyState": "Enabled",
+    "KeyUsage": "ENCRYPT_DECRYPT",
+    "MultiRegion": false,
+    "MultiRegionConfiguration": null,
+    "Origin": "AWS_KMS",
+    "PolicyStatus": "skipped"
+  },
+  {
+    "Aliases": [
+      "alias/demo-key",
+      "alias/demo-key-secondary"
+    ],
+    "Arn": "arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a1",
+    "Description": "demo customer key",
+    "Enabled": true,
+    "Grants": [
+      {
+        "Constraints": null,
+        "GrantId": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcd01",
+        "GranteePrincipal": "arn:aws:iam::111122223333:role/demo-lambda-role",
+        "IssuingAccount": "arn:aws:iam::111122223333:root",
+        "Name": "demo-lambda-grant",
+        "Operations": [
+          "Decrypt",
+          "GenerateDataKey"
+        ],
+        "RetiringPrincipal": null
+      }
+    ],
+    "KeyId": "1111aaaa-0000-4000-8000-0000000000a1",
+    "KeyManager": "CUSTOMER",
+    "KeySpec": "SYMMETRIC_DEFAULT",
+    "KeyState": "Enabled",
+    "KeyUsage": "ENCRYPT_DECRYPT",
+    "MultiRegion": false,
+    "MultiRegionConfiguration": null,
+    "Origin": "AWS_KMS",
+    "PolicyStatus": "present"
+  },
+  {
+    "Aliases": [],
+    "Arn": "arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a3",
+    "CollectionErrors": [
+      {
+        "api": "kms:DescribeKey",
+        "error_code": "AccessDeniedException",
+        "status": "denied"
+      }
+    ],
+    "Description": null,
+    "Enabled": null,
+    "Grants": [],
+    "KeyId": "1111aaaa-0000-4000-8000-0000000000a3",
+    "KeyManager": null,
+    "KeySpec": null,
+    "KeyState": null,
+    "KeyUsage": null,
+    "MultiRegion": null,
+    "MultiRegionConfiguration": null,
+    "Origin": null,
+    "PolicyStatus": "present"
+  },
+  {
+    "Aliases": [],
+    "Arn": "arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a4",
+    "CollectionErrors": [
+      {
+        "api": "kms:GetKeyPolicy",
+        "error_code": "AccessDeniedException",
+        "status": "denied"
+      },
+      {
+        "api": "kms:ListGrants",
+        "error_code": "AccessDeniedException",
+        "status": "denied"
+      }
+    ],
+    "Description": "policy and grants denied",
+    "Enabled": false,
+    "Grants": null,
+    "KeyId": "1111aaaa-0000-4000-8000-0000000000a4",
+    "KeyManager": "CUSTOMER",
+    "KeySpec": "SYMMETRIC_DEFAULT",
+    "KeyState": "Disabled",
+    "KeyUsage": "ENCRYPT_DECRYPT",
+    "MultiRegion": false,
+    "MultiRegionConfiguration": null,
+    "Origin": "AWS_KMS",
+    "PolicyStatus": "denied"
+  }
+]

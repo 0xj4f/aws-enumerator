@@ -1,0 +1,21 @@
+[
+  {
+    "AccepterVpcInfo": {
+      "CidrBlock": "10.99.0.0/16",
+      "OwnerId": "999999999999",
+      "Region": "eu-west-2",
+      "VpcId": "vpc-0e87eaaa1000000009"
+    },
+    "RequesterVpcInfo": {
+      "CidrBlock": "10.20.0.0/16",
+      "OwnerId": "111122223333",
+      "Region": "eu-west-2",
+      "VpcId": "vpc-0dec000000000002"
+    },
+    "Status": {
+      "Code": "active",
+      "Message": "Active"
+    },
+    "VpcPeeringConnectionId": "pcx-0dec00000000002"
+  }
+]

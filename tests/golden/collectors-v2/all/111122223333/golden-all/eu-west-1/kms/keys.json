@@ -1,0 +1,18 @@
+[
+  {
+    "Aliases": null,
+    "Arn": "arn:aws:kms:eu-west-1:111122223333:key/2222bbbb-0000-4000-8000-0000000000b1",
+    "Description": "demo west key",
+    "Enabled": true,
+    "Grants": [],
+    "KeyId": "2222bbbb-0000-4000-8000-0000000000b1",
+    "KeyManager": "CUSTOMER",
+    "KeySpec": "SYMMETRIC_DEFAULT",
+    "KeyState": "Enabled",
+    "KeyUsage": "ENCRYPT_DECRYPT",
+    "MultiRegion": false,
+    "MultiRegionConfiguration": null,
+    "Origin": "AWS_KMS",
+    "PolicyStatus": "present"
+  }
+]

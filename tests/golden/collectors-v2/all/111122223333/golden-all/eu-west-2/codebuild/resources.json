@@ -1,0 +1,61 @@
+[
+  {
+    "Arn": "arn:aws:codebuild:eu-west-2:111122223333:project/demo-build",
+    "Environment": {
+      "ComputeType": "BUILD_GENERAL1_SMALL",
+      "Image": "aws/codebuild/standard:7.0",
+      "PrivilegedMode": false,
+      "Type": "LINUX_CONTAINER"
+    },
+    "EnvironmentVariables": [
+      {
+        "Name": "DB_PASSWORD",
+        "Type": "PARAMETER_STORE"
+      },
+      {
+        "Name": "NPM_TOKEN",
+        "Type": "PLAINTEXT"
+      }
+    ],
+    "Name": "demo-build",
+    "ProjectVisibility": null,
+    "Roles": [
+      "arn:aws:iam::111122223333:role/demo-build-role"
+    ],
+    "SecondarySources": [],
+    "Source": {
+      "AuthType": null,
+      "Location": "https://git.example.com/demo/app.git",
+      "ReportBuildStatus": null,
+      "SourceIdentifier": null,
+      "Type": "GITHUB"
+    },
+    "Type": "codebuild",
+    "Webhook": null
+  },
+  {
+    "Arn": "arn:aws:codebuild:eu-west-2:111122223333:project/demo-deploy",
+    "Environment": {
+      "ComputeType": "BUILD_GENERAL1_SMALL",
+      "Image": "aws/codebuild/standard:7.0",
+      "PrivilegedMode": false,
+      "Type": "LINUX_CONTAINER"
+    },
+    "EnvironmentVariables": [],
+    "Name": "demo-deploy",
+    "ProjectVisibility": null,
+    "Roles": [
+      "arn:aws:iam::111122223333:role/demo-build-role"
+    ],
+    "SecondarySources": [],
+    "Source": {
+      "AuthType": null,
+      "Location": "https://git.example.com/demo/deploy.git",
+      "ReportBuildStatus": null,
+      "SourceIdentifier": null,
+      "Type": "GITHUB"
+    },
+    "Type": "codebuild",
+    "Webhook": null
+  }
+]

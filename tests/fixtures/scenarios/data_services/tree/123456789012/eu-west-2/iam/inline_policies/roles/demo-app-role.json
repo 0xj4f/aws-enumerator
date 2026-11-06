@@ -1,0 +1,62 @@
+{
+  "RoleName": "demo-app-role",
+  "InlinePolicies": {
+    "app": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "secretsmanager:GetSecretValue"
+          ],
+          "Resource": "arn:aws:secretsmanager:eu-west-2:123456789012:secret:demo/*"
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "ssm:GetParameter",
+            "ssm:GetParameters"
+          ],
+          "Resource": "arn:aws:ssm:eu-west-2:123456789012:parameter/demo/*"
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "kms:Decrypt"
+          ],
+          "Resource": "arn:aws:kms:eu-west-2:123456789012:key/4b2c1a3d-aaaa-4bbb-8ccc-1d2e3f4a5b6c"
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "sqs:SendMessage",
+            "sqs:ReceiveMessage"
+          ],
+          "Resource": "arn:aws:sqs:eu-west-2:123456789012:demo-queue"
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "sns:Publish"
+          ],
+          "Resource": "arn:aws:sns:eu-west-2:123456789012:demo-topic"
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "dynamodb:GetItem",
+            "dynamodb:PutItem"
+          ],
+          "Resource": "arn:aws:dynamodb:eu-west-2:123456789012:table/demo-table"
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "lambda:InvokeFunction"
+          ],
+          "Resource": "arn:aws:lambda:eu-west-2:123456789012:function:demo-etl"
+        }
+      ]
+    }
+  }
+}

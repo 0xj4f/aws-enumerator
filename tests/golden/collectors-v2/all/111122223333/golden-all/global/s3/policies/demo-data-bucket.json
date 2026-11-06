@@ -1,0 +1,31 @@
+{
+  "Statement": [
+    {
+      "Action": "s3:*",
+      "Condition": {
+        "Bool": {
+          "aws:SecureTransport": "false"
+        }
+      },
+      "Effect": "Deny",
+      "Principal": "*",
+      "Resource": [
+        "arn:aws:s3:::demo-data-bucket",
+        "arn:aws:s3:::demo-data-bucket/*"
+      ],
+      "Sid": "DenyInsecure"
+    },
+    {
+      "Action": [
+        "s3:GetObject"
+      ],
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::111122223333:role/demo-app-role"
+      },
+      "Resource": "arn:aws:s3:::demo-data-bucket/*",
+      "Sid": "AppRead"
+    }
+  ],
+  "Version": "2012-10-17"
+}

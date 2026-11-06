@@ -1,0 +1,18 @@
+{
+  "RoleName": "c08-self-service-keys",
+  "InlinePolicies": {
+    "p": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "iam:CreateAccessKey",
+            "iam:UpdateLoginProfile"
+          ],
+          "Resource": "arn:aws:iam::123456789012:user/${aws:username}"
+        }
+      ]
+    }
+  }
+}

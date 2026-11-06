@@ -1,0 +1,43 @@
+[
+  {
+    "metadata": {
+      "annotations": {
+        "alb.ingress.kubernetes.io/scheme": "internet-facing"
+      },
+      "labels": null,
+      "name": "demo-api-ingress",
+      "namespace": "demo-apps"
+    },
+    "spec": {
+      "default_backend": null,
+      "ingress_class_name": "alb",
+      "rules": [
+        {
+          "host": "api.example.com",
+          "http": {
+            "paths": [
+              {
+                "backend": {
+                  "service": {
+                    "name": "demo-api-lb",
+                    "port": {
+                      "number": 80
+                    }
+                  }
+                },
+                "path": "/",
+                "path_type": "Prefix"
+              }
+            ]
+          }
+        }
+      ],
+      "tls": null
+    },
+    "status": {
+      "load_balancer": {
+        "ingress": null
+      }
+    }
+  }
+]

@@ -1,0 +1,369 @@
+[
+  {
+    "Arn": "arn:aws:iam::111122223333:role/demo-admin-role",
+    "AssumeRolePolicyDocument": {
+      "Statement": [
+        {
+          "Action": "sts:AssumeRole",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::111122223333:user/demo-alice"
+          }
+        }
+      ],
+      "Version": "2012-10-17"
+    },
+    "CreateDate": "2024-01-01T10:00:00Z",
+    "Description": "demo-admin-role (acme synthetic)",
+    "InstanceProfileArns": [],
+    "MaxSessionDuration": 3600,
+    "Path": "/",
+    "PermissionsBoundary": null,
+    "RoleId": "AROAEXAMPLEADMINROLE1",
+    "RoleLastUsed": {
+      "LastUsedDate": "2024-01-14T10:00:00Z",
+      "Region": "eu-west-2"
+    },
+    "RoleName": "demo-admin-role",
+    "Tags": [
+      {
+        "Key": "tier",
+        "Value": "admin"
+      }
+    ]
+  },
+  {
+    "Arn": "arn:aws:iam::111122223333:role/demo-app-role",
+    "AssumeRolePolicyDocument": {
+      "Statement": [
+        {
+          "Action": "sts:AssumeRole",
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "ec2.amazonaws.com"
+          }
+        }
+      ],
+      "Version": "2012-10-17"
+    },
+    "CreateDate": "2024-01-01T10:00:00Z",
+    "Description": "demo-app-role (acme synthetic)",
+    "InstanceProfileArns": [
+      "arn:aws:iam::111122223333:instance-profile/demo-app-profile"
+    ],
+    "MaxSessionDuration": 3600,
+    "Path": "/",
+    "PermissionsBoundary": null,
+    "RoleId": "AROAEXAMPLEAPPROLE001",
+    "RoleLastUsed": {},
+    "RoleName": "demo-app-role",
+    "Tags": [
+      {
+        "Key": "app",
+        "Value": "demo"
+      },
+      {
+        "Key": "env",
+        "Value": "demo"
+      }
+    ]
+  },
+  {
+    "Arn": "arn:aws:iam::111122223333:role/demo-build-role",
+    "AssumeRolePolicyDocument": {
+      "Statement": [
+        {
+          "Action": "sts:AssumeRole",
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "codebuild.amazonaws.com"
+          }
+        }
+      ],
+      "Version": "2012-10-17"
+    },
+    "CreateDate": "2024-01-01T10:00:00Z",
+    "Description": "demo-build-role (acme synthetic)",
+    "InstanceProfileArns": [],
+    "MaxSessionDuration": 3600,
+    "Path": "/",
+    "PermissionsBoundary": null,
+    "RoleId": "AROAEXAMPLEBUILDROLE1",
+    "RoleLastUsed": {},
+    "RoleName": "demo-build-role",
+    "Tags": []
+  },
+  {
+    "Arn": "arn:aws:iam::111122223333:role/demo-cfn-role",
+    "AssumeRolePolicyDocument": {
+      "Statement": [
+        {
+          "Action": "sts:AssumeRole",
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "cloudformation.amazonaws.com"
+          }
+        }
+      ],
+      "Version": "2012-10-17"
+    },
+    "CreateDate": "2024-01-01T10:00:00Z",
+    "Description": "demo-cfn-role (acme synthetic)",
+    "InstanceProfileArns": [],
+    "MaxSessionDuration": 3600,
+    "Path": "/",
+    "PermissionsBoundary": null,
+    "RoleId": "AROAEXAMPLECFNROLE001",
+    "RoleLastUsed": {},
+    "RoleName": "demo-cfn-role",
+    "Tags": []
+  },
+  {
+    "Arn": "arn:aws:iam::111122223333:role/demo-cognito-unauth-role",
+    "AssumeRolePolicyDocument": {
+      "Statement": [
+        {
+          "Action": "sts:AssumeRoleWithWebIdentity",
+          "Condition": {
+            "ForAnyValue:StringLike": {
+              "cognito-identity.amazonaws.com:amr": "unauthenticated"
+            },
+            "StringEquals": {
+              "cognito-identity.amazonaws.com:aud": "eu-west-2:11111111-2222-4333-8444-55555555555a"
+            }
+          },
+          "Effect": "Allow",
+          "Principal": {
+            "Federated": "cognito-identity.amazonaws.com"
+          }
+        }
+      ],
+      "Version": "2012-10-17"
+    },
+    "CreateDate": "2024-01-01T10:00:00Z",
+    "Description": "demo-cognito-unauth-role (acme synthetic)",
+    "InstanceProfileArns": [],
+    "MaxSessionDuration": 3600,
+    "Path": "/",
+    "PermissionsBoundary": null,
+    "RoleId": "AROAEXAMPLECOGNITO001",
+    "RoleLastUsed": {},
+    "RoleName": "demo-cognito-unauth-role",
+    "Tags": []
+  },
+  {
+    "Arn": "arn:aws:iam::111122223333:role/demo-cross-account-role",
+    "AssumeRolePolicyDocument": {
+      "Statement": [
+        {
+          "Action": "sts:AssumeRole",
+          "Condition": {
+            "StringEquals": {
+              "sts:ExternalId": "demo-external-id"
+            }
+          },
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::999999999999:root"
+          }
+        }
+      ],
+      "Version": "2012-10-17"
+    },
+    "CreateDate": "2024-01-01T10:00:00Z",
+    "Description": "demo-cross-account-role (acme synthetic)",
+    "InstanceProfileArns": [],
+    "MaxSessionDuration": 3600,
+    "Path": "/",
+    "PermissionsBoundary": null,
+    "RoleId": "AROAEXAMPLEXACCOUNT01",
+    "RoleLastUsed": {},
+    "RoleName": "demo-cross-account-role",
+    "Tags": []
+  },
+  {
+    "Arn": "arn:aws:iam::111122223333:role/demo-ecs-task-role",
+    "AssumeRolePolicyDocument": {
+      "Statement": [
+        {
+          "Action": "sts:AssumeRole",
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "ecs-tasks.amazonaws.com"
+          }
+        }
+      ],
+      "Version": "2012-10-17"
+    },
+    "CreateDate": "2024-01-01T10:00:00Z",
+    "Description": "demo-ecs-task-role (acme synthetic)",
+    "InstanceProfileArns": [],
+    "MaxSessionDuration": 3600,
+    "Path": "/",
+    "PermissionsBoundary": null,
+    "RoleId": "AROAEXAMPLEECSTASK001",
+    "RoleLastUsed": {},
+    "RoleName": "demo-ecs-task-role",
+    "Tags": []
+  },
+  {
+    "Arn": "arn:aws:iam::111122223333:role/demo-eks-cluster-role",
+    "AssumeRolePolicyDocument": {
+      "Statement": [
+        {
+          "Action": "sts:AssumeRole",
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "eks.amazonaws.com"
+          }
+        }
+      ],
+      "Version": "2012-10-17"
+    },
+    "CreateDate": "2024-01-01T10:00:00Z",
+    "Description": "demo-eks-cluster-role (acme synthetic)",
+    "InstanceProfileArns": [],
+    "MaxSessionDuration": 3600,
+    "Path": "/",
+    "PermissionsBoundary": null,
+    "RoleId": "AROAEXAMPLEEKSCLUST01",
+    "RoleLastUsed": {},
+    "RoleName": "demo-eks-cluster-role",
+    "Tags": []
+  },
+  {
+    "Arn": "arn:aws:iam::111122223333:role/demo-eks-node-role",
+    "AssumeRolePolicyDocument": {
+      "Statement": [
+        {
+          "Action": "sts:AssumeRole",
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "ec2.amazonaws.com"
+          }
+        }
+      ],
+      "Version": "2012-10-17"
+    },
+    "CreateDate": "2024-01-01T10:00:00Z",
+    "Description": "demo-eks-node-role (acme synthetic)",
+    "InstanceProfileArns": [
+      "arn:aws:iam::111122223333:instance-profile/demo-eks-node-profile"
+    ],
+    "MaxSessionDuration": 3600,
+    "Path": "/",
+    "PermissionsBoundary": null,
+    "RoleId": "AROAEXAMPLEEKSNODE001",
+    "RoleLastUsed": {},
+    "RoleName": "demo-eks-node-role",
+    "Tags": []
+  },
+  {
+    "Arn": "arn:aws:iam::111122223333:role/demo-glue-role",
+    "AssumeRolePolicyDocument": {
+      "Statement": [
+        {
+          "Action": "sts:AssumeRole",
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "glue.amazonaws.com"
+          }
+        }
+      ],
+      "Version": "2012-10-17"
+    },
+    "CreateDate": "2024-01-01T10:00:00Z",
+    "Description": "demo-glue-role (acme synthetic)",
+    "InstanceProfileArns": [],
+    "MaxSessionDuration": 3600,
+    "Path": "/",
+    "PermissionsBoundary": null,
+    "RoleId": "AROAEXAMPLEGLUEROLE01",
+    "RoleLastUsed": {},
+    "RoleName": "demo-glue-role",
+    "Tags": []
+  },
+  {
+    "Arn": "arn:aws:iam::111122223333:role/demo-irsa-role",
+    "AssumeRolePolicyDocument": {
+      "Statement": [
+        {
+          "Action": "sts:AssumeRoleWithWebIdentity",
+          "Condition": {
+            "StringEquals": {
+              "oidc.eks.eu-west-2.amazonaws.com/id/DEMO0000000000000000000000000002:sub": "system:serviceaccount:demo-apps:demo-api"
+            }
+          },
+          "Effect": "Allow",
+          "Principal": {
+            "Federated": "arn:aws:iam::111122223333:oidc-provider/oidc.eks.eu-west-2.amazonaws.com/id/DEMO0000000000000000000000000002"
+          }
+        }
+      ],
+      "Version": "2012-10-17"
+    },
+    "CreateDate": "2024-01-01T10:00:00Z",
+    "Description": "demo-irsa-role (acme synthetic)",
+    "InstanceProfileArns": [],
+    "MaxSessionDuration": 3600,
+    "Path": "/",
+    "PermissionsBoundary": null,
+    "RoleId": "AROAEXAMPLEIRSAROLE01",
+    "RoleLastUsed": {},
+    "RoleName": "demo-irsa-role",
+    "Tags": []
+  },
+  {
+    "Arn": "arn:aws:iam::111122223333:role/demo-lambda-role",
+    "AssumeRolePolicyDocument": {
+      "Statement": [
+        {
+          "Action": "sts:AssumeRole",
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "lambda.amazonaws.com"
+          }
+        }
+      ],
+      "Version": "2012-10-17"
+    },
+    "CreateDate": "2024-01-01T10:00:00Z",
+    "Description": "demo-lambda-role (acme synthetic)",
+    "InstanceProfileArns": [],
+    "MaxSessionDuration": 3600,
+    "Path": "/",
+    "PermissionsBoundary": {
+      "PermissionsBoundaryArn": "arn:aws:iam::111122223333:policy/demo-app-policy",
+      "PermissionsBoundaryType": "PermissionsBoundaryPolicy"
+    },
+    "RoleId": "AROAEXAMPLELAMBDAR001",
+    "RoleLastUsed": {},
+    "RoleName": "demo-lambda-role",
+    "Tags": []
+  },
+  {
+    "Arn": "arn:aws:iam::111122223333:role/demo-sagemaker-role",
+    "AssumeRolePolicyDocument": {
+      "Statement": [
+        {
+          "Action": "sts:AssumeRole",
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "sagemaker.amazonaws.com"
+          }
+        }
+      ],
+      "Version": "2012-10-17"
+    },
+    "CreateDate": "2024-01-01T10:00:00Z",
+    "Description": "demo-sagemaker-role (acme synthetic)",
+    "InstanceProfileArns": [],
+    "MaxSessionDuration": 3600,
+    "Path": "/",
+    "PermissionsBoundary": null,
+    "RoleId": "AROAEXAMPLESAGEMAKER1",
+    "RoleLastUsed": {},
+    "RoleName": "demo-sagemaker-role",
+    "Tags": []
+  }
+]

@@ -1,0 +1,212 @@
+[
+  {
+    "metadata": {
+      "annotations": null,
+      "labels": {
+        "app": "demo-worker"
+      },
+      "name": "demo-worker-0",
+      "namespace": "demo-apps",
+      "owner_references": null
+    },
+    "spec": {
+      "automount_service_account_token": null,
+      "containers": [
+        {
+          "env": [
+            {
+              "name": "MODE",
+              "value_from": null,
+              "value_present": true
+            }
+          ],
+          "env_from": null,
+          "image": "public.ecr.aws/demo/worker:latest",
+          "name": "worker",
+          "ports": null,
+          "security_context": {
+            "privileged": true
+          },
+          "volume_mounts": null
+        }
+      ],
+      "ephemeral_containers": null,
+      "host_ipc": null,
+      "host_network": true,
+      "host_pid": true,
+      "init_containers": [
+        {
+          "env": [
+            {
+              "name": "BOOTSTRAP_TOKEN",
+              "value_from": null,
+              "value_present": true
+            }
+          ],
+          "env_from": null,
+          "image": "public.ecr.aws/demo/init:latest",
+          "name": "init",
+          "ports": null,
+          "security_context": null,
+          "volume_mounts": null
+        }
+      ],
+      "node_name": null,
+      "security_context": null,
+      "service_account": "demo-worker",
+      "service_account_name": "demo-worker",
+      "share_process_namespace": null,
+      "volumes": [
+        {
+          "host_path": {
+            "path": "/",
+            "type": "Directory"
+          },
+          "name": "host-root"
+        }
+      ]
+    },
+    "status": {
+      "phase": "Running"
+    }
+  },
+  {
+    "metadata": {
+      "annotations": null,
+      "labels": {
+        "k8s-app": "aws-node"
+      },
+      "name": "aws-node-xyz12",
+      "namespace": "kube-system",
+      "owner_references": null
+    },
+    "spec": {
+      "automount_service_account_token": null,
+      "containers": [
+        {
+          "env": [
+            {
+              "name": "AWS_VPC_K8S_CNI_LOGLEVEL",
+              "value_from": null,
+              "value_present": true
+            }
+          ],
+          "env_from": null,
+          "image": "public.ecr.aws/demo/amazon-k8s-cni:v1.16.0",
+          "name": "aws-node",
+          "ports": null,
+          "security_context": {
+            "privileged": false
+          },
+          "volume_mounts": null
+        }
+      ],
+      "ephemeral_containers": null,
+      "host_ipc": null,
+      "host_network": true,
+      "host_pid": null,
+      "init_containers": null,
+      "node_name": null,
+      "security_context": null,
+      "service_account": "aws-node",
+      "service_account_name": "aws-node",
+      "share_process_namespace": null,
+      "volumes": []
+    },
+    "status": {
+      "phase": "Running"
+    }
+  },
+  {
+    "metadata": {
+      "annotations": {
+        "kubectl.kubernetes.io/restartedAt": null
+      },
+      "labels": {
+        "app": "demo-api"
+      },
+      "name": "demo-api-7d9f8c6b5-abcde",
+      "namespace": "demo-apps",
+      "owner_references": [
+        {
+          "kind": "ReplicaSet",
+          "name": "demo-api-7d9f8c6b5"
+        }
+      ]
+    },
+    "spec": {
+      "automount_service_account_token": true,
+      "containers": [
+        {
+          "env": [
+            {
+              "name": "API_KEY",
+              "value_from": {
+                "secret_key_ref": {
+                  "key": "api-key",
+                  "name": "demo-db-secret"
+                }
+              },
+              "value_present": false
+            },
+            {
+              "name": "DB_PASSWORD",
+              "value_from": null,
+              "value_present": true
+            }
+          ],
+          "env_from": null,
+          "image": "111122223333.dkr.ecr.eu-west-2.amazonaws.com/demo-api:1.0",
+          "name": "api",
+          "ports": null,
+          "security_context": {
+            "privileged": false,
+            "run_as_non_root": true
+          },
+          "volume_mounts": [
+            {
+              "mount_path": "/var/run/secrets/db",
+              "name": "db-creds",
+              "read_only": true
+            }
+          ]
+        }
+      ],
+      "ephemeral_containers": null,
+      "host_ipc": null,
+      "host_network": null,
+      "host_pid": null,
+      "init_containers": null,
+      "node_name": "ip-10-20-2-10.eu-west-2.compute.internal",
+      "security_context": null,
+      "service_account": "demo-api",
+      "service_account_name": "demo-api",
+      "share_process_namespace": null,
+      "volumes": [
+        {
+          "name": "aws-iam-token",
+          "projected": {
+            "sources": [
+              {
+                "service_account_token": {
+                  "audience": "sts.amazonaws.com",
+                  "expiration_seconds": 86400,
+                  "path": "token"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "name": "db-creds",
+          "secret": {
+            "secret_name": "demo-db-secret"
+          }
+        }
+      ]
+    },
+    "status": {
+      "phase": "Running"
+    }
+  }
+]

@@ -1,0 +1,25 @@
+{
+  "AccountId": "111122223333",
+  "Complete": true,
+  "Path": [
+    {
+      "Arn": "arn:aws:organizations::999999999999:ou/o-exampleorg1/ou-exam-demo0001",
+      "Id": "ou-exam-demo0001",
+      "Name": "demo-workloads",
+      "Type": "ORGANIZATIONAL_UNIT"
+    },
+    {
+      "Arn": null,
+      "Id": "111122223333",
+      "Name": null,
+      "Type": "ACCOUNT"
+    },
+    {
+      "Arn": null,
+      "Id": "r-exam",
+      "Name": null,
+      "Type": "ROOT"
+    }
+  ],
+  "Source": "api"
+}

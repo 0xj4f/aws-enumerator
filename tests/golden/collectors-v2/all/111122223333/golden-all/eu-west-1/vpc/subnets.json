@@ -1,0 +1,11 @@
+[
+  {
+    "AvailabilityZone": "eu-west-1a",
+    "AvailableIpAddressCount": 251,
+    "CidrBlock": "10.10.1.0/24",
+    "MapPublicIpOnLaunch": true,
+    "State": "available",
+    "SubnetId": "subnet-0dec0ee5700001",
+    "VpcId": "vpc-0dec000000000001"
+  }
+]

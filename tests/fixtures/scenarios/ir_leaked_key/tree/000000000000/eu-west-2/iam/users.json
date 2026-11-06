@@ -1,0 +1,42 @@
+[
+  {
+    "UserName": "leaked-user",
+    "UserId": "AIDAOFCKEFKHOIHBFAHNP",
+    "Arn": "arn:aws:iam::000000000000:user/leaked-user",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "PasswordLastUsed": "",
+    "Path": "/",
+    "Tags": [],
+    "AccessKeys": [
+      {
+        "AccessKeyId": "AKIAEXAMPLEPFIBAHOAJ",
+        "Status": "Active",
+        "CreateDate": "2026-01-01 00:00:00+00:00"
+      }
+    ],
+    "MFADevices": [],
+    "HasLoginProfile": true,
+    "LoginProfileCreateDate": "2026-01-01 00:00:00+00:00",
+    "PermissionsBoundary": null
+  },
+  {
+    "UserName": "admin-user",
+    "UserId": "AIDAJBKFGEFBDLDBOHGAF",
+    "Arn": "arn:aws:iam::000000000000:user/admin-user",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "PasswordLastUsed": "",
+    "Path": "/",
+    "Tags": [],
+    "AccessKeys": [
+      {
+        "AccessKeyId": "AKIAEXAMPLEPDJJLNLFO",
+        "Status": "Active",
+        "CreateDate": "2026-01-01 00:00:00+00:00"
+      }
+    ],
+    "MFADevices": [],
+    "HasLoginProfile": true,
+    "LoginProfileCreateDate": "2026-01-01 00:00:00+00:00",
+    "PermissionsBoundary": null
+  }
+]

@@ -1,0 +1,8 @@
+{
+  "demo-power-group": [
+    {
+      "PolicyName": "PowerUserAccess",
+      "PolicyArn": "arn:aws:iam::aws:policy/PowerUserAccess"
+    }
+  ]
+}

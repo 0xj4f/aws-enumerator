@@ -1,0 +1,51 @@
+[
+  {
+    "RouteTableId": "rtb-0a1b2c3d4e5f6ab01",
+    "VpcId": "vpc-0a1b2c3d4e5f6aaaa",
+    "OwnerId": "123456789012",
+    "Associations": [
+      {
+        "Main": false,
+        "RouteTableAssociationId": "rtbassoc-0a1b2c3daaaa",
+        "RouteTableId": "rtb-0a1b2c3d4e5f6ab01",
+        "SubnetId": "subnet-0a1b2c3d4e5f6ab01"
+      }
+    ],
+    "Routes": [
+      {
+        "DestinationCidrBlock": "10.0.0.0/16",
+        "GatewayId": "local",
+        "State": "active"
+      },
+      {
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": "igw-0a1b2c3d4e5f",
+        "State": "active"
+      }
+    ]
+  },
+  {
+    "RouteTableId": "rtb-0a1b2c3d4e5f6ab00",
+    "VpcId": "vpc-0a1b2c3d4e5f6aaaa",
+    "OwnerId": "123456789012",
+    "Associations": [
+      {
+        "Main": true,
+        "RouteTableAssociationId": "rtbassoc-0a1b2c3dbbbb",
+        "RouteTableId": "rtb-0a1b2c3d4e5f6ab00"
+      }
+    ],
+    "Routes": [
+      {
+        "DestinationCidrBlock": "10.0.0.0/16",
+        "GatewayId": "local",
+        "State": "active"
+      },
+      {
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "NatGatewayId": "nat-0a1b2c3d4e5f6aaaa",
+        "State": "active"
+      }
+    ]
+  }
+]

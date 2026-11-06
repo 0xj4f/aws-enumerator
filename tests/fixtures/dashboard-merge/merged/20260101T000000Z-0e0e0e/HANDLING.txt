@@ -1,0 +1,20 @@
+aws-enumerator report: CONFIDENTIAL
+
+Run:      20260101T000000Z-0e0e0e
+Account:  111122223333, 123456789012
+Created:  2026-10-16T09:29:22Z
+
+This directory is a pre-computed attack map of the AWS account above: identities and
+their effective permissions, trust relationships, network exposure, and resource policies.
+Treat it like a credential.
+
+  - Keep it encrypted at rest and in transit (aws-enumerator package --encrypt ...).
+  - Do not commit it to version control or attach it to tickets or chat.
+  - Share it only with people covered by the written authorisation for this assessment.
+  - Delete it when the engagement's retention period ends.
+  - Open the dashboard only on this machine (aws-enumerator dashboard binds 127.0.0.1),
+    and open reports you did not produce only in an isolated browser profile.
+
+The collectors are designed to leave out secret values (no S3 objects, no secret or parameter
+values, no Kubernetes Secret data, no environment-variable values), but names, tags, policy
+documents and configuration are copied as they are and may hold more than intended.

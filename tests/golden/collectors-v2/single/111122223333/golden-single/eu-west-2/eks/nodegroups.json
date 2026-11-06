@@ -1,0 +1,25 @@
+{
+  "demo-cluster": [
+    {
+      "amiType": "AL2_x86_64",
+      "clusterName": "demo-cluster",
+      "createdAt": "2024-01-03T10:00:00Z",
+      "instanceTypes": [
+        "m5.large"
+      ],
+      "nodeRole": "arn:aws:iam::111122223333:role/demo-eks-node-role",
+      "nodegroupArn": "arn:aws:eks:eu-west-2:111122223333:nodegroup/demo-cluster/demo-ng/abc",
+      "nodegroupName": "demo-ng",
+      "scalingConfig": {
+        "desiredSize": 2,
+        "maxSize": 3,
+        "minSize": 1
+      },
+      "status": "ACTIVE",
+      "subnets": [
+        "subnet-0dec0ba1b000002"
+      ],
+      "version": "1.29"
+    }
+  ]
+}

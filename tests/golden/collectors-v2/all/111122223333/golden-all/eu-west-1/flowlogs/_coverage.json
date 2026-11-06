@@ -1,0 +1,50 @@
+{
+  "breakers": [],
+  "calls": [
+    {
+      "api": "ec2:DescribeFlowLogs",
+      "count": 1,
+      "error_code": "ReadTimeoutError",
+      "items": 0,
+      "not_configured": false,
+      "optional": false,
+      "pages": 0,
+      "primary": true,
+      "status": "error"
+    }
+  ],
+  "duration_seconds": "<stripped>",
+  "ended_at": "<stripped>",
+  "error": null,
+  "item_errors": [],
+  "item_errors_truncated": false,
+  "module": "flowlogs",
+  "protocol": "ctx",
+  "region": "eu-west-1",
+  "schema_version": 1,
+  "sections": [
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "flow_logs",
+      "status": "ok"
+    }
+  ],
+  "services": [
+    "ec2"
+  ],
+  "started_at": "<stripped>",
+  "status": "partial",
+  "status_reason": "ec2:DescribeFlowLogs error",
+  "summary": {
+    "calls": 1,
+    "denied": 0,
+    "error": 1,
+    "item_errors": 0,
+    "not_configured": 0,
+    "ok": 0,
+    "skipped": 0,
+    "throttled": 0
+  }
+}

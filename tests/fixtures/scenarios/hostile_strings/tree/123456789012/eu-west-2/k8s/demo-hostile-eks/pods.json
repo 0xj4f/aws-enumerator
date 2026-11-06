@@ -1,0 +1,67 @@
+[
+  {
+    "api_version": null,
+    "kind": null,
+    "metadata": {
+      "name": "demo\u202e\u200bunicode\u2028line",
+      "namespace": "<img src=x onerror=window.__aeXssCanary=1>",
+      "labels": {
+        "app": "javascript:window.__aeXssCanary=1"
+      },
+      "annotations": null,
+      "uid": "9c9273a6-aaaa-4bbb-8ccc-c517a62737af",
+      "creation_timestamp": "2026-01-01 00:00:00+00:00",
+      "resource_version": "1000",
+      "owner_references": null,
+      "managed_fields": null
+    },
+    "spec": {
+      "containers": [
+        {
+          "name": "main",
+          "image": "public.ecr.aws/docker/library/busybox:1.36",
+          "command": null,
+          "args": null,
+          "env": null,
+          "env_from": null,
+          "ports": null,
+          "security_context": {
+            "privileged": true,
+            "run_as_user": null
+          },
+          "volume_mounts": [
+            {
+              "name": "' onmouseover='window.__aeXssCanary=1' x='",
+              "mount_path": "/var/run/' onmouseover='window.__aeXssCanary=1' x='",
+              "read_only": true
+            }
+          ]
+        }
+      ],
+      "init_containers": null,
+      "ephemeral_containers": null,
+      "service_account_name": "\"><svg onload=window.__aeXssCanary=1>",
+      "service_account": "\"><svg onload=window.__aeXssCanary=1>",
+      "automount_service_account_token": null,
+      "host_network": null,
+      "host_pid": null,
+      "host_ipc": null,
+      "node_name": "ip-10-0-1-10.demo.internal",
+      "security_context": {},
+      "volumes": [
+        {
+          "name": "' onmouseover='window.__aeXssCanary=1' x='",
+          "secret": {
+            "secret_name": "' onmouseover='window.__aeXssCanary=1' x='",
+            "default_mode": 420
+          }
+        }
+      ]
+    },
+    "status": {
+      "phase": "Running",
+      "pod_ip": "10.0.1.20",
+      "host_ip": "10.0.1.10"
+    }
+  }
+]

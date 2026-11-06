@@ -1,0 +1,24 @@
+[
+  {
+    "FunctionName": "demo-url-fn",
+    "FunctionArn": "arn:aws:lambda:eu-west-2:123456789012:function:demo-url-fn",
+    "Runtime": "python3.12",
+    "Handler": "app.handler",
+    "Role": "arn:aws:iam::123456789012:role/demo-fn-role",
+    "MemorySize": 128,
+    "Timeout": 30,
+    "LastModified": "2026-01-01T00:00:00.000+0000",
+    "PackageType": "Zip",
+    "Layers": [],
+    "VpcConfig": {
+      "VpcId": null,
+      "SubnetIds": [],
+      "SecurityGroupIds": []
+    },
+    "EnvironmentVariableNames": [],
+    "FunctionUrl": {
+      "Url": "https://03ff6e69197aaa5947c15f405f3e9dad.lambda-url.eu-west-2.on.aws/",
+      "AuthType": "NONE"
+    }
+  }
+]

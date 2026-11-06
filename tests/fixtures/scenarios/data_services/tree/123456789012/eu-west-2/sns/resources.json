@@ -1,0 +1,39 @@
+[
+  {
+    "Type": "sns",
+    "Arn": "arn:aws:sns:eu-west-2:123456789012:demo-topic",
+    "Name": "demo-topic",
+    "Policy": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "*"
+          },
+          "Action": "sns:Publish",
+          "Resource": "arn:aws:sns:eu-west-2:123456789012:demo-topic",
+          "Condition": {
+            "StringEquals": {
+              "AWS:SourceOwner": "123456789012"
+            }
+          }
+        },
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::999999999999:root"
+          },
+          "Action": "sns:Subscribe",
+          "Resource": "arn:aws:sns:eu-west-2:123456789012:demo-topic"
+        }
+      ]
+    }
+  },
+  {
+    "Type": "sns",
+    "Arn": "arn:aws:sns:eu-west-2:123456789012:demo-quiet-topic",
+    "Name": "demo-quiet-topic",
+    "Policy": null
+  }
+]

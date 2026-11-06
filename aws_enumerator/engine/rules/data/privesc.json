@@ -1,0 +1,4020 @@
+{
+  "rules_version": "2.1.0",
+  "kind": "privesc",
+  "rules": [
+    {
+      "id": "PRIVESC-001",
+      "legacy_ids": [],
+      "name": "CreatePolicyVersion",
+      "title": "CreatePolicyVersion: can rewrite a customer-managed policy attached to a principal",
+      "description": "Can create a new default version of a customer-managed policy with arbitrary permissions",
+      "class": "policy-modification",
+      "base_severity": "CRITICAL",
+      "legacy_severity": "CRITICAL",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:CreatePolicyVersion",
+            "resource": "$target"
+          }
+        ]
+      },
+      "target": {
+        "select": "attached_customer_policy"
+      },
+      "emits": {
+        "self": "CAN_ESCALATE",
+        "other": "CAN_MODIFY_PERMISSIONS_OF"
+      },
+      "requires_inputs": [
+        "iam.policies",
+        "iam.attachments"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreatePolicyVersion.html"
+        ],
+        "pathfinding_cloud": [
+          "iam-001",
+          "iam-016",
+          "iam-020"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "CreatePolicyVersion"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:CreatePolicyVersion"
+        ]
+      },
+      "remediation": "Restrict iam:CreatePolicyVersion to specific policy ARNs or remove"
+    },
+    {
+      "id": "PRIVESC-002",
+      "legacy_ids": [],
+      "name": "SetDefaultPolicyVersion",
+      "title": "SetDefaultPolicyVersion: can activate a more permissive older version of a customer-managed policy",
+      "description": "Can activate older permissive policy versions",
+      "class": "policy-modification",
+      "base_severity": "CRITICAL",
+      "legacy_severity": "CRITICAL",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:SetDefaultPolicyVersion",
+            "resource": "$target"
+          }
+        ]
+      },
+      "target": {
+        "select": "attached_customer_policy",
+        "versions": "more_permissive_non_default"
+      },
+      "emits": {
+        "self": "CAN_ESCALATE",
+        "other": "CAN_MODIFY_PERMISSIONS_OF"
+      },
+      "requires_inputs": [
+        "iam.policies",
+        "iam.policy_versions"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/IAM/latest/APIReference/API_SetDefaultPolicyVersion.html"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "SetDefaultPolicyVersion"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:SetDefaultPolicyVersion"
+        ]
+      },
+      "remediation": "Remove iam:SetDefaultPolicyVersion or restrict to specific policies; delete unused permissive policy versions"
+    },
+    {
+      "id": "PRIVESC-003",
+      "legacy_ids": [],
+      "name": "PutUserPolicy",
+      "title": "PutUserPolicy: can write an inline policy on a user",
+      "description": "Can create arbitrary inline policy on users",
+      "class": "principal-modification",
+      "base_severity": "CRITICAL",
+      "legacy_severity": "CRITICAL",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:PutUserPolicy",
+            "resource": "$target"
+          }
+        ]
+      },
+      "target": {
+        "select": "self_or_principal",
+        "kind": "user"
+      },
+      "emits": {
+        "self": "CAN_ESCALATE",
+        "other": "CAN_MODIFY_PERMISSIONS_OF"
+      },
+      "requires_inputs": [
+        "iam.users"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/IAM/latest/APIReference/API_PutUserPolicy.html"
+        ],
+        "pathfinding_cloud": [
+          "iam-007",
+          "iam-018"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "PutUserPolicy"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:PutUserPolicy"
+        ]
+      },
+      "remediation": "Remove iam:PutUserPolicy or restrict Resource to specific user ARNs"
+    },
+    {
+      "id": "PRIVESC-004",
+      "legacy_ids": [],
+      "name": "PutGroupPolicy",
+      "title": "PutGroupPolicy: can write an inline policy on a group",
+      "description": "Can create arbitrary inline policy on groups",
+      "class": "principal-modification",
+      "base_severity": "CRITICAL",
+      "legacy_severity": "CRITICAL",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:PutGroupPolicy",
+            "resource": "$target"
+          }
+        ]
+      },
+      "target": {
+        "select": "self_or_principal",
+        "kind": "group"
+      },
+      "emits": {
+        "self": "CAN_ESCALATE",
+        "other": "CAN_MODIFY_PERMISSIONS_OF"
+      },
+      "requires_inputs": [
+        "iam.groups"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/IAM/latest/APIReference/API_PutGroupPolicy.html"
+        ],
+        "pathfinding_cloud": [
+          "iam-011"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "PutGroupPolicy"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:PutGroupPolicy"
+        ]
+      },
+      "remediation": "Remove iam:PutGroupPolicy or restrict Resource to specific group ARNs"
+    },
+    {
+      "id": "PRIVESC-005",
+      "legacy_ids": [],
+      "name": "PutRolePolicy",
+      "title": "PutRolePolicy: can write an inline policy on a role",
+      "description": "Can create arbitrary inline policy on roles",
+      "class": "principal-modification",
+      "base_severity": "CRITICAL",
+      "legacy_severity": "CRITICAL",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:PutRolePolicy",
+            "resource": "$target"
+          }
+        ]
+      },
+      "target": {
+        "select": "self_or_principal",
+        "kind": "role"
+      },
+      "emits": {
+        "self": "CAN_ESCALATE",
+        "other": "CAN_MODIFY_PERMISSIONS_OF"
+      },
+      "requires_inputs": [
+        "iam.roles"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/IAM/latest/APIReference/API_PutRolePolicy.html"
+        ],
+        "pathfinding_cloud": [
+          "iam-005",
+          "iam-017",
+          "iam-021"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "PutRolePolicy"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:PutRolePolicy"
+        ]
+      },
+      "remediation": "Remove iam:PutRolePolicy or restrict Resource to specific role ARNs"
+    },
+    {
+      "id": "PRIVESC-006",
+      "legacy_ids": [],
+      "name": "AttachUserPolicy",
+      "title": "AttachUserPolicy: can attach managed policies (including AdministratorAccess) to a user",
+      "description": "Can attach managed policies (including AdministratorAccess) to users",
+      "class": "principal-modification",
+      "base_severity": "CRITICAL",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:AttachUserPolicy",
+            "resource": "$target",
+            "context": {
+              "iam:PolicyARN": "arn:{partition}:iam::aws:policy/AdministratorAccess"
+            }
+          }
+        ]
+      },
+      "target": {
+        "select": "self_or_principal",
+        "kind": "user"
+      },
+      "emits": {
+        "self": "CAN_ESCALATE",
+        "other": "CAN_MODIFY_PERMISSIONS_OF"
+      },
+      "requires_inputs": [
+        "iam.users"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/IAM/latest/APIReference/API_AttachUserPolicy.html"
+        ],
+        "pathfinding_cloud": [
+          "iam-008",
+          "iam-015"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "AttachUserPolicy"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:AttachUserPolicy"
+        ]
+      },
+      "remediation": "Remove or restrict iam:AttachUserPolicy",
+      "policy_arn_probe": true
+    },
+    {
+      "id": "PRIVESC-007",
+      "legacy_ids": [],
+      "name": "AttachGroupPolicy",
+      "title": "AttachGroupPolicy: can attach managed policies (including AdministratorAccess) to a group",
+      "description": "Can attach managed policies (including AdministratorAccess) to groups",
+      "class": "principal-modification",
+      "base_severity": "CRITICAL",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:AttachGroupPolicy",
+            "resource": "$target",
+            "context": {
+              "iam:PolicyARN": "arn:{partition}:iam::aws:policy/AdministratorAccess"
+            }
+          }
+        ]
+      },
+      "target": {
+        "select": "self_or_principal",
+        "kind": "group"
+      },
+      "emits": {
+        "self": "CAN_ESCALATE",
+        "other": "CAN_MODIFY_PERMISSIONS_OF"
+      },
+      "requires_inputs": [
+        "iam.groups"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/IAM/latest/APIReference/API_AttachGroupPolicy.html"
+        ],
+        "pathfinding_cloud": [
+          "iam-010"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "AttachGroupPolicy"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:AttachGroupPolicy"
+        ]
+      },
+      "remediation": "Remove or restrict iam:AttachGroupPolicy",
+      "policy_arn_probe": true
+    },
+    {
+      "id": "PRIVESC-008",
+      "legacy_ids": [],
+      "name": "AttachRolePolicy",
+      "title": "AttachRolePolicy: can attach managed policies (including AdministratorAccess) to a role",
+      "description": "Can attach managed policies (including AdministratorAccess) to roles",
+      "class": "principal-modification",
+      "base_severity": "CRITICAL",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:AttachRolePolicy",
+            "resource": "$target",
+            "context": {
+              "iam:PolicyARN": "arn:{partition}:iam::aws:policy/AdministratorAccess"
+            }
+          }
+        ]
+      },
+      "target": {
+        "select": "self_or_principal",
+        "kind": "role"
+      },
+      "emits": {
+        "self": "CAN_ESCALATE",
+        "other": "CAN_MODIFY_PERMISSIONS_OF"
+      },
+      "requires_inputs": [
+        "iam.roles"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/IAM/latest/APIReference/API_AttachRolePolicy.html"
+        ],
+        "pathfinding_cloud": [
+          "iam-009",
+          "iam-014",
+          "iam-019"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "AttachRolePolicy"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:AttachRolePolicy"
+        ]
+      },
+      "remediation": "Remove or restrict iam:AttachRolePolicy",
+      "policy_arn_probe": true
+    },
+    {
+      "id": "PRIVESC-009",
+      "legacy_ids": [],
+      "name": "CreateAccessKey",
+      "title": "CreateAccessKey: can create access keys for other users",
+      "description": "Can create access keys for other users",
+      "class": "principal-access",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:CreateAccessKey",
+            "resource": "$target"
+          }
+        ]
+      },
+      "target": {
+        "select": "principal",
+        "kind": "user",
+        "access_keys": "below_limit"
+      },
+      "emits": {
+        "other": "CAN_TAKEOVER"
+      },
+      "requires_inputs": [
+        "iam.users"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateAccessKey.html"
+        ],
+        "pathfinding_cloud": [
+          "iam-002",
+          "iam-015",
+          "iam-018"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "CreateAccessKey"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:CreateAccessKey"
+        ]
+      },
+      "remediation": "Restrict iam:CreateAccessKey Resource to self only (${aws:username})"
+    },
+    {
+      "id": "PRIVESC-010",
+      "legacy_ids": [],
+      "name": "CreateLoginProfile",
+      "title": "CreateLoginProfile: can create a console password for another user",
+      "description": "Can create console login for users without one",
+      "class": "principal-access",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:CreateLoginProfile",
+            "resource": "$target"
+          }
+        ]
+      },
+      "target": {
+        "select": "principal",
+        "kind": "user",
+        "login_profile": "absent"
+      },
+      "emits": {
+        "other": "CAN_TAKEOVER"
+      },
+      "requires_inputs": [
+        "iam.users"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateLoginProfile.html"
+        ],
+        "pathfinding_cloud": [
+          "iam-004"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "CreateLoginProfile"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:CreateLoginProfile"
+        ]
+      },
+      "remediation": "Restrict iam:CreateLoginProfile Resource to self only"
+    },
+    {
+      "id": "PRIVESC-011",
+      "legacy_ids": [],
+      "name": "UpdateLoginProfile",
+      "title": "UpdateLoginProfile: can reset the console password of another user",
+      "description": "Can reset console passwords for other users",
+      "class": "principal-access",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:UpdateLoginProfile",
+            "resource": "$target"
+          }
+        ]
+      },
+      "target": {
+        "select": "principal",
+        "kind": "user",
+        "login_profile": "present"
+      },
+      "emits": {
+        "other": "CAN_TAKEOVER"
+      },
+      "requires_inputs": [
+        "iam.users"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/IAM/latest/APIReference/API_UpdateLoginProfile.html"
+        ],
+        "pathfinding_cloud": [
+          "iam-006"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "UpdateLoginProfile"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:UpdateLoginProfile"
+        ]
+      },
+      "remediation": "Restrict iam:UpdateLoginProfile Resource to self only"
+    },
+    {
+      "id": "PRIVESC-012",
+      "legacy_ids": [],
+      "name": "AddUserToGroup",
+      "title": "AddUserToGroup: can add a user to a more privileged group",
+      "description": "Can add self or others to privileged groups",
+      "class": "group-membership",
+      "base_severity": "derived",
+      "legacy_severity": "MEDIUM",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:AddUserToGroup",
+            "resource": "$target"
+          }
+        ]
+      },
+      "target": {
+        "select": "group_membership"
+      },
+      "emits": {
+        "other": "CAN_TAKEOVER"
+      },
+      "requires_inputs": [
+        "iam.groups"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/IAM/latest/APIReference/API_AddUserToGroup.html"
+        ],
+        "pathfinding_cloud": [
+          "iam-013"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "AddUserToGroup"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:AddUserToGroup"
+        ]
+      },
+      "remediation": "Remove or restrict iam:AddUserToGroup to specific groups"
+    },
+    {
+      "id": "PRIVESC-013",
+      "legacy_ids": [],
+      "name": "UpdateAssumeRolePolicy",
+      "title": "UpdateAssumeRolePolicy: can rewrite a role's trust policy and assume it",
+      "description": "Can modify role trust policies to allow self to assume any role",
+      "class": "principal-access",
+      "base_severity": "derived",
+      "legacy_severity": "CRITICAL",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:UpdateAssumeRolePolicy",
+            "resource": "$target"
+          }
+        ]
+      },
+      "target": {
+        "select": "principal",
+        "kind": "role"
+      },
+      "emits": {
+        "other": "CAN_TAKEOVER"
+      },
+      "requires_inputs": [
+        "iam.roles"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/IAM/latest/APIReference/API_UpdateAssumeRolePolicy.html"
+        ],
+        "pathfinding_cloud": [
+          "iam-012",
+          "iam-019",
+          "iam-020",
+          "iam-021"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "UpdateAssumeRolePolicy",
+          "AssumeRole"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:UpdateAssumeRolePolicy"
+        ]
+      },
+      "remediation": "Remove iam:UpdateAssumeRolePolicy or restrict to specific role ARNs"
+    },
+    {
+      "id": "PRIVESC-014",
+      "legacy_ids": [],
+      "name": "PassRole+Lambda",
+      "title": "PassRole+Lambda: can run code as a passed role in a new Lambda function",
+      "description": "Can pass privileged role to Lambda and execute arbitrary code",
+      "class": "new-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "CRITICAL",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:PassRole",
+            "resource": "$target",
+            "context": {
+              "iam:PassedToService": "lambda.amazonaws.com"
+            }
+          },
+          {
+            "action": "lambda:CreateFunction",
+            "resource": "arn:{partition}:lambda:*:{account}:function:*"
+          },
+          {
+            "any": [
+              {
+                "action": "lambda:InvokeFunction",
+                "resource": "arn:{partition}:lambda:*:{account}:function:*"
+              },
+              {
+                "action": "lambda:CreateEventSourceMapping",
+                "resource": "*"
+              },
+              {
+                "all": [
+                  {
+                    "action": "lambda:AddPermission",
+                    "resource": "arn:{partition}:lambda:*:{account}:function:*"
+                  },
+                  {
+                    "action": "lambda:CreateFunctionUrlConfig",
+                    "resource": "arn:{partition}:lambda:*:{account}:function:*"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "target": {
+        "select": "passable_service_role",
+        "service_principal": "lambda.amazonaws.com"
+      },
+      "emits": {
+        "other": "CAN_PASS_ROLE_TO",
+        "via": "lambda"
+      },
+      "requires_inputs": [
+        "iam.roles",
+        "iam.trust"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_passrole.html"
+        ],
+        "pathfinding_cloud": [
+          "lambda-001",
+          "lambda-002"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "CreateFunction20150331",
+          "Invoke",
+          "CreateEventSourceMapping20150331"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:PassRole",
+          "lambda:CreateFunction",
+          "lambda:InvokeFunction"
+        ]
+      },
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs and add an iam:PassedToService condition"
+    },
+    {
+      "id": "PRIVESC-015",
+      "legacy_ids": [],
+      "name": "PassRole+EC2",
+      "title": "PassRole+EC2: can launch an instance with a passed role and read its credentials",
+      "description": "Can launch EC2 with privileged role, access credentials via IMDS",
+      "class": "new-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "CRITICAL",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:PassRole",
+            "resource": "$target",
+            "context": {
+              "iam:PassedToService": "ec2.amazonaws.com"
+            }
+          },
+          {
+            "action": "ec2:RunInstances",
+            "resource": "arn:{partition}:ec2:*:{account}:instance/*"
+          }
+        ]
+      },
+      "target": {
+        "select": "passable_service_role",
+        "service_principal": "ec2.amazonaws.com",
+        "instance_profile": "required"
+      },
+      "emits": {
+        "other": "CAN_PASS_ROLE_TO",
+        "via": "ec2"
+      },
+      "requires_inputs": [
+        "iam.roles",
+        "iam.trust",
+        "iam.instance_profiles"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-ec2.html"
+        ],
+        "pathfinding_cloud": [
+          "ec2-001"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "RunInstances"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:PassRole",
+          "ec2:RunInstances"
+        ]
+      },
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs"
+    },
+    {
+      "id": "PRIVESC-016",
+      "legacy_ids": [],
+      "name": "PassRole+CloudFormation",
+      "title": "PassRole+CloudFormation: can create a stack that runs as a passed role",
+      "description": "Can create CloudFormation stack with privileged role",
+      "class": "new-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "CRITICAL",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:PassRole",
+            "resource": "$target",
+            "context": {
+              "iam:PassedToService": "cloudformation.amazonaws.com"
+            }
+          },
+          {
+            "action": "cloudformation:CreateStack",
+            "resource": "arn:{partition}:cloudformation:*:{account}:stack/*"
+          }
+        ]
+      },
+      "target": {
+        "select": "passable_service_role",
+        "service_principal": "cloudformation.amazonaws.com"
+      },
+      "emits": {
+        "other": "CAN_PASS_ROLE_TO",
+        "via": "cloudformation"
+      },
+      "requires_inputs": [
+        "iam.roles",
+        "iam.trust"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-iam-servicerole.html"
+        ],
+        "pathfinding_cloud": [
+          "cloudformation-001"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "CreateStack"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:PassRole",
+          "cloudformation:CreateStack"
+        ]
+      },
+      "remediation": "Restrict iam:PassRole and cloudformation:CreateStack"
+    },
+    {
+      "id": "PRIVESC-017",
+      "legacy_ids": [],
+      "name": "PassRole+ECS",
+      "title": "PassRole+ECS: can run a task as a passed role",
+      "description": "Can run ECS task with privileged role",
+      "class": "new-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:PassRole",
+            "resource": "$target",
+            "context": {
+              "iam:PassedToService": "ecs-tasks.amazonaws.com"
+            }
+          },
+          {
+            "any": [
+              {
+                "action": "ecs:RunTask",
+                "resource": "*"
+              },
+              {
+                "action": "ecs:StartTask",
+                "resource": "*"
+              },
+              {
+                "all": [
+                  {
+                    "action": "ecs:RegisterTaskDefinition",
+                    "resource": "*"
+                  },
+                  {
+                    "any": [
+                      {
+                        "action": "ecs:CreateService",
+                        "resource": "*"
+                      },
+                      {
+                        "action": "ecs:UpdateService",
+                        "resource": "*"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "target": {
+        "select": "passable_service_role",
+        "service_principal": "ecs-tasks.amazonaws.com"
+      },
+      "emits": {
+        "other": "CAN_PASS_ROLE_TO",
+        "via": "ecs"
+      },
+      "requires_inputs": [
+        "iam.roles",
+        "iam.trust"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-iam-roles.html"
+        ],
+        "pathfinding_cloud": [
+          "ecs-001",
+          "ecs-002",
+          "ecs-003",
+          "ecs-004",
+          "ecs-005",
+          "ecs-007",
+          "ecs-008",
+          "ecs-009"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "RegisterTaskDefinition",
+          "RunTask",
+          "StartTask",
+          "CreateService",
+          "UpdateService"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:PassRole",
+          "ecs:RegisterTaskDefinition",
+          "ecs:RunTask"
+        ]
+      },
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs"
+    },
+    {
+      "id": "PRIVESC-018",
+      "legacy_ids": [],
+      "name": "PassRole+Glue",
+      "title": "PassRole+Glue: can run a dev endpoint or job as a passed role",
+      "description": "Can create Glue endpoint/job with privileged role",
+      "class": "new-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:PassRole",
+            "resource": "$target",
+            "context": {
+              "iam:PassedToService": "glue.amazonaws.com"
+            }
+          },
+          {
+            "any": [
+              {
+                "action": "glue:CreateDevEndpoint",
+                "resource": "*"
+              },
+              {
+                "all": [
+                  {
+                    "action": "glue:CreateJob",
+                    "resource": "*"
+                  },
+                  {
+                    "any": [
+                      {
+                        "action": "glue:StartJobRun",
+                        "resource": "*"
+                      },
+                      {
+                        "action": "glue:CreateTrigger",
+                        "resource": "*"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "target": {
+        "select": "passable_service_role",
+        "service_principal": "glue.amazonaws.com"
+      },
+      "emits": {
+        "other": "CAN_PASS_ROLE_TO",
+        "via": "glue"
+      },
+      "requires_inputs": [
+        "iam.roles",
+        "iam.trust"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/glue/latest/dg/create-an-iam-role.html"
+        ],
+        "pathfinding_cloud": [
+          "glue-001",
+          "glue-003",
+          "glue-004"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "CreateDevEndpoint",
+          "CreateJob",
+          "StartJobRun",
+          "CreateTrigger"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:PassRole",
+          "glue:CreateDevEndpoint",
+          "glue:CreateJob",
+          "glue:StartJobRun"
+        ]
+      },
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs"
+    },
+    {
+      "id": "PRIVESC-019",
+      "legacy_ids": [],
+      "name": "PassRole+CodeBuild",
+      "title": "PassRole+CodeBuild: can create and start a build project that runs as a passed role",
+      "description": "Can create CodeBuild project with privileged role",
+      "class": "new-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:PassRole",
+            "resource": "$target",
+            "context": {
+              "iam:PassedToService": "codebuild.amazonaws.com"
+            }
+          },
+          {
+            "action": "codebuild:CreateProject",
+            "resource": "arn:{partition}:codebuild:*:{account}:project/*"
+          },
+          {
+            "any": [
+              {
+                "action": "codebuild:StartBuild",
+                "resource": "arn:{partition}:codebuild:*:{account}:project/*"
+              },
+              {
+                "action": "codebuild:StartBuildBatch",
+                "resource": "arn:{partition}:codebuild:*:{account}:project/*"
+              }
+            ]
+          }
+        ]
+      },
+      "target": {
+        "select": "passable_service_role",
+        "service_principal": "codebuild.amazonaws.com"
+      },
+      "emits": {
+        "other": "CAN_PASS_ROLE_TO",
+        "via": "codebuild"
+      },
+      "requires_inputs": [
+        "iam.roles",
+        "iam.trust"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/codebuild/latest/userguide/setting-up-service-role.html"
+        ],
+        "pathfinding_cloud": [
+          "codebuild-001",
+          "codebuild-004"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "CreateProject",
+          "StartBuild",
+          "StartBuildBatch"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:PassRole",
+          "codebuild:CreateProject",
+          "codebuild:StartBuild"
+        ]
+      },
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs"
+    },
+    {
+      "id": "PRIVESC-020",
+      "legacy_ids": [],
+      "name": "PassRole+SageMaker",
+      "title": "PassRole+SageMaker: can open a notebook instance that runs as a passed role",
+      "description": "Can create SageMaker notebook with privileged role",
+      "class": "new-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:PassRole",
+            "resource": "$target",
+            "context": {
+              "iam:PassedToService": "sagemaker.amazonaws.com"
+            }
+          },
+          {
+            "action": "sagemaker:CreateNotebookInstance",
+            "resource": "arn:{partition}:sagemaker:*:{account}:notebook-instance/*"
+          },
+          {
+            "any": [
+              {
+                "action": "sagemaker:CreatePresignedNotebookInstanceUrl",
+                "resource": "arn:{partition}:sagemaker:*:{account}:notebook-instance/*"
+              },
+              {
+                "action": "sagemaker:CreateNotebookInstanceLifecycleConfig",
+                "resource": "*"
+              }
+            ]
+          }
+        ]
+      },
+      "target": {
+        "select": "passable_service_role",
+        "service_principal": "sagemaker.amazonaws.com"
+      },
+      "emits": {
+        "other": "CAN_PASS_ROLE_TO",
+        "via": "sagemaker"
+      },
+      "requires_inputs": [
+        "iam.roles",
+        "iam.trust"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-roles.html"
+        ],
+        "pathfinding_cloud": [
+          "sagemaker-001"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "CreateNotebookInstance",
+          "CreatePresignedNotebookInstanceUrl"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:PassRole",
+          "sagemaker:CreateNotebookInstance",
+          "sagemaker:CreatePresignedNotebookInstanceUrl"
+        ]
+      },
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs"
+    },
+    {
+      "id": "PRIVESC-021",
+      "legacy_ids": [],
+      "name": "UpdateFunctionCode",
+      "title": "UpdateFunctionCode: can replace the code of an existing function and run as its role",
+      "description": "Can replace the code of an existing Lambda function; the code runs as the function's execution role",
+      "class": "existing-resource",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "lambda:UpdateFunctionCode",
+            "resource": "$target"
+          }
+        ]
+      },
+      "target": {
+        "select": "existing",
+        "resource_type": "lambda_function"
+      },
+      "emits": {
+        "other": "CAN_UPDATE_CODE"
+      },
+      "requires_inputs": [
+        "lambda.functions"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/lambda/latest/api/API_UpdateFunctionCode.html"
+        ],
+        "pathfinding_cloud": [
+          "lambda-003",
+          "lambda-004",
+          "lambda-005"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "UpdateFunctionCode20150331v2"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "lambda:UpdateFunctionCode"
+        ]
+      },
+      "remediation": "Restrict lambda:UpdateFunctionCode to specific functions whose roles are not more privileged"
+    },
+    {
+      "id": "PRIVESC-022",
+      "legacy_ids": [],
+      "name": "UpdateDevEndpoint",
+      "title": "UpdateDevEndpoint: can add an SSH key to an existing Glue dev endpoint and run as its role",
+      "description": "Can update an existing Glue development endpoint (SSH public key) and run code as its role",
+      "class": "existing-resource",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "glue:UpdateDevEndpoint",
+            "resource": "$target"
+          }
+        ]
+      },
+      "target": {
+        "select": "existing",
+        "resource_type": "glue_dev_endpoint"
+      },
+      "emits": {
+        "other": "CAN_HIJACK"
+      },
+      "requires_inputs": [
+        "compute.glue"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/glue/latest/webapi/API_UpdateDevEndpoint.html"
+        ],
+        "pathfinding_cloud": [
+          "glue-002"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "UpdateDevEndpoint"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "glue:UpdateDevEndpoint"
+        ]
+      },
+      "remediation": "Restrict glue:UpdateDevEndpoint to specific endpoints"
+    },
+    {
+      "id": "PRIVESC-023",
+      "legacy_ids": [],
+      "name": "StartBuild (buildspec override)",
+      "title": "StartBuild: can start an existing CodeBuild project with an overridden buildspec and run as its role",
+      "description": "Can start an existing CodeBuild project with a buildspec override; the build runs as the project's service role",
+      "class": "existing-resource",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "any": [
+          {
+            "action": "codebuild:StartBuild",
+            "resource": "$target"
+          },
+          {
+            "action": "codebuild:StartBuildBatch",
+            "resource": "$target"
+          }
+        ]
+      },
+      "target": {
+        "select": "existing",
+        "resource_type": "codebuild_project"
+      },
+      "emits": {
+        "other": "CAN_HIJACK"
+      },
+      "requires_inputs": [
+        "compute.codebuild"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/codebuild/latest/APIReference/API_StartBuild.html"
+        ],
+        "pathfinding_cloud": [
+          "codebuild-002",
+          "codebuild-003"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "StartBuild",
+          "StartBuildBatch"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "codebuild:StartBuild"
+        ]
+      },
+      "remediation": "Restrict codebuild:StartBuild to specific projects and their service roles"
+    },
+    {
+      "id": "PRIVESC-024",
+      "legacy_ids": [],
+      "name": "CreateAccessKey+DeleteAccessKey",
+      "title": "CreateAccessKey+DeleteAccessKey: can replace an access key of a user that already has two",
+      "description": "Can delete one of another user's two access keys and create a new one for that user",
+      "class": "principal-access",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:DeleteAccessKey",
+            "resource": "$target"
+          },
+          {
+            "action": "iam:CreateAccessKey",
+            "resource": "$target"
+          }
+        ]
+      },
+      "target": {
+        "select": "principal",
+        "kind": "user",
+        "access_keys": "at_limit"
+      },
+      "emits": {
+        "other": "CAN_TAKEOVER"
+      },
+      "requires_inputs": [
+        "iam.users"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateAccessKey.html"
+        ],
+        "pathfinding_cloud": [
+          "iam-003"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "DeleteAccessKey",
+          "CreateAccessKey"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:DeleteAccessKey",
+          "iam:CreateAccessKey"
+        ]
+      },
+      "remediation": "Restrict iam:CreateAccessKey and iam:DeleteAccessKey to the caller's own user (user/${aws:username})",
+      "imported": true
+    },
+    {
+      "id": "PRIVESC-025",
+      "legacy_ids": [],
+      "name": "PassRole+Lambda via AddPermission",
+      "title": "PassRole+Lambda via AddPermission: can run code as a passed role (a new Lambda function it can invoke through the function policy)",
+      "description": "Can pass a privileged role to a new Lambda function it can invoke through the function policy and run arbitrary code or API calls as that role",
+      "class": "new-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:PassRole",
+            "resource": "$target",
+            "context": {
+              "iam:PassedToService": "lambda.amazonaws.com"
+            }
+          },
+          {
+            "action": "lambda:CreateFunction",
+            "resource": "arn:{partition}:lambda:*:{account}:function:*"
+          },
+          {
+            "action": "lambda:AddPermission",
+            "resource": "arn:{partition}:lambda:*:{account}:function:*"
+          }
+        ]
+      },
+      "target": {
+        "select": "passable_service_role",
+        "service_principal": "lambda.amazonaws.com"
+      },
+      "emits": {
+        "other": "CAN_PASS_ROLE_TO",
+        "via": "lambda"
+      },
+      "requires_inputs": [
+        "iam.roles",
+        "iam.trust"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/lambda/latest/api/API_AddPermission.html"
+        ],
+        "pathfinding_cloud": [
+          "lambda-006"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "CreateFunction20150331",
+          "AddPermission20150331v2"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:PassRole",
+          "lambda:CreateFunction",
+          "lambda:AddPermission"
+        ]
+      },
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs, add an iam:PassedToService condition and limit who can create a new Lambda function it can invoke through the function policy",
+      "imported": true
+    },
+    {
+      "id": "PRIVESC-026",
+      "legacy_ids": [],
+      "name": "PassRole+EC2 Spot",
+      "title": "PassRole+EC2 Spot: can run code as a passed role (a new EC2 Spot instance)",
+      "description": "Can pass a privileged role to a new EC2 Spot instance and run arbitrary code or API calls as that role",
+      "class": "new-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:PassRole",
+            "resource": "$target",
+            "context": {
+              "iam:PassedToService": "ec2.amazonaws.com"
+            }
+          },
+          {
+            "action": "ec2:RequestSpotInstances",
+            "resource": "*"
+          }
+        ]
+      },
+      "target": {
+        "select": "passable_service_role",
+        "service_principal": "ec2.amazonaws.com",
+        "instance_profile": "required"
+      },
+      "emits": {
+        "other": "CAN_PASS_ROLE_TO",
+        "via": "ec2"
+      },
+      "requires_inputs": [
+        "iam.roles",
+        "iam.trust"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RequestSpotInstances.html"
+        ],
+        "pathfinding_cloud": [
+          "ec2-003"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "RequestSpotInstances"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:PassRole",
+          "ec2:RequestSpotInstances"
+        ]
+      },
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs, add an iam:PassedToService condition and limit who can create a new EC2 Spot instance",
+      "imported": true
+    },
+    {
+      "id": "PRIVESC-027",
+      "legacy_ids": [],
+      "name": "PassRole+CloudFormation StackSet",
+      "title": "PassRole+CloudFormation StackSet: can run code as a passed role (a new self-managed CloudFormation StackSet)",
+      "description": "Can pass a privileged role to a new self-managed CloudFormation StackSet and run arbitrary code or API calls as that role",
+      "class": "new-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:PassRole",
+            "resource": "$target",
+            "context": {
+              "iam:PassedToService": "cloudformation.amazonaws.com"
+            }
+          },
+          {
+            "action": "cloudformation:CreateStackSet",
+            "resource": "*"
+          },
+          {
+            "action": "cloudformation:CreateStackInstances",
+            "resource": "*"
+          }
+        ]
+      },
+      "target": {
+        "select": "passable_service_role",
+        "service_principal": "cloudformation.amazonaws.com"
+      },
+      "emits": {
+        "other": "CAN_PASS_ROLE_TO",
+        "via": "cloudformation"
+      },
+      "requires_inputs": [
+        "iam.roles",
+        "iam.trust"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacksets-prereqs-self-managed.html"
+        ],
+        "pathfinding_cloud": [
+          "cloudformation-003"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "CreateStackSet",
+          "CreateStackInstances"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:PassRole",
+          "cloudformation:CreateStackSet",
+          "cloudformation:CreateStackInstances"
+        ]
+      },
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs, add an iam:PassedToService condition and limit who can create a new self-managed CloudFormation StackSet",
+      "imported": true
+    },
+    {
+      "id": "PRIVESC-028",
+      "legacy_ids": [],
+      "name": "PassRole+CloudFormation UpdateStackSet",
+      "title": "PassRole+CloudFormation UpdateStackSet: can run code as a passed role (an updated CloudFormation StackSet)",
+      "description": "Can pass a privileged role to an updated CloudFormation StackSet and run arbitrary code or API calls as that role",
+      "class": "new-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:PassRole",
+            "resource": "$target",
+            "context": {
+              "iam:PassedToService": "cloudformation.amazonaws.com"
+            }
+          },
+          {
+            "action": "cloudformation:UpdateStackSet",
+            "resource": "*"
+          }
+        ]
+      },
+      "target": {
+        "select": "passable_service_role",
+        "service_principal": "cloudformation.amazonaws.com"
+      },
+      "emits": {
+        "other": "CAN_PASS_ROLE_TO",
+        "via": "cloudformation"
+      },
+      "requires_inputs": [
+        "iam.roles",
+        "iam.trust"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_UpdateStackSet.html"
+        ],
+        "pathfinding_cloud": [
+          "cloudformation-004"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "UpdateStackSet"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:PassRole",
+          "cloudformation:UpdateStackSet"
+        ]
+      },
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs, add an iam:PassedToService condition and limit who can create an updated CloudFormation StackSet",
+      "imported": true
+    },
+    {
+      "id": "PRIVESC-029",
+      "legacy_ids": [],
+      "name": "CloudFormation stack update",
+      "title": "CloudFormation stack update: can run code as the role of an existing CloudFormation stack with a service role",
+      "description": "Can take over an existing CloudFormation stack with a service role and run code or API calls as the role it runs as",
+      "class": "existing-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "any": [
+          {
+            "action": "cloudformation:UpdateStack",
+            "resource": "$target"
+          },
+          {
+            "all": [
+              {
+                "action": "cloudformation:CreateChangeSet",
+                "resource": "$target"
+              },
+              {
+                "action": "cloudformation:ExecuteChangeSet",
+                "resource": "$target"
+              }
+            ]
+          }
+        ]
+      },
+      "target": {
+        "select": "existing",
+        "resource_type": "cfn_stack"
+      },
+      "emits": {
+        "other": "CAN_HIJACK"
+      },
+      "requires_inputs": [
+        "cloudformation.resources"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-iam-servicerole.html"
+        ],
+        "pathfinding_cloud": [
+          "cloudformation-002",
+          "cloudformation-005"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "UpdateStack",
+          "CreateChangeSet",
+          "ExecuteChangeSet"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "cloudformation:CreateChangeSet",
+          "cloudformation:ExecuteChangeSet",
+          "cloudformation:UpdateStack"
+        ]
+      },
+      "remediation": "Restrict stack updates and change sets on stacks with privileged service roles; use a service role scoped to the stack's resources",
+      "imported": true
+    },
+    {
+      "id": "PRIVESC-030",
+      "legacy_ids": [],
+      "name": "PassRole+Cognito identity pool",
+      "title": "PassRole+Cognito identity pool: can run code as a passed role (a Cognito identity pool whose (unauthenticated) identities then receive its credentials)",
+      "description": "Can pass a privileged role to a Cognito identity pool whose (unauthenticated) identities then receive its credentials and run arbitrary code or API calls as that role",
+      "class": "new-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:PassRole",
+            "resource": "$target",
+            "context": {
+              "iam:PassedToService": "cognito-identity.amazonaws.com"
+            }
+          },
+          {
+            "action": "cognito-identity:SetIdentityPoolRoles",
+            "resource": "*"
+          }
+        ]
+      },
+      "target": {
+        "select": "passable_service_role",
+        "service_principal": "cognito-identity.amazonaws.com",
+        "trust_protocol": "WebIdentity",
+        "trusted_principal": "cognito-identity.amazonaws.com"
+      },
+      "emits": {
+        "other": "CAN_PASS_ROLE_TO",
+        "via": "cognito-identity"
+      },
+      "requires_inputs": [
+        "iam.roles",
+        "iam.trust"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/cognitoidentity/latest/APIReference/API_SetIdentityPoolRoles.html"
+        ],
+        "pathfinding_cloud": [
+          "cognitoidentity-001"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "SetIdentityPoolRoles"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:PassRole",
+          "cognito-identity:SetIdentityPoolRoles"
+        ]
+      },
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs, add an iam:PassedToService condition and limit who can create a Cognito identity pool whose (unauthenticated) identities then receive its credentials",
+      "imported": true
+    },
+    {
+      "id": "PRIVESC-031",
+      "legacy_ids": [],
+      "name": "PassRole+Data Pipeline",
+      "title": "PassRole+Data Pipeline: can run code as a passed role (a new Data Pipeline)",
+      "description": "Can pass a privileged role to a new Data Pipeline and run arbitrary code or API calls as that role",
+      "class": "new-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:PassRole",
+            "resource": "$target",
+            "context": {
+              "iam:PassedToService": "datapipeline.amazonaws.com"
+            }
+          },
+          {
+            "action": "datapipeline:CreatePipeline",
+            "resource": "*"
+          },
+          {
+            "action": "datapipeline:PutPipelineDefinition",
+            "resource": "*"
+          },
+          {
+            "action": "datapipeline:ActivatePipeline",
+            "resource": "*"
+          }
+        ]
+      },
+      "target": {
+        "select": "passable_service_role",
+        "service_principal": "datapipeline.amazonaws.com",
+        "trusted_services": [
+          "datapipeline.amazonaws.com",
+          "ec2.amazonaws.com",
+          "elasticmapreduce.amazonaws.com"
+        ]
+      },
+      "emits": {
+        "other": "CAN_PASS_ROLE_TO",
+        "via": "datapipeline"
+      },
+      "requires_inputs": [
+        "iam.roles",
+        "iam.trust"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/datapipeline/latest/DeveloperGuide/dp-iam-roles.html"
+        ],
+        "pathfinding_cloud": [
+          "datapipeline-001"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "CreatePipeline",
+          "PutPipelineDefinition",
+          "ActivatePipeline"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:PassRole",
+          "datapipeline:CreatePipeline",
+          "datapipeline:PutPipelineDefinition",
+          "datapipeline:ActivatePipeline"
+        ]
+      },
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs, add an iam:PassedToService condition and limit who can create a new Data Pipeline",
+      "imported": true
+    },
+    {
+      "id": "PRIVESC-032",
+      "legacy_ids": [],
+      "name": "PassRole+EMR",
+      "title": "PassRole+EMR: can run code as a passed role (a new EMR cluster (instance profile role))",
+      "description": "Can pass a privileged role to a new EMR cluster (instance profile role) and run arbitrary code or API calls as that role",
+      "class": "new-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:PassRole",
+            "resource": "$target",
+            "context": {
+              "iam:PassedToService": "elasticmapreduce.amazonaws.com"
+            }
+          },
+          {
+            "action": "elasticmapreduce:RunJobFlow",
+            "resource": "*"
+          }
+        ]
+      },
+      "target": {
+        "select": "passable_service_role",
+        "service_principal": "elasticmapreduce.amazonaws.com",
+        "trusted_services": [
+          "ec2.amazonaws.com"
+        ],
+        "instance_profile": "required"
+      },
+      "emits": {
+        "other": "CAN_PASS_ROLE_TO",
+        "via": "emr"
+      },
+      "requires_inputs": [
+        "iam.roles",
+        "iam.trust"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-iam-role-for-ec2.html"
+        ],
+        "pathfinding_cloud": [
+          "emr-001"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "RunJobFlow"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:PassRole",
+          "elasticmapreduce:RunJobFlow"
+        ]
+      },
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs, add an iam:PassedToService condition and limit who can create a new EMR cluster (instance profile role)",
+      "imported": true
+    },
+    {
+      "id": "PRIVESC-033",
+      "legacy_ids": [],
+      "name": "PassRole+EMR Serverless",
+      "title": "PassRole+EMR Serverless: can run code as a passed role (a new EMR Serverless application)",
+      "description": "Can pass a privileged role to a new EMR Serverless application and run arbitrary code or API calls as that role",
+      "class": "new-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:PassRole",
+            "resource": "$target",
+            "context": {
+              "iam:PassedToService": "emr-serverless.amazonaws.com"
+            }
+          },
+          {
+            "action": "emr-serverless:CreateApplication",
+            "resource": "*"
+          },
+          {
+            "action": "emr-serverless:StartJobRun",
+            "resource": "*"
+          }
+        ]
+      },
+      "target": {
+        "select": "passable_service_role",
+        "service_principal": "emr-serverless.amazonaws.com"
+      },
+      "emits": {
+        "other": "CAN_PASS_ROLE_TO",
+        "via": "emr-serverless"
+      },
+      "requires_inputs": [
+        "iam.roles",
+        "iam.trust"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/emr/latest/EMR-Serverless-UserGuide/security-iam-runtime-role.html"
+        ],
+        "pathfinding_cloud": [
+          "emrserverless-001"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "CreateApplication",
+          "StartJobRun"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:PassRole",
+          "emr-serverless:CreateApplication",
+          "emr-serverless:StartJobRun"
+        ]
+      },
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs, add an iam:PassedToService condition and limit who can create a new EMR Serverless application",
+      "imported": true
+    },
+    {
+      "id": "PRIVESC-034",
+      "legacy_ids": [],
+      "name": "PassRole+GameLift",
+      "title": "PassRole+GameLift: can run code as a passed role (a new GameLift fleet)",
+      "description": "Can pass a privileged role to a new GameLift fleet and run arbitrary code or API calls as that role",
+      "class": "new-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:PassRole",
+            "resource": "$target",
+            "context": {
+              "iam:PassedToService": "gamelift.amazonaws.com"
+            }
+          },
+          {
+            "action": "gamelift:CreateBuild",
+            "resource": "*"
+          },
+          {
+            "action": "gamelift:RequestUploadCredentials",
+            "resource": "*"
+          },
+          {
+            "action": "gamelift:CreateFleet",
+            "resource": "*"
+          }
+        ]
+      },
+      "target": {
+        "select": "passable_service_role",
+        "service_principal": "gamelift.amazonaws.com",
+        "trusted_services": [
+          "gamelift.amazonaws.com",
+          "ec2.amazonaws.com"
+        ]
+      },
+      "emits": {
+        "other": "CAN_PASS_ROLE_TO",
+        "via": "gamelift"
+      },
+      "requires_inputs": [
+        "iam.roles",
+        "iam.trust"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-resources.html"
+        ],
+        "pathfinding_cloud": [
+          "gamelift-001"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "CreateBuild",
+          "RequestUploadCredentials",
+          "CreateFleet"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:PassRole",
+          "gamelift:CreateBuild",
+          "gamelift:RequestUploadCredentials",
+          "gamelift:CreateFleet"
+        ]
+      },
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs, add an iam:PassedToService condition and limit who can create a new GameLift fleet",
+      "imported": true
+    },
+    {
+      "id": "PRIVESC-035",
+      "legacy_ids": [],
+      "name": "PassRole+Glue UpdateJob",
+      "title": "PassRole+Glue UpdateJob: can run code as a passed role (an updated Glue job)",
+      "description": "Can pass a privileged role to an updated Glue job and run arbitrary code or API calls as that role",
+      "class": "new-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:PassRole",
+            "resource": "$target",
+            "context": {
+              "iam:PassedToService": "glue.amazonaws.com"
+            }
+          },
+          {
+            "action": "glue:UpdateJob",
+            "resource": "arn:{partition}:glue:*:{account}:job/*"
+          },
+          {
+            "any": [
+              {
+                "action": "glue:StartJobRun",
+                "resource": "*"
+              },
+              {
+                "action": "glue:CreateTrigger",
+                "resource": "*"
+              }
+            ]
+          }
+        ]
+      },
+      "target": {
+        "select": "passable_service_role",
+        "service_principal": "glue.amazonaws.com"
+      },
+      "emits": {
+        "other": "CAN_PASS_ROLE_TO",
+        "via": "glue"
+      },
+      "requires_inputs": [
+        "iam.roles",
+        "iam.trust"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/glue/latest/webapi/API_UpdateJob.html"
+        ],
+        "pathfinding_cloud": [
+          "glue-005",
+          "glue-006"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "UpdateJob",
+          "StartJobRun",
+          "CreateTrigger"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:PassRole",
+          "glue:UpdateJob"
+        ]
+      },
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs, add an iam:PassedToService condition and limit who can create an updated Glue job",
+      "imported": true
+    },
+    {
+      "id": "PRIVESC-036",
+      "legacy_ids": [],
+      "name": "PassRole+Glue interactive session",
+      "title": "PassRole+Glue interactive session: can run code as a passed role (a new Glue interactive session)",
+      "description": "Can pass a privileged role to a new Glue interactive session and run arbitrary code or API calls as that role",
+      "class": "new-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:PassRole",
+            "resource": "$target",
+            "context": {
+              "iam:PassedToService": "glue.amazonaws.com"
+            }
+          },
+          {
+            "action": "glue:CreateSession",
+            "resource": "*"
+          },
+          {
+            "action": "glue:RunStatement",
+            "resource": "*"
+          }
+        ]
+      },
+      "target": {
+        "select": "passable_service_role",
+        "service_principal": "glue.amazonaws.com"
+      },
+      "emits": {
+        "other": "CAN_PASS_ROLE_TO",
+        "via": "glue"
+      },
+      "requires_inputs": [
+        "iam.roles",
+        "iam.trust"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/glue/latest/dg/interactive-sessions.html"
+        ],
+        "pathfinding_cloud": [
+          "glue-007"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "CreateSession",
+          "RunStatement"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:PassRole",
+          "glue:CreateSession",
+          "glue:RunStatement"
+        ]
+      },
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs, add an iam:PassedToService condition and limit who can create a new Glue interactive session",
+      "imported": true
+    },
+    {
+      "id": "PRIVESC-037",
+      "legacy_ids": [],
+      "name": "PassRole+Image Builder",
+      "title": "PassRole+Image Builder: can run code as a passed role (a new Image Builder build instance (instance profile role))",
+      "description": "Can pass a privileged role to a new Image Builder build instance (instance profile role) and run arbitrary code or API calls as that role",
+      "class": "new-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:PassRole",
+            "resource": "$target",
+            "context": {
+              "iam:PassedToService": "ec2.amazonaws.com"
+            }
+          },
+          {
+            "action": "imagebuilder:CreateComponent",
+            "resource": "*"
+          },
+          {
+            "action": "imagebuilder:CreateImageRecipe",
+            "resource": "*"
+          },
+          {
+            "action": "imagebuilder:CreateInfrastructureConfiguration",
+            "resource": "*"
+          },
+          {
+            "action": "imagebuilder:CreateImage",
+            "resource": "*"
+          }
+        ]
+      },
+      "target": {
+        "select": "passable_service_role",
+        "service_principal": "ec2.amazonaws.com",
+        "instance_profile": "required"
+      },
+      "emits": {
+        "other": "CAN_PASS_ROLE_TO",
+        "via": "imagebuilder"
+      },
+      "requires_inputs": [
+        "iam.roles",
+        "iam.trust"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/imagebuilder/latest/userguide/image-builder-setting-up.html"
+        ],
+        "pathfinding_cloud": [
+          "imagebuilder-001"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "CreateComponent",
+          "CreateImageRecipe",
+          "CreateInfrastructureConfiguration",
+          "CreateImage"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:PassRole",
+          "imagebuilder:CreateComponent",
+          "imagebuilder:CreateImageRecipe",
+          "imagebuilder:CreateInfrastructureConfiguration",
+          "imagebuilder:CreateImage"
+        ]
+      },
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs, add an iam:PassedToService condition and limit who can create a new Image Builder build instance (instance profile role)",
+      "imported": true
+    },
+    {
+      "id": "PRIVESC-038",
+      "legacy_ids": [],
+      "name": "PassRole+Kinesis Data Analytics",
+      "title": "PassRole+Kinesis Data Analytics: can run code as a passed role (a new Managed Service for Apache Flink application)",
+      "description": "Can pass a privileged role to a new Managed Service for Apache Flink application and run arbitrary code or API calls as that role",
+      "class": "new-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:PassRole",
+            "resource": "$target",
+            "context": {
+              "iam:PassedToService": "kinesisanalytics.amazonaws.com"
+            }
+          },
+          {
+            "action": "kinesisanalytics:CreateApplication",
+            "resource": "*"
+          },
+          {
+            "action": "kinesisanalytics:StartApplication",
+            "resource": "*"
+          }
+        ]
+      },
+      "target": {
+        "select": "passable_service_role",
+        "service_principal": "kinesisanalytics.amazonaws.com"
+      },
+      "emits": {
+        "other": "CAN_PASS_ROLE_TO",
+        "via": "kinesisanalytics"
+      },
+      "requires_inputs": [
+        "iam.roles",
+        "iam.trust"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/managed-flink/latest/java/iam-role.html"
+        ],
+        "pathfinding_cloud": [
+          "kinesisanalytics-001"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "CreateApplication",
+          "StartApplication"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:PassRole",
+          "kinesisanalytics:CreateApplication",
+          "kinesisanalytics:StartApplication"
+        ]
+      },
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs, add an iam:PassedToService condition and limit who can create a new Managed Service for Apache Flink application",
+      "imported": true
+    },
+    {
+      "id": "PRIVESC-039",
+      "legacy_ids": [],
+      "name": "PassRole+HealthOmics",
+      "title": "PassRole+HealthOmics: can run code as a passed role (a new HealthOmics workflow run)",
+      "description": "Can pass a privileged role to a new HealthOmics workflow run and run arbitrary code or API calls as that role",
+      "class": "new-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:PassRole",
+            "resource": "$target",
+            "context": {
+              "iam:PassedToService": "omics.amazonaws.com"
+            }
+          },
+          {
+            "action": "omics:CreateWorkflow",
+            "resource": "*"
+          },
+          {
+            "action": "omics:StartRun",
+            "resource": "*"
+          },
+          {
+            "action": "s3:GetObject",
+            "resource": "*"
+          }
+        ]
+      },
+      "target": {
+        "select": "passable_service_role",
+        "service_principal": "omics.amazonaws.com"
+      },
+      "emits": {
+        "other": "CAN_PASS_ROLE_TO",
+        "via": "omics"
+      },
+      "requires_inputs": [
+        "iam.roles",
+        "iam.trust"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/omics/latest/dev/permissions-service.html"
+        ],
+        "pathfinding_cloud": [
+          "omics-001"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "CreateWorkflow",
+          "StartRun"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:PassRole",
+          "omics:CreateWorkflow",
+          "omics:StartRun",
+          "s3:GetObject"
+        ]
+      },
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs, add an iam:PassedToService condition and limit who can create a new HealthOmics workflow run",
+      "imported": true
+    },
+    {
+      "id": "PRIVESC-040",
+      "legacy_ids": [],
+      "name": "PassRole+SageMaker job",
+      "title": "PassRole+SageMaker job: can run code as a passed role (a new SageMaker training or processing job)",
+      "description": "Can pass a privileged role to a new SageMaker training or processing job and run arbitrary code or API calls as that role",
+      "class": "new-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:PassRole",
+            "resource": "$target",
+            "context": {
+              "iam:PassedToService": "sagemaker.amazonaws.com"
+            }
+          },
+          {
+            "any": [
+              {
+                "action": "sagemaker:CreateTrainingJob",
+                "resource": "arn:{partition}:sagemaker:*:{account}:training-job/*"
+              },
+              {
+                "action": "sagemaker:CreateProcessingJob",
+                "resource": "arn:{partition}:sagemaker:*:{account}:processing-job/*"
+              }
+            ]
+          }
+        ]
+      },
+      "target": {
+        "select": "passable_service_role",
+        "service_principal": "sagemaker.amazonaws.com"
+      },
+      "emits": {
+        "other": "CAN_PASS_ROLE_TO",
+        "via": "sagemaker"
+      },
+      "requires_inputs": [
+        "iam.roles",
+        "iam.trust"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-roles.html"
+        ],
+        "pathfinding_cloud": [
+          "sagemaker-002",
+          "sagemaker-003"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "CreateTrainingJob",
+          "CreateProcessingJob"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:PassRole"
+        ]
+      },
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs, add an iam:PassedToService condition and limit who can create a new SageMaker training or processing job",
+      "imported": true
+    },
+    {
+      "id": "PRIVESC-041",
+      "legacy_ids": [],
+      "name": "PassRole+EventBridge Scheduler",
+      "title": "PassRole+EventBridge Scheduler: can run code as a passed role (a new EventBridge Scheduler schedule (universal target))",
+      "description": "Can pass a privileged role to a new EventBridge Scheduler schedule (universal target) and run arbitrary code or API calls as that role",
+      "class": "new-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:PassRole",
+            "resource": "$target",
+            "context": {
+              "iam:PassedToService": "scheduler.amazonaws.com"
+            }
+          },
+          {
+            "action": "scheduler:CreateSchedule",
+            "resource": "*"
+          }
+        ]
+      },
+      "target": {
+        "select": "passable_service_role",
+        "service_principal": "scheduler.amazonaws.com"
+      },
+      "emits": {
+        "other": "CAN_PASS_ROLE_TO",
+        "via": "scheduler"
+      },
+      "requires_inputs": [
+        "iam.roles",
+        "iam.trust"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/scheduler/latest/UserGuide/managing-targets-universal.html"
+        ],
+        "pathfinding_cloud": [
+          "scheduler-001"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "CreateSchedule"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:PassRole",
+          "scheduler:CreateSchedule"
+        ]
+      },
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs, add an iam:PassedToService condition and limit who can create a new EventBridge Scheduler schedule (universal target)",
+      "imported": true
+    },
+    {
+      "id": "PRIVESC-042",
+      "legacy_ids": [],
+      "name": "PassRole+SSM Automation",
+      "title": "PassRole+SSM Automation: can run code as a passed role (a new Systems Manager Automation execution)",
+      "description": "Can pass a privileged role to a new Systems Manager Automation execution and run arbitrary code or API calls as that role",
+      "class": "new-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:PassRole",
+            "resource": "$target",
+            "context": {
+              "iam:PassedToService": "ssm.amazonaws.com"
+            }
+          },
+          {
+            "action": "ssm:CreateDocument",
+            "resource": "*"
+          },
+          {
+            "action": "ssm:StartAutomationExecution",
+            "resource": "*"
+          }
+        ]
+      },
+      "target": {
+        "select": "passable_service_role",
+        "service_principal": "ssm.amazonaws.com"
+      },
+      "emits": {
+        "other": "CAN_PASS_ROLE_TO",
+        "via": "ssm"
+      },
+      "requires_inputs": [
+        "iam.roles",
+        "iam.trust"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/systems-manager/latest/userguide/automation-setup.html"
+        ],
+        "pathfinding_cloud": [
+          "ssm-003"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "CreateDocument",
+          "StartAutomationExecution"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:PassRole",
+          "ssm:CreateDocument",
+          "ssm:StartAutomationExecution"
+        ]
+      },
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs, add an iam:PassedToService condition and limit who can create a new Systems Manager Automation execution",
+      "imported": true
+    },
+    {
+      "id": "PRIVESC-043",
+      "legacy_ids": [],
+      "name": "PassRole+Step Functions",
+      "title": "PassRole+Step Functions: can run code as a passed role (a new Step Functions state machine)",
+      "description": "Can pass a privileged role to a new Step Functions state machine and run arbitrary code or API calls as that role",
+      "class": "new-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:PassRole",
+            "resource": "$target",
+            "context": {
+              "iam:PassedToService": "states.amazonaws.com"
+            }
+          },
+          {
+            "action": "states:CreateStateMachine",
+            "resource": "*"
+          },
+          {
+            "action": "states:StartExecution",
+            "resource": "*"
+          }
+        ]
+      },
+      "target": {
+        "select": "passable_service_role",
+        "service_principal": "states.amazonaws.com"
+      },
+      "emits": {
+        "other": "CAN_PASS_ROLE_TO",
+        "via": "states"
+      },
+      "requires_inputs": [
+        "iam.roles",
+        "iam.trust"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/step-functions/latest/dg/procedure-create-iam-role.html"
+        ],
+        "pathfinding_cloud": [
+          "stepfunctions-001"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "CreateStateMachine",
+          "StartExecution"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:PassRole",
+          "states:CreateStateMachine",
+          "states:StartExecution"
+        ]
+      },
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs, add an iam:PassedToService condition and limit who can create a new Step Functions state machine",
+      "imported": true
+    },
+    {
+      "id": "PRIVESC-044",
+      "legacy_ids": [],
+      "name": "PassRole+App Runner",
+      "title": "PassRole+App Runner: can run code as a passed role (a new App Runner service (instance role))",
+      "description": "Can pass a privileged role to a new App Runner service (instance role) and run arbitrary code or API calls as that role",
+      "class": "new-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:PassRole",
+            "resource": "$target",
+            "context": {
+              "iam:PassedToService": "tasks.apprunner.amazonaws.com"
+            }
+          },
+          {
+            "action": "apprunner:CreateService",
+            "resource": "*"
+          }
+        ]
+      },
+      "target": {
+        "select": "passable_service_role",
+        "service_principal": "tasks.apprunner.amazonaws.com"
+      },
+      "emits": {
+        "other": "CAN_PASS_ROLE_TO",
+        "via": "apprunner"
+      },
+      "requires_inputs": [
+        "iam.roles",
+        "iam.trust"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/apprunner/latest/dg/security_iam_service-with-iam.html"
+        ],
+        "pathfinding_cloud": [
+          "apprunner-001"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "CreateService"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:PassRole",
+          "apprunner:CreateService"
+        ]
+      },
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs, add an iam:PassedToService condition and limit who can create a new App Runner service (instance role)",
+      "imported": true
+    },
+    {
+      "id": "PRIVESC-045",
+      "legacy_ids": [],
+      "name": "PassRole+AWS Batch",
+      "title": "PassRole+AWS Batch: can run code as a passed role (a new AWS Batch job definition (job role))",
+      "description": "Can pass a privileged role to a new AWS Batch job definition (job role) and run arbitrary code or API calls as that role",
+      "class": "new-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:PassRole",
+            "resource": "$target",
+            "context": {
+              "iam:PassedToService": "batch.amazonaws.com"
+            }
+          },
+          {
+            "action": "batch:RegisterJobDefinition",
+            "resource": "*"
+          },
+          {
+            "action": "batch:SubmitJob",
+            "resource": "*"
+          }
+        ]
+      },
+      "target": {
+        "select": "passable_service_role",
+        "service_principal": "batch.amazonaws.com",
+        "trusted_services": [
+          "batch.amazonaws.com",
+          "ecs-tasks.amazonaws.com"
+        ]
+      },
+      "emits": {
+        "other": "CAN_PASS_ROLE_TO",
+        "via": "batch"
+      },
+      "requires_inputs": [
+        "iam.roles",
+        "iam.trust"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/batch/latest/userguide/job-iam-roles.html"
+        ],
+        "pathfinding_cloud": [
+          "batch-001",
+          "batch-003"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "RegisterJobDefinition",
+          "SubmitJob"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:PassRole",
+          "batch:RegisterJobDefinition",
+          "batch:SubmitJob"
+        ]
+      },
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs, add an iam:PassedToService condition and limit who can create a new AWS Batch job definition (job role)",
+      "imported": true
+    },
+    {
+      "id": "PRIVESC-046",
+      "legacy_ids": [],
+      "name": "PassRole+Bedrock AgentCore code interpreter",
+      "title": "PassRole+Bedrock AgentCore code interpreter: can run code as a passed role (a new Bedrock AgentCore code interpreter)",
+      "description": "Can pass a privileged role to a new Bedrock AgentCore code interpreter and run arbitrary code or API calls as that role",
+      "class": "new-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:PassRole",
+            "resource": "$target",
+            "context": {
+              "iam:PassedToService": "bedrock-agentcore.amazonaws.com"
+            }
+          },
+          {
+            "action": "bedrock-agentcore:CreateCodeInterpreter",
+            "resource": "*"
+          },
+          {
+            "action": "bedrock-agentcore:StartCodeInterpreterSession",
+            "resource": "*"
+          },
+          {
+            "action": "bedrock-agentcore:InvokeCodeInterpreter",
+            "resource": "*"
+          }
+        ]
+      },
+      "target": {
+        "select": "passable_service_role",
+        "service_principal": "bedrock-agentcore.amazonaws.com"
+      },
+      "emits": {
+        "other": "CAN_PASS_ROLE_TO",
+        "via": "bedrock-agentcore"
+      },
+      "requires_inputs": [
+        "iam.roles",
+        "iam.trust"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/code-interpreter-tool.html"
+        ],
+        "pathfinding_cloud": [
+          "bedrock-001"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "CreateCodeInterpreter",
+          "StartCodeInterpreterSession",
+          "InvokeCodeInterpreter"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:PassRole",
+          "bedrock-agentcore:CreateCodeInterpreter",
+          "bedrock-agentcore:StartCodeInterpreterSession",
+          "bedrock-agentcore:InvokeCodeInterpreter"
+        ]
+      },
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs, add an iam:PassedToService condition and limit who can create a new Bedrock AgentCore code interpreter",
+      "imported": true
+    },
+    {
+      "id": "PRIVESC-047",
+      "legacy_ids": [],
+      "name": "PassRole+Bedrock AgentCore runtime",
+      "title": "PassRole+Bedrock AgentCore runtime: can run code as a passed role (a new Bedrock AgentCore runtime)",
+      "description": "Can pass a privileged role to a new Bedrock AgentCore runtime and run arbitrary code or API calls as that role",
+      "class": "new-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:PassRole",
+            "resource": "$target",
+            "context": {
+              "iam:PassedToService": "bedrock-agentcore.amazonaws.com"
+            }
+          },
+          {
+            "action": "bedrock-agentcore:CreateAgentRuntime",
+            "resource": "*"
+          },
+          {
+            "action": "bedrock-agentcore:CreateAgentRuntimeEndpoint",
+            "resource": "*"
+          },
+          {
+            "action": "bedrock-agentcore:CreateWorkloadIdentity",
+            "resource": "*"
+          },
+          {
+            "action": "bedrock-agentcore:InvokeAgentRuntimeCommand",
+            "resource": "*"
+          }
+        ]
+      },
+      "target": {
+        "select": "passable_service_role",
+        "service_principal": "bedrock-agentcore.amazonaws.com"
+      },
+      "emits": {
+        "other": "CAN_PASS_ROLE_TO",
+        "via": "bedrock-agentcore"
+      },
+      "requires_inputs": [
+        "iam.roles",
+        "iam.trust"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-permissions.html"
+        ],
+        "pathfinding_cloud": [
+          "bedrock-003",
+          "bedrock-005"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "CreateAgentRuntime",
+          "CreateAgentRuntimeEndpoint",
+          "CreateWorkloadIdentity",
+          "InvokeAgentRuntimeCommand"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:PassRole",
+          "bedrock-agentcore:CreateAgentRuntime",
+          "bedrock-agentcore:CreateAgentRuntimeEndpoint",
+          "bedrock-agentcore:CreateWorkloadIdentity",
+          "bedrock-agentcore:InvokeAgentRuntimeCommand"
+        ]
+      },
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs, add an iam:PassedToService condition and limit who can create a new Bedrock AgentCore runtime",
+      "imported": true
+    },
+    {
+      "id": "PRIVESC-048",
+      "legacy_ids": [],
+      "name": "PassRole+Bedrock AgentCore browser",
+      "title": "PassRole+Bedrock AgentCore browser: can run code as a passed role (a new Bedrock AgentCore browser)",
+      "description": "Can pass a privileged role to a new Bedrock AgentCore browser and run arbitrary code or API calls as that role",
+      "class": "new-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:PassRole",
+            "resource": "$target",
+            "context": {
+              "iam:PassedToService": "bedrock-agentcore.amazonaws.com"
+            }
+          },
+          {
+            "action": "bedrock-agentcore:CreateBrowser",
+            "resource": "*"
+          },
+          {
+            "action": "bedrock-agentcore:StartBrowserSession",
+            "resource": "*"
+          },
+          {
+            "action": "bedrock-agentcore:ConnectBrowserAutomationStream",
+            "resource": "*"
+          }
+        ]
+      },
+      "target": {
+        "select": "passable_service_role",
+        "service_principal": "bedrock-agentcore.amazonaws.com"
+      },
+      "emits": {
+        "other": "CAN_PASS_ROLE_TO",
+        "via": "bedrock-agentcore"
+      },
+      "requires_inputs": [
+        "iam.roles",
+        "iam.trust"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/browser-tool.html"
+        ],
+        "pathfinding_cloud": [
+          "bedrock-006"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "CreateBrowser",
+          "StartBrowserSession",
+          "ConnectBrowserAutomationStream"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:PassRole",
+          "bedrock-agentcore:CreateBrowser",
+          "bedrock-agentcore:StartBrowserSession",
+          "bedrock-agentcore:ConnectBrowserAutomationStream"
+        ]
+      },
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs, add an iam:PassedToService condition and limit who can create a new Bedrock AgentCore browser",
+      "imported": true
+    },
+    {
+      "id": "PRIVESC-049",
+      "legacy_ids": [],
+      "name": "PassRole+Braket",
+      "title": "PassRole+Braket: can run code as a passed role (a new Amazon Braket hybrid job)",
+      "description": "Can pass a privileged role to a new Amazon Braket hybrid job and run arbitrary code or API calls as that role",
+      "class": "new-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:PassRole",
+            "resource": "$target",
+            "context": {
+              "iam:PassedToService": "braket.amazonaws.com"
+            }
+          },
+          {
+            "action": "braket:CreateJob",
+            "resource": "*"
+          }
+        ]
+      },
+      "target": {
+        "select": "passable_service_role",
+        "service_principal": "braket.amazonaws.com"
+      },
+      "emits": {
+        "other": "CAN_PASS_ROLE_TO",
+        "via": "braket"
+      },
+      "requires_inputs": [
+        "iam.roles",
+        "iam.trust"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/braket/latest/developerguide/braket-manage-access.html"
+        ],
+        "pathfinding_cloud": [
+          "braket-001"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "CreateJob"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:PassRole",
+          "braket:CreateJob"
+        ]
+      },
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs, add an iam:PassedToService condition and limit who can create a new Amazon Braket hybrid job",
+      "imported": true
+    },
+    {
+      "id": "PRIVESC-050",
+      "legacy_ids": [],
+      "name": "Instance command execution",
+      "title": "Instance command execution: can run code as the role of an existing EC2 instance with an instance profile",
+      "description": "Can take over an existing EC2 instance with an instance profile and run code or API calls as the role it runs as",
+      "class": "existing-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "any": [
+          {
+            "action": "ssm:StartSession",
+            "resource": "$target"
+          },
+          {
+            "action": "ssm:SendCommand",
+            "resource": "$target"
+          },
+          {
+            "action": "ec2-instance-connect:SendSSHPublicKey",
+            "resource": "$target"
+          }
+        ]
+      },
+      "target": {
+        "select": "existing",
+        "resource_type": "ec2_instance"
+      },
+      "emits": {
+        "other": "CAN_CONNECT"
+      },
+      "requires_inputs": [
+        "ec2.instances",
+        "iam.instance_profiles"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-getting-started-restrict-access.html"
+        ],
+        "pathfinding_cloud": [
+          "ssm-001",
+          "ssm-002",
+          "ec2instanceconnect-003"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "StartSession",
+          "SendCommand",
+          "SendSSHPublicKey"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "ec2-instance-connect:SendSSHPublicKey",
+          "ssm:SendCommand",
+          "ssm:StartSession"
+        ]
+      },
+      "remediation": "Restrict ssm:StartSession / ssm:SendCommand / ec2-instance-connect:SendSSHPublicKey to specific instances (tags or ARNs) and keep privileged instance profiles off shared instances",
+      "imported": true
+    },
+    {
+      "id": "PRIVESC-051",
+      "legacy_ids": [],
+      "name": "Instance user-data rewrite",
+      "title": "Instance user-data rewrite: can run code as the role of an existing EC2 instance with an instance profile",
+      "description": "Can take over an existing EC2 instance with an instance profile and run code or API calls as the role it runs as",
+      "class": "existing-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "ec2:ModifyInstanceAttribute",
+            "resource": "$target"
+          },
+          {
+            "action": "ec2:StopInstances",
+            "resource": "$target"
+          },
+          {
+            "action": "ec2:StartInstances",
+            "resource": "$target"
+          }
+        ]
+      },
+      "target": {
+        "select": "existing",
+        "resource_type": "ec2_instance"
+      },
+      "emits": {
+        "other": "CAN_MODIFY_USERDATA"
+      },
+      "requires_inputs": [
+        "ec2.instances",
+        "iam.instance_profiles"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html"
+        ],
+        "pathfinding_cloud": [
+          "ec2-002"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "ModifyInstanceAttribute",
+          "StopInstances",
+          "StartInstances"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "ec2:ModifyInstanceAttribute",
+          "ec2:StartInstances",
+          "ec2:StopInstances"
+        ]
+      },
+      "remediation": "Restrict ec2:ModifyInstanceAttribute together with Stop/StartInstances on instances with privileged roles",
+      "imported": true
+    },
+    {
+      "id": "PRIVESC-052",
+      "legacy_ids": [],
+      "name": "Launch template version",
+      "title": "Launch template version: can run code as the role of an existing EC2 launch template with an instance profile",
+      "description": "Can take over an existing EC2 launch template with an instance profile and run code or API calls as the role it runs as",
+      "class": "existing-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "ec2:CreateLaunchTemplateVersion",
+            "resource": "$target"
+          },
+          {
+            "action": "ec2:ModifyLaunchTemplate",
+            "resource": "$target"
+          }
+        ]
+      },
+      "target": {
+        "select": "existing",
+        "resource_type": "ec2_launch_template",
+        "condition_gap": "ec2:launch-template-consumers-unknown"
+      },
+      "emits": {},
+      "requires_inputs": [
+        "ec2.launch_templates",
+        "iam.instance_profiles"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/manage-launch-template-versions.html"
+        ],
+        "pathfinding_cloud": [
+          "ec2-004",
+          "ec2-005"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "CreateLaunchTemplateVersion",
+          "ModifyLaunchTemplate"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "ec2:CreateLaunchTemplateVersion",
+          "ec2:ModifyLaunchTemplate"
+        ]
+      },
+      "remediation": "Restrict ec2:CreateLaunchTemplateVersion / ec2:ModifyLaunchTemplate on templates that carry privileged instance profiles",
+      "imported": true
+    },
+    {
+      "id": "PRIVESC-053",
+      "legacy_ids": [],
+      "name": "ECS Exec",
+      "title": "ECS Exec: can run code as the role of an existing ECS service with ECS Exec enabled",
+      "description": "Can take over an existing ECS service with ECS Exec enabled and run code or API calls as the role it runs as",
+      "class": "existing-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "ecs:ExecuteCommand",
+            "resource": "arn:{partition}:ecs:*:{account}:task/*"
+          }
+        ]
+      },
+      "target": {
+        "select": "existing",
+        "resource_type": "ecs_exec_service"
+      },
+      "emits": {
+        "other": "CAN_EXEC"
+      },
+      "requires_inputs": [
+        "ecs.services",
+        "ecs.task_definitions"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-exec.html"
+        ],
+        "pathfinding_cloud": [
+          "ecs-006"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "ExecuteCommand"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "ecs:ExecuteCommand"
+        ]
+      },
+      "remediation": "Restrict ecs:ExecuteCommand to specific clusters and tasks, and enable ECS Exec only where needed",
+      "imported": true
+    },
+    {
+      "id": "PRIVESC-054",
+      "legacy_ids": [],
+      "name": "SageMaker presigned notebook URL",
+      "title": "SageMaker presigned notebook URL: can run code as the role of an existing SageMaker notebook instance",
+      "description": "Can take over an existing SageMaker notebook instance and run code or API calls as the role it runs as",
+      "class": "existing-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "sagemaker:CreatePresignedNotebookInstanceUrl",
+            "resource": "$target"
+          }
+        ]
+      },
+      "target": {
+        "select": "existing",
+        "resource_type": "sagemaker_notebook"
+      },
+      "emits": {
+        "other": "CAN_EXEC"
+      },
+      "requires_inputs": [
+        "sagemaker.resources"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreatePresignedNotebookInstanceUrl.html"
+        ],
+        "pathfinding_cloud": [
+          "sagemaker-004"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "CreatePresignedNotebookInstanceUrl"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "sagemaker:CreatePresignedNotebookInstanceUrl"
+        ]
+      },
+      "remediation": "Restrict sagemaker:CreatePresignedNotebookInstanceUrl to the notebook's owners",
+      "imported": true
+    },
+    {
+      "id": "PRIVESC-055",
+      "legacy_ids": [],
+      "name": "SageMaker notebook lifecycle configuration",
+      "title": "SageMaker notebook lifecycle configuration: can run code as the role of an existing SageMaker notebook instance",
+      "description": "Can take over an existing SageMaker notebook instance and run code or API calls as the role it runs as",
+      "class": "existing-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "sagemaker:CreateNotebookInstanceLifecycleConfig",
+            "resource": "*"
+          },
+          {
+            "action": "sagemaker:StopNotebookInstance",
+            "resource": "$target"
+          },
+          {
+            "action": "sagemaker:UpdateNotebookInstance",
+            "resource": "$target"
+          },
+          {
+            "action": "sagemaker:StartNotebookInstance",
+            "resource": "$target"
+          }
+        ]
+      },
+      "target": {
+        "select": "existing",
+        "resource_type": "sagemaker_notebook"
+      },
+      "emits": {
+        "other": "CAN_HIJACK"
+      },
+      "requires_inputs": [
+        "sagemaker.resources"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/sagemaker/latest/dg/notebook-lifecycle-config.html"
+        ],
+        "pathfinding_cloud": [
+          "sagemaker-005"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "CreateNotebookInstanceLifecycleConfig",
+          "StopNotebookInstance",
+          "UpdateNotebookInstance",
+          "StartNotebookInstance"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "sagemaker:CreateNotebookInstanceLifecycleConfig",
+          "sagemaker:StartNotebookInstance",
+          "sagemaker:StopNotebookInstance",
+          "sagemaker:UpdateNotebookInstance"
+        ]
+      },
+      "remediation": "Restrict lifecycle-configuration changes and notebook updates on notebooks with privileged roles",
+      "imported": true
+    },
+    {
+      "id": "PRIVESC-056",
+      "legacy_ids": [],
+      "name": "SageMaker Studio presigned domain URL",
+      "title": "SageMaker Studio presigned domain URL: can run code as the role of an existing SageMaker Studio user profile",
+      "description": "Can take over an existing SageMaker Studio user profile and run code or API calls as the role it runs as",
+      "class": "existing-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "sagemaker:CreatePresignedDomainUrl",
+            "resource": "$target"
+          }
+        ]
+      },
+      "target": {
+        "select": "existing",
+        "resource_type": "sagemaker_user_profile"
+      },
+      "emits": {
+        "other": "CAN_EXEC"
+      },
+      "requires_inputs": [
+        "sagemaker.resources"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreatePresignedDomainUrl.html"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "CreatePresignedDomainUrl"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "sagemaker:CreatePresignedDomainUrl"
+        ]
+      },
+      "remediation": "Restrict sagemaker:CreatePresignedDomainUrl to each user's own profile (sagemaker:ResourceTag or profile ARN)"
+    },
+    {
+      "id": "PRIVESC-057",
+      "legacy_ids": [],
+      "name": "App Runner service update",
+      "title": "App Runner service update: can run code as the role of an existing App Runner service",
+      "description": "Can take over an existing App Runner service and run code or API calls as the role it runs as (this resource type is not collected: whether one runs as a privileged role is unknown)",
+      "class": "existing-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "apprunner:UpdateService",
+            "resource": "$target"
+          }
+        ]
+      },
+      "target": {
+        "select": "existing",
+        "resource_type": "apprunner_service"
+      },
+      "emits": {},
+      "requires_inputs": [],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/apprunner/latest/api/API_UpdateService.html"
+        ],
+        "pathfinding_cloud": [
+          "apprunner-002"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "UpdateService"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "apprunner:UpdateService"
+        ]
+      },
+      "remediation": "Restrict the App Runner service actions to the resources each principal owns; aws-enumerator does not collect App Runner services, so review which roles they run as",
+      "imported": true
+    },
+    {
+      "id": "PRIVESC-058",
+      "legacy_ids": [],
+      "name": "AWS Batch job submission",
+      "title": "AWS Batch job submission: can run code as the role of an existing AWS Batch job definition",
+      "description": "Can take over an existing AWS Batch job definition and run code or API calls as the role it runs as (this resource type is not collected: whether one runs as a privileged role is unknown)",
+      "class": "existing-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "batch:SubmitJob",
+            "resource": "$target"
+          }
+        ]
+      },
+      "target": {
+        "select": "existing",
+        "resource_type": "batch_job_definition"
+      },
+      "emits": {},
+      "requires_inputs": [],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/batch/latest/APIReference/API_SubmitJob.html"
+        ],
+        "pathfinding_cloud": [
+          "batch-002"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "SubmitJob"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "batch:SubmitJob"
+        ]
+      },
+      "remediation": "Restrict the AWS Batch job definition actions to the resources each principal owns; aws-enumerator does not collect AWS Batch job definitions, so review which roles they run as",
+      "imported": true
+    },
+    {
+      "id": "PRIVESC-059",
+      "legacy_ids": [],
+      "name": "Bedrock AgentCore code interpreter session",
+      "title": "Bedrock AgentCore code interpreter session: can run code as the role of an existing Bedrock AgentCore code interpreter",
+      "description": "Can take over an existing Bedrock AgentCore code interpreter and run code or API calls as the role it runs as (this resource type is not collected: whether one runs as a privileged role is unknown)",
+      "class": "existing-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "bedrock-agentcore:StartCodeInterpreterSession",
+            "resource": "$target"
+          },
+          {
+            "action": "bedrock-agentcore:InvokeCodeInterpreter",
+            "resource": "$target"
+          }
+        ]
+      },
+      "target": {
+        "select": "existing",
+        "resource_type": "bedrock_code_interpreter"
+      },
+      "emits": {},
+      "requires_inputs": [],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/code-interpreter-tool.html"
+        ],
+        "pathfinding_cloud": [
+          "bedrock-002"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "StartCodeInterpreterSession",
+          "InvokeCodeInterpreter"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "bedrock-agentcore:InvokeCodeInterpreter",
+          "bedrock-agentcore:StartCodeInterpreterSession"
+        ]
+      },
+      "remediation": "Restrict the Bedrock AgentCore code interpreter actions to the resources each principal owns; aws-enumerator does not collect Bedrock AgentCore code interpreters, so review which roles they run as",
+      "imported": true
+    },
+    {
+      "id": "PRIVESC-060",
+      "legacy_ids": [],
+      "name": "Bedrock AgentCore runtime command",
+      "title": "Bedrock AgentCore runtime command: can run code as the role of an existing Bedrock AgentCore runtime",
+      "description": "Can take over an existing Bedrock AgentCore runtime and run code or API calls as the role it runs as (this resource type is not collected: whether one runs as a privileged role is unknown)",
+      "class": "existing-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "bedrock-agentcore:InvokeAgentRuntimeCommand",
+            "resource": "$target"
+          }
+        ]
+      },
+      "target": {
+        "select": "existing",
+        "resource_type": "bedrock_agent_runtime"
+      },
+      "emits": {},
+      "requires_inputs": [],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-permissions.html"
+        ],
+        "pathfinding_cloud": [
+          "bedrock-004"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "InvokeAgentRuntimeCommand"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "bedrock-agentcore:InvokeAgentRuntimeCommand"
+        ]
+      },
+      "remediation": "Restrict the Bedrock AgentCore runtime actions to the resources each principal owns; aws-enumerator does not collect Bedrock AgentCore runtimes, so review which roles they run as",
+      "imported": true
+    },
+    {
+      "id": "PRIVESC-061",
+      "legacy_ids": [],
+      "name": "Bedrock AgentCore browser session",
+      "title": "Bedrock AgentCore browser session: can run code as the role of an existing Bedrock AgentCore browser",
+      "description": "Can take over an existing Bedrock AgentCore browser and run code or API calls as the role it runs as (this resource type is not collected: whether one runs as a privileged role is unknown)",
+      "class": "existing-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "bedrock-agentcore:StartBrowserSession",
+            "resource": "$target"
+          },
+          {
+            "action": "bedrock-agentcore:ConnectBrowserAutomationStream",
+            "resource": "$target"
+          }
+        ]
+      },
+      "target": {
+        "select": "existing",
+        "resource_type": "bedrock_browser"
+      },
+      "emits": {},
+      "requires_inputs": [],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/browser-tool.html"
+        ],
+        "pathfinding_cloud": [
+          "bedrock-007"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "StartBrowserSession",
+          "ConnectBrowserAutomationStream"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "bedrock-agentcore:ConnectBrowserAutomationStream",
+          "bedrock-agentcore:StartBrowserSession"
+        ]
+      },
+      "remediation": "Restrict the Bedrock AgentCore browser actions to the resources each principal owns; aws-enumerator does not collect Bedrock AgentCore browsers, so review which roles they run as",
+      "imported": true
+    },
+    {
+      "id": "PRIVESC-062",
+      "legacy_ids": [],
+      "name": "CodeDeploy deployment",
+      "title": "CodeDeploy deployment: can run code as the role of an existing CodeDeploy deployment group",
+      "description": "Can take over an existing CodeDeploy deployment group and run code or API calls as the role it runs as (this resource type is not collected: whether one runs as a privileged role is unknown)",
+      "class": "existing-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "codedeploy:CreateDeployment",
+            "resource": "$target"
+          },
+          {
+            "action": "codedeploy:RegisterApplicationRevision",
+            "resource": "*"
+          }
+        ]
+      },
+      "target": {
+        "select": "existing",
+        "resource_type": "codedeploy_deployment_group"
+      },
+      "emits": {},
+      "requires_inputs": [],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/codedeploy/latest/APIReference/API_CreateDeployment.html"
+        ],
+        "pathfinding_cloud": [
+          "codedeploy-001"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "CreateDeployment",
+          "RegisterApplicationRevision"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "codedeploy:CreateDeployment",
+          "codedeploy:RegisterApplicationRevision"
+        ]
+      },
+      "remediation": "Restrict the CodeDeploy deployment group actions to the resources each principal owns; aws-enumerator does not collect CodeDeploy deployment groups, so review which roles they run as",
+      "imported": true
+    },
+    {
+      "id": "PRIVESC-063",
+      "legacy_ids": [],
+      "name": "Step Functions state machine update",
+      "title": "Step Functions state machine update: can run code as the role of an existing Step Functions state machine",
+      "description": "Can take over an existing Step Functions state machine and run code or API calls as the role it runs as (this resource type is not collected: whether one runs as a privileged role is unknown)",
+      "class": "existing-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "states:UpdateStateMachine",
+            "resource": "$target"
+          },
+          {
+            "action": "states:StartExecution",
+            "resource": "$target"
+          }
+        ]
+      },
+      "target": {
+        "select": "existing",
+        "resource_type": "sfn_state_machine"
+      },
+      "emits": {},
+      "requires_inputs": [],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/step-functions/latest/apireference/API_UpdateStateMachine.html"
+        ],
+        "pathfinding_cloud": [
+          "stepfunctions-002"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "UpdateStateMachine",
+          "StartExecution"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "states:StartExecution",
+          "states:UpdateStateMachine"
+        ]
+      },
+      "remediation": "Restrict the Step Functions state machine actions to the resources each principal owns; aws-enumerator does not collect Step Functions state machines, so review which roles they run as",
+      "imported": true
+    },
+    {
+      "id": "PRIVESC-064",
+      "legacy_ids": [],
+      "name": "PassRole+instance profile association",
+      "title": "PassRole+instance profile association: can attach a passed role to an instance it can run commands on",
+      "description": "Can associate a privileged role's instance profile with an existing instance and run commands there (Systems Manager or EC2 Instance Connect), then use the role's credentials from the instance metadata service",
+      "class": "new-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:PassRole",
+            "resource": "$target",
+            "context": {
+              "iam:PassedToService": "ec2.amazonaws.com"
+            }
+          },
+          {
+            "any": [
+              {
+                "action": "ec2:AssociateIamInstanceProfile",
+                "resource": "arn:{partition}:ec2:*:{account}:instance/*"
+              },
+              {
+                "action": "ec2:ReplaceIamInstanceProfileAssociation",
+                "resource": "*"
+              }
+            ]
+          },
+          {
+            "any": [
+              {
+                "action": "ssm:StartSession",
+                "resource": "arn:{partition}:ec2:*:{account}:instance/*"
+              },
+              {
+                "action": "ssm:SendCommand",
+                "resource": "arn:{partition}:ec2:*:{account}:instance/*"
+              },
+              {
+                "action": "ec2-instance-connect:SendSSHPublicKey",
+                "resource": "arn:{partition}:ec2:*:{account}:instance/*"
+              }
+            ]
+          }
+        ]
+      },
+      "target": {
+        "select": "passable_service_role",
+        "service_principal": "ec2.amazonaws.com",
+        "instance_profile": "required"
+      },
+      "emits": {
+        "other": "CAN_PASS_ROLE_TO",
+        "via": "ec2"
+      },
+      "requires_inputs": [
+        "iam.roles",
+        "iam.trust"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_AssociateIamInstanceProfile.html"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "AssociateIamInstanceProfile",
+          "ReplaceIamInstanceProfileAssociation",
+          "StartSession",
+          "SendCommand"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:PassRole",
+          "ec2:AssociateIamInstanceProfile",
+          "ssm:SendCommand"
+        ]
+      },
+      "remediation": "Restrict iam:PassRole to specific roles with iam:PassedToService ec2.amazonaws.com, and restrict ec2:AssociateIamInstanceProfile / ReplaceIamInstanceProfileAssociation"
+    },
+    {
+      "id": "PRIVESC-065",
+      "legacy_ids": [],
+      "name": "PassRole+Auto Scaling",
+      "title": "PassRole+Auto Scaling: can run code as a passed role on instances an Auto Scaling group launches",
+      "description": "Can create a launch configuration or launch template with a privileged instance profile and user data, and an Auto Scaling group that launches it",
+      "class": "new-passrole",
+      "base_severity": "derived",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "all": [
+          {
+            "action": "iam:PassRole",
+            "resource": "$target",
+            "context": {
+              "iam:PassedToService": "ec2.amazonaws.com"
+            }
+          },
+          {
+            "any": [
+              {
+                "action": "autoscaling:CreateLaunchConfiguration",
+                "resource": "*"
+              },
+              {
+                "action": "ec2:CreateLaunchTemplate",
+                "resource": "*"
+              }
+            ]
+          },
+          {
+            "any": [
+              {
+                "action": "autoscaling:CreateAutoScalingGroup",
+                "resource": "*"
+              },
+              {
+                "action": "autoscaling:UpdateAutoScalingGroup",
+                "resource": "*"
+              }
+            ]
+          }
+        ]
+      },
+      "target": {
+        "select": "passable_service_role",
+        "service_principal": "ec2.amazonaws.com",
+        "instance_profile": "required"
+      },
+      "emits": {
+        "other": "CAN_PASS_ROLE_TO",
+        "via": "ec2"
+      },
+      "requires_inputs": [
+        "iam.roles",
+        "iam.trust"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/autoscaling/ec2/userguide/us-iam-role.html"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "CreateLaunchConfiguration",
+          "CreateLaunchTemplate",
+          "CreateAutoScalingGroup",
+          "UpdateAutoScalingGroup"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:PassRole",
+          "autoscaling:CreateLaunchConfiguration",
+          "autoscaling:CreateAutoScalingGroup"
+        ]
+      },
+      "remediation": "Restrict iam:PassRole to specific roles with iam:PassedToService ec2.amazonaws.com, and restrict who can create launch configurations, launch templates and Auto Scaling groups"
+    },
+    {
+      "id": "PRIVESC-066",
+      "legacy_ids": [],
+      "name": "User permissions boundary removal",
+      "title": "User permissions boundary removal: can delete or replace the permissions boundary of a user",
+      "description": "Can delete or replace the permissions boundary of a user that has one, lifting the cap on its identity policies",
+      "class": "principal-modification",
+      "base_severity": "CRITICAL",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "any": [
+          {
+            "action": "iam:DeleteUserPermissionsBoundary",
+            "resource": "$target"
+          },
+          {
+            "action": "iam:PutUserPermissionsBoundary",
+            "resource": "$target"
+          }
+        ]
+      },
+      "target": {
+        "select": "self_or_principal",
+        "kind": "user",
+        "boundary": "present",
+        "probe": false
+      },
+      "emits": {
+        "self": "CAN_ESCALATE",
+        "other": "CAN_MODIFY_PERMISSIONS_OF"
+      },
+      "requires_inputs": [
+        "iam.authorization_details"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/IAM/latest/APIReference/API_DeleteUserPermissionsBoundary.html",
+          "https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "DeleteUserPermissionsBoundary",
+          "PutUserPermissionsBoundary"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:DeleteUserPermissionsBoundary",
+          "iam:PutUserPermissionsBoundary"
+        ]
+      },
+      "remediation": "Deny iam:DeleteUserPermissionsBoundary and iam:PutUserPermissionsBoundary to the principals the boundary is meant to cap (a boundary-protection statement in the boundary itself)"
+    },
+    {
+      "id": "PRIVESC-067",
+      "legacy_ids": [],
+      "name": "Role permissions boundary removal",
+      "title": "Role permissions boundary removal: can delete or replace the permissions boundary of a role",
+      "description": "Can delete or replace the permissions boundary of a role that has one, lifting the cap on its identity policies",
+      "class": "principal-modification",
+      "base_severity": "CRITICAL",
+      "legacy_severity": "HIGH",
+      "steps": {
+        "any": [
+          {
+            "action": "iam:DeleteRolePermissionsBoundary",
+            "resource": "$target"
+          },
+          {
+            "action": "iam:PutRolePermissionsBoundary",
+            "resource": "$target"
+          }
+        ]
+      },
+      "target": {
+        "select": "self_or_principal",
+        "kind": "role",
+        "boundary": "present",
+        "probe": false
+      },
+      "emits": {
+        "self": "CAN_ESCALATE",
+        "other": "CAN_MODIFY_PERMISSIONS_OF"
+      },
+      "requires_inputs": [
+        "iam.authorization_details"
+      ],
+      "references": {
+        "aws_docs": [
+          "https://docs.aws.amazon.com/IAM/latest/APIReference/API_DeleteRolePermissionsBoundary.html",
+          "https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html"
+        ]
+      },
+      "detection_hint": {
+        "cloudtrail": [
+          "DeleteRolePermissionsBoundary",
+          "PutRolePermissionsBoundary"
+        ]
+      },
+      "validate_hint": {
+        "simulate_actions": [
+          "iam:DeleteRolePermissionsBoundary",
+          "iam:PutRolePermissionsBoundary"
+        ]
+      },
+      "remediation": "Deny iam:DeleteRolePermissionsBoundary and iam:PutRolePermissionsBoundary to the principals the boundary is meant to cap (a boundary-protection statement in the boundary itself)"
+    }
+  ]
+}

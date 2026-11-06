@@ -1,0 +1,119 @@
+{
+  "breakers": [],
+  "calls": [
+    {
+      "api": "ec2:DescribeSnapshotAttribute",
+      "count": 1,
+      "error_code": "UnauthorizedOperation",
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 0,
+      "primary": false,
+      "status": "denied"
+    },
+    {
+      "api": "ec2:DescribeSnapshotAttribute",
+      "count": 2,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 2,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "ec2:DescribeSnapshots",
+      "count": 1,
+      "error_code": null,
+      "items": 1,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "ec2:DescribeSnapshots",
+      "count": 1,
+      "error_code": null,
+      "items": 3,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": true,
+      "status": "ok"
+    },
+    {
+      "api": "ec2:GetEbsEncryptionByDefault",
+      "count": 1,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "ec2:GetSnapshotBlockPublicAccessState",
+      "count": 1,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    }
+  ],
+  "duration_seconds": "<stripped>",
+  "ended_at": "<stripped>",
+  "error": null,
+  "item_errors": [
+    {
+      "api": "ec2:DescribeSnapshotAttribute",
+      "error_code": "UnauthorizedOperation",
+      "resource": "arn:aws:ec2:eu-west-2::snapshot/snap-0dec0ba1ba7e00023",
+      "status": "denied"
+    }
+  ],
+  "item_errors_truncated": false,
+  "module": "ebs",
+  "protocol": "ctx",
+  "region": "eu-west-2",
+  "schema_version": 1,
+  "sections": [
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "account_settings",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "snapshots",
+      "status": "ok"
+    }
+  ],
+  "services": [
+    "ec2"
+  ],
+  "started_at": "<stripped>",
+  "status": "partial",
+  "status_reason": "ec2:DescribeSnapshotAttribute denied",
+  "summary": {
+    "calls": 7,
+    "denied": 1,
+    "error": 0,
+    "item_errors": 1,
+    "not_configured": 0,
+    "ok": 6,
+    "skipped": 0,
+    "throttled": 0
+  }
+}

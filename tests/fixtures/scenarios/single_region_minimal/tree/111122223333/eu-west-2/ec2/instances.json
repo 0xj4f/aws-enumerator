@@ -1,0 +1,101 @@
+[
+  {
+    "InstanceId": "i-0a1b2c3d4e5f60000",
+    "InstanceType": "t3.micro",
+    "State": "running",
+    "LaunchTime": "2026-01-01 00:00:00+00:00",
+    "AvailabilityZone": "eu-west-2a",
+    "AmiId": "ami-0a1b2c3d4e5f6abcd",
+    "PublicIpAddress": null,
+    "PrivateIpAddress": "10.0.1.10",
+    "SubnetId": "subnet-0a1b2c3d4e5f6aaaa",
+    "VpcId": "vpc-0a1b2c3d4e5f6aaaa",
+    "IamInstanceProfile": {
+      "Arn": "arn:aws:iam::111122223333:instance-profile/app",
+      "Id": "AIPAAJLOCDCNEEMJNMIIK"
+    },
+    "SecurityGroups": [],
+    "NetworkInterfaces": [
+      {
+        "NetworkInterfaceId": "eni-2f711a31311a64f6d",
+        "PrivateIpAddress": "10.0.1.10",
+        "SubnetId": "subnet-0a1b2c3d4e5f6aaaa",
+        "VpcId": "vpc-0a1b2c3d4e5f6aaaa",
+        "MacAddress": "02:00:00:00:00:01",
+        "Status": "in-use"
+      }
+    ],
+    "MetadataOptions": {
+      "HttpTokens": "required",
+      "HttpPutResponseHopLimit": 1
+    },
+    "Monitoring": "disabled",
+    "Tags": {}
+  },
+  {
+    "InstanceId": "i-0a1b2c3d4e5f60001",
+    "InstanceType": "t3.micro",
+    "State": "running",
+    "LaunchTime": "2026-01-01 00:00:00+00:00",
+    "AvailabilityZone": "eu-west-2a",
+    "AmiId": "ami-0a1b2c3d4e5f6abcd",
+    "PublicIpAddress": null,
+    "PrivateIpAddress": "10.0.1.10",
+    "SubnetId": "subnet-0a1b2c3d4e5f6aaaa",
+    "VpcId": "vpc-0a1b2c3d4e5f6aaaa",
+    "IamInstanceProfile": {
+      "Arn": "arn:aws:iam::111122223333:instance-profile/app",
+      "Id": "AIPAAJLOCDCNEEMJNMIIK"
+    },
+    "SecurityGroups": [],
+    "NetworkInterfaces": [
+      {
+        "NetworkInterfaceId": "eni-c21303a7a3ab39686",
+        "PrivateIpAddress": "10.0.1.10",
+        "SubnetId": "subnet-0a1b2c3d4e5f6aaaa",
+        "VpcId": "vpc-0a1b2c3d4e5f6aaaa",
+        "MacAddress": "02:00:00:00:00:01",
+        "Status": "in-use"
+      }
+    ],
+    "MetadataOptions": {
+      "HttpTokens": "required",
+      "HttpPutResponseHopLimit": 1
+    },
+    "Monitoring": "disabled",
+    "Tags": {}
+  },
+  {
+    "InstanceId": "i-0a1b2c3d4e5f60002",
+    "InstanceType": "t3.micro",
+    "State": "running",
+    "LaunchTime": "2026-01-01 00:00:00+00:00",
+    "AvailabilityZone": "eu-west-2a",
+    "AmiId": "ami-0a1b2c3d4e5f6abcd",
+    "PublicIpAddress": null,
+    "PrivateIpAddress": "10.0.1.10",
+    "SubnetId": "subnet-0a1b2c3d4e5f6aaaa",
+    "VpcId": "vpc-0a1b2c3d4e5f6aaaa",
+    "IamInstanceProfile": {
+      "Arn": "arn:aws:iam::111122223333:instance-profile/app",
+      "Id": "AIPAAJLOCDCNEEMJNMIIK"
+    },
+    "SecurityGroups": [],
+    "NetworkInterfaces": [
+      {
+        "NetworkInterfaceId": "eni-70a365b70418a26b7",
+        "PrivateIpAddress": "10.0.1.10",
+        "SubnetId": "subnet-0a1b2c3d4e5f6aaaa",
+        "VpcId": "vpc-0a1b2c3d4e5f6aaaa",
+        "MacAddress": "02:00:00:00:00:01",
+        "Status": "in-use"
+      }
+    ],
+    "MetadataOptions": {
+      "HttpTokens": "required",
+      "HttpPutResponseHopLimit": 1
+    },
+    "Monitoring": "disabled",
+    "Tags": {}
+  }
+]

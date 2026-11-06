@@ -1,0 +1,20 @@
+[
+  {
+    "AvailabilityZone": "eu-west-1a",
+    "CidrBlock": "10.0.1.0/24",
+    "MapPublicIpOnLaunch": true,
+    "State": "available",
+    "SubnetId": "subnet-0a1b2c3d4e5f6c001",
+    "VpcId": "vpc-0a1b2c3d4e5f60001",
+    "OwnerId": "111122223333"
+  },
+  {
+    "AvailabilityZone": "eu-west-1b",
+    "CidrBlock": "10.0.2.0/24",
+    "MapPublicIpOnLaunch": false,
+    "State": "available",
+    "SubnetId": "subnet-0a1b2c3d4e5f6d001",
+    "VpcId": "vpc-0a1b2c3d4e5f60001",
+    "OwnerId": "111122223333"
+  }
+]

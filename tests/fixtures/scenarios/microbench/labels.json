@@ -1,0 +1,42 @@
+{
+  "c01-admin": {
+    "positive": true,
+    "note": "Action:* on *"
+  },
+  "c02-poweruser-notaction": {
+    "positive": true,
+    "note": "PowerUserAccess shape"
+  },
+  "c03-putrolepolicy": {
+    "positive": true,
+    "note": "classic privesc"
+  },
+  "c04-attachuserpolicy": {
+    "positive": true,
+    "note": "classic privesc"
+  },
+  "c05-iam-notresource": {
+    "positive": true,
+    "note": "iam:* except one role"
+  },
+  "c06-quarantined": {
+    "positive": false,
+    "note": "explicit Deny *"
+  },
+  "c07-passrole-scoped": {
+    "positive": false,
+    "note": "PassRole to one low-priv role"
+  },
+  "c08-self-service-keys": {
+    "positive": false,
+    "note": "self-service creds"
+  },
+  "c09-boundary-capped": {
+    "positive": false,
+    "note": "admin capped by read-only boundary"
+  },
+  "c10-readonly": {
+    "positive": false,
+    "note": "read-only"
+  }
+}

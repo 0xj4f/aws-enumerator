@@ -1,0 +1,40 @@
+[
+  {
+    "UserName": "dev",
+    "UserId": "AIDAOKHDJCFKCLEOOPKGF",
+    "Arn": "arn:aws:iam::111122223333:user/dev",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "PasswordLastUsed": "",
+    "Path": "/",
+    "Tags": [],
+    "AccessKeys": [
+      {
+        "AccessKeyId": "AKIAEXAMPLELMFBGCNPA",
+        "Status": "Active",
+        "CreateDate": "2026-01-01 00:00:00+00:00"
+      }
+    ],
+    "MFADevices": [],
+    "HasLoginProfile": false,
+    "PermissionsBoundary": null
+  },
+  {
+    "UserName": "auditor",
+    "UserId": "AIDAOCCIAEGDKKOIODLKH",
+    "Arn": "arn:aws:iam::111122223333:user/auditor",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "PasswordLastUsed": "",
+    "Path": "/",
+    "Tags": [],
+    "AccessKeys": [],
+    "MFADevices": [
+      {
+        "SerialNumber": "arn:aws:iam::111122223333:mfa/auditor",
+        "EnableDate": "2026-01-01 00:00:00+00:00"
+      }
+    ],
+    "HasLoginProfile": true,
+    "LoginProfileCreateDate": "2026-01-01 00:00:00+00:00",
+    "PermissionsBoundary": null
+  }
+]

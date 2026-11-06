@@ -1,0 +1,229 @@
+[
+  {
+    "Path": "/",
+    "RoleName": "deploy",
+    "RoleId": "AROAJGNDPFHOACOMONEAE",
+    "Arn": "arn:aws:iam::123456789012:role/deploy",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "AssumeRolePolicyDocument": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::999999999999:role/deploy"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "Description": "",
+    "MaxSessionDuration": 3600
+  },
+  {
+    "Path": "/",
+    "RoleName": "audit",
+    "RoleId": "AROANDFMFKIMODIEMGLGJ",
+    "Arn": "arn:aws:iam::123456789012:role/audit",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "AssumeRolePolicyDocument": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::111122223333:root"
+          },
+          "Action": "sts:AssumeRole",
+          "Condition": {
+            "StringEquals": {
+              "sts:ExternalId": "example-external-id"
+            }
+          }
+        }
+      ]
+    },
+    "Description": "",
+    "MaxSessionDuration": 3600
+  },
+  {
+    "Path": "/",
+    "RoleName": "same-account-root",
+    "RoleId": "AROAMLDOFGLAFKHKGODIC",
+    "Arn": "arn:aws:iam::123456789012:role/same-account-root",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "AssumeRolePolicyDocument": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::123456789012:root"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "Description": "",
+    "MaxSessionDuration": 3600
+  },
+  {
+    "Path": "/",
+    "RoleName": "gha-deploy",
+    "RoleId": "AROAFDPGINOOKJIKJEGMI",
+    "Arn": "arn:aws:iam::123456789012:role/gha-deploy",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "AssumeRolePolicyDocument": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Federated": "arn:aws:iam::123456789012:oidc-provider/token.actions.githubusercontent.com"
+          },
+          "Action": "sts:AssumeRoleWithWebIdentity",
+          "Condition": {
+            "StringLike": {
+              "token.actions.githubusercontent.com:sub": "repo:example-org/*"
+            },
+            "StringEquals": {
+              "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
+            }
+          }
+        }
+      ]
+    },
+    "Description": "",
+    "MaxSessionDuration": 3600
+  },
+  {
+    "Path": "/",
+    "RoleName": "saml-admin",
+    "RoleId": "AROAHLIMAAGMIKEIJJOEL",
+    "Arn": "arn:aws:iam::123456789012:role/saml-admin",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "AssumeRolePolicyDocument": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Federated": "arn:aws:iam::123456789012:saml-provider/ExampleIdP"
+          },
+          "Action": "sts:AssumeRoleWithSAML",
+          "Condition": {
+            "StringEquals": {
+              "SAML:aud": "https://signin.aws.amazon.com/saml"
+            }
+          }
+        }
+      ]
+    },
+    "Description": "",
+    "MaxSessionDuration": 3600
+  },
+  {
+    "Path": "/",
+    "RoleName": "wildcard-org",
+    "RoleId": "AROAIFOFJBBIDHCJFGMMM",
+    "Arn": "arn:aws:iam::123456789012:role/wildcard-org",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "AssumeRolePolicyDocument": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "*"
+          },
+          "Action": "sts:AssumeRole",
+          "Condition": {
+            "StringEquals": {
+              "aws:PrincipalOrgID": "o-exampleorg1"
+            }
+          }
+        }
+      ]
+    },
+    "Description": "",
+    "MaxSessionDuration": 3600
+  },
+  {
+    "Path": "/",
+    "RoleName": "wildcard-open",
+    "RoleId": "AROAFFIHFOPHNBAHOJHMK",
+    "Arn": "arn:aws:iam::123456789012:role/wildcard-open",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "AssumeRolePolicyDocument": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": "*",
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "Description": "",
+    "MaxSessionDuration": 3600
+  },
+  {
+    "Path": "/",
+    "RoleName": "bare-account",
+    "RoleId": "AROAPEBDJAIIDIEEDKKKC",
+    "Arn": "arn:aws:iam::123456789012:role/bare-account",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "AssumeRolePolicyDocument": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "999999999999"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "Description": "",
+    "MaxSessionDuration": 3600
+  },
+  {
+    "Path": "/",
+    "RoleName": "multi-principal",
+    "RoleId": "AROAJNCFLHECIGNBLDEGD",
+    "Arn": "arn:aws:iam::123456789012:role/multi-principal",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "AssumeRolePolicyDocument": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": [
+              "arn:aws:iam::999999999999:user/partner",
+              "arn:aws:iam::123456789012:user/deploy"
+            ],
+            "Service": [
+              "ec2.amazonaws.com",
+              "lambda.amazonaws.com"
+            ]
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "Description": "",
+    "MaxSessionDuration": 3600
+  },
+  {
+    "Path": "/",
+    "RoleName": "string-trust",
+    "RoleId": "AROAJMBHHKHDDLKILKOEF",
+    "Arn": "arn:aws:iam::123456789012:role/string-trust",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "AssumeRolePolicyDocument": "{\"Version\": \"2012-10-17\", \"Statement\": [{\"Effect\": \"Allow\", \"Principal\": {\"AWS\": \"arn:aws:iam::000000000000:root\"}, \"Action\": \"sts:AssumeRole\"}]}",
+    "Description": "",
+    "MaxSessionDuration": 3600
+  }
+]

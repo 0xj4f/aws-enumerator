@@ -1,0 +1,107 @@
+[
+  {
+    "Arn": "arn:aws:organizations::999999999999:policy/o-exampleorg1/service_control_policy/p-demo0deny01",
+    "AwsManaged": false,
+    "Content": {
+      "Statement": [
+        {
+          "Action": "organizations:LeaveOrganization",
+          "Effect": "Deny",
+          "Resource": "*"
+        }
+      ],
+      "Version": "2012-10-17"
+    },
+    "Description": "demo-deny-leave-org (acme)",
+    "Name": "demo-deny-leave-org",
+    "PolicyId": "p-demo0deny01",
+    "Source": "api",
+    "Targets": [
+      "ou-exam-demo0001"
+    ],
+    "Type": "SERVICE_CONTROL_POLICY"
+  },
+  {
+    "Arn": "arn:aws:organizations::999999999999:policy/o-exampleorg1/service_control_policy/p-demo0region",
+    "AwsManaged": false,
+    "Content": {
+      "Statement": [
+        {
+          "Condition": {
+            "StringNotEquals": {
+              "aws:RequestedRegion": [
+                "eu-west-1",
+                "eu-west-2",
+                "us-east-1"
+              ]
+            }
+          },
+          "Effect": "Deny",
+          "NotAction": [
+            "iam:*",
+            "organizations:*",
+            "sts:*",
+            "support:*"
+          ],
+          "Resource": "*"
+        }
+      ],
+      "Version": "2012-10-17"
+    },
+    "Description": "demo-region-lock (acme)",
+    "Name": "demo-region-lock",
+    "PolicyId": "p-demo0region",
+    "Source": "api",
+    "Targets": [
+      "111122223333"
+    ],
+    "Type": "SERVICE_CONTROL_POLICY"
+  },
+  {
+    "Arn": "arn:aws:organizations::aws:policy/resource_control_policy/p-RCPFullAWSAccess",
+    "AwsManaged": true,
+    "Content": {
+      "Statement": [
+        {
+          "Action": "*",
+          "Effect": "Allow",
+          "Principal": "*",
+          "Resource": "*"
+        }
+      ],
+      "Version": "2012-10-17"
+    },
+    "Description": "RCPFullAWSAccess (acme)",
+    "Name": "RCPFullAWSAccess",
+    "PolicyId": "p-RCPFullAWSAccess",
+    "Source": "api",
+    "Targets": [
+      "r-exam"
+    ],
+    "Type": "RESOURCE_CONTROL_POLICY"
+  },
+  {
+    "Arn": "arn:aws:organizations::aws:policy/service_control_policy/p-FullAWSAccess",
+    "AwsManaged": true,
+    "Content": {
+      "Statement": [
+        {
+          "Action": "*",
+          "Effect": "Allow",
+          "Resource": "*"
+        }
+      ],
+      "Version": "2012-10-17"
+    },
+    "Description": "FullAWSAccess (acme)",
+    "Name": "FullAWSAccess",
+    "PolicyId": "p-FullAWSAccess",
+    "Source": "api",
+    "Targets": [
+      "111122223333",
+      "ou-exam-demo0001",
+      "r-exam"
+    ],
+    "Type": "SERVICE_CONTROL_POLICY"
+  }
+]

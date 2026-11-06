@@ -1,0 +1,22 @@
+[
+  {
+    "Type": "apigw",
+    "Arn": "arn:aws:apigateway:eu-west-2::/restapis/a1b2c3d4e5",
+    "Name": "demo-rest-api",
+    "Protocol": "REST",
+    "LambdaTargets": [
+      "arn:aws:lambda:eu-west-2:123456789012:function:demo-etl"
+    ],
+    "HasAuthorizer": true
+  },
+  {
+    "Type": "apigw",
+    "Arn": "arn:aws:apigateway:eu-west-2::/apis/f6g7h8i9j0",
+    "Name": "demo-http-api",
+    "Protocol": "HTTP",
+    "LambdaTargets": [
+      "arn:aws:lambda:eu-west-2:123456789012:function:demo-public-fn"
+    ],
+    "HasAuthorizer": false
+  }
+]

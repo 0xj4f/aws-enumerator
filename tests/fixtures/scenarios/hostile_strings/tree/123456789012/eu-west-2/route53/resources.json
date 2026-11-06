@@ -1,0 +1,24 @@
+[
+  {
+    "Type": "route53zone",
+    "Id": "Z0EXAMPLEZONECCC",
+    "Name": "example.net.",
+    "Private": false,
+    "RecordCount": 1,
+    "Records": [
+      {
+        "Name": "<img src=x onerror=window.__aeXssCanary=1>",
+        "Type": "CNAME",
+        "Targets": [
+          "demo.cloudfront.net"
+        ]
+      }
+    ],
+    "TakeoverCandidates": [
+      {
+        "Name": "<img src=x onerror=window.__aeXssCanary=1>",
+        "Target": "demo.cloudfront.net"
+      }
+    ]
+  }
+]

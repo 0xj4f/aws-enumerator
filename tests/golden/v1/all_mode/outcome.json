@@ -1,0 +1,23 @@
+{
+  "analysis_files": [
+    "_provenance.json",
+    "compute_relationships.json",
+    "ec2_relationships.json",
+    "extra_relationships.json",
+    "findings.json",
+    "graph.json",
+    "k8s_relationships.json",
+    "kms_relationships.json",
+    "lambda_relationships.json",
+    "messaging_relationships.json",
+    "newsurface_relationships.json",
+    "permission_map.json",
+    "s3_relationships.json",
+    "secrets_relationships.json",
+    "summary.json",
+    "trust_relationships.json"
+  ],
+  "input": "111122223333",
+  "scenario": "all_mode",
+  "status": "ok"
+}

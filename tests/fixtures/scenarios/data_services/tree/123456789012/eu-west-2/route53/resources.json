@@ -1,0 +1,31 @@
+[
+  {
+    "Type": "route53zone",
+    "Id": "Z0EXAMPLEZONEAAA",
+    "Name": "example.com.",
+    "Private": false,
+    "RecordCount": 2,
+    "Records": [
+      {
+        "Name": "example.com.",
+        "Type": "NS",
+        "Targets": [
+          "ns-1.awsdns-00.org."
+        ]
+      },
+      {
+        "Name": "www.example.com.",
+        "Type": "CNAME",
+        "Targets": [
+          "demo-alb.eu-west-2.elb.amazonaws.com"
+        ]
+      }
+    ],
+    "TakeoverCandidates": [
+      {
+        "Name": "www.example.com.",
+        "Target": "demo-alb.eu-west-2.elb.amazonaws.com"
+      }
+    ]
+  }
+]

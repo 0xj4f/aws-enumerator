@@ -1,0 +1,179 @@
+id: iam-003
+parent:
+  id: iam-002
+  modification: Adds iam:DeleteAccessKey to handle the scenario where the target user already has 2 access keys (AWS maximum limit)
+name: iam:CreateAccessKey + iam:DeleteAccessKey
+category: principal-access
+services:
+- iam
+description: This is a variation of `iam:CreateAccessKey` that works even when the target user already has 2 access keys (the AWS maximum). By combining `iam:CreateAccessKey` with `iam:DeleteAccessKey`, an attacker can first delete one of the existing keys, then create a new access key for themselves, gaining access to the target user's permissions.
+prerequisites:
+  admin:
+  - Target user has 2 access keys (maximum allowed)
+  - Target user must have administrative permissions (e.g., AdministratorAccess)
+  lateral:
+  - Target user has 2 access keys (maximum allowed)
+exploitationSteps:
+  awscli:
+  - step: 1
+    command: aws iam list-access-keys --user-name @username
+    description: List existing access keys for the target user
+  - step: 2
+    command: aws iam delete-access-key --user-name @username --access-key-id @access-key-id
+    description: Delete one of the existing access keys
+  - step: 3
+    command: aws iam create-access-key --user-name @username
+    description: Create a new access key for the target user
+  - step: 4
+    command: aws configure --profile target-user
+    description: Configure AWS CLI with the newly created access key
+  pathrunner:
+  - step: 1
+    command: pathrunner use iam-003
+    description: Load the iam-003 exploit module in Pathrunner.
+  - step: 2
+    command: pathrunner set TARGET_USER target-iam-user
+    description: Set the TARGET_USER option (replace the placeholder with your target's real value).
+  - step: 3
+    command: pathrunner exploit
+    description: Execute the privilege escalation.
+recommendation: 'Restrict access to both `iam:CreateAccessKey` and `iam:DeleteAccessKey` using the principle of least privilege. The combination of these permissions is particularly dangerous as it bypasses the 2-key limit protection. Monitor for sequences where DeleteAccessKey is immediately followed by CreateAccessKey for the same user.'
+limitations: 'This path provides administrative access only if the target user or group has administrative permissions. The attacker gains whatever permissions the target principal has. If the target has limited permissions, the attacker gains limited access. However, even limited access may enable multi-hop attacks or access to sensitive data.'
+discoveryAttribution:
+  firstDocumented:
+    author: Seth Art
+    organization: Datadog
+    date: 2024
+  derivativeOf:
+    pathId: iam-002
+    modification: Adds iam:DeleteAccessKey to handle the scenario where the target user already has 2 access keys (AWS maximum limit)
+  ultimateOrigin:
+    pathId: iam-002
+    author: Spencer Gietzen
+    organization: Rhino Security Labs
+    date: 2019
+    link: https://rhinosecuritylabs.com/aws/aws-privilege-escalation-methods-mitigation/
+references:
+- title: HackTricks - AWS - IAM Privesc
+  url: https://cloud.hacktricks.wiki/en/pentesting-cloud/aws-security/aws-privilege-escalation/aws-iam-privesc/index.html#iamcreateaccesskey
+- title: AWS IAM User Access Key Limits
+  url: https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_iam-quotas.html
+relatedPaths:
+- iam-002
+detectionTools:
+  pmapper: https://github.com/nccgroup/PMapper/blob/91d2e60102bdadf346d77b60d90ddaa4a678f037/principalmapper/graphing/iam_edges.py#L63-L85
+  prowler: https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L41
+  cloudsplaining: https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L230
+learningEnvironments:
+  pathfinding-labs:
+    type: open-source
+    githubLink: https://github.com/DataDog/pathfinding-labs
+    scenario: privesc-one-hop/to-admin/iam-deleteaccesskey+createaccesskey
+    description: Deploy Terraform into your own AWS account to practice this attack path
+  iam-vulnerable:
+    type: open-source
+    githubLink: https://github.com/BishopFox/iam-vulnerable
+    scenario: IAM-CreateAccessKey
+    description: Deploy Terraform into your own AWS account and practice individual exploitation paths
+  cloudgoat:
+    type: open-source
+    githubLink: https://github.com/RhinoSecurityLabs/cloudgoat
+    scenario: iam_privesc_by_key_rotation
+    description: Deploy vulnerable infrastructure using CloudGoat to practice AWS attacks
+  cybr:
+    type: closed-source
+    description: Hosted learning environment with interactive AWS security labs
+    scenario: https://cybr.com/courses/iam-privilege-escalation-labs/lessons/lab-ctf-iamcreateaccesskey-privesc/
+    scenarioPricingModel: paid
+toolSupport:
+  pmapper: false
+  iamVulnerable: false
+attackVisualization:
+  nodes:
+  - id: start
+    label: Starting Principal
+    type: principal
+    description: 'The principal with iam:DeleteAccessKey and iam:CreateAccessKey permissions on the target user. Can be an IAM user or role with permission to delete and create access keys for other users.
+
+      '
+  - id: target_user
+    label: target-user (2 keys)
+    type: principal
+    description: 'The target IAM user who already has 2 existing access keys (AWS maximum). The attacker must first delete one of the existing keys before creating a new one. Once the new key is created, the attacker gains access to all permissions attached to this user.
+
+      '
+  - id: admin
+    label: Effective Administrator
+    type: outcome
+    description: 'Full administrative access to the AWS account when the target user has AdministratorAccess or equivalent permissions.
+
+      '
+  - id: some_perms
+    label: Some additional access
+    type: outcome
+    color: '#ffeb99'
+    description: 'The target user has some elevated permissions. Check for data access (S3, RDS, DynamoDB) or additional privilege escalation paths.
+
+      '
+  - id: no_access
+    label: No additional access
+    type: outcome
+    color: '#cccccc'
+    description: 'The target user has no interesting permissions beyond what the starting principal already had.
+
+      '
+  edges:
+  - from: start
+    to: target_user
+    label: iam:DeleteAccessKey + iam:CreateAccessKey
+    description: 'First, execute iam:DeleteAccessKey to remove one of the target user''s existing access keys (freeing up a slot). Then execute iam:CreateAccessKey to generate a new access key for the target user. The API returns both the AccessKeyId and SecretAccessKey in the response. Configure the AWS CLI with these credentials to authenticate as the target user.
+
+
+      Commands:
+
+      ```bash
+
+      aws iam list-access-keys --user-name @username
+
+      aws iam delete-access-key --user-name @username --access-key-id @access-key-id
+
+      aws iam create-access-key --user-name @username
+
+      ```
+
+      '
+  - from: target_user
+    to: admin
+    label: If user has admin permissions
+    branch: A
+    condition: admin
+    description: 'If the target user has AdministratorAccess or equivalent permissions, the attacker gains full administrative access to the account.
+
+      '
+  - from: target_user
+    to: some_perms
+    label: If user has some permissions
+    branch: B
+    condition: some_permissions
+    description: 'If the target user has some elevated permissions, check for data access (S3, RDS, DynamoDB) or additional privilege escalation paths.
+
+      '
+  - from: target_user
+    to: no_access
+    label: If user has no interesting permissions
+    branch: C
+    condition: no_permissions
+    description: 'If the target user only has minimal permissions, there may be no meaningful privilege escalation achieved.
+
+      '
+permissions:
+  required:
+  - permission: iam:CreateAccessKey
+    resourceConstraints: Target IAM user must be in the Resource section
+  - permission: iam:DeleteAccessKey
+    resourceConstraints: Target IAM user must be in the Resource section
+  additional:
+  - permission: iam:ListUsers
+    resourceConstraints: Helpful for discovering target users
+  - permission: iam:GetUser
+    resourceConstraints: Useful for viewing user details

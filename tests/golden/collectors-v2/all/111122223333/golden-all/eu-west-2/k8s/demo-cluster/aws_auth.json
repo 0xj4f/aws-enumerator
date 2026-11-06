@@ -1,0 +1,23 @@
+{
+  "map_accounts": [],
+  "map_roles": [
+    {
+      "groups": [
+        "system:bootstrappers",
+        "system:nodes"
+      ],
+      "rolearn": "arn:aws:iam::111122223333:role/demo-eks-node-role",
+      "username": "system:node:{{EC2PrivateDNSName}}"
+    },
+    {
+      "groups": [
+        "system:masters"
+      ],
+      "rolearn": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "username": "demo-admin"
+    }
+  ],
+  "map_users": [],
+  "parse_errors": [],
+  "present": true
+}

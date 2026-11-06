@@ -1,0 +1,38 @@
+[
+  {
+    "Arn": "arn:aws:ecs:eu-west-2:111122223333:task-definition/demo-api:2",
+    "ExecutionRole": "arn:aws:iam::111122223333:role/demo-ecs-task-role",
+    "Family": "demo-api",
+    "Name": "demo-api",
+    "Revisions": [
+      1,
+      2
+    ],
+    "RevisionsTruncated": false,
+    "Roles": [
+      "arn:aws:iam::111122223333:role/demo-ecs-task-role"
+    ],
+    "TaskRole": "arn:aws:iam::111122223333:role/demo-ecs-task-role",
+    "Type": "ecstask"
+  },
+  {
+    "Arn": "arn:aws:ecs:eu-west-2:111122223333:task-definition/demo-batch:1",
+    "CollectionErrors": [
+      {
+        "api": "ecs:DescribeTaskDefinition",
+        "error_code": "AccessDeniedException",
+        "status": "denied"
+      }
+    ],
+    "ExecutionRole": null,
+    "Family": "demo-batch",
+    "Name": "demo-batch",
+    "Revisions": [
+      1
+    ],
+    "RevisionsTruncated": false,
+    "Roles": null,
+    "TaskRole": null,
+    "Type": "ecstask"
+  }
+]

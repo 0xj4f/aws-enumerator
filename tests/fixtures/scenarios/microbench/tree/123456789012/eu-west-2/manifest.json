@@ -1,0 +1,46 @@
+{
+  "tool": "aws-enumerator",
+  "version": "0.2.0",
+  "author": "0xj4f",
+  "run_metadata": {
+    "account_id": "123456789012",
+    "mode": "single_region",
+    "region": "eu-west-2",
+    "regions_enumerated": [],
+    "caller_arn": "arn:aws:iam::123456789012:user/demo-operator",
+    "caller_user_id": "AIDAIOFJECGLDECPDLLDA",
+    "timestamp_start": "2026-01-01T00:00:00",
+    "timestamp_end": "2026-01-01T00:00:00",
+    "duration_seconds": 0.0
+  },
+  "modules_executed": [
+    {
+      "name": "iam",
+      "path": "iam/",
+      "file_count": 21,
+      "files": [
+        "account_password_policy.json",
+        "account_summary.json",
+        "group_attached_policies.json",
+        "groups.json",
+        "inline_policies/roles/c01-admin.json",
+        "inline_policies/roles/c02-poweruser-notaction.json",
+        "inline_policies/roles/c03-putrolepolicy.json",
+        "inline_policies/roles/c04-attachuserpolicy.json",
+        "inline_policies/roles/c05-iam-notresource.json",
+        "inline_policies/roles/c06-quarantined.json",
+        "inline_policies/roles/c07-passrole-scoped.json",
+        "inline_policies/roles/c08-self-service-keys.json",
+        "inline_policies/roles/c09-boundary-capped.json",
+        "inline_policies/roles/c10-readonly.json",
+        "instance_profiles.json",
+        "policies.json",
+        "role_attached_policies.json",
+        "roles.json",
+        "user_attached_policies.json",
+        "user_group_memberships.json",
+        "users.json"
+      ]
+    }
+  ]
+}

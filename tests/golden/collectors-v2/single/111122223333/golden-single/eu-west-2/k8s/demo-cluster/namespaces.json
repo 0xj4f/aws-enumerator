@@ -1,0 +1,38 @@
+[
+  {
+    "metadata": {
+      "annotations": null,
+      "labels": {
+        "kubernetes.io/metadata.name": "default"
+      },
+      "name": "default"
+    },
+    "status": {
+      "phase": "Active"
+    }
+  },
+  {
+    "metadata": {
+      "annotations": null,
+      "labels": {
+        "kubernetes.io/metadata.name": "demo-apps"
+      },
+      "name": "demo-apps"
+    },
+    "status": {
+      "phase": "Active"
+    }
+  },
+  {
+    "metadata": {
+      "annotations": null,
+      "labels": {
+        "kubernetes.io/metadata.name": "kube-system"
+      },
+      "name": "kube-system"
+    },
+    "status": {
+      "phase": "Active"
+    }
+  }
+]

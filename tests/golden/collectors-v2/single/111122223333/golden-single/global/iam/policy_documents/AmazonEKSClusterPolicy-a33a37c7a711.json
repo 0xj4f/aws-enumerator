@@ -1,0 +1,21 @@
+{
+  "DefaultVersionId": "v5",
+  "Document": {
+    "Statement": [
+      {
+        "Action": [
+          "ec2:CreateNetworkInterface",
+          "ec2:Describe*"
+        ],
+        "Effect": "Allow",
+        "Resource": "*"
+      }
+    ],
+    "Version": "2012-10-17"
+  },
+  "PolicyArn": "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy",
+  "PolicyName": "AmazonEKSClusterPolicy",
+  "PolicyType": "AWS",
+  "VersionId": "v5",
+  "Versions": []
+}

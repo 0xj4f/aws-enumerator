@@ -1,0 +1,10 @@
+[
+  {
+    "Type": "codebuild",
+    "Arn": "arn:aws:codebuild:eu-west-2:123456789012:project/demo-build",
+    "Name": "demo-build",
+    "Roles": [
+      "arn:aws:iam::123456789012:role/demo-codebuild-role"
+    ]
+  }
+]

@@ -1,0 +1,5 @@
+{
+  "example-group": {
+    "Error": "An error occurred (AccessDenied) when calling the ListAttachedGroupPolicies operation: User: arn:aws:iam::123456789012:user/demo-operator is not authorized to perform: iam:ListAttachedGroupPolicies"
+  }
+}

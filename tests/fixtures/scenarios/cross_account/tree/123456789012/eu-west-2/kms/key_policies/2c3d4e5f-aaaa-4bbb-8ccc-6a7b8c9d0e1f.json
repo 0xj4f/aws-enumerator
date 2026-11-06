@@ -1,0 +1,27 @@
+{
+  "KeyId": "2c3d4e5f-aaaa-4bbb-8ccc-6a7b8c9d0e1f",
+  "Arn": "arn:aws:kms:eu-west-2:123456789012:key/2c3d4e5f-aaaa-4bbb-8ccc-6a7b8c9d0e1f",
+  "Policy": {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Principal": {
+          "AWS": "arn:aws:iam::123456789012:root"
+        },
+        "Action": "kms:*",
+        "Resource": "*"
+      },
+      {
+        "Effect": "Allow",
+        "Principal": {
+          "AWS": "arn:aws:iam::999999999999:role/deploy"
+        },
+        "Action": [
+          "kms:Decrypt"
+        ],
+        "Resource": "*"
+      }
+    ]
+  }
+}

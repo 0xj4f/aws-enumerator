@@ -1,0 +1,150 @@
+{
+  "rules_version": "2.1.0",
+  "kind": "dangerous",
+  "rules": [
+    {
+      "id": "DANGER-001",
+      "legacy_ids": [],
+      "title": "Full administrator access (Action:* Resource:*)",
+      "description": "Full administrator access (Action:* Resource:*)",
+      "base_severity": "CRITICAL",
+      "legacy_severity": "CRITICAL",
+      "capability": {
+        "resource_template": "*",
+        "mode": "covers",
+        "action_glob": "*"
+      },
+      "remediation": "Restrict to specific actions and resource ARNs"
+    },
+    {
+      "id": "DANGER-002",
+      "legacy_ids": [],
+      "title": "Full IAM control",
+      "description": "Full IAM control",
+      "base_severity": "CRITICAL",
+      "legacy_severity": "CRITICAL",
+      "capability": {
+        "resource_template": "arn:{partition}:iam::{account}:*",
+        "mode": "covers",
+        "action_glob": "iam:*"
+      },
+      "remediation": "Restrict to specific actions and resource ARNs"
+    },
+    {
+      "id": "DANGER-003",
+      "legacy_ids": [],
+      "title": "Unrestricted S3 access across all buckets",
+      "description": "Unrestricted S3 access across all buckets",
+      "base_severity": "HIGH",
+      "legacy_severity": "HIGH",
+      "capability": {
+        "resource_template": "arn:{partition}:s3:::*",
+        "mode": "covers",
+        "action_glob": "s3:*"
+      },
+      "remediation": "Restrict to specific actions and resource ARNs"
+    },
+    {
+      "id": "DANGER-004",
+      "legacy_ids": [],
+      "title": "Full EC2 control",
+      "description": "Full EC2 control",
+      "base_severity": "HIGH",
+      "legacy_severity": "HIGH",
+      "capability": {
+        "resource_template": "arn:{partition}:ec2:*:{account}:*",
+        "mode": "covers",
+        "action_glob": "ec2:*"
+      },
+      "remediation": "Restrict to specific actions and resource ARNs"
+    },
+    {
+      "id": "DANGER-005",
+      "legacy_ids": [],
+      "title": "May call sts:AssumeRole on any role (each role's trust policy decides)",
+      "description": "May call sts:AssumeRole on any role in the account; whether a role can actually be assumed is decided by its trust policy (see the CAN_ASSUME edges)",
+      "base_severity": "HIGH",
+      "legacy_severity": "HIGH",
+      "capability": {
+        "resource_template": "arn:{partition}:iam::{account}:role/*",
+        "mode": "covers",
+        "action_glob": "sts:AssumeRole"
+      },
+      "remediation": "Restrict to specific actions and resource ARNs"
+    },
+    {
+      "id": "DANGER-006",
+      "legacy_ids": [],
+      "title": "Unrestricted PassRole (can pass any role to any service)",
+      "description": "Unrestricted PassRole (can pass any role to any service)",
+      "base_severity": "MEDIUM",
+      "legacy_severity": "MEDIUM",
+      "capability": {
+        "resource_template": "arn:{partition}:iam::{account}:role/*",
+        "mode": "covers",
+        "action_glob": "iam:PassRole"
+      },
+      "remediation": "Restrict to specific actions and resource ARNs"
+    },
+    {
+      "id": "DANGER-007",
+      "legacy_ids": [],
+      "title": "Full Lambda control (code execution)",
+      "description": "Full Lambda control (code execution)",
+      "base_severity": "HIGH",
+      "legacy_severity": "HIGH",
+      "capability": {
+        "resource_template": "arn:{partition}:lambda:*:{account}:function:*",
+        "mode": "covers",
+        "action_glob": "lambda:*"
+      },
+      "remediation": "Restrict to specific actions and resource ARNs"
+    },
+    {
+      "id": "DANGER-008",
+      "legacy_ids": [],
+      "title": "Can read all secrets",
+      "description": "Can read all secrets",
+      "base_severity": "MEDIUM",
+      "legacy_severity": "MEDIUM",
+      "capability": {
+        "resource_template": "arn:{partition}:secretsmanager:*:{account}:secret:*",
+        "mode": "covers",
+        "action_glob": "secretsmanager:GetSecretValue"
+      },
+      "remediation": "Restrict to specific actions and resource ARNs"
+    },
+    {
+      "id": "DANGER-009",
+      "legacy_ids": [],
+      "title": "Can read all SSM parameters (may contain secrets)",
+      "description": "Can read all SSM parameters (may contain secrets)",
+      "base_severity": "MEDIUM",
+      "legacy_severity": "MEDIUM",
+      "capability": {
+        "resource_template": "arn:{partition}:ssm:*:{account}:parameter/*",
+        "mode": "covers",
+        "actions_any": [
+          "ssm:GetParameter",
+          "ssm:GetParameters",
+          "ssm:GetParametersByPath"
+        ]
+      },
+      "remediation": "Restrict to specific actions and resource ARNs"
+    },
+    {
+      "id": "DANGER-010",
+      "legacy_ids": [],
+      "title": "Can decrypt with any KMS key",
+      "description": "Can decrypt with any KMS key",
+      "base_severity": "HIGH",
+      "legacy_severity": "HIGH",
+      "capability": {
+        "resource_template": "arn:{partition}:kms:*:{account}:key/*",
+        "mode": "covers",
+        "action_glob": "kms:Decrypt"
+      },
+      "remediation": "Restrict to specific actions and resource ARNs"
+    }
+  ]
+}

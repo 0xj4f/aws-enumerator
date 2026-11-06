@@ -1,0 +1,128 @@
+{
+  "<img src=x onerror=window.__aeXssCanary=1>": [
+    {
+      "Path": "/",
+      "GroupName": "demo-hostile-group",
+      "GroupId": "AGPAKMLKKPDNNKDEOMIEE",
+      "Arn": "arn:aws:iam::123456789012:group/demo-hostile-group",
+      "CreateDate": "2026-01-01 00:00:00+00:00"
+    }
+  ],
+  "\"><svg onload=window.__aeXssCanary=1>": [
+    {
+      "Path": "/",
+      "GroupName": "demo-hostile-group",
+      "GroupId": "AGPAKMLKKPDNNKDEOMIEE",
+      "Arn": "arn:aws:iam::123456789012:group/demo-hostile-group",
+      "CreateDate": "2026-01-01 00:00:00+00:00"
+    }
+  ],
+  "</script><script>window.__aeXssCanary=1</script>": [
+    {
+      "Path": "/",
+      "GroupName": "demo-hostile-group",
+      "GroupId": "AGPAKMLKKPDNNKDEOMIEE",
+      "Arn": "arn:aws:iam::123456789012:group/demo-hostile-group",
+      "CreateDate": "2026-01-01 00:00:00+00:00"
+    }
+  ],
+  "javascript:window.__aeXssCanary=1": [
+    {
+      "Path": "/",
+      "GroupName": "demo-hostile-group",
+      "GroupId": "AGPAKMLKKPDNNKDEOMIEE",
+      "Arn": "arn:aws:iam::123456789012:group/demo-hostile-group",
+      "CreateDate": "2026-01-01 00:00:00+00:00"
+    }
+  ],
+  "' onmouseover='window.__aeXssCanary=1' x='": [
+    {
+      "Path": "/",
+      "GroupName": "demo-hostile-group",
+      "GroupId": "AGPAKMLKKPDNNKDEOMIEE",
+      "Arn": "arn:aws:iam::123456789012:group/demo-hostile-group",
+      "CreateDate": "2026-01-01 00:00:00+00:00"
+    }
+  ],
+  "\" onfocus=\"window.__aeXssCanary=1\" autofocus=\"": [
+    {
+      "Path": "/",
+      "GroupName": "demo-hostile-group",
+      "GroupId": "AGPAKMLKKPDNNKDEOMIEE",
+      "Arn": "arn:aws:iam::123456789012:group/demo-hostile-group",
+      "CreateDate": "2026-01-01 00:00:00+00:00"
+    }
+  ],
+  "demo\\\\path\\\"quote\\'single": [
+    {
+      "Path": "/",
+      "GroupName": "demo-hostile-group",
+      "GroupId": "AGPAKMLKKPDNNKDEOMIEE",
+      "Arn": "arn:aws:iam::123456789012:group/demo-hostile-group",
+      "CreateDate": "2026-01-01 00:00:00+00:00"
+    }
+  ],
+  "${window.__aeXssCanary=1}": [
+    {
+      "Path": "/",
+      "GroupName": "demo-hostile-group",
+      "GroupId": "AGPAKMLKKPDNNKDEOMIEE",
+      "Arn": "arn:aws:iam::123456789012:group/demo-hostile-group",
+      "CreateDate": "2026-01-01 00:00:00+00:00"
+    }
+  ],
+  "{{constructor.constructor('window.__aeXssCanary=1')()}}": [
+    {
+      "Path": "/",
+      "GroupName": "demo-hostile-group",
+      "GroupId": "AGPAKMLKKPDNNKDEOMIEE",
+      "Arn": "arn:aws:iam::123456789012:group/demo-hostile-group",
+      "CreateDate": "2026-01-01 00:00:00+00:00"
+    }
+  ],
+  "demo\u202e\u200bunicode\u2028line": [
+    {
+      "Path": "/",
+      "GroupName": "demo-hostile-group",
+      "GroupId": "AGPAKMLKKPDNNKDEOMIEE",
+      "Arn": "arn:aws:iam::123456789012:group/demo-hostile-group",
+      "CreateDate": "2026-01-01 00:00:00+00:00"
+    }
+  ],
+  "constructor": [
+    {
+      "Path": "/",
+      "GroupName": "demo-hostile-group",
+      "GroupId": "AGPAKMLKKPDNNKDEOMIEE",
+      "Arn": "arn:aws:iam::123456789012:group/demo-hostile-group",
+      "CreateDate": "2026-01-01 00:00:00+00:00"
+    }
+  ],
+  "__proto__": [
+    {
+      "Path": "/",
+      "GroupName": "demo-hostile-group",
+      "GroupId": "AGPAKMLKKPDNNKDEOMIEE",
+      "Arn": "arn:aws:iam::123456789012:group/demo-hostile-group",
+      "CreateDate": "2026-01-01 00:00:00+00:00"
+    }
+  ],
+  "hasOwnProperty": [
+    {
+      "Path": "/",
+      "GroupName": "demo-hostile-group",
+      "GroupId": "AGPAKMLKKPDNNKDEOMIEE",
+      "Arn": "arn:aws:iam::123456789012:group/demo-hostile-group",
+      "CreateDate": "2026-01-01 00:00:00+00:00"
+    }
+  ],
+  "toString": [
+    {
+      "Path": "/",
+      "GroupName": "demo-hostile-group",
+      "GroupId": "AGPAKMLKKPDNNKDEOMIEE",
+      "Arn": "arn:aws:iam::123456789012:group/demo-hostile-group",
+      "CreateDate": "2026-01-01 00:00:00+00:00"
+    }
+  ]
+}

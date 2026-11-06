@@ -1,0 +1,40 @@
+[
+  {
+    "Arn": "arn:aws:ssm:eu-west-2:111122223333:document/demo-patch-baseline",
+    "DocumentFormat": "YAML",
+    "DocumentType": "Automation",
+    "DocumentVersion": "3",
+    "Name": "demo-patch-baseline",
+    "PlatformTypes": [
+      "Linux"
+    ],
+    "Public": false,
+    "SharedAccounts": [
+      "999999999999"
+    ]
+  },
+  {
+    "Arn": "arn:aws:ssm:eu-west-2:111122223333:document/demo-private-doc",
+    "DocumentFormat": "JSON",
+    "DocumentType": "Command",
+    "DocumentVersion": "1",
+    "Name": "demo-private-doc",
+    "PlatformTypes": [
+      "Linux"
+    ],
+    "Public": false,
+    "SharedAccounts": []
+  },
+  {
+    "Arn": "arn:aws:ssm:eu-west-2:111122223333:document/demo-run-shell",
+    "DocumentFormat": "JSON",
+    "DocumentType": "Command",
+    "DocumentVersion": "1",
+    "Name": "demo-run-shell",
+    "PlatformTypes": [
+      "Linux"
+    ],
+    "Public": true,
+    "SharedAccounts": []
+  }
+]

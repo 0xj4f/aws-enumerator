@@ -1,0 +1,88 @@
+{
+  "description": "Edge types the d13c215 engine wrote into each legacy relationship file, collected from the retired tests/golden/legacy/** characterisation goldens (Wave 0, d13c215 analyze() on every committed scenario tree and the --all main() run) before they were removed in Wave 3a (DECISIONS.md D-53). tests/python/engine/core/test_contracts_engine.py checks that edge_types.py maps every one of them.",
+  "files": {
+    "compute_relationships.json": [
+      "CAN_MODIFY",
+      "USES_ROLE"
+    ],
+    "ec2_relationships.json": [
+      "CAN_CONNECT",
+      "CAN_LAUNCH",
+      "EC2_FULL_ACCESS",
+      "HAS_SG",
+      "INSTANCE_ROLE",
+      "SG_ALLOWS_FROM"
+    ],
+    "extra_relationships.json": [
+      "EBS_ENCRYPTED_BY",
+      "EBS_SHARED_CROSS_ACCOUNT",
+      "EBS_SHARED_PUBLIC",
+      "EXPOSES",
+      "POOL_AUTH_ROLE",
+      "POOL_UNAUTH_ROLE"
+    ],
+    "k8s_relationships.json": [
+      "BOUND_TO",
+      "CLUSTER_ROLE",
+      "EXPOSES",
+      "IN_CLUSTER",
+      "IRSA_BRIDGE",
+      "MOUNTS_SECRET",
+      "NODE_ROLE",
+      "RUNS_AS",
+      "SELECTS"
+    ],
+    "kms_relationships.json": [
+      "CAN_ADMIN_KEY",
+      "CAN_DECRYPT",
+      "KMS_GRANT",
+      "KMS_GRANTS_CROSS_ACCOUNT",
+      "KMS_GRANTS_PUBLIC"
+    ],
+    "lambda_relationships.json": [
+      "CAN_INVOKE",
+      "CAN_UPDATE_CODE",
+      "LAMBDA_GRANTS_CROSS_ACCOUNT",
+      "LAMBDA_GRANTS_PUBLIC",
+      "USES_ROLE"
+    ],
+    "messaging_relationships.json": [
+      "CAN_ADMIN_MSG",
+      "CAN_RECEIVE",
+      "CAN_SEND",
+      "MSG_GRANTS_CROSS_ACCOUNT",
+      "MSG_GRANTS_PUBLIC"
+    ],
+    "newsurface_relationships.json": [
+      "CAN_READ_TABLE",
+      "CAN_WRITE_TABLE",
+      "DDB_GRANTS_CROSS_ACCOUNT",
+      "DDB_GRANTS_PUBLIC",
+      "ECR_GRANTS_CROSS_ACCOUNT",
+      "ECR_GRANTS_PUBLIC",
+      "INVOKES",
+      "RDS_ENCRYPTED_BY"
+    ],
+    "s3_relationships.json": [
+      "CAN_READ",
+      "CAN_WRITE",
+      "ENCRYPTED_BY",
+      "FULL_ACCESS",
+      "GRANTS_ACCESS",
+      "GRANTS_CROSS_ACCOUNT",
+      "GRANTS_PUBLIC",
+      "NOTIFIES"
+    ],
+    "secrets_relationships.json": [
+      "CAN_READ_PARAM",
+      "CAN_READ_SECRET",
+      "CAN_WRITE_SECRET",
+      "PARAM_ENCRYPTED_BY",
+      "SECRET_ENCRYPTED_BY",
+      "SECRET_GRANTS_ACCESS",
+      "SECRET_GRANTS_CROSS_ACCOUNT",
+      "SECRET_GRANTS_PUBLIC"
+    ]
+  },
+  "source": "tests/golden/legacy/**/analysis/*_relationships.json at d13c215 behaviour"
+}

@@ -1,0 +1,15 @@
+{
+  "FunctionArn": "arn:aws:lambda:eu-west-2:123456789012:function:demo-url-fn",
+  "FunctionName": "demo-url-fn",
+  "ResourcePolicy": {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Principal": "*",
+        "Action": "lambda:InvokeFunctionUrl",
+        "Resource": "arn:aws:lambda:eu-west-2:123456789012:function:demo-url-fn"
+      }
+    ]
+  }
+}

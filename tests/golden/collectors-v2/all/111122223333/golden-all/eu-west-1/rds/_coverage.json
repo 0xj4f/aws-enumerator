@@ -1,0 +1,104 @@
+{
+  "breakers": [],
+  "calls": [
+    {
+      "api": "rds:DescribeDBClusterSnapshots",
+      "count": 1,
+      "error_code": null,
+      "items": 0,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "rds:DescribeDBClusters",
+      "count": 1,
+      "error_code": null,
+      "items": 0,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "rds:DescribeDBInstances",
+      "count": 1,
+      "error_code": "AccessDenied",
+      "items": 0,
+      "not_configured": false,
+      "optional": false,
+      "pages": 0,
+      "primary": true,
+      "status": "denied"
+    },
+    {
+      "api": "rds:DescribeDBSnapshots",
+      "count": 1,
+      "error_code": "AccessDenied",
+      "items": 0,
+      "not_configured": false,
+      "optional": false,
+      "pages": 0,
+      "primary": false,
+      "status": "denied"
+    }
+  ],
+  "duration_seconds": "<stripped>",
+  "ended_at": "<stripped>",
+  "error": null,
+  "item_errors": [],
+  "item_errors_truncated": false,
+  "module": "rds",
+  "protocol": "ctx",
+  "region": "eu-west-1",
+  "schema_version": 1,
+  "sections": [
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "cluster_snapshots",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "clusters",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "instances",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "snapshots",
+      "status": "ok"
+    }
+  ],
+  "services": [
+    "rds"
+  ],
+  "started_at": "<stripped>",
+  "status": "denied",
+  "status_reason": "primary call denied: rds:DescribeDBInstances",
+  "summary": {
+    "calls": 4,
+    "denied": 2,
+    "error": 0,
+    "item_errors": 0,
+    "not_configured": 0,
+    "ok": 2,
+    "skipped": 0,
+    "throttled": 0
+  }
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "InstanceId": "i-0a1b2c3d4e5f6ac01",
+    "InstanceType": "t3.micro",
+    "State": "running",
+    "LaunchTime": "2026-01-01 00:00:00+00:00",
+    "AvailabilityZone": "eu-west-2a",
+    "AmiId": "ami-0a1b2c3d4e5f6abcd",
+    "PublicIpAddress": null,
+    "PrivateIpAddress": "10.0.1.10",
+    "SubnetId": "subnet-0a1b2c3d4e5f6aaaa",
+    "VpcId": "vpc-0a1b2c3d4e5f6aaaa",
+    "IamInstanceProfile": {},
+    "SecurityGroups": [],
+    "NetworkInterfaces": [
+      {
+        "NetworkInterfaceId": "eni-463b5441eeed62966",
+        "PrivateIpAddress": "10.0.1.10",
+        "SubnetId": "subnet-0a1b2c3d4e5f6aaaa",
+        "VpcId": "vpc-0a1b2c3d4e5f6aaaa",
+        "MacAddress": "02:00:00:00:00:01",
+        "Status": "in-use"
+      }
+    ],
+    "MetadataOptions": {
+      "HttpTokens": "required",
+      "HttpPutResponseHopLimit": 1
+    },
+    "Monitoring": "disabled",
+    "Tags": {}
+  }
+]

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" preserveAspectRatio="xMidYMid meet" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- AWS account: a building with a pediment and columns -->
+  <path d="M3 9 L12 4 L21 9 Z"/>
+  <path d="M3 20 H21"/>
+  <path d="M6 10 V18"/>
+  <path d="M10 10 V18"/>
+  <path d="M14 10 V18"/>
+  <path d="M18 10 V18"/>
+</svg>

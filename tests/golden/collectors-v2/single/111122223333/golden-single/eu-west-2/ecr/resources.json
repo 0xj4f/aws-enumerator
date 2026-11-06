@@ -1,0 +1,48 @@
+[
+  {
+    "Arn": "arn:aws:ecr:eu-west-2:111122223333:repository/demo-api",
+    "EncryptionType": "AES256",
+    "ImageTagMutability": "MUTABLE",
+    "KmsKey": null,
+    "Name": "demo-api",
+    "Policy": {
+      "Statement": [
+        {
+          "Action": [
+            "ecr:BatchGetImage",
+            "ecr:GetDownloadUrlForLayer"
+          ],
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::999999999999:root"
+          },
+          "Sid": "XAccountPull"
+        }
+      ],
+      "Version": "2012-10-17"
+    },
+    "PolicyStatus": "present",
+    "RegistryId": "111122223333",
+    "ScanOnPush": false,
+    "Type": "ecr"
+  },
+  {
+    "Arn": "arn:aws:ecr:eu-west-2:111122223333:repository/demo-base",
+    "CollectionErrors": [
+      {
+        "api": "ecr:GetRepositoryPolicy",
+        "error_code": "ThrottlingException",
+        "status": "throttled"
+      }
+    ],
+    "EncryptionType": "AES256",
+    "ImageTagMutability": "MUTABLE",
+    "KmsKey": null,
+    "Name": "demo-base",
+    "Policy": null,
+    "PolicyStatus": "error",
+    "RegistryId": "111122223333",
+    "ScanOnPush": false,
+    "Type": "ecr"
+  }
+]

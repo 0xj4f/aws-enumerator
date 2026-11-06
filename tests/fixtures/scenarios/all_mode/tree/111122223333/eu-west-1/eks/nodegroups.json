@@ -1,0 +1,11 @@
+{
+  "demo-eks-west1": [
+    {
+      "nodegroupName": "demo-ng-1",
+      "nodegroupArn": "arn:aws:eks:eu-west-1:111122223333:nodegroup/demo-eks-west1/demo-ng-1/abcd",
+      "clusterName": "demo-eks-west1",
+      "nodeRole": "arn:aws:iam::111122223333:role/demo-eks-node",
+      "status": "ACTIVE"
+    }
+  ]
+}

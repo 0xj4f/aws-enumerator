@@ -1,0 +1,127 @@
+[
+  {
+    "Arn": "arn:aws:route53:::hostedzone/Z0DEMOPRIVATE0002",
+    "CollectionErrors": [
+      {
+        "api": "route53:ListResourceRecordSets",
+        "error_code": "AccessDenied",
+        "status": "denied"
+      }
+    ],
+    "Id": "Z0DEMOPRIVATE0002",
+    "Name": "internal.example.com.",
+    "Private": true,
+    "RecordCount": null,
+    "Records": null,
+    "ResourceRecordSetCount": 3,
+    "TakeoverCandidates": null,
+    "Type": "route53zone"
+  },
+  {
+    "Arn": "arn:aws:route53:::hostedzone/Z0DEMOPUBLIC00001",
+    "Id": "Z0DEMOPUBLIC00001",
+    "Name": "example.com.",
+    "Private": false,
+    "RecordCount": 6,
+    "Records": [
+      {
+        "AliasTarget": null,
+        "CnameTarget": "d111111abcdef8.cloudfront.net",
+        "Name": "www.example.com.",
+        "SetIdentifier": null,
+        "Type": "CNAME",
+        "ValueCount": 1,
+        "Values": [
+          "d111111abcdef8.cloudfront.net"
+        ]
+      },
+      {
+        "AliasTarget": null,
+        "CnameTarget": "demo-old-site.s3-website-eu-west-1.amazonaws.com",
+        "Name": "old.example.com.",
+        "SetIdentifier": null,
+        "Type": "CNAME",
+        "ValueCount": 1,
+        "Values": [
+          "demo-old-site.s3-website-eu-west-1.amazonaws.com"
+        ]
+      },
+      {
+        "AliasTarget": null,
+        "CnameTarget": null,
+        "Name": "example.com.",
+        "SetIdentifier": null,
+        "Type": "NS",
+        "ValueCount": 2,
+        "Values": [
+          "ns-1.awsdns-01.org.",
+          "ns-2.awsdns-02.co.uk."
+        ]
+      },
+      {
+        "AliasTarget": null,
+        "CnameTarget": null,
+        "Name": "example.com.",
+        "SetIdentifier": null,
+        "Type": "SOA",
+        "ValueCount": 1,
+        "Values": null,
+        "ValuesOmitted": true
+      },
+      {
+        "AliasTarget": null,
+        "CnameTarget": null,
+        "Name": "example.com.",
+        "SetIdentifier": null,
+        "Type": "TXT",
+        "ValueCount": 1,
+        "Values": null,
+        "ValuesOmitted": true
+      },
+      {
+        "AliasTarget": {
+          "DNSName": "dualstack.demo-public-alb-1234567890.eu-west-2.elb.amazonaws.com.",
+          "EvaluateTargetHealth": true,
+          "HostedZoneId": "ZHURV8PSTC4K8"
+        },
+        "CnameTarget": null,
+        "Name": "app.example.com.",
+        "SetIdentifier": null,
+        "Type": "A",
+        "ValueCount": 0,
+        "Values": []
+      }
+    ],
+    "ResourceRecordSetCount": 6,
+    "TakeoverCandidates": [
+      {
+        "Alias": false,
+        "Claimable": "info",
+        "Kind": "cloudfront",
+        "Name": "www.example.com.",
+        "Private": false,
+        "Target": "d111111abcdef8.cloudfront.net",
+        "Type": "CNAME"
+      },
+      {
+        "Alias": false,
+        "Claimable": "likely",
+        "Kind": "s3-website",
+        "Name": "old.example.com.",
+        "Private": false,
+        "Target": "demo-old-site.s3-website-eu-west-1.amazonaws.com",
+        "Type": "CNAME"
+      },
+      {
+        "Alias": true,
+        "Claimable": "unlikely",
+        "Kind": "elb",
+        "Name": "app.example.com.",
+        "Private": false,
+        "Target": "dualstack.demo-public-alb-1234567890.eu-west-2.elb.amazonaws.com",
+        "Type": "A"
+      }
+    ],
+    "Type": "route53zone"
+  }
+]

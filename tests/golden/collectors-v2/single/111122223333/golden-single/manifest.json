@@ -1,0 +1,2165 @@
+{
+  "analysis": {
+    "dir": "analysis",
+    "duration_seconds": "<stripped>",
+    "engine": "v2",
+    "error": null,
+    "graph_schema_version": "1.0.0",
+    "started_at": "<stripped>",
+    "status": "ok"
+  },
+  "classification": "CONFIDENTIAL: pre-computed attack map of the target account; see HANDLING.txt",
+  "coverage_summary": {
+    "denied_apis": [
+      {
+        "api": "cloudfront:GetDistributionConfig",
+        "regions": [
+          "global"
+        ]
+      },
+      {
+        "api": "cognito-identity:GetIdentityPoolRoles",
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      {
+        "api": "ec2:DescribeSnapshotAttribute",
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      {
+        "api": "ecs:DescribeTaskDefinition",
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      {
+        "api": "eks:DescribeAccessEntry",
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      {
+        "api": "elbv2:DescribeTargetHealth",
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      {
+        "api": "iam:ListSSHPublicKeys",
+        "regions": [
+          "global"
+        ]
+      },
+      {
+        "api": "kms:DescribeKey",
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      {
+        "api": "kms:GetKeyPolicy",
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      {
+        "api": "kms:ListGrants",
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      {
+        "api": "lambda:ListFunctionUrlConfigs",
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      {
+        "api": "rds:DescribeDBSnapshotAttributes",
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      {
+        "api": "route53:ListResourceRecordSets",
+        "regions": [
+          "global"
+        ]
+      },
+      {
+        "api": "s3:GetBucketAcl",
+        "regions": [
+          "global"
+        ]
+      },
+      {
+        "api": "s3:GetBucketEncryption",
+        "regions": [
+          "global"
+        ]
+      },
+      {
+        "api": "s3:GetBucketNotificationConfiguration",
+        "regions": [
+          "global"
+        ]
+      },
+      {
+        "api": "s3:GetBucketOwnershipControls",
+        "regions": [
+          "global"
+        ]
+      },
+      {
+        "api": "s3:GetBucketPolicy",
+        "regions": [
+          "global"
+        ]
+      },
+      {
+        "api": "s3:GetBucketPolicyStatus",
+        "regions": [
+          "global"
+        ]
+      },
+      {
+        "api": "s3:GetPublicAccessBlock",
+        "regions": [
+          "global"
+        ]
+      },
+      {
+        "api": "secretsmanager:GetResourcePolicy",
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      {
+        "api": "sns:GetTopicAttributes",
+        "regions": [
+          "eu-west-2"
+        ]
+      },
+      {
+        "api": "sqs:GetQueueAttributes",
+        "regions": [
+          "eu-west-2"
+        ]
+      }
+    ],
+    "failed_modules": [],
+    "item_errors": 26,
+    "modules_by_status": {
+      "ok": 20,
+      "partial": 16
+    },
+    "partial_modules": [
+      "cloudfront@global",
+      "cognito@eu-west-2",
+      "ebs@eu-west-2",
+      "ecr@eu-west-2",
+      "ecs@eu-west-2",
+      "eks@eu-west-2",
+      "elb@eu-west-2",
+      "iam@global",
+      "kms@eu-west-2",
+      "lambda@eu-west-2",
+      "rds@eu-west-2",
+      "route53@global",
+      "s3@global",
+      "secretsmanager@eu-west-2",
+      "sns@eu-west-2",
+      "sqs@eu-west-2"
+    ],
+    "throttled_calls": 1
+  },
+  "files": [
+    {
+      "bytes": "<stripped>",
+      "path": "HANDLING.txt",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "analysis/compute_relationships.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "analysis/ec2_relationships.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "analysis/extra_relationships.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "analysis/findings.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "analysis/graph.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "analysis/k8s_relationships.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "analysis/kms_relationships.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "analysis/lambda_relationships.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "analysis/messaging_relationships.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "analysis/newsurface_relationships.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "analysis/permission_map.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "analysis/s3_relationships.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "analysis/secrets_relationships.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "analysis/summary.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "analysis/trust_relationships.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "eu-west-2/accessanalyzer/_coverage.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "eu-west-2/apigateway/_coverage.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "eu-west-2/cloudformation/_coverage.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "eu-west-2/cloudtrail/_coverage.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "eu-west-2/codebuild/_coverage.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "eu-west-2/cognito/_coverage.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "eu-west-2/config/_coverage.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "eu-west-2/dynamodb/_coverage.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "eu-west-2/ebs/_coverage.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "eu-west-2/ec2/_coverage.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "eu-west-2/ecr/_coverage.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "eu-west-2/ecs/_coverage.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "eu-west-2/eks/_coverage.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "eu-west-2/elb/_coverage.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "eu-west-2/flowlogs/_coverage.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "eu-west-2/glue/_coverage.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "eu-west-2/guardduty/_coverage.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "eu-west-2/k8s/_coverage.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "eu-west-2/kms/_coverage.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "eu-west-2/lambda/_coverage.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "eu-west-2/rds/_coverage.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "eu-west-2/sagemaker/_coverage.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "eu-west-2/secretsmanager/_coverage.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "eu-west-2/securityhub/_coverage.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "eu-west-2/sg/_coverage.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "eu-west-2/sns/_coverage.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "eu-west-2/sqs/_coverage.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "eu-west-2/ssm/_coverage.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "eu-west-2/vpc/_coverage.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "eu-west-2/waf/_coverage.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "global/cloudfront/_coverage.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "global/iam/_coverage.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "global/organizations/_coverage.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "global/route53/_coverage.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "global/s3/_coverage.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": "<stripped>",
+      "path": "global/waf_cloudfront/_coverage.json",
+      "sha256": "<stripped>"
+    },
+    {
+      "bytes": 10113,
+      "path": "global/iam/roles.json",
+      "sha256": "0d43735e59da522ff4382b41e1f9ccc0166af551c19c6258f48e3b88701db6ef"
+    },
+    {
+      "bytes": 1026,
+      "path": "eu-west-2/lambda/layers.json",
+      "sha256": "5755533ed2be8c3373010e6c3f34c4f9550560e447ccdb9f16a82dec19c73f83"
+    },
+    {
+      "bytes": 103,
+      "path": "eu-west-2/config/delivery_channels.json",
+      "sha256": "25e3617216ee6db8730142f45fdc22032fc1eb570ce74142af23ad80b9e817db"
+    },
+    {
+      "bytes": 1058,
+      "path": "eu-west-2/lambda/resource_policies/demo-processor-a700e72ba20b.json",
+      "sha256": "1e330216519eb472d085965716d93eb4b1beea5fa2b87b903b5ff4aaa2d6f105"
+    },
+    {
+      "bytes": 1059,
+      "path": "eu-west-2/cloudformation/resources.json",
+      "sha256": "c3b4c3fb7aa1cfac3ea28b2472767ee57d7b8539ef938ab4fe0fb81c39dd0cd4"
+    },
+    {
+      "bytes": 1102,
+      "path": "eu-west-2/k8s/demo-cluster/cluster_roles.json",
+      "sha256": "7af613b4aad78055cfe5740c2108ac82e203829b157ce15ab7b07d7595aeeaeb"
+    },
+    {
+      "bytes": 1139,
+      "path": "eu-west-2/k8s/demo-cluster/service_accounts.json",
+      "sha256": "5a02dcaa12314e24b96f1224ce29d5e642ceba25745e60f8da0e73d33b0e3709"
+    },
+    {
+      "bytes": 1150,
+      "path": "eu-west-2/ecr/resources.json",
+      "sha256": "91489c9a5bb920dedae8097d22e55568de2c2afa01ef54af64a7fa64453c84ff"
+    },
+    {
+      "bytes": 120,
+      "path": "global/s3/public_access_block/demo-data-bucket.json",
+      "sha256": "cb83e29507ea5301a4f6a4e8cb4111eb4bd72c14608f0685e1a66d27d9cc4386"
+    },
+    {
+      "bytes": 120,
+      "path": "global/s3/public_access_block/demo-logs-bucket.json",
+      "sha256": "cb83e29507ea5301a4f6a4e8cb4111eb4bd72c14608f0685e1a66d27d9cc4386"
+    },
+    {
+      "bytes": 1226,
+      "path": "global/iam/role_attached_policies.json",
+      "sha256": "0e7f548fa7f9747ca7a44207b14d57e111eae7bf0c9b2c8edc3521a3af0135d8"
+    },
+    {
+      "bytes": 1242,
+      "path": "global/iam/policy_documents/demo-app-policy-735b730f9d91.json",
+      "sha256": "1e64d10b79184b0a84a1229f226d8794e51a1e090831ce5e47a4b14d2c47675f"
+    },
+    {
+      "bytes": 1255,
+      "path": "eu-west-2/cloudtrail/trails.json",
+      "sha256": "0db26d1244f6f9f69f30890574bec7ff36eba52710579a48fa9f0ca2572002f0"
+    },
+    {
+      "bytes": 1256,
+      "path": "global/waf_cloudfront/web_acls.json",
+      "sha256": "66854e927a02d899b0ad340734b9644b6111b0d346cb7b5a3cecec60aa87e9ba"
+    },
+    {
+      "bytes": 1328,
+      "path": "eu-west-2/vpc/route_tables.json",
+      "sha256": "3f397144bbe7d6b1467b3bb0590b7a90f77ae1d2adcb6a0121025e358427b3f9"
+    },
+    {
+      "bytes": 1386,
+      "path": "eu-west-2/k8s/demo-cluster/services.json",
+      "sha256": "0a5548c0a7febd5c218e2243f634b3cb377937238c26033eb7f86a18b89d99b3"
+    },
+    {
+      "bytes": 143,
+      "path": "eu-west-2/vpc/network_firewalls.json",
+      "sha256": "95e7034e75c20f8de13e5e638a17170e166cb58cd99c052e7d4438179ef9d685"
+    },
+    {
+      "bytes": 144,
+      "path": "global/s3/account_public_access_block.json",
+      "sha256": "024081dee983fbe20764a95a84fc3935cfd8f8698de97b9eb77a8bcd524fb106"
+    },
+    {
+      "bytes": 148,
+      "path": "eu-west-2/codebuild/source_credentials.json",
+      "sha256": "9bbef731573c69372584d43fd547f288f23e13ebd4139335b4f9f309b61fcde4"
+    },
+    {
+      "bytes": 1486,
+      "path": "eu-west-2/ebs/resources.json",
+      "sha256": "d7af72d2403779008b27355118801c05d4b22a4499ec51c8e514d6b6fa2786e0"
+    },
+    {
+      "bytes": 1499,
+      "path": "global/iam/policies.json",
+      "sha256": "58b1e3082e0022e799e61f4e5eadbb4ebd91ae1a84997af0fcbd2264b8249ab9"
+    },
+    {
+      "bytes": 1516,
+      "path": "eu-west-2/eks/clusters.json",
+      "sha256": "a598e41ba6acd05ec64b420353ad4ab24a851a677995644f21640c9685ab6050"
+    },
+    {
+      "bytes": 153,
+      "path": "global/s3/encryption/demo-legacy-eu-bucket.json",
+      "sha256": "ed579bd9cbcfaebd1ad0d8f678546913b3aaf757d06e510e6b69de5912c76fb2"
+    },
+    {
+      "bytes": 153,
+      "path": "global/s3/encryption/demo-logs-bucket.json",
+      "sha256": "ed579bd9cbcfaebd1ad0d8f678546913b3aaf757d06e510e6b69de5912c76fb2"
+    },
+    {
+      "bytes": 153,
+      "path": "global/s3/encryption/demo-public-site.json",
+      "sha256": "ed579bd9cbcfaebd1ad0d8f678546913b3aaf757d06e510e6b69de5912c76fb2"
+    },
+    {
+      "bytes": 1560,
+      "path": "eu-west-2/codebuild/resources.json",
+      "sha256": "ef78b49b44bd5782b063310d9ec2c054d46470fa92b28756552bb94516ec7c27"
+    },
+    {
+      "bytes": 1560,
+      "path": "eu-west-2/sqs/resources.json",
+      "sha256": "c4a89b4914c9d60b58de2ddf275d0e4592f03af03b649297ba00df89d2df56f5"
+    },
+    {
+      "bytes": 1616,
+      "path": "eu-west-2/sagemaker/resources.json",
+      "sha256": "f88fb37edb0f6e05e9c8e28003332f4f989b526706b69a3b570c38c5552dea07"
+    },
+    {
+      "bytes": 1632,
+      "path": "global/iam/policy_documents/demo-ci-deploy-e45e56ba0522.json",
+      "sha256": "6a50634c7f9e01a7c7994922eb6df5ea8b167c42f5440e3ab5078feda1069658"
+    },
+    {
+      "bytes": 1747,
+      "path": "global/iam/policy_documents/demo-dev-policy-b82d0c20224a.json",
+      "sha256": "8f5469189cd9b9843501e092ec87e9b26fe91f93f115ee8fd62556fd9e2dd22f"
+    },
+    {
+      "bytes": 1871,
+      "path": "eu-west-2/ec2/launch_templates.json",
+      "sha256": "c10e9008b446f01b1467a391c62df30eb99b9a4d574368e6c7554830fd397921"
+    },
+    {
+      "bytes": 1921,
+      "path": "eu-west-2/cognito/resources.json",
+      "sha256": "a4d8e526dbb33a839234e03e8f21dd7a7a16441fcbb70bbc2fe7ba24e159aae5"
+    },
+    {
+      "bytes": 1959,
+      "path": "eu-west-2/sns/resources.json",
+      "sha256": "69ea8753cf7e9d35ca133a74ee751e2bc725550730e2cd74cb79706c93f2f7fc"
+    },
+    {
+      "bytes": 1986,
+      "path": "eu-west-2/eks/access_entries.json",
+      "sha256": "9ede6904c4aa06688024f9974f37ef83b2f985e6b87a640670ca362b5a9272e4"
+    },
+    {
+      "bytes": 204,
+      "path": "eu-west-2/vpc/internet_gateways.json",
+      "sha256": "11a77cb96debb8af840c87f79c983bd4022a18cd29979091529786aa96e6315d"
+    },
+    {
+      "bytes": 216,
+      "path": "global/iam/account_summary.json",
+      "sha256": "cbbf54f35d8b71af51cae0197fc373c5c9458fd4b0e90f5d8a7de54366e6c48d"
+    },
+    {
+      "bytes": 224,
+      "path": "global/s3/policies/demo-public-site.json",
+      "sha256": "bd61d376fe9b561235b1554883bb78d64abfe8c611a14793bca31a87dc270daf"
+    },
+    {
+      "bytes": 2280,
+      "path": "eu-west-2/k8s/demo-cluster/cluster_info.json",
+      "sha256": "52d0b0851bf00febb028e6d54bc8f628fa9d921ef526624b7238039d237404c2"
+    },
+    {
+      "bytes": 23,
+      "path": "global/s3/policy_status/demo-legacy-eu-bucket.json",
+      "sha256": "3be2f208a67c891388889736b3527ca150193c6c9e4ac747d4df4d4fdf496059"
+    },
+    {
+      "bytes": 23,
+      "path": "global/s3/policy_status/demo-public-site.json",
+      "sha256": "3be2f208a67c891388889736b3527ca150193c6c9e4ac747d4df4d4fdf496059"
+    },
+    {
+      "bytes": 231,
+      "path": "eu-west-2/ecr/registry.json",
+      "sha256": "49598398d919ca06a0f292501018906aed50124e57f7c3a49ba6110bf34f48d7"
+    },
+    {
+      "bytes": 24,
+      "path": "global/s3/policy_status/demo-data-bucket.json",
+      "sha256": "e0dc853b82b46adfb9ee6790b440ed36887e43597429d901b57660362aa1d668"
+    },
+    {
+      "bytes": 251,
+      "path": "eu-west-2/waf/logging_configs.json",
+      "sha256": "4a6174782c43de468eb533f3fb8eb9632885bb5e619772321c0ab1db369f0271"
+    },
+    {
+      "bytes": 2563,
+      "path": "global/organizations/policies.json",
+      "sha256": "ccbe353eec8fab2db55bff71acce388d03107b010a30e54d251a3b5465dc1900"
+    },
+    {
+      "bytes": 258,
+      "path": "global/s3/encryption/demo-data-bucket.json",
+      "sha256": "700df394343eff426022890e936875cc04e4a93862daecb0297cf3a4b7bf87df"
+    },
+    {
+      "bytes": 26,
+      "path": "global/iam/account_password_policy.json",
+      "sha256": "e27dc7b4209d9530b4aaa775f57f9320e06459fe34cca4e89d8a76f2419e113d"
+    },
+    {
+      "bytes": 2661,
+      "path": "eu-west-2/secretsmanager/secrets.json",
+      "sha256": "3c4286c9890c5e9daaf0e44001c77107ceb104a5e74858f4cbdeb691db2b2d8c"
+    },
+    {
+      "bytes": 2692,
+      "path": "eu-west-2/waf/web_acls.json",
+      "sha256": "f651f6306940623a3a9be8c2c8daab650ea4c0bcc9cfdce99197a168f109805d"
+    },
+    {
+      "bytes": 271,
+      "path": "eu-west-2/vpc/dhcp_options.json",
+      "sha256": "fc0fba8b7f56b0643bcf904806103f10eeace84cc62949103612bc4ed61b0a0e"
+    },
+    {
+      "bytes": 274,
+      "path": "global/iam/permission_boundaries/demo-ci.json",
+      "sha256": "bbca7c25daf41c5e97eac5edb22a24831e7b2fdf5aeb63590abd114fd7359398"
+    },
+    {
+      "bytes": 2945,
+      "path": "eu-west-2/kms/keys.json",
+      "sha256": "add39d63badaf70284e8473befb36d976d9ec1aa7ce37a4e214f5c99f8bc4b1b"
+    },
+    {
+      "bytes": 296,
+      "path": "global/iam/group_attached_policies.json",
+      "sha256": "8796dead91b3a55a1a5b52fb69d64fb9e1f7cbdc0d763ebb2b8fcdd564e164ff"
+    },
+    {
+      "bytes": 2993,
+      "path": "eu-west-2/rds/resources.json",
+      "sha256": "191048e1d789535f02be9dff38e1cd7d97c6decc539c9ba2e3afa425b43222ee"
+    },
+    {
+      "bytes": 3,
+      "path": "global/waf_cloudfront/logging_configs.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "bytes": 3,
+      "path": "global/waf_cloudfront/rule_groups.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "bytes": 302,
+      "path": "global/iam/permission_boundaries/demo-lambda-role.json",
+      "sha256": "ccd613e6fb8de47e199d1ea2c831f2b13f774645f98a214bbdf05e2e3e746700"
+    },
+    {
+      "bytes": 304,
+      "path": "global/iam/user_attached_policies.json",
+      "sha256": "8d274f57e494f6604477ead45f2e9f5519f05b243148af7becc239d765afd356"
+    },
+    {
+      "bytes": 307,
+      "path": "eu-west-2/lambda/event_source_mappings.json",
+      "sha256": "b80969aebbeb97fd5d81c10b690eec956c419bb5d93e38b183be4f9fe5b57b06"
+    },
+    {
+      "bytes": 307,
+      "path": "global/s3/acls/demo-public-site.json",
+      "sha256": "ef7a2fd21840fe8b09f11d68765f88cbd4cb3c2255e94ad88345ede008edb0fc"
+    },
+    {
+      "bytes": 3171,
+      "path": "eu-west-2/ec2/instances.json",
+      "sha256": "fb75813539e732bd1715aec569c88f0f9d9ebeff80d45da0de82e53de53a3af7"
+    },
+    {
+      "bytes": 323,
+      "path": "eu-west-2/ssm/parameters_shared_with_account.json",
+      "sha256": "20398d4f1b3a0ef9e323ce2445f3fba07798a38cfb911d19c1df6b0edd2783c8"
+    },
+    {
+      "bytes": 3278,
+      "path": "eu-west-2/sg/security_groups.json",
+      "sha256": "34d2401e98c63bd3a764787f8ac92975af0d2989380f23c22b09b898a79d810e"
+    },
+    {
+      "bytes": 3280,
+      "path": "global/route53/resources.json",
+      "sha256": "820c155bded804ecdf529401e03dcdb1f3a2206197fd6e0ecc833fcbfe981391"
+    },
+    {
+      "bytes": 3282,
+      "path": "eu-west-2/lambda/functions.json",
+      "sha256": "421bcc690b66ad34f324548e232657be676553293d52493bd7ed8c0aae06f7d4"
+    },
+    {
+      "bytes": 329,
+      "path": "eu-west-2/vpc/vpcs.json",
+      "sha256": "44338b365d36be9cde790cda8d8e063a8f06e2ccbbcc305e63afe75385ddcf53"
+    },
+    {
+      "bytes": 337,
+      "path": "eu-west-2/vpc/vpn_gateways.json",
+      "sha256": "ee13bc1e8577d56a7f8abb5b66e27a644f36a60cd0b2eb5a721c45e829a59684"
+    },
+    {
+      "bytes": 344,
+      "path": "global/waf_cloudfront/ip_sets.json",
+      "sha256": "8043d898360ad29c498cb23e747fbaf24a67960da82a652f40d07700c518aee4"
+    },
+    {
+      "bytes": 351,
+      "path": "eu-west-2/accessanalyzer/analyzers.json",
+      "sha256": "4559679163046edae9af254abbbea11eb9d315670f26ca77312c924bcc4d7bd2"
+    },
+    {
+      "bytes": 359,
+      "path": "global/iam/policy_documents/AdministratorAccess-bd08088c959d.json",
+      "sha256": "095ee217a1b1b37410c6d5b01984a7a04938af2e712a28f629b6cd7146bd3e8c"
+    },
+    {
+      "bytes": 365,
+      "path": "eu-west-2/waf/ip_sets.json",
+      "sha256": "92a9a98ff26d4f506b1153833106296a56386277577445530315ea2ad62c5c50"
+    },
+    {
+      "bytes": 3668,
+      "path": "global/iam/users.json",
+      "sha256": "8195fcb271d267bf2fd4f2e8a56e53e7c6324953303e5c9f72c483f5a84e8414"
+    },
+    {
+      "bytes": 371,
+      "path": "eu-west-2/vpc/nat_gateways.json",
+      "sha256": "b113f2faa83d63042c8904ad565e3127614f2c9d7af33d5cd2d985bf38ddfad2"
+    },
+    {
+      "bytes": 372,
+      "path": "global/iam/inline_policies/roles/demo-glue-role.json",
+      "sha256": "f565a740cacb1d3e61461af6871b7dba3c6fcb90ebaf55375ba7cf7c7bd2da3a"
+    },
+    {
+      "bytes": 3739,
+      "path": "eu-west-2/elb/resources.json",
+      "sha256": "caf0dd190bada3238144709e816a09be64dc72f13046cfd5b4435c3c9a2ed062"
+    },
+    {
+      "bytes": 376,
+      "path": "global/s3/acls/demo-data-bucket.json",
+      "sha256": "d9b39bbda472b5d0b562b8fa754cf52640ef49c9c6d6ddb2fd164b59d928a9fc"
+    },
+    {
+      "bytes": 378,
+      "path": "global/iam/inline_policies/roles/demo-cognito-unauth-role.json",
+      "sha256": "79121c609f12783c50d8a6676ee67eaf4f68506ad8d73cffd84cffd97fdc89f1"
+    },
+    {
+      "bytes": 380,
+      "path": "global/iam/inline_policies/users/demo-alice.json",
+      "sha256": "c16d84ad9a0d2467da77863e6dddcb73d33ee0305b1ab7d8b57d6156f2a9404e"
+    },
+    {
+      "bytes": 382,
+      "path": "eu-west-2/secretsmanager/resource_policies/demo_db-creds-57a31afda6aa.json",
+      "sha256": "8ea7a2603df5ed456d19fa7fc646f3715ebf2b082a484fdfc0d39d805b3ce94d"
+    },
+    {
+      "bytes": 3905,
+      "path": "global/iam/credential_report.json",
+      "sha256": "695b0f91768272171f19415cd560750e57c5372e1a85bcaa887b40befff4f813"
+    },
+    {
+      "bytes": 397,
+      "path": "global/iam/inline_policies/groups/demo-developers.json",
+      "sha256": "7c2302b456296f44d4a1863d24a3aaf1dd14642981f863ae579c3154a3dfcf8e"
+    },
+    {
+      "bytes": 398,
+      "path": "global/iam/inline_policies/roles/demo-ecs-task-role.json",
+      "sha256": "f40f95569d4e6faa682fb1ccb0afab91770d11033cb37a7063cb407048b7bfec"
+    },
+    {
+      "bytes": 404,
+      "path": "global/iam/user_group_memberships.json",
+      "sha256": "3ded648fe0c63406a439ae444a224fb1fe3f276496948b957aceff24dca3958d"
+    },
+    {
+      "bytes": 405,
+      "path": "global/iam/groups.json",
+      "sha256": "571770a13b090307d58cd0e6b10f15ed6dbc7f0edb5fb9830b667af6b3e5877e"
+    },
+    {
+      "bytes": 405,
+      "path": "global/iam/inline_policies/roles/demo-irsa-role.json",
+      "sha256": "9b58db3a771e595c65485ff6e4d70f80646a133e61222cff78613bf9e705a34a"
+    },
+    {
+      "bytes": 408,
+      "path": "eu-west-2/vpc/vpc_endpoints.json",
+      "sha256": "79790d75ec3643b87e9138a985e3f831ce1f19aca705c1757a5ec263c8850c22"
+    },
+    {
+      "bytes": 416,
+      "path": "eu-west-2/cloudtrail/event_data_stores.json",
+      "sha256": "7f0542619371ec30e78ac4cf9f77e54e5a40ccb86c22c6c416068f304f310dbb"
+    },
+    {
+      "bytes": 416,
+      "path": "eu-west-2/kms/key_policies/1111aaaa-0000-4000-8000-0000000000a3.json",
+      "sha256": "2667f65451935e80101495363988b42702b6cc32c17ae0935909b6bb376da508"
+    },
+    {
+      "bytes": 428,
+      "path": "global/s3/notifications/demo-data-bucket.json",
+      "sha256": "3645add1cdd9084291d2ed932eb282d45b6615aa36b024ddb4b8ae1779325646"
+    },
+    {
+      "bytes": 4388,
+      "path": "global/s3/buckets.json",
+      "sha256": "3b8193fc8fd9c69df4d9799fdd4c81f091eceb4bf6d1c74994fa74242d19d5f8"
+    },
+    {
+      "bytes": 439,
+      "path": "global/iam/policy_documents/AmazonEKSClusterPolicy-a33a37c7a711.json",
+      "sha256": "df33909442e018f4aa65a9c706a90f6529389483fbe396ee6ae82ee3f46e5c67"
+    },
+    {
+      "bytes": 443,
+      "path": "eu-west-2/k8s/demo-cluster/roles.json",
+      "sha256": "ef9509403211a3d9a422f1e6332be83bc2567aff83d39554ff54e0e9f2145555"
+    },
+    {
+      "bytes": 446,
+      "path": "eu-west-2/secretsmanager/resource_policies/demo_db-creds-34fb1b58abf1.json",
+      "sha256": "70e79c31289e04e11ddf6b20dcf69b9e703c4034c898a1fa12e30d8a72884a63"
+    },
+    {
+      "bytes": 446,
+      "path": "global/iam/policy_documents/AmazonEKSWorkerNodePolicy-58348d38cd7e.json",
+      "sha256": "8521f3c0070819dc894f15379f1a8de5770dbb6cf01912d0d1c87097ceed882a"
+    },
+    {
+      "bytes": 454,
+      "path": "eu-west-2/vpc/nacls.json",
+      "sha256": "ba75220cd22f1a51f05b5d309bf1e84dbc0a32383edbe7e30076bd55dcf4639e"
+    },
+    {
+      "bytes": 4570,
+      "path": "eu-west-2/k8s/demo-cluster/self_rules.json",
+      "sha256": "8dbf96eefdafe5270eba9367ac286e95941d4d826424122355875d4a4b46b14b"
+    },
+    {
+      "bytes": 469,
+      "path": "eu-west-2/ecr/registry_policy.json",
+      "sha256": "607244e7f032582ff6e3bde4282ff297115e2ac67b066cb7a91f5114fec49722"
+    },
+    {
+      "bytes": 474,
+      "path": "eu-west-2/vpc/vpc_peering_connections.json",
+      "sha256": "7733622a0efd35f42b76c962bb9498cc26c44966bc52ec622e65c98f478f8859"
+    },
+    {
+      "bytes": 475,
+      "path": "global/iam/policy_documents/ReadOnlyAccess-2a3bda39e155.json",
+      "sha256": "a7e457e8368aa16c4ddf9ae1a30d72d65c7d3e98b8b528f093ee6b0686820175"
+    },
+    {
+      "bytes": 477,
+      "path": "eu-west-2/eks/pod_identity_associations.json",
+      "sha256": "f9fdf7f118b48ef7df4f45c7a0a8004af3609209cbcbb505f4a8a1c67442fb97"
+    },
+    {
+      "bytes": 478,
+      "path": "eu-west-2/waf/rule_groups.json",
+      "sha256": "99b6057752f96156e14cd8548d27bcd25b480982d7a0558df60f0a078538f727"
+    },
+    {
+      "bytes": 480,
+      "path": "eu-west-2/k8s/demo-cluster/role_bindings.json",
+      "sha256": "7cea15229a995f38f6f1daec19857a0c1b7ce41f29db5e01d09cbe03664ee031"
+    },
+    {
+      "bytes": 480,
+      "path": "global/iam/inline_policies/users/demo-ci.json",
+      "sha256": "8a3e68892651a9392f6b3f3a3a501753df22434b1eca5ef18acdc2de55da18a8"
+    },
+    {
+      "bytes": 487,
+      "path": "global/organizations/ou_path.json",
+      "sha256": "3a756e3f1b140c0906b08c9c0f9462700e35e7e38ec52367e1d4637ba247efe3"
+    },
+    {
+      "bytes": 488,
+      "path": "eu-west-2/k8s/demo-cluster/aws_auth.json",
+      "sha256": "4f01729f31af2e2713fb0ac84ad31ca21a94f7be9438aafdb5800b1ae8571559"
+    },
+    {
+      "bytes": 49,
+      "path": "eu-west-2/ec2/account_settings.json",
+      "sha256": "153635c441ae2e9c648fbb8a4927fe65dfd6e0e3ce07f673977870bf5d4ed6db"
+    },
+    {
+      "bytes": 496,
+      "path": "eu-west-2/ecs/services.json",
+      "sha256": "4f12af8adbb2ae02f4da9d5adc4653de64e0455f16c4878560edc8b27e081b88"
+    },
+    {
+      "bytes": 510,
+      "path": "eu-west-2/vpc/subnets.json",
+      "sha256": "295b3ba74505e62d5dca478998b718a1ccd98efd2b3866b3e0ffbba39cc1abe4"
+    },
+    {
+      "bytes": 513,
+      "path": "eu-west-2/config/recorders.json",
+      "sha256": "369a457603da97a95107b1089be060114985d9a00dccf057e3ae1aff5077fc0c"
+    },
+    {
+      "bytes": 5142,
+      "path": "eu-west-2/k8s/demo-cluster/pods.json",
+      "sha256": "961ff21654738cafeb94de6c758362d7b4867df7c47223f85d47ad01417a5567"
+    },
+    {
+      "bytes": 534,
+      "path": "global/s3/acls/demo-logs-bucket.json",
+      "sha256": "865c0b2fa30aad26ae008e4c2bfa9eba8eb208bddea230f229056bc78ac331c4"
+    },
+    {
+      "bytes": 5589,
+      "path": "eu-west-2/apigateway/resources.json",
+      "sha256": "46c26ef490f37918d2284f693507647bbfaca7d3341a25542f45164dc5dc473f"
+    },
+    {
+      "bytes": 560,
+      "path": "global/organizations/organization.json",
+      "sha256": "2ba4fc1d859b120f0d5de531c73ea87bc9c2434d7a3ab270709d4f3c946d7113"
+    },
+    {
+      "bytes": 564,
+      "path": "eu-west-2/securityhub/hub.json",
+      "sha256": "fd41c81aa9ff4b9d5fc217734a6b6422c3336e159e6f936794062fbbbbc46c53"
+    },
+    {
+      "bytes": 585,
+      "path": "eu-west-2/k8s/demo-cluster/nodes.json",
+      "sha256": "0b593afe987460420d0247f9997d4397908ed0d1e54e9bbaaf9afd510f17b256"
+    },
+    {
+      "bytes": 585,
+      "path": "eu-west-2/lambda/resource_policies/demo-layered-fe4d7d1696e7.json",
+      "sha256": "2d227ac7982e0151ccc0eed108dc1c84b798ca9d2bf059a5cdc74949b3b0cd40"
+    },
+    {
+      "bytes": 586,
+      "path": "eu-west-2/eks/fargate_profiles.json",
+      "sha256": "aca8ccd97b8d573bade671a686cd7a70df097635b1cd62b56085fc303ba2e9a2"
+    },
+    {
+      "bytes": 594,
+      "path": "eu-west-2/glue/resources.json",
+      "sha256": "930eb3ead8c7a7ec41d3afa79a85c7f8b36a405c69b84cfc7c8159211e525617"
+    },
+    {
+      "bytes": 618,
+      "path": "eu-west-2/eks/nodegroups.json",
+      "sha256": "0642e81bfbbcfa912c0a05cf42e2229467dce4f220b5836ca7fc9d890ebef0b9"
+    },
+    {
+      "bytes": 631,
+      "path": "global/s3/policies/demo-data-bucket.json",
+      "sha256": "1a5753c74078f662862782d668636eb85f73db7a9d9a6e9effdc164c56e0a094"
+    },
+    {
+      "bytes": 6319,
+      "path": "global/cloudfront/distributions.json",
+      "sha256": "e0272f98eb9131dfb4611bfad1b6d8a48fb32842268f7d5c4a33a3f7e7381865"
+    },
+    {
+      "bytes": 636,
+      "path": "eu-west-2/k8s/demo-cluster/namespaces.json",
+      "sha256": "40b12563e0a3071bef61d9b25ef6e1f7f1a7756600df6951785fb9a20fddb9e9"
+    },
+    {
+      "bytes": 639,
+      "path": "global/iam/inline_policies/roles/demo-lambda-role.json",
+      "sha256": "8a16168a60b28c9c5128ffe21e5cee49cfd11b71a06ff9360b3c795174bcc50e"
+    },
+    {
+      "bytes": 653,
+      "path": "eu-west-2/vpc/transit_gateways.json",
+      "sha256": "616f9d62db50aa7c159d09c471308dd5fdf29215ef66931d59ec0275911fee58"
+    },
+    {
+      "bytes": 669,
+      "path": "eu-west-2/lambda/resource_policies/demo-internal_live-813723fe108e.json",
+      "sha256": "18e5bea2e56d626821eb184556d0c1bf811e8f12b55984fc46bd990ab1f5b53e"
+    },
+    {
+      "bytes": 674,
+      "path": "eu-west-2/ec2/elastic_ips.json",
+      "sha256": "8c7957375349eec5205779253688133cc65b2881a05e31747f745dd3d4aa441c"
+    },
+    {
+      "bytes": 683,
+      "path": "eu-west-2/ssm/managed_instances.json",
+      "sha256": "a573239f25ccbd171d137d5a3a819fa66170e18b5b1db19659ce14d3c81981cb"
+    },
+    {
+      "bytes": 695,
+      "path": "eu-west-2/kms/key_policies/1111aaaa-0000-4000-8000-0000000000a1.json",
+      "sha256": "973249717939c00e8df8e74775b0c3df33cd16eded0cb2e6e455e5788ad384c1"
+    },
+    {
+      "bytes": 724,
+      "path": "global/iam/policy_documents/demo-broken-policy-5f3ecb85c62b.json",
+      "sha256": "c8d15592a41f8d39889c96a0f9674fcd816e6ab50dabd3641eb6d2d28a363e63"
+    },
+    {
+      "bytes": 73,
+      "path": "global/s3/ownership_controls/demo-legacy-eu-bucket.json",
+      "sha256": "aeb02d121a4cffe056a9ff648f03fa7bbe828f124b104d8b76f905dad11ab279"
+    },
+    {
+      "bytes": 80,
+      "path": "global/s3/ownership_controls/demo-data-bucket.json",
+      "sha256": "83e55fb9e6297ae85c669b9b02ef9bda4f2982b6239e0dc9b0b08247fd20392d"
+    },
+    {
+      "bytes": 81,
+      "path": "global/s3/ownership_controls/demo-logs-bucket.json",
+      "sha256": "ede3cab8d32cc61943c6e97e45ab984334b4d211870a19c21c8c8a9b36c15ced"
+    },
+    {
+      "bytes": 811,
+      "path": "eu-west-2/ec2/images.json",
+      "sha256": "941cf70e95e5241cbe84dff2965c0f3265072cb4da3fc1a0e11f4ff31931ffa7"
+    },
+    {
+      "bytes": 812,
+      "path": "global/iam/inline_policies/roles/demo-app-role.json",
+      "sha256": "5c29f3b9494f78c022465056eb752f130737364d732b9556778dbad0205b05eb"
+    },
+    {
+      "bytes": 818,
+      "path": "eu-west-2/vpc/transit_gateway_attachments.json",
+      "sha256": "4115ffa9ffa09f8f08c0e9d893b2bb0a954fabb019b092a78fb6d282273846e7"
+    },
+    {
+      "bytes": 849,
+      "path": "eu-west-2/vpc/vpn_connections.json",
+      "sha256": "95791e446f74b2d387813e10ee832de3d8bfffe9eb1a4862062f9c5c7b24ac53"
+    },
+    {
+      "bytes": 860,
+      "path": "eu-west-2/guardduty/detectors.json",
+      "sha256": "dfb622cc5e1103e85082ab8a4943283c052a4a28dfee25e03b23f5848fb852b2"
+    },
+    {
+      "bytes": 863,
+      "path": "eu-west-2/eks/addons.json",
+      "sha256": "bbb2f8e2223532a88e50d99b0843832d63aded53eb291f1d671de90bc09cbb81"
+    },
+    {
+      "bytes": 87,
+      "path": "eu-west-2/ebs/account_settings.json",
+      "sha256": "d0f593f062205a5a6a6245830269c11859ad82cdf06de0799e1a6523e3402887"
+    },
+    {
+      "bytes": 882,
+      "path": "eu-west-2/k8s/demo-cluster/ingresses.json",
+      "sha256": "8b570772c728629094b7bb36f68814aeecdbe3729b37ad65d3e1406f0dbae141"
+    },
+    {
+      "bytes": 902,
+      "path": "eu-west-2/vpc/managed_prefix_lists.json",
+      "sha256": "02a5cbf3f8d0174ca73943726bc97af62df57e216e8a2b924d11dc3deeee268d"
+    },
+    {
+      "bytes": 905,
+      "path": "eu-west-2/k8s/demo-cluster/cluster_role_bindings.json",
+      "sha256": "326091086ca9f7ea4ed9f61999e79ce87bc3ca95b66e6d7960ed4abd4ac1c3dd"
+    },
+    {
+      "bytes": 917,
+      "path": "eu-west-2/flowlogs/flowlogs.json",
+      "sha256": "1f6ca896d4c078675ef196d5807585d2ddb977364856bcb54db01779d169f6d5"
+    },
+    {
+      "bytes": 918,
+      "path": "eu-west-2/ssm/documents.json",
+      "sha256": "0f65f1665f6df26dda2d8814b3017537d32b7900cf3a1cce07746386c98cf53d"
+    },
+    {
+      "bytes": 925,
+      "path": "eu-west-2/ecs/resources.json",
+      "sha256": "b9be0a5b1fc9eeafd53bc7a4a6e5851299782b007fa2c4958b61f20bbd134092"
+    },
+    {
+      "bytes": 929,
+      "path": "eu-west-2/ssm/parameters.json",
+      "sha256": "f7c00700dc98c49480f3131d66b467a1576d3fbb7c6cbd5663cd404addaef245"
+    },
+    {
+      "bytes": 960,
+      "path": "global/iam/identity_providers.json",
+      "sha256": "11554f793d27fe7f4d8dc651b12214dbb9dfa3a8087258c87dedf934f9144b71"
+    },
+    {
+      "bytes": 976,
+      "path": "eu-west-2/dynamodb/resources.json",
+      "sha256": "670f97b2ccb583a94f22d0ba1c67944a9727b717ad25696b6dbb3b6bcadc79e4"
+    },
+    {
+      "bytes": 993,
+      "path": "global/iam/instance_profiles.json",
+      "sha256": "35841ffff13c10d9367d37346aad1e4af2fa5a8e7a26ee40dc3a7bf3fee648ce"
+    }
+  ],
+  "modules": [
+    {
+      "coverage": {
+        "calls": 1,
+        "denied": 0,
+        "error": 0,
+        "item_errors": 0,
+        "not_configured": 0,
+        "ok": 1,
+        "skipped": 0,
+        "throttled": 0
+      },
+      "dir": "eu-west-2/accessanalyzer",
+      "duration_seconds": "<stripped>",
+      "ended_at": "<stripped>",
+      "error": null,
+      "name": "accessanalyzer",
+      "region": "eu-west-2",
+      "resumed": false,
+      "scope": "regional",
+      "started_at": "<stripped>",
+      "status": "ok",
+      "status_reason": null,
+      "throttle_events": 0
+    },
+    {
+      "coverage": {
+        "calls": 1,
+        "denied": 0,
+        "error": 0,
+        "item_errors": 0,
+        "not_configured": 0,
+        "ok": 1,
+        "skipped": 0,
+        "throttled": 0
+      },
+      "dir": "eu-west-2/flowlogs",
+      "duration_seconds": "<stripped>",
+      "ended_at": "<stripped>",
+      "error": null,
+      "name": "flowlogs",
+      "region": "eu-west-2",
+      "resumed": false,
+      "scope": "regional",
+      "started_at": "<stripped>",
+      "status": "ok",
+      "status_reason": null,
+      "throttle_events": 0
+    },
+    {
+      "coverage": {
+        "calls": 14,
+        "denied": 0,
+        "error": 0,
+        "item_errors": 0,
+        "not_configured": 0,
+        "ok": 14,
+        "skipped": 0,
+        "throttled": 0
+      },
+      "dir": "global/organizations",
+      "duration_seconds": "<stripped>",
+      "ended_at": "<stripped>",
+      "error": null,
+      "name": "organizations",
+      "region": "global",
+      "resumed": false,
+      "scope": "global",
+      "started_at": "<stripped>",
+      "status": "ok",
+      "status_reason": null,
+      "throttle_events": 0
+    },
+    {
+      "coverage": {
+        "calls": 14,
+        "denied": 3,
+        "error": 0,
+        "item_errors": 3,
+        "not_configured": 0,
+        "ok": 10,
+        "skipped": 1,
+        "throttled": 0
+      },
+      "dir": "eu-west-2/kms",
+      "duration_seconds": "<stripped>",
+      "ended_at": "<stripped>",
+      "error": null,
+      "name": "kms",
+      "region": "eu-west-2",
+      "resumed": false,
+      "scope": "regional",
+      "started_at": "<stripped>",
+      "status": "partial",
+      "status_reason": "kms:DescribeKey denied (+2 more)",
+      "throttle_events": 0
+    },
+    {
+      "coverage": {
+        "calls": 15,
+        "denied": 0,
+        "error": 0,
+        "item_errors": 0,
+        "not_configured": 0,
+        "ok": 15,
+        "skipped": 0,
+        "throttled": 0
+      },
+      "dir": "eu-west-2/k8s",
+      "duration_seconds": "<stripped>",
+      "ended_at": "<stripped>",
+      "error": null,
+      "name": "k8s",
+      "region": "eu-west-2",
+      "resumed": false,
+      "scope": "k8s",
+      "started_at": "<stripped>",
+      "status": "ok",
+      "status_reason": null,
+      "throttle_events": 0
+    },
+    {
+      "coverage": {
+        "calls": 16,
+        "denied": 0,
+        "error": 0,
+        "item_errors": 0,
+        "not_configured": 0,
+        "ok": 16,
+        "skipped": 0,
+        "throttled": 0
+      },
+      "dir": "eu-west-2/apigateway",
+      "duration_seconds": "<stripped>",
+      "ended_at": "<stripped>",
+      "error": null,
+      "name": "apigateway",
+      "region": "eu-west-2",
+      "resumed": false,
+      "scope": "regional",
+      "started_at": "<stripped>",
+      "status": "ok",
+      "status_reason": null,
+      "throttle_events": 0
+    },
+    {
+      "coverage": {
+        "calls": 16,
+        "denied": 0,
+        "error": 0,
+        "item_errors": 0,
+        "not_configured": 0,
+        "ok": 16,
+        "skipped": 0,
+        "throttled": 0
+      },
+      "dir": "eu-west-2/vpc",
+      "duration_seconds": "<stripped>",
+      "ended_at": "<stripped>",
+      "error": null,
+      "name": "vpc",
+      "region": "eu-west-2",
+      "resumed": false,
+      "scope": "regional",
+      "started_at": "<stripped>",
+      "status": "ok",
+      "status_reason": null,
+      "throttle_events": 0
+    },
+    {
+      "coverage": {
+        "calls": 17,
+        "denied": 1,
+        "error": 0,
+        "item_errors": 1,
+        "not_configured": 3,
+        "ok": 16,
+        "skipped": 0,
+        "throttled": 0
+      },
+      "dir": "eu-west-2/lambda",
+      "duration_seconds": "<stripped>",
+      "ended_at": "<stripped>",
+      "error": null,
+      "name": "lambda",
+      "region": "eu-west-2",
+      "resumed": false,
+      "scope": "regional",
+      "started_at": "<stripped>",
+      "status": "partial",
+      "status_reason": "lambda:ListFunctionUrlConfigs denied",
+      "throttle_events": 0
+    },
+    {
+      "coverage": {
+        "calls": 18,
+        "denied": 1,
+        "error": 0,
+        "item_errors": 1,
+        "not_configured": 0,
+        "ok": 17,
+        "skipped": 0,
+        "throttled": 0
+      },
+      "dir": "eu-west-2/eks",
+      "duration_seconds": "<stripped>",
+      "ended_at": "<stripped>",
+      "error": null,
+      "name": "eks",
+      "region": "eu-west-2",
+      "resumed": false,
+      "scope": "regional",
+      "started_at": "<stripped>",
+      "status": "partial",
+      "status_reason": "eks:DescribeAccessEntry denied",
+      "throttle_events": 0
+    },
+    {
+      "coverage": {
+        "calls": 2,
+        "denied": 0,
+        "error": 0,
+        "item_errors": 0,
+        "not_configured": 0,
+        "ok": 2,
+        "skipped": 0,
+        "throttled": 0
+      },
+      "dir": "eu-west-2/glue",
+      "duration_seconds": "<stripped>",
+      "ended_at": "<stripped>",
+      "error": null,
+      "name": "glue",
+      "region": "eu-west-2",
+      "resumed": false,
+      "scope": "regional",
+      "started_at": "<stripped>",
+      "status": "ok",
+      "status_reason": null,
+      "throttle_events": 0
+    },
+    {
+      "coverage": {
+        "calls": 2,
+        "denied": 0,
+        "error": 0,
+        "item_errors": 0,
+        "not_configured": 0,
+        "ok": 2,
+        "skipped": 0,
+        "throttled": 0
+      },
+      "dir": "eu-west-2/guardduty",
+      "duration_seconds": "<stripped>",
+      "ended_at": "<stripped>",
+      "error": null,
+      "name": "guardduty",
+      "region": "eu-west-2",
+      "resumed": false,
+      "scope": "regional",
+      "started_at": "<stripped>",
+      "status": "ok",
+      "status_reason": null,
+      "throttle_events": 0
+    },
+    {
+      "coverage": {
+        "calls": 2,
+        "denied": 0,
+        "error": 0,
+        "item_errors": 0,
+        "not_configured": 0,
+        "ok": 2,
+        "skipped": 0,
+        "throttled": 0
+      },
+      "dir": "eu-west-2/securityhub",
+      "duration_seconds": "<stripped>",
+      "ended_at": "<stripped>",
+      "error": null,
+      "name": "securityhub",
+      "region": "eu-west-2",
+      "resumed": false,
+      "scope": "regional",
+      "started_at": "<stripped>",
+      "status": "ok",
+      "status_reason": null,
+      "throttle_events": 0
+    },
+    {
+      "coverage": {
+        "calls": 2,
+        "denied": 0,
+        "error": 0,
+        "item_errors": 0,
+        "not_configured": 0,
+        "ok": 2,
+        "skipped": 0,
+        "throttled": 0
+      },
+      "dir": "eu-west-2/sg",
+      "duration_seconds": "<stripped>",
+      "ended_at": "<stripped>",
+      "error": null,
+      "name": "sg",
+      "region": "eu-west-2",
+      "resumed": false,
+      "scope": "regional",
+      "started_at": "<stripped>",
+      "status": "ok",
+      "status_reason": null,
+      "throttle_events": 0
+    },
+    {
+      "coverage": {
+        "calls": 22,
+        "denied": 0,
+        "error": 0,
+        "item_errors": 0,
+        "not_configured": 0,
+        "ok": 22,
+        "skipped": 0,
+        "throttled": 0
+      },
+      "dir": "eu-west-2/waf",
+      "duration_seconds": "<stripped>",
+      "ended_at": "<stripped>",
+      "error": null,
+      "name": "waf",
+      "region": "eu-west-2",
+      "resumed": false,
+      "scope": "regional",
+      "started_at": "<stripped>",
+      "status": "ok",
+      "status_reason": null,
+      "throttle_events": 0
+    },
+    {
+      "coverage": {
+        "calls": 24,
+        "denied": 1,
+        "error": 0,
+        "item_errors": 1,
+        "not_configured": 1,
+        "ok": 23,
+        "skipped": 0,
+        "throttled": 0
+      },
+      "dir": "global/iam",
+      "duration_seconds": "<stripped>",
+      "ended_at": "<stripped>",
+      "error": null,
+      "name": "iam",
+      "region": "global",
+      "resumed": false,
+      "scope": "global",
+      "started_at": "<stripped>",
+      "status": "partial",
+      "status_reason": "iam:ListSSHPublicKeys denied",
+      "throttle_events": 0
+    },
+    {
+      "coverage": {
+        "calls": 3,
+        "denied": 0,
+        "error": 0,
+        "item_errors": 0,
+        "not_configured": 0,
+        "ok": 3,
+        "skipped": 0,
+        "throttled": 0
+      },
+      "dir": "eu-west-2/cloudformation",
+      "duration_seconds": "<stripped>",
+      "ended_at": "<stripped>",
+      "error": null,
+      "name": "cloudformation",
+      "region": "eu-west-2",
+      "resumed": false,
+      "scope": "regional",
+      "started_at": "<stripped>",
+      "status": "ok",
+      "status_reason": null,
+      "throttle_events": 0
+    },
+    {
+      "coverage": {
+        "calls": 3,
+        "denied": 0,
+        "error": 0,
+        "item_errors": 0,
+        "not_configured": 0,
+        "ok": 3,
+        "skipped": 0,
+        "throttled": 0
+      },
+      "dir": "eu-west-2/codebuild",
+      "duration_seconds": "<stripped>",
+      "ended_at": "<stripped>",
+      "error": null,
+      "name": "codebuild",
+      "region": "eu-west-2",
+      "resumed": false,
+      "scope": "regional",
+      "started_at": "<stripped>",
+      "status": "ok",
+      "status_reason": null,
+      "throttle_events": 0
+    },
+    {
+      "coverage": {
+        "calls": 3,
+        "denied": 0,
+        "error": 0,
+        "item_errors": 0,
+        "not_configured": 0,
+        "ok": 3,
+        "skipped": 0,
+        "throttled": 0
+      },
+      "dir": "eu-west-2/config",
+      "duration_seconds": "<stripped>",
+      "ended_at": "<stripped>",
+      "error": null,
+      "name": "config",
+      "region": "eu-west-2",
+      "resumed": false,
+      "scope": "regional",
+      "started_at": "<stripped>",
+      "status": "ok",
+      "status_reason": null,
+      "throttle_events": 0
+    },
+    {
+      "coverage": {
+        "calls": 3,
+        "denied": 1,
+        "error": 0,
+        "item_errors": 1,
+        "not_configured": 0,
+        "ok": 2,
+        "skipped": 0,
+        "throttled": 0
+      },
+      "dir": "global/cloudfront",
+      "duration_seconds": "<stripped>",
+      "ended_at": "<stripped>",
+      "error": null,
+      "name": "cloudfront",
+      "region": "global",
+      "resumed": false,
+      "scope": "global",
+      "started_at": "<stripped>",
+      "status": "partial",
+      "status_reason": "cloudfront:GetDistributionConfig denied",
+      "throttle_events": 0
+    },
+    {
+      "coverage": {
+        "calls": 3,
+        "denied": 1,
+        "error": 0,
+        "item_errors": 1,
+        "not_configured": 0,
+        "ok": 2,
+        "skipped": 0,
+        "throttled": 0
+      },
+      "dir": "global/route53",
+      "duration_seconds": "<stripped>",
+      "ended_at": "<stripped>",
+      "error": null,
+      "name": "route53",
+      "region": "global",
+      "resumed": false,
+      "scope": "global",
+      "started_at": "<stripped>",
+      "status": "partial",
+      "status_reason": "route53:ListResourceRecordSets denied",
+      "throttle_events": 0
+    },
+    {
+      "coverage": {
+        "calls": 4,
+        "denied": 0,
+        "error": 0,
+        "item_errors": 0,
+        "not_configured": 2,
+        "ok": 4,
+        "skipped": 0,
+        "throttled": 0
+      },
+      "dir": "eu-west-2/dynamodb",
+      "duration_seconds": "<stripped>",
+      "ended_at": "<stripped>",
+      "error": null,
+      "name": "dynamodb",
+      "region": "eu-west-2",
+      "resumed": false,
+      "scope": "regional",
+      "started_at": "<stripped>",
+      "status": "ok",
+      "status_reason": null,
+      "throttle_events": 0
+    },
+    {
+      "coverage": {
+        "calls": 4,
+        "denied": 1,
+        "error": 0,
+        "item_errors": 1,
+        "not_configured": 0,
+        "ok": 3,
+        "skipped": 0,
+        "throttled": 0
+      },
+      "dir": "eu-west-2/sqs",
+      "duration_seconds": "<stripped>",
+      "ended_at": "<stripped>",
+      "error": null,
+      "name": "sqs",
+      "region": "eu-west-2",
+      "resumed": false,
+      "scope": "regional",
+      "started_at": "<stripped>",
+      "status": "partial",
+      "status_reason": "sqs:GetQueueAttributes denied",
+      "throttle_events": 0
+    },
+    {
+      "coverage": {
+        "calls": 42,
+        "denied": 9,
+        "error": 0,
+        "item_errors": 9,
+        "not_configured": 4,
+        "ok": 27,
+        "skipped": 6,
+        "throttled": 0
+      },
+      "dir": "global/s3",
+      "duration_seconds": "<stripped>",
+      "ended_at": "<stripped>",
+      "error": null,
+      "name": "s3",
+      "region": "global",
+      "resumed": false,
+      "scope": "global",
+      "started_at": "<stripped>",
+      "status": "partial",
+      "status_reason": "s3:GetBucketPolicy denied (+8 more)",
+      "throttle_events": 0
+    },
+    {
+      "coverage": {
+        "calls": 5,
+        "denied": 0,
+        "error": 0,
+        "item_errors": 0,
+        "not_configured": 0,
+        "ok": 5,
+        "skipped": 0,
+        "throttled": 0
+      },
+      "dir": "eu-west-2/cloudtrail",
+      "duration_seconds": "<stripped>",
+      "ended_at": "<stripped>",
+      "error": null,
+      "name": "cloudtrail",
+      "region": "eu-west-2",
+      "resumed": false,
+      "scope": "regional",
+      "started_at": "<stripped>",
+      "status": "ok",
+      "status_reason": null,
+      "throttle_events": 0
+    },
+    {
+      "coverage": {
+        "calls": 5,
+        "denied": 0,
+        "error": 0,
+        "item_errors": 1,
+        "not_configured": 0,
+        "ok": 4,
+        "skipped": 0,
+        "throttled": 1
+      },
+      "dir": "eu-west-2/ecr",
+      "duration_seconds": "<stripped>",
+      "ended_at": "<stripped>",
+      "error": null,
+      "name": "ecr",
+      "region": "eu-west-2",
+      "resumed": false,
+      "scope": "regional",
+      "started_at": "<stripped>",
+      "status": "partial",
+      "status_reason": "ecr:GetRepositoryPolicy throttled",
+      "throttle_events": 1
+    },
+    {
+      "coverage": {
+        "calls": 5,
+        "denied": 1,
+        "error": 0,
+        "item_errors": 1,
+        "not_configured": 0,
+        "ok": 4,
+        "skipped": 0,
+        "throttled": 0
+      },
+      "dir": "eu-west-2/sns",
+      "duration_seconds": "<stripped>",
+      "ended_at": "<stripped>",
+      "error": null,
+      "name": "sns",
+      "region": "eu-west-2",
+      "resumed": false,
+      "scope": "regional",
+      "started_at": "<stripped>",
+      "status": "partial",
+      "status_reason": "sns:GetTopicAttributes denied",
+      "throttle_events": 0
+    },
+    {
+      "coverage": {
+        "calls": 6,
+        "denied": 1,
+        "error": 0,
+        "item_errors": 1,
+        "not_configured": 0,
+        "ok": 4,
+        "skipped": 1,
+        "throttled": 0
+      },
+      "dir": "eu-west-2/secretsmanager",
+      "duration_seconds": "<stripped>",
+      "ended_at": "<stripped>",
+      "error": null,
+      "name": "secretsmanager",
+      "region": "eu-west-2",
+      "resumed": false,
+      "scope": "regional",
+      "started_at": "<stripped>",
+      "status": "partial",
+      "status_reason": "secretsmanager:GetResourcePolicy denied",
+      "throttle_events": 0
+    },
+    {
+      "coverage": {
+        "calls": 7,
+        "denied": 0,
+        "error": 0,
+        "item_errors": 0,
+        "not_configured": 0,
+        "ok": 7,
+        "skipped": 0,
+        "throttled": 0
+      },
+      "dir": "eu-west-2/sagemaker",
+      "duration_seconds": "<stripped>",
+      "ended_at": "<stripped>",
+      "error": null,
+      "name": "sagemaker",
+      "region": "eu-west-2",
+      "resumed": false,
+      "scope": "regional",
+      "started_at": "<stripped>",
+      "status": "ok",
+      "status_reason": null,
+      "throttle_events": 0
+    },
+    {
+      "coverage": {
+        "calls": 7,
+        "denied": 0,
+        "error": 0,
+        "item_errors": 0,
+        "not_configured": 0,
+        "ok": 7,
+        "skipped": 0,
+        "throttled": 0
+      },
+      "dir": "eu-west-2/ssm",
+      "duration_seconds": "<stripped>",
+      "ended_at": "<stripped>",
+      "error": null,
+      "name": "ssm",
+      "region": "eu-west-2",
+      "resumed": false,
+      "scope": "regional",
+      "started_at": "<stripped>",
+      "status": "ok",
+      "status_reason": null,
+      "throttle_events": 0
+    },
+    {
+      "coverage": {
+        "calls": 7,
+        "denied": 0,
+        "error": 0,
+        "item_errors": 0,
+        "not_configured": 0,
+        "ok": 7,
+        "skipped": 0,
+        "throttled": 0
+      },
+      "dir": "global/waf_cloudfront",
+      "duration_seconds": "<stripped>",
+      "ended_at": "<stripped>",
+      "error": null,
+      "name": "waf_cloudfront",
+      "region": "global",
+      "resumed": false,
+      "scope": "global",
+      "started_at": "<stripped>",
+      "status": "ok",
+      "status_reason": null,
+      "throttle_events": 0
+    },
+    {
+      "coverage": {
+        "calls": 7,
+        "denied": 1,
+        "error": 0,
+        "item_errors": 1,
+        "not_configured": 0,
+        "ok": 6,
+        "skipped": 0,
+        "throttled": 0
+      },
+      "dir": "eu-west-2/ebs",
+      "duration_seconds": "<stripped>",
+      "ended_at": "<stripped>",
+      "error": null,
+      "name": "ebs",
+      "region": "eu-west-2",
+      "resumed": false,
+      "scope": "regional",
+      "started_at": "<stripped>",
+      "status": "partial",
+      "status_reason": "ec2:DescribeSnapshotAttribute denied",
+      "throttle_events": 0
+    },
+    {
+      "coverage": {
+        "calls": 8,
+        "denied": 0,
+        "error": 0,
+        "item_errors": 0,
+        "not_configured": 0,
+        "ok": 8,
+        "skipped": 0,
+        "throttled": 0
+      },
+      "dir": "eu-west-2/ec2",
+      "duration_seconds": "<stripped>",
+      "ended_at": "<stripped>",
+      "error": null,
+      "name": "ec2",
+      "region": "eu-west-2",
+      "resumed": false,
+      "scope": "regional",
+      "started_at": "<stripped>",
+      "status": "ok",
+      "status_reason": null,
+      "throttle_events": 0
+    },
+    {
+      "coverage": {
+        "calls": 8,
+        "denied": 1,
+        "error": 0,
+        "item_errors": 1,
+        "not_configured": 0,
+        "ok": 7,
+        "skipped": 0,
+        "throttled": 0
+      },
+      "dir": "eu-west-2/cognito",
+      "duration_seconds": "<stripped>",
+      "ended_at": "<stripped>",
+      "error": null,
+      "name": "cognito",
+      "region": "eu-west-2",
+      "resumed": false,
+      "scope": "regional",
+      "started_at": "<stripped>",
+      "status": "partial",
+      "status_reason": "cognito-identity:GetIdentityPoolRoles denied",
+      "throttle_events": 0
+    },
+    {
+      "coverage": {
+        "calls": 9,
+        "denied": 1,
+        "error": 0,
+        "item_errors": 1,
+        "not_configured": 0,
+        "ok": 8,
+        "skipped": 0,
+        "throttled": 0
+      },
+      "dir": "eu-west-2/ecs",
+      "duration_seconds": "<stripped>",
+      "ended_at": "<stripped>",
+      "error": null,
+      "name": "ecs",
+      "region": "eu-west-2",
+      "resumed": false,
+      "scope": "regional",
+      "started_at": "<stripped>",
+      "status": "partial",
+      "status_reason": "ecs:DescribeTaskDefinition denied",
+      "throttle_events": 0
+    },
+    {
+      "coverage": {
+        "calls": 9,
+        "denied": 1,
+        "error": 0,
+        "item_errors": 1,
+        "not_configured": 0,
+        "ok": 8,
+        "skipped": 0,
+        "throttled": 0
+      },
+      "dir": "eu-west-2/elb",
+      "duration_seconds": "<stripped>",
+      "ended_at": "<stripped>",
+      "error": null,
+      "name": "elb",
+      "region": "eu-west-2",
+      "resumed": false,
+      "scope": "regional",
+      "started_at": "<stripped>",
+      "status": "partial",
+      "status_reason": "elbv2:DescribeTargetHealth denied",
+      "throttle_events": 0
+    },
+    {
+      "coverage": {
+        "calls": 9,
+        "denied": 1,
+        "error": 0,
+        "item_errors": 1,
+        "not_configured": 0,
+        "ok": 8,
+        "skipped": 0,
+        "throttled": 0
+      },
+      "dir": "eu-west-2/rds",
+      "duration_seconds": "<stripped>",
+      "ended_at": "<stripped>",
+      "error": null,
+      "name": "rds",
+      "region": "eu-west-2",
+      "resumed": false,
+      "scope": "regional",
+      "started_at": "<stripped>",
+      "status": "partial",
+      "status_reason": "rds:DescribeDBSnapshotAttributes denied",
+      "throttle_events": 0
+    }
+  ],
+  "operator": {
+    "caller_arn": "arn:aws:sts::111122223333:assumed-role/demo-audit-role/demo-session",
+    "caller_arn_sha256": "7a18b73e393395404993976b2d9a7d66233d24540980d1f6a1acd14062245309",
+    "caller_user_id": "AROAEXAMPLEDEMOAUDIT01:demo-session",
+    "principal_arn": "arn:aws:iam::111122223333:role/demo-audit-role",
+    "principal_type": "assumed-role",
+    "redacted": false
+  },
+  "preflight": null,
+  "run": {
+    "argv": [
+      "--region",
+      "--run-id",
+      "collect",
+      "eu-west-2",
+      "golden-single"
+    ],
+    "duration_seconds": "<stripped>",
+    "ended_at": "<stripped>",
+    "exit_code": 2,
+    "global_source": null,
+    "kind": "collect",
+    "options": {
+      "concurrency": 3,
+      "credential_report": true,
+      "deny_breaker": 3,
+      "ebs_share_check": "cap:1000",
+      "ec2_userdata_check": false,
+      "ecs_max_revisions": 5,
+      "full_dns": false,
+      "iam_mode": "gaad",
+      "iam_user_details": true,
+      "k8s": true,
+      "k8s_auth": "eks-token",
+      "k8s_secrets": false,
+      "k8s_self_review": true,
+      "k8s_timeout": "5,60",
+      "keep_sensitive_metadata": false,
+      "lambda_versions": false,
+      "max_tier": 2,
+      "modules": [
+        "accessanalyzer",
+        "apigateway",
+        "cloudformation",
+        "cloudfront",
+        "cloudtrail",
+        "codebuild",
+        "cognito",
+        "config",
+        "dynamodb",
+        "ebs",
+        "ec2",
+        "ecr",
+        "ecs",
+        "eks",
+        "elb",
+        "flowlogs",
+        "glue",
+        "guardduty",
+        "iam",
+        "k8s",
+        "kms",
+        "lambda",
+        "organizations",
+        "rds",
+        "route53",
+        "s3",
+        "sagemaker",
+        "secretsmanager",
+        "securityhub",
+        "sg",
+        "sns",
+        "sqs",
+        "ssm",
+        "vpc",
+        "waf",
+        "waf_cloudfront"
+      ],
+      "rate_limit": {
+        "default_rps": 1000000.0,
+        "enabled": true,
+        "max_rps": null,
+        "overrides": {}
+      },
+      "redact_identity": false,
+      "regions_requested": [
+        "eu-west-2"
+      ],
+      "s3_subresources": "basic",
+      "skipped_modules": [],
+      "zip": false
+    },
+    "resumes": [],
+    "run_id": "golden-single",
+    "started_at": "<stripped>",
+    "status": "partial"
+  },
+  "schema_version": "2.0",
+  "target": {
+    "account_id": "111122223333",
+    "global_region": "us-east-1",
+    "home_region": "eu-west-2",
+    "partition": "aws",
+    "region_source": "explicit",
+    "regions": [
+      "eu-west-2"
+    ],
+    "regions_skipped": []
+  },
+  "tool": {
+    "boto3": "<stripped>",
+    "botocore": "<stripped>",
+    "git_sha": "000000000000",
+    "kubernetes": "<stripped>",
+    "name": "aws-enumerator",
+    "python": "<stripped>",
+    "version": "0.3.0"
+  }
+}

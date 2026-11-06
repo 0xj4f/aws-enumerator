@@ -1,0 +1,181 @@
+{
+  "breakers": [],
+  "calls": [
+    {
+      "api": "lambda:GetLayerVersionPolicy",
+      "count": 1,
+      "error_code": "ResourceNotFoundException",
+      "items": null,
+      "not_configured": true,
+      "optional": false,
+      "pages": 0,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "lambda:GetLayerVersionPolicy",
+      "count": 1,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "lambda:GetPolicy",
+      "count": 2,
+      "error_code": "ResourceNotFoundException",
+      "items": null,
+      "not_configured": true,
+      "optional": false,
+      "pages": 0,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "lambda:GetPolicy",
+      "count": 3,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 3,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "lambda:ListAliases",
+      "count": 3,
+      "error_code": null,
+      "items": 2,
+      "not_configured": false,
+      "optional": false,
+      "pages": 3,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "lambda:ListEventSourceMappings",
+      "count": 1,
+      "error_code": null,
+      "items": 1,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "lambda:ListFunctionUrlConfigs",
+      "count": 1,
+      "error_code": "AccessDeniedException",
+      "items": 0,
+      "not_configured": false,
+      "optional": false,
+      "pages": 0,
+      "primary": false,
+      "status": "denied"
+    },
+    {
+      "api": "lambda:ListFunctionUrlConfigs",
+      "count": 2,
+      "error_code": null,
+      "items": 2,
+      "not_configured": false,
+      "optional": false,
+      "pages": 2,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "lambda:ListFunctions",
+      "count": 1,
+      "error_code": null,
+      "items": 3,
+      "not_configured": false,
+      "optional": false,
+      "pages": 2,
+      "primary": true,
+      "status": "ok"
+    },
+    {
+      "api": "lambda:ListLayerVersions",
+      "count": 1,
+      "error_code": null,
+      "items": 2,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "lambda:ListLayers",
+      "count": 1,
+      "error_code": null,
+      "items": 1,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    }
+  ],
+  "duration_seconds": "<stripped>",
+  "ended_at": "<stripped>",
+  "error": null,
+  "item_errors": [
+    {
+      "api": "lambda:ListFunctionUrlConfigs",
+      "error_code": "AccessDeniedException",
+      "resource": "arn:aws:lambda:eu-west-2:111122223333:function:demo-layered",
+      "status": "denied"
+    }
+  ],
+  "item_errors_truncated": false,
+  "module": "lambda",
+  "protocol": "ctx",
+  "region": "eu-west-2",
+  "schema_version": 1,
+  "sections": [
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "event_source_mappings",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "functions",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "layers",
+      "status": "ok"
+    }
+  ],
+  "services": [
+    "lambda"
+  ],
+  "started_at": "<stripped>",
+  "status": "partial",
+  "status_reason": "lambda:ListFunctionUrlConfigs denied",
+  "summary": {
+    "calls": 17,
+    "denied": 1,
+    "error": 0,
+    "item_errors": 1,
+    "not_configured": 3,
+    "ok": 16,
+    "skipped": 0,
+    "throttled": 0
+  }
+}

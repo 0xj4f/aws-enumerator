@@ -1,0 +1,22 @@
+[
+  {
+    "Associations": [
+      {
+        "Main": true,
+        "RouteTableAssociationId": "rtbassoc-0dec000001a",
+        "RouteTableId": "rtb-0dec0ee57000001"
+      }
+    ],
+    "OwnerId": "111122223333",
+    "RouteTableId": "rtb-0dec0ee57000001",
+    "Routes": [
+      {
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": "igw-0dec00000000001",
+        "Origin": "CreateRoute",
+        "State": "active"
+      }
+    ],
+    "VpcId": "vpc-0dec000000000001"
+  }
+]

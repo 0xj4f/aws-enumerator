@@ -1,0 +1,86 @@
+{
+  "breakers": [],
+  "calls": [
+    {
+      "api": "ecr:DescribeRegistry",
+      "count": 1,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "ecr:DescribeRepositories",
+      "count": 1,
+      "error_code": null,
+      "items": 0,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": true,
+      "status": "ok"
+    },
+    {
+      "api": "ecr:GetRegistryPolicy",
+      "count": 1,
+      "error_code": "RegistryPolicyNotFoundException",
+      "items": null,
+      "not_configured": true,
+      "optional": false,
+      "pages": 0,
+      "primary": false,
+      "status": "ok"
+    }
+  ],
+  "duration_seconds": "<stripped>",
+  "ended_at": "<stripped>",
+  "error": null,
+  "item_errors": [],
+  "item_errors_truncated": false,
+  "module": "ecr",
+  "protocol": "ctx",
+  "region": "eu-west-1",
+  "schema_version": 1,
+  "sections": [
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "registry",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "registry_policy",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "repositories",
+      "status": "ok"
+    }
+  ],
+  "services": [
+    "ecr"
+  ],
+  "started_at": "<stripped>",
+  "status": "ok",
+  "status_reason": null,
+  "summary": {
+    "calls": 3,
+    "denied": 0,
+    "error": 0,
+    "item_errors": 0,
+    "not_configured": 1,
+    "ok": 3,
+    "skipped": 0,
+    "throttled": 0
+  }
+}

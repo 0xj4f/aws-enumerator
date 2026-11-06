@@ -1,0 +1,21 @@
+{
+  "Policy": {
+    "Statement": [
+      {
+        "Action": [
+          "ecr:CreateRepository",
+          "ecr:ReplicateImage"
+        ],
+        "Effect": "Allow",
+        "Principal": {
+          "AWS": "arn:aws:iam::999999999999:root"
+        },
+        "Resource": "arn:aws:ecr:eu-west-2:111122223333:repository/*",
+        "Sid": "ReplicateFromPartner"
+      }
+    ],
+    "Version": "2012-10-17"
+  },
+  "PolicyStatus": "present",
+  "RegistryId": "111122223333"
+}

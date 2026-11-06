@@ -1,0 +1,18 @@
+{
+  "UserName": "example-user",
+  "InlinePolicies": {
+    "p": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": "s3:GetObject",
+          "Resource": "*"
+        }
+      ]
+    },
+    "denied": {
+      "Error": "An error occurred (AccessDenied) when calling the GetUserPolicy operation: User: arn:aws:iam::123456789012:user/demo-operator is not authorized to perform: iam:GetUserPolicy"
+    }
+  }
+}

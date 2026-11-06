@@ -1,0 +1,62 @@
+{
+  "demo-cluster": [
+    {
+      "CollectionErrors": [
+        {
+          "api": "eks:DescribeAccessEntry",
+          "error_code": "AccessDeniedException",
+          "status": "denied"
+        }
+      ],
+      "associatedAccessPolicies": [
+        {
+          "accessScope": {
+            "namespaces": [
+              "demo-apps"
+            ],
+            "type": "namespace"
+          },
+          "associatedAt": "2024-01-04T10:00:00Z",
+          "modifiedAt": "2024-01-04T10:00:00Z",
+          "policyArn": "arn:aws:eks::aws:cluster-access-policy/AmazonEKSViewPolicy"
+        }
+      ],
+      "clusterName": "demo-cluster",
+      "principalArn": "arn:aws:iam::111122223333:user/demo-alice"
+    },
+    {
+      "accessEntryArn": "arn:aws:eks:eu-west-2:111122223333:access-entry/demo-cluster/ec2_linux/{{EC2PrivateDNSName}}",
+      "associatedAccessPolicies": [],
+      "clusterName": "demo-cluster",
+      "createdAt": "2024-01-04T10:00:00Z",
+      "kubernetesGroups": [],
+      "modifiedAt": "2024-01-04T10:00:00Z",
+      "principalArn": "arn:aws:iam::111122223333:role/demo-eks-node-role",
+      "tags": {},
+      "type": "EC2_LINUX",
+      "username": "system:node:{{EC2PrivateDNSName}}"
+    },
+    {
+      "accessEntryArn": "arn:aws:eks:eu-west-2:111122223333:access-entry/demo-cluster/standard/demo-admin",
+      "associatedAccessPolicies": [
+        {
+          "accessScope": {
+            "namespaces": [],
+            "type": "cluster"
+          },
+          "associatedAt": "2024-01-04T10:00:00Z",
+          "modifiedAt": "2024-01-04T10:00:00Z",
+          "policyArn": "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+        }
+      ],
+      "clusterName": "demo-cluster",
+      "createdAt": "2024-01-04T10:00:00Z",
+      "kubernetesGroups": [],
+      "modifiedAt": "2024-01-04T10:00:00Z",
+      "principalArn": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "tags": {},
+      "type": "STANDARD",
+      "username": "demo-admin"
+    }
+  ]
+}

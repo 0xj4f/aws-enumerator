@@ -1,0 +1,12 @@
+[
+  {
+    "Arn": "arn:aws:glue:eu-west-1:111122223333:job/demo-west-job",
+    "Command": "glueetl",
+    "Kind": "job",
+    "Name": "demo-west-job",
+    "Roles": [
+      "arn:aws:iam::111122223333:role/demo-glue-role"
+    ],
+    "Type": "gluejob"
+  }
+]

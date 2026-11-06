@@ -14,7 +14,11 @@ pip-wheel-metadata/
 
 # Environment
 .env
+.env.*
+!.env.example
 .venv
+# Extra interpreters for `scripts/check.sh matrix` (.venvs/py3.1x)
+.venvs/
 env/
 venv/
 ENV/
@@ -47,4 +51,30 @@ Temporary Items
 .code-workspace
 
 # PROJECT BASED
-reports
+# Reports are confidential attack maps (HANDLING.txt). The default output is ~/.aws-enumerator/reports, and the
+# CLI refuses to write inside a git work tree without --allow-in-repo (F-066); these patterns are the backstop.
+# Anchored to the repo root: an unanchored "reports" also ignored tests/fixtures/**/reports/.
+/reports/
+/out/
+*.zip
+*.age
+*.gpg
+*.minisig
+# Owner's local engagement files and wrappers (never committed): keep real targets in *.local.sh
+/tmp
+/enum.sh
+*.local.sh
+# Local Claude Code settings (machine-specific; ignored here, not only in a global ignore file)
+.claude/settings.local.json
+# Internal review docs (untracked by owner decision 2026-10-15)
+/internal-docs/
+# Owner notes, never committed (F-066 hazard: one `git add .` or `git add docs/` from a push)
+/docs/features.md
+
+# Test / lint tooling
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+node_modules/

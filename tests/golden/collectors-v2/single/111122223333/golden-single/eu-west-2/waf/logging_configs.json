@@ -1,0 +1,8 @@
+[
+  {
+    "LogDestinationConfigs": [
+      "arn:aws:logs:eu-west-2:111122223333:log-group:aws-waf-logs-demo"
+    ],
+    "ResourceArn": "arn:aws:wafv2:eu-west-2:111122223333:regional/webacl/demo-regional-acl/a1a1a1a1-0000-4000-8000-0000000000a1"
+  }
+]

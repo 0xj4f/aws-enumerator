@@ -1,0 +1,44 @@
+[
+  {
+    "KeyId": "4b2c1a3d-aaaa-4bbb-8ccc-1d2e3f4a5b6c",
+    "Arn": "arn:aws:kms:eu-west-2:123456789012:key/4b2c1a3d-aaaa-4bbb-8ccc-1d2e3f4a5b6c",
+    "KeyManager": "CUSTOMER",
+    "KeyState": "Enabled",
+    "Origin": "AWS_KMS",
+    "Description": "demo key",
+    "Enabled": true,
+    "Aliases": [
+      "alias/demo-app"
+    ],
+    "Grants": [
+      {
+        "GrantId": "5ca242ff26ef2cb3a74686a66ffddee2a79c78645ca242ff26ef2cb3a74686a6",
+        "GranteePrincipal": "arn:aws:iam::123456789012:role/demo-app-role",
+        "Operations": [
+          "Decrypt",
+          "GenerateDataKey"
+        ]
+      },
+      {
+        "GrantId": "bddd5554c84091a86314bf6a7043e0eff92058b3bddd5554c84091a86314bf6a",
+        "GranteePrincipal": "rds.eu-west-2.amazonaws.com",
+        "Operations": [
+          "Decrypt"
+        ]
+      }
+    ]
+  },
+  {
+    "KeyId": "9f8e7d6c-aaaa-4bbb-8ccc-6c5b4a3f2e1d",
+    "Arn": "arn:aws:kms:eu-west-2:123456789012:key/9f8e7d6c-aaaa-4bbb-8ccc-6c5b4a3f2e1d",
+    "KeyManager": "AWS",
+    "KeyState": "Enabled",
+    "Origin": "AWS_KMS",
+    "Description": "Default key that protects my SSM parameters",
+    "Enabled": true,
+    "Aliases": [
+      "alias/aws/ssm"
+    ],
+    "Grants": []
+  }
+]

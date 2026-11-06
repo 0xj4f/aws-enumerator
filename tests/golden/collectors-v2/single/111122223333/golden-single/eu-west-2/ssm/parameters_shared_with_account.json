@@ -1,0 +1,12 @@
+[
+  {
+    "ARN": "arn:aws:ssm:eu-west-2:999999999999:parameter/shared/demo-config",
+    "DataType": "text",
+    "KeyId": null,
+    "LastModifiedDate": "2024-01-05T10:00:00Z",
+    "Name": "arn:aws:ssm:eu-west-2:999999999999:parameter/shared/demo-config",
+    "Tier": "Advanced",
+    "Type": "String",
+    "Version": 1
+  }
+]

@@ -1,0 +1,12 @@
+[
+  {
+    "Attachments": [
+      {
+        "State": "available",
+        "VpcId": "vpc-0dec000000000001"
+      }
+    ],
+    "InternetGatewayId": "igw-0dec00000000001",
+    "OwnerId": "111122223333"
+  }
+]

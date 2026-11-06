@@ -1,0 +1,879 @@
+{
+  "schema_version": "1.0.0",
+  "generator": {
+    "tool": "aws-enumerator",
+    "version": "0.3.0",
+    "engine_version": "1.0.0",
+    "rules_version": "2.0.0",
+    "git_sha": null
+  },
+  "run": {
+    "run_id": "20260101T000000Z-a1b2c3",
+    "account_id": "123456789012",
+    "partition": "aws",
+    "mode": "run",
+    "regions": [
+      "eu-west-2"
+    ],
+    "generated_at": "2026-01-01T00:00:00Z",
+    "source_manifest_sha256": "d6bef222cd1ce3e76aa8796ee7cb51ec76038339fc5dfd724c0927ae4ba7fd5d",
+    "operator": {
+      "arn": "arn:aws:sts::123456789012:assumed-role/__proto__/demo-session",
+      "node_id": "arn:aws:iam::123456789012:role/__proto__",
+      "resolution": "assumed-role",
+      "redacted": false
+    }
+  },
+  "meta": {
+    "default_sources": [
+      "arn:aws:iam::123456789012:role/__proto__",
+      "arn:aws:iam::123456789012:user/\"'\\/demo-quote",
+      "arn:aws:iam::999999999999:role/__proto__",
+      "aws-enumerator:anonymous"
+    ],
+    "default_targets": [
+      "arn:aws:iam::123456789012:role/<img/src=x/onerror=window.__aeXssCanary=1>/demo-canary",
+      "aws-enumerator:account-admin/123456789012"
+    ]
+  },
+  "node_types": {
+    "account_admin": {
+      "label": "Account administrator",
+      "icon": "admin",
+      "group": "synthetic",
+      "order": 8,
+      "is_compute_bridge": false,
+      "default_source": false,
+      "data_asset": false,
+      "synthetic": true,
+      "description": "Administrator of the assessed account; the default path target."
+    },
+    "anonymous": {
+      "label": "Anyone",
+      "icon": "anonymous",
+      "group": "synthetic",
+      "order": 7,
+      "is_compute_bridge": false,
+      "default_source": true,
+      "data_asset": false,
+      "synthetic": true,
+      "description": "The internet / any AWS account. Source of every public exposure (F-037)."
+    },
+    "bucket": {
+      "label": "S3 bucket",
+      "icon": "bucket",
+      "group": "data",
+      "order": 35,
+      "is_compute_bridge": false,
+      "default_source": false,
+      "data_asset": true,
+      "synthetic": false,
+      "description": ""
+    },
+    "cluster": {
+      "label": "EKS cluster",
+      "icon": "cluster",
+      "group": "kubernetes",
+      "order": 49,
+      "is_compute_bridge": false,
+      "default_source": false,
+      "data_asset": false,
+      "synthetic": false,
+      "description": ""
+    },
+    "external_principal": {
+      "label": "External principal",
+      "icon": "external",
+      "group": "synthetic",
+      "order": 10,
+      "is_compute_bridge": false,
+      "default_source": true,
+      "data_asset": false,
+      "synthetic": false,
+      "description": "A specific user, role or session in a foreign account."
+    },
+    "pod": {
+      "label": "Kubernetes pod (or owner)",
+      "icon": "pod",
+      "group": "kubernetes",
+      "order": 51,
+      "is_compute_bridge": true,
+      "default_source": false,
+      "data_asset": false,
+      "synthetic": false,
+      "description": "Pods are aggregated by owner where possible."
+    },
+    "role": {
+      "label": "IAM role",
+      "icon": "role",
+      "group": "identity",
+      "order": 2,
+      "is_compute_bridge": false,
+      "default_source": false,
+      "data_asset": false,
+      "synthetic": false,
+      "description": ""
+    },
+    "sa": {
+      "label": "Kubernetes service account",
+      "icon": "sa",
+      "group": "kubernetes",
+      "order": 52,
+      "is_compute_bridge": true,
+      "default_source": false,
+      "data_asset": false,
+      "synthetic": false,
+      "description": ""
+    },
+    "user": {
+      "label": "IAM user",
+      "icon": "user",
+      "group": "identity",
+      "order": 1,
+      "is_compute_bridge": false,
+      "default_source": true,
+      "data_asset": false,
+      "synthetic": false,
+      "description": "Long-term credentials: a leaked access key is a common entry point."
+    }
+  },
+  "edge_types": {
+    "CAN_ASSUME": {
+      "category": "trust",
+      "category_label": "Role assumption",
+      "category_order": 2,
+      "traversal": "control",
+      "traversable": true,
+      "traversable_rule": null,
+      "base_weight": 1,
+      "bridge": false,
+      "sources": [
+        "user",
+        "role",
+        "external_account",
+        "external_principal",
+        "anonymous"
+      ],
+      "targets": [
+        "role"
+      ],
+      "description": "sts:AssumeRole is allowed by the role's trust policy and, where needed, the caller's identity policy (same-account root trust, cross-account, wildcard). Replaces CAN_ASSUME_CROSS.",
+      "doc_anchor": "#can_assume",
+      "legacy_name": null
+    },
+    "CAN_PASS_ROLE_TO": {
+      "category": "privesc",
+      "category_label": "Privilege escalation",
+      "category_order": 3,
+      "traversal": "control",
+      "traversable": true,
+      "traversable_rule": null,
+      "base_weight": 2,
+      "bridge": false,
+      "sources": [
+        "user",
+        "role",
+        "group"
+      ],
+      "targets": [
+        "role"
+      ],
+      "description": "PassRole plus a service action that runs code as the passed role (new-passrole / existing-passrole rules); evidence.via lists the services, evidence.rule_ids the rules.",
+      "doc_anchor": "#can_pass_role_to",
+      "legacy_name": null
+    },
+    "CAN_READ": {
+      "category": "s3",
+      "category_label": "S3",
+      "category_order": 7,
+      "traversal": "access",
+      "traversable": true,
+      "traversable_rule": null,
+      "base_weight": 1,
+      "bridge": false,
+      "sources": [
+        "user",
+        "role",
+        "group"
+      ],
+      "targets": [
+        "bucket"
+      ],
+      "description": "Get or list objects.",
+      "doc_anchor": "#can_read",
+      "legacy_name": "CAN_READ"
+    },
+    "GRANTS_CROSS_ACCOUNT": {
+      "category": "s3",
+      "category_label": "S3",
+      "category_order": 7,
+      "traversal": "access",
+      "traversable": true,
+      "traversable_rule": null,
+      "base_weight": 2,
+      "bridge": false,
+      "sources": [
+        "external_account",
+        "external_principal"
+      ],
+      "targets": [
+        "bucket"
+      ],
+      "description": "The bucket policy grants another account or a foreign principal. Normalised grantee \u2192 bucket.",
+      "doc_anchor": "#grants_cross_account",
+      "legacy_name": "GRANTS_CROSS_ACCOUNT"
+    },
+    "GRANTS_PUBLIC": {
+      "category": "s3",
+      "category_label": "S3",
+      "category_order": 7,
+      "traversal": "exposure",
+      "traversable": true,
+      "traversable_rule": null,
+      "base_weight": 0,
+      "bridge": false,
+      "sources": [
+        "anonymous"
+      ],
+      "targets": [
+        "bucket"
+      ],
+      "description": "Public bucket policy or public ACL (BPA-aware). Normalised anonymous \u2192 bucket.",
+      "doc_anchor": "#grants_public",
+      "legacy_name": "GRANTS_PUBLIC"
+    },
+    "IRSA_BRIDGE": {
+      "category": "eks",
+      "category_label": "EKS identity",
+      "category_order": 17,
+      "traversal": "control",
+      "traversable": "conditional",
+      "traversable_rule": "trust-verified",
+      "base_weight": 0,
+      "bridge": true,
+      "sources": [
+        "sa"
+      ],
+      "targets": [
+        "role"
+      ],
+      "description": "IRSA: the annotated role trusts this service account through the cluster's OIDC provider.",
+      "doc_anchor": "#irsa_bridge",
+      "legacy_name": "IRSA_BRIDGE"
+    },
+    "IS_ADMIN_EQUIVALENT": {
+      "category": "privesc",
+      "category_label": "Privilege escalation",
+      "category_order": 3,
+      "traversal": "control",
+      "traversable": true,
+      "traversable_rule": null,
+      "base_weight": 0,
+      "bridge": false,
+      "sources": [
+        "user",
+        "role",
+        "group"
+      ],
+      "targets": [
+        "account_admin"
+      ],
+      "description": "The principal is admin-equivalent (ADMIN-001), so reaching it means reaching the account admin.",
+      "doc_anchor": "#is_admin_equivalent",
+      "legacy_name": null
+    },
+    "RUNS_AS": {
+      "category": "k8s",
+      "category_label": "Kubernetes",
+      "category_order": 18,
+      "traversal": "control",
+      "traversable": true,
+      "traversable_rule": null,
+      "base_weight": 0,
+      "bridge": true,
+      "sources": [
+        "pod"
+      ],
+      "targets": [
+        "sa"
+      ],
+      "description": "The pod mounts the service-account token (automount on).",
+      "doc_anchor": "#runs_as",
+      "legacy_name": "RUNS_AS"
+    }
+  },
+  "nodes": [
+    {
+      "id": "arn:aws:eks:eu-west-2:123456789012:cluster/demo-hostile",
+      "type": "cluster",
+      "label": "demo\u202e\u200bunicode line",
+      "account": "123456789012",
+      "region": "eu-west-2",
+      "partition": "aws",
+      "props": {},
+      "tags": [],
+      "coverage": {
+        "status": "complete",
+        "gaps": []
+      },
+      "findings": [],
+      "inherited_findings": [],
+      "max_severity": null
+    },
+    {
+      "id": "arn:aws:iam::123456789012:role/<img/src=x/onerror=window.__aeXssCanary=1>/demo-canary",
+      "type": "role",
+      "label": "<img src=x onerror=window.__aeXssCanary=1>",
+      "account": "123456789012",
+      "region": null,
+      "partition": "aws",
+      "props": {
+        "attached_policies_status": "complete",
+        "high_value": true,
+        "high_value_reason": "admin-equivalent",
+        "path": "/<img/src=x/onerror=window.__aeXssCanary=1>/",
+        "description": "\"><svg onload=window.__aeXssCanary=1>"
+      },
+      "tags": [],
+      "coverage": {
+        "status": "complete",
+        "gaps": []
+      },
+      "findings": [
+        "d9626a7506f765f9ac6dad2f2faae765"
+      ],
+      "inherited_findings": [],
+      "max_severity": "CRITICAL"
+    },
+    {
+      "id": "arn:aws:iam::123456789012:role/__proto__",
+      "type": "role",
+      "label": "__proto__",
+      "account": "123456789012",
+      "region": null,
+      "partition": "aws",
+      "props": {
+        "attached_policies_status": "complete",
+        "note": "\"><svg onload=window.__aeXssCanary=1>"
+      },
+      "tags": [
+        {
+          "key": "hasOwnProperty",
+          "value": "\"><svg onload=window.__aeXssCanary=1>"
+        },
+        {
+          "key": "name",
+          "value": "demo\\\\path\\\"quote\\'single"
+        }
+      ],
+      "coverage": {
+        "status": "complete",
+        "gaps": []
+      },
+      "findings": [],
+      "inherited_findings": [],
+      "max_severity": null
+    },
+    {
+      "id": "arn:aws:iam::123456789012:role/constructor",
+      "type": "role",
+      "label": "constructor",
+      "account": "123456789012",
+      "region": null,
+      "partition": "aws",
+      "props": {
+        "attached_policies_status": "complete",
+        "note": "<img src=x onerror=window.__aeXssCanary=1>"
+      },
+      "tags": [
+        {
+          "key": "__proto__",
+          "value": "<img src=x onerror=window.__aeXssCanary=1>"
+        },
+        {
+          "key": "name",
+          "value": "\" onfocus=\"window.__aeXssCanary=1\" autofocus=\""
+        }
+      ],
+      "coverage": {
+        "status": "complete",
+        "gaps": []
+      },
+      "findings": [],
+      "inherited_findings": [],
+      "max_severity": null
+    },
+    {
+      "id": "arn:aws:iam::123456789012:role/hasOwnProperty",
+      "type": "role",
+      "label": "hasOwnProperty",
+      "account": "123456789012",
+      "region": null,
+      "partition": "aws",
+      "props": {
+        "attached_policies_status": "complete",
+        "note": "</script><script>window.__aeXssCanary=1</script>"
+      },
+      "tags": [
+        {
+          "key": "name",
+          "value": "${window.__aeXssCanary=1}"
+        },
+        {
+          "key": "toString",
+          "value": "</script><script>window.__aeXssCanary=1</script>"
+        }
+      ],
+      "coverage": {
+        "status": "complete",
+        "gaps": []
+      },
+      "findings": [
+        "86ddf3c9f95832428d551fd860bd3769"
+      ],
+      "inherited_findings": [],
+      "max_severity": "LOW"
+    },
+    {
+      "id": "arn:aws:iam::123456789012:role/toString",
+      "type": "role",
+      "label": "toString",
+      "account": "123456789012",
+      "region": null,
+      "partition": "aws",
+      "props": {
+        "attached_policies_status": "complete",
+        "note": "javascript:window.__aeXssCanary=1"
+      },
+      "tags": [
+        {
+          "key": "constructor",
+          "value": "javascript:window.__aeXssCanary=1"
+        },
+        {
+          "key": "name",
+          "value": "{{constructor.constructor('window.__aeXssCanary=1')()}}"
+        }
+      ],
+      "coverage": {
+        "status": "complete",
+        "gaps": []
+      },
+      "findings": [],
+      "inherited_findings": [],
+      "max_severity": null
+    },
+    {
+      "id": "arn:aws:iam::123456789012:user/\"'\\/demo-quote",
+      "type": "user",
+      "label": "demo\\\\path\\\"quote\\'single",
+      "account": "123456789012",
+      "region": null,
+      "partition": "aws",
+      "props": {
+        "entry_point": true,
+        "attached_policies_status": "complete",
+        "nested": {
+          "toString": "</script><script>window.__aeXssCanary=1</script>",
+          "hasOwnProperty": [
+            "javascript:window.__aeXssCanary=1",
+            {
+              "x": "' onmouseover='window.__aeXssCanary=1' x='"
+            }
+          ]
+        }
+      },
+      "tags": [],
+      "coverage": {
+        "status": "complete",
+        "gaps": []
+      },
+      "findings": [],
+      "inherited_findings": [],
+      "max_severity": null
+    },
+    {
+      "id": "arn:aws:iam::999999999999:role/__proto__",
+      "type": "external_principal",
+      "label": "__proto__",
+      "account": "999999999999",
+      "region": null,
+      "partition": "aws",
+      "props": {
+        "entry_point": true,
+        "external": true
+      },
+      "tags": [],
+      "coverage": {
+        "status": "complete",
+        "gaps": []
+      },
+      "findings": [],
+      "inherited_findings": [],
+      "max_severity": null
+    },
+    {
+      "id": "arn:aws:s3:::demo-hostile-bucket",
+      "type": "bucket",
+      "label": "\" onfocus=\"window.__aeXssCanary=1\" autofocus=\"",
+      "account": "123456789012",
+      "region": "eu-west-2",
+      "partition": "aws",
+      "props": {
+        "data_asset": true
+      },
+      "tags": [
+        {
+          "key": "constructor",
+          "value": "${window.__aeXssCanary=1}"
+        },
+        {
+          "key": "toString",
+          "value": "{{constructor.constructor('window.__aeXssCanary=1')()}}"
+        }
+      ],
+      "coverage": {
+        "status": "complete",
+        "gaps": []
+      },
+      "findings": [
+        "f7e46baad80fd6d1b647812670afad1f"
+      ],
+      "inherited_findings": [],
+      "max_severity": "HIGH"
+    },
+    {
+      "id": "aws-enumerator:account-admin/123456789012",
+      "type": "account_admin",
+      "label": "Account administrator",
+      "account": "123456789012",
+      "region": null,
+      "partition": "aws",
+      "props": {
+        "high_value": true,
+        "high_value_reason": "account-admin"
+      },
+      "tags": [],
+      "coverage": {
+        "status": "not-applicable",
+        "gaps": []
+      },
+      "findings": [],
+      "inherited_findings": [],
+      "max_severity": null
+    },
+    {
+      "id": "aws-enumerator:anonymous",
+      "type": "anonymous",
+      "label": "Anyone (internet)",
+      "account": null,
+      "region": null,
+      "partition": null,
+      "props": {
+        "entry_point": true
+      },
+      "tags": [],
+      "coverage": {
+        "status": "not-applicable",
+        "gaps": []
+      },
+      "findings": [],
+      "inherited_findings": [],
+      "max_severity": null
+    },
+    {
+      "id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-hostile/Pod/constructor/Deployment:toString",
+      "type": "pod",
+      "label": "</script><script>window.__aeXssCanary=1</script>",
+      "account": "123456789012",
+      "region": "eu-west-2",
+      "partition": "aws",
+      "props": {},
+      "tags": [],
+      "coverage": {
+        "status": "complete",
+        "gaps": []
+      },
+      "findings": [],
+      "inherited_findings": [],
+      "max_severity": null
+    },
+    {
+      "id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-hostile/ServiceAccount/constructor/hasownproperty",
+      "type": "sa",
+      "label": "' onmouseover='window.__aeXssCanary=1' x='",
+      "account": "123456789012",
+      "region": "eu-west-2",
+      "partition": "aws",
+      "props": {},
+      "tags": [],
+      "coverage": {
+        "status": "complete",
+        "gaps": []
+      },
+      "findings": [
+        "402f4f9c7a719fbef2de086bd09d8916"
+      ],
+      "inherited_findings": [],
+      "max_severity": "MEDIUM"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e:b13122b9671656682e33",
+      "source": "arn:aws:iam::123456789012:role/<img/src=x/onerror=window.__aeXssCanary=1>/demo-canary",
+      "target": "aws-enumerator:account-admin/123456789012",
+      "type": "IS_ADMIN_EQUIVALENT",
+      "category": "privesc",
+      "traversal": "control",
+      "traversable": true,
+      "weight": 0,
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow"
+      }
+    },
+    {
+      "id": "e:59506b9ad11dfe8b6d89",
+      "source": "arn:aws:iam::123456789012:role/__proto__",
+      "target": "arn:aws:iam::123456789012:role/<img/src=x/onerror=window.__aeXssCanary=1>/demo-canary",
+      "type": "CAN_PASS_ROLE_TO",
+      "category": "privesc",
+      "traversal": "control",
+      "traversable": true,
+      "weight": 2,
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "via": [
+          "\" onfocus=\"window.__aeXssCanary=1\" autofocus=\""
+        ],
+        "technique": "{{constructor.constructor('window.__aeXssCanary=1')()}}"
+      }
+    },
+    {
+      "id": "e:c477d125ac8b64bc77de",
+      "source": "arn:aws:iam::123456789012:role/constructor",
+      "target": "arn:aws:s3:::demo-hostile-bucket",
+      "type": "CAN_READ",
+      "category": "s3",
+      "traversal": "access",
+      "traversable": true,
+      "weight": 1,
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow"
+      }
+    },
+    {
+      "id": "e:8051104aa83244990808",
+      "source": "arn:aws:iam::123456789012:user/\"'\\/demo-quote",
+      "target": "arn:aws:iam::123456789012:role/__proto__",
+      "type": "CAN_ASSUME",
+      "category": "trust",
+      "traversal": "control",
+      "traversable": true,
+      "weight": 1,
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "statements": [
+          {
+            "sid": "<img src=x onerror=window.__aeXssCanary=1>",
+            "policy_name": "</script><script>window.__aeXssCanary=1</script>"
+          }
+        ],
+        "actions": [
+          "javascript:window.__aeXssCanary=1"
+        ]
+      }
+    },
+    {
+      "id": "e:66bc144b90ad0bdc7a98",
+      "source": "arn:aws:iam::999999999999:role/__proto__",
+      "target": "arn:aws:s3:::demo-hostile-bucket",
+      "type": "GRANTS_CROSS_ACCOUNT",
+      "category": "s3",
+      "traversal": "access",
+      "traversable": true,
+      "weight": 2,
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "conditions": [
+          {
+            "key": "\"><svg onload=window.__aeXssCanary=1>",
+            "values": [
+              "<img src=x onerror=window.__aeXssCanary=1>",
+              "\"><svg onload=window.__aeXssCanary=1>",
+              "</script><script>window.__aeXssCanary=1</script>"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "e:9f51ecb4c3fad70cb2e5",
+      "source": "aws-enumerator:anonymous",
+      "target": "arn:aws:s3:::demo-hostile-bucket",
+      "type": "GRANTS_PUBLIC",
+      "category": "s3",
+      "traversal": "exposure",
+      "traversable": true,
+      "weight": 0,
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow"
+      }
+    },
+    {
+      "id": "e:240d274b3730c92171fc",
+      "source": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-hostile/Pod/constructor/Deployment:toString",
+      "target": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-hostile/ServiceAccount/constructor/hasownproperty",
+      "type": "RUNS_AS",
+      "category": "k8s",
+      "traversal": "control",
+      "traversable": true,
+      "weight": 0,
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow"
+      }
+    },
+    {
+      "id": "e:d2ff3aad4dfb99e686ba",
+      "source": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-hostile/ServiceAccount/constructor/hasownproperty",
+      "target": "arn:aws:iam::123456789012:role/constructor",
+      "type": "IRSA_BRIDGE",
+      "category": "eks",
+      "traversal": "control",
+      "traversable": true,
+      "weight": 0,
+      "confidence": "definite",
+      "evidence": {
+        "decision": "allow",
+        "traversable_rule": {
+          "rule": "trust-verified",
+          "holds": true
+        },
+        "annotation": "demo\u202e\u200bunicode line"
+      }
+    }
+  ],
+  "findings": [
+    {
+      "fingerprint": "d9626a7506f765f9ac6dad2f2faae765",
+      "id": "ADMIN-001",
+      "legacy_ids": [],
+      "severity": "CRITICAL",
+      "base_severity": "CRITICAL",
+      "confidence": "definite",
+      "node_id": "arn:aws:iam::123456789012:role/<img/src=x/onerror=window.__aeXssCanary=1>/demo-canary",
+      "title": "<img src=x onerror=window.__aeXssCanary=1>",
+      "description": "\"><svg onload=window.__aeXssCanary=1>",
+      "evidence": {
+        "capability": "javascript:window.__aeXssCanary=1",
+        "steps": [
+          {
+            "rule_action": "' onmouseover='window.__aeXssCanary=1' x='"
+          }
+        ]
+      },
+      "remediation": "</script><script>window.__aeXssCanary=1</script>",
+      "reference": "https://example.invalid/docs?\"><img/src=x/onerror=window.__aeXssCanary=1>",
+      "status": "open",
+      "account": "123456789012"
+    },
+    {
+      "fingerprint": "f7e46baad80fd6d1b647812670afad1f",
+      "id": "S3-PUBLIC-001",
+      "legacy_ids": [],
+      "severity": "HIGH",
+      "base_severity": "HIGH",
+      "confidence": "definite",
+      "node_id": "arn:aws:s3:::demo-hostile-bucket",
+      "title": "\" onfocus=\"window.__aeXssCanary=1\" autofocus=\"",
+      "description": "demo\\\\path\\\"quote\\'single",
+      "evidence": {},
+      "remediation": "${window.__aeXssCanary=1}",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#s3",
+      "status": "open",
+      "account": "123456789012",
+      "related_node_ids": [
+        "arn:aws:iam::999999999999:role/__proto__"
+      ],
+      "matched_actions": [
+        "{{constructor.constructor('window.__aeXssCanary=1')()}}"
+      ],
+      "entity": "demo\u202e\u200bunicode line"
+    },
+    {
+      "fingerprint": "402f4f9c7a719fbef2de086bd09d8916",
+      "id": "K8S-IRSA-001",
+      "legacy_ids": [],
+      "severity": "MEDIUM",
+      "base_severity": "MEDIUM",
+      "confidence": "definite",
+      "node_id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-hostile/ServiceAccount/constructor/hasownproperty",
+      "title": "__proto__",
+      "description": "constructor",
+      "evidence": {},
+      "remediation": "toString",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#k8s",
+      "status": "open",
+      "account": "123456789012",
+      "category": "hasOwnProperty"
+    },
+    {
+      "fingerprint": "86ddf3c9f95832428d551fd860bd3769",
+      "id": "TRUST-002",
+      "legacy_ids": [],
+      "severity": "LOW",
+      "base_severity": "LOW",
+      "confidence": "definite",
+      "node_id": "arn:aws:iam::123456789012:role/hasOwnProperty",
+      "title": "{{constructor.constructor('window.__aeXssCanary=1')()}}",
+      "description": "{{constructor.constructor('window.__aeXssCanary=1')()}}",
+      "evidence": {},
+      "remediation": "Review and restrict the grant.",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#trust",
+      "status": "open",
+      "account": "123456789012"
+    }
+  ],
+  "coverage": {
+    "source": "ledger",
+    "status": "partial",
+    "modules": [
+      {
+        "module": "<img src=x onerror=window.__aeXssCanary=1>",
+        "region": "\"><svg onload=window.__aeXssCanary=1>",
+        "status": "denied",
+        "error_code": "</script><script>window.__aeXssCanary=1</script>",
+        "detail": "javascript:window.__aeXssCanary=1"
+      }
+    ]
+  },
+  "evaluation_gaps": [
+    {
+      "code": "external-identity",
+      "detail": "' onmouseover='window.__aeXssCanary=1' x='",
+      "count": 1
+    }
+  ],
+  "analyzer_status": [
+    {
+      "name": "\" onfocus=\"window.__aeXssCanary=1\" autofocus=\"",
+      "phase": "resources",
+      "status": "error",
+      "duration_seconds": 0.0,
+      "error": {
+        "type": "ValueError",
+        "message": "demo\\\\path\\\"quote\\'single"
+      },
+      "inputs_missing": [
+        "${window.__aeXssCanary=1}"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1601 @@
+{
+  "account_id": "123456789012",
+  "findings": [
+    {
+      "account": "123456789012",
+      "base_severity": "CRITICAL",
+      "category": "dangerous_permission",
+      "confidence": "definite",
+      "description": "This role is administrator-equivalent: its effective permissions allow every action on every resource. Its 64 individual privilege-escalation and dangerous-permission findings are summarised here.",
+      "evidence": {
+        "basis": "allow-star",
+        "rule_ids": [
+          "DANGER-001"
+        ],
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+                "policy_name": "AdministratorAccess",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "aws_managed",
+                "statement_index": 0,
+                "version_id": "v1"
+              }
+            ],
+            "resource": "*",
+            "rule_action": "*"
+          }
+        ],
+        "subsumed": [
+          {
+            "fingerprint": "0133d1b3c5aeab766867bba882a644f1",
+            "id": "PRIVESC-057",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "041aeea2aeb3cde36ee16773e42cc7c0",
+            "id": "PRIVESC-009",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "17bd852790ca75610620b428ad3d9b34",
+            "id": "PRIVESC-011",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "18238a1fcab5ae1027b23a7da66ec318",
+            "id": "PRIVESC-031",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "196519fc61072f5e490a252941d3ba15",
+            "id": "PRIVESC-010",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "1cc87876d7f680dee5fe445041e4abd0",
+            "id": "PRIVESC-030",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "1de7074135a207cb9f2fd7bc2bdeb673",
+            "id": "PRIVESC-032",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "1f2a493163f923f9e2635d8ce458840f",
+            "id": "PRIVESC-033",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "22af0b8ea1372ea093a2be3aaf69cddf",
+            "id": "PRIVESC-025",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "279bba137f228286e2c0b766c7c1e81c",
+            "id": "PRIVESC-035",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "2a27aded4f43c9f5d42f53ed6a8f3302",
+            "id": "DANGER-001",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "2b3167095de9514a1e83bdd8473df42c",
+            "id": "PRIVESC-058",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "2c75925f15a998ff6d16f2e034ef1072",
+            "id": "PRIVESC-046",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "33729275b0599bbd180e80f3442e081f",
+            "id": "PRIVESC-015",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "37dfb11d7031daee80d0b6f555fa2edd",
+            "id": "PRIVESC-036",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "380dae5f7fe059df02953680db7eaf51",
+            "id": "PRIVESC-034",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "3b1b34895dab04b313240f419161b6f6",
+            "id": "PRIVESC-001",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "3b42f91caf68feb22a35146738b074f8",
+            "id": "PRIVESC-060",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "3e555c260bc8d9993af1ab18692046c5",
+            "id": "PRIVESC-039",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "4811ad26528f8974196a0d03a0d55918",
+            "id": "DANGER-006",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "4a16ceb864d696f94e97145796c1cb92",
+            "id": "PRIVESC-008",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "4a5dc41f3d605c976abea328ad894a42",
+            "id": "PRIVESC-062",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "4e6b2d8184da581b8cf08acf8f342a77",
+            "id": "PRIVESC-043",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "544f920504729647cfb1058357e27d8d",
+            "id": "DANGER-002",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "5e8068e4a2d47f52061d02cd949e0781",
+            "id": "PRIVESC-003",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "61687d02b04e5679515b56d5781590cb",
+            "id": "PRIVESC-027",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "6197bbd2b17fd8cf00442f5671286ce7",
+            "id": "PRIVESC-017",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "638feeaf3dc50e66ab905c19c3b965bf",
+            "id": "DANGER-004",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "67789585bc2aa60d8c24a1f1e27e0954",
+            "id": "PRIVESC-016",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "69fca5846de957b58f5af58ccc324851",
+            "id": "PRIVESC-048",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "6dfb9aadfbcf630c177a0119e086945d",
+            "id": "DANGER-009",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "6dfbdbdbbf17dc48cf2714a53c6101a7",
+            "id": "PRIVESC-064",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "6fe2b53a80873c085f3d79411688b797",
+            "id": "PRIVESC-045",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "7185d83b9dc6c79232d10677cee7ec0e",
+            "id": "DANGER-007",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "7dbe9dcc2a0ea005b92316b05a1a3678",
+            "id": "PRIVESC-049",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "7eb61a36a7c054c0a52e8165b231534f",
+            "id": "PRIVESC-007",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "884238499391b1b50be2a79b7efbff7d",
+            "id": "PRIVESC-040",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "8a72508564d2a4b3d22151b5458ae47b",
+            "id": "PRIVESC-012",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "8d1c3ff0edf6bb6863f5ae49b041a4ad",
+            "id": "DANGER-003",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "90b60064ee78cf085c57fbc32fba1573",
+            "id": "PRIVESC-037",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "957e9cc86ad04d44ec0b609577b7f11e",
+            "id": "PRIVESC-063",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "9a49245bcc7cff52c06e54e3ac019b3c",
+            "id": "PRIVESC-026",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "9df8d9d9fe3c5fc45a6ef0cc214250a6",
+            "id": "PRIVESC-024",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "9edba12a61a4b217af9f6ebb5f5c6477",
+            "id": "PRIVESC-047",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "a783896664239bd54e80d010845ac0e2",
+            "id": "DANGER-010",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "aa73f3bd53832049270e4f4a973df72c",
+            "id": "PRIVESC-006",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "ad7f5292d7228ea284cf5db92f44f813",
+            "id": "DANGER-005",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "b4b590fb1cb588145cd3ebf20738b270",
+            "id": "PRIVESC-061",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "b963abe30e714406b3c7d4c6144a9ac9",
+            "id": "DANGER-008",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "bbf6a985acb68543aeb81f96d1be08c8",
+            "id": "PRIVESC-041",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "c1f06b26df2b5ce9f5a91f18d20ce6f6",
+            "id": "PRIVESC-044",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "c3213aa5d0368df62a70a80f8112fb1c",
+            "id": "PRIVESC-038",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "c3b8a80aacbdd324eb2beda51a8626fe",
+            "id": "PRIVESC-020",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "ca1de406eb073176ccadb546faf19317",
+            "id": "PRIVESC-065",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "d67d805a20a985f705ba96bd39c9baac",
+            "id": "PRIVESC-002",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "db80307a4ba93cae6b52b64fef3278b7",
+            "id": "PRIVESC-028",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "dbb7bef741bf52386470731e1ae4bae5",
+            "id": "PRIVESC-005",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "e16993d49fee54e7e135163be9228c32",
+            "id": "PRIVESC-042",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "e230330173858ae84cf93781bb225065",
+            "id": "PRIVESC-013",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "e3f4fbe4f3633378424c22fc64fa2897",
+            "id": "PRIVESC-004",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "e5104651cb3ce635b853b74b05328e01",
+            "id": "PRIVESC-018",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "e5860f22b90a84aa821d25604af525dc",
+            "id": "PRIVESC-059",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "f0f2d9177c9846b27f430da2da036305",
+            "id": "PRIVESC-014",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "fc38d031ea88efece4eb9f333e8e8700",
+            "id": "PRIVESC-019",
+            "severity": "INFO"
+          }
+        ],
+        "subsumed_count": 64
+      },
+      "fingerprint": "55e51362267a49c84ff741c626f1e830",
+      "id": "ADMIN-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "*",
+        "ec2:*",
+        "iam:*",
+        "iam:passrole",
+        "kms:decrypt",
+        "lambda:*",
+        "s3:*",
+        "secretsmanager:getsecretvalue",
+        "ssm:getparameter",
+        "ssm:getparameters",
+        "ssm:getparametersbypath",
+        "sts:assumerole"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/<img src=x onerror=window.__aeXssCanary=1>",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#high-value-targets-to-hunt",
+      "related_node_ids": [
+        "aws-enumerator:account-admin/123456789012"
+      ],
+      "remediation": "Treat this principal as an account administrator: limit who can use it (trust policy, group membership, credentials), require MFA, and replace broad grants (Action:* or iam:*) by the permissions it needs.",
+      "severity": "CRITICAL",
+      "status": "open",
+      "subsumes": [
+        "DANGER-001",
+        "DANGER-002",
+        "DANGER-003",
+        "DANGER-004",
+        "DANGER-005",
+        "DANGER-006",
+        "DANGER-007",
+        "DANGER-008",
+        "DANGER-009",
+        "DANGER-010",
+        "PRIVESC-001",
+        "PRIVESC-002",
+        "PRIVESC-003",
+        "PRIVESC-004",
+        "PRIVESC-005",
+        "PRIVESC-006",
+        "PRIVESC-007",
+        "PRIVESC-008",
+        "PRIVESC-009",
+        "PRIVESC-010",
+        "PRIVESC-011",
+        "PRIVESC-012",
+        "PRIVESC-013",
+        "PRIVESC-014",
+        "PRIVESC-015",
+        "PRIVESC-016",
+        "PRIVESC-017",
+        "PRIVESC-018",
+        "PRIVESC-019",
+        "PRIVESC-020",
+        "PRIVESC-024",
+        "PRIVESC-025",
+        "PRIVESC-026",
+        "PRIVESC-027",
+        "PRIVESC-028",
+        "PRIVESC-030",
+        "PRIVESC-031",
+        "PRIVESC-032",
+        "PRIVESC-033",
+        "PRIVESC-034",
+        "PRIVESC-035",
+        "PRIVESC-036",
+        "PRIVESC-037",
+        "PRIVESC-038",
+        "PRIVESC-039",
+        "PRIVESC-040",
+        "PRIVESC-041",
+        "PRIVESC-042",
+        "PRIVESC-043",
+        "PRIVESC-044",
+        "PRIVESC-045",
+        "PRIVESC-046",
+        "PRIVESC-047",
+        "PRIVESC-048",
+        "PRIVESC-049",
+        "PRIVESC-057",
+        "PRIVESC-058",
+        "PRIVESC-059",
+        "PRIVESC-060",
+        "PRIVESC-061",
+        "PRIVESC-062",
+        "PRIVESC-063",
+        "PRIVESC-064",
+        "PRIVESC-065"
+      ],
+      "title": "Administrator-equivalent principal"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "CRITICAL",
+      "category": "k8s_rbac",
+      "confidence": "definite",
+      "description": "ClusterRoleBinding \"{{constructor.constructor('window.__aeXssCanary=1')()}}\" grants <img src=x onerror=window.__aeXssCanary=1>/\"><svg onload=window.__aeXssCanary=1> every verb on every resource in the whole cluster. Every pod running as this service account controls the cluster.",
+      "entity": "serviceaccount/demo-hostile-eks/<img src=x onerror=window.__aeXssCanary=1>/\"><svg onload=window.__aeXssCanary=1>",
+      "entity_arn": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-hostile-eks/ServiceAccount/<img src=x onerror=window.__aeXssCanary=1>/\"><svg onload=window.__aeXssCanary=1>",
+      "evidence": {
+        "binding": "{{constructor.constructor('window.__aeXssCanary=1')()}}",
+        "binding_kind": "ClusterRoleBinding",
+        "role": "cluster-admin",
+        "scope": "cluster"
+      },
+      "fingerprint": "1eb568b74d03efe177dc68bb29eebd84",
+      "id": "K8S-RBAC-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "*"
+      ],
+      "node_id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-hostile-eks/ServiceAccount/<img src=x onerror=window.__aeXssCanary=1>/\"><svg onload=window.__aeXssCanary=1>",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-2--you-compromised-a-kubernetes-pod",
+      "region": "eu-west-2",
+      "remediation": "Use a more restrictive ClusterRole or a namespaced Role.",
+      "resource": [
+        "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-hostile-eks/ServiceAccount/<img src=x onerror=window.__aeXssCanary=1>/\"><svg onload=window.__aeXssCanary=1>"
+      ],
+      "severity": "CRITICAL",
+      "source_policy": "{{constructor.constructor('window.__aeXssCanary=1')()}}",
+      "source_type": "k8s_rbac",
+      "status": "open",
+      "title": "ServiceAccount <img src=x onerror=window.__aeXssCanary=1>/\"><svg onload=window.__aeXssCanary=1> bound to cluster-admin (cluster demo-hostile-eks)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "ec2_exposure",
+      "confidence": "conditional",
+      "description": "Instance 'i-0a1b2c3d4e5f6bad1' (running) has public address(es) 198.51.100.7; security group(s) sg-0a1b2c3d4e5f6bad1 admit 0.0.0.0/0 on 80/tcp. Not verified: ec2:nacl-unknown, ec2:route-unknown.",
+      "entity": "instance/i-0a1b2c3d4e5f6bad1",
+      "entity_arn": "arn:aws:ec2:eu-west-2:123456789012:instance/i-0a1b2c3d4e5f6bad1",
+      "evidence": {
+        "addresses": [
+          "198.51.100.7"
+        ],
+        "blocked_by_nacl": [],
+        "ports": [
+          "80/tcp"
+        ],
+        "routes": {
+          "4": "unknown",
+          "6": "unknown"
+        },
+        "security_groups": [
+          "sg-0a1b2c3d4e5f6bad1"
+        ],
+        "sources": [
+          "0.0.0.0/0"
+        ]
+      },
+      "fingerprint": "374c48b6f5beeda6815e9ef534d26ea5",
+      "gaps": [
+        "ec2:nacl-unknown",
+        "ec2:route-unknown"
+      ],
+      "id": "EC2-EXPOSURE-001",
+      "legacy_ids": [],
+      "node_id": "arn:aws:ec2:eu-west-2:123456789012:instance/i-0a1b2c3d4e5f6bad1",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-1--you-compromised-an-ec2-instance",
+      "region": "eu-west-2",
+      "remediation": "Restrict the security-group ingress to specific source ranges, or move the instance behind a load balancer in a private subnet.",
+      "resource": [
+        "arn:aws:ec2:eu-west-2:123456789012:instance/i-0a1b2c3d4e5f6bad1"
+      ],
+      "severity": "HIGH",
+      "source_type": "security_group",
+      "status": "open",
+      "title": "Instance i-0a1b2c3d4e5f6bad1 is reachable from the internet on 80/tcp"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "k8s_network",
+      "confidence": "definite",
+      "description": "Service <img src=x onerror=window.__aeXssCanary=1>/\" onfocus=\"window.__aeXssCanary=1\" autofocus=\" of type LoadBalancer gets an internet-facing AWS load balancer (in-tree cloud provider default (internet-facing)), open to any source address.",
+      "entity": "k8sservice/demo-hostile-eks/<img src=x onerror=window.__aeXssCanary=1>/\" onfocus=\"window.__aeXssCanary=1\" autofocus=\"",
+      "entity_arn": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-hostile-eks/Service/<img src=x onerror=window.__aeXssCanary=1>/\" onfocus=\"window.__aeXssCanary=1\" autofocus=\"",
+      "evidence": {
+        "load_balancer_source_ranges": [],
+        "scheme": "internet-facing",
+        "scheme_reason": "in-tree cloud provider default (internet-facing)"
+      },
+      "fingerprint": "b0ca0a39dfe65bfa5f0e307fde3e4a07",
+      "id": "K8S-NET-001",
+      "legacy_ids": [],
+      "node_id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-hostile-eks/Service/<img src=x onerror=window.__aeXssCanary=1>/\" onfocus=\"window.__aeXssCanary=1\" autofocus=\"",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "region": "eu-west-2",
+      "remediation": "Use an internal load balancer (service.beta.kubernetes.io/aws-load-balancer-scheme: internal) or restrict loadBalancerSourceRanges.",
+      "resource": [
+        "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-hostile-eks/Service/<img src=x onerror=window.__aeXssCanary=1>/\" onfocus=\"window.__aeXssCanary=1\" autofocus=\""
+      ],
+      "severity": "HIGH",
+      "source_policy": "Service.spec.type",
+      "source_type": "k8s_service",
+      "status": "open",
+      "title": "Service <img src=x onerror=window.__aeXssCanary=1>/\" onfocus=\"window.__aeXssCanary=1\" autofocus=\" is an internet-facing load balancer (cluster demo-hostile-eks)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "k8s_workload",
+      "confidence": "definite",
+      "description": "A privileged container (regular, init or ephemeral) has every capability and the host's devices: it can take over the node.",
+      "entity": "pod/demo-hostile-eks/<img src=x onerror=window.__aeXssCanary=1>/demo\u202e\u200bunicode\u2028line",
+      "entity_arn": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-hostile-eks/Pod/<img src=x onerror=window.__aeXssCanary=1>/demo\u202e\u200bunicode\u2028line",
+      "evidence": {
+        "containers": [
+          "container main"
+        ],
+        "pod_count": 1,
+        "pods": [
+          "demo\u202e\u200bunicode\u2028line"
+        ]
+      },
+      "fingerprint": "e6c5890d8d004642c12a8c4fcea18e2a",
+      "id": "K8S-PRIV-001",
+      "legacy_ids": [],
+      "node_id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-hostile-eks/Pod/<img src=x onerror=window.__aeXssCanary=1>/demo\u202e\u200bunicode\u2028line",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-2--you-compromised-a-kubernetes-pod",
+      "region": "eu-west-2",
+      "remediation": "Remove privileged: true (regular, init and ephemeral containers).",
+      "resource": [
+        "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-hostile-eks/Pod/<img src=x onerror=window.__aeXssCanary=1>/demo\u202e\u200bunicode\u2028line"
+      ],
+      "severity": "HIGH",
+      "source_policy": "securityContext.privileged",
+      "source_type": "k8s_pod",
+      "status": "open",
+      "title": "Privileged container (<img src=x onerror=window.__aeXssCanary=1>/demo\u202e\u200bunicode\u2028line, cluster demo-hostile-eks)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "messaging_public",
+      "confidence": "definite",
+      "description": "The SNS policy lets any principal perform sns:publish.",
+      "evidence": {
+        "actions": [
+          "sns:publish"
+        ],
+        "condition_strength": "none",
+        "decision": "allow"
+      },
+      "fingerprint": "92cf27c45384c8bda096c4987a03f31e",
+      "id": "MSG-PUB-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "sns:publish"
+      ],
+      "node_id": "arn:aws:sns:eu-west-2:123456789012:<img src=x onerror=window.__aeXssCanary=1>",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "region": "eu-west-2",
+      "related_node_ids": [
+        "aws-enumerator:anonymous"
+      ],
+      "remediation": "Scope the Principal or add a Condition (e.g. aws:SourceArn/SourceAccount).",
+      "severity": "HIGH",
+      "status": "open",
+      "title": "SNS '<img src=x onerror=window.__aeXssCanary=1>' grants access to everyone"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "dangerous_permission",
+      "confidence": "definite",
+      "description": "Unrestricted PassRole (can pass any role to any service)",
+      "evidence": {
+        "decision": "allow",
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "iam:passrole",
+                  "ec2:runinstances"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:role/*",
+            "rule_action": "iam:PassRole"
+          }
+        ]
+      },
+      "fingerprint": "619528d3b3c490419e16f68b6e8aef03",
+      "id": "DANGER-006",
+      "legacy_ids": [],
+      "matched_actions": [
+        "iam:passrole"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/__proto__",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#high-value-targets-to-hunt",
+      "remediation": "Restrict to specific actions and resource ARNs",
+      "rule_version": "2.1.0",
+      "severity": "MEDIUM",
+      "status": "open",
+      "title": "Unrestricted PassRole (can pass any role to any service)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "dangerous_permission",
+      "confidence": "definite",
+      "description": "Unrestricted PassRole (can pass any role to any service)",
+      "evidence": {
+        "decision": "allow",
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "iam:passrole",
+                  "ec2:runinstances"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:role/*",
+            "rule_action": "iam:PassRole"
+          }
+        ]
+      },
+      "fingerprint": "ebe4494cf8cbdf436328ef0d9c46a347",
+      "id": "DANGER-006",
+      "legacy_ids": [],
+      "matched_actions": [
+        "iam:passrole"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/constructor",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#high-value-targets-to-hunt",
+      "remediation": "Restrict to specific actions and resource ARNs",
+      "rule_version": "2.1.0",
+      "severity": "MEDIUM",
+      "status": "open",
+      "title": "Unrestricted PassRole (can pass any role to any service)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "dangerous_permission",
+      "confidence": "definite",
+      "description": "Unrestricted PassRole (can pass any role to any service)",
+      "evidence": {
+        "decision": "allow",
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "iam:passrole",
+                  "ec2:runinstances"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:role/*",
+            "rule_action": "iam:PassRole"
+          }
+        ]
+      },
+      "fingerprint": "21bec5033764d9f99ae5b98ce50310c6",
+      "id": "DANGER-006",
+      "legacy_ids": [],
+      "matched_actions": [
+        "iam:passrole"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/hasOwnProperty",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#high-value-targets-to-hunt",
+      "remediation": "Restrict to specific actions and resource ARNs",
+      "rule_version": "2.1.0",
+      "severity": "MEDIUM",
+      "status": "open",
+      "title": "Unrestricted PassRole (can pass any role to any service)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "dangerous_permission",
+      "confidence": "definite",
+      "description": "Unrestricted PassRole (can pass any role to any service)",
+      "evidence": {
+        "decision": "allow",
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "iam:passrole",
+                  "ec2:runinstances"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:role/*",
+            "rule_action": "iam:PassRole"
+          }
+        ]
+      },
+      "fingerprint": "2a9230730bf869c866bb469bf7633e09",
+      "id": "DANGER-006",
+      "legacy_ids": [],
+      "matched_actions": [
+        "iam:passrole"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/toString",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#high-value-targets-to-hunt",
+      "remediation": "Restrict to specific actions and resource ARNs",
+      "rule_version": "2.1.0",
+      "severity": "MEDIUM",
+      "status": "open",
+      "title": "Unrestricted PassRole (can pass any role to any service)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "dangerous_permission",
+      "confidence": "definite",
+      "description": "Can read all secrets",
+      "evidence": {
+        "decision": "allow",
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "s3:listbucket",
+                  "secretsmanager:getsecretvalue"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:secretsmanager:*:123456789012:secret:*",
+            "rule_action": "secretsmanager:GetSecretValue"
+          }
+        ]
+      },
+      "fingerprint": "420795b2421c58148978cc3643951193",
+      "id": "DANGER-008",
+      "legacy_ids": [],
+      "matched_actions": [
+        "secretsmanager:getsecretvalue"
+      ],
+      "node_id": "arn:aws:iam::123456789012:user/__proto__",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#high-value-targets-to-hunt",
+      "remediation": "Restrict to specific actions and resource ARNs",
+      "rule_version": "2.1.0",
+      "severity": "MEDIUM",
+      "status": "open",
+      "title": "Can read all secrets"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "dangerous_permission",
+      "confidence": "definite",
+      "description": "Can read all secrets",
+      "evidence": {
+        "decision": "allow",
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "s3:listbucket",
+                  "secretsmanager:getsecretvalue"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:secretsmanager:*:123456789012:secret:*",
+            "rule_action": "secretsmanager:GetSecretValue"
+          }
+        ]
+      },
+      "fingerprint": "0ba45ad891ff8431d63524c9ffd0f885",
+      "id": "DANGER-008",
+      "legacy_ids": [],
+      "matched_actions": [
+        "secretsmanager:getsecretvalue"
+      ],
+      "node_id": "arn:aws:iam::123456789012:user/constructor",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#high-value-targets-to-hunt",
+      "remediation": "Restrict to specific actions and resource ARNs",
+      "rule_version": "2.1.0",
+      "severity": "MEDIUM",
+      "status": "open",
+      "title": "Can read all secrets"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "dangerous_permission",
+      "confidence": "definite",
+      "description": "Can read all secrets",
+      "evidence": {
+        "decision": "allow",
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "s3:listbucket",
+                  "secretsmanager:getsecretvalue"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:secretsmanager:*:123456789012:secret:*",
+            "rule_action": "secretsmanager:GetSecretValue"
+          }
+        ]
+      },
+      "fingerprint": "6d19a03ba5664d4de346eef50fce3872",
+      "id": "DANGER-008",
+      "legacy_ids": [],
+      "matched_actions": [
+        "secretsmanager:getsecretvalue"
+      ],
+      "node_id": "arn:aws:iam::123456789012:user/hasOwnProperty",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#high-value-targets-to-hunt",
+      "remediation": "Restrict to specific actions and resource ARNs",
+      "rule_version": "2.1.0",
+      "severity": "MEDIUM",
+      "status": "open",
+      "title": "Can read all secrets"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "dangerous_permission",
+      "confidence": "definite",
+      "description": "Can read all secrets",
+      "evidence": {
+        "decision": "allow",
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "s3:listbucket",
+                  "secretsmanager:getsecretvalue"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:secretsmanager:*:123456789012:secret:*",
+            "rule_action": "secretsmanager:GetSecretValue"
+          }
+        ]
+      },
+      "fingerprint": "354439e8504218d5c3b20fccf0137cf9",
+      "id": "DANGER-008",
+      "legacy_ids": [],
+      "matched_actions": [
+        "secretsmanager:getsecretvalue"
+      ],
+      "node_id": "arn:aws:iam::123456789012:user/toString",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#high-value-targets-to-hunt",
+      "remediation": "Restrict to specific actions and resource ARNs",
+      "rule_version": "2.1.0",
+      "severity": "MEDIUM",
+      "status": "open",
+      "title": "Can read all secrets"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "eks_exposure",
+      "confidence": "definite",
+      "description": "The Kubernetes API endpoint of cluster demo-hostile-eks (eu-west-2) is publicly accessible from 0.0.0.0/0. Authentication is still required, but any leaked kubeconfig, token or mapped IAM credential is usable from anywhere, and API-server vulnerabilities are exposed.",
+      "entity": "cluster/demo-hostile-eks",
+      "entity_arn": "arn:aws:eks:eu-west-2:123456789012:cluster/demo-hostile-eks",
+      "evidence": {
+        "endpoint_private_access": false,
+        "endpoint_public_access": true,
+        "public_access_cidrs": [
+          "0.0.0.0/0"
+        ]
+      },
+      "fingerprint": "514dde9d0bf43b92c6db828b04057587",
+      "id": "EKS-ENDPOINT-001",
+      "legacy_ids": [],
+      "node_id": "arn:aws:eks:eu-west-2:123456789012:cluster/demo-hostile-eks",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "region": "eu-west-2",
+      "remediation": "Disable public endpoint access, or restrict publicAccessCidrs to known administration networks.",
+      "resource": [
+        "arn:aws:eks:eu-west-2:123456789012:cluster/demo-hostile-eks"
+      ],
+      "severity": "MEDIUM",
+      "source_policy": "resourcesVpcConfig",
+      "source_type": "eks_cluster",
+      "status": "open",
+      "title": "EKS cluster demo-hostile-eks has a public API endpoint open to the internet"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "lambda_public",
+      "confidence": "conditional",
+      "description": "The URL needs no authentication and the function policy of that qualifier could not be read, so whether unauthenticated callers may invoke it is unknown (not 'private').",
+      "evidence": {
+        "auth_type": "NONE",
+        "policy": "unknown",
+        "url": "https://6a9e9452ca5286a64f752ecae22a1c35.lambda-url.eu-west-2.on.aws/"
+      },
+      "fingerprint": "12cda3e66cb8bbe1fabf10ed8c140d42",
+      "gaps": [
+        "lambda:GetPolicy:unknown"
+      ],
+      "id": "LAMBDA-URL-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "lambda:InvokeFunctionUrl"
+      ],
+      "node_id": "arn:aws:lambda:eu-west-2:123456789012:function:\"><svg onload=window.__aeXssCanary=1>",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "region": "eu-west-2",
+      "remediation": "Set the function URL AuthType to AWS_IAM, or remove the public InvokeFunctionUrl permission and the URL if it is not needed.",
+      "severity": "MEDIUM",
+      "status": "open",
+      "title": "Lambda '\"><svg onload=window.__aeXssCanary=1>' has a function URL with AuthType NONE (exposure unknown)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "lambda_public",
+      "confidence": "conditional",
+      "description": "The URL needs no authentication and the function policy of that qualifier could not be read, so whether unauthenticated callers may invoke it is unknown (not 'private').",
+      "evidence": {
+        "auth_type": "NONE",
+        "policy": "unknown",
+        "url": "https://82a36bf629f41764a7db684c964faff0.lambda-url.eu-west-2.on.aws/"
+      },
+      "fingerprint": "64969bb59461aa032395d6de3c8fe0a3",
+      "gaps": [
+        "lambda:GetPolicy:unknown"
+      ],
+      "id": "LAMBDA-URL-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "lambda:InvokeFunctionUrl"
+      ],
+      "node_id": "arn:aws:lambda:eu-west-2:123456789012:function:</script><script>window.__aeXssCanary=1</script>",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "region": "eu-west-2",
+      "remediation": "Set the function URL AuthType to AWS_IAM, or remove the public InvokeFunctionUrl permission and the URL if it is not needed.",
+      "severity": "MEDIUM",
+      "status": "open",
+      "title": "Lambda '</script><script>window.__aeXssCanary=1</script>' has a function URL with AuthType NONE (exposure unknown)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "lambda_public",
+      "confidence": "conditional",
+      "description": "The URL needs no authentication and the function policy of that qualifier could not be read, so whether unauthenticated callers may invoke it is unknown (not 'private').",
+      "evidence": {
+        "auth_type": "NONE",
+        "policy": "unknown",
+        "url": "https://dcb12e968aced6aaa091c269dbed20c7.lambda-url.eu-west-2.on.aws/"
+      },
+      "fingerprint": "01d562925c7d74c264819b2184a5123f",
+      "gaps": [
+        "lambda:GetPolicy:unknown"
+      ],
+      "id": "LAMBDA-URL-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "lambda:InvokeFunctionUrl"
+      ],
+      "node_id": "arn:aws:lambda:eu-west-2:123456789012:function:<img src=x onerror=window.__aeXssCanary=1>",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "region": "eu-west-2",
+      "remediation": "Set the function URL AuthType to AWS_IAM, or remove the public InvokeFunctionUrl permission and the URL if it is not needed.",
+      "severity": "MEDIUM",
+      "status": "open",
+      "title": "Lambda '<img src=x onerror=window.__aeXssCanary=1>' has a function URL with AuthType NONE (exposure unknown)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "ssm_plaintext_secret",
+      "confidence": "definite",
+      "description": "SSM parameter '/demo/\"><svg onload=window.__aeXssCanary=1>/password' has type 'String' (plaintext) but its name has a credential word as a whole token. Anyone with ssm:GetParameter on it reads the value in plaintext, with no KMS gate.",
+      "entity": "ssmparam//demo/\"><svg onload=window.__aeXssCanary=1>/password",
+      "entity_arn": "arn:aws:ssm:eu-west-2:123456789012:parameter/demo/\"><svg onload=window.__aeXssCanary=1>/password",
+      "evidence": {
+        "param_type": "String"
+      },
+      "fingerprint": "568500894e34a7ef5145cee5152114f1",
+      "id": "PARAM-PLAIN-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "ssm:GetParameter"
+      ],
+      "node_id": "arn:aws:ssm:eu-west-2:123456789012:parameter/demo/\"><svg onload=window.__aeXssCanary=1>/password",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "region": "eu-west-2",
+      "remediation": "Migrate the parameter to type SecureString (KMS-encrypted).",
+      "resource": [
+        "arn:aws:ssm:eu-west-2:123456789012:parameter/demo/\"><svg onload=window.__aeXssCanary=1>/password"
+      ],
+      "severity": "MEDIUM",
+      "source_policy": "Parameter Type",
+      "source_type": "ssm_config",
+      "status": "open",
+      "title": "Parameter '/demo/\"><svg onload=window.__aeXssCanary=1>/password' looks like a secret but is stored as a plaintext String"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "ssm_plaintext_secret",
+      "confidence": "definite",
+      "description": "SSM parameter '/demo/<img src=x onerror=window.__aeXssCanary=1>/password' has type 'String' (plaintext) but its name has a credential word as a whole token. Anyone with ssm:GetParameter on it reads the value in plaintext, with no KMS gate.",
+      "entity": "ssmparam//demo/<img src=x onerror=window.__aeXssCanary=1>/password",
+      "entity_arn": "arn:aws:ssm:eu-west-2:123456789012:parameter/demo/<img src=x onerror=window.__aeXssCanary=1>/password",
+      "evidence": {
+        "param_type": "String"
+      },
+      "fingerprint": "c11305cebdc8011dacdce1352c766db4",
+      "id": "PARAM-PLAIN-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "ssm:GetParameter"
+      ],
+      "node_id": "arn:aws:ssm:eu-west-2:123456789012:parameter/demo/<img src=x onerror=window.__aeXssCanary=1>/password",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "region": "eu-west-2",
+      "remediation": "Migrate the parameter to type SecureString (KMS-encrypted).",
+      "resource": [
+        "arn:aws:ssm:eu-west-2:123456789012:parameter/demo/<img src=x onerror=window.__aeXssCanary=1>/password"
+      ],
+      "severity": "MEDIUM",
+      "source_policy": "Parameter Type",
+      "source_type": "ssm_config",
+      "status": "open",
+      "title": "Parameter '/demo/<img src=x onerror=window.__aeXssCanary=1>/password' looks like a secret but is stored as a plaintext String"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "LOW",
+      "category": "ec2_imds",
+      "confidence": "definite",
+      "description": "Instance 'i-0a1b2c3d4e5f6bad1' (running) has HttpTokens 'optional' with the metadata endpoint enabled: SSRF can read instance metadata and user data (no role is attached).",
+      "entity": "instance/i-0a1b2c3d4e5f6bad1",
+      "entity_arn": "arn:aws:ec2:eu-west-2:123456789012:instance/i-0a1b2c3d4e5f6bad1",
+      "evidence": {
+        "hop_limit": 1,
+        "http_tokens": "optional",
+        "role": null,
+        "state": "running"
+      },
+      "fingerprint": "5eb3dc9d0a1b1fe295a26967e931893b",
+      "id": "EC2-IMDS-001",
+      "legacy_ids": [],
+      "node_id": "arn:aws:ec2:eu-west-2:123456789012:instance/i-0a1b2c3d4e5f6bad1",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-1--you-compromised-an-ec2-instance",
+      "region": "eu-west-2",
+      "remediation": "Set HttpTokens to 'required' to enforce IMDSv2 (or disable the metadata endpoint).",
+      "resource": [
+        "arn:aws:ec2:eu-west-2:123456789012:instance/i-0a1b2c3d4e5f6bad1"
+      ],
+      "severity": "LOW",
+      "source_type": "ec2_config",
+      "status": "open",
+      "title": "Instance i-0a1b2c3d4e5f6bad1 allows IMDSv1"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "LOW",
+      "category": "iam_hygiene",
+      "confidence": "definite",
+      "description": "The IAM password policy is below common baselines: password reuse prevention None < 24.",
+      "evidence": {
+        "configured": true,
+        "console_users": 0,
+        "weaknesses": [
+          "password reuse prevention None < 24"
+        ]
+      },
+      "fingerprint": "8324f653d46059d49f0e62bada4e6cf9",
+      "id": "IAM-PWPOL-001",
+      "legacy_ids": [],
+      "node_id": "aws-enumerator:account/123456789012",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-6--youre-external-no-foothold-yet",
+      "remediation": "Set an account password policy: length >= 14, all character classes, reuse prevention 24.",
+      "severity": "LOW",
+      "status": "open",
+      "title": "The account password policy is weak"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "LOW",
+      "category": "k8s_irsa",
+      "confidence": "definite",
+      "description": "The irsa configuration of <img src=x onerror=window.__aeXssCanary=1>/\"><svg onload=window.__aeXssCanary=1> names arn:aws:iam::123456789012:role/<img src=x onerror=window.__aeXssCanary=1>, but the role's trust policy does not admit it (trust policy: not_allowed (trust_policy)). The pods get no AWS credentials from it; the configuration is stale or was planted, and is not an attack path.",
+      "entity": "sa/demo-hostile-eks/<img src=x onerror=window.__aeXssCanary=1>/\"><svg onload=window.__aeXssCanary=1>",
+      "entity_arn": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-hostile-eks/ServiceAccount/<img src=x onerror=window.__aeXssCanary=1>/\"><svg onload=window.__aeXssCanary=1>",
+      "evidence": {
+        "mechanism": "irsa",
+        "role_arn": "arn:aws:iam::123456789012:role/<img src=x onerror=window.__aeXssCanary=1>",
+        "trust_verified": false
+      },
+      "fingerprint": "070cc6a3a46c86e4f6c497a74d52dee7",
+      "id": "K8S-IRSA-002",
+      "legacy_ids": [],
+      "node_id": "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-hostile-eks/ServiceAccount/<img src=x onerror=window.__aeXssCanary=1>/\"><svg onload=window.__aeXssCanary=1>",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-2--you-compromised-a-kubernetes-pod",
+      "region": "eu-west-2",
+      "related_node_ids": [
+        "arn:aws:iam::123456789012:role/<img src=x onerror=window.__aeXssCanary=1>"
+      ],
+      "remediation": "Remove the stale eks.amazonaws.com/role-arn annotation or Pod Identity association, or fix the role's trust policy if the workload needs it.",
+      "resource": [
+        "k8s://arn:aws:eks:eu-west-2:123456789012:cluster/demo-hostile-eks/ServiceAccount/<img src=x onerror=window.__aeXssCanary=1>/\"><svg onload=window.__aeXssCanary=1>"
+      ],
+      "severity": "LOW",
+      "source_policy": "irsa",
+      "source_type": "k8s_service_account",
+      "status": "open",
+      "title": "Service account names an IAM role whose trust does not admit it (<img src=x onerror=window.__aeXssCanary=1>/\"><svg onload=window.__aeXssCanary=1>, cluster demo-hostile-eks)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "INFO",
+      "category": "privilege_escalation",
+      "confidence": "definite",
+      "description": "Can launch EC2 with privileged role, access credentials via IMDS, but no role that this principal may pass currently trusts ec2.amazonaws.com and is more privileged than the principal.",
+      "evidence": {
+        "decision": "allow",
+        "no_candidate": true,
+        "rule_class": "new-passrole",
+        "services": [
+          "ec2.amazonaws.com"
+        ],
+        "steps": [
+          {
+            "context": {
+              "iam:PassedToService": "ec2.amazonaws.com"
+            },
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "iam:passrole",
+                  "ec2:runinstances"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:role/*",
+            "rule_action": "iam:passrole"
+          },
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "iam:passrole",
+                  "ec2:runinstances"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:ec2:*:123456789012:instance/*",
+            "rule_action": "ec2:runinstances"
+          }
+        ]
+      },
+      "fingerprint": "8e8a0a77700ce2dd66033cddb0bcd012",
+      "id": "PRIVESC-015",
+      "legacy_ids": [],
+      "matched_actions": [
+        "ec2:runinstances",
+        "iam:passrole"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/__proto__",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs",
+      "rule_version": "2.1.0",
+      "severity": "INFO",
+      "status": "open",
+      "title": "PassRole+EC2: no passable role currently trusts ec2.amazonaws.com"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "INFO",
+      "category": "privilege_escalation",
+      "confidence": "definite",
+      "description": "Can launch EC2 with privileged role, access credentials via IMDS, but no role that this principal may pass currently trusts ec2.amazonaws.com and is more privileged than the principal.",
+      "evidence": {
+        "decision": "allow",
+        "no_candidate": true,
+        "rule_class": "new-passrole",
+        "services": [
+          "ec2.amazonaws.com"
+        ],
+        "steps": [
+          {
+            "context": {
+              "iam:PassedToService": "ec2.amazonaws.com"
+            },
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "iam:passrole",
+                  "ec2:runinstances"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:role/*",
+            "rule_action": "iam:passrole"
+          },
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "iam:passrole",
+                  "ec2:runinstances"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:ec2:*:123456789012:instance/*",
+            "rule_action": "ec2:runinstances"
+          }
+        ]
+      },
+      "fingerprint": "3ebd735212bec6514a27f422fb22d922",
+      "id": "PRIVESC-015",
+      "legacy_ids": [],
+      "matched_actions": [
+        "ec2:runinstances",
+        "iam:passrole"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/constructor",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs",
+      "rule_version": "2.1.0",
+      "severity": "INFO",
+      "status": "open",
+      "title": "PassRole+EC2: no passable role currently trusts ec2.amazonaws.com"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "INFO",
+      "category": "privilege_escalation",
+      "confidence": "definite",
+      "description": "Can launch EC2 with privileged role, access credentials via IMDS, but no role that this principal may pass currently trusts ec2.amazonaws.com and is more privileged than the principal.",
+      "evidence": {
+        "decision": "allow",
+        "no_candidate": true,
+        "rule_class": "new-passrole",
+        "services": [
+          "ec2.amazonaws.com"
+        ],
+        "steps": [
+          {
+            "context": {
+              "iam:PassedToService": "ec2.amazonaws.com"
+            },
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "iam:passrole",
+                  "ec2:runinstances"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:role/*",
+            "rule_action": "iam:passrole"
+          },
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "iam:passrole",
+                  "ec2:runinstances"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:ec2:*:123456789012:instance/*",
+            "rule_action": "ec2:runinstances"
+          }
+        ]
+      },
+      "fingerprint": "c4ab2c957b541c79e3257e22243333c4",
+      "id": "PRIVESC-015",
+      "legacy_ids": [],
+      "matched_actions": [
+        "ec2:runinstances",
+        "iam:passrole"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/hasOwnProperty",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs",
+      "rule_version": "2.1.0",
+      "severity": "INFO",
+      "status": "open",
+      "title": "PassRole+EC2: no passable role currently trusts ec2.amazonaws.com"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "INFO",
+      "category": "privilege_escalation",
+      "confidence": "definite",
+      "description": "Can launch EC2 with privileged role, access credentials via IMDS, but no role that this principal may pass currently trusts ec2.amazonaws.com and is more privileged than the principal.",
+      "evidence": {
+        "decision": "allow",
+        "no_candidate": true,
+        "rule_class": "new-passrole",
+        "services": [
+          "ec2.amazonaws.com"
+        ],
+        "steps": [
+          {
+            "context": {
+              "iam:PassedToService": "ec2.amazonaws.com"
+            },
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "iam:passrole",
+                  "ec2:runinstances"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:role/*",
+            "rule_action": "iam:passrole"
+          },
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "iam:passrole",
+                  "ec2:runinstances"
+                ],
+                "layer": "identity",
+                "policy_name": "p",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:ec2:*:123456789012:instance/*",
+            "rule_action": "ec2:runinstances"
+          }
+        ]
+      },
+      "fingerprint": "c88754069ae07c2fdd8026c0ae670d45",
+      "id": "PRIVESC-015",
+      "legacy_ids": [],
+      "matched_actions": [
+        "ec2:runinstances",
+        "iam:passrole"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/toString",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs",
+      "rule_version": "2.1.0",
+      "severity": "INFO",
+      "status": "open",
+      "title": "PassRole+EC2: no passable role currently trusts ec2.amazonaws.com"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "INFO",
+      "category": "route53_dangling",
+      "confidence": "definite",
+      "description": "Record '<img src=x onerror=window.__aeXssCanary=1>' (CNAME) points at 'demo.cloudfront.net' (cloudfront, takeover info): cloudfront target (info to be claimable).",
+      "entity": "route53/example.net.",
+      "entity_arn": "arn:aws:route53:::hostedzone/Z0EXAMPLEZONECCC",
+      "evidence": {
+        "alias": null,
+        "check": "cloudfront target (info to be claimable)",
+        "claimable": "info",
+        "kind": "cloudfront",
+        "private": false,
+        "record": "<img src=x onerror=window.__aeXssCanary=1>",
+        "target": "demo.cloudfront.net",
+        "type": "CNAME"
+      },
+      "fingerprint": "8ab699a09f0b95fd7a3e7c134c10b305",
+      "id": "ROUTE53-DANGLING-001",
+      "legacy_ids": [],
+      "node_id": "arn:aws:route53:::hostedzone/Z0EXAMPLEZONECCC",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "remediation": "Verify the target resource still exists and belongs to you; remove the record if not.",
+      "resource": [
+        "<img src=x onerror=window.__aeXssCanary=1>"
+      ],
+      "severity": "INFO",
+      "source_type": "route53_record",
+      "status": "open",
+      "title": "Potential dangling DNS record: <img src=x onerror=window.__aeXssCanary=1>"
+    }
+  ],
+  "generated_at": "<stripped>",
+  "mode": "legacy-single",
+  "partition": "aws",
+  "regions": [
+    "eu-west-2"
+  ],
+  "rules_version": "2.1.0",
+  "run_id": "legacy-eu-west-2",
+  "schema_version": "1.0.0",
+  "tool_version": "0.3.0"
+}

@@ -1,0 +1,110 @@
+{
+  "schema_version": "1.0.0",
+  "generator": {
+    "tool": "aws-enumerator",
+    "version": "0.3.0",
+    "engine_version": "1.0.0",
+    "rules_version": "2.0.0",
+    "git_sha": null
+  },
+  "run": {
+    "run_id": "20260101T000000Z-a1b2c3",
+    "account_id": "111122223333",
+    "partition": "aws",
+    "mode": "run",
+    "regions": [
+      "eu-west-2"
+    ],
+    "generated_at": "2026-01-01T00:00:00Z",
+    "source_manifest_sha256": "d6bef222cd1ce3e76aa8796ee7cb51ec76038339fc5dfd724c0927ae4ba7fd5d",
+    "operator": {
+      "arn": null,
+      "node_id": null,
+      "resolution": "unavailable",
+      "redacted": false
+    }
+  },
+  "meta": {
+    "default_sources": [
+      "aws-enumerator:anonymous"
+    ],
+    "default_targets": [
+      "aws-enumerator:account-admin/111122223333"
+    ]
+  },
+  "node_types": {
+    "account_admin": {
+      "label": "Account administrator",
+      "icon": "admin",
+      "group": "synthetic",
+      "order": 8,
+      "is_compute_bridge": false,
+      "default_source": false,
+      "data_asset": false,
+      "synthetic": true,
+      "description": "Administrator of the assessed account; the default path target."
+    },
+    "anonymous": {
+      "label": "Anyone",
+      "icon": "anonymous",
+      "group": "synthetic",
+      "order": 7,
+      "is_compute_bridge": false,
+      "default_source": true,
+      "data_asset": false,
+      "synthetic": true,
+      "description": "The internet / any AWS account. Source of every public exposure (F-037)."
+    }
+  },
+  "edge_types": {},
+  "nodes": [
+    {
+      "id": "aws-enumerator:account-admin/111122223333",
+      "type": "account_admin",
+      "label": "Account administrator",
+      "account": "111122223333",
+      "region": null,
+      "partition": "aws",
+      "props": {
+        "high_value": true,
+        "high_value_reason": "account-admin"
+      },
+      "tags": [],
+      "coverage": {
+        "status": "not-applicable",
+        "gaps": []
+      },
+      "findings": [],
+      "inherited_findings": [],
+      "max_severity": null
+    },
+    {
+      "id": "aws-enumerator:anonymous",
+      "type": "anonymous",
+      "label": "Anyone (internet)",
+      "account": null,
+      "region": null,
+      "partition": null,
+      "props": {
+        "entry_point": true
+      },
+      "tags": [],
+      "coverage": {
+        "status": "not-applicable",
+        "gaps": []
+      },
+      "findings": [],
+      "inherited_findings": [],
+      "max_severity": null
+    }
+  ],
+  "edges": [],
+  "findings": [],
+  "coverage": {
+    "source": "ledger",
+    "status": "complete",
+    "modules": []
+  },
+  "evaluation_gaps": [],
+  "analyzer_status": []
+}

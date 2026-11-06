@@ -1,0 +1,98 @@
+[
+  {
+    "api_version": null,
+    "kind": null,
+    "metadata": {
+      "name": "cluster-admin",
+      "namespace": null,
+      "labels": null,
+      "annotations": null,
+      "uid": "e95c8d98-aaaa-4bbb-8ccc-b09067a69f28",
+      "creation_timestamp": "2026-01-01 00:00:00+00:00",
+      "resource_version": "1000",
+      "owner_references": null,
+      "managed_fields": null
+    },
+    "rules": [
+      {
+        "api_groups": [
+          "*"
+        ],
+        "resources": [
+          "*"
+        ],
+        "verbs": [
+          "*"
+        ],
+        "resource_names": null,
+        "non_resource_ur_ls": null
+      }
+    ],
+    "aggregation_rule": null
+  },
+  {
+    "api_version": null,
+    "kind": null,
+    "metadata": {
+      "name": "view",
+      "namespace": null,
+      "labels": null,
+      "annotations": null,
+      "uid": "a89ad0f7-aaaa-4bbb-8ccc-8f3a07543a88",
+      "creation_timestamp": "2026-01-01 00:00:00+00:00",
+      "resource_version": "1000",
+      "owner_references": null,
+      "managed_fields": null
+    },
+    "rules": [
+      {
+        "api_groups": [
+          ""
+        ],
+        "resources": [
+          "pods",
+          "services"
+        ],
+        "verbs": [
+          "get",
+          "list",
+          "watch"
+        ],
+        "resource_names": null,
+        "non_resource_ur_ls": null
+      }
+    ],
+    "aggregation_rule": null
+  },
+  {
+    "api_version": null,
+    "kind": null,
+    "metadata": {
+      "name": "demo-wildcard",
+      "namespace": null,
+      "labels": null,
+      "annotations": null,
+      "uid": "e00056ae-aaaa-4bbb-8ccc-50676a30997f",
+      "creation_timestamp": "2026-01-01 00:00:00+00:00",
+      "resource_version": "1000",
+      "owner_references": null,
+      "managed_fields": null
+    },
+    "rules": [
+      {
+        "api_groups": [
+          ""
+        ],
+        "resources": [
+          "*"
+        ],
+        "verbs": [
+          "*"
+        ],
+        "resource_names": null,
+        "non_resource_ur_ls": null
+      }
+    ],
+    "aggregation_rule": null
+  }
+]

@@ -1,0 +1,1106 @@
+{
+  "edges": [
+    {
+      "access_types": [
+        "CAN_CONNECT",
+        "CAN_MANAGE",
+        "CAN_MODIFY_USERDATA",
+        "CAN_TERMINATE",
+        "EC2_FULL_ACCESS"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:9c7395a4ccb7c2cc0672",
+      "matched_actions": [
+        "ec2-instance-connect:SendSSHPublicKey",
+        "ssm:SendCommand",
+        "ssm:StartSession"
+      ],
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "i-0dec0abb000000002",
+      "type": "CAN_CONNECT",
+      "weight": 0.5
+    },
+    {
+      "access_types": [
+        "CAN_CONNECT",
+        "CAN_MANAGE",
+        "CAN_MODIFY_USERDATA",
+        "CAN_TERMINATE",
+        "EC2_FULL_ACCESS"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:8357a6e71963e3ebfd11",
+      "matched_actions": [
+        "ec2:*",
+        "ec2:ModifyInstanceAttribute",
+        "ec2:StartInstances",
+        "ec2:StopInstances"
+      ],
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "i-0dec0abb000000002",
+      "type": "EC2_FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "access_types": [
+        "CAN_CONNECT",
+        "CAN_MANAGE",
+        "CAN_MODIFY_USERDATA",
+        "CAN_TERMINATE",
+        "EC2_FULL_ACCESS"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:38aaa640f3e6e29e4e47",
+      "matched_actions": [
+        "ec2-instance-connect:SendSSHPublicKey",
+        "ssm:SendCommand",
+        "ssm:StartSession"
+      ],
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "i-0dec0ee5700000001",
+      "type": "CAN_CONNECT",
+      "weight": 0.5
+    },
+    {
+      "access_types": [
+        "CAN_CONNECT",
+        "CAN_MANAGE",
+        "CAN_MODIFY_USERDATA",
+        "CAN_TERMINATE",
+        "EC2_FULL_ACCESS"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:3ea662446f28709bafb8",
+      "matched_actions": [
+        "ec2:*",
+        "ec2:ModifyInstanceAttribute",
+        "ec2:StartInstances",
+        "ec2:StopInstances"
+      ],
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "i-0dec0ee5700000001",
+      "type": "EC2_FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "access_types": [
+        "CAN_CONNECT",
+        "CAN_MANAGE",
+        "CAN_MODIFY_USERDATA",
+        "CAN_TERMINATE",
+        "EC2_FULL_ACCESS"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:a48e3423c4cffca3d423",
+      "matched_actions": [
+        "ec2-instance-connect:SendSSHPublicKey",
+        "ssm:SendCommand",
+        "ssm:StartSession"
+      ],
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "i-0dec0eeb000000002",
+      "type": "CAN_CONNECT",
+      "weight": 0.5
+    },
+    {
+      "access_types": [
+        "CAN_CONNECT",
+        "CAN_MANAGE",
+        "CAN_MODIFY_USERDATA",
+        "CAN_TERMINATE",
+        "EC2_FULL_ACCESS"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:33e3b6d7067cdbfe25ef",
+      "matched_actions": [
+        "ec2:*",
+        "ec2:ModifyInstanceAttribute",
+        "ec2:StartInstances",
+        "ec2:StopInstances"
+      ],
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "i-0dec0eeb000000002",
+      "type": "EC2_FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "access_types": [
+        "CAN_ADMIN_SG"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:27d9911227782befdee9",
+      "matched_actions": [
+        "ec2:AuthorizeSecurityGroupEgress",
+        "ec2:AuthorizeSecurityGroupIngress",
+        "ec2:ModifySecurityGroupRules",
+        "ec2:RevokeSecurityGroupIngress"
+      ],
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "sg-0dec0abb000000002",
+      "type": "CAN_ADMIN_SG",
+      "weight": 1
+    },
+    {
+      "access_types": [
+        "CAN_ADMIN_SG"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:fce8a98baeb0e6e34713",
+      "matched_actions": [
+        "ec2:AuthorizeSecurityGroupEgress",
+        "ec2:AuthorizeSecurityGroupIngress",
+        "ec2:ModifySecurityGroupRules",
+        "ec2:RevokeSecurityGroupIngress"
+      ],
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "sg-0dec0defa01700002",
+      "type": "CAN_ADMIN_SG",
+      "weight": 1
+    },
+    {
+      "access_types": [
+        "CAN_ADMIN_SG"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:18d2de139fa2e5c3e439",
+      "matched_actions": [
+        "ec2:AuthorizeSecurityGroupEgress",
+        "ec2:AuthorizeSecurityGroupIngress",
+        "ec2:ModifySecurityGroupRules",
+        "ec2:RevokeSecurityGroupIngress"
+      ],
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "sg-0dec0ee5700000001",
+      "type": "CAN_ADMIN_SG",
+      "weight": 1
+    },
+    {
+      "access_types": [
+        "CAN_ADMIN_SG"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:38f24bc8ab297548332c",
+      "matched_actions": [
+        "ec2:AuthorizeSecurityGroupEgress",
+        "ec2:AuthorizeSecurityGroupIngress",
+        "ec2:ModifySecurityGroupRules",
+        "ec2:RevokeSecurityGroupIngress"
+      ],
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "sg-0dec0eeb000000002",
+      "type": "CAN_ADMIN_SG",
+      "weight": 1
+    },
+    {
+      "access_types": [
+        "CAN_CONNECT"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:13c59fbe36b06f52f2d3",
+      "matched_actions": [
+        "ssm:SendCommand",
+        "ssm:StartSession"
+      ],
+      "source": "arn:aws:iam::111122223333:group/demo-developers",
+      "source_policy": "demo-dev-ssm-inline",
+      "source_type": "inline",
+      "target": "i-0dec0abb000000002",
+      "type": "CAN_CONNECT",
+      "weight": 0.5
+    },
+    {
+      "access_types": [
+        "CAN_CONNECT"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:9ebc0aa05706aa9bb7cb",
+      "has_conditions": true,
+      "matched_actions": [
+        "ssm:SendCommand",
+        "ssm:StartSession"
+      ],
+      "source": "arn:aws:iam::111122223333:group/demo-developers",
+      "source_policy": "demo-dev-ssm-inline",
+      "source_type": "inline",
+      "target": "i-0dec0ee5700000001",
+      "type": "CAN_CONNECT",
+      "weight": 1.5
+    },
+    {
+      "access_types": [
+        "CAN_CONNECT"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:defe13cc5b90231f8ae4",
+      "matched_actions": [
+        "ssm:SendCommand",
+        "ssm:StartSession"
+      ],
+      "source": "arn:aws:iam::111122223333:group/demo-developers",
+      "source_policy": "demo-dev-ssm-inline",
+      "source_type": "inline",
+      "target": "i-0dec0eeb000000002",
+      "type": "CAN_CONNECT",
+      "weight": 0.5
+    },
+    {
+      "access_types": [
+        "CAN_CONNECT",
+        "CAN_MANAGE",
+        "CAN_MODIFY_USERDATA",
+        "CAN_TERMINATE",
+        "EC2_FULL_ACCESS"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:69967e1b71fb1f029b45",
+      "matched_actions": [
+        "ec2-instance-connect:SendSSHPublicKey",
+        "ssm:SendCommand",
+        "ssm:StartSession"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "i-0dec0abb000000002",
+      "type": "CAN_CONNECT",
+      "weight": 0.5
+    },
+    {
+      "access_types": [
+        "CAN_CONNECT",
+        "CAN_MANAGE",
+        "CAN_MODIFY_USERDATA",
+        "CAN_TERMINATE",
+        "EC2_FULL_ACCESS"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:cc4400ad35843bf997ff",
+      "matched_actions": [
+        "ec2:*",
+        "ec2:ModifyInstanceAttribute",
+        "ec2:StartInstances",
+        "ec2:StopInstances"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "i-0dec0abb000000002",
+      "type": "EC2_FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "access_types": [
+        "CAN_CONNECT",
+        "CAN_MANAGE",
+        "CAN_MODIFY_USERDATA",
+        "CAN_TERMINATE",
+        "EC2_FULL_ACCESS"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:e17bb7024654daf56458",
+      "matched_actions": [
+        "ec2-instance-connect:SendSSHPublicKey",
+        "ssm:SendCommand",
+        "ssm:StartSession"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "i-0dec0ee5700000001",
+      "type": "CAN_CONNECT",
+      "weight": 0.5
+    },
+    {
+      "access_types": [
+        "CAN_CONNECT",
+        "CAN_MANAGE",
+        "CAN_MODIFY_USERDATA",
+        "CAN_TERMINATE",
+        "EC2_FULL_ACCESS"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:a313c042c6a32222bf2b",
+      "matched_actions": [
+        "ec2:*",
+        "ec2:ModifyInstanceAttribute",
+        "ec2:StartInstances",
+        "ec2:StopInstances"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "i-0dec0ee5700000001",
+      "type": "EC2_FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "access_types": [
+        "CAN_CONNECT",
+        "CAN_MANAGE",
+        "CAN_MODIFY_USERDATA",
+        "CAN_TERMINATE",
+        "EC2_FULL_ACCESS"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:964ef36a8c126811bf02",
+      "matched_actions": [
+        "ec2-instance-connect:SendSSHPublicKey",
+        "ssm:SendCommand",
+        "ssm:StartSession"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "i-0dec0eeb000000002",
+      "type": "CAN_CONNECT",
+      "weight": 0.5
+    },
+    {
+      "access_types": [
+        "CAN_CONNECT",
+        "CAN_MANAGE",
+        "CAN_MODIFY_USERDATA",
+        "CAN_TERMINATE",
+        "EC2_FULL_ACCESS"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:e0e523739d16ea1c2a62",
+      "matched_actions": [
+        "ec2:*",
+        "ec2:ModifyInstanceAttribute",
+        "ec2:StartInstances",
+        "ec2:StopInstances"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "i-0dec0eeb000000002",
+      "type": "EC2_FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "access_types": [
+        "CAN_ADMIN_SG"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:a4b545f2b7b9fb75e935",
+      "matched_actions": [
+        "ec2:AuthorizeSecurityGroupEgress",
+        "ec2:AuthorizeSecurityGroupIngress",
+        "ec2:ModifySecurityGroupRules",
+        "ec2:RevokeSecurityGroupIngress"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "sg-0dec0abb000000002",
+      "type": "CAN_ADMIN_SG",
+      "weight": 1
+    },
+    {
+      "access_types": [
+        "CAN_ADMIN_SG"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:b49509efd9a3820a6e51",
+      "matched_actions": [
+        "ec2:AuthorizeSecurityGroupEgress",
+        "ec2:AuthorizeSecurityGroupIngress",
+        "ec2:ModifySecurityGroupRules",
+        "ec2:RevokeSecurityGroupIngress"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "sg-0dec0defa01700002",
+      "type": "CAN_ADMIN_SG",
+      "weight": 1
+    },
+    {
+      "access_types": [
+        "CAN_ADMIN_SG"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:9bdde252ac6c6fd191d5",
+      "matched_actions": [
+        "ec2:AuthorizeSecurityGroupEgress",
+        "ec2:AuthorizeSecurityGroupIngress",
+        "ec2:ModifySecurityGroupRules",
+        "ec2:RevokeSecurityGroupIngress"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "sg-0dec0ee5700000001",
+      "type": "CAN_ADMIN_SG",
+      "weight": 1
+    },
+    {
+      "access_types": [
+        "CAN_ADMIN_SG"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:b7d512ef9869b598a37c",
+      "matched_actions": [
+        "ec2:AuthorizeSecurityGroupEgress",
+        "ec2:AuthorizeSecurityGroupIngress",
+        "ec2:ModifySecurityGroupRules",
+        "ec2:RevokeSecurityGroupIngress"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "sg-0dec0eeb000000002",
+      "type": "CAN_ADMIN_SG",
+      "weight": 1
+    },
+    {
+      "access_types": [
+        "CAN_CONNECT",
+        "CAN_MANAGE",
+        "CAN_MODIFY_USERDATA",
+        "CAN_TERMINATE",
+        "EC2_FULL_ACCESS"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:430fc0833b85f1ee5da1",
+      "matched_actions": [
+        "ec2-instance-connect:SendSSHPublicKey",
+        "ssm:SendCommand",
+        "ssm:StartSession"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "i-0dec0abb000000002",
+      "type": "CAN_CONNECT",
+      "weight": 0.5
+    },
+    {
+      "access_types": [
+        "CAN_CONNECT",
+        "CAN_MANAGE",
+        "CAN_MODIFY_USERDATA",
+        "CAN_TERMINATE",
+        "EC2_FULL_ACCESS"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:57060df401472a4da13b",
+      "matched_actions": [
+        "ec2:*",
+        "ec2:ModifyInstanceAttribute",
+        "ec2:StartInstances",
+        "ec2:StopInstances"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "i-0dec0abb000000002",
+      "type": "EC2_FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "access_types": [
+        "CAN_CONNECT",
+        "CAN_MANAGE",
+        "CAN_MODIFY_USERDATA",
+        "CAN_TERMINATE",
+        "EC2_FULL_ACCESS"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:d548d8928e50315b6568",
+      "matched_actions": [
+        "ec2-instance-connect:SendSSHPublicKey",
+        "ssm:SendCommand",
+        "ssm:StartSession"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "i-0dec0ee5700000001",
+      "type": "CAN_CONNECT",
+      "weight": 0.5
+    },
+    {
+      "access_types": [
+        "CAN_CONNECT",
+        "CAN_MANAGE",
+        "CAN_MODIFY_USERDATA",
+        "CAN_TERMINATE",
+        "EC2_FULL_ACCESS"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:9aadb6233b1dbdfb3edb",
+      "matched_actions": [
+        "ec2:*",
+        "ec2:ModifyInstanceAttribute",
+        "ec2:StartInstances",
+        "ec2:StopInstances"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "i-0dec0ee5700000001",
+      "type": "EC2_FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "access_types": [
+        "CAN_CONNECT",
+        "CAN_MANAGE",
+        "CAN_MODIFY_USERDATA",
+        "CAN_TERMINATE",
+        "EC2_FULL_ACCESS"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:4aca371ef0a6a86022ae",
+      "matched_actions": [
+        "ec2-instance-connect:SendSSHPublicKey",
+        "ssm:SendCommand",
+        "ssm:StartSession"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "i-0dec0eeb000000002",
+      "type": "CAN_CONNECT",
+      "weight": 0.5
+    },
+    {
+      "access_types": [
+        "CAN_CONNECT",
+        "CAN_MANAGE",
+        "CAN_MODIFY_USERDATA",
+        "CAN_TERMINATE",
+        "EC2_FULL_ACCESS"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:d2f8df380b05c2bf5295",
+      "matched_actions": [
+        "ec2:*",
+        "ec2:ModifyInstanceAttribute",
+        "ec2:StartInstances",
+        "ec2:StopInstances"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "i-0dec0eeb000000002",
+      "type": "EC2_FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "access_types": [
+        "CAN_ADMIN_SG"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:49d8638e69edba703799",
+      "matched_actions": [
+        "ec2:AuthorizeSecurityGroupEgress",
+        "ec2:AuthorizeSecurityGroupIngress",
+        "ec2:ModifySecurityGroupRules",
+        "ec2:RevokeSecurityGroupIngress"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "sg-0dec0abb000000002",
+      "type": "CAN_ADMIN_SG",
+      "weight": 1
+    },
+    {
+      "access_types": [
+        "CAN_ADMIN_SG"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:dd00483283f567564adc",
+      "matched_actions": [
+        "ec2:AuthorizeSecurityGroupEgress",
+        "ec2:AuthorizeSecurityGroupIngress",
+        "ec2:ModifySecurityGroupRules",
+        "ec2:RevokeSecurityGroupIngress"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "sg-0dec0defa01700002",
+      "type": "CAN_ADMIN_SG",
+      "weight": 1
+    },
+    {
+      "access_types": [
+        "CAN_ADMIN_SG"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:74c6daa69323fc512dbc",
+      "matched_actions": [
+        "ec2:AuthorizeSecurityGroupEgress",
+        "ec2:AuthorizeSecurityGroupIngress",
+        "ec2:ModifySecurityGroupRules",
+        "ec2:RevokeSecurityGroupIngress"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "sg-0dec0ee5700000001",
+      "type": "CAN_ADMIN_SG",
+      "weight": 1
+    },
+    {
+      "access_types": [
+        "CAN_ADMIN_SG"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:2a9e6622ef279f9ba187",
+      "matched_actions": [
+        "ec2:AuthorizeSecurityGroupEgress",
+        "ec2:AuthorizeSecurityGroupIngress",
+        "ec2:ModifySecurityGroupRules",
+        "ec2:RevokeSecurityGroupIngress"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "sg-0dec0eeb000000002",
+      "type": "CAN_ADMIN_SG",
+      "weight": 1
+    },
+    {
+      "access_types": [
+        "CAN_CONNECT",
+        "CAN_MANAGE",
+        "CAN_MODIFY_USERDATA",
+        "CAN_TERMINATE",
+        "EC2_FULL_ACCESS"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:5296d77e466a49e29907",
+      "matched_actions": [
+        "ec2-instance-connect:SendSSHPublicKey",
+        "ssm:SendCommand",
+        "ssm:StartSession"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "i-0dec0abb000000002",
+      "type": "CAN_CONNECT",
+      "weight": 0.5
+    },
+    {
+      "access_types": [
+        "CAN_CONNECT",
+        "CAN_MANAGE",
+        "CAN_MODIFY_USERDATA",
+        "CAN_TERMINATE",
+        "EC2_FULL_ACCESS"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:561bf6f06e39ecf670b2",
+      "matched_actions": [
+        "ec2:*",
+        "ec2:ModifyInstanceAttribute",
+        "ec2:StartInstances",
+        "ec2:StopInstances"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "i-0dec0abb000000002",
+      "type": "EC2_FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "access_types": [
+        "CAN_CONNECT",
+        "CAN_MANAGE",
+        "CAN_MODIFY_USERDATA",
+        "CAN_TERMINATE",
+        "EC2_FULL_ACCESS"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:403336457f74d34e4b85",
+      "matched_actions": [
+        "ec2-instance-connect:SendSSHPublicKey",
+        "ssm:SendCommand",
+        "ssm:StartSession"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "i-0dec0ee5700000001",
+      "type": "CAN_CONNECT",
+      "weight": 0.5
+    },
+    {
+      "access_types": [
+        "CAN_CONNECT",
+        "CAN_MANAGE",
+        "CAN_MODIFY_USERDATA",
+        "CAN_TERMINATE",
+        "EC2_FULL_ACCESS"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:513f8c59a9326148e33e",
+      "matched_actions": [
+        "ec2:*",
+        "ec2:ModifyInstanceAttribute",
+        "ec2:StartInstances",
+        "ec2:StopInstances"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "i-0dec0ee5700000001",
+      "type": "EC2_FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "access_types": [
+        "CAN_CONNECT",
+        "CAN_MANAGE",
+        "CAN_MODIFY_USERDATA",
+        "CAN_TERMINATE",
+        "EC2_FULL_ACCESS"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:eb850cdace542593b1bf",
+      "matched_actions": [
+        "ec2-instance-connect:SendSSHPublicKey",
+        "ssm:SendCommand",
+        "ssm:StartSession"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "i-0dec0eeb000000002",
+      "type": "CAN_CONNECT",
+      "weight": 0.5
+    },
+    {
+      "access_types": [
+        "CAN_CONNECT",
+        "CAN_MANAGE",
+        "CAN_MODIFY_USERDATA",
+        "CAN_TERMINATE",
+        "EC2_FULL_ACCESS"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:82e3456a449f9af71c73",
+      "matched_actions": [
+        "ec2:*",
+        "ec2:ModifyInstanceAttribute",
+        "ec2:StartInstances",
+        "ec2:StopInstances"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "i-0dec0eeb000000002",
+      "type": "EC2_FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "access_types": [
+        "CAN_ADMIN_SG"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:dafd6ae243ac97524499",
+      "matched_actions": [
+        "ec2:AuthorizeSecurityGroupEgress",
+        "ec2:AuthorizeSecurityGroupIngress",
+        "ec2:ModifySecurityGroupRules",
+        "ec2:RevokeSecurityGroupIngress"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "sg-0dec0abb000000002",
+      "type": "CAN_ADMIN_SG",
+      "weight": 1
+    },
+    {
+      "access_types": [
+        "CAN_ADMIN_SG"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:769d4988db3709a37d3d",
+      "matched_actions": [
+        "ec2:AuthorizeSecurityGroupEgress",
+        "ec2:AuthorizeSecurityGroupIngress",
+        "ec2:ModifySecurityGroupRules",
+        "ec2:RevokeSecurityGroupIngress"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "sg-0dec0defa01700002",
+      "type": "CAN_ADMIN_SG",
+      "weight": 1
+    },
+    {
+      "access_types": [
+        "CAN_ADMIN_SG"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:fc102c6dbbc0bfcf3500",
+      "matched_actions": [
+        "ec2:AuthorizeSecurityGroupEgress",
+        "ec2:AuthorizeSecurityGroupIngress",
+        "ec2:ModifySecurityGroupRules",
+        "ec2:RevokeSecurityGroupIngress"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "sg-0dec0ee5700000001",
+      "type": "CAN_ADMIN_SG",
+      "weight": 1
+    },
+    {
+      "access_types": [
+        "CAN_ADMIN_SG"
+      ],
+      "category": "ec2_access",
+      "edge_id": "e:65f1ae59e4aa1f81e8db",
+      "matched_actions": [
+        "ec2:AuthorizeSecurityGroupEgress",
+        "ec2:AuthorizeSecurityGroupIngress",
+        "ec2:ModifySecurityGroupRules",
+        "ec2:RevokeSecurityGroupIngress"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "sg-0dec0eeb000000002",
+      "type": "CAN_ADMIN_SG",
+      "weight": 1
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:d16bf7c3019c8220fb11",
+      "source": "i-0dec0abb000000002",
+      "target": "arn:aws:iam::111122223333:role/demo-eks-node-role",
+      "type": "INSTANCE_ROLE",
+      "weight": 0
+    },
+    {
+      "category": "ec2_network",
+      "edge_id": "e:feb926e8c947ccf44a5c",
+      "source": "i-0dec0abb000000002",
+      "target": "sg-0dec0abb000000002",
+      "type": "HAS_SG",
+      "weight": 0
+    },
+    {
+      "category": "ec2_network",
+      "edge_id": "e:a94dba85c1258cb8f13a",
+      "source": "i-0dec0ee5700000001",
+      "target": "sg-0dec0ee5700000001",
+      "type": "HAS_SG",
+      "weight": 0
+    },
+    {
+      "category": "compute",
+      "edge_id": "e:26ef33ead99dbdd0ef41",
+      "source": "i-0dec0eeb000000002",
+      "target": "arn:aws:iam::111122223333:role/demo-app-role",
+      "type": "INSTANCE_ROLE",
+      "weight": 0
+    },
+    {
+      "category": "ec2_network",
+      "edge_id": "e:b4f8b912d33e41ec9aaa",
+      "source": "i-0dec0eeb000000002",
+      "target": "sg-0dec0eeb000000002",
+      "type": "HAS_SG",
+      "weight": 0
+    },
+    {
+      "category": "ec2_network",
+      "edge_id": "e:0f820b82051550fc6d9e",
+      "source": "principal:*",
+      "target": "i-0dec0eeb000000002",
+      "type": "PUBLIC_INBOUND",
+      "weight": 0
+    },
+    {
+      "category": "ec2_network",
+      "edge_id": "e:132ef3dc1c7ce003b76b",
+      "source": "sg-0dec0eeb000000002",
+      "target": "sg-0dec0abb000000002",
+      "type": "SG_ALLOWS_FROM",
+      "weight": 1
+    }
+  ],
+  "findings": [
+    {
+      "category": "ami_public",
+      "description": "Anyone can launch an instance from AMI 'ami-0dec0b0b11c000002' and read its volumes.",
+      "entity": "ami/ami-0dec0b0b11c000002",
+      "entity_arn": "arn:aws:ec2:eu-west-2::image/ami-0dec0b0b11c000002",
+      "fingerprint": "80cd2186ed906f20ba3ee62c5c95647f",
+      "id": "AMI-PUB-001",
+      "matched_actions": [],
+      "node_id": "arn:aws:ec2:eu-west-2::image/ami-0dec0b0b11c000002",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "remediation": "Make the AMI private (remove the 'all' launch permission) and turn on AMI Block Public Access.",
+      "resource": [
+        "arn:aws:ec2:eu-west-2::image/ami-0dec0b0b11c000002"
+      ],
+      "severity": "HIGH",
+      "source_type": "ami_config",
+      "title": "AMI ami-0dec0b0b11c000002 is public"
+    },
+    {
+      "category": "ami_cross_account",
+      "description": "Account 999999999999 can launch instances from AMI 'ami-0dec0000000000002' (launch permission).",
+      "entity": "ami/ami-0dec0000000000002",
+      "entity_arn": "arn:aws:ec2:eu-west-2::image/ami-0dec0000000000002",
+      "fingerprint": "0cabf86b9db6e3cfc2ead6f6a3082658",
+      "id": "AMI-XACCT-001",
+      "matched_actions": [],
+      "node_id": "arn:aws:ec2:eu-west-2::image/ami-0dec0000000000002",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "remediation": "Verify the cross-account launch permission is intended.",
+      "resource": [
+        "arn:aws:ec2:eu-west-2::image/ami-0dec0000000000002"
+      ],
+      "severity": "MEDIUM",
+      "source_type": "ami_config",
+      "title": "AMI ami-0dec0000000000002 is shared with account 999999999999"
+    },
+    {
+      "category": "ec2_exposure",
+      "description": "Instance 'i-0dec0eeb000000002' (running) has public address(es) 203.0.113.10; security group(s) sg-0dec0eeb000000002 admit 0.0.0.0/0 on 22/tcp.",
+      "entity": "instance/i-0dec0eeb000000002",
+      "entity_arn": "arn:aws:ec2:eu-west-2:111122223333:instance/i-0dec0eeb000000002",
+      "fingerprint": "4ebc1285dc1fb17ec73280022e24e898",
+      "id": "EC2-EXPOSURE-001",
+      "matched_actions": [],
+      "node_id": "arn:aws:ec2:eu-west-2:111122223333:instance/i-0dec0eeb000000002",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-1--you-compromised-an-ec2-instance",
+      "remediation": "Restrict the security-group ingress to specific source ranges, or move the instance behind a load balancer in a private subnet.",
+      "resource": [
+        "arn:aws:ec2:eu-west-2:111122223333:instance/i-0dec0eeb000000002"
+      ],
+      "severity": "HIGH",
+      "source_type": "security_group",
+      "title": "Instance i-0dec0eeb000000002 is reachable from the internet on 22/tcp"
+    },
+    {
+      "category": "ec2_imds",
+      "description": "Instance 'i-0dec0eeb000000002' (running) has HttpTokens 'optional' with the metadata endpoint enabled: SSRF can read the instance role's temporary credentials.",
+      "entity": "instance/i-0dec0eeb000000002",
+      "entity_arn": "arn:aws:ec2:eu-west-2:111122223333:instance/i-0dec0eeb000000002",
+      "fingerprint": "89ce89e0b5bcda308e0e52b023210e5d",
+      "id": "EC2-IMDS-001",
+      "matched_actions": [],
+      "node_id": "arn:aws:ec2:eu-west-2:111122223333:instance/i-0dec0eeb000000002",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-1--you-compromised-an-ec2-instance",
+      "remediation": "Set HttpTokens to 'required' to enforce IMDSv2 (or disable the metadata endpoint).",
+      "resource": [
+        "arn:aws:ec2:eu-west-2:111122223333:instance/i-0dec0eeb000000002"
+      ],
+      "severity": "MEDIUM",
+      "source_type": "ec2_config",
+      "title": "Instance i-0dec0eeb000000002 allows IMDSv1 (instance role exposed to SSRF)"
+    },
+    {
+      "category": "ec2_exposure",
+      "description": "Instance 'i-0dec0eeb000000002' has public address(es) 203.0.113.10 and its subnet's effective route table routes to an attached internet gateway.",
+      "entity": "instance/i-0dec0eeb000000002",
+      "entity_arn": "arn:aws:ec2:eu-west-2:111122223333:instance/i-0dec0eeb000000002",
+      "fingerprint": "b59474fe280977a25df9b88dd66d8c36",
+      "id": "EC2-INET-001",
+      "matched_actions": [],
+      "node_id": "arn:aws:ec2:eu-west-2:111122223333:instance/i-0dec0eeb000000002",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-1--you-compromised-an-ec2-instance",
+      "remediation": "Move the instance to a private subnet or remove its public address.",
+      "resource": [
+        "arn:aws:ec2:eu-west-2:111122223333:instance/i-0dec0eeb000000002"
+      ],
+      "severity": "MEDIUM",
+      "source_type": "vpc",
+      "title": "Instance i-0dec0eeb000000002 has a public address in an internet-routed subnet"
+    },
+    {
+      "category": "ec2_userdata",
+      "description": "The launch template 'demo-web-lt' has user data (content not collected). User data is readable by anyone with ec2:DescribeInstanceAttribute / DescribeLaunchTemplateVersions and through IMDS on the host; review it for embedded credentials.",
+      "entity": "launch template/demo-web-lt",
+      "entity_arn": "arn:aws:ec2:eu-west-2:111122223333:launch-template/lt-0dec0eeb000000002",
+      "fingerprint": "b0842d58be1650b7b5f8c1e2bf6817e0",
+      "id": "EC2-USERDATA-001",
+      "matched_actions": [],
+      "node_id": "arn:aws:ec2:eu-west-2:111122223333:launch-template/lt-0dec0eeb000000002",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-1--you-compromised-an-ec2-instance",
+      "remediation": "Review the user data for embedded credentials; move secrets to Secrets Manager or SSM SecureString parameters read at boot.",
+      "resource": [
+        "arn:aws:ec2:eu-west-2:111122223333:launch-template/lt-0dec0eeb000000002"
+      ],
+      "severity": "INFO",
+      "source_type": "ec2_config",
+      "title": "User data is present on launch template demo-web-lt"
+    }
+  ]
+}

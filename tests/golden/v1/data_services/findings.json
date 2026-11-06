@@ -1,0 +1,1317 @@
+{
+  "account_id": "123456789012",
+  "findings": [
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "dynamodb_public",
+      "confidence": "definite",
+      "description": "The dynamodb table's resource policy grants dynamodb:Query to any AWS principal.",
+      "entity": "dynamodb/demo-open-table",
+      "entity_arn": "arn:aws:dynamodb:eu-west-2:123456789012:table/demo-open-table",
+      "evidence": {
+        "auth": "any-aws-account",
+        "condition_strength": "none",
+        "decision": "allow",
+        "statements": [
+          {
+            "layer": "resource",
+            "policy_arn": "arn:aws:dynamodb:eu-west-2:123456789012:table/demo-open-table",
+            "policy_name": "resource",
+            "sid": null,
+            "source_type": "resource",
+            "statement_index": 0,
+            "version_id": null,
+            "via_group": null
+          }
+        ]
+      },
+      "fingerprint": "e25d1c8da74711ca3de2cdf0c486204a",
+      "id": "DDB-PUB-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "dynamodb:Query"
+      ],
+      "node_id": "arn:aws:dynamodb:eu-west-2:123456789012:table/demo-open-table",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "region": "eu-west-2",
+      "remediation": "Scope the Principal or add Condition constraints (e.g. aws:PrincipalOrgID).",
+      "resource": [
+        "arn:aws:dynamodb:eu-west-2:123456789012:table/demo-open-table"
+      ],
+      "severity": "HIGH",
+      "source_policy": "ResourcePolicy",
+      "source_type": "dynamodb_resource_policy",
+      "status": "open",
+      "title": "DynamoDB table 'demo-open-table' is accessible to everyone through its resource policy"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "ecr_public",
+      "confidence": "definite",
+      "description": "The ecr repository's resource policy grants ecr:BatchGetImage to any AWS principal.",
+      "entity": "ecr/demo-public-repo",
+      "entity_arn": "arn:aws:ecr:eu-west-2:123456789012:repository/demo-public-repo",
+      "evidence": {
+        "auth": "any-aws-account",
+        "condition_strength": "none",
+        "decision": "allow",
+        "statements": [
+          {
+            "layer": "resource",
+            "policy_arn": "arn:aws:ecr:eu-west-2:123456789012:repository/demo-public-repo",
+            "policy_name": "resource",
+            "sid": null,
+            "source_type": "resource",
+            "statement_index": 0,
+            "version_id": null,
+            "via_group": null
+          }
+        ]
+      },
+      "fingerprint": "29a427645064272feb25b050b7910964",
+      "id": "ECR-PUB-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "ecr:BatchGetImage"
+      ],
+      "node_id": "arn:aws:ecr:eu-west-2:123456789012:repository/demo-public-repo",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "region": "eu-west-2",
+      "remediation": "Scope the Principal or add Condition constraints (e.g. aws:PrincipalOrgID).",
+      "resource": [
+        "arn:aws:ecr:eu-west-2:123456789012:repository/demo-public-repo"
+      ],
+      "severity": "HIGH",
+      "source_policy": "ResourcePolicy",
+      "source_type": "ecr_resource_policy",
+      "status": "open",
+      "title": "ECR repository 'demo-public-repo' is accessible to everyone through its resource policy"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "lambda_public",
+      "confidence": "definite",
+      "description": "A policy of the function lets any caller perform lambda:invokefunction.",
+      "evidence": {
+        "actions": [
+          "lambda:invokefunction"
+        ],
+        "condition_strength": "none",
+        "decision": "allow",
+        "qualifiers": []
+      },
+      "fingerprint": "5ac7f801ad80a01795e8c1c1a0f9a319",
+      "id": "LAMBDA-PUB-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "lambda:invokefunction"
+      ],
+      "node_id": "arn:aws:lambda:eu-west-2:123456789012:function:demo-public-fn",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "region": "eu-west-2",
+      "related_node_ids": [
+        "aws-enumerator:anonymous"
+      ],
+      "remediation": "Scope the Principal, or add a SourceArn/SourceAccount Condition.",
+      "severity": "HIGH",
+      "status": "open",
+      "title": "Lambda 'demo-public-fn' grants public access via its resource policy"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "lambda_public",
+      "confidence": "definite",
+      "description": "The function URL needs no authentication and the function policy lets unauthenticated callers invoke it: anyone on the internet can run the function.",
+      "evidence": {
+        "auth_type": "NONE",
+        "decision": "allow",
+        "policy": "public",
+        "url": "https://b22c20213ab0a0dab3ea42e1fc4d9f0e.lambda-url.eu-west-2.on.aws/"
+      },
+      "fingerprint": "04f637f01e13554cc9bf749e0915ae30",
+      "id": "LAMBDA-URL-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "lambda:InvokeFunctionUrl"
+      ],
+      "node_id": "arn:aws:lambda:eu-west-2:123456789012:function:demo-public-fn",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "region": "eu-west-2",
+      "related_node_ids": [
+        "aws-enumerator:anonymous"
+      ],
+      "remediation": "Set the function URL AuthType to AWS_IAM, or remove the public InvokeFunctionUrl permission and the URL if it is not needed.",
+      "severity": "HIGH",
+      "status": "open",
+      "title": "Lambda 'demo-public-fn' has a public function URL (AuthType NONE)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "messaging_public",
+      "confidence": "definite",
+      "description": "The SQS policy lets any principal perform sqs:sendmessage.",
+      "evidence": {
+        "actions": [
+          "sqs:sendmessage"
+        ],
+        "condition_strength": "none",
+        "decision": "allow"
+      },
+      "fingerprint": "e7079aacb42f38265791ab92064dcd77",
+      "id": "MSG-PUB-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "sqs:sendmessage"
+      ],
+      "node_id": "arn:aws:sqs:eu-west-2:123456789012:demo-queue",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "region": "eu-west-2",
+      "related_node_ids": [
+        "aws-enumerator:anonymous"
+      ],
+      "remediation": "Scope the Principal or add a Condition (e.g. aws:SourceArn/SourceAccount).",
+      "severity": "HIGH",
+      "status": "open",
+      "title": "SQS 'demo-queue' grants access to everyone"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "secret_public",
+      "confidence": "definite",
+      "description": "The secret's resource policy grants secretsmanager:GetSecretValue to any AWS principal.",
+      "entity": "secret/demo/api-token",
+      "entity_arn": "arn:aws:secretsmanager:eu-west-2:123456789012:secret:demo/api-token-pjpkgm",
+      "evidence": {
+        "auth": "any-aws-account",
+        "condition_strength": "none",
+        "decision": "allow",
+        "statements": [
+          {
+            "layer": "resource",
+            "policy_arn": "arn:aws:secretsmanager:eu-west-2:123456789012:secret:demo/api-token-pjpkgm",
+            "policy_name": "resource",
+            "sid": null,
+            "source_type": "resource",
+            "statement_index": 0,
+            "version_id": null,
+            "via_group": null
+          }
+        ]
+      },
+      "fingerprint": "feb0e7527ac47feb11ca86602c05be54",
+      "id": "SECRET-PUB-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "secretsmanager:GetSecretValue"
+      ],
+      "node_id": "arn:aws:secretsmanager:eu-west-2:123456789012:secret:demo/api-token-pjpkgm",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "region": "eu-west-2",
+      "remediation": "Remove the wildcard Principal or add a restrictive Condition (aws:PrincipalOrgID, aws:PrincipalAccount).",
+      "resource": [
+        "arn:aws:secretsmanager:eu-west-2:123456789012:secret:demo/api-token-pjpkgm"
+      ],
+      "severity": "HIGH",
+      "source_policy": "ResourcePolicy",
+      "source_type": "secret_resource_policy",
+      "status": "open",
+      "title": "Secret 'demo/api-token' is accessible to everyone through its resource policy"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "apigw_public",
+      "confidence": "conditional",
+      "description": "This report predates per-method authorisation data: the API has Lambda integrations and no authorizer object, so its routes may be unauthenticated (AWS_IAM methods need no authorizer object; re-collect to decide per route).",
+      "entity": "apigw/demo-http-api",
+      "entity_arn": "arn:aws:apigateway:eu-west-2::/apis/f6g7h8i9j0",
+      "evidence": {
+        "basis": "legacy-has-authorizer",
+        "functions": [
+          "arn:aws:lambda:eu-west-2:123456789012:function:demo-public-fn"
+        ]
+      },
+      "fingerprint": "885b17b4bf5f282bb2e12927c3d98908",
+      "gaps": [
+        "apigateway:per-method-authorization-unknown"
+      ],
+      "id": "APIGW-AUTH-001",
+      "legacy_ids": [],
+      "node_id": "arn:aws:apigateway:eu-west-2::/apis/f6g7h8i9j0",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "region": "eu-west-2",
+      "remediation": "Attach an authorizer (IAM, Cognito, JWT or Lambda) to the listed routes, or confirm that unauthenticated access is intended.",
+      "resource": [
+        "arn:aws:apigateway:eu-west-2::/apis/f6g7h8i9j0"
+      ],
+      "severity": "MEDIUM",
+      "source_policy": "APIConfig",
+      "source_type": "apigw_config",
+      "status": "open",
+      "title": "API 'demo-http-api' has Lambda integrations and no authorizer object"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "dangerous_permission",
+      "confidence": "definite",
+      "description": "Unrestricted PassRole (can pass any role to any service)",
+      "evidence": {
+        "decision": "allow",
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "iam:passrole"
+                ],
+                "layer": "identity",
+                "policy_name": "deploy",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:role/*",
+            "rule_action": "iam:PassRole"
+          }
+        ]
+      },
+      "fingerprint": "49485c6aac25ef2c7807faca400a6908",
+      "id": "DANGER-006",
+      "legacy_ids": [],
+      "matched_actions": [
+        "iam:passrole"
+      ],
+      "node_id": "arn:aws:iam::123456789012:user/demo-deployer",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#high-value-targets-to-hunt",
+      "remediation": "Restrict to specific actions and resource ARNs",
+      "rule_version": "2.1.0",
+      "severity": "MEDIUM",
+      "status": "open",
+      "title": "Unrestricted PassRole (can pass any role to any service)"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "dynamodb_cross_account",
+      "confidence": "definite",
+      "description": "The dynamodb table's resource policy grants dynamodb:GetItem to principals of account(s) 999999999999, independently of this account's IAM policies.",
+      "entity": "dynamodb/demo-table",
+      "entity_arn": "arn:aws:dynamodb:eu-west-2:123456789012:table/demo-table",
+      "evidence": {
+        "accounts": [
+          "999999999999"
+        ],
+        "principals": [
+          "arn:aws:iam::999999999999:role/demo-partner"
+        ]
+      },
+      "fingerprint": "49b7a97c122b3e3b53d4c256b01cbf24",
+      "id": "DDB-XACCT-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "dynamodb:GetItem"
+      ],
+      "node_id": "arn:aws:dynamodb:eu-west-2:123456789012:table/demo-table",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "region": "eu-west-2",
+      "related_node_ids": [
+        "arn:aws:iam::999999999999:role/demo-partner"
+      ],
+      "remediation": "Verify cross-account access is intended.",
+      "resource": [
+        "arn:aws:dynamodb:eu-west-2:123456789012:table/demo-table"
+      ],
+      "severity": "MEDIUM",
+      "source_policy": "ResourcePolicy",
+      "source_type": "dynamodb_resource_policy",
+      "status": "open",
+      "title": "DynamoDB table 'demo-table' is shared with 999999999999"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "ebs_cross_account",
+      "confidence": "definite",
+      "description": "Account 111122223333 can create volumes from the snapshot (createVolumePermission).",
+      "entity": "ebssnapshot/snap-0a1b2c3d4e5f6aaa1",
+      "entity_arn": "arn:aws:ec2:eu-west-2::snapshot/snap-0a1b2c3d4e5f6aaa1",
+      "evidence": {
+        "account": "111122223333"
+      },
+      "fingerprint": "911b597dd65baadb7d5cd0667c753af2",
+      "id": "EBS-XACCT-001",
+      "legacy_ids": [],
+      "node_id": "arn:aws:ec2:eu-west-2::snapshot/snap-0a1b2c3d4e5f6aaa1",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "region": "eu-west-2",
+      "related_node_ids": [
+        "arn:aws:iam::111122223333:root"
+      ],
+      "remediation": "Verify the cross-account sharing is intended.",
+      "resource": [
+        "arn:aws:ec2:eu-west-2::snapshot/snap-0a1b2c3d4e5f6aaa1"
+      ],
+      "severity": "MEDIUM",
+      "source_type": "ebs_config",
+      "status": "open",
+      "title": "EBS snapshot 'snap-0a1b2c3d4e5f6aaa1' is shared with account 111122223333"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "ecr_cross_account",
+      "confidence": "definite",
+      "description": "The ecr repository's resource policy grants ecr:BatchGetImage, ecr:GetDownloadUrlForLayer to principals of account(s) 111122223333, independently of this account's IAM policies.",
+      "entity": "ecr/demo-repo",
+      "entity_arn": "arn:aws:ecr:eu-west-2:123456789012:repository/demo-repo",
+      "evidence": {
+        "accounts": [
+          "111122223333"
+        ],
+        "principals": [
+          "arn:aws:iam::111122223333:root"
+        ]
+      },
+      "fingerprint": "5e27bfcc792d6e7e2dd5f1f34c935e89",
+      "id": "ECR-XACCT-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "ecr:BatchGetImage",
+        "ecr:GetDownloadUrlForLayer"
+      ],
+      "node_id": "arn:aws:ecr:eu-west-2:123456789012:repository/demo-repo",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "region": "eu-west-2",
+      "related_node_ids": [
+        "arn:aws:iam::111122223333:root"
+      ],
+      "remediation": "Verify cross-account pull/push access is intended.",
+      "resource": [
+        "arn:aws:ecr:eu-west-2:123456789012:repository/demo-repo"
+      ],
+      "severity": "MEDIUM",
+      "source_policy": "ResourcePolicy",
+      "source_type": "ecr_resource_policy",
+      "status": "open",
+      "title": "ECR repository 'demo-repo' is shared with 111122223333"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "kms_cross_account",
+      "confidence": "definite",
+      "description": "The kms key's resource policy grants kms:Decrypt to principals of account(s) 999999999999, independently of this account's IAM policies.",
+      "entity": "kms/alias/demo-app",
+      "entity_arn": "arn:aws:kms:eu-west-2:123456789012:key/4b2c1a3d-aaaa-4bbb-8ccc-1d2e3f4a5b6c",
+      "evidence": {
+        "accounts": [
+          "999999999999"
+        ],
+        "principals": [
+          "arn:aws:iam::999999999999:role/demo-partner"
+        ]
+      },
+      "fingerprint": "8af3fb911716bedea5c0de837b631c11",
+      "id": "KMS-XACCT-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "kms:Decrypt"
+      ],
+      "node_id": "arn:aws:kms:eu-west-2:123456789012:key/4b2c1a3d-aaaa-4bbb-8ccc-1d2e3f4a5b6c",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "region": "eu-west-2",
+      "related_node_ids": [
+        "arn:aws:iam::999999999999:role/demo-partner"
+      ],
+      "remediation": "Verify that cross-account use of the key is intended; remove accounts that should not use it.",
+      "resource": [
+        "arn:aws:kms:eu-west-2:123456789012:key/4b2c1a3d-aaaa-4bbb-8ccc-1d2e3f4a5b6c"
+      ],
+      "severity": "MEDIUM",
+      "source_policy": "KeyPolicy",
+      "source_type": "kms_key_policy",
+      "status": "open",
+      "title": "KMS key 'alias/demo-app' is shared with 999999999999"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "lambda_cross_account",
+      "confidence": "definite",
+      "description": "A policy of the function lets arn:aws:iam::111122223333:root (account 111122223333) perform lambda:invokefunction.",
+      "evidence": {
+        "actions": [
+          "lambda:invokefunction"
+        ],
+        "decision": "allow",
+        "grantee": "arn:aws:iam::111122223333:root",
+        "qualifiers": []
+      },
+      "fingerprint": "2ca87609cc032d1a6bb3388df65bd0d8",
+      "id": "LAMBDA-XACCT-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "lambda:invokefunction"
+      ],
+      "node_id": "arn:aws:lambda:eu-west-2:123456789012:function:demo-etl",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "region": "eu-west-2",
+      "related_node_ids": [
+        "arn:aws:iam::111122223333:root"
+      ],
+      "remediation": "Verify cross-account invoke access is intended.",
+      "severity": "MEDIUM",
+      "status": "open",
+      "title": "Lambda 'demo-etl' grants access to account 111122223333"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "messaging_cross_account",
+      "confidence": "definite",
+      "description": "The SNS policy lets arn:aws:iam::999999999999:root (account 999999999999) perform sns:subscribe.",
+      "evidence": {
+        "actions": [
+          "sns:subscribe"
+        ],
+        "decision": "allow",
+        "grantee": "arn:aws:iam::999999999999:root"
+      },
+      "fingerprint": "3a77a7a129405f3201999987e8c73f51",
+      "id": "MSG-XACCT-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "sns:subscribe"
+      ],
+      "node_id": "arn:aws:sns:eu-west-2:123456789012:demo-topic",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "region": "eu-west-2",
+      "related_node_ids": [
+        "arn:aws:iam::999999999999:root"
+      ],
+      "remediation": "Verify cross-account access is intended.",
+      "severity": "MEDIUM",
+      "status": "open",
+      "title": "SNS 'demo-topic' grants access to account 999999999999"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "ssm_plaintext_secret",
+      "confidence": "definite",
+      "description": "SSM parameter '/demo/api_key' has type 'String' (plaintext) but its name has a credential word as a whole token. Anyone with ssm:GetParameter on it reads the value in plaintext, with no KMS gate.",
+      "entity": "ssmparam//demo/api_key",
+      "entity_arn": "arn:aws:ssm:eu-west-2:123456789012:parameter/demo/api_key",
+      "evidence": {
+        "param_type": "String"
+      },
+      "fingerprint": "7edca6d98909e4e97e6014e650c3dfdd",
+      "id": "PARAM-PLAIN-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "ssm:GetParameter"
+      ],
+      "node_id": "arn:aws:ssm:eu-west-2:123456789012:parameter/demo/api_key",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "region": "eu-west-2",
+      "remediation": "Migrate the parameter to type SecureString (KMS-encrypted).",
+      "resource": [
+        "arn:aws:ssm:eu-west-2:123456789012:parameter/demo/api_key"
+      ],
+      "severity": "MEDIUM",
+      "source_policy": "Parameter Type",
+      "source_type": "ssm_config",
+      "status": "open",
+      "title": "Parameter '/demo/api_key' looks like a secret but is stored as a plaintext String"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "ssm_plaintext_secret",
+      "confidence": "definite",
+      "description": "SSM parameter '/demo/db/password' has type 'String' (plaintext) but its name has a credential word as a whole token. Anyone with ssm:GetParameter on it reads the value in plaintext, with no KMS gate.",
+      "entity": "ssmparam//demo/db/password",
+      "entity_arn": "arn:aws:ssm:eu-west-2:123456789012:parameter/demo/db/password",
+      "evidence": {
+        "param_type": "String"
+      },
+      "fingerprint": "dcd3c6f8503e7886a37ea8063efe36c6",
+      "id": "PARAM-PLAIN-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "ssm:GetParameter"
+      ],
+      "node_id": "arn:aws:ssm:eu-west-2:123456789012:parameter/demo/db/password",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "region": "eu-west-2",
+      "remediation": "Migrate the parameter to type SecureString (KMS-encrypted).",
+      "resource": [
+        "arn:aws:ssm:eu-west-2:123456789012:parameter/demo/db/password"
+      ],
+      "severity": "MEDIUM",
+      "source_policy": "Parameter Type",
+      "source_type": "ssm_config",
+      "status": "open",
+      "title": "Parameter '/demo/db/password' looks like a secret but is stored as a plaintext String"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "privilege_escalation",
+      "confidence": "definite",
+      "description": "Can create CloudFormation stack with privileged role",
+      "evidence": {
+        "decision": "allow",
+        "rule_class": "new-passrole",
+        "steps": [
+          {
+            "context": {
+              "iam:PassedToService": "cloudformation.amazonaws.com"
+            },
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "iam:passrole"
+                ],
+                "layer": "identity",
+                "policy_name": "deploy",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:role/demo-cfn-role",
+            "rule_action": "iam:passrole"
+          },
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "cloudformation:createstack",
+                  "cloudformation:updatestack"
+                ],
+                "layer": "identity",
+                "policy_name": "deploy",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 3
+              }
+            ],
+            "resource": "arn:aws:cloudformation:*:123456789012:stack/*",
+            "rule_action": "cloudformation:createstack"
+          }
+        ],
+        "targets_detail": [
+          {
+            "arn": "arn:aws:iam::123456789012:role/demo-cfn-role",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/demo-cfn-role",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          }
+        ]
+      },
+      "fingerprint": "17cc34e8bbe9d9f4dd7138c56cedcd56",
+      "id": "PRIVESC-016",
+      "legacy_ids": [],
+      "matched_actions": [
+        "cloudformation:createstack",
+        "iam:passrole"
+      ],
+      "node_id": "arn:aws:iam::123456789012:user/demo-deployer",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "related_node_ids": [
+        "arn:aws:iam::123456789012:role/demo-cfn-role"
+      ],
+      "remediation": "Restrict iam:PassRole and cloudformation:CreateStack",
+      "rule_version": "2.1.0",
+      "severity": "MEDIUM",
+      "status": "open",
+      "targets": [
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/demo-cfn-role",
+          "tier": "MEDIUM"
+        }
+      ],
+      "title": "PassRole+CloudFormation: Can create CloudFormation stack with privileged role"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "privilege_escalation",
+      "confidence": "definite",
+      "description": "Can run ECS task with privileged role",
+      "evidence": {
+        "decision": "allow",
+        "rule_class": "new-passrole",
+        "steps": [
+          {
+            "context": {
+              "iam:PassedToService": "ecs-tasks.amazonaws.com"
+            },
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "iam:passrole"
+                ],
+                "layer": "identity",
+                "policy_name": "deploy",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:role/demo-app-role",
+            "rule_action": "iam:passrole"
+          },
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "ecs:runtask",
+                  "ecs:registertaskdefinition"
+                ],
+                "layer": "identity",
+                "policy_name": "deploy",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 2
+              }
+            ],
+            "resource": "*",
+            "rule_action": "ecs:runtask"
+          }
+        ],
+        "targets_detail": [
+          {
+            "arn": "arn:aws:iam::123456789012:role/demo-app-role",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/demo-app-role",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          },
+          {
+            "arn": "arn:aws:iam::123456789012:role/demo-ecs-exec",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/demo-ecs-exec",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          }
+        ]
+      },
+      "fingerprint": "3b038440dfa8ffb244068f593d50278d",
+      "id": "PRIVESC-017",
+      "legacy_ids": [],
+      "matched_actions": [
+        "ecs:runtask",
+        "iam:passrole"
+      ],
+      "node_id": "arn:aws:iam::123456789012:user/demo-deployer",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "related_node_ids": [
+        "arn:aws:iam::123456789012:role/demo-app-role",
+        "arn:aws:iam::123456789012:role/demo-ecs-exec"
+      ],
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs",
+      "rule_version": "2.1.0",
+      "severity": "MEDIUM",
+      "status": "open",
+      "targets": [
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/demo-app-role",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/demo-ecs-exec",
+          "tier": "MEDIUM"
+        }
+      ],
+      "title": "PassRole+ECS: Can run ECS task with privileged role"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "privilege_escalation",
+      "confidence": "definite",
+      "description": "Can create Glue endpoint/job with privileged role",
+      "evidence": {
+        "decision": "allow",
+        "rule_class": "new-passrole",
+        "steps": [
+          {
+            "context": {
+              "iam:PassedToService": "glue.amazonaws.com"
+            },
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "iam:passrole"
+                ],
+                "layer": "identity",
+                "policy_name": "deploy",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 0
+              }
+            ],
+            "resource": "arn:aws:iam::123456789012:role/demo-glue-role",
+            "rule_action": "iam:passrole"
+          },
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "glue:createjob",
+                  "glue:startjobrun"
+                ],
+                "layer": "identity",
+                "policy_name": "deploy",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 5
+              }
+            ],
+            "resource": "*",
+            "rule_action": "glue:createjob"
+          },
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "glue:createjob",
+                  "glue:startjobrun"
+                ],
+                "layer": "identity",
+                "policy_name": "deploy",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 5
+              }
+            ],
+            "resource": "*",
+            "rule_action": "glue:startjobrun"
+          }
+        ],
+        "targets_detail": [
+          {
+            "arn": "arn:aws:iam::123456789012:role/demo-glue-role",
+            "decision": "allow",
+            "node_id": "arn:aws:iam::123456789012:role/demo-glue-role",
+            "tier": "MEDIUM",
+            "tier_class": "medium",
+            "trust_decision": "allow"
+          }
+        ]
+      },
+      "fingerprint": "6ea5e6bbae211f6185164d6ca1f7cf0b",
+      "id": "PRIVESC-018",
+      "legacy_ids": [],
+      "matched_actions": [
+        "glue:createjob",
+        "glue:startjobrun",
+        "iam:passrole"
+      ],
+      "node_id": "arn:aws:iam::123456789012:user/demo-deployer",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "related_node_ids": [
+        "arn:aws:iam::123456789012:role/demo-glue-role"
+      ],
+      "remediation": "Restrict iam:PassRole Resource to specific role ARNs",
+      "rule_version": "2.1.0",
+      "severity": "MEDIUM",
+      "status": "open",
+      "targets": [
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:iam::123456789012:role/demo-glue-role",
+          "tier": "MEDIUM"
+        }
+      ],
+      "title": "PassRole+Glue: Can create Glue endpoint/job with privileged role"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "privilege_escalation",
+      "confidence": "definite",
+      "description": "Can replace the code of an existing Lambda function; the code runs as the function's execution role",
+      "evidence": {
+        "decision": "allow",
+        "rule_class": "existing-resource",
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "lambda:updatefunctioncode",
+                  "lambda:getfunction"
+                ],
+                "layer": "identity",
+                "policy_name": "deploy",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 1
+              }
+            ],
+            "resource": "arn:aws:lambda:eu-west-2:123456789012:function:demo-etl",
+            "rule_action": "lambda:updatefunctioncode"
+          }
+        ],
+        "targets_detail": [
+          {
+            "arn": "arn:aws:lambda:eu-west-2:123456789012:function:demo-etl",
+            "decision": "allow",
+            "node_id": "arn:aws:lambda:eu-west-2:123456789012:function:demo-etl",
+            "resource_type": "lambda_function",
+            "role": "arn:aws:iam::123456789012:role/demo-lambda-exec",
+            "tier": "MEDIUM",
+            "tier_class": "medium"
+          },
+          {
+            "arn": "arn:aws:lambda:eu-west-2:123456789012:function:demo-public-fn",
+            "decision": "allow",
+            "node_id": "arn:aws:lambda:eu-west-2:123456789012:function:demo-public-fn",
+            "resource_type": "lambda_function",
+            "role": "arn:aws:iam::123456789012:role/demo-lambda-exec",
+            "tier": "MEDIUM",
+            "tier_class": "medium"
+          }
+        ]
+      },
+      "fingerprint": "1725e899cc9018940efcce807fc8ac51",
+      "id": "PRIVESC-021",
+      "legacy_ids": [],
+      "matched_actions": [
+        "lambda:updatefunctioncode"
+      ],
+      "node_id": "arn:aws:iam::123456789012:user/demo-deployer",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "related_node_ids": [
+        "arn:aws:iam::123456789012:role/demo-lambda-exec",
+        "arn:aws:lambda:eu-west-2:123456789012:function:demo-etl",
+        "arn:aws:lambda:eu-west-2:123456789012:function:demo-public-fn"
+      ],
+      "remediation": "Restrict lambda:UpdateFunctionCode to specific functions whose roles are not more privileged",
+      "rule_version": "2.1.0",
+      "severity": "MEDIUM",
+      "status": "open",
+      "targets": [
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:lambda:eu-west-2:123456789012:function:demo-etl",
+          "tier": "MEDIUM"
+        },
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:lambda:eu-west-2:123456789012:function:demo-public-fn",
+          "tier": "MEDIUM"
+        }
+      ],
+      "title": "UpdateFunctionCode: Can replace the code of an existing Lambda function; the code runs as the function's execution role"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "privilege_escalation",
+      "confidence": "definite",
+      "description": "Can start an existing CodeBuild project with a buildspec override; the build runs as the project's service role",
+      "evidence": {
+        "decision": "allow",
+        "rule_class": "existing-resource",
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "codebuild:startbuild"
+                ],
+                "layer": "identity",
+                "policy_name": "deploy",
+                "resources": [
+                  "arn:aws:codebuild:eu-west-2:123456789012:project/demo-build"
+                ],
+                "source_type": "inline",
+                "statement_index": 4
+              }
+            ],
+            "resource": "arn:aws:codebuild:eu-west-2:123456789012:project/demo-build",
+            "rule_action": "codebuild:startbuild"
+          }
+        ],
+        "targets_detail": [
+          {
+            "arn": "arn:aws:codebuild:eu-west-2:123456789012:project/demo-build",
+            "decision": "allow",
+            "node_id": "arn:aws:codebuild:eu-west-2:123456789012:project/demo-build",
+            "resource_type": "codebuild_project",
+            "role": "arn:aws:iam::123456789012:role/demo-codebuild-role",
+            "tier": "MEDIUM",
+            "tier_class": "medium"
+          }
+        ]
+      },
+      "fingerprint": "59eaf62b0d72dc67cdfabbeaf77a2b45",
+      "id": "PRIVESC-023",
+      "legacy_ids": [],
+      "matched_actions": [
+        "codebuild:startbuild"
+      ],
+      "node_id": "arn:aws:iam::123456789012:user/demo-deployer",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "related_node_ids": [
+        "arn:aws:codebuild:eu-west-2:123456789012:project/demo-build",
+        "arn:aws:iam::123456789012:role/demo-codebuild-role"
+      ],
+      "remediation": "Restrict codebuild:StartBuild to specific projects and their service roles",
+      "rule_version": "2.1.0",
+      "severity": "MEDIUM",
+      "status": "open",
+      "targets": [
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:codebuild:eu-west-2:123456789012:project/demo-build",
+          "tier": "MEDIUM"
+        }
+      ],
+      "title": "StartBuild (buildspec override): Can start an existing CodeBuild project with a buildspec override; the build runs as the project's service role"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "privilege_escalation",
+      "confidence": "definite",
+      "description": "Can take over an existing CloudFormation stack with a service role and run code or API calls as the role it runs as",
+      "evidence": {
+        "decision": "allow",
+        "rule_class": "existing-passrole",
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "cloudformation:createstack",
+                  "cloudformation:updatestack"
+                ],
+                "layer": "identity",
+                "policy_name": "deploy",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 3
+              }
+            ],
+            "resource": "arn:aws:cloudformation:eu-west-2:123456789012:stack/demo-stack/b26dc72d-aaaa-4bbb-8ccc-986c754b0e12",
+            "rule_action": "cloudformation:updatestack"
+          }
+        ],
+        "targets_detail": [
+          {
+            "arn": "arn:aws:cloudformation:eu-west-2:123456789012:stack/demo-stack/b26dc72d-aaaa-4bbb-8ccc-986c754b0e12",
+            "decision": "allow",
+            "node_id": "arn:aws:cloudformation:eu-west-2:123456789012:stack/demo-stack/b26dc72d-aaaa-4bbb-8ccc-986c754b0e12",
+            "resource_type": "cfn_stack",
+            "role": "arn:aws:iam::123456789012:role/demo-cfn-role",
+            "tier": "MEDIUM",
+            "tier_class": "medium"
+          }
+        ]
+      },
+      "fingerprint": "cde4ef43f63b53244d736f15d535c990",
+      "id": "PRIVESC-029",
+      "legacy_ids": [],
+      "matched_actions": [
+        "cloudformation:updatestack"
+      ],
+      "node_id": "arn:aws:iam::123456789012:user/demo-deployer",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "related_node_ids": [
+        "arn:aws:cloudformation:eu-west-2:123456789012:stack/demo-stack/b26dc72d-aaaa-4bbb-8ccc-986c754b0e12",
+        "arn:aws:iam::123456789012:role/demo-cfn-role"
+      ],
+      "remediation": "Restrict stack updates and change sets on stacks with privileged service roles; use a service role scoped to the stack's resources",
+      "rule_version": "2.1.0",
+      "severity": "MEDIUM",
+      "status": "open",
+      "targets": [
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:cloudformation:eu-west-2:123456789012:stack/demo-stack/b26dc72d-aaaa-4bbb-8ccc-986c754b0e12",
+          "tier": "MEDIUM"
+        }
+      ],
+      "title": "CloudFormation stack update: Can take over an existing CloudFormation stack with a service role and run code or API calls as the role it runs as"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "privilege_escalation",
+      "confidence": "definite",
+      "description": "Can take over an existing SageMaker notebook instance and run code or API calls as the role it runs as",
+      "evidence": {
+        "decision": "allow",
+        "rule_class": "existing-passrole",
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "sagemaker:createpresignednotebookinstanceurl"
+                ],
+                "layer": "identity",
+                "policy_name": "deploy",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "inline",
+                "statement_index": 6
+              }
+            ],
+            "resource": "arn:aws:sagemaker:eu-west-2:123456789012:notebook-instance/demo-notebook",
+            "rule_action": "sagemaker:createpresignednotebookinstanceurl"
+          }
+        ],
+        "targets_detail": [
+          {
+            "arn": "arn:aws:sagemaker:eu-west-2:123456789012:notebook-instance/demo-notebook",
+            "decision": "allow",
+            "node_id": "arn:aws:sagemaker:eu-west-2:123456789012:notebook-instance/demo-notebook",
+            "resource_type": "sagemaker_notebook",
+            "role": "arn:aws:iam::123456789012:role/demo-sagemaker-role",
+            "tier": "MEDIUM",
+            "tier_class": "medium"
+          }
+        ]
+      },
+      "fingerprint": "eecad8c0a4733a5d1f3f83c9e11cfbe7",
+      "id": "PRIVESC-054",
+      "legacy_ids": [],
+      "matched_actions": [
+        "sagemaker:createpresignednotebookinstanceurl"
+      ],
+      "node_id": "arn:aws:iam::123456789012:user/demo-deployer",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns",
+      "related_node_ids": [
+        "arn:aws:iam::123456789012:role/demo-sagemaker-role",
+        "arn:aws:sagemaker:eu-west-2:123456789012:notebook-instance/demo-notebook"
+      ],
+      "remediation": "Restrict sagemaker:CreatePresignedNotebookInstanceUrl to the notebook's owners",
+      "rule_version": "2.1.0",
+      "severity": "MEDIUM",
+      "status": "open",
+      "targets": [
+        {
+          "decision": "allow",
+          "node_id": "arn:aws:sagemaker:eu-west-2:123456789012:notebook-instance/demo-notebook",
+          "tier": "MEDIUM"
+        }
+      ],
+      "title": "SageMaker presigned notebook URL: Can take over an existing SageMaker notebook instance and run code or API calls as the role it runs as"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "MEDIUM",
+      "category": "secret_cross_account",
+      "confidence": "definite",
+      "description": "The secret's resource policy grants secretsmanager:GetSecretValue to principals of account(s) 999999999999, independently of this account's IAM policies.",
+      "entity": "secret/demo/db-password",
+      "entity_arn": "arn:aws:secretsmanager:eu-west-2:123456789012:secret:demo/db-password-babobj",
+      "evidence": {
+        "accounts": [
+          "999999999999"
+        ],
+        "principals": [
+          "arn:aws:iam::999999999999:root"
+        ]
+      },
+      "fingerprint": "f35dad0ee6c00f69657892d5fba91462",
+      "id": "SECRET-XACCT-001",
+      "legacy_ids": [
+        "SECRET-XAUTH-001"
+      ],
+      "matched_actions": [
+        "secretsmanager:GetSecretValue"
+      ],
+      "node_id": "arn:aws:secretsmanager:eu-west-2:123456789012:secret:demo/db-password-babobj",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "region": "eu-west-2",
+      "related_node_ids": [
+        "arn:aws:iam::999999999999:root"
+      ],
+      "remediation": "Verify that cross-account access to the secret is intended; scope the Principal to specific role ARNs or add aws:PrincipalOrgID.",
+      "resource": [
+        "arn:aws:secretsmanager:eu-west-2:123456789012:secret:demo/db-password-babobj"
+      ],
+      "severity": "MEDIUM",
+      "source_policy": "ResourcePolicy",
+      "source_type": "secret_resource_policy",
+      "status": "open",
+      "title": "Secret 'demo/db-password' is shared with 999999999999"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "LOW",
+      "category": "iam_hygiene",
+      "confidence": "definite",
+      "description": "The IAM password policy is below common baselines: password reuse prevention None < 24.",
+      "evidence": {
+        "configured": true,
+        "console_users": 1,
+        "weaknesses": [
+          "password reuse prevention None < 24"
+        ]
+      },
+      "fingerprint": "8324f653d46059d49f0e62bada4e6cf9",
+      "id": "IAM-PWPOL-001",
+      "legacy_ids": [],
+      "node_id": "aws-enumerator:account/123456789012",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-6--youre-external-no-foothold-yet",
+      "remediation": "Set an account password policy: length >= 14, all character classes, reuse prevention 24.",
+      "severity": "LOW",
+      "status": "open",
+      "title": "The account password policy is weak"
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "INFO",
+      "category": "route53_dangling",
+      "confidence": "definite",
+      "description": "Record 'www.example.com.' (CNAME) points at 'demo-alb.eu-west-2.elb.amazonaws.com' (elb, takeover unlikely): no load balancer with this DNS name in the analysed regions: a stale record (ELB names carry a random suffix and cannot be re-registered).",
+      "entity": "route53/example.com.",
+      "entity_arn": "arn:aws:route53:::hostedzone/Z0EXAMPLEZONEAAA",
+      "evidence": {
+        "alias": null,
+        "check": "no load balancer with this DNS name in the analysed regions: a stale record (ELB names carry a random suffix and cannot be re-registered)",
+        "claimable": "unlikely",
+        "kind": "elb",
+        "private": false,
+        "record": "www.example.com.",
+        "target": "demo-alb.eu-west-2.elb.amazonaws.com",
+        "type": "CNAME"
+      },
+      "fingerprint": "78de8860d6d7bf796964f0bbfe2cb55e",
+      "id": "ROUTE53-DANGLING-001",
+      "legacy_ids": [],
+      "node_id": "arn:aws:route53:::hostedzone/Z0EXAMPLEZONEAAA",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "remediation": "Verify the target resource still exists and belongs to you; remove the record if not.",
+      "resource": [
+        "www.example.com."
+      ],
+      "severity": "INFO",
+      "source_type": "route53_record",
+      "status": "open",
+      "title": "Potential dangling DNS record: www.example.com."
+    },
+    {
+      "account": "123456789012",
+      "base_severity": "HIGH",
+      "category": "trust_policy",
+      "confidence": "conditional",
+      "description": "Web identity provider cognito-identity.amazonaws.com can assume 'demo-cognito-auth'.",
+      "entity": "role/demo-cognito-auth",
+      "entity_arn": "arn:aws:iam::123456789012:role/demo-cognito-auth",
+      "evidence": {
+        "admits": "specific",
+        "conditions": [
+          {
+            "key": "cognito-identity.amazonaws.com:aud",
+            "operator": "StringEquals",
+            "values": [
+              "eu-west-2:5e6f7a8b-aaaa-4bbb-8ccc-9d0e1f2a3b4c"
+            ]
+          }
+        ],
+        "problems": [],
+        "provider": "cognito",
+        "statement_index": 0
+      },
+      "fingerprint": "fecbc3104c0e24e53fe0eacec758bc8d",
+      "id": "TRUST-OIDC-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "sts:AssumeRoleWithWebIdentity"
+      ],
+      "node_id": "arn:aws:iam::123456789012:role/demo-cognito-auth",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-6--youre-external-no-foothold-yet",
+      "related_node_ids": [
+        "aws-enumerator:idp/cognito-identity.amazonaws.com"
+      ],
+      "remediation": "Require the provider's audience (<host>:aud) and an exact subject (<host>:sub), e.g. repo:<org>/<repo>:ref:refs/heads/main for GitHub or system:serviceaccount:<ns>:<sa> for EKS.",
+      "resource": [
+        "arn:aws:iam::123456789012:role/demo-cognito-auth"
+      ],
+      "severity": "INFO",
+      "source_policy": "AssumeRolePolicyDocument",
+      "source_type": "trust_policy",
+      "status": "open",
+      "title": "Role 'demo-cognito-auth' trusts cognito identities (specific subjects)"
+    }
+  ],
+  "generated_at": "<stripped>",
+  "mode": "legacy-single",
+  "partition": "aws",
+  "regions": [
+    "eu-west-2"
+  ],
+  "rules_version": "2.1.0",
+  "run_id": "legacy-eu-west-2",
+  "schema_version": "1.0.0",
+  "tool_version": "0.3.0"
+}

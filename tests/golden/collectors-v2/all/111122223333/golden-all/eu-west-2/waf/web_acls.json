@@ -1,0 +1,96 @@
+[
+  {
+    "ARN": "arn:aws:wafv2:eu-west-2:111122223333:regional/webacl/demo-api-acl/a1a1a1a1-0000-4000-8000-0000000000a2",
+    "AssociatedResources": [
+      {
+        "Arn": "arn:aws:apigateway:eu-west-2::/restapis/demorest01/stages/prod",
+        "ResourceType": "API_GATEWAY"
+      },
+      {
+        "Arn": "arn:aws:cognito-idp:eu-west-2:111122223333:userpool/eu-west-2_DemoPool1",
+        "ResourceType": "COGNITO_USER_POOL"
+      }
+    ],
+    "Capacity": 700,
+    "DefaultAction": {
+      "Allow": {}
+    },
+    "Description": "demo-api-acl (acme)",
+    "Id": "a1a1a1a1-0000-4000-8000-0000000000a2",
+    "LabelNamespace": null,
+    "ManagedByFirewallManager": null,
+    "Name": "demo-api-acl",
+    "Rules": [
+      {
+        "Action": {
+          "Block": {}
+        },
+        "Name": "demo-rate-limit",
+        "Priority": 0,
+        "Statement": {
+          "RateBasedStatement": {
+            "AggregateKeyType": "IP",
+            "Limit": 1000
+          }
+        },
+        "VisibilityConfig": {
+          "CloudWatchMetricsEnabled": true,
+          "MetricName": "rate",
+          "SampledRequestsEnabled": true
+        }
+      }
+    ],
+    "Scope": "REGIONAL",
+    "UncheckedResourceTypes": [],
+    "VisibilityConfig": {
+      "CloudWatchMetricsEnabled": true,
+      "MetricName": "demo-api-acl",
+      "SampledRequestsEnabled": true
+    }
+  },
+  {
+    "ARN": "arn:aws:wafv2:eu-west-2:111122223333:regional/webacl/demo-regional-acl/a1a1a1a1-0000-4000-8000-0000000000a1",
+    "AssociatedResources": [
+      {
+        "Arn": "arn:aws:elasticloadbalancing:eu-west-2:111122223333:loadbalancer/app/demo-public-alb/0123456789abcdef",
+        "ResourceType": "APPLICATION_LOAD_BALANCER"
+      }
+    ],
+    "Capacity": 700,
+    "DefaultAction": {
+      "Allow": {}
+    },
+    "Description": "demo-regional-acl (acme)",
+    "Id": "a1a1a1a1-0000-4000-8000-0000000000a1",
+    "LabelNamespace": null,
+    "ManagedByFirewallManager": null,
+    "Name": "demo-regional-acl",
+    "Rules": [
+      {
+        "Name": "AWS-AWSManagedRulesCommonRuleSet",
+        "OverrideAction": {
+          "None": {}
+        },
+        "Priority": 0,
+        "Statement": {
+          "ManagedRuleGroupStatement": {
+            "Name": "AWSManagedRulesCommonRuleSet",
+            "VendorName": "AWS"
+          }
+        },
+        "VisibilityConfig": {
+          "CloudWatchMetricsEnabled": true,
+          "MetricName": "common",
+          "SampledRequestsEnabled": true
+        }
+      }
+    ],
+    "Scope": "REGIONAL",
+    "UncheckedResourceTypes": [],
+    "VisibilityConfig": {
+      "CloudWatchMetricsEnabled": true,
+      "MetricName": "demo-regional-acl",
+      "SampledRequestsEnabled": true
+    }
+  }
+]

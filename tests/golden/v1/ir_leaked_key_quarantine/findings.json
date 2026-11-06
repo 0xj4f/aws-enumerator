@@ -1,0 +1,1948 @@
+{
+  "account_id": "000000000000",
+  "findings": [
+    {
+      "account": "000000000000",
+      "base_severity": "CRITICAL",
+      "category": "dangerous_permission",
+      "confidence": "definite",
+      "description": "This role is administrator-equivalent: its effective permissions allow every action on every resource. Its 65 individual privilege-escalation and dangerous-permission findings are summarised here.",
+      "evidence": {
+        "basis": "allow-star",
+        "rule_ids": [
+          "DANGER-001"
+        ],
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+                "policy_name": "AdministratorAccess",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "aws_managed",
+                "statement_index": 0,
+                "version_id": "v1"
+              }
+            ],
+            "resource": "*",
+            "rule_action": "*"
+          }
+        ],
+        "subsumed": [
+          {
+            "fingerprint": "023ce0c08cc2d5e533eb4e477400992b",
+            "id": "PRIVESC-021",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "03fee14628a08f8e9bc4d02f2ccaa39f",
+            "id": "PRIVESC-024",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "083c22d98706f96ccc1359ac7e1f1fd3",
+            "id": "PRIVESC-007",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "08a2d04db119c3d0d547e309912a8f5e",
+            "id": "DANGER-005",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "12b1068f499e3eb635e8a073926fc1a5",
+            "id": "PRIVESC-008",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "15353d38da5b8f5fc9ac0bbc5ea17fea",
+            "id": "PRIVESC-028",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "1893685bac622c3d8a31f533e5fba1e2",
+            "id": "PRIVESC-038",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "26997d37a2696f4dee9f8ec141d2b0cc",
+            "id": "PRIVESC-045",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "282e1419827d56ac343fad9b649b8549",
+            "id": "PRIVESC-059",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "2e2569ce14b8c336f3fb50483be63176",
+            "id": "PRIVESC-034",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "2eb3b122105ea27c69f65e3648bc2fc1",
+            "id": "PRIVESC-060",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "2fa6c0b4ee8014a72ceb82ecbae9b329",
+            "id": "PRIVESC-042",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "315e9194233f3979b193665e7b0ecfec",
+            "id": "PRIVESC-019",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "316ea3e374784defd2539457ed7c6714",
+            "id": "PRIVESC-041",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "327b5aa771a07defe868c12e646aa087",
+            "id": "DANGER-010",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "32c8123601669b2938731e4211e02426",
+            "id": "PRIVESC-018",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "37af21068d61051745f1e47bdf51828d",
+            "id": "PRIVESC-033",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "475c7eb13e52999b890635b009af2d27",
+            "id": "PRIVESC-065",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "4a765865f41deac31d336cdc7f308280",
+            "id": "PRIVESC-047",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "5004379cb6c24d1888a8c4f1264415c0",
+            "id": "PRIVESC-011",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "501806a93792014da478bad98d80003f",
+            "id": "PRIVESC-057",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "51f41997e6cffed7b885644ccda65cd4",
+            "id": "PRIVESC-017",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "531a237e03140e3ad44f06467f521025",
+            "id": "PRIVESC-010",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "5b29e51d69f6af0902b20469d69d69d9",
+            "id": "PRIVESC-020",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "60cd8c996ab6f00d820875e43f4c6f7a",
+            "id": "PRIVESC-013",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "62fe7336199d8619518161e53dab5b61",
+            "id": "PRIVESC-004",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "67dbeeae356a8fb665d5dfcbc0d6a81b",
+            "id": "PRIVESC-035",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "69c75dcb4cba0d73fa69b94e6185bae0",
+            "id": "PRIVESC-001",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "6bbe97b6104d87176486edcff84bc0c5",
+            "id": "PRIVESC-030",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "6e5e6bdc25b95980089c6be69da7289d",
+            "id": "PRIVESC-014",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "70deabf948b14f231bfaf9f16c8bb4ce",
+            "id": "PRIVESC-044",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "7662eadfd17746c691f966887c4c4640",
+            "id": "PRIVESC-061",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "7aed99772c6d34ef21000113fe22853a",
+            "id": "DANGER-009",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "7ce27e29f6bcb2ab41ef2b34ac3a8741",
+            "id": "PRIVESC-016",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "7d17a248a2abe99462e14f2ef8f3c955",
+            "id": "PRIVESC-032",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "7d19bd81d4af2586ed50e01aabe0471f",
+            "id": "DANGER-007",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "7fc7390354a2fa9e1c8aa204f60f078b",
+            "id": "PRIVESC-040",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "8b1787a75ff15afec26b8720646934b8",
+            "id": "PRIVESC-049",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "8eb47ffcca2de50e8744e640756f9405",
+            "id": "PRIVESC-043",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "9231e4ef4b152f95599daf8ab89da45f",
+            "id": "PRIVESC-063",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "9375b0fd145dc57f725a96b54c64cb2a",
+            "id": "PRIVESC-015",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "9b8bd7ecf754a3e5bbc664b91a8bff0b",
+            "id": "DANGER-004",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "9c47b41b5040d41cb263309a56a4c721",
+            "id": "PRIVESC-062",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "9e267bb634ba86cc8b33cb21ce02e80e",
+            "id": "DANGER-002",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "9fa33d42838b97e2cbe8e385e9d1ada8",
+            "id": "PRIVESC-048",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "a5db8b10f32b59b9c957efbcd00d4929",
+            "id": "PRIVESC-025",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "a8381225c3db1fb1a3148aeb52080b9d",
+            "id": "DANGER-006",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "a852cc6f7b9751115842bdb8e186bd1d",
+            "id": "PRIVESC-005",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "b82a5711f412ff9560908fc2632e34ff",
+            "id": "PRIVESC-026",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "be6b25a6b34becf20d307d0ce0180ee5",
+            "id": "PRIVESC-002",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "c065039a7cb67030e82de37e7a248280",
+            "id": "DANGER-001",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "c127c85069d19f1abf82084de2464fe5",
+            "id": "PRIVESC-027",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "c1dd5f115ddc770889a4ec1eeb2aaea6",
+            "id": "DANGER-003",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "c527b6a600dc966d4ff874388bd34934",
+            "id": "PRIVESC-037",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "c65e5bb17b8aee3510bb7a2e9fbee91b",
+            "id": "PRIVESC-064",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "c71827fe6c4e613a08612de8f16dda29",
+            "id": "DANGER-008",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "d0229056725ee4d443b9804fbe50b7d9",
+            "id": "PRIVESC-031",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "d89fc0003fd81f46abbc279e40248dcb",
+            "id": "PRIVESC-046",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "db46fa6e3376af7da5171d2340a48fda",
+            "id": "PRIVESC-012",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "dd727c930ceaf536832e65a284d25ae1",
+            "id": "PRIVESC-039",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "e354d26a7e6b472ffe8821da2bc4ae7d",
+            "id": "PRIVESC-058",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "e8dc85c6a2f5aab9ae719c36e9d118e4",
+            "id": "PRIVESC-036",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "eaf0747dabe1bb23f5288760092d5522",
+            "id": "PRIVESC-009",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "f4648d877bd2fced1b5f486031a5505e",
+            "id": "PRIVESC-003",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "f956197bd9af3e5bdb0e0a34ca748017",
+            "id": "PRIVESC-006",
+            "severity": "CRITICAL"
+          }
+        ],
+        "subsumed_count": 65
+      },
+      "fingerprint": "9904cfd74a406bb4b069091fe5e8cb67",
+      "id": "ADMIN-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "*",
+        "ec2:*",
+        "iam:*",
+        "iam:passrole",
+        "kms:decrypt",
+        "lambda:*",
+        "s3:*",
+        "secretsmanager:getsecretvalue",
+        "ssm:getparameter",
+        "ssm:getparameters",
+        "ssm:getparametersbypath",
+        "sts:assumerole"
+      ],
+      "node_id": "arn:aws:iam::000000000000:role/admin-role",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#high-value-targets-to-hunt",
+      "related_node_ids": [
+        "aws-enumerator:account-admin/000000000000"
+      ],
+      "remediation": "Treat this principal as an account administrator: limit who can use it (trust policy, group membership, credentials), require MFA, and replace broad grants (Action:* or iam:*) by the permissions it needs.",
+      "severity": "CRITICAL",
+      "status": "open",
+      "subsumes": [
+        "DANGER-001",
+        "DANGER-002",
+        "DANGER-003",
+        "DANGER-004",
+        "DANGER-005",
+        "DANGER-006",
+        "DANGER-007",
+        "DANGER-008",
+        "DANGER-009",
+        "DANGER-010",
+        "PRIVESC-001",
+        "PRIVESC-002",
+        "PRIVESC-003",
+        "PRIVESC-004",
+        "PRIVESC-005",
+        "PRIVESC-006",
+        "PRIVESC-007",
+        "PRIVESC-008",
+        "PRIVESC-009",
+        "PRIVESC-010",
+        "PRIVESC-011",
+        "PRIVESC-012",
+        "PRIVESC-013",
+        "PRIVESC-014",
+        "PRIVESC-015",
+        "PRIVESC-016",
+        "PRIVESC-017",
+        "PRIVESC-018",
+        "PRIVESC-019",
+        "PRIVESC-020",
+        "PRIVESC-021",
+        "PRIVESC-024",
+        "PRIVESC-025",
+        "PRIVESC-026",
+        "PRIVESC-027",
+        "PRIVESC-028",
+        "PRIVESC-030",
+        "PRIVESC-031",
+        "PRIVESC-032",
+        "PRIVESC-033",
+        "PRIVESC-034",
+        "PRIVESC-035",
+        "PRIVESC-036",
+        "PRIVESC-037",
+        "PRIVESC-038",
+        "PRIVESC-039",
+        "PRIVESC-040",
+        "PRIVESC-041",
+        "PRIVESC-042",
+        "PRIVESC-043",
+        "PRIVESC-044",
+        "PRIVESC-045",
+        "PRIVESC-046",
+        "PRIVESC-047",
+        "PRIVESC-048",
+        "PRIVESC-049",
+        "PRIVESC-057",
+        "PRIVESC-058",
+        "PRIVESC-059",
+        "PRIVESC-060",
+        "PRIVESC-061",
+        "PRIVESC-062",
+        "PRIVESC-063",
+        "PRIVESC-064",
+        "PRIVESC-065"
+      ],
+      "title": "Administrator-equivalent principal"
+    },
+    {
+      "account": "000000000000",
+      "base_severity": "CRITICAL",
+      "category": "dangerous_permission",
+      "confidence": "definite",
+      "description": "This role is administrator-equivalent: its effective permissions allow every action on every resource. Its 64 individual privilege-escalation and dangerous-permission findings are summarised here.",
+      "evidence": {
+        "basis": "allow-star",
+        "rule_ids": [
+          "DANGER-001"
+        ],
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+                "policy_name": "AdministratorAccess",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "aws_managed",
+                "statement_index": 0,
+                "version_id": "v1"
+              }
+            ],
+            "resource": "*",
+            "rule_action": "*"
+          }
+        ],
+        "subsumed": [
+          {
+            "fingerprint": "046d252ddeab0f9d67353f521151f086",
+            "id": "PRIVESC-043",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "09abbc7ef8b51f131743d0bdefa567a2",
+            "id": "PRIVESC-020",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "0d21132cb8ecfb6c84657f4ca6a74356",
+            "id": "PRIVESC-009",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "143e19033f2c1d1846b4b716193a2fe6",
+            "id": "DANGER-001",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "184c0f5a15c1492d5976faff2f079a76",
+            "id": "DANGER-003",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "20df2e5e30a6be8f15f2dfc09b64ad5c",
+            "id": "PRIVESC-018",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "2a3331c6f550837f7ff4d5be3adea61f",
+            "id": "PRIVESC-017",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "2aa6db3abdf05c9e39576b415e4d60d9",
+            "id": "PRIVESC-042",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "2bc200623851e906b041c0e09e566a43",
+            "id": "PRIVESC-010",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "2c0613bc664971dab6ff2bfaff04a1b7",
+            "id": "PRIVESC-028",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "2e02a6e4f3e9977d06ff194d9a8f3d51",
+            "id": "PRIVESC-024",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "2e8308c89bc045d17fbc8729aaf4376c",
+            "id": "PRIVESC-049",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "2ff1547feb7d1b810d8f88490cf9731f",
+            "id": "PRIVESC-026",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "316ba0cea1c857d672aaefed5053d8b9",
+            "id": "PRIVESC-019",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "336302085553c83af8c524ad388423f9",
+            "id": "PRIVESC-060",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "34a974f86570c17714bdf795d947ffa2",
+            "id": "PRIVESC-044",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "3ec63e768b4f66f8326a81a4206248e0",
+            "id": "PRIVESC-027",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "4863bbe3383a4199c1b8f55a0c1a9307",
+            "id": "PRIVESC-036",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "497745946298d7c7f435dd44eebbd735",
+            "id": "PRIVESC-045",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "50fd4a67c429213029db030caa338ccc",
+            "id": "PRIVESC-038",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "5452131f67dce2043189887bc92e1216",
+            "id": "PRIVESC-057",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "5a79b0c542071c4a71ac797dd56211bc",
+            "id": "PRIVESC-013",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "5d79d44637de893f1254bd48844250b8",
+            "id": "DANGER-006",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "63d8af3724736c75ff66af7ef187d223",
+            "id": "PRIVESC-037",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "6548ebb84700883c7b7be85caad3cc58",
+            "id": "PRIVESC-040",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "655fba2916deb37fe92821d84ad11e5e",
+            "id": "PRIVESC-008",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "6e83bb49e663bcc8942460232a6be8df",
+            "id": "PRIVESC-032",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "714f79a80ec832c14f1be4cd8c72eb19",
+            "id": "DANGER-008",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "74413ae114e9a9913e8e0fa6909c344b",
+            "id": "PRIVESC-007",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "754178db4faee1e24cb97d3ecf465a23",
+            "id": "PRIVESC-030",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "78891560f7bde67f6592581ef9e35f96",
+            "id": "DANGER-004",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "7dea56dd2b46b5bb3663ffd72635f9bc",
+            "id": "PRIVESC-002",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "7e2c39c7588229f0c04b9fba3f0ed5b2",
+            "id": "PRIVESC-011",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "815a2e6ad2323afab6ef57ce2e7ff898",
+            "id": "DANGER-002",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "825ded77dd8247b3a2a3ac7686699195",
+            "id": "PRIVESC-001",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "917ca5a8164617a28af0c6112244c080",
+            "id": "PRIVESC-003",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "93eafeb6ee119239986a0f20121dc566",
+            "id": "PRIVESC-061",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "98b35cebe9b9cc055a954182cdea62b8",
+            "id": "PRIVESC-006",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "a0c4d4dcff1d9dd1f0f963ecde129f94",
+            "id": "PRIVESC-004",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "a2a034ea8dd546e801b25126c022b459",
+            "id": "DANGER-010",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "ade4653640fcae9e2b96db3110e38f31",
+            "id": "PRIVESC-012",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "b040ce61fe680d7369be394e9eb48baf",
+            "id": "PRIVESC-064",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "b0b4c2e8c17ad806f7364cac6e05f4c7",
+            "id": "PRIVESC-033",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "b22cb67d201372aedf7ddb52e72e16ba",
+            "id": "PRIVESC-014",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "b8d51e1dfd33566c39835579ad978511",
+            "id": "PRIVESC-059",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "b9c6f444ac5d13814c652eadede062fa",
+            "id": "DANGER-005",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "bfa3e6daeed431957cdfbe2bf0bb3277",
+            "id": "PRIVESC-031",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "c50b60aa475bc88390a91f7ed43f78ec",
+            "id": "DANGER-009",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "c608c984b3d82b7d3adf34a6aca10b87",
+            "id": "PRIVESC-005",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "c8fbd05f17d176a386430185434c4f6f",
+            "id": "PRIVESC-062",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "ce2d16d9c07770ffc958ebd838cf344b",
+            "id": "DANGER-007",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "cf0449526431b759c88162c35a047768",
+            "id": "PRIVESC-015",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "da1838661c1d9a7c263d95898e8541d8",
+            "id": "PRIVESC-025",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "dcf4ab5a500c4ecfcb1eedea7e12b0c4",
+            "id": "PRIVESC-065",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "eb0a6cba523e10466f508b351260b249",
+            "id": "PRIVESC-063",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "ed10fd28e9eeb727db915c7a86fd60d4",
+            "id": "PRIVESC-035",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "ee03fb2707d0643859f180a18528181b",
+            "id": "PRIVESC-041",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "efd12d8d9ab68c93e18672ccd99ea4ba",
+            "id": "PRIVESC-039",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "f13206a59b8af53cd372eb850eeef122",
+            "id": "PRIVESC-058",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "f22a0982f3f6e89d2d4af85d4b8c807a",
+            "id": "PRIVESC-048",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "f640a4b88a39c2271cffad1d420bea65",
+            "id": "PRIVESC-016",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "f82b6cab72df405e8cfc9d2536df3033",
+            "id": "PRIVESC-046",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "fc845b98c33f9cc50bd7fffbe0160d8f",
+            "id": "PRIVESC-034",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "fcdb820e114e305bab1718f2a8245bf3",
+            "id": "PRIVESC-047",
+            "severity": "INFO"
+          }
+        ],
+        "subsumed_count": 64
+      },
+      "fingerprint": "09628f98bff97f54429ea29accbed95a",
+      "id": "ADMIN-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "*",
+        "ec2:*",
+        "iam:*",
+        "iam:passrole",
+        "kms:decrypt",
+        "lambda:*",
+        "s3:*",
+        "secretsmanager:getsecretvalue",
+        "ssm:getparameter",
+        "ssm:getparameters",
+        "ssm:getparametersbypath",
+        "sts:assumerole"
+      ],
+      "node_id": "arn:aws:iam::000000000000:role/fn-admin-role",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#high-value-targets-to-hunt",
+      "related_node_ids": [
+        "aws-enumerator:account-admin/000000000000"
+      ],
+      "remediation": "Treat this principal as an account administrator: limit who can use it (trust policy, group membership, credentials), require MFA, and replace broad grants (Action:* or iam:*) by the permissions it needs.",
+      "severity": "CRITICAL",
+      "status": "open",
+      "subsumes": [
+        "DANGER-001",
+        "DANGER-002",
+        "DANGER-003",
+        "DANGER-004",
+        "DANGER-005",
+        "DANGER-006",
+        "DANGER-007",
+        "DANGER-008",
+        "DANGER-009",
+        "DANGER-010",
+        "PRIVESC-001",
+        "PRIVESC-002",
+        "PRIVESC-003",
+        "PRIVESC-004",
+        "PRIVESC-005",
+        "PRIVESC-006",
+        "PRIVESC-007",
+        "PRIVESC-008",
+        "PRIVESC-009",
+        "PRIVESC-010",
+        "PRIVESC-011",
+        "PRIVESC-012",
+        "PRIVESC-013",
+        "PRIVESC-014",
+        "PRIVESC-015",
+        "PRIVESC-016",
+        "PRIVESC-017",
+        "PRIVESC-018",
+        "PRIVESC-019",
+        "PRIVESC-020",
+        "PRIVESC-024",
+        "PRIVESC-025",
+        "PRIVESC-026",
+        "PRIVESC-027",
+        "PRIVESC-028",
+        "PRIVESC-030",
+        "PRIVESC-031",
+        "PRIVESC-032",
+        "PRIVESC-033",
+        "PRIVESC-034",
+        "PRIVESC-035",
+        "PRIVESC-036",
+        "PRIVESC-037",
+        "PRIVESC-038",
+        "PRIVESC-039",
+        "PRIVESC-040",
+        "PRIVESC-041",
+        "PRIVESC-042",
+        "PRIVESC-043",
+        "PRIVESC-044",
+        "PRIVESC-045",
+        "PRIVESC-046",
+        "PRIVESC-047",
+        "PRIVESC-048",
+        "PRIVESC-049",
+        "PRIVESC-057",
+        "PRIVESC-058",
+        "PRIVESC-059",
+        "PRIVESC-060",
+        "PRIVESC-061",
+        "PRIVESC-062",
+        "PRIVESC-063",
+        "PRIVESC-064",
+        "PRIVESC-065"
+      ],
+      "title": "Administrator-equivalent principal"
+    },
+    {
+      "account": "000000000000",
+      "base_severity": "CRITICAL",
+      "category": "dangerous_permission",
+      "confidence": "definite",
+      "description": "This role is administrator-equivalent: its effective permissions allow every action on every resource. Its 65 individual privilege-escalation and dangerous-permission findings are summarised here.",
+      "evidence": {
+        "basis": "allow-star",
+        "rule_ids": [
+          "DANGER-001"
+        ],
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+                "policy_name": "AdministratorAccess",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "aws_managed",
+                "statement_index": 0,
+                "version_id": "v1"
+              }
+            ],
+            "resource": "*",
+            "rule_action": "*"
+          }
+        ],
+        "subsumed": [
+          {
+            "fingerprint": "071400ccbd8ab9ad84cb8a8c65556697",
+            "id": "PRIVESC-006",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "0f30dfb4900c68ec21bc4641720eece2",
+            "id": "PRIVESC-011",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "15853f037937bab4a7e5bcbdf9954446",
+            "id": "PRIVESC-021",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "17d5d1c72485369b1b7536b9c6512945",
+            "id": "PRIVESC-038",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "1b41a043b16a52752f408c22f6fceb4e",
+            "id": "PRIVESC-005",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "1e8a2723f36c060c845372f871d163f8",
+            "id": "DANGER-003",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "20b1560d0439c41ea6ce80a806c9e3a6",
+            "id": "PRIVESC-060",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "2521dc063743b959edc9c2015d839b84",
+            "id": "DANGER-006",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "25bc2bf65eb30cafa3a49c2e354424b1",
+            "id": "PRIVESC-035",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "292bb8ee20c1fb6730ceba48de692d3e",
+            "id": "PRIVESC-009",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "2d519ddf584a8e04786e57ab346d04bf",
+            "id": "PRIVESC-042",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "2e7f515a23e9e6bab68ed64acd111a01",
+            "id": "PRIVESC-045",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "2ed768ff2cde6f06983efb01df0469eb",
+            "id": "DANGER-009",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "319092214db979f4ae78fad2faf24d7a",
+            "id": "PRIVESC-034",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "32580d463011ae45d160cbc73c3d2cce",
+            "id": "PRIVESC-032",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "360d669c941715df957f3a624424c461",
+            "id": "PRIVESC-037",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "3c8f5e736590ac97681c9454957b19f3",
+            "id": "PRIVESC-058",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "3d9aaf068b30857778f72a8a7fb318fc",
+            "id": "PRIVESC-030",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "3fbc02baf032480e72d596d13c015ca3",
+            "id": "PRIVESC-043",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "40f20ed22fadb2d4c8a92b90b00d5ed2",
+            "id": "DANGER-010",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "41322d1aa77eccc4a187472854ed3348",
+            "id": "DANGER-002",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "4b4a161d8e58d24b4f738972a5138803",
+            "id": "PRIVESC-019",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "4d94708f0ff6fc731c389a77caa7c3c5",
+            "id": "PRIVESC-047",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "4fa38f6388d107b019a4e9031c360137",
+            "id": "PRIVESC-040",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "567b849d53ed3617219fd4db1b7cc5ff",
+            "id": "PRIVESC-061",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "57e0e95ac4e24201b9b7f8b32b957594",
+            "id": "PRIVESC-031",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "58a8a7c0d31d5d365e4420b1ba083311",
+            "id": "PRIVESC-033",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "5eac8608db7fcd69b45f767523c52a54",
+            "id": "PRIVESC-012",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "611888b356d829ea060c360e908c62ed",
+            "id": "PRIVESC-025",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "63148e1c7bcab9bbdda7cdd4520a92f6",
+            "id": "PRIVESC-044",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "635e2f2cf304737d411e8aa1099ea21b",
+            "id": "PRIVESC-017",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "673a74356eb2400b5406f087709fa424",
+            "id": "PRIVESC-062",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "6a1dfe36a5aa46a3c6343640b4d2fb4c",
+            "id": "PRIVESC-020",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "7425d754101845162cd4cefd4be94e1a",
+            "id": "DANGER-008",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "7e2abf27ec12ea140b82fabe0baa46f0",
+            "id": "PRIVESC-059",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "805aae97deaa4c019ece7b37c2d2bf87",
+            "id": "PRIVESC-002",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "84dd4499bfc9441b907c6a04e4d0445d",
+            "id": "PRIVESC-046",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "85e6853242d7027345b3a8a6bdd12887",
+            "id": "DANGER-005",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "8796cdb15e820f2380059bff80c07fb4",
+            "id": "PRIVESC-026",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "89b2db8bd0cd4ab81331de7a6626ce0e",
+            "id": "PRIVESC-064",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "998cc2108ed27cad7d3778ec78239b22",
+            "id": "PRIVESC-048",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "9a0f481b39688148d03cedcffc6157fd",
+            "id": "PRIVESC-027",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "9c9159c6c8af5827cb659b95d84487cb",
+            "id": "PRIVESC-010",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "9cff2af803b901b4f3a85b1f0b571be8",
+            "id": "PRIVESC-063",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "a15ae4d233d587abaabac60054096e56",
+            "id": "PRIVESC-003",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "a2a1a138f8531d716db7a97b50f6bb61",
+            "id": "PRIVESC-065",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "ab0f2be54719e18867fc6e5072c6ece4",
+            "id": "PRIVESC-057",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "ae8124e98d4a9c19c9e6725bec7d61a5",
+            "id": "PRIVESC-039",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "af3614aae63a294bdfcc89deb36287ff",
+            "id": "PRIVESC-015",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "b5557f9e17a9809e96c3697ccd4fd943",
+            "id": "PRIVESC-001",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "be5a5de9514374a0aa57279a24616988",
+            "id": "PRIVESC-018",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "c25c5febeb8fd44ea757795c1ebbd282",
+            "id": "PRIVESC-049",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "c5c9e7ab6b70e57dbf9a6b917bd1a665",
+            "id": "PRIVESC-013",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "d10e2a2d289cb97e2ac359a1d854225d",
+            "id": "PRIVESC-016",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "d21ab28daf18e5a503743b2046826045",
+            "id": "DANGER-007",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "d9ac371f777e958fe366fac6bff279c7",
+            "id": "PRIVESC-041",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "da1a5d68f835218db3cff79ddcaf47b0",
+            "id": "PRIVESC-008",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "de6cc77c12adc775f4f132535c0e613f",
+            "id": "PRIVESC-024",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "e8efd8cfd28fc290d5bd3bddc398fdc3",
+            "id": "DANGER-001",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "eaf318bdf480185eb7722fc978174751",
+            "id": "PRIVESC-036",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "eefb2e6bef386eb634792be6c4a3c47e",
+            "id": "DANGER-004",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "f3a8b4736cb82bca7611a0fbb1f2925d",
+            "id": "PRIVESC-004",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "fbd8d1fb5f5b39762eded34ae97b8539",
+            "id": "PRIVESC-028",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "fc3da723737f09a8aa11ca199156b6f6",
+            "id": "PRIVESC-007",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "ff8961d333dd5a7c928ab050c2f1dcae",
+            "id": "PRIVESC-014",
+            "severity": "INFO"
+          }
+        ],
+        "subsumed_count": 65
+      },
+      "fingerprint": "ba8e7e123d27824b5ae51e64665dc32d",
+      "id": "ADMIN-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "*",
+        "ec2:*",
+        "iam:*",
+        "iam:passrole",
+        "kms:decrypt",
+        "lambda:*",
+        "s3:*",
+        "secretsmanager:getsecretvalue",
+        "ssm:getparameter",
+        "ssm:getparameters",
+        "ssm:getparametersbypath",
+        "sts:assumerole"
+      ],
+      "node_id": "arn:aws:iam::000000000000:role/gha-deploy",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#high-value-targets-to-hunt",
+      "related_node_ids": [
+        "aws-enumerator:account-admin/000000000000"
+      ],
+      "remediation": "Treat this principal as an account administrator: limit who can use it (trust policy, group membership, credentials), require MFA, and replace broad grants (Action:* or iam:*) by the permissions it needs.",
+      "severity": "CRITICAL",
+      "status": "open",
+      "subsumes": [
+        "DANGER-001",
+        "DANGER-002",
+        "DANGER-003",
+        "DANGER-004",
+        "DANGER-005",
+        "DANGER-006",
+        "DANGER-007",
+        "DANGER-008",
+        "DANGER-009",
+        "DANGER-010",
+        "PRIVESC-001",
+        "PRIVESC-002",
+        "PRIVESC-003",
+        "PRIVESC-004",
+        "PRIVESC-005",
+        "PRIVESC-006",
+        "PRIVESC-007",
+        "PRIVESC-008",
+        "PRIVESC-009",
+        "PRIVESC-010",
+        "PRIVESC-011",
+        "PRIVESC-012",
+        "PRIVESC-013",
+        "PRIVESC-014",
+        "PRIVESC-015",
+        "PRIVESC-016",
+        "PRIVESC-017",
+        "PRIVESC-018",
+        "PRIVESC-019",
+        "PRIVESC-020",
+        "PRIVESC-021",
+        "PRIVESC-024",
+        "PRIVESC-025",
+        "PRIVESC-026",
+        "PRIVESC-027",
+        "PRIVESC-028",
+        "PRIVESC-030",
+        "PRIVESC-031",
+        "PRIVESC-032",
+        "PRIVESC-033",
+        "PRIVESC-034",
+        "PRIVESC-035",
+        "PRIVESC-036",
+        "PRIVESC-037",
+        "PRIVESC-038",
+        "PRIVESC-039",
+        "PRIVESC-040",
+        "PRIVESC-041",
+        "PRIVESC-042",
+        "PRIVESC-043",
+        "PRIVESC-044",
+        "PRIVESC-045",
+        "PRIVESC-046",
+        "PRIVESC-047",
+        "PRIVESC-048",
+        "PRIVESC-049",
+        "PRIVESC-057",
+        "PRIVESC-058",
+        "PRIVESC-059",
+        "PRIVESC-060",
+        "PRIVESC-061",
+        "PRIVESC-062",
+        "PRIVESC-063",
+        "PRIVESC-064",
+        "PRIVESC-065"
+      ],
+      "title": "Administrator-equivalent principal"
+    },
+    {
+      "account": "000000000000",
+      "base_severity": "CRITICAL",
+      "category": "dangerous_permission",
+      "confidence": "definite",
+      "description": "This user is administrator-equivalent: its effective permissions allow every action on every resource. Its 65 individual privilege-escalation and dangerous-permission findings are summarised here.",
+      "evidence": {
+        "basis": "allow-star",
+        "rule_ids": [
+          "DANGER-001"
+        ],
+        "steps": [
+          {
+            "decision": "allow",
+            "denies_considered": [],
+            "granted": [
+              {
+                "actions": [
+                  "*"
+                ],
+                "layer": "identity",
+                "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+                "policy_name": "AdministratorAccess",
+                "resources": [
+                  "*"
+                ],
+                "source_type": "aws_managed",
+                "statement_index": 0,
+                "version_id": "v1"
+              }
+            ],
+            "resource": "*",
+            "rule_action": "*"
+          }
+        ],
+        "subsumed": [
+          {
+            "fingerprint": "05c53ab388c0d60398688acc04752361",
+            "id": "PRIVESC-057",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "0771251be45e13a7d7282ca5be691da3",
+            "id": "PRIVESC-038",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "09b507e473d68220becb0959ca17e81a",
+            "id": "PRIVESC-021",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "158de03bd89aca1340095ab98d6e4027",
+            "id": "PRIVESC-002",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "166be40dab52a3755b6f5f297f95e49b",
+            "id": "PRIVESC-009",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "17e3cc33a3777c3958bc1de44686137c",
+            "id": "PRIVESC-036",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "1b43adf615ad04a96b752e2bd95d21f8",
+            "id": "DANGER-004",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "204ba65003fc88e584a6599df758f4f9",
+            "id": "PRIVESC-044",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "2d4b0c94e3fcb85bcf45c29f9e997ea2",
+            "id": "PRIVESC-020",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "35088120a1d7323ee6afcea1a789ecfe",
+            "id": "PRIVESC-005",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "355fe815b9576aa2c9d4bbf88065e1e1",
+            "id": "PRIVESC-026",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "36ae431905370d5f51033953cc6e2f69",
+            "id": "PRIVESC-035",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "36b20d99941e93d203deda0438e079e5",
+            "id": "PRIVESC-039",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "37ff94c2801cf66dbbd811461f98aaa8",
+            "id": "PRIVESC-001",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "3c138f4eecc2569a365d55e40a776c71",
+            "id": "PRIVESC-027",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "4181e67358990cf457458e3b18ac9c6e",
+            "id": "PRIVESC-028",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "4588822adb2270ff9999944192910681",
+            "id": "PRIVESC-014",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "4820501c378e5e73e900283d17074403",
+            "id": "PRIVESC-058",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "48d983cfae5efbfd98263c83c7f7d1f8",
+            "id": "PRIVESC-013",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "4a32732eb7876917633b2d71a4eb8f80",
+            "id": "PRIVESC-060",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "4a52a7238a88ce134396468121025a2a",
+            "id": "PRIVESC-034",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "51c4c7f74d8d1683e5239e0e7849f269",
+            "id": "PRIVESC-062",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "603712b73d47772759aac69b0079a63b",
+            "id": "PRIVESC-065",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "65e48c6a35ca3a1ed2d9193c8e770bd3",
+            "id": "PRIVESC-018",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "6ae8a0a29b304862c1c801853498da4f",
+            "id": "PRIVESC-003",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "707ee6b62a45f456e03919df7b604ae4",
+            "id": "PRIVESC-032",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "78c58ad44b877de513833ae37fc7d7b3",
+            "id": "PRIVESC-049",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "7987b8dcf8cd6086237ee9059e5a2750",
+            "id": "PRIVESC-006",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "7b762c7a741942d4f1300941ecff8b6d",
+            "id": "PRIVESC-047",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "7f48a01c939c5d1969387e02c169ed1b",
+            "id": "PRIVESC-007",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "86fe73b275906ded663ae6419bab593b",
+            "id": "PRIVESC-015",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "8755f171715088c0ed3a31aacf052f3b",
+            "id": "PRIVESC-017",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "87b5edc71d94c077c8ccd77780d08b35",
+            "id": "PRIVESC-042",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "8b322556c56cbdfd78e62a6ad1991b11",
+            "id": "DANGER-005",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "8dd26b09547ea863ddeba629805dff06",
+            "id": "PRIVESC-048",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "920dffc43efcbf70d27978691dc9b3f9",
+            "id": "PRIVESC-010",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "947caa78fa977fc3d1e1a65ef4341ecb",
+            "id": "PRIVESC-043",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "951a8881e027d5ef6784dafa99e6b0c4",
+            "id": "PRIVESC-019",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "97ac94485d0ba8846d64310b6db23085",
+            "id": "PRIVESC-011",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "9875b45f8c259894a2269f1e0ba580b9",
+            "id": "PRIVESC-004",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "9a4486fc695a7c4f735130bfbf495486",
+            "id": "PRIVESC-024",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "9cf54d34943b848d79afa6663cbab09f",
+            "id": "PRIVESC-061",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "a3464e895ac0a169f7053a1ef7c0c384",
+            "id": "DANGER-007",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "a353cf1d87428223f50e37b6b67ad88a",
+            "id": "PRIVESC-033",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "a485e90c83a000659d90ccbf08b73e22",
+            "id": "PRIVESC-012",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "a4b772e9ed2d203eeac5408a3911aa63",
+            "id": "PRIVESC-030",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "abd90b05d38c177451625e4e2931cb8b",
+            "id": "PRIVESC-041",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "b190ced31d614f22ed1d162d1617d6f8",
+            "id": "PRIVESC-045",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "b5d84d2ede296050c071fe5ff9a430c2",
+            "id": "DANGER-010",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "b760c8f107834d5fe15aacfc088eb7bb",
+            "id": "PRIVESC-016",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "c64e6d67ef52a1881a7e67dc22bf9c0f",
+            "id": "DANGER-002",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "cc6946c74bc17f3c7aacbd49f7cb119b",
+            "id": "DANGER-001",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "d0d8a3fb79cceb6a9d87d059ac3b9d9c",
+            "id": "DANGER-009",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "d7850af64f5377d362277bd9ceb42266",
+            "id": "DANGER-003",
+            "severity": "HIGH"
+          },
+          {
+            "fingerprint": "da6afc310228d901fbab6664625b380d",
+            "id": "PRIVESC-063",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "dc6d79e4381b6e1a6e54745e3326b6f2",
+            "id": "DANGER-006",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "dd8c505285dab12cca2e3d8a4468d17f",
+            "id": "PRIVESC-046",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "df339e0e8dcc2d844bd042205d101ac4",
+            "id": "PRIVESC-008",
+            "severity": "CRITICAL"
+          },
+          {
+            "fingerprint": "e2f71f04b8c067672ab1ebabca95c355",
+            "id": "PRIVESC-059",
+            "severity": "LOW"
+          },
+          {
+            "fingerprint": "ea9b73a193b916a61780fecca5c78de8",
+            "id": "DANGER-008",
+            "severity": "MEDIUM"
+          },
+          {
+            "fingerprint": "eacc6398a8f287cf017629c9fb5433af",
+            "id": "PRIVESC-040",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "ed9677819fcc248fa227ff319e6e7729",
+            "id": "PRIVESC-025",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "f6f588ca4daaf7977858e9f6dc807001",
+            "id": "PRIVESC-064",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "fb1a004cf689bc72585e15c05e43ac45",
+            "id": "PRIVESC-031",
+            "severity": "INFO"
+          },
+          {
+            "fingerprint": "ff8856000f4442e57ef1b262eb305319",
+            "id": "PRIVESC-037",
+            "severity": "INFO"
+          }
+        ],
+        "subsumed_count": 65
+      },
+      "fingerprint": "271505cf0c6b91f70c93eff49e6bb2f2",
+      "id": "ADMIN-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "*",
+        "ec2:*",
+        "iam:*",
+        "iam:passrole",
+        "kms:decrypt",
+        "lambda:*",
+        "s3:*",
+        "secretsmanager:getsecretvalue",
+        "ssm:getparameter",
+        "ssm:getparameters",
+        "ssm:getparametersbypath",
+        "sts:assumerole"
+      ],
+      "node_id": "arn:aws:iam::000000000000:user/admin-user",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#high-value-targets-to-hunt",
+      "related_node_ids": [
+        "aws-enumerator:account-admin/000000000000"
+      ],
+      "remediation": "Treat this principal as an account administrator: limit who can use it (trust policy, group membership, credentials), require MFA, and replace broad grants (Action:* or iam:*) by the permissions it needs.",
+      "severity": "CRITICAL",
+      "status": "open",
+      "subsumes": [
+        "DANGER-001",
+        "DANGER-002",
+        "DANGER-003",
+        "DANGER-004",
+        "DANGER-005",
+        "DANGER-006",
+        "DANGER-007",
+        "DANGER-008",
+        "DANGER-009",
+        "DANGER-010",
+        "PRIVESC-001",
+        "PRIVESC-002",
+        "PRIVESC-003",
+        "PRIVESC-004",
+        "PRIVESC-005",
+        "PRIVESC-006",
+        "PRIVESC-007",
+        "PRIVESC-008",
+        "PRIVESC-009",
+        "PRIVESC-010",
+        "PRIVESC-011",
+        "PRIVESC-012",
+        "PRIVESC-013",
+        "PRIVESC-014",
+        "PRIVESC-015",
+        "PRIVESC-016",
+        "PRIVESC-017",
+        "PRIVESC-018",
+        "PRIVESC-019",
+        "PRIVESC-020",
+        "PRIVESC-021",
+        "PRIVESC-024",
+        "PRIVESC-025",
+        "PRIVESC-026",
+        "PRIVESC-027",
+        "PRIVESC-028",
+        "PRIVESC-030",
+        "PRIVESC-031",
+        "PRIVESC-032",
+        "PRIVESC-033",
+        "PRIVESC-034",
+        "PRIVESC-035",
+        "PRIVESC-036",
+        "PRIVESC-037",
+        "PRIVESC-038",
+        "PRIVESC-039",
+        "PRIVESC-040",
+        "PRIVESC-041",
+        "PRIVESC-042",
+        "PRIVESC-043",
+        "PRIVESC-044",
+        "PRIVESC-045",
+        "PRIVESC-046",
+        "PRIVESC-047",
+        "PRIVESC-048",
+        "PRIVESC-049",
+        "PRIVESC-057",
+        "PRIVESC-058",
+        "PRIVESC-059",
+        "PRIVESC-060",
+        "PRIVESC-061",
+        "PRIVESC-062",
+        "PRIVESC-063",
+        "PRIVESC-064",
+        "PRIVESC-065"
+      ],
+      "title": "Administrator-equivalent principal"
+    },
+    {
+      "account": "000000000000",
+      "base_severity": "CRITICAL",
+      "category": "trust_policy",
+      "confidence": "definite",
+      "description": "Web identity provider arn:aws:iam::000000000000:oidc-provider/token.actions.githubusercontent.com can assume 'gha-deploy'.",
+      "entity": "role/gha-deploy",
+      "entity_arn": "arn:aws:iam::000000000000:role/gha-deploy",
+      "evidence": {
+        "admits": "any",
+        "conditions": [
+          {
+            "key": "token.actions.githubusercontent.com:sub",
+            "operator": "StringLike",
+            "values": [
+              "repo:*"
+            ]
+          }
+        ],
+        "problems": [],
+        "provider": "github",
+        "statement_index": 0
+      },
+      "fingerprint": "faa668e3c70dcbfa35a53da46e731246",
+      "id": "TRUST-OIDC-001",
+      "legacy_ids": [],
+      "matched_actions": [
+        "sts:AssumeRoleWithWebIdentity"
+      ],
+      "node_id": "arn:aws:iam::000000000000:role/gha-deploy",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-6--youre-external-no-foothold-yet",
+      "related_node_ids": [
+        "arn:aws:iam::000000000000:oidc-provider/token.actions.githubusercontent.com"
+      ],
+      "remediation": "Require the provider's audience (<host>:aud) and an exact subject (<host>:sub), e.g. repo:<org>/<repo>:ref:refs/heads/main for GitHub or system:serviceaccount:<ns>:<sa> for EKS.",
+      "resource": [
+        "arn:aws:iam::000000000000:role/gha-deploy"
+      ],
+      "severity": "CRITICAL",
+      "source_policy": "AssumeRolePolicyDocument",
+      "source_type": "trust_policy",
+      "status": "open",
+      "title": "Role 'gha-deploy' trusts github identities (any subjects)"
+    },
+    {
+      "account": "000000000000",
+      "base_severity": "MEDIUM",
+      "category": "iam_hygiene",
+      "confidence": "definite",
+      "description": "The user has a console password and no MFA device: a phished or reused password is enough to act as this user.",
+      "evidence": {
+        "console_password": true,
+        "mfa_active": false
+      },
+      "fingerprint": "09febac57d6db05de3d79c1ff6a3757e",
+      "id": "IAM-USER-MFA-001",
+      "legacy_ids": [],
+      "node_id": "arn:aws:iam::000000000000:user/admin-user",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-6--youre-external-no-foothold-yet",
+      "remediation": "Require MFA for every console user (an MFA device plus a policy denying actions without aws:MultiFactorAuthPresent), or move people to IAM Identity Center.",
+      "severity": "MEDIUM",
+      "status": "open",
+      "title": "IAM user 'admin-user' can sign in to the console without MFA"
+    },
+    {
+      "account": "000000000000",
+      "base_severity": "MEDIUM",
+      "category": "iam_hygiene",
+      "confidence": "definite",
+      "description": "The user has a console password and no MFA device: a phished or reused password is enough to act as this user.",
+      "evidence": {
+        "console_password": true,
+        "mfa_active": false
+      },
+      "fingerprint": "b517251c2a5ee1150e3d1c240113c36c",
+      "id": "IAM-USER-MFA-001",
+      "legacy_ids": [],
+      "node_id": "arn:aws:iam::000000000000:user/leaked-user",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-6--youre-external-no-foothold-yet",
+      "remediation": "Require MFA for every console user (an MFA device plus a policy denying actions without aws:MultiFactorAuthPresent), or move people to IAM Identity Center.",
+      "severity": "MEDIUM",
+      "status": "open",
+      "title": "IAM user 'leaked-user' can sign in to the console without MFA"
+    },
+    {
+      "account": "000000000000",
+      "base_severity": "LOW",
+      "category": "iam_hygiene",
+      "confidence": "definite",
+      "description": "The IAM password policy is below common baselines: password reuse prevention None < 24.",
+      "evidence": {
+        "configured": true,
+        "console_users": 2,
+        "weaknesses": [
+          "password reuse prevention None < 24"
+        ]
+      },
+      "fingerprint": "242df0434b5550dc6b1aa34c551f83db",
+      "id": "IAM-PWPOL-001",
+      "legacy_ids": [],
+      "node_id": "aws-enumerator:account/000000000000",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-6--youre-external-no-foothold-yet",
+      "remediation": "Set an account password policy: length >= 14, all character classes, reuse prevention 24.",
+      "severity": "LOW",
+      "status": "open",
+      "title": "The account password policy is weak"
+    }
+  ],
+  "generated_at": "<stripped>",
+  "mode": "legacy-single",
+  "partition": "aws",
+  "regions": [
+    "eu-west-2"
+  ],
+  "rules_version": "2.1.0",
+  "run_id": "legacy-eu-west-2",
+  "schema_version": "1.0.0",
+  "tool_version": "0.3.0"
+}

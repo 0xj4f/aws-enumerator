@@ -1,0 +1,16 @@
+{
+  "<img src=x onerror=window.__aeXssCanary=1>": [],
+  "\"><svg onload=window.__aeXssCanary=1>": [],
+  "</script><script>window.__aeXssCanary=1</script>": [],
+  "javascript:window.__aeXssCanary=1": [],
+  "' onmouseover='window.__aeXssCanary=1' x='": [],
+  "\" onfocus=\"window.__aeXssCanary=1\" autofocus=\"": [],
+  "demo\\\\path\\\"quote\\'single": [],
+  "${window.__aeXssCanary=1}": [],
+  "{{constructor.constructor('window.__aeXssCanary=1')()}}": [],
+  "demo\u202e\u200bunicode\u2028line": [],
+  "constructor": [],
+  "__proto__": [],
+  "hasOwnProperty": [],
+  "toString": []
+}

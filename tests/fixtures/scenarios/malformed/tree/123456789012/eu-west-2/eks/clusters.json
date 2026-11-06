@@ -1,0 +1,56 @@
+[
+  {
+    "name": "demo-err",
+    "Error": "An error occurred (AccessDenied) when calling the DescribeCluster operation: User: arn:aws:iam::123456789012:user/demo-operator is not authorized to perform: eks:DescribeCluster"
+  },
+  {
+    "name": "demo-unreachable",
+    "arn": "arn:aws:eks:eu-west-2:123456789012:cluster/demo-unreachable",
+    "createdAt": "2026-01-01 00:00:00+00:00",
+    "version": "1.30",
+    "endpoint": "https://DMMJBMPJHPDOKHCKIHJCMOFKOHOPAJKJ.gr7.eu-west-2.eks.amazonaws.com",
+    "roleArn": "arn:aws:iam::123456789012:role/example-single-stmt",
+    "resourcesVpcConfig": {
+      "subnetIds": [
+        "subnet-0a1b2c3d4e5f6aaaa"
+      ],
+      "securityGroupIds": [],
+      "clusterSecurityGroupId": "sg-0a1b2c3d4e5f6c0de",
+      "vpcId": "vpc-0a1b2c3d4e5f6aaaa",
+      "endpointPublicAccess": true,
+      "endpointPrivateAccess": false,
+      "publicAccessCidrs": [
+        "0.0.0.0/0"
+      ]
+    },
+    "kubernetesNetworkConfig": {
+      "serviceIpv4Cidr": "172.20.0.0/16",
+      "ipFamily": "ipv4"
+    },
+    "logging": {
+      "clusterLogging": [
+        {
+          "types": [
+            "api",
+            "audit"
+          ],
+          "enabled": false
+        }
+      ]
+    },
+    "identity": {
+      "oidc": {
+        "issuer": "https://oidc.eks.eu-west-2.amazonaws.com/id/DMMJBMPJHPDOKHCKIHJCMOFKOHOPAJKJ"
+      }
+    },
+    "status": "ACTIVE",
+    "certificateAuthority": {
+      "data": "RVhBTVBMRS1DQS1EQVRBLU5PVC1BLUNFUlQ="
+    },
+    "platformVersion": "eks.1",
+    "tags": {},
+    "accessConfig": {
+      "authenticationMode": "API_AND_CONFIG_MAP"
+    }
+  }
+]

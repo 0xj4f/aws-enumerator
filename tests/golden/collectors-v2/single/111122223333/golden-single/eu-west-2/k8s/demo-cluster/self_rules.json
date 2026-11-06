@@ -1,0 +1,252 @@
+[
+  {
+    "evaluation_error": null,
+    "incomplete": false,
+    "namespace": "default",
+    "non_resource_rules": [
+      {
+        "non_resource_ur_ls": [
+          "/healthz",
+          "/readyz",
+          "/version"
+        ],
+        "verbs": [
+          "get"
+        ]
+      }
+    ],
+    "resource_rules": [
+      {
+        "api_groups": [
+          ""
+        ],
+        "resource_names": null,
+        "resources": [
+          "configmaps",
+          "namespaces",
+          "nodes",
+          "pods",
+          "serviceaccounts",
+          "services"
+        ],
+        "verbs": [
+          "get",
+          "list",
+          "watch"
+        ]
+      },
+      {
+        "api_groups": [
+          "authorization.k8s.io"
+        ],
+        "resource_names": null,
+        "resources": [
+          "selfsubjectaccessreviews",
+          "selfsubjectrulesreviews"
+        ],
+        "verbs": [
+          "create"
+        ]
+      },
+      {
+        "api_groups": [
+          "networking.k8s.io"
+        ],
+        "resource_names": null,
+        "resources": [
+          "ingresses"
+        ],
+        "verbs": [
+          "get",
+          "list",
+          "watch"
+        ]
+      },
+      {
+        "api_groups": [
+          "rbac.authorization.k8s.io"
+        ],
+        "resource_names": null,
+        "resources": [
+          "*"
+        ],
+        "verbs": [
+          "get",
+          "list",
+          "watch"
+        ]
+      }
+    ]
+  },
+  {
+    "evaluation_error": null,
+    "incomplete": false,
+    "namespace": "demo-apps",
+    "non_resource_rules": [
+      {
+        "non_resource_ur_ls": [
+          "/healthz",
+          "/readyz",
+          "/version"
+        ],
+        "verbs": [
+          "get"
+        ]
+      }
+    ],
+    "resource_rules": [
+      {
+        "api_groups": [
+          ""
+        ],
+        "resource_names": null,
+        "resources": [
+          "configmaps",
+          "namespaces",
+          "nodes",
+          "pods",
+          "serviceaccounts",
+          "services"
+        ],
+        "verbs": [
+          "get",
+          "list",
+          "watch"
+        ]
+      },
+      {
+        "api_groups": [
+          ""
+        ],
+        "resource_names": null,
+        "resources": [
+          "secrets"
+        ],
+        "verbs": [
+          "get",
+          "list"
+        ]
+      },
+      {
+        "api_groups": [
+          "authorization.k8s.io"
+        ],
+        "resource_names": null,
+        "resources": [
+          "selfsubjectaccessreviews",
+          "selfsubjectrulesreviews"
+        ],
+        "verbs": [
+          "create"
+        ]
+      },
+      {
+        "api_groups": [
+          "networking.k8s.io"
+        ],
+        "resource_names": null,
+        "resources": [
+          "ingresses"
+        ],
+        "verbs": [
+          "get",
+          "list",
+          "watch"
+        ]
+      },
+      {
+        "api_groups": [
+          "rbac.authorization.k8s.io"
+        ],
+        "resource_names": null,
+        "resources": [
+          "*"
+        ],
+        "verbs": [
+          "get",
+          "list",
+          "watch"
+        ]
+      }
+    ]
+  },
+  {
+    "evaluation_error": null,
+    "incomplete": false,
+    "namespace": "kube-system",
+    "non_resource_rules": [
+      {
+        "non_resource_ur_ls": [
+          "/healthz",
+          "/readyz",
+          "/version"
+        ],
+        "verbs": [
+          "get"
+        ]
+      }
+    ],
+    "resource_rules": [
+      {
+        "api_groups": [
+          ""
+        ],
+        "resource_names": null,
+        "resources": [
+          "configmaps",
+          "namespaces",
+          "nodes",
+          "pods",
+          "serviceaccounts",
+          "services"
+        ],
+        "verbs": [
+          "get",
+          "list",
+          "watch"
+        ]
+      },
+      {
+        "api_groups": [
+          "authorization.k8s.io"
+        ],
+        "resource_names": null,
+        "resources": [
+          "selfsubjectaccessreviews",
+          "selfsubjectrulesreviews"
+        ],
+        "verbs": [
+          "create"
+        ]
+      },
+      {
+        "api_groups": [
+          "networking.k8s.io"
+        ],
+        "resource_names": null,
+        "resources": [
+          "ingresses"
+        ],
+        "verbs": [
+          "get",
+          "list",
+          "watch"
+        ]
+      },
+      {
+        "api_groups": [
+          "rbac.authorization.k8s.io"
+        ],
+        "resource_names": null,
+        "resources": [
+          "*"
+        ],
+        "verbs": [
+          "get",
+          "list",
+          "watch"
+        ]
+      }
+    ]
+  }
+]

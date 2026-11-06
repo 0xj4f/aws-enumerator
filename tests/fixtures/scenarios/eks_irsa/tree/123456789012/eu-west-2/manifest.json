@@ -1,0 +1,78 @@
+{
+  "tool": "aws-enumerator",
+  "version": "0.2.0",
+  "author": "0xj4f",
+  "run_metadata": {
+    "account_id": "123456789012",
+    "mode": "single_region",
+    "region": "eu-west-2",
+    "regions_enumerated": [],
+    "caller_arn": "arn:aws:iam::123456789012:user/demo-operator",
+    "caller_user_id": "AIDAIOFJECGLDECPDLLDA",
+    "timestamp_start": "2026-01-01T00:00:00",
+    "timestamp_end": "2026-01-01T00:00:00",
+    "duration_seconds": 0.0
+  },
+  "modules_executed": [
+    {
+      "name": "eks",
+      "path": "eks/",
+      "file_count": 4,
+      "files": [
+        "addons.json",
+        "clusters.json",
+        "fargate_profiles.json",
+        "nodegroups.json"
+      ]
+    },
+    {
+      "name": "iam",
+      "path": "iam/",
+      "file_count": 16,
+      "files": [
+        "account_password_policy.json",
+        "account_summary.json",
+        "group_attached_policies.json",
+        "groups.json",
+        "inline_policies/roles/demo-irsa-reader.json",
+        "inline_policies/users/demo-platform-engineer.json",
+        "instance_profiles.json",
+        "policies.json",
+        "policy_documents/AdministratorAccess_v1.json",
+        "policy_documents/AmazonEKSClusterPolicy_v1.json",
+        "policy_documents/AmazonEKSWorkerNodePolicy_v1.json",
+        "role_attached_policies.json",
+        "roles.json",
+        "user_attached_policies.json",
+        "user_group_memberships.json",
+        "users.json"
+      ]
+    },
+    {
+      "name": "k8s",
+      "path": "k8s/",
+      "file_count": 11,
+      "files": [
+        "demo-eks/cluster_info.json",
+        "demo-eks/cluster_role_bindings.json",
+        "demo-eks/cluster_roles.json",
+        "demo-eks/ingresses.json",
+        "demo-eks/namespaces.json",
+        "demo-eks/pods.json",
+        "demo-eks/role_bindings.json",
+        "demo-eks/roles.json",
+        "demo-eks/secrets.json",
+        "demo-eks/service_accounts.json",
+        "demo-eks/services.json"
+      ]
+    },
+    {
+      "name": "s3",
+      "path": "s3/",
+      "file_count": 1,
+      "files": [
+        "buckets.json"
+      ]
+    }
+  ]
+}

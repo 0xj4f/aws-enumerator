@@ -1,0 +1,15 @@
+{
+  "RoleName": "demo-boundary-capped",
+  "InlinePolicies": {
+    "p": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": "*",
+          "Resource": "*"
+        }
+      ]
+    }
+  }
+}

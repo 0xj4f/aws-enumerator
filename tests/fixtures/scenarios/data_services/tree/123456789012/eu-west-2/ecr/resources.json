@@ -1,0 +1,47 @@
+[
+  {
+    "Type": "ecr",
+    "Arn": "arn:aws:ecr:eu-west-2:123456789012:repository/demo-repo",
+    "Name": "demo-repo",
+    "Policy": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::111122223333:root"
+          },
+          "Action": [
+            "ecr:BatchGetImage",
+            "ecr:GetDownloadUrlForLayer"
+          ],
+          "Resource": "*"
+        }
+      ]
+    }
+  },
+  {
+    "Type": "ecr",
+    "Arn": "arn:aws:ecr:eu-west-2:123456789012:repository/demo-public-repo",
+    "Name": "demo-public-repo",
+    "Policy": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": "*",
+          "Action": [
+            "ecr:BatchGetImage"
+          ],
+          "Resource": "*"
+        }
+      ]
+    }
+  },
+  {
+    "Type": "ecr",
+    "Arn": "arn:aws:ecr:eu-west-2:123456789012:repository/demo-private-repo",
+    "Name": "demo-private-repo",
+    "Policy": null
+  }
+]

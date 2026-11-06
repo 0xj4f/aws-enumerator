@@ -1,0 +1,171 @@
+{
+  "breakers": [],
+  "calls": [
+    {
+      "api": "kms:DescribeKey",
+      "count": 1,
+      "error_code": "AccessDeniedException",
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 0,
+      "primary": false,
+      "status": "denied"
+    },
+    {
+      "api": "kms:DescribeKey",
+      "count": 3,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 3,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "kms:GetKeyPolicy",
+      "count": 1,
+      "error_code": "AccessDeniedException",
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 0,
+      "primary": false,
+      "status": "denied"
+    },
+    {
+      "api": "kms:GetKeyPolicy",
+      "count": 1,
+      "error_code": "AwsManagedKey",
+      "items": null,
+      "not_configured": false,
+      "optional": true,
+      "pages": 0,
+      "primary": false,
+      "status": "skipped"
+    },
+    {
+      "api": "kms:GetKeyPolicy",
+      "count": 2,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 2,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "kms:ListAliases",
+      "count": 1,
+      "error_code": null,
+      "items": 4,
+      "not_configured": false,
+      "optional": false,
+      "pages": 2,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "kms:ListGrants",
+      "count": 1,
+      "error_code": "AccessDeniedException",
+      "items": 0,
+      "not_configured": false,
+      "optional": false,
+      "pages": 0,
+      "primary": false,
+      "status": "denied"
+    },
+    {
+      "api": "kms:ListGrants",
+      "count": 3,
+      "error_code": null,
+      "items": 1,
+      "not_configured": false,
+      "optional": false,
+      "pages": 3,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "kms:ListKeys",
+      "count": 1,
+      "error_code": null,
+      "items": 4,
+      "not_configured": false,
+      "optional": false,
+      "pages": 2,
+      "primary": true,
+      "status": "ok"
+    }
+  ],
+  "duration_seconds": "<stripped>",
+  "ended_at": "<stripped>",
+  "error": null,
+  "item_errors": [
+    {
+      "api": "kms:DescribeKey",
+      "error_code": "AccessDeniedException",
+      "resource": "arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a3",
+      "status": "denied"
+    },
+    {
+      "api": "kms:GetKeyPolicy",
+      "error_code": "AccessDeniedException",
+      "resource": "arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a4",
+      "status": "denied"
+    },
+    {
+      "api": "kms:ListGrants",
+      "error_code": "AccessDeniedException",
+      "resource": "arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a4",
+      "status": "denied"
+    }
+  ],
+  "item_errors_truncated": false,
+  "module": "kms",
+  "protocol": "ctx",
+  "region": "eu-west-2",
+  "schema_version": 1,
+  "sections": [
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "aliases",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "key_details",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "keys",
+      "status": "ok"
+    }
+  ],
+  "services": [
+    "kms"
+  ],
+  "started_at": "<stripped>",
+  "status": "partial",
+  "status_reason": "kms:DescribeKey denied (+2 more)",
+  "summary": {
+    "calls": 14,
+    "denied": 3,
+    "error": 0,
+    "item_errors": 3,
+    "not_configured": 0,
+    "ok": 10,
+    "skipped": 1,
+    "throttled": 0
+  }
+}

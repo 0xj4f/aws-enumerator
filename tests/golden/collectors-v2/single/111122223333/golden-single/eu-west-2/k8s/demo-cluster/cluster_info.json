@@ -1,0 +1,104 @@
+{
+  "arn": "arn:aws:eks:eu-west-2:111122223333:cluster/demo-cluster",
+  "auth_mode": "eks-token",
+  "auth_status": "ok",
+  "endpoint": "https://DEMO0000000000000000000000000002.gr7.eu-west-2.eks.amazonaws.com",
+  "endpoint_hint": null,
+  "endpoint_private_access": true,
+  "endpoint_public_access": true,
+  "error": null,
+  "error_code": null,
+  "name": "demo-cluster",
+  "public_access_cidrs": [
+    "0.0.0.0/0"
+  ],
+  "resources": {
+    "aws_auth": {
+      "error_code": null,
+      "items": null,
+      "namespaces": null,
+      "scope": "kube-system",
+      "status": "ok"
+    },
+    "cluster_role_bindings": {
+      "error_code": null,
+      "items": 2,
+      "namespaces": null,
+      "scope": "cluster",
+      "status": "ok"
+    },
+    "cluster_roles": {
+      "error_code": null,
+      "items": 2,
+      "namespaces": null,
+      "scope": "cluster",
+      "status": "ok"
+    },
+    "ingresses": {
+      "error_code": null,
+      "items": 1,
+      "namespaces": null,
+      "scope": "cluster",
+      "status": "ok"
+    },
+    "namespaces": {
+      "error_code": null,
+      "items": 3,
+      "namespaces": null,
+      "scope": "cluster",
+      "status": "ok"
+    },
+    "nodes": {
+      "error_code": null,
+      "items": 1,
+      "namespaces": null,
+      "scope": "cluster",
+      "status": "ok"
+    },
+    "pods": {
+      "error_code": null,
+      "items": 3,
+      "namespaces": null,
+      "scope": "cluster",
+      "status": "ok"
+    },
+    "role_bindings": {
+      "error_code": null,
+      "items": 1,
+      "namespaces": null,
+      "scope": "cluster",
+      "status": "ok"
+    },
+    "roles": {
+      "error_code": null,
+      "items": 1,
+      "namespaces": null,
+      "scope": "cluster",
+      "status": "ok"
+    },
+    "service_accounts": {
+      "error_code": null,
+      "items": 4,
+      "namespaces": null,
+      "scope": "cluster",
+      "status": "ok"
+    },
+    "services": {
+      "error_code": null,
+      "items": 2,
+      "namespaces": null,
+      "scope": "cluster",
+      "status": "ok"
+    }
+  },
+  "secrets_listed": false,
+  "self_rules_namespaces": 3,
+  "self_rules_reviewed": true,
+  "self_rules_truncated": false,
+  "version": {
+    "git_version": "v1.29.4-eks-demo",
+    "major": "1",
+    "minor": "29",
+    "platform": "linux/amd64"
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "tool": "aws-enumerator",
+  "version": "0.2.0",
+  "author": "0xj4f",
+  "run_metadata": {
+    "account_id": "123456789012",
+    "mode": "single_region",
+    "region": "eu-west-2",
+    "regions_enumerated": [],
+    "caller_arn": "arn:aws:iam::123456789012:user/demo-operator",
+    "caller_user_id": "AIDAIOFJECGLDECPDLLDA",
+    "timestamp_start": "2026-01-01T00:00:00",
+    "timestamp_end": "2026-01-01T00:00:00",
+    "duration_seconds": 0.0
+  },
+  "modules_executed": [
+    {
+      "name": "iam",
+      "path": "iam/",
+      "file_count": 16,
+      "files": [
+        "account_password_policy.json",
+        "account_summary.json",
+        "group_attached_policies.json",
+        "groups.json",
+        "inline_policies/roles/same-account-root.json",
+        "inline_policies/roles/wildcard-open.json",
+        "inline_policies/users/deploy.json",
+        "instance_profiles.json",
+        "policies.json",
+        "policy_documents/AdministratorAccess_v1.json",
+        "policy_documents/ReadOnlyAccess_v1.json",
+        "role_attached_policies.json",
+        "roles.json",
+        "user_attached_policies.json",
+        "user_group_memberships.json",
+        "users.json"
+      ]
+    },
+    {
+      "name": "kms",
+      "path": "kms/",
+      "file_count": 2,
+      "files": [
+        "key_policies/2c3d4e5f-aaaa-4bbb-8ccc-6a7b8c9d0e1f.json",
+        "keys.json"
+      ]
+    },
+    {
+      "name": "s3",
+      "path": "s3/",
+      "file_count": 2,
+      "files": [
+        "buckets.json",
+        "policies/demo-shared-bucket.json"
+      ]
+    },
+    {
+      "name": "secretsmanager",
+      "path": "secretsmanager/",
+      "file_count": 2,
+      "files": [
+        "resource_policies/demo_shared.json",
+        "secrets.json"
+      ]
+    }
+  ]
+}

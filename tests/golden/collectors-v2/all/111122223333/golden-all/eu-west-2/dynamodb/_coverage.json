@@ -1,0 +1,72 @@
+{
+  "breakers": [],
+  "calls": [
+    {
+      "api": "dynamodb:GetResourcePolicy",
+      "count": 1,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "dynamodb:GetResourcePolicy",
+      "count": 2,
+      "error_code": "PolicyNotFoundException",
+      "items": null,
+      "not_configured": true,
+      "optional": false,
+      "pages": 0,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "dynamodb:ListTables",
+      "count": 1,
+      "error_code": null,
+      "items": 3,
+      "not_configured": false,
+      "optional": false,
+      "pages": 2,
+      "primary": true,
+      "status": "ok"
+    }
+  ],
+  "duration_seconds": "<stripped>",
+  "ended_at": "<stripped>",
+  "error": null,
+  "item_errors": [],
+  "item_errors_truncated": false,
+  "module": "dynamodb",
+  "protocol": "ctx",
+  "region": "eu-west-2",
+  "schema_version": 1,
+  "sections": [
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "tables",
+      "status": "ok"
+    }
+  ],
+  "services": [
+    "dynamodb"
+  ],
+  "started_at": "<stripped>",
+  "status": "ok",
+  "status_reason": null,
+  "summary": {
+    "calls": 4,
+    "denied": 0,
+    "error": 0,
+    "item_errors": 0,
+    "not_configured": 2,
+    "ok": 4,
+    "skipped": 0,
+    "throttled": 0
+  }
+}

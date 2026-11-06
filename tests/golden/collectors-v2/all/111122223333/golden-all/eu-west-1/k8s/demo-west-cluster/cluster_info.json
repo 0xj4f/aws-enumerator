@@ -1,0 +1,21 @@
+{
+  "arn": "arn:aws:eks:eu-west-1:111122223333:cluster/demo-west-cluster",
+  "auth_mode": "eks-token",
+  "auth_status": "failed",
+  "endpoint": "https://DEMO0000000000000000000000000001.gr7.eu-west-1.eks.amazonaws.com",
+  "endpoint_hint": "the public API endpoint only accepts 1 CIDR range(s) (publicAccessCidrs); requests from other addresses time out",
+  "endpoint_private_access": false,
+  "endpoint_public_access": true,
+  "error": "the API server rejected the credentials (HTTP 401); is the principal mapped by an EKS access entry or aws-auth?",
+  "error_code": "Unauthorized",
+  "name": "demo-west-cluster",
+  "public_access_cidrs": [
+    "198.51.100.0/24"
+  ],
+  "resources": {},
+  "secrets_listed": false,
+  "self_rules_namespaces": 0,
+  "self_rules_reviewed": false,
+  "self_rules_truncated": false,
+  "version": null
+}

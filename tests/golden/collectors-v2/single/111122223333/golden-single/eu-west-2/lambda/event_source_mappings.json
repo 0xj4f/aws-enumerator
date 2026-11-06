@@ -1,0 +1,10 @@
+[
+  {
+    "BatchSize": 10,
+    "EventSourceArn": "arn:aws:sqs:eu-west-2:111122223333:demo-queue",
+    "FunctionArn": "arn:aws:lambda:eu-west-2:111122223333:function:demo-processor",
+    "LastModified": "2024-01-09T10:00:00Z",
+    "State": "Enabled",
+    "UUID": "dec0dec0-0000-4000-8000-0000000000e5"
+  }
+]

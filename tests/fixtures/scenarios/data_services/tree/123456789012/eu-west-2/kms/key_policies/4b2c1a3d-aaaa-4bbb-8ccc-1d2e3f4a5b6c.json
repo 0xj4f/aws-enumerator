@@ -1,0 +1,54 @@
+{
+  "KeyId": "4b2c1a3d-aaaa-4bbb-8ccc-1d2e3f4a5b6c",
+  "Arn": "arn:aws:kms:eu-west-2:123456789012:key/4b2c1a3d-aaaa-4bbb-8ccc-1d2e3f4a5b6c",
+  "Policy": {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Sid": "Enable IAM User Permissions",
+        "Effect": "Allow",
+        "Principal": {
+          "AWS": "arn:aws:iam::123456789012:root"
+        },
+        "Action": "kms:*",
+        "Resource": "*"
+      },
+      {
+        "Effect": "Allow",
+        "Principal": {
+          "AWS": "arn:aws:iam::999999999999:role/demo-partner"
+        },
+        "Action": [
+          "kms:Decrypt",
+          "kms:DescribeKey"
+        ],
+        "Resource": "*"
+      },
+      {
+        "Effect": "Allow",
+        "Principal": {
+          "AWS": "*"
+        },
+        "Action": [
+          "kms:Decrypt"
+        ],
+        "Resource": "*",
+        "Condition": {
+          "StringEquals": {
+            "kms:CallerAccount": "123456789012"
+          }
+        }
+      },
+      {
+        "Effect": "Allow",
+        "Principal": {
+          "Service": "logs.eu-west-2.amazonaws.com"
+        },
+        "Action": [
+          "kms:Encrypt"
+        ],
+        "Resource": "*"
+      }
+    ]
+  }
+}

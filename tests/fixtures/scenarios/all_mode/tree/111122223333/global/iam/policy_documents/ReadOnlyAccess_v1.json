@@ -1,0 +1,21 @@
+{
+  "PolicyName": "ReadOnlyAccess",
+  "PolicyArn": "arn:aws:iam::aws:policy/ReadOnlyAccess",
+  "VersionId": "v1",
+  "Document": {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "s3:Get*",
+          "s3:List*",
+          "ec2:Describe*",
+          "iam:Get*",
+          "iam:List*"
+        ],
+        "Resource": "*"
+      }
+    ]
+  }
+}

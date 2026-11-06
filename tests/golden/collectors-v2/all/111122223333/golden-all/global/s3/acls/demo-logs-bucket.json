@@ -1,0 +1,23 @@
+{
+  "Grants": [
+    {
+      "Grantee": {
+        "DisplayName": "demo-owner",
+        "ID": "0000000000000000000000000000000000000000000000000000000000000000",
+        "Type": "CanonicalUser"
+      },
+      "Permission": "FULL_CONTROL"
+    },
+    {
+      "Grantee": {
+        "Type": "Group",
+        "URI": "http://acs.amazonaws.com/groups/s3/LogDelivery"
+      },
+      "Permission": "WRITE"
+    }
+  ],
+  "Owner": {
+    "DisplayName": "demo-owner",
+    "ID": "0000000000000000000000000000000000000000000000000000000000000000"
+  }
+}

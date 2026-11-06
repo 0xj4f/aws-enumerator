@@ -1,0 +1,29 @@
+[
+  {
+    "Arn": "arn:aws:guardduty:eu-west-2:111122223333:detector/dec0dec0dec0dec0dec0dec0dec0dec2",
+    "CreatedAt": "2024-01-02T10:00:00.000Z",
+    "DataSources": null,
+    "DetectorId": "dec0dec0dec0dec0dec0dec0dec0dec2",
+    "Features": [
+      {
+        "AdditionalConfiguration": [],
+        "Name": "EKS_AUDIT_LOGS",
+        "Status": "DISABLED"
+      },
+      {
+        "AdditionalConfiguration": [],
+        "Name": "RUNTIME_MONITORING",
+        "Status": "DISABLED"
+      },
+      {
+        "AdditionalConfiguration": [],
+        "Name": "S3_DATA_EVENTS",
+        "Status": "ENABLED"
+      }
+    ],
+    "FindingPublishingFrequency": "SIX_HOURS",
+    "ServiceRole": "arn:aws:iam::111122223333:role/aws-service-role/guardduty.amazonaws.com/AWSServiceRoleForAmazonGuardDuty",
+    "Status": "ENABLED",
+    "UpdatedAt": "2024-01-09T10:00:00.000Z"
+  }
+]

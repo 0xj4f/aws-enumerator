@@ -1,0 +1,248 @@
+[
+  {
+    "ARN": "arn:aws:cloudfront::111122223333:distribution/E1DEMOEXAMPLE01",
+    "Aliases": {
+      "Items": [
+        "www.example.com"
+      ],
+      "Quantity": 1
+    },
+    "CacheBehaviors": {
+      "Quantity": 0
+    },
+    "Comment": "demo public site",
+    "CustomErrorResponses": {
+      "Quantity": 0
+    },
+    "DefaultCacheBehavior": {
+      "AllowedMethods": {
+        "CachedMethods": {
+          "Items": [
+            "GET",
+            "HEAD"
+          ],
+          "Quantity": 2
+        },
+        "Items": [
+          "GET",
+          "HEAD"
+        ],
+        "Quantity": 2
+      },
+      "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
+      "Compress": true,
+      "FieldLevelEncryptionId": "",
+      "FunctionAssociations": {
+        "Quantity": 0
+      },
+      "LambdaFunctionAssociations": {
+        "Quantity": 0
+      },
+      "SmoothStreaming": false,
+      "TargetOriginId": "s3-site",
+      "TrustedKeyGroups": {
+        "Enabled": false,
+        "Quantity": 0
+      },
+      "TrustedSigners": {
+        "Enabled": false,
+        "Quantity": 0
+      },
+      "ViewerProtocolPolicy": "redirect-to-https"
+    },
+    "DefaultRootObject": "index.html",
+    "DomainName": "d111111abcdef8.cloudfront.net",
+    "Enabled": true,
+    "HttpVersion": "http2",
+    "Id": "E1DEMOEXAMPLE01",
+    "IsIPV6Enabled": true,
+    "LastModifiedTime": "2024-01-10T10:00:00Z",
+    "Logging": {
+      "Bucket": "demo-logs-bucket.s3.amazonaws.com",
+      "Enabled": true,
+      "IncludeCookies": false,
+      "Prefix": "cf/"
+    },
+    "OriginGroups": {
+      "Quantity": 0
+    },
+    "Origins": {
+      "Items": [
+        {
+          "ConnectionAttempts": 3,
+          "ConnectionTimeout": 10,
+          "CustomHeaders": {
+            "Items": [
+              {
+                "HeaderName": "X-Origin-Verify",
+                "HeaderValue": "<redacted>"
+              }
+            ],
+            "Quantity": 1
+          },
+          "CustomOriginConfig": {
+            "HTTPPort": 80,
+            "HTTPSPort": 443,
+            "OriginKeepaliveTimeout": 5,
+            "OriginProtocolPolicy": "https-only",
+            "OriginReadTimeout": 30,
+            "OriginSslProtocols": {
+              "Items": [
+                "TLSv1.2"
+              ],
+              "Quantity": 1
+            }
+          },
+          "DomainName": "api.example.com",
+          "Id": "api-origin",
+          "OriginAccessControlId": "",
+          "OriginPath": ""
+        },
+        {
+          "ConnectionAttempts": 3,
+          "ConnectionTimeout": 10,
+          "CustomHeaders": {
+            "Quantity": 0
+          },
+          "DomainName": "demo-public-site.s3.eu-west-1.amazonaws.com",
+          "Id": "s3-site",
+          "OriginAccessControlId": "",
+          "OriginPath": "",
+          "S3OriginConfig": {
+            "OriginAccessIdentity": ""
+          }
+        }
+      ],
+      "Quantity": 2
+    },
+    "PriceClass": "PriceClass_100",
+    "Restrictions": {
+      "GeoRestriction": {
+        "Quantity": 0,
+        "RestrictionType": "none"
+      }
+    },
+    "Staging": false,
+    "Status": "Deployed",
+    "ViewerCertificate": {
+      "ACMCertificateArn": "arn:aws:acm:us-east-1:111122223333:certificate/a1b2c3d4-0000-4000-8000-0000000000d1",
+      "Certificate": "",
+      "CertificateSource": "acm",
+      "CloudFrontDefaultCertificate": false,
+      "MinimumProtocolVersion": "TLSv1.2_2021",
+      "SSLSupportMethod": "sni-only"
+    },
+    "WebACLId": "arn:aws:wafv2:us-east-1:111122223333:global/webacl/demo-cf-acl/c0c0c0c0-0000-4000-8000-0000000000c1"
+  },
+  {
+    "ARN": "arn:aws:cloudfront::111122223333:distribution/E2DEMOEXAMPLE02",
+    "Aliases": {
+      "Quantity": 0
+    },
+    "CacheBehaviors": {
+      "Quantity": 0
+    },
+    "CollectionErrors": [
+      {
+        "api": "cloudfront:GetDistributionConfig",
+        "error_code": "AccessDenied",
+        "status": "denied"
+      }
+    ],
+    "Comment": "demo alb front",
+    "CustomErrorResponses": {
+      "Quantity": 0
+    },
+    "DefaultCacheBehavior": {
+      "AllowedMethods": {
+        "CachedMethods": {
+          "Items": [
+            "GET",
+            "HEAD"
+          ],
+          "Quantity": 2
+        },
+        "Items": [
+          "GET",
+          "HEAD"
+        ],
+        "Quantity": 2
+      },
+      "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
+      "Compress": true,
+      "FieldLevelEncryptionId": "",
+      "FunctionAssociations": {
+        "Quantity": 0
+      },
+      "LambdaFunctionAssociations": {
+        "Quantity": 0
+      },
+      "SmoothStreaming": false,
+      "TargetOriginId": "alb-origin",
+      "TrustedKeyGroups": {
+        "Enabled": false,
+        "Quantity": 0
+      },
+      "TrustedSigners": {
+        "Enabled": false,
+        "Quantity": 0
+      },
+      "ViewerProtocolPolicy": "redirect-to-https"
+    },
+    "DefaultRootObject": null,
+    "DomainName": "d222222abcdef8.cloudfront.net",
+    "Enabled": true,
+    "HttpVersion": "http2",
+    "Id": "E2DEMOEXAMPLE02",
+    "IsIPV6Enabled": true,
+    "LastModifiedTime": "2024-01-10T10:00:00Z",
+    "Logging": null,
+    "OriginGroups": {
+      "Quantity": 0
+    },
+    "Origins": {
+      "Items": [
+        {
+          "ConnectionAttempts": 3,
+          "ConnectionTimeout": 10,
+          "CustomHeaders": {
+            "Quantity": 0
+          },
+          "CustomOriginConfig": {
+            "HTTPPort": 80,
+            "HTTPSPort": 443,
+            "OriginKeepaliveTimeout": 5,
+            "OriginProtocolPolicy": "https-only",
+            "OriginReadTimeout": 30,
+            "OriginSslProtocols": {
+              "Items": [
+                "TLSv1.2"
+              ],
+              "Quantity": 1
+            }
+          },
+          "DomainName": "demo-public-alb-1234567890.eu-west-2.elb.amazonaws.com",
+          "Id": "alb-origin",
+          "OriginAccessControlId": "",
+          "OriginPath": ""
+        }
+      ],
+      "Quantity": 1
+    },
+    "PriceClass": "PriceClass_All",
+    "Restrictions": {
+      "GeoRestriction": {
+        "Quantity": 0,
+        "RestrictionType": "none"
+      }
+    },
+    "Staging": false,
+    "Status": "Deployed",
+    "ViewerCertificate": {
+      "CertificateSource": "cloudfront",
+      "CloudFrontDefaultCertificate": true,
+      "MinimumProtocolVersion": "TLSv1"
+    },
+    "WebACLId": ""
+  }
+]

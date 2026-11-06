@@ -1,0 +1,19 @@
+{
+  "RoleName": "c02-poweruser-notaction",
+  "InlinePolicies": {
+    "p": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "NotAction": [
+            "iam:*",
+            "organizations:*",
+            "account:*"
+          ],
+          "Resource": "*"
+        }
+      ]
+    }
+  }
+}

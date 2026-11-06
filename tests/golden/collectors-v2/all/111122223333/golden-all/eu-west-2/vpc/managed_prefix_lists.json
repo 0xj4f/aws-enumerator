@@ -1,0 +1,37 @@
+[
+  {
+    "AddressFamily": "IPv4",
+    "Entries": [
+      {
+        "Cidr": "0.0.0.0/0",
+        "Description": "demo: far too broad (F-076)"
+      },
+      {
+        "Cidr": "198.51.100.0/24",
+        "Description": "demo office"
+      }
+    ],
+    "MaxEntries": 5,
+    "OwnerId": "111122223333",
+    "PrefixListArn": "arn:aws:ec2:eu-west-2:111122223333:prefix-list/pl-0dec00ff1ce000002",
+    "PrefixListId": "pl-0dec00ff1ce000002",
+    "PrefixListName": "demo-office-cidrs",
+    "State": "create-complete",
+    "Tags": [
+      {
+        "Key": "Name",
+        "Value": "demo-office-cidrs"
+      }
+    ],
+    "Version": 2
+  },
+  {
+    "AddressFamily": "IPv4",
+    "Entries": null,
+    "OwnerId": "AWS",
+    "PrefixListArn": "arn:aws:ec2:eu-west-2:aws:prefix-list/pl-7ca54a1e",
+    "PrefixListId": "pl-7ca54a1e",
+    "PrefixListName": "com.amazonaws.eu-west-2.s3",
+    "State": "create-complete"
+  }
+]

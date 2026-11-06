@@ -1,0 +1,21 @@
+{
+  "EntityArn": "arn:aws:iam::111122223333:user/demo-ci",
+  "InlinePolicies": {
+    "demo-ci-passrole": {
+      "Statement": [
+        {
+          "Action": "codebuild:StartBuild",
+          "Effect": "Allow",
+          "Resource": "*"
+        },
+        {
+          "Action": "iam:PassRole",
+          "Effect": "Allow",
+          "Resource": "arn:aws:iam::111122223333:role/demo-build-role"
+        }
+      ],
+      "Version": "2012-10-17"
+    }
+  },
+  "UserName": "demo-ci"
+}

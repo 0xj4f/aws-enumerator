@@ -1,0 +1,27 @@
+[
+  {
+    "CreationTime": "2024-01-02T10:00:00Z",
+    "DeliverLogsPermissionArn": "arn:aws:iam::111122223333:role/demo-flowlogs-role",
+    "DeliverLogsStatus": "SUCCESS",
+    "FlowLogId": "fl-0dec000000000021",
+    "FlowLogStatus": "ACTIVE",
+    "LogDestinationType": "cloud-watch-logs",
+    "LogFormat": "${version} ${account-id} ${interface-id} ${srcaddr} ${dstaddr}",
+    "LogGroupName": "demo-vpc-flow",
+    "MaxAggregationInterval": 600,
+    "ResourceId": "vpc-0dec000000000002",
+    "TrafficType": "ALL"
+  },
+  {
+    "CreationTime": "2024-01-03T10:00:00Z",
+    "DeliverLogsStatus": "SUCCESS",
+    "FlowLogId": "fl-0dec000000000022",
+    "FlowLogStatus": "ACTIVE",
+    "LogDestination": "arn:aws:s3:::demo-logs-bucket/flow/",
+    "LogDestinationType": "s3",
+    "LogFormat": "${version} ${srcaddr}",
+    "MaxAggregationInterval": 60,
+    "ResourceId": "subnet-0dec0b0b0000002",
+    "TrafficType": "REJECT"
+  }
+]

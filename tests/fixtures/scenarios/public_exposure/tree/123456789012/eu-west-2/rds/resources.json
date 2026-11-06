@@ -1,0 +1,22 @@
+[
+  {
+    "Type": "rds",
+    "Kind": "instance",
+    "Arn": "arn:aws:rds:eu-west-2:123456789012:db:demo-public-db",
+    "Name": "demo-public-db",
+    "Public": true,
+    "Encrypted": false,
+    "KmsKeyId": null,
+    "IAMAuth": false,
+    "Engine": "mysql"
+  },
+  {
+    "Type": "rds",
+    "Kind": "snapshot",
+    "Arn": "arn:aws:rds:eu-west-2:123456789012:snapshot:demo-public-snap",
+    "Name": "demo-public-snap",
+    "PublicSnapshot": true,
+    "Encrypted": false,
+    "KmsKeyId": null
+  }
+]

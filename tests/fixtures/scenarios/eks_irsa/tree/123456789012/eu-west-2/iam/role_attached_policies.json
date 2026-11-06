@@ -1,0 +1,21 @@
+{
+  "demo-eks-cluster-role": [
+    {
+      "PolicyName": "AmazonEKSClusterPolicy",
+      "PolicyArn": "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+    }
+  ],
+  "demo-eks-node-role": [
+    {
+      "PolicyName": "AmazonEKSWorkerNodePolicy",
+      "PolicyArn": "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
+    }
+  ],
+  "demo-irsa-admin": [
+    {
+      "PolicyName": "AdministratorAccess",
+      "PolicyArn": "arn:aws:iam::aws:policy/AdministratorAccess"
+    }
+  ],
+  "demo-irsa-reader": []
+}

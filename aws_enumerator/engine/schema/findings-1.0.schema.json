@@ -1,0 +1,828 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:aws-enumerator:schema:findings:1.0",
+  "title": "aws-enumerator findings.json 1.x",
+  "description": "analysis/findings.json wrapper (docs/contracts/finding-identity.md). $defs/diff and $defs/suppressionFile describe diff.json and the --suppress file. $defs/finding is identical to the one in graph-1.0.schema.json (a test enforces it).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "tool_version",
+    "rules_version",
+    "account_id",
+    "partition",
+    "regions",
+    "mode",
+    "run_id",
+    "generated_at",
+    "findings"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^1\\.[0-9]+\\.[0-9]+$"
+    },
+    "tool_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "rules_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "account_id": {
+      "$ref": "#/$defs/accountId"
+    },
+    "partition": {
+      "$ref": "#/$defs/partition"
+    },
+    "regions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/region"
+      },
+      "uniqueItems": true
+    },
+    "mode": {
+      "enum": [
+        "run",
+        "legacy-all",
+        "legacy-single"
+      ]
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9._-]{1,64}$"
+    },
+    "generated_at": {
+      "$ref": "#/$defs/utcTimestamp"
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/finding"
+      }
+    }
+  },
+  "$defs": {
+    "safeKey": {
+      "description": "Any key except the JavaScript prototype names (F-042).",
+      "type": "string",
+      "not": {
+        "enum": [
+          "__proto__",
+          "constructor",
+          "prototype"
+        ]
+      }
+    },
+    "safeValue": {
+      "description": "Any JSON value whose object keys (at any depth) are safe keys.",
+      "anyOf": [
+        {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/safeValue"
+          }
+        },
+        {
+          "$ref": "#/$defs/safeObject"
+        }
+      ]
+    },
+    "safeObject": {
+      "type": "object",
+      "propertyNames": {
+        "$ref": "#/$defs/safeKey"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/safeValue"
+      }
+    },
+    "fieldKey": {
+      "description": "Engine-defined snake_case key (props, evidence). Never derived from report data.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "not": {
+        "enum": [
+          "__proto__",
+          "constructor",
+          "prototype"
+        ]
+      }
+    },
+    "accountId": {
+      "type": "string",
+      "pattern": "^[0-9]{12}$"
+    },
+    "region": {
+      "type": "string",
+      "pattern": "^[a-z]{2}(-[a-z]+)+-[0-9]+$"
+    },
+    "partition": {
+      "type": "string",
+      "pattern": "^aws(-[a-z]+)*$"
+    },
+    "severity": {
+      "enum": [
+        "CRITICAL",
+        "HIGH",
+        "MEDIUM",
+        "LOW",
+        "INFO"
+      ]
+    },
+    "confidence": {
+      "enum": [
+        "definite",
+        "conditional"
+      ]
+    },
+    "nodeId": {
+      "description": "Opaque node id (docs/contracts/node-ids.md). The old principal:* placeholder is gone.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096,
+      "not": {
+        "pattern": "^principal:"
+      }
+    },
+    "edgeId": {
+      "type": "string",
+      "pattern": "^e:[0-9a-f]{20}$"
+    },
+    "fingerprint": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{32}$"
+    },
+    "findingId": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)*$"
+    },
+    "utcTimestamp": {
+      "description": "ISO 8601 UTC timestamp (F-171).",
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]+)?(Z|\\+00:00)$"
+    },
+    "httpsUrl": {
+      "type": "string",
+      "pattern": "^https://[^\\s]+$"
+    },
+    "stringList": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "evidence": {
+      "description": "Evidence of an edge or finding. Well-known keys are typed; other engine keys are free-form.",
+      "type": "object",
+      "propertyNames": {
+        "$ref": "#/$defs/fieldKey"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/safeValue"
+      },
+      "properties": {
+        "decision": {
+          "enum": [
+            "allow",
+            "conditional"
+          ]
+        },
+        "condition_strength": {
+          "enum": [
+            "none",
+            "weak",
+            "strong"
+          ]
+        },
+        "layers": {
+          "$ref": "#/$defs/safeObject"
+        },
+        "actions": {
+          "$ref": "#/$defs/stringList"
+        },
+        "statements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/safeObject"
+          }
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/safeValue"
+          }
+        },
+        "gaps": {
+          "$ref": "#/$defs/stringList"
+        },
+        "rule_ids": {
+          "$ref": "#/$defs/stringList"
+        },
+        "technique": {
+          "type": "string"
+        },
+        "via": {
+          "$ref": "#/$defs/stringList"
+        },
+        "chain": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/edgeId"
+          }
+        },
+        "weight_extra": {
+          "type": "number",
+          "minimum": 0
+        },
+        "demoted_by": {
+          "enum": [
+            "bridge-invariant"
+          ]
+        },
+        "traversable_rule": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "rule",
+            "holds"
+          ],
+          "properties": {
+            "rule": {
+              "type": "string"
+            },
+            "holds": {
+              "type": "boolean"
+            }
+          }
+        },
+        "legacy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "type",
+            "direction"
+          ],
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "direction": {
+              "enum": [
+                "forward",
+                "reversed"
+              ]
+            },
+            "file": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "finding": {
+      "description": "A finding (docs/contracts/finding-identity.md). Domain-specific data goes in evidence.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fingerprint",
+        "id",
+        "legacy_ids",
+        "severity",
+        "base_severity",
+        "confidence",
+        "node_id",
+        "title",
+        "description",
+        "evidence",
+        "remediation",
+        "reference",
+        "status"
+      ],
+      "properties": {
+        "fingerprint": {
+          "$ref": "#/$defs/fingerprint"
+        },
+        "id": {
+          "$ref": "#/$defs/findingId"
+        },
+        "legacy_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/findingId"
+          },
+          "uniqueItems": true
+        },
+        "rule_version": {
+          "type": "string"
+        },
+        "severity": {
+          "$ref": "#/$defs/severity"
+        },
+        "base_severity": {
+          "$ref": "#/$defs/severity"
+        },
+        "confidence": {
+          "$ref": "#/$defs/confidence"
+        },
+        "category": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string"
+        },
+        "node_id": {
+          "$ref": "#/$defs/nodeId"
+        },
+        "related_node_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/nodeId"
+          },
+          "uniqueItems": true
+        },
+        "account": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/accountId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "region": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/region"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "matched_actions": {
+          "$ref": "#/$defs/stringList"
+        },
+        "evidence": {
+          "$ref": "#/$defs/evidence"
+        },
+        "targets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "node_id"
+            ],
+            "properties": {
+              "node_id": {
+                "$ref": "#/$defs/nodeId"
+              },
+              "tier": {
+                "$ref": "#/$defs/severity"
+              },
+              "decision": {
+                "enum": [
+                  "allow",
+                  "conditional"
+                ]
+              }
+            }
+          }
+        },
+        "subsumes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/findingId"
+          },
+          "uniqueItems": true
+        },
+        "via_group": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "affected_members": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/nodeId"
+          },
+          "uniqueItems": true
+        },
+        "gaps": {
+          "$ref": "#/$defs/stringList"
+        },
+        "remediation": {
+          "type": "string"
+        },
+        "reference": {
+          "description": "Version-pinned documentation link; consumers still pass it through safeHref.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/httpsUrl"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "detection_hint": {
+          "$ref": "#/$defs/safeObject"
+        },
+        "validate_hint": {
+          "$ref": "#/$defs/safeObject"
+        },
+        "status": {
+          "enum": [
+            "open",
+            "suppressed"
+          ]
+        },
+        "suppression": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "reason",
+            "expires",
+            "match"
+          ],
+          "properties": {
+            "reason": {
+              "type": "string",
+              "minLength": 1
+            },
+            "expires": {
+              "type": "string",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+            },
+            "owner": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "match": {
+              "enum": [
+                "fingerprint",
+                "rule"
+              ]
+            }
+          }
+        },
+        "baseline_state": {
+          "enum": [
+            "new",
+            "unchanged",
+            "severity_changed"
+          ]
+        },
+        "entity": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "entity_arn": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "source_policy": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "source_type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "resource": {
+          "anyOf": [
+            {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            {
+              "$ref": "#/$defs/stringList"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "suppressed"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "required": [
+              "suppression"
+            ]
+          }
+        }
+      ]
+    },
+    "diffEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fingerprint",
+        "id",
+        "node_id",
+        "severity"
+      ],
+      "properties": {
+        "fingerprint": {
+          "$ref": "#/$defs/fingerprint"
+        },
+        "id": {
+          "$ref": "#/$defs/findingId"
+        },
+        "node_id": {
+          "$ref": "#/$defs/nodeId"
+        },
+        "severity": {
+          "$ref": "#/$defs/severity"
+        }
+      }
+    },
+    "diff": {
+      "description": "analysis/diff.json, written with --baseline.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "baseline",
+        "counts",
+        "new",
+        "resolved",
+        "unchanged",
+        "severity_changed",
+        "unknown"
+      ],
+      "properties": {
+        "schema_version": {
+          "type": "string",
+          "pattern": "^1\\.[0-9]+\\.[0-9]+$"
+        },
+        "baseline": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "ref",
+            "schema_version"
+          ],
+          "properties": {
+            "ref": {
+              "type": "string"
+            },
+            "schema_version": {
+              "type": "string"
+            },
+            "run_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "generated_at": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/utcTimestamp"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        },
+        "counts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "new",
+            "resolved",
+            "unchanged",
+            "severity_changed",
+            "unknown"
+          ],
+          "properties": {
+            "new": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "resolved": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "unchanged": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "severity_changed": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "unknown": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "new": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/diffEntry"
+          }
+        },
+        "resolved": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/diffEntry"
+          }
+        },
+        "unchanged": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/diffEntry"
+          }
+        },
+        "severity_changed": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "fingerprint",
+              "id",
+              "node_id",
+              "from",
+              "to"
+            ],
+            "properties": {
+              "fingerprint": {
+                "$ref": "#/$defs/fingerprint"
+              },
+              "id": {
+                "$ref": "#/$defs/findingId"
+              },
+              "node_id": {
+                "$ref": "#/$defs/nodeId"
+              },
+              "from": {
+                "$ref": "#/$defs/severity"
+              },
+              "to": {
+                "$ref": "#/$defs/severity"
+              }
+            }
+          }
+        },
+        "unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "fingerprint",
+              "id",
+              "node_id",
+              "severity",
+              "reason"
+            ],
+            "properties": {
+              "fingerprint": {
+                "$ref": "#/$defs/fingerprint"
+              },
+              "id": {
+                "$ref": "#/$defs/findingId"
+              },
+              "node_id": {
+                "$ref": "#/$defs/nodeId"
+              },
+              "severity": {
+                "$ref": "#/$defs/severity"
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "suppressionFile": {
+      "description": "The --suppress file.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "version",
+        "suppressions"
+      ],
+      "properties": {
+        "version": {
+          "const": 1
+        },
+        "suppressions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "reason",
+              "expires"
+            ],
+            "properties": {
+              "fingerprint": {
+                "$ref": "#/$defs/fingerprint"
+              },
+              "rule_id": {
+                "$ref": "#/$defs/findingId"
+              },
+              "node_id_glob": {
+                "type": "string",
+                "minLength": 1
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 1
+              },
+              "expires": {
+                "type": "string",
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+              },
+              "owner": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "oneOf": [
+              {
+                "required": [
+                  "fingerprint"
+                ],
+                "not": {
+                  "anyOf": [
+                    {
+                      "required": [
+                        "rule_id"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "node_id_glob"
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "required": [
+                  "rule_id",
+                  "node_id_glob"
+                ],
+                "not": {
+                  "required": [
+                    "fingerprint"
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

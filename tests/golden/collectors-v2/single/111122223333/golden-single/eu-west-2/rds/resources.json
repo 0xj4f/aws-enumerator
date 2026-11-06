@@ -1,0 +1,106 @@
+[
+  {
+    "Arn": "arn:aws:rds:eu-west-2:111122223333:cluster-snapshot:demo-aurora-snap-public",
+    "DBClusterIdentifier": "demo-aurora",
+    "Encrypted": false,
+    "Kind": "cluster_snapshot",
+    "KmsKeyId": null,
+    "Name": "demo-aurora-snap-public",
+    "PublicSnapshot": true,
+    "SharedAccounts": [],
+    "Type": "rds"
+  },
+  {
+    "Arn": "arn:aws:rds:eu-west-2:111122223333:cluster-snapshot:demo-aurora-snap-shared",
+    "DBClusterIdentifier": "demo-aurora",
+    "Encrypted": true,
+    "Kind": "cluster_snapshot",
+    "KmsKeyId": "arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a1",
+    "Name": "demo-aurora-snap-shared",
+    "PublicSnapshot": false,
+    "SharedAccounts": [
+      "999999999999"
+    ],
+    "Type": "rds"
+  },
+  {
+    "Arn": "arn:aws:rds:eu-west-2:111122223333:cluster:demo-aurora",
+    "Encrypted": true,
+    "Engine": "aurora-postgresql",
+    "IAMAuth": true,
+    "Kind": "cluster",
+    "KmsKeyId": "arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a1",
+    "Members": [
+      "demo-db-private"
+    ],
+    "Name": "demo-aurora",
+    "Public": false,
+    "Type": "rds"
+  },
+  {
+    "Arn": "arn:aws:rds:eu-west-2:111122223333:db:demo-db",
+    "DBClusterIdentifier": null,
+    "Encrypted": false,
+    "Engine": "postgres",
+    "IAMAuth": false,
+    "Kind": "instance",
+    "KmsKeyId": null,
+    "Name": "demo-db",
+    "Public": true,
+    "Type": "rds"
+  },
+  {
+    "Arn": "arn:aws:rds:eu-west-2:111122223333:db:demo-db-private",
+    "DBClusterIdentifier": null,
+    "Encrypted": true,
+    "Engine": "aurora-postgresql",
+    "IAMAuth": true,
+    "Kind": "instance",
+    "KmsKeyId": "arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a1",
+    "Name": "demo-db-private",
+    "Public": false,
+    "Type": "rds"
+  },
+  {
+    "Arn": "arn:aws:rds:eu-west-2:111122223333:snapshot:demo-db-snap-denied",
+    "CollectionErrors": [
+      {
+        "api": "rds:DescribeDBSnapshotAttributes",
+        "error_code": "AccessDenied",
+        "status": "denied"
+      }
+    ],
+    "DBInstanceIdentifier": "demo-db",
+    "Encrypted": false,
+    "Kind": "snapshot",
+    "KmsKeyId": null,
+    "Name": "demo-db-snap-denied",
+    "PublicSnapshot": null,
+    "SharedAccounts": null,
+    "Type": "rds"
+  },
+  {
+    "Arn": "arn:aws:rds:eu-west-2:111122223333:snapshot:demo-db-snap-public",
+    "DBInstanceIdentifier": "demo-db",
+    "Encrypted": false,
+    "Kind": "snapshot",
+    "KmsKeyId": null,
+    "Name": "demo-db-snap-public",
+    "PublicSnapshot": true,
+    "SharedAccounts": [],
+    "Type": "rds"
+  },
+  {
+    "Arn": "arn:aws:rds:eu-west-2:111122223333:snapshot:demo-db-snap-shared",
+    "DBInstanceIdentifier": "demo-db-private",
+    "Encrypted": true,
+    "Kind": "snapshot",
+    "KmsKeyId": "arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a1",
+    "Name": "demo-db-snap-shared",
+    "PublicSnapshot": false,
+    "SharedAccounts": [
+      "999999999999"
+    ],
+    "Type": "rds"
+  }
+]

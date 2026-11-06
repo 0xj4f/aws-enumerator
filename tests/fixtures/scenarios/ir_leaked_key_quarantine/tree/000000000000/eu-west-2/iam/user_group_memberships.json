@@ -1,0 +1,20 @@
+{
+  "leaked-user": [
+    {
+      "Path": "/",
+      "GroupName": "devs",
+      "GroupId": "AGPAIKIBNPBMKGILEALKI",
+      "Arn": "arn:aws:iam::000000000000:group/devs",
+      "CreateDate": "2026-01-01 00:00:00+00:00"
+    }
+  ],
+  "admin-user": [
+    {
+      "Path": "/",
+      "GroupName": "devs",
+      "GroupId": "AGPAIKIBNPBMKGILEALKI",
+      "Arn": "arn:aws:iam::000000000000:group/devs",
+      "CreateDate": "2026-01-01 00:00:00+00:00"
+    }
+  ]
+}

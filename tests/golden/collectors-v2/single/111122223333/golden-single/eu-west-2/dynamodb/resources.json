@@ -1,0 +1,39 @@
+[
+  {
+    "Arn": "arn:aws:dynamodb:eu-west-2:111122223333:table/demo-denied-table",
+    "Name": "demo-denied-table",
+    "Policy": null,
+    "PolicyStatus": "absent",
+    "Type": "dynamodb"
+  },
+  {
+    "Arn": "arn:aws:dynamodb:eu-west-2:111122223333:table/demo-orders",
+    "Name": "demo-orders",
+    "Policy": {
+      "Statement": [
+        {
+          "Action": [
+            "dynamodb:GetItem",
+            "dynamodb:Query"
+          ],
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::999999999999:root"
+          },
+          "Resource": "arn:aws:dynamodb:eu-west-2:111122223333:table/demo-orders",
+          "Sid": "XAccountRead"
+        }
+      ],
+      "Version": "2012-10-17"
+    },
+    "PolicyStatus": "present",
+    "Type": "dynamodb"
+  },
+  {
+    "Arn": "arn:aws:dynamodb:eu-west-2:111122223333:table/demo-sessions",
+    "Name": "demo-sessions",
+    "Policy": null,
+    "PolicyStatus": "absent",
+    "Type": "dynamodb"
+  }
+]

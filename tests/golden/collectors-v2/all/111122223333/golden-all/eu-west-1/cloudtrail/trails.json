@@ -1,0 +1,25 @@
+[
+  {
+    "AdvancedEventSelectors": null,
+    "CloudWatchLogsLogGroupArn": null,
+    "CloudWatchLogsRoleArn": null,
+    "EventSelectors": null,
+    "HasCustomEventSelectors": false,
+    "HasInsightSelectors": true,
+    "HomeRegion": "eu-west-2",
+    "IncludeGlobalServiceEvents": true,
+    "InsightSelectors": null,
+    "IsMultiRegionTrail": true,
+    "IsOrganizationTrail": false,
+    "IsShadow": true,
+    "KmsKeyId": "arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a1",
+    "LogFileValidationEnabled": true,
+    "Name": "demo-org-trail",
+    "OwnerAccountId": "111122223333",
+    "S3BucketName": "demo-logs-bucket",
+    "S3KeyPrefix": null,
+    "SnsTopicARN": null,
+    "Status": null,
+    "TrailARN": "arn:aws:cloudtrail:eu-west-2:111122223333:trail/demo-org-trail"
+  }
+]

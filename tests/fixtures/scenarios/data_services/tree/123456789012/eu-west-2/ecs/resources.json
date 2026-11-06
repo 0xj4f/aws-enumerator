@@ -1,0 +1,11 @@
+[
+  {
+    "Type": "ecstask",
+    "Arn": "arn:aws:ecs:eu-west-2:123456789012:task-definition/demo-task:3",
+    "Name": "demo-task",
+    "Roles": [
+      "arn:aws:iam::123456789012:role/demo-app-role",
+      "arn:aws:iam::123456789012:role/demo-ecs-exec"
+    ]
+  }
+]

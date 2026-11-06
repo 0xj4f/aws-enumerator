@@ -1,0 +1,50 @@
+[
+  {
+    "Arn": "arn:aws:ec2:eu-west-2::snapshot/snap-0dec054aaed000022",
+    "Encrypted": true,
+    "Id": "snap-0dec054aaed000022",
+    "KmsKeyId": "arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a1",
+    "Name": "snap-0dec054aaed000022",
+    "Public": false,
+    "SharedAccounts": [
+      "999999999999"
+    ],
+    "SharingChecked": true,
+    "StartTime": "2024-01-06T10:00:00Z",
+    "Type": "ebssnapshot",
+    "VolumeId": "vol-0dec000000000022"
+  },
+  {
+    "Arn": "arn:aws:ec2:eu-west-2::snapshot/snap-0dec0b0b11c000021",
+    "Encrypted": false,
+    "Id": "snap-0dec0b0b11c000021",
+    "KmsKeyId": null,
+    "Name": "snap-0dec0b0b11c000021",
+    "Public": true,
+    "SharedAccounts": [],
+    "SharingChecked": true,
+    "StartTime": "2024-01-05T10:00:00Z",
+    "Type": "ebssnapshot",
+    "VolumeId": "vol-0dec000000000021"
+  },
+  {
+    "Arn": "arn:aws:ec2:eu-west-2::snapshot/snap-0dec0ba1ba7e00023",
+    "CollectionErrors": [
+      {
+        "api": "ec2:DescribeSnapshotAttribute",
+        "error_code": "UnauthorizedOperation",
+        "status": "denied"
+      }
+    ],
+    "Encrypted": true,
+    "Id": "snap-0dec0ba1ba7e00023",
+    "KmsKeyId": "arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a1",
+    "Name": "snap-0dec0ba1ba7e00023",
+    "Public": false,
+    "SharedAccounts": null,
+    "SharingChecked": false,
+    "StartTime": "2024-01-07T10:00:00Z",
+    "Type": "ebssnapshot",
+    "VolumeId": "vol-0dec000000000023"
+  }
+]

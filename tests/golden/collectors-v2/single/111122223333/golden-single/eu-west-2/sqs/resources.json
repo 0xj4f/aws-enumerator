@@ -1,0 +1,57 @@
+[
+  {
+    "Arn": "arn:aws:sqs:eu-west-2:111122223333:demo-denied-queue",
+    "CollectionErrors": [
+      {
+        "api": "sqs:GetQueueAttributes",
+        "error_code": "AccessDenied",
+        "status": "denied"
+      }
+    ],
+    "KmsMasterKeyId": null,
+    "Name": "demo-denied-queue",
+    "Policy": null,
+    "PolicyStatus": "denied",
+    "SqsManagedSseEnabled": null,
+    "Type": "sqs",
+    "Url": "https://sqs.eu-west-2.amazonaws.com/111122223333/demo-denied-queue"
+  },
+  {
+    "Arn": "arn:aws:sqs:eu-west-2:111122223333:demo-dlq",
+    "KmsMasterKeyId": null,
+    "Name": "demo-dlq",
+    "Policy": null,
+    "PolicyStatus": "absent",
+    "SqsManagedSseEnabled": null,
+    "Type": "sqs",
+    "Url": "https://sqs.eu-west-2.amazonaws.com/111122223333/demo-dlq"
+  },
+  {
+    "Arn": "arn:aws:sqs:eu-west-2:111122223333:demo-queue",
+    "KmsMasterKeyId": null,
+    "Name": "demo-queue",
+    "Policy": {
+      "Statement": [
+        {
+          "Action": "sqs:SendMessage",
+          "Condition": {
+            "ArnEquals": {
+              "aws:SourceArn": "arn:aws:sns:eu-west-2:111122223333:demo-alerts"
+            }
+          },
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "sns.amazonaws.com"
+          },
+          "Resource": "arn:aws:sqs:eu-west-2:111122223333:demo-queue",
+          "Sid": "FromSns"
+        }
+      ],
+      "Version": "2012-10-17"
+    },
+    "PolicyStatus": "present",
+    "SqsManagedSseEnabled": null,
+    "Type": "sqs",
+    "Url": "https://sqs.eu-west-2.amazonaws.com/111122223333/demo-queue"
+  }
+]

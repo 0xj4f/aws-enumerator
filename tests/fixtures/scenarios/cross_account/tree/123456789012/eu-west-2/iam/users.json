@@ -1,0 +1,15 @@
+[
+  {
+    "UserName": "deploy",
+    "UserId": "AIDABIEOMFJPAGKMFLGKC",
+    "Arn": "arn:aws:iam::123456789012:user/deploy",
+    "CreateDate": "2026-01-01 00:00:00+00:00",
+    "PasswordLastUsed": "",
+    "Path": "/",
+    "Tags": [],
+    "AccessKeys": [],
+    "MFADevices": [],
+    "HasLoginProfile": false,
+    "PermissionsBoundary": null
+  }
+]

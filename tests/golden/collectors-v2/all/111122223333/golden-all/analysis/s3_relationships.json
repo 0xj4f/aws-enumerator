@@ -1,0 +1,805 @@
+{
+  "edges": [
+    {
+      "access_types": [
+        "CAN_ADMIN",
+        "CAN_READ",
+        "CAN_WRITE",
+        "FULL_ACCESS"
+      ],
+      "category": "s3_access",
+      "edge_id": "e:29c8f7de02d922c59e82",
+      "matched_actions": [
+        "s3:*"
+      ],
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "bucket:demo-data-bucket",
+      "type": "FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "access_types": [
+        "CAN_ADMIN",
+        "CAN_READ",
+        "CAN_WRITE",
+        "FULL_ACCESS"
+      ],
+      "category": "s3_access",
+      "edge_id": "e:c631d99903ae95127b64",
+      "matched_actions": [
+        "s3:*"
+      ],
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "bucket:demo-denied-bucket",
+      "type": "FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "access_types": [
+        "CAN_ADMIN",
+        "CAN_READ",
+        "CAN_WRITE",
+        "FULL_ACCESS"
+      ],
+      "category": "s3_access",
+      "edge_id": "e:e206c8e445bbdcc12651",
+      "matched_actions": [
+        "s3:*"
+      ],
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "bucket:demo-legacy-eu-bucket",
+      "type": "FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "access_types": [
+        "CAN_ADMIN",
+        "CAN_READ",
+        "CAN_WRITE",
+        "FULL_ACCESS"
+      ],
+      "category": "s3_access",
+      "edge_id": "e:164b9de188845eeffecf",
+      "matched_actions": [
+        "s3:*"
+      ],
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "bucket:demo-logs-bucket",
+      "type": "FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "access_types": [
+        "CAN_ADMIN",
+        "CAN_READ",
+        "CAN_WRITE",
+        "FULL_ACCESS"
+      ],
+      "category": "s3_access",
+      "edge_id": "e:3463a901691c77aac523",
+      "matched_actions": [
+        "s3:*"
+      ],
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "bucket:demo-public-site",
+      "type": "FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "access_types": [
+        "CAN_READ"
+      ],
+      "category": "s3_access",
+      "edge_id": "e:b19eb9bf8c156bf2dbfe",
+      "matched_actions": [
+        "s3:GetObject"
+      ],
+      "source": "arn:aws:iam::111122223333:group/demo-developers",
+      "source_policy": "demo-dev-policy",
+      "source_policy_arn": "arn:aws:iam::111122223333:policy/demo-dev-policy",
+      "source_type": "managed",
+      "target": "bucket:demo-data-bucket",
+      "type": "CAN_READ",
+      "weight": 1
+    },
+    {
+      "access_types": [
+        "CAN_READ"
+      ],
+      "category": "s3_access",
+      "edge_id": "e:5835f058e065fbc28b5b",
+      "matched_actions": [
+        "s3:GetObject"
+      ],
+      "source": "arn:aws:iam::111122223333:group/demo-developers",
+      "source_policy": "BucketPolicy",
+      "source_policy_arn": "arn:aws:s3:::demo-public-site",
+      "source_type": "resource",
+      "target": "bucket:demo-public-site",
+      "type": "CAN_READ",
+      "weight": 1
+    },
+    {
+      "access_types": [
+        "CAN_ADMIN",
+        "CAN_READ",
+        "CAN_WRITE",
+        "FULL_ACCESS"
+      ],
+      "category": "s3_access",
+      "edge_id": "e:9498268d3a6254d26303",
+      "matched_actions": [
+        "s3:*"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "bucket:demo-data-bucket",
+      "type": "FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "access_types": [
+        "CAN_ADMIN",
+        "CAN_READ",
+        "CAN_WRITE",
+        "FULL_ACCESS"
+      ],
+      "category": "s3_access",
+      "edge_id": "e:4c43befad51c8d69f136",
+      "matched_actions": [
+        "s3:*"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "bucket:demo-denied-bucket",
+      "type": "FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "access_types": [
+        "CAN_ADMIN",
+        "CAN_READ",
+        "CAN_WRITE",
+        "FULL_ACCESS"
+      ],
+      "category": "s3_access",
+      "edge_id": "e:24c14e22c45dadfd197d",
+      "matched_actions": [
+        "s3:*"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "bucket:demo-legacy-eu-bucket",
+      "type": "FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "access_types": [
+        "CAN_ADMIN",
+        "CAN_READ",
+        "CAN_WRITE",
+        "FULL_ACCESS"
+      ],
+      "category": "s3_access",
+      "edge_id": "e:f7bb953a3385c3ce0289",
+      "matched_actions": [
+        "s3:*"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "bucket:demo-logs-bucket",
+      "type": "FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "access_types": [
+        "CAN_ADMIN",
+        "CAN_READ",
+        "CAN_WRITE",
+        "FULL_ACCESS"
+      ],
+      "category": "s3_access",
+      "edge_id": "e:95245ce832ba6bc2f783",
+      "matched_actions": [
+        "s3:*"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "bucket:demo-public-site",
+      "type": "FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "access_types": [
+        "CAN_READ",
+        "CAN_WRITE"
+      ],
+      "category": "s3_access",
+      "edge_id": "e:a0782d9a299de8851877",
+      "matched_actions": [
+        "s3:GetObject"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-app-role",
+      "source_policies": [
+        "BucketPolicy",
+        "demo-app-policy"
+      ],
+      "source_policy": "demo-app-policy",
+      "source_policy_arn": "arn:aws:iam::111122223333:policy/demo-app-policy",
+      "source_type": "managed",
+      "target": "bucket:demo-data-bucket",
+      "type": "CAN_READ",
+      "weight": 1
+    },
+    {
+      "access_types": [
+        "CAN_READ",
+        "CAN_WRITE"
+      ],
+      "category": "s3_access",
+      "edge_id": "e:fc907fb84f57e6cc5dce",
+      "matched_actions": [
+        "s3:PutObject"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-app-role",
+      "source_policy": "demo-app-policy",
+      "source_policy_arn": "arn:aws:iam::111122223333:policy/demo-app-policy",
+      "source_type": "managed",
+      "target": "bucket:demo-data-bucket",
+      "type": "CAN_WRITE",
+      "weight": 1
+    },
+    {
+      "access_types": [
+        "CAN_READ"
+      ],
+      "category": "s3_access",
+      "edge_id": "e:bb096a739fd9f5f19d26",
+      "matched_actions": [
+        "s3:GetObject"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-app-role",
+      "source_policy": "BucketPolicy",
+      "source_policy_arn": "arn:aws:s3:::demo-public-site",
+      "source_type": "resource",
+      "target": "bucket:demo-public-site",
+      "type": "CAN_READ",
+      "weight": 1
+    },
+    {
+      "access_types": [
+        "CAN_ADMIN",
+        "CAN_READ",
+        "CAN_WRITE",
+        "FULL_ACCESS"
+      ],
+      "category": "s3_access",
+      "edge_id": "e:2e27aad015f1fa2a2515",
+      "matched_actions": [
+        "s3:*"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "bucket:demo-data-bucket",
+      "type": "FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "access_types": [
+        "CAN_ADMIN",
+        "CAN_READ",
+        "CAN_WRITE",
+        "FULL_ACCESS"
+      ],
+      "category": "s3_access",
+      "edge_id": "e:64d382bbbf36643451c6",
+      "matched_actions": [
+        "s3:*"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "bucket:demo-denied-bucket",
+      "type": "FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "access_types": [
+        "CAN_ADMIN",
+        "CAN_READ",
+        "CAN_WRITE",
+        "FULL_ACCESS"
+      ],
+      "category": "s3_access",
+      "edge_id": "e:a5b8c45e1d8e546ddbf9",
+      "matched_actions": [
+        "s3:*"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "bucket:demo-legacy-eu-bucket",
+      "type": "FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "access_types": [
+        "CAN_ADMIN",
+        "CAN_READ",
+        "CAN_WRITE",
+        "FULL_ACCESS"
+      ],
+      "category": "s3_access",
+      "edge_id": "e:b4728e6816cfd6071fe0",
+      "matched_actions": [
+        "s3:*"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "bucket:demo-logs-bucket",
+      "type": "FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "access_types": [
+        "CAN_ADMIN",
+        "CAN_READ",
+        "CAN_WRITE",
+        "FULL_ACCESS"
+      ],
+      "category": "s3_access",
+      "edge_id": "e:76d1cbd0b59a3499f64e",
+      "matched_actions": [
+        "s3:*"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "bucket:demo-public-site",
+      "type": "FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "access_types": [
+        "CAN_ADMIN",
+        "CAN_READ",
+        "CAN_WRITE",
+        "FULL_ACCESS"
+      ],
+      "category": "s3_access",
+      "edge_id": "e:6f1e1473bb4a00b9de97",
+      "matched_actions": [
+        "s3:*"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "bucket:demo-data-bucket",
+      "type": "FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "access_types": [
+        "CAN_ADMIN",
+        "CAN_READ",
+        "CAN_WRITE",
+        "FULL_ACCESS"
+      ],
+      "category": "s3_access",
+      "edge_id": "e:3934229114a4059e86fc",
+      "matched_actions": [
+        "s3:*"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "bucket:demo-denied-bucket",
+      "type": "FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "access_types": [
+        "CAN_ADMIN",
+        "CAN_READ",
+        "CAN_WRITE",
+        "FULL_ACCESS"
+      ],
+      "category": "s3_access",
+      "edge_id": "e:ec4dcdc047dc63c93de3",
+      "matched_actions": [
+        "s3:*"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "bucket:demo-legacy-eu-bucket",
+      "type": "FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "access_types": [
+        "CAN_ADMIN",
+        "CAN_READ",
+        "CAN_WRITE",
+        "FULL_ACCESS"
+      ],
+      "category": "s3_access",
+      "edge_id": "e:82dd58dbe88997650723",
+      "matched_actions": [
+        "s3:*"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "bucket:demo-logs-bucket",
+      "type": "FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "access_types": [
+        "CAN_ADMIN",
+        "CAN_READ",
+        "CAN_WRITE",
+        "FULL_ACCESS"
+      ],
+      "category": "s3_access",
+      "edge_id": "e:524c829016243801955c",
+      "matched_actions": [
+        "s3:*"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "source_policy": "AdministratorAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "source_type": "aws_managed",
+      "target": "bucket:demo-public-site",
+      "type": "FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "access_types": [
+        "CAN_READ"
+      ],
+      "category": "s3_access",
+      "edge_id": "e:4b5e52f442e0a86119cf",
+      "matched_actions": [
+        "s3:GetObject"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cognito-unauth-role",
+      "source_policies": [
+        "BucketPolicy",
+        "demo-cognito-s3"
+      ],
+      "source_policy": "demo-cognito-s3",
+      "source_type": "inline",
+      "target": "bucket:demo-public-site",
+      "type": "CAN_READ",
+      "weight": 1
+    },
+    {
+      "access_types": [
+        "CAN_READ"
+      ],
+      "category": "s3_access",
+      "edge_id": "e:3ea4334517b5f37608fc",
+      "matched_actions": [
+        "s3:GetObject",
+        "s3:GetObjectVersion",
+        "s3:ListBucket",
+        "s3:ListBucketVersions"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cross-account-role",
+      "source_policy": "ReadOnlyAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/ReadOnlyAccess",
+      "source_type": "aws_managed",
+      "target": "bucket:demo-data-bucket",
+      "type": "CAN_READ",
+      "weight": 1
+    },
+    {
+      "access_types": [
+        "CAN_READ"
+      ],
+      "category": "s3_access",
+      "edge_id": "e:5604695f583ea6750800",
+      "matched_actions": [
+        "s3:GetObject",
+        "s3:GetObjectVersion",
+        "s3:ListBucket",
+        "s3:ListBucketVersions"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cross-account-role",
+      "source_policy": "ReadOnlyAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/ReadOnlyAccess",
+      "source_type": "aws_managed",
+      "target": "bucket:demo-denied-bucket",
+      "type": "CAN_READ",
+      "weight": 1
+    },
+    {
+      "access_types": [
+        "CAN_READ"
+      ],
+      "category": "s3_access",
+      "edge_id": "e:71e4204aab580c229247",
+      "matched_actions": [
+        "s3:GetObject",
+        "s3:GetObjectVersion",
+        "s3:ListBucket",
+        "s3:ListBucketVersions"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cross-account-role",
+      "source_policy": "ReadOnlyAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/ReadOnlyAccess",
+      "source_type": "aws_managed",
+      "target": "bucket:demo-legacy-eu-bucket",
+      "type": "CAN_READ",
+      "weight": 1
+    },
+    {
+      "access_types": [
+        "CAN_READ"
+      ],
+      "category": "s3_access",
+      "edge_id": "e:61a6672d3f3507b3861b",
+      "matched_actions": [
+        "s3:GetObject",
+        "s3:GetObjectVersion",
+        "s3:ListBucket",
+        "s3:ListBucketVersions"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cross-account-role",
+      "source_policy": "ReadOnlyAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/ReadOnlyAccess",
+      "source_type": "aws_managed",
+      "target": "bucket:demo-logs-bucket",
+      "type": "CAN_READ",
+      "weight": 1
+    },
+    {
+      "access_types": [
+        "CAN_READ"
+      ],
+      "category": "s3_access",
+      "edge_id": "e:48696ff615729fbf1579",
+      "matched_actions": [
+        "s3:GetObject",
+        "s3:GetObjectVersion",
+        "s3:ListBucket",
+        "s3:ListBucketVersions"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cross-account-role",
+      "source_policies": [
+        "BucketPolicy",
+        "ReadOnlyAccess"
+      ],
+      "source_policy": "ReadOnlyAccess",
+      "source_policy_arn": "arn:aws:iam::aws:policy/ReadOnlyAccess",
+      "source_type": "aws_managed",
+      "target": "bucket:demo-public-site",
+      "type": "CAN_READ",
+      "weight": 1
+    },
+    {
+      "access_types": [
+        "CAN_ADMIN",
+        "CAN_READ",
+        "CAN_WRITE",
+        "FULL_ACCESS"
+      ],
+      "category": "s3_access",
+      "edge_id": "e:86670bd13d31a399c0e8",
+      "matched_actions": [
+        "s3:*"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-glue-role",
+      "source_policy": "demo-glue-s3",
+      "source_type": "inline",
+      "target": "bucket:demo-data-bucket",
+      "type": "FULL_ACCESS",
+      "weight": 0
+    },
+    {
+      "access_types": [
+        "CAN_READ"
+      ],
+      "category": "s3_access",
+      "edge_id": "e:b86ecd0b7f82054de4ad",
+      "matched_actions": [
+        "s3:GetObject"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-glue-role",
+      "source_policy": "BucketPolicy",
+      "source_policy_arn": "arn:aws:s3:::demo-public-site",
+      "source_type": "resource",
+      "target": "bucket:demo-public-site",
+      "type": "CAN_READ",
+      "weight": 1
+    },
+    {
+      "access_types": [
+        "CAN_READ"
+      ],
+      "category": "s3_access",
+      "edge_id": "e:efffa0e4228800a016f2",
+      "matched_actions": [
+        "s3:GetObject",
+        "s3:ListBucket"
+      ],
+      "source": "arn:aws:iam::111122223333:user/demo-alice",
+      "source_policies": [
+        "demo-alice-s3-inline",
+        "demo-dev-policy"
+      ],
+      "source_policy": "demo-dev-policy",
+      "source_policy_arn": "arn:aws:iam::111122223333:policy/demo-dev-policy",
+      "source_type": "managed",
+      "target": "bucket:demo-data-bucket",
+      "type": "CAN_READ",
+      "weight": 1
+    },
+    {
+      "access_types": [
+        "CAN_READ"
+      ],
+      "category": "s3_access",
+      "edge_id": "e:29ecb063f780f0d20024",
+      "matched_actions": [
+        "s3:GetObject"
+      ],
+      "source": "arn:aws:iam::111122223333:user/demo-alice",
+      "source_policy": "BucketPolicy",
+      "source_policy_arn": "arn:aws:s3:::demo-public-site",
+      "source_type": "resource",
+      "target": "bucket:demo-public-site",
+      "type": "CAN_READ",
+      "weight": 1
+    },
+    {
+      "category": "kms",
+      "edge_id": "e:7b4a4da8d83fc0445542",
+      "source": "bucket:demo-data-bucket",
+      "target": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a1",
+      "type": "ENCRYPTED_BY",
+      "weight": 3
+    },
+    {
+      "category": "notification",
+      "edge_id": "e:2f3e01be4fecf968aa26",
+      "source": "bucket:demo-data-bucket",
+      "target": "lambda:arn:aws:lambda:eu-west-2:111122223333:function:demo-processor",
+      "type": "NOTIFIES",
+      "weight": 5
+    },
+    {
+      "category": "notification",
+      "edge_id": "e:b3b49082e62f18e84439",
+      "source": "bucket:demo-data-bucket",
+      "target": "sqs:arn:aws:sqs:eu-west-2:111122223333:demo-queue",
+      "type": "NOTIFIES",
+      "weight": 5
+    },
+    {
+      "category": "s3_grant",
+      "edge_id": "e:3b43d52dce35dc059cfc",
+      "has_conditions": true,
+      "source": "bucket:demo-legacy-eu-bucket",
+      "target": "principal:*",
+      "type": "GRANTS_PUBLIC",
+      "weight": 1
+    },
+    {
+      "access_types": [
+        "CAN_READ"
+      ],
+      "category": "s3_grant",
+      "edge_id": "e:b0e9f093a6ae1a8ff3b6",
+      "matched_actions": [
+        "acl:READ",
+        "s3:getobject"
+      ],
+      "source": "bucket:demo-public-site",
+      "source_policy": "BucketPolicy",
+      "source_policy_arn": "arn:aws:s3:::demo-public-site",
+      "source_type": "resource",
+      "target": "principal:*",
+      "type": "GRANTS_PUBLIC",
+      "weight": 0
+    }
+  ],
+  "findings": [
+    {
+      "category": "s3_public_access",
+      "description": "S3 bucket 'demo-legacy-eu-bucket' gives anyone on the internet access (actions unknown: the policy could not be read); not verified: s3:GetBucketPolicy:denied.",
+      "entity": "bucket/demo-legacy-eu-bucket",
+      "entity_arn": "arn:aws:s3:::demo-legacy-eu-bucket",
+      "fingerprint": "435c395e8fb37b0fb1630cc50e6c91f0",
+      "id": "S3-PUBLIC-001",
+      "matched_actions": [],
+      "node_id": "arn:aws:s3:::demo-legacy-eu-bucket",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-5--you-have-access-to-an-s3-bucket",
+      "remediation": "Remove the wildcard Principal or scope it with a principal-restricting condition (aws:PrincipalOrgID, aws:SourceVpce, aws:SourceArn); keep Block Public Access (RestrictPublicBuckets) on at account level.",
+      "resource": [
+        "arn:aws:s3:::demo-legacy-eu-bucket"
+      ],
+      "severity": "HIGH",
+      "source_type": "s3_aws_policy_status",
+      "title": "Bucket 'demo-legacy-eu-bucket' is public according to AWS (policy not readable)"
+    },
+    {
+      "category": "s3_public_access",
+      "description": "S3 bucket 'demo-public-site' gives anyone on the internet CAN_READ (actions: s3:getobject).",
+      "entity": "bucket/demo-public-site",
+      "entity_arn": "arn:aws:s3:::demo-public-site",
+      "fingerprint": "5036ad88f0a7263843b55f72f5d15925",
+      "id": "S3-PUBLIC-001",
+      "matched_actions": [
+        "s3:getobject"
+      ],
+      "node_id": "arn:aws:s3:::demo-public-site",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-5--you-have-access-to-an-s3-bucket",
+      "remediation": "Remove the wildcard Principal or scope it with a principal-restricting condition (aws:PrincipalOrgID, aws:SourceVpce, aws:SourceArn); keep Block Public Access (RestrictPublicBuckets) on at account level.",
+      "resource": [
+        "arn:aws:s3:::demo-public-site"
+      ],
+      "severity": "HIGH",
+      "source_type": "s3_bucket_policy",
+      "title": "Bucket 'demo-public-site' is public through its bucket policy (CAN_READ)"
+    },
+    {
+      "category": "s3_public_access",
+      "description": "S3 bucket 'demo-public-site' gives anyone on the internet CAN_READ.",
+      "entity": "bucket/demo-public-site",
+      "entity_arn": "arn:aws:s3:::demo-public-site",
+      "fingerprint": "dd90eaabed0fc22e567cbd9a5f29d433",
+      "id": "S3-PUBLIC-002",
+      "matched_actions": [
+        "acl:READ"
+      ],
+      "node_id": "arn:aws:s3:::demo-public-site",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#scenario-5--you-have-access-to-an-s3-bucket",
+      "remediation": "Remove the AllUsers / AuthenticatedUsers ACL grants, set Object Ownership to BucketOwnerEnforced (ACLs disabled) and turn on IgnorePublicAcls.",
+      "resource": [
+        "arn:aws:s3:::demo-public-site"
+      ],
+      "severity": "HIGH",
+      "source_type": "s3_acl",
+      "title": "Bucket 'demo-public-site' ACL grants anyone on the internet (READ)"
+    }
+  ]
+}

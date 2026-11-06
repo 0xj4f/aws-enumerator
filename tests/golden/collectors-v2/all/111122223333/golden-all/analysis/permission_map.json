@@ -1,0 +1,844 @@
+{
+  "groups": {
+    "demo-admins": {
+      "attached_policies": [
+        "AdministratorAccess"
+      ],
+      "attached_policy_arns": [
+        "arn:aws:iam::aws:policy/AdministratorAccess"
+      ],
+      "effective_statements": [
+        {
+          "actions": [
+            "*"
+          ],
+          "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+          "resources": [
+            "*"
+          ],
+          "source": "AdministratorAccess",
+          "source_type": "managed"
+        }
+      ],
+      "inline_policies": []
+    },
+    "demo-developers": {
+      "attached_policies": [
+        "demo-dev-policy"
+      ],
+      "attached_policy_arns": [
+        "arn:aws:iam::111122223333:policy/demo-dev-policy"
+      ],
+      "effective_statements": [
+        {
+          "actions": [
+            "ec2:Describe*",
+            "ec2:RunInstances"
+          ],
+          "policy_arn": "arn:aws:iam::111122223333:policy/demo-dev-policy",
+          "resources": [
+            "*"
+          ],
+          "source": "demo-dev-policy",
+          "source_type": "managed"
+        },
+        {
+          "actions": [
+            "iam:PassRole"
+          ],
+          "policy_arn": "arn:aws:iam::111122223333:policy/demo-dev-policy",
+          "resources": [
+            "arn:aws:iam::111122223333:role/demo-app-role"
+          ],
+          "source": "demo-dev-policy",
+          "source_type": "managed"
+        },
+        {
+          "actions": [
+            "s3:GetObject"
+          ],
+          "policy_arn": "arn:aws:iam::111122223333:policy/demo-dev-policy",
+          "resources": [
+            "arn:aws:s3:::demo-data-bucket/*"
+          ],
+          "source": "demo-dev-policy",
+          "source_type": "managed"
+        },
+        {
+          "actions": [
+            "ssm:SendCommand",
+            "ssm:StartSession"
+          ],
+          "resources": [
+            "*"
+          ],
+          "source": "demo-dev-ssm-inline",
+          "source_type": "inline"
+        }
+      ],
+      "inline_policies": [
+        "demo-dev-ssm-inline"
+      ]
+    }
+  },
+  "roles": {
+    "demo-admin-role": {
+      "arn": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "attached_policies": [
+        "AdministratorAccess"
+      ],
+      "attached_policy_arns": [
+        "arn:aws:iam::aws:policy/AdministratorAccess"
+      ],
+      "effective_statements": [
+        {
+          "actions": [
+            "*"
+          ],
+          "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+          "resources": [
+            "*"
+          ],
+          "source": "AdministratorAccess",
+          "source_type": "managed"
+        }
+      ],
+      "inline_policies": [],
+      "trust_policy": {
+        "Statement": [
+          {
+            "Action": "sts:AssumeRole",
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::111122223333:user/demo-alice"
+            }
+          }
+        ],
+        "Version": "2012-10-17"
+      }
+    },
+    "demo-app-role": {
+      "arn": "arn:aws:iam::111122223333:role/demo-app-role",
+      "attached_policies": [
+        "demo-app-policy"
+      ],
+      "attached_policy_arns": [
+        "arn:aws:iam::111122223333:policy/demo-app-policy"
+      ],
+      "effective_statements": [
+        {
+          "actions": [
+            "kms:Decrypt"
+          ],
+          "resources": [
+            "arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a1"
+          ],
+          "source": "demo-app-secrets-inline",
+          "source_type": "inline"
+        },
+        {
+          "actions": [
+            "s3:GetObject",
+            "s3:PutObject"
+          ],
+          "policy_arn": "arn:aws:iam::111122223333:policy/demo-app-policy",
+          "resources": [
+            "arn:aws:s3:::demo-data-bucket/*"
+          ],
+          "source": "demo-app-policy",
+          "source_type": "managed"
+        },
+        {
+          "actions": [
+            "secretsmanager:GetSecretValue"
+          ],
+          "resources": [
+            "arn:aws:secretsmanager:eu-west-2:111122223333:secret:demo/*"
+          ],
+          "source": "demo-app-secrets-inline",
+          "source_type": "inline"
+        },
+        {
+          "actions": [
+            "sqs:SendMessage"
+          ],
+          "policy_arn": "arn:aws:iam::111122223333:policy/demo-app-policy",
+          "resources": [
+            "arn:aws:sqs:eu-west-2:111122223333:demo-queue"
+          ],
+          "source": "demo-app-policy",
+          "source_type": "managed"
+        },
+        {
+          "actions": [
+            "ssm:GetParameter"
+          ],
+          "resources": [
+            "arn:aws:ssm:eu-west-2:111122223333:parameter/demo/*"
+          ],
+          "source": "demo-app-secrets-inline",
+          "source_type": "inline"
+        }
+      ],
+      "inline_policies": [
+        "demo-app-secrets-inline"
+      ],
+      "trust_policy": {
+        "Statement": [
+          {
+            "Action": "sts:AssumeRole",
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ec2.amazonaws.com"
+            }
+          }
+        ],
+        "Version": "2012-10-17"
+      }
+    },
+    "demo-build-role": {
+      "arn": "arn:aws:iam::111122223333:role/demo-build-role",
+      "attached_policies": [
+        "AdministratorAccess"
+      ],
+      "attached_policy_arns": [
+        "arn:aws:iam::aws:policy/AdministratorAccess"
+      ],
+      "effective_statements": [
+        {
+          "actions": [
+            "*"
+          ],
+          "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+          "resources": [
+            "*"
+          ],
+          "source": "AdministratorAccess",
+          "source_type": "managed"
+        }
+      ],
+      "inline_policies": [],
+      "trust_policy": {
+        "Statement": [
+          {
+            "Action": "sts:AssumeRole",
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "codebuild.amazonaws.com"
+            }
+          }
+        ],
+        "Version": "2012-10-17"
+      }
+    },
+    "demo-cfn-role": {
+      "arn": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "attached_policies": [
+        "AdministratorAccess"
+      ],
+      "attached_policy_arns": [
+        "arn:aws:iam::aws:policy/AdministratorAccess"
+      ],
+      "effective_statements": [
+        {
+          "actions": [
+            "*"
+          ],
+          "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+          "resources": [
+            "*"
+          ],
+          "source": "AdministratorAccess",
+          "source_type": "managed"
+        }
+      ],
+      "inline_policies": [],
+      "trust_policy": {
+        "Statement": [
+          {
+            "Action": "sts:AssumeRole",
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "cloudformation.amazonaws.com"
+            }
+          }
+        ],
+        "Version": "2012-10-17"
+      }
+    },
+    "demo-cognito-unauth-role": {
+      "arn": "arn:aws:iam::111122223333:role/demo-cognito-unauth-role",
+      "attached_policies": [],
+      "attached_policy_arns": [],
+      "effective_statements": [
+        {
+          "actions": [
+            "s3:GetObject"
+          ],
+          "resources": [
+            "arn:aws:s3:::demo-public-site/*"
+          ],
+          "source": "demo-cognito-s3",
+          "source_type": "inline"
+        }
+      ],
+      "inline_policies": [
+        "demo-cognito-s3"
+      ],
+      "trust_policy": {
+        "Statement": [
+          {
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Condition": {
+              "ForAnyValue:StringLike": {
+                "cognito-identity.amazonaws.com:amr": "unauthenticated"
+              },
+              "StringEquals": {
+                "cognito-identity.amazonaws.com:aud": "eu-west-2:11111111-2222-4333-8444-55555555555a"
+              }
+            },
+            "Effect": "Allow",
+            "Principal": {
+              "Federated": "cognito-identity.amazonaws.com"
+            }
+          }
+        ],
+        "Version": "2012-10-17"
+      }
+    },
+    "demo-cross-account-role": {
+      "arn": "arn:aws:iam::111122223333:role/demo-cross-account-role",
+      "attached_policies": [
+        "ReadOnlyAccess"
+      ],
+      "attached_policy_arns": [
+        "arn:aws:iam::aws:policy/ReadOnlyAccess"
+      ],
+      "effective_statements": [
+        {
+          "actions": [
+            "ec2:Describe*",
+            "iam:Get*",
+            "iam:List*",
+            "s3:Get*",
+            "s3:List*"
+          ],
+          "policy_arn": "arn:aws:iam::aws:policy/ReadOnlyAccess",
+          "resources": [
+            "*"
+          ],
+          "source": "ReadOnlyAccess",
+          "source_type": "managed"
+        }
+      ],
+      "inline_policies": [],
+      "trust_policy": {
+        "Statement": [
+          {
+            "Action": "sts:AssumeRole",
+            "Condition": {
+              "StringEquals": {
+                "sts:ExternalId": "demo-external-id"
+              }
+            },
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::999999999999:root"
+            }
+          }
+        ],
+        "Version": "2012-10-17"
+      }
+    },
+    "demo-ecs-task-role": {
+      "arn": "arn:aws:iam::111122223333:role/demo-ecs-task-role",
+      "attached_policies": [],
+      "attached_policy_arns": [],
+      "effective_statements": [
+        {
+          "actions": [
+            "sqs:DeleteMessage",
+            "sqs:ReceiveMessage"
+          ],
+          "resources": [
+            "*"
+          ],
+          "source": "demo-ecs-sqs",
+          "source_type": "inline"
+        }
+      ],
+      "inline_policies": [
+        "demo-ecs-sqs"
+      ],
+      "trust_policy": {
+        "Statement": [
+          {
+            "Action": "sts:AssumeRole",
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ecs-tasks.amazonaws.com"
+            }
+          }
+        ],
+        "Version": "2012-10-17"
+      }
+    },
+    "demo-eks-cluster-role": {
+      "arn": "arn:aws:iam::111122223333:role/demo-eks-cluster-role",
+      "attached_policies": [
+        "AmazonEKSClusterPolicy"
+      ],
+      "attached_policy_arns": [
+        "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+      ],
+      "effective_statements": [
+        {
+          "actions": [
+            "ec2:CreateNetworkInterface",
+            "ec2:Describe*"
+          ],
+          "policy_arn": "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy",
+          "resources": [
+            "*"
+          ],
+          "source": "AmazonEKSClusterPolicy",
+          "source_type": "managed"
+        }
+      ],
+      "inline_policies": [],
+      "trust_policy": {
+        "Statement": [
+          {
+            "Action": "sts:AssumeRole",
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "eks.amazonaws.com"
+            }
+          }
+        ],
+        "Version": "2012-10-17"
+      }
+    },
+    "demo-eks-node-role": {
+      "arn": "arn:aws:iam::111122223333:role/demo-eks-node-role",
+      "attached_policies": [
+        "AmazonEKSWorkerNodePolicy"
+      ],
+      "attached_policy_arns": [
+        "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
+      ],
+      "effective_statements": [
+        {
+          "actions": [
+            "ec2:DescribeInstances",
+            "eks:DescribeCluster"
+          ],
+          "policy_arn": "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
+          "resources": [
+            "*"
+          ],
+          "source": "AmazonEKSWorkerNodePolicy",
+          "source_type": "managed"
+        }
+      ],
+      "inline_policies": [],
+      "trust_policy": {
+        "Statement": [
+          {
+            "Action": "sts:AssumeRole",
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ec2.amazonaws.com"
+            }
+          }
+        ],
+        "Version": "2012-10-17"
+      }
+    },
+    "demo-glue-role": {
+      "arn": "arn:aws:iam::111122223333:role/demo-glue-role",
+      "attached_policies": [],
+      "attached_policy_arns": [],
+      "effective_statements": [
+        {
+          "actions": [
+            "s3:*"
+          ],
+          "resources": [
+            "arn:aws:s3:::demo-data-bucket*"
+          ],
+          "source": "demo-glue-s3",
+          "source_type": "inline"
+        }
+      ],
+      "inline_policies": [
+        "demo-glue-s3"
+      ],
+      "trust_policy": {
+        "Statement": [
+          {
+            "Action": "sts:AssumeRole",
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "glue.amazonaws.com"
+            }
+          }
+        ],
+        "Version": "2012-10-17"
+      }
+    },
+    "demo-irsa-role": {
+      "arn": "arn:aws:iam::111122223333:role/demo-irsa-role",
+      "attached_policies": [],
+      "attached_policy_arns": [],
+      "effective_statements": [
+        {
+          "actions": [
+            "secretsmanager:GetSecretValue"
+          ],
+          "resources": [
+            "arn:aws:secretsmanager:eu-west-2:111122223333:secret:demo/*"
+          ],
+          "source": "demo-irsa-secrets",
+          "source_type": "inline"
+        }
+      ],
+      "inline_policies": [
+        "demo-irsa-secrets"
+      ],
+      "trust_policy": {
+        "Statement": [
+          {
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Condition": {
+              "StringEquals": {
+                "oidc.eks.eu-west-2.amazonaws.com/id/DEMO0000000000000000000000000002:sub": "system:serviceaccount:demo-apps:demo-api"
+              }
+            },
+            "Effect": "Allow",
+            "Principal": {
+              "Federated": "arn:aws:iam::111122223333:oidc-provider/oidc.eks.eu-west-2.amazonaws.com/id/DEMO0000000000000000000000000002"
+            }
+          }
+        ],
+        "Version": "2012-10-17"
+      }
+    },
+    "demo-lambda-role": {
+      "arn": "arn:aws:iam::111122223333:role/demo-lambda-role",
+      "attached_policies": [],
+      "attached_policy_arns": [],
+      "effective_statements": [
+        {
+          "actions": [
+            "iam:CreateAccessKey"
+          ],
+          "resources": [
+            "*"
+          ],
+          "source": "demo-lambda-inline",
+          "source_type": "inline"
+        },
+        {
+          "actions": [
+            "logs:CreateLogStream",
+            "logs:PutLogEvents"
+          ],
+          "resources": [
+            "*"
+          ],
+          "source": "demo-lambda-logs",
+          "source_type": "inline"
+        }
+      ],
+      "inline_policies": [
+        "demo-lambda-inline",
+        "demo-lambda-logs"
+      ],
+      "permissions_boundary": {
+        "arn": "arn:aws:iam::111122223333:policy/demo-app-policy",
+        "effective_statements": [
+          {
+            "actions": [
+              "s3:GetObject",
+              "s3:PutObject"
+            ],
+            "resources": [
+              "arn:aws:s3:::demo-data-bucket/*"
+            ],
+            "source": "arn:aws:iam::111122223333:policy/demo-app-policy",
+            "source_type": "boundary"
+          },
+          {
+            "actions": [
+              "sqs:SendMessage"
+            ],
+            "resources": [
+              "arn:aws:sqs:eu-west-2:111122223333:demo-queue"
+            ],
+            "source": "arn:aws:iam::111122223333:policy/demo-app-policy",
+            "source_type": "boundary"
+          }
+        ],
+        "status": "collected"
+      },
+      "trust_policy": {
+        "Statement": [
+          {
+            "Action": "sts:AssumeRole",
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "lambda.amazonaws.com"
+            }
+          }
+        ],
+        "Version": "2012-10-17"
+      }
+    },
+    "demo-sagemaker-role": {
+      "arn": "arn:aws:iam::111122223333:role/demo-sagemaker-role",
+      "attached_policies": [],
+      "attached_policy_arns": [],
+      "effective_statements": [],
+      "inline_policies": [],
+      "trust_policy": {
+        "Statement": [
+          {
+            "Action": "sts:AssumeRole",
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "sagemaker.amazonaws.com"
+            }
+          }
+        ],
+        "Version": "2012-10-17"
+      }
+    }
+  },
+  "users": {
+    "demo-alice": {
+      "arn": "arn:aws:iam::111122223333:user/demo-alice",
+      "attached_policies": [
+        "demo-dev-policy"
+      ],
+      "attached_policy_arns": [
+        "arn:aws:iam::111122223333:policy/demo-dev-policy"
+      ],
+      "effective_statements": [
+        {
+          "actions": [
+            "ec2:Describe*",
+            "ec2:RunInstances"
+          ],
+          "policy_arn": "arn:aws:iam::111122223333:policy/demo-dev-policy",
+          "resources": [
+            "*"
+          ],
+          "source": "demo-dev-policy",
+          "source_type": "managed",
+          "via_group": "demo-developers"
+        },
+        {
+          "actions": [
+            "ec2:Describe*",
+            "ec2:RunInstances"
+          ],
+          "policy_arn": "arn:aws:iam::111122223333:policy/demo-dev-policy",
+          "resources": [
+            "*"
+          ],
+          "source": "demo-dev-policy",
+          "source_type": "managed"
+        },
+        {
+          "actions": [
+            "iam:PassRole"
+          ],
+          "policy_arn": "arn:aws:iam::111122223333:policy/demo-dev-policy",
+          "resources": [
+            "arn:aws:iam::111122223333:role/demo-app-role"
+          ],
+          "source": "demo-dev-policy",
+          "source_type": "managed",
+          "via_group": "demo-developers"
+        },
+        {
+          "actions": [
+            "iam:PassRole"
+          ],
+          "policy_arn": "arn:aws:iam::111122223333:policy/demo-dev-policy",
+          "resources": [
+            "arn:aws:iam::111122223333:role/demo-app-role"
+          ],
+          "source": "demo-dev-policy",
+          "source_type": "managed"
+        },
+        {
+          "actions": [
+            "s3:GetObject"
+          ],
+          "policy_arn": "arn:aws:iam::111122223333:policy/demo-dev-policy",
+          "resources": [
+            "arn:aws:s3:::demo-data-bucket/*"
+          ],
+          "source": "demo-dev-policy",
+          "source_type": "managed",
+          "via_group": "demo-developers"
+        },
+        {
+          "actions": [
+            "s3:GetObject"
+          ],
+          "policy_arn": "arn:aws:iam::111122223333:policy/demo-dev-policy",
+          "resources": [
+            "arn:aws:s3:::demo-data-bucket/*"
+          ],
+          "source": "demo-dev-policy",
+          "source_type": "managed"
+        },
+        {
+          "actions": [
+            "s3:ListBucket"
+          ],
+          "resources": [
+            "arn:aws:s3:::demo-data-bucket"
+          ],
+          "source": "demo-alice-s3-inline",
+          "source_type": "inline"
+        },
+        {
+          "actions": [
+            "ssm:SendCommand",
+            "ssm:StartSession"
+          ],
+          "resources": [
+            "*"
+          ],
+          "source": "demo-dev-ssm-inline",
+          "source_type": "inline",
+          "via_group": "demo-developers"
+        }
+      ],
+      "groups": [
+        "demo-developers"
+      ],
+      "inline_policies": [
+        "demo-alice-s3-inline"
+      ]
+    },
+    "demo-bob": {
+      "arn": "arn:aws:iam::111122223333:user/demo-bob",
+      "attached_policies": [],
+      "attached_policy_arns": [],
+      "effective_statements": [
+        {
+          "actions": [
+            "*"
+          ],
+          "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+          "resources": [
+            "*"
+          ],
+          "source": "AdministratorAccess",
+          "source_type": "managed",
+          "via_group": "demo-admins"
+        }
+      ],
+      "groups": [
+        "demo-admins"
+      ],
+      "inline_policies": []
+    },
+    "demo-ci": {
+      "arn": "arn:aws:iam::111122223333:user/demo-ci",
+      "attached_policies": [
+        "demo-ci-deploy"
+      ],
+      "attached_policy_arns": [
+        "arn:aws:iam::111122223333:policy/demo-ci-deploy"
+      ],
+      "effective_statements": [
+        {
+          "actions": [
+            "cloudformation:CreateStack",
+            "cloudformation:UpdateStack"
+          ],
+          "policy_arn": "arn:aws:iam::111122223333:policy/demo-ci-deploy",
+          "resources": [
+            "*"
+          ],
+          "source": "demo-ci-deploy",
+          "source_type": "managed"
+        },
+        {
+          "actions": [
+            "codebuild:StartBuild"
+          ],
+          "resources": [
+            "*"
+          ],
+          "source": "demo-ci-passrole",
+          "source_type": "inline"
+        },
+        {
+          "actions": [
+            "iam:PassRole"
+          ],
+          "policy_arn": "arn:aws:iam::111122223333:policy/demo-ci-deploy",
+          "resources": [
+            "arn:aws:iam::111122223333:role/demo-lambda-role"
+          ],
+          "source": "demo-ci-deploy",
+          "source_type": "managed"
+        },
+        {
+          "actions": [
+            "iam:PassRole"
+          ],
+          "resources": [
+            "arn:aws:iam::111122223333:role/demo-build-role"
+          ],
+          "source": "demo-ci-passrole",
+          "source_type": "inline"
+        },
+        {
+          "actions": [
+            "lambda:CreateFunction",
+            "lambda:InvokeFunction",
+            "lambda:UpdateFunctionCode"
+          ],
+          "policy_arn": "arn:aws:iam::111122223333:policy/demo-ci-deploy",
+          "resources": [
+            "*"
+          ],
+          "source": "demo-ci-deploy",
+          "source_type": "managed"
+        }
+      ],
+      "groups": [],
+      "inline_policies": [
+        "demo-ci-passrole"
+      ],
+      "permissions_boundary": {
+        "arn": "arn:aws:iam::aws:policy/ReadOnlyAccess",
+        "effective_statements": [
+          {
+            "actions": [
+              "ec2:Describe*",
+              "iam:Get*",
+              "iam:List*",
+              "s3:Get*",
+              "s3:List*"
+            ],
+            "resources": [
+              "*"
+            ],
+            "source": "arn:aws:iam::aws:policy/ReadOnlyAccess",
+            "source_type": "boundary"
+          }
+        ],
+        "status": "collected"
+      }
+    }
+  }
+}

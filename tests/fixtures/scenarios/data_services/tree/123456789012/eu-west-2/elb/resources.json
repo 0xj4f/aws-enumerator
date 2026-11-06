@@ -1,0 +1,29 @@
+[
+  {
+    "Type": "elb",
+    "Arn": "arn:aws:elasticloadbalancing:eu-west-2:123456789012:loadbalancer/app/demo-alb/7b393e3772edd3a9",
+    "Name": "demo-alb",
+    "Scheme": "internal",
+    "DNSName": "internal-demo-alb.eu-west-2.elb.amazonaws.com",
+    "LBType": "application",
+    "Targets": [
+      {
+        "kind": "lambda",
+        "id": "arn:aws:lambda:eu-west-2:123456789012:function:demo-etl"
+      },
+      {
+        "kind": "ip",
+        "id": "10.0.1.20"
+      }
+    ]
+  },
+  {
+    "Type": "elb",
+    "Arn": "demo-classic-elb",
+    "Name": "demo-classic-elb",
+    "Scheme": "internal",
+    "DNSName": "internal-demo-classic-elb.eu-west-2.elb.amazonaws.com",
+    "LBType": "classic",
+    "Targets": []
+  }
+]

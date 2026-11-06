@@ -1,0 +1,119 @@
+{
+  "description": "Two users share a group; Discover All Paths reaches the CRITICAL user through the group (undirected).",
+  "directedComparison": [
+    {
+      "directed": "unreachable",
+      "from": "arn:aws:iam::111122223333:user/demo-dev-user",
+      "to": "arn:aws:iam::111122223333:user/demo-admin-user",
+      "undirected": 2
+    }
+  ],
+  "discoverAll": {
+    "falsePathCount": 1,
+    "pathCount": 1,
+    "paths": [
+      {
+        "authoredCost": 0,
+        "directedValid": false,
+        "distance": 2,
+        "edges": [
+          {
+            "type": "MEMBER_OF",
+            "walked": "forward",
+            "weight": 0
+          },
+          {
+            "type": "MEMBER_OF",
+            "walked": "reversed",
+            "weight": 0
+          }
+        ],
+        "hops": 2,
+        "reversedEdgeTypes": [
+          "MEMBER_OF"
+        ],
+        "route": "[user]demo-dev-user -MEMBER_OF(w=0)- [group]demo-devs -MEMBER_OF(w=0)- [user]demo-admin-user",
+        "source": "arn:aws:iam::111122223333:user/demo-dev-user",
+        "target": "arn:aws:iam::111122223333:user/demo-admin-user",
+        "traversesGrantEdge": false
+      }
+    ],
+    "status": "1 paths found (2 sources -> 1 targets)"
+  },
+  "findPath": [
+    {
+      "cost": "2.0",
+      "from": "arn:aws:iam::111122223333:user/demo-dev-user",
+      "hops": "2 edges, 3 nodes",
+      "to": "arn:aws:iam::111122223333:user/demo-admin-user"
+    }
+  ],
+  "graph": {
+    "duplicateIds": [],
+    "edgeCount": 2,
+    "edges": [
+      {
+        "category": "structural",
+        "id": "arn:aws:iam::111122223333:user/demo-admin-user->arn:aws:iam::111122223333:group/demo-devs:MEMBER_OF",
+        "source": "arn:aws:iam::111122223333:user/demo-admin-user",
+        "target": "arn:aws:iam::111122223333:group/demo-devs",
+        "type": "MEMBER_OF",
+        "weight": 0
+      },
+      {
+        "category": "structural",
+        "id": "arn:aws:iam::111122223333:user/demo-dev-user->arn:aws:iam::111122223333:group/demo-devs:MEMBER_OF",
+        "source": "arn:aws:iam::111122223333:user/demo-dev-user",
+        "target": "arn:aws:iam::111122223333:group/demo-devs",
+        "type": "MEMBER_OF",
+        "weight": 0
+      }
+    ],
+    "elementsPassedToCytoscape": 5,
+    "graphInfoText": "3 nodes, 2 edges",
+    "nodeCount": 3,
+    "nodes": [
+      {
+        "id": "arn:aws:iam::111122223333:group/demo-devs",
+        "isHighValue": null,
+        "label": "demo-devs",
+        "maxSeverity": null,
+        "type": "group"
+      },
+      {
+        "id": "arn:aws:iam::111122223333:user/demo-admin-user",
+        "isHighValue": true,
+        "label": "demo-admin-user",
+        "maxSeverity": "CRITICAL",
+        "type": "user"
+      },
+      {
+        "id": "arn:aws:iam::111122223333:user/demo-dev-user",
+        "isHighValue": false,
+        "label": "demo-dev-user",
+        "maxSeverity": null,
+        "type": "user"
+      }
+    ]
+  },
+  "harness": "tests/js/helpers/legacy-harness.js (DOM stub + Cytoscape-semantics stub; equal-cost routes may differ from a browser)",
+  "legacy": {
+    "commit": "d13c215",
+    "path": "app/dashboard/index.html"
+  },
+  "note": "Informational characterisation of the legacy dashboard; the paths below are known to be wrong (F-007, F-040). Not a specification.",
+  "pathFinding": {
+    "dijkstraCallsByDiscoverAll": 2,
+    "directedFlags": [
+      false
+    ],
+    "effectiveWeights": [
+      {
+        "authored": 0,
+        "effective": 1,
+        "type": "MEMBER_OF"
+      }
+    ]
+  },
+  "scenario": "shared-group"
+}

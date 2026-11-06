@@ -1,0 +1,15 @@
+[
+  {
+    "KeyId": "1a2b3c4d-aaaa-4bbb-8ccc-0a0b0c0d0e02",
+    "Arn": "arn:aws:kms:eu-west-2:111122223333:key/1a2b3c4d-aaaa-4bbb-8ccc-0a0b0c0d0e02",
+    "KeyManager": "CUSTOMER",
+    "KeyState": "Enabled",
+    "Origin": "AWS_KMS",
+    "Description": "demo key",
+    "Enabled": true,
+    "Aliases": [
+      "alias/demo-eu-west-2"
+    ],
+    "Grants": []
+  }
+]

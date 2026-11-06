@@ -1,0 +1,24 @@
+{
+  "demo-eks": [
+    {
+      "nodegroupName": "demo-ng",
+      "nodegroupArn": "arn:aws:eks:eu-west-2:123456789012:nodegroup/demo-eks/demo-ng/abcd",
+      "clusterName": "demo-eks",
+      "version": "1.30",
+      "status": "ACTIVE",
+      "capacityType": "ON_DEMAND",
+      "instanceTypes": [
+        "t3.large"
+      ],
+      "nodeRole": "arn:aws:iam::123456789012:role/demo-eks-node-role",
+      "subnets": [
+        "subnet-0a1b2c3d4e5f6aaaa"
+      ],
+      "scalingConfig": {
+        "minSize": 1,
+        "maxSize": 3,
+        "desiredSize": 2
+      }
+    }
+  ]
+}

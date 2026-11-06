@@ -1,0 +1,110 @@
+# pathfinding.cloud dataset pin (vendored for the privilege-escalation coverage benchmark, engine.md §3.6).
+# Read by tests/python/engine/bench/import_pathfinding.py; checked by tests/python/engine/bench/test_pathfinding_data.py.
+repository: https://github.com/DataDog/pathfinding.cloud
+commit: ecc3d092e7e409497474c8d39eb92f61810d815f
+commit_date: 2026-10-09T15:20:23Z
+archive: https://codeload.github.com/DataDog/pathfinding.cloud/tar.gz/ecc3d092e7e409497474c8d39eb92f61810d815f
+archive_sha256: 1e615d49ee7f18c1faa1d32f6d3638a599529f59e4e73a1ec4c703ef8ebdfe5e
+retrieved: 2026-10-16
+license: Apache-2.0 (LICENSE and NOTICE copied unchanged from the archive root)
+copied: data/paths/aws/**/*.yaml -> paths/ (92 files), LICENSE, NOTICE
+modified: paths/sts/sts-001.yaml paths/sagemaker/sagemaker-002.yaml paths/sagemaker/sagemaker-003.yaml
+modification: each modified file starts with a two-line comment; one 12-digit AWS account number per file was replaced by a placeholder account (repository rule: no non-placeholder account ids); nothing else changed
+# sha256 of every vendored file (after modification), then of the upstream original where it differs
+sha256: 87d710b445451487af7c4ba57f0a04e28163e728834bb09a1abf2c24adda920b  LICENSE
+sha256: d1feb482a47e8e4539d45a059d4b2612d142a93ff8d53b80ab2c6c86ae6a18b1  NOTICE
+sha256: 5a41c91285000eae81eb0e47807d5efb75e392b65073753f1a92bb61c1b23542  paths/apprunner/apprunner-001.yaml
+sha256: bf3480a0f4342ad18e67d9c23e67b024c1420d5081cae4bc5b719f425eafe8f7  paths/apprunner/apprunner-002.yaml
+sha256: ff31488f65db4e37002715fa2ac17df1bfd8bf26d083b871964f9af1e34d55f9  paths/batch/batch-001.yaml
+sha256: 9cfb4b693d3e1f6dd224ce08c64006f5a8a0fcf8fee4675e110ec42c122d8a50  paths/batch/batch-002.yaml
+sha256: 86bb7c3605226aee7bfa0244694271e6543870c5a2d9f9d746923e37d579ceea  paths/batch/batch-003.yaml
+sha256: e6523bbd07990da58c91fd68d81fbe1a7f25f3e1a4882c08ff3b16cb6e37af85  paths/bedrock/bedrock-001.yaml
+sha256: 7daba4c01a239ccae5c19908ffe71d5f7d12f0b63945b4af0c415e970e8303e1  paths/bedrock/bedrock-002.yaml
+sha256: 69c621e4e77b736c1b9a3660e1fb661570563b3295f5851c14db55767067eaa0  paths/bedrock/bedrock-003.yaml
+sha256: e0bffbfae20ff45d23f078ea3a684ca64c2f73dcd8f91827ec9473d30c945aaa  paths/bedrock/bedrock-004.yaml
+sha256: 9c6f805a98c018e40003f5b52aa88347e14b184ee5deaf21d8482b876037c228  paths/bedrock/bedrock-005.yaml
+sha256: ff805b972d83bffd4aef35d134f3f13c8682da5303dc733338ed989ed2bfc6a4  paths/bedrock/bedrock-006.yaml
+sha256: d1668beb9c2c9d3996b3e5aaaf1bb848a9488e3c86391504e223cec5c2b5a206  paths/bedrock/bedrock-007.yaml
+sha256: 9773ddb0a058fbb450813cc5a41000d16b5db16bb17b1d1d2b7285489fb45eff  paths/braket/braket-001.yaml
+sha256: 53bf591979c772e2c505f3c64d53b963bbf0a56e9826ab078b2f0b521caef2f2  paths/cloudformation/cloudformation-001.yaml
+sha256: 31e53df4a876162664e4d0f76ddc3d2164d129af2d8a50213e4ff11e55b0f972  paths/cloudformation/cloudformation-002.yaml
+sha256: 5525ae98f3332a3b6fbdc351f09456c09281eb6d92a52a74070870aec65395de  paths/cloudformation/cloudformation-003.yaml
+sha256: a49cfcc79d26ecefd86d6d25ba0f7961fd26f90338a6595e310e8ae717e9e88b  paths/cloudformation/cloudformation-004.yaml
+sha256: 90eed01f30895a1ebc36f24302436d45e75701a17d257c01fa85ba04c8ae25d9  paths/cloudformation/cloudformation-005.yaml
+sha256: 1fc5a4e2f9b7e5330f3d2e7601af148921e33c361053db3b8bfb5a6ad6906d02  paths/codebuild/codebuild-001.yaml
+sha256: eda057787fdf6a4d91b7e5739eadc35df1795de551137166da1e86ed50b82e87  paths/codebuild/codebuild-002.yaml
+sha256: 5d3f7dd7f1315e46dc4fb9609e6cac00cfa1cf812aab3393ed47e3f093ab0166  paths/codebuild/codebuild-003.yaml
+sha256: c91774f10a7790b0cc13226f39ae0f8fd188f598261b440f5e53773bb9190d73  paths/codebuild/codebuild-004.yaml
+sha256: 86035cb825f5a9b32bf2bb86d182553e52ec42664173b665f5f6aa7897ebb878  paths/codedeploy/codedeploy-001.yaml
+sha256: 5763c67935472af30a1e5e84163748f891a3e7d9c0fed9ed2c31b8e2bc396103  paths/cognitoidentity/cognitoidentity-001.yaml
+sha256: f5bdb01ac71bf1b1b95551d2e071868ca6f733c972a02539dfd383e63f7a8335  paths/datapipeline/datapipeline-001.yaml
+sha256: 999cd964b788669a8416ad5c8fb10cd57f052978e979a5c0dfddc9e6fe7e8ad5  paths/ec2-instance-connect/ec2instanceconnect-003.yaml
+sha256: 32bf9bae14d81d95d4335f4beaaf83a85ca9cefb9970a9b4ebd351d3d1a06957  paths/ec2/ec2-001.yaml
+sha256: 762844456ca2443d46aeb51fc584f14370b8f522e3794eab54033c42786f18c6  paths/ec2/ec2-002.yaml
+sha256: 949a71955f89a6ba7839ef1ef86acfb9fdc6b0e798f760a836f0c15271a1874a  paths/ec2/ec2-003.yaml
+sha256: ffd32791f85949a9528ba1f4b5ffa5b1e468f7295d5aeb3c375ccbd44b0c0fab  paths/ec2/ec2-004.yaml
+sha256: e27fc9288d4268e7771b1d79d112a09b363df309ed779b6c5d2c81be6af834b4  paths/ec2/ec2-005.yaml
+sha256: cc84457bb7e26bc7a47b2417dd412ce7d97ab21f61c28fe8f2298b1546470430  paths/ecs/ecs-001.yaml
+sha256: 7fed35f6b5332e5271a2f149a96645399d4b246f1229a867a988cad2a814d34d  paths/ecs/ecs-002.yaml
+sha256: e372f97ec11ddc83ec5ffc87323ce07e7c8110f44f0f1f80c264640e1c0ac2f4  paths/ecs/ecs-003.yaml
+sha256: 9eaf01d571d790a3aaae16ddd8e301151325a36a483abe4576b4442547948be3  paths/ecs/ecs-004.yaml
+sha256: 63c160049eb8bbdb1dfeeb8fbc2f829cd7f27f7da46463dd91eba67c06cc1dd0  paths/ecs/ecs-005.yaml
+sha256: 5b0c45a88e83955ccb716441fb49afc821bf5a0cf4bb2567fa1db45fafea15d4  paths/ecs/ecs-006.yaml
+sha256: c4604b8e4ec4de3b2e41b1699c8c7bf17e895f56a79b3d248d37ee95ea889b89  paths/ecs/ecs-007.yaml
+sha256: b6ddba8c63c5389556851edacf6cdadb2f63fca29d2abc8be0b993d8628e22bc  paths/ecs/ecs-008.yaml
+sha256: dcb50e802c0d93a4a7eb1a316cb43543ef6cb6e3fdc9f72b7c23430268f84a09  paths/ecs/ecs-009.yaml
+sha256: cd4b8a273a7c4452c036cb9d4662d3f09220cbd68a8b827512a0eef6d21dd7e9  paths/emr/emr-001.yaml
+sha256: a43b9ed7862092e1a82b0e5523b15bdb96353090ba973571f6e9c897f4cafd25  paths/emrserverless/emrserverless-001.yaml
+sha256: bf566a1f43e35e86f8e157f7adf7058c88a6ae89fee4e4b54ac3f15e3955a95f  paths/gamelift/gamelift-001.yaml
+sha256: 358d84d123f31776a1038d413d185cd1ceb95aeb2e15e70264c478fe178b17e2  paths/glue/glue-001.yaml
+sha256: 82fffe7147fbc009d62c29fd96523bec08de0606bf72001c1aa97ad22bbe4538  paths/glue/glue-002.yaml
+sha256: 4ec52091e389db269b32eb4b204ed76024aa05fb516cb93749733d3cc573eb11  paths/glue/glue-003.yaml
+sha256: 0c6bab3c436c86c85c95646abc7feeba0d92369a6c93d4290d0893b0c35fbb2c  paths/glue/glue-004.yaml
+sha256: 6b05a3f76c3270d85308a91e36923686afc4b7a7600f1aed8c5512c5ada983b6  paths/glue/glue-005.yaml
+sha256: 376b8f1a01503ca7b364ab6ab201f2351ff31d3ba1dfae9fa5d3e3f010ff45ff  paths/glue/glue-006.yaml
+sha256: c2467c7a5a3bba3eccae0cd1a2fc93be489ae01b136770533144024f89a88096  paths/glue/glue-007.yaml
+sha256: 1dcac0e47836cf832296d32536194ccf2a8e135a4a070f09b84bb784230cf8ca  paths/iam/iam-001.yaml
+sha256: 5640b61d2b425c43f9145e73e66c6e0a9d1008aa1f7c092b3c9a9a9b28c5326b  paths/iam/iam-002.yaml
+sha256: f8bce516c18729d26562246b8b0a58582cff7628cd01ece7ef53ef44e9c6ffc1  paths/iam/iam-003.yaml
+sha256: fc0621d1a1ab35491072573697a0bd0ee12b40cd5241acb955251ace65c9bb6e  paths/iam/iam-004.yaml
+sha256: 9b0fec560bcac48395dd37be936deaaed732153fa8ee4f5a793ef97f0ce82095  paths/iam/iam-005.yaml
+sha256: d9613486140973810f7629f803bd257647d5ecc769da957cc6e7477888c16104  paths/iam/iam-006.yaml
+sha256: 56bf4bbf063a62f8026dadcaa4493feee17e76fa64ab7b4718aaeba7c3545f82  paths/iam/iam-007.yaml
+sha256: bc8496cfa14227e51a5b2dc99221c565306953ce69e9171f239c116e089e80ba  paths/iam/iam-008.yaml
+sha256: 13a34183bd35c1c39c35ca83417b8025d7fbb8437d06f256807a1742e982a97d  paths/iam/iam-009.yaml
+sha256: 2d2c2cffb3d64c12289946246209e6c0167e7e9b9e107cb6a5715184ccb441f6  paths/iam/iam-010.yaml
+sha256: 531caa65be8310b7cb31b650490021889e990151e325e984064c10e7e0753b1f  paths/iam/iam-011.yaml
+sha256: e21ec5e86e36116d398126cfb27670defe421a51bb6a57bcb385bf7653e0e595  paths/iam/iam-012.yaml
+sha256: 337486533f6840ba0f443f4b3f0c65d8f89a659cee7b6e3f1ef3c752b5f8d011  paths/iam/iam-013.yaml
+sha256: f53a6096a3523846cd7b30395c92ee06d8e3a716d229f66dfbdfce43fe430300  paths/iam/iam-014.yaml
+sha256: 6db585f91476cd4568571f39bfa50f333b80c3904a2a1522c7ee5d2ae066bf4a  paths/iam/iam-015.yaml
+sha256: 99bd0e6c077dd6cbd02b9b62c1a00f71fc8c648e84ddcea60622b7d57f93e3f5  paths/iam/iam-016.yaml
+sha256: 41cc99a051e2990a6413556965f544ad99078d7a16b51a40932d232e6f4f43cf  paths/iam/iam-017.yaml
+sha256: b3171722bfd33154c3d82f857e1682efa4471f3d2c60baf587071cf075a19246  paths/iam/iam-018.yaml
+sha256: a219b31d8ae31301ee48622925f3644844abfa7459aa68a53e2540198d4f91f3  paths/iam/iam-019.yaml
+sha256: 596dfb85249fd7f3293fda2561c96199dc7a05c018235077593aa70d97c59c0c  paths/iam/iam-020.yaml
+sha256: 95128d265ac2bd6fdd9575f9cdaca2514676172a9a8622b6123f898d1a66e9d6  paths/iam/iam-021.yaml
+sha256: 0c7c556850c3932e8b0c545dc5690c1130a5423456fd0fb0e489fb0638cc2a71  paths/imagebuilder/imagebuilder-001.yaml
+sha256: bb62b42ae15e530a0974319d628ef972c6a3ee23677204471d48a25683933357  paths/kinesisanalytics/kinesisanalytics-001.yaml
+sha256: f3582a50f0fa346bf8ecee1431767b888d2f92b815cec15306f9c11f7e3d4293  paths/lambda/lambda-001.yaml
+sha256: 7f1f0cb635c14d0dbf3d8dd1d77af4d824659381c5594517185c0ea6e7460ffd  paths/lambda/lambda-002.yaml
+sha256: 4e852b83732b7f23d894b3da63341de003125021f3db557d8a3e2d84425a8d3d  paths/lambda/lambda-003.yaml
+sha256: 333657d891be1082c64b0a1db9d10af7397687f8cb4e5536b63d8e1c487db349  paths/lambda/lambda-004.yaml
+sha256: 94e349f97cdaf3e567952b75c2364bb75dfc4505978124ee5a6209f5c087b062  paths/lambda/lambda-005.yaml
+sha256: f3143598baa78576682ab9497105284ca919a9283892ce90994a5f6695030647  paths/lambda/lambda-006.yaml
+sha256: 74a689616e8bc9adeb1807c28133ef8dabe69556270e1f91649a0dc6e83eeaa7  paths/omics/omics-001.yaml
+sha256: a9661f1682bae3689d09805d76114ab8fc9723b505bf11fde694cd894a30dcad  paths/sagemaker/sagemaker-001.yaml
+sha256: 3945e697754374aabc86c8df3cfe91e2d41b147d11bc1a2f8f312bf42377046c  paths/sagemaker/sagemaker-002.yaml
+sha256: c314f771651fdb9091d9a9de610f5f5c68f061b9f3e70686f824bbb8cf8ecc2d  paths/sagemaker/sagemaker-003.yaml
+sha256: 711b0335b84675bd12c9d4cf01187db8ed198736d3769ffd0091c3fc91f77690  paths/sagemaker/sagemaker-004.yaml
+sha256: 588f24448c3a756fde76e0f913e395ecfbb01e8927fba005b7cca45b13213544  paths/sagemaker/sagemaker-005.yaml
+sha256: 12c0fef71f43751fbe8ef4c5a3953e4e1d34591e0025beb9e88168ddecc1467e  paths/scheduler/scheduler-001.yaml
+sha256: 600cb4b2c4914d3a3209e9269990ceff2dd2d0c574de71c25ee0331d7a2d7646  paths/ssm/ssm-001.yaml
+sha256: 0f93b546bb9fb2738f02c89a847e18926a68419db44a75f24d1cc8f6168f0174  paths/ssm/ssm-002.yaml
+sha256: 5d05f5e020ad1131e47079fc028368287758836868dee9f66680c6e6b46dd13f  paths/ssm/ssm-003.yaml
+sha256: 73c464c01f30f861a8adccb9d911f2f3a4efa13405c74bdc7b52ab356489025a  paths/stepfunctions/stepfunctions-001.yaml
+sha256: ef8942a179aa605467bde96617352f1dcf74493f801550283c1f56a4492af87c  paths/stepfunctions/stepfunctions-002.yaml
+sha256: 7623d9ece15fc7c702a4213d46779b2c0dfca4675f15147c28d33ca372594b1d  paths/sts/sts-001.yaml
+upstream_sha256: 6711d6394dfe6f00beb73209e949beef420cead4f6670d1843a9d22cc73787a5  paths/sts/sts-001.yaml
+upstream_sha256: d402991474a439c4b346250bd0b6e77f1e15fcb4c69074e64dcf5146aa6ccf67  paths/sagemaker/sagemaker-002.yaml
+upstream_sha256: 39b5c88d55aa076b40583e3c2a72825d6ecb38a7cbdcc0ec2fefc1f27df0eb1f  paths/sagemaker/sagemaker-003.yaml

@@ -1,0 +1,23 @@
+# sdist contents (setuptools). A wheel built from the sdist needs the readme (pyproject `readme`, the long
+# description), the licence, and every package-data file that pyproject.toml lists under
+# [tool.setuptools.package-data]. Older setuptools (65.5, as in the dev venv) adds a readme by itself only when it
+# is spelled README, README.txt, README.rst or README.md (case-sensitive), so readme.md is named here. Keep the
+# globs below in step with the package-data list (tests/python/cli/test_w4_packaging_sdist.py checks the result).
+#
+# Nothing else from the repository goes in: tests, docs, scripts, examples, internal documents, reports and the
+# owner's local files are never added, because no line here names them.
+include readme.md LICENSE
+
+include aws_enumerator/dashboard/index.html
+include aws_enumerator/dashboard/css/*.css
+include aws_enumerator/dashboard/icons/*.svg
+include aws_enumerator/dashboard/vendor/*
+include aws_enumerator/dashboard/js/*.js
+include aws_enumerator/schemas/*.json
+include aws_enumerator/util/regions.json
+include aws_enumerator/engine/schema/*.json
+include aws_enumerator/engine/rules/data/*.json
+include aws_enumerator/engine/rules/data/NOTICE
+include aws_enumerator/engine/rules/schema.json
+
+global-exclude __pycache__ *.py[cod] .DS_Store .env .env.*

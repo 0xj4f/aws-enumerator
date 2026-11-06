@@ -1,0 +1,120 @@
+{
+  "breakers": [],
+  "calls": [
+    {
+      "api": "elb:DescribeLoadBalancers",
+      "count": 1,
+      "error_code": null,
+      "items": 1,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "elbv2:DescribeListeners",
+      "count": 2,
+      "error_code": null,
+      "items": 4,
+      "not_configured": false,
+      "optional": false,
+      "pages": 2,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "elbv2:DescribeLoadBalancers",
+      "count": 1,
+      "error_code": null,
+      "items": 2,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "elbv2:DescribeTargetGroups",
+      "count": 2,
+      "error_code": null,
+      "items": 3,
+      "not_configured": false,
+      "optional": false,
+      "pages": 2,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "elbv2:DescribeTargetHealth",
+      "count": 1,
+      "error_code": "AccessDenied",
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 0,
+      "primary": false,
+      "status": "denied"
+    },
+    {
+      "api": "elbv2:DescribeTargetHealth",
+      "count": 2,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 2,
+      "primary": false,
+      "status": "ok"
+    }
+  ],
+  "duration_seconds": "<stripped>",
+  "ended_at": "<stripped>",
+  "error": null,
+  "item_errors": [
+    {
+      "api": "elbv2:DescribeTargetHealth",
+      "error_code": "AccessDenied",
+      "resource": "arn:aws:elasticloadbalancing:eu-west-2:111122223333:targetgroup/demo-denied-tg/0123456789abcdef",
+      "status": "denied"
+    }
+  ],
+  "item_errors_truncated": false,
+  "module": "elb",
+  "protocol": "ctx",
+  "region": "eu-west-2",
+  "schema_version": 1,
+  "sections": [
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "classic",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "v2",
+      "status": "ok"
+    }
+  ],
+  "services": [
+    "elb",
+    "elbv2"
+  ],
+  "started_at": "<stripped>",
+  "status": "partial",
+  "status_reason": "elbv2:DescribeTargetHealth denied",
+  "summary": {
+    "calls": 9,
+    "denied": 1,
+    "error": 0,
+    "item_errors": 1,
+    "not_configured": 0,
+    "ok": 8,
+    "skipped": 0,
+    "throttled": 0
+  }
+}

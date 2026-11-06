@@ -1,0 +1,2197 @@
+{
+  "baseline_d13c215": {
+    "rule_fires": 40,
+    "rule_or_edge": 55
+  },
+  "by_category": {
+    "existing-passrole": "14/23",
+    "new-passrole": "46/47",
+    "principal-access": "14/14",
+    "self-escalation": "8/8"
+  },
+  "covered": [
+    "apprunner-001",
+    "batch-001",
+    "batch-003",
+    "bedrock-001",
+    "bedrock-003",
+    "bedrock-005",
+    "bedrock-006",
+    "braket-001",
+    "cloudformation-001",
+    "cloudformation-002",
+    "cloudformation-003",
+    "cloudformation-004",
+    "cloudformation-005",
+    "codebuild-001",
+    "codebuild-002",
+    "codebuild-003",
+    "codebuild-004",
+    "cognitoidentity-001",
+    "datapipeline-001",
+    "ec2-001",
+    "ec2-002",
+    "ec2-003",
+    "ec2instanceconnect-003",
+    "ecs-001",
+    "ecs-002",
+    "ecs-003",
+    "ecs-004",
+    "ecs-005",
+    "ecs-006",
+    "ecs-007",
+    "ecs-008",
+    "ecs-009",
+    "emr-001",
+    "emrserverless-001",
+    "gamelift-001",
+    "glue-001",
+    "glue-002",
+    "glue-003",
+    "glue-004",
+    "glue-005",
+    "glue-006",
+    "glue-007",
+    "iam-001",
+    "iam-002",
+    "iam-003",
+    "iam-004",
+    "iam-005",
+    "iam-006",
+    "iam-007",
+    "iam-008",
+    "iam-009",
+    "iam-010",
+    "iam-011",
+    "iam-012",
+    "iam-013",
+    "iam-014",
+    "iam-015",
+    "iam-016",
+    "iam-017",
+    "iam-018",
+    "iam-019",
+    "iam-020",
+    "iam-021",
+    "imagebuilder-001",
+    "kinesisanalytics-001",
+    "lambda-001",
+    "lambda-002",
+    "lambda-003",
+    "lambda-004",
+    "lambda-005",
+    "lambda-006",
+    "omics-001",
+    "sagemaker-002",
+    "sagemaker-003",
+    "sagemaker-004",
+    "sagemaker-005",
+    "scheduler-001",
+    "ssm-001",
+    "ssm-002",
+    "ssm-003",
+    "stepfunctions-001",
+    "sts-001"
+  ],
+  "covered_count": 82,
+  "dataset": {
+    "commit": "ecc3d092e7e409497474c8d39eb92f61810d815f",
+    "commit_date": "2026-10-09T15:20:23Z",
+    "repository": "https://github.com/DataDog/pathfinding.cloud"
+  },
+  "not_covered": [
+    "apprunner-002",
+    "batch-002",
+    "bedrock-002",
+    "bedrock-004",
+    "bedrock-007",
+    "codedeploy-001",
+    "ec2-004",
+    "ec2-005",
+    "sagemaker-001",
+    "stepfunctions-002"
+  ],
+  "paths": {
+    "apprunner-001": {
+      "by": [
+        "finding:PRIVESC-044",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-044"
+      ],
+      "twins": {
+        "apprunner:CreateService": {
+          "by": [],
+          "fired": false
+        },
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "apprunner-002": {
+      "by": [],
+      "category": "existing-passrole",
+      "covered": false,
+      "note": "App Runner services are not collected",
+      "rules": [
+        "PRIVESC-057"
+      ],
+      "twins": {
+        "apprunner:UpdateService": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "batch-001": {
+      "by": [
+        "finding:PRIVESC-045",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-045"
+      ],
+      "twins": {
+        "batch:RegisterJobDefinition": {
+          "by": [],
+          "fired": false
+        },
+        "batch:SubmitJob": {
+          "by": [],
+          "fired": false
+        },
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "batch-002": {
+      "by": [],
+      "category": "existing-passrole",
+      "covered": false,
+      "note": "Batch job definitions are not collected",
+      "rules": [
+        "PRIVESC-058"
+      ],
+      "twins": {
+        "batch:SubmitJob": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "batch-003": {
+      "by": [
+        "finding:PRIVESC-045",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-045"
+      ],
+      "twins": {
+        "batch:CreateComputeEnvironment": {
+          "by": [
+            "finding:PRIVESC-045",
+            "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+          ],
+          "fired": true,
+          "justified": "remaining permissions complete batch-001, batch-002"
+        },
+        "batch:CreateJobQueue": {
+          "by": [
+            "finding:PRIVESC-045",
+            "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+          ],
+          "fired": true,
+          "justified": "remaining permissions complete batch-001, batch-002"
+        },
+        "batch:RegisterJobDefinition": {
+          "by": [],
+          "fired": false
+        },
+        "batch:SubmitJob": {
+          "by": [],
+          "fired": false
+        },
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "bedrock-001": {
+      "by": [
+        "finding:PRIVESC-046",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-046"
+      ],
+      "twins": {
+        "bedrock-agentcore:CreateCodeInterpreter": {
+          "by": [],
+          "fired": false
+        },
+        "bedrock-agentcore:InvokeCodeInterpreter": {
+          "by": [],
+          "fired": false
+        },
+        "bedrock-agentcore:StartCodeInterpreterSession": {
+          "by": [],
+          "fired": false
+        },
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "bedrock-002": {
+      "by": [],
+      "category": "existing-passrole",
+      "covered": false,
+      "note": "Bedrock AgentCore code interpreters are not collected",
+      "rules": [
+        "PRIVESC-059"
+      ],
+      "twins": {
+        "bedrock-agentcore:InvokeCodeInterpreter": {
+          "by": [],
+          "fired": false
+        },
+        "bedrock-agentcore:StartCodeInterpreterSession": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "bedrock-003": {
+      "by": [
+        "finding:PRIVESC-047",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-047"
+      ],
+      "twins": {
+        "bedrock-agentcore:CreateAgentRuntime": {
+          "by": [],
+          "fired": false
+        },
+        "bedrock-agentcore:CreateAgentRuntimeEndpoint": {
+          "by": [],
+          "fired": false
+        },
+        "bedrock-agentcore:CreateWorkloadIdentity": {
+          "by": [],
+          "fired": false
+        },
+        "bedrock-agentcore:InvokeAgentRuntimeCommand": {
+          "by": [],
+          "fired": false
+        },
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "bedrock-004": {
+      "by": [],
+      "category": "existing-passrole",
+      "covered": false,
+      "note": "Bedrock AgentCore runtimes are not collected",
+      "rules": [
+        "PRIVESC-060"
+      ],
+      "twins": {
+        "bedrock-agentcore:InvokeAgentRuntimeCommand": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "bedrock-005": {
+      "by": [
+        "finding:PRIVESC-047",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-047"
+      ],
+      "twins": {
+        "bedrock-agentcore:CreateAgentRuntime": {
+          "by": [],
+          "fired": false
+        },
+        "bedrock-agentcore:CreateAgentRuntimeEndpoint": {
+          "by": [],
+          "fired": false
+        },
+        "bedrock-agentcore:CreateHarness": {
+          "by": [
+            "finding:PRIVESC-047",
+            "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+          ],
+          "fired": true,
+          "justified": "remaining permissions complete bedrock-003, bedrock-004"
+        },
+        "bedrock-agentcore:CreateWorkloadIdentity": {
+          "by": [],
+          "fired": false
+        },
+        "bedrock-agentcore:GetAgentRuntime": {
+          "skipped": "reconnaissance permission"
+        },
+        "bedrock-agentcore:GetHarness": {
+          "skipped": "reconnaissance permission"
+        },
+        "bedrock-agentcore:InvokeAgentRuntimeCommand": {
+          "by": [],
+          "fired": false
+        },
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "bedrock-006": {
+      "by": [
+        "finding:PRIVESC-048",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-048"
+      ],
+      "twins": {
+        "bedrock-agentcore:ConnectBrowserAutomationStream": {
+          "by": [],
+          "fired": false
+        },
+        "bedrock-agentcore:CreateBrowser": {
+          "by": [],
+          "fired": false
+        },
+        "bedrock-agentcore:StartBrowserSession": {
+          "by": [],
+          "fired": false
+        },
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "bedrock-007": {
+      "by": [],
+      "category": "existing-passrole",
+      "covered": false,
+      "note": "Bedrock AgentCore browsers are not collected",
+      "rules": [
+        "PRIVESC-061"
+      ],
+      "twins": {
+        "bedrock-agentcore:ConnectBrowserAutomationStream": {
+          "by": [],
+          "fired": false
+        },
+        "bedrock-agentcore:StartBrowserSession": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "braket-001": {
+      "by": [
+        "finding:PRIVESC-049",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-049"
+      ],
+      "twins": {
+        "braket:CreateJob": {
+          "by": [],
+          "fired": false
+        },
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "cloudformation-001": {
+      "by": [
+        "finding:PRIVESC-016",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-016"
+      ],
+      "twins": {
+        "cloudformation:CreateStack": {
+          "by": [],
+          "fired": false
+        },
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "cloudformation-002": {
+      "by": [
+        "finding:PRIVESC-029",
+        "path:CAN_HIJACK>USES_ROLE>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "existing-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-029"
+      ],
+      "twins": {
+        "cloudformation:UpdateStack": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "cloudformation-003": {
+      "by": [
+        "finding:PRIVESC-027",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-027"
+      ],
+      "twins": {
+        "cloudformation:CreateStackInstances": {
+          "by": [],
+          "fired": false
+        },
+        "cloudformation:CreateStackSet": {
+          "by": [],
+          "fired": false
+        },
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "cloudformation-004": {
+      "by": [
+        "finding:PRIVESC-028",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-028"
+      ],
+      "twins": {
+        "cloudformation:UpdateStackSet": {
+          "by": [],
+          "fired": false
+        },
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "cloudformation-005": {
+      "by": [
+        "finding:PRIVESC-029",
+        "path:CAN_HIJACK>USES_ROLE>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-029"
+      ],
+      "twins": {
+        "cloudformation:CreateChangeSet": {
+          "by": [],
+          "fired": false
+        },
+        "cloudformation:ExecuteChangeSet": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "codebuild-001": {
+      "by": [
+        "finding:PRIVESC-019",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-019"
+      ],
+      "twins": {
+        "codebuild:CreateProject": {
+          "by": [],
+          "fired": false
+        },
+        "codebuild:StartBuild": {
+          "by": [],
+          "fired": false
+        },
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "codebuild-002": {
+      "by": [
+        "finding:PRIVESC-023",
+        "path:CAN_HIJACK>USES_ROLE>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "existing-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-023"
+      ],
+      "twins": {
+        "codebuild:StartBuild": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "codebuild-003": {
+      "by": [
+        "finding:PRIVESC-023",
+        "path:CAN_HIJACK>USES_ROLE>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "existing-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-023"
+      ],
+      "twins": {
+        "codebuild:StartBuildBatch": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "codebuild-004": {
+      "by": [
+        "finding:PRIVESC-019",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-019"
+      ],
+      "twins": {
+        "codebuild:CreateProject": {
+          "by": [],
+          "fired": false
+        },
+        "codebuild:StartBuildBatch": {
+          "by": [],
+          "fired": false
+        },
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "codedeploy-001": {
+      "by": [],
+      "category": "existing-passrole",
+      "covered": false,
+      "note": "CodeDeploy deployment groups are not collected",
+      "rules": [
+        "PRIVESC-062"
+      ],
+      "twins": {
+        "codedeploy:CreateDeployment": {
+          "by": [],
+          "fired": false
+        },
+        "codedeploy:GetDeploymentConfig": {
+          "skipped": "reconnaissance permission"
+        },
+        "codedeploy:RegisterApplicationRevision": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "cognitoidentity-001": {
+      "by": [
+        "finding:PRIVESC-030",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-030"
+      ],
+      "twins": {
+        "cognito-identity:SetIdentityPoolRoles": {
+          "by": [],
+          "fired": false
+        },
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "datapipeline-001": {
+      "by": [
+        "finding:PRIVESC-031",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-031"
+      ],
+      "twins": {
+        "datapipeline:ActivatePipeline": {
+          "by": [],
+          "fired": false
+        },
+        "datapipeline:CreatePipeline": {
+          "by": [],
+          "fired": false
+        },
+        "datapipeline:PutPipelineDefinition": {
+          "by": [],
+          "fired": false
+        },
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "ec2-001": {
+      "by": [
+        "finding:PRIVESC-015",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-015"
+      ],
+      "twins": {
+        "ec2:RunInstances": {
+          "by": [],
+          "fired": false
+        },
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "ec2-002": {
+      "by": [
+        "finding:PRIVESC-051",
+        "path:CAN_MODIFY_USERDATA>INSTANCE_ROLE>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "existing-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-051"
+      ],
+      "twins": {
+        "ec2:ModifyInstanceAttribute": {
+          "by": [],
+          "fired": false
+        },
+        "ec2:StartInstances": {
+          "by": [],
+          "fired": false
+        },
+        "ec2:StopInstances": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "ec2-003": {
+      "by": [
+        "finding:PRIVESC-026",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-026"
+      ],
+      "twins": {
+        "ec2:RequestSpotInstances": {
+          "by": [],
+          "fired": false
+        },
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "ec2-004": {
+      "by": [],
+      "category": "existing-passrole",
+      "covered": false,
+      "rules": [
+        "PRIVESC-052"
+      ],
+      "twins": {
+        "ec2:CreateLaunchTemplateVersion": {
+          "by": [],
+          "fired": false
+        },
+        "ec2:ModifyLaunchTemplate": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "ec2-005": {
+      "by": [],
+      "category": "existing-passrole",
+      "covered": false,
+      "rules": [
+        "PRIVESC-052"
+      ],
+      "twins": {
+        "ec2:CreateLaunchTemplateVersion": {
+          "by": [],
+          "fired": false
+        },
+        "ec2:ModifyLaunchTemplate": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "ec2instanceconnect-003": {
+      "by": [
+        "finding:PRIVESC-050",
+        "path:CAN_CONNECT>INSTANCE_ROLE>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "existing-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-050"
+      ],
+      "twins": {
+        "ec2-instance-connect:SendSSHPublicKey": {
+          "by": [],
+          "fired": false
+        },
+        "ec2:DescribeInstances": {
+          "skipped": "reconnaissance permission"
+        }
+      }
+    },
+    "ecs-001": {
+      "by": [
+        "finding:PRIVESC-017",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-017"
+      ],
+      "twins": {
+        "ecs:CreateCluster": {
+          "by": [
+            "finding:PRIVESC-017",
+            "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+          ],
+          "fired": true,
+          "justified": "remaining permissions complete ecs-003"
+        },
+        "ecs:CreateService": {
+          "by": [],
+          "fired": false
+        },
+        "ecs:RegisterTaskDefinition": {
+          "by": [],
+          "fired": false
+        },
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "ecs-002": {
+      "by": [
+        "finding:PRIVESC-017",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-017"
+      ],
+      "twins": {
+        "ecs:CreateCluster": {
+          "by": [
+            "finding:PRIVESC-017",
+            "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+          ],
+          "fired": true,
+          "justified": "remaining permissions complete ecs-004, ecs-008"
+        },
+        "ecs:RegisterTaskDefinition": {
+          "by": [
+            "finding:PRIVESC-017",
+            "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+          ],
+          "fired": true,
+          "justified": "remaining permissions complete ecs-008"
+        },
+        "ecs:RunTask": {
+          "by": [],
+          "fired": false
+        },
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "ecs-003": {
+      "by": [
+        "finding:PRIVESC-017",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-017"
+      ],
+      "twins": {
+        "ecs:CreateService": {
+          "by": [],
+          "fired": false
+        },
+        "ecs:RegisterTaskDefinition": {
+          "by": [],
+          "fired": false
+        },
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "ecs-004": {
+      "by": [
+        "finding:PRIVESC-017",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-017"
+      ],
+      "twins": {
+        "ecs:RegisterTaskDefinition": {
+          "by": [
+            "finding:PRIVESC-017",
+            "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+          ],
+          "fired": true,
+          "justified": "remaining permissions complete ecs-008"
+        },
+        "ecs:RunTask": {
+          "by": [],
+          "fired": false
+        },
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "ecs-005": {
+      "by": [
+        "finding:PRIVESC-017",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-017"
+      ],
+      "twins": {
+        "ecs:RegisterTaskDefinition": {
+          "by": [
+            "finding:PRIVESC-017",
+            "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+          ],
+          "fired": true,
+          "justified": "remaining permissions complete ecs-009"
+        },
+        "ecs:StartTask": {
+          "by": [],
+          "fired": false
+        },
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "ecs-006": {
+      "by": [
+        "finding:PRIVESC-053",
+        "path:CAN_EXEC>USES_ROLE>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "existing-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-053"
+      ],
+      "twins": {
+        "ecs:DescribeTasks": {
+          "skipped": "reconnaissance permission"
+        },
+        "ecs:ExecuteCommand": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "ecs-007": {
+      "by": [
+        "finding:PRIVESC-017",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-017"
+      ],
+      "twins": {
+        "ecs:RegisterContainerInstance": {
+          "by": [
+            "finding:PRIVESC-017",
+            "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+          ],
+          "fired": true,
+          "justified": "remaining permissions complete ecs-009"
+        },
+        "ecs:StartTask": {
+          "by": [],
+          "fired": false
+        },
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "ecs-008": {
+      "by": [
+        "finding:PRIVESC-017",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-017"
+      ],
+      "twins": {
+        "ecs:RunTask": {
+          "by": [],
+          "fired": false
+        },
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "ecs-009": {
+      "by": [
+        "finding:PRIVESC-017",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-017"
+      ],
+      "twins": {
+        "ecs:StartTask": {
+          "by": [],
+          "fired": false
+        },
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "emr-001": {
+      "by": [
+        "finding:PRIVESC-032",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-032"
+      ],
+      "twins": {
+        "elasticmapreduce:RunJobFlow": {
+          "by": [],
+          "fired": false
+        },
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "emrserverless-001": {
+      "by": [
+        "finding:PRIVESC-033",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-033"
+      ],
+      "twins": {
+        "emr-serverless:CreateApplication": {
+          "by": [],
+          "fired": false
+        },
+        "emr-serverless:StartJobRun": {
+          "by": [],
+          "fired": false
+        },
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "gamelift-001": {
+      "by": [
+        "finding:PRIVESC-034",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-034"
+      ],
+      "twins": {
+        "gamelift:CreateBuild": {
+          "by": [],
+          "fired": false
+        },
+        "gamelift:CreateFleet": {
+          "by": [],
+          "fired": false
+        },
+        "gamelift:RequestUploadCredentials": {
+          "by": [],
+          "fired": false
+        },
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "glue-001": {
+      "by": [
+        "finding:PRIVESC-018",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-018"
+      ],
+      "twins": {
+        "glue:CreateDevEndpoint": {
+          "by": [],
+          "fired": false
+        },
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "glue-002": {
+      "by": [
+        "finding:PRIVESC-022",
+        "path:CAN_HIJACK>USES_ROLE>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "existing-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-022"
+      ],
+      "twins": {
+        "glue:UpdateDevEndpoint": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "glue-003": {
+      "by": [
+        "finding:PRIVESC-018",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-018"
+      ],
+      "twins": {
+        "glue:CreateJob": {
+          "by": [],
+          "fired": false
+        },
+        "glue:StartJobRun": {
+          "by": [],
+          "fired": false
+        },
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "glue-004": {
+      "by": [
+        "finding:PRIVESC-018",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-018"
+      ],
+      "twins": {
+        "glue:CreateJob": {
+          "by": [],
+          "fired": false
+        },
+        "glue:CreateTrigger": {
+          "by": [],
+          "fired": false
+        },
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "glue-005": {
+      "by": [
+        "finding:PRIVESC-035",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-035"
+      ],
+      "twins": {
+        "glue:StartJobRun": {
+          "by": [],
+          "fired": false
+        },
+        "glue:UpdateJob": {
+          "by": [],
+          "fired": false
+        },
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "glue-006": {
+      "by": [
+        "finding:PRIVESC-035",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-035"
+      ],
+      "twins": {
+        "glue:CreateTrigger": {
+          "by": [],
+          "fired": false
+        },
+        "glue:UpdateJob": {
+          "by": [],
+          "fired": false
+        },
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "glue-007": {
+      "by": [
+        "finding:PRIVESC-036",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-036"
+      ],
+      "twins": {
+        "glue:CreateSession": {
+          "by": [],
+          "fired": false
+        },
+        "glue:RunStatement": {
+          "by": [],
+          "fired": false
+        },
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "iam-001": {
+      "by": [
+        "finding:PRIVESC-001",
+        "path:CAN_ESCALATE"
+      ],
+      "category": "self-escalation",
+      "covered": true,
+      "rules": [
+        "PRIVESC-001"
+      ],
+      "twins": {
+        "iam:CreatePolicyVersion": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "iam-002": {
+      "by": [
+        "finding:PRIVESC-009",
+        "path:CAN_TAKEOVER>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "principal-access",
+      "covered": true,
+      "rules": [
+        "PRIVESC-009"
+      ],
+      "twins": {
+        "iam:CreateAccessKey": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "iam-003": {
+      "by": [
+        "finding:PRIVESC-024",
+        "path:CAN_TAKEOVER>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "principal-access",
+      "covered": true,
+      "rules": [
+        "PRIVESC-024"
+      ],
+      "twins": {
+        "iam:CreateAccessKey": {
+          "by": [],
+          "fired": false
+        },
+        "iam:DeleteAccessKey": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "iam-004": {
+      "by": [
+        "finding:PRIVESC-010",
+        "path:CAN_TAKEOVER>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "principal-access",
+      "covered": true,
+      "rules": [
+        "PRIVESC-010"
+      ],
+      "twins": {
+        "iam:CreateLoginProfile": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "iam-005": {
+      "by": [
+        "finding:PRIVESC-005",
+        "path:CAN_ESCALATE"
+      ],
+      "category": "self-escalation",
+      "covered": true,
+      "rules": [
+        "PRIVESC-005"
+      ],
+      "twins": {
+        "iam:PutRolePolicy": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "iam-006": {
+      "by": [
+        "finding:PRIVESC-011",
+        "path:CAN_TAKEOVER>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "principal-access",
+      "covered": true,
+      "rules": [
+        "PRIVESC-011"
+      ],
+      "twins": {
+        "iam:UpdateLoginProfile": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "iam-007": {
+      "by": [
+        "finding:PRIVESC-003",
+        "path:CAN_ESCALATE"
+      ],
+      "category": "self-escalation",
+      "covered": true,
+      "rules": [
+        "PRIVESC-003"
+      ],
+      "twins": {
+        "iam:PutUserPolicy": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "iam-008": {
+      "by": [
+        "finding:PRIVESC-006",
+        "path:CAN_ESCALATE"
+      ],
+      "category": "self-escalation",
+      "covered": true,
+      "rules": [
+        "PRIVESC-006"
+      ],
+      "twins": {
+        "iam:AttachUserPolicy": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "iam-009": {
+      "by": [
+        "finding:PRIVESC-008",
+        "path:CAN_ESCALATE"
+      ],
+      "category": "self-escalation",
+      "covered": true,
+      "rules": [
+        "PRIVESC-008"
+      ],
+      "twins": {
+        "iam:AttachRolePolicy": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "iam-010": {
+      "by": [
+        "finding:PRIVESC-007",
+        "path:CAN_ESCALATE"
+      ],
+      "category": "self-escalation",
+      "covered": true,
+      "rules": [
+        "PRIVESC-007"
+      ],
+      "twins": {
+        "iam:AttachGroupPolicy": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "iam-011": {
+      "by": [
+        "finding:PRIVESC-004",
+        "path:CAN_ESCALATE"
+      ],
+      "category": "self-escalation",
+      "covered": true,
+      "rules": [
+        "PRIVESC-004"
+      ],
+      "twins": {
+        "iam:PutGroupPolicy": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "iam-012": {
+      "by": [
+        "finding:PRIVESC-013",
+        "path:CAN_TAKEOVER>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "principal-access",
+      "covered": true,
+      "rules": [
+        "PRIVESC-013"
+      ],
+      "twins": {
+        "iam:UpdateAssumeRolePolicy": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "iam-013": {
+      "by": [
+        "finding:PRIVESC-012",
+        "path:CAN_TAKEOVER>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "self-escalation",
+      "covered": true,
+      "rules": [
+        "PRIVESC-012"
+      ],
+      "twins": {
+        "iam:AddUserToGroup": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "iam-014": {
+      "by": [
+        "finding:PRIVESC-008",
+        "path:CAN_ESCALATE"
+      ],
+      "category": "principal-access",
+      "covered": true,
+      "rules": [
+        "PRIVESC-008"
+      ],
+      "twins": {
+        "iam:AttachRolePolicy": {
+          "by": [],
+          "fired": false
+        },
+        "sts:AssumeRole": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "iam-015": {
+      "by": [
+        "finding:PRIVESC-006",
+        "path:CAN_ESCALATE"
+      ],
+      "category": "principal-access",
+      "covered": true,
+      "rules": [
+        "PRIVESC-006",
+        "PRIVESC-009"
+      ],
+      "twins": {
+        "iam:AttachUserPolicy": {
+          "by": [],
+          "fired": false
+        },
+        "iam:CreateAccessKey": {
+          "by": [
+            "finding:PRIVESC-006",
+            "path:CAN_ESCALATE"
+          ],
+          "fired": true,
+          "justified": "remaining permissions complete iam-008"
+        }
+      }
+    },
+    "iam-016": {
+      "by": [
+        "finding:PRIVESC-001",
+        "path:CAN_ESCALATE"
+      ],
+      "category": "principal-access",
+      "covered": true,
+      "rules": [
+        "PRIVESC-001"
+      ],
+      "twins": {
+        "iam:CreatePolicyVersion": {
+          "by": [],
+          "fired": false
+        },
+        "sts:AssumeRole": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "iam-017": {
+      "by": [
+        "finding:PRIVESC-005",
+        "path:CAN_ESCALATE"
+      ],
+      "category": "principal-access",
+      "covered": true,
+      "rules": [
+        "PRIVESC-005"
+      ],
+      "twins": {
+        "iam:PutRolePolicy": {
+          "by": [],
+          "fired": false
+        },
+        "sts:AssumeRole": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "iam-018": {
+      "by": [
+        "finding:PRIVESC-003",
+        "path:CAN_ESCALATE"
+      ],
+      "category": "principal-access",
+      "covered": true,
+      "rules": [
+        "PRIVESC-003",
+        "PRIVESC-009"
+      ],
+      "twins": {
+        "iam:CreateAccessKey": {
+          "by": [
+            "finding:PRIVESC-003",
+            "path:CAN_ESCALATE"
+          ],
+          "fired": true,
+          "justified": "remaining permissions complete iam-007"
+        },
+        "iam:PutUserPolicy": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "iam-019": {
+      "by": [
+        "finding:PRIVESC-008",
+        "path:CAN_ESCALATE"
+      ],
+      "category": "principal-access",
+      "covered": true,
+      "rules": [
+        "PRIVESC-008",
+        "PRIVESC-013"
+      ],
+      "twins": {
+        "iam:AttachRolePolicy": {
+          "by": [],
+          "fired": false
+        },
+        "iam:UpdateAssumeRolePolicy": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "iam-020": {
+      "by": [
+        "finding:PRIVESC-001",
+        "path:CAN_ESCALATE"
+      ],
+      "category": "principal-access",
+      "covered": true,
+      "rules": [
+        "PRIVESC-001",
+        "PRIVESC-013"
+      ],
+      "twins": {
+        "iam:CreatePolicyVersion": {
+          "by": [],
+          "fired": false
+        },
+        "iam:UpdateAssumeRolePolicy": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "iam-021": {
+      "by": [
+        "finding:PRIVESC-005",
+        "path:CAN_ESCALATE"
+      ],
+      "category": "principal-access",
+      "covered": true,
+      "rules": [
+        "PRIVESC-005",
+        "PRIVESC-013"
+      ],
+      "twins": {
+        "iam:PutRolePolicy": {
+          "by": [],
+          "fired": false
+        },
+        "iam:UpdateAssumeRolePolicy": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "imagebuilder-001": {
+      "by": [
+        "finding:PRIVESC-037",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-037"
+      ],
+      "twins": {
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        },
+        "imagebuilder:CreateComponent": {
+          "by": [],
+          "fired": false
+        },
+        "imagebuilder:CreateImage": {
+          "by": [],
+          "fired": false
+        },
+        "imagebuilder:CreateImageRecipe": {
+          "by": [],
+          "fired": false
+        },
+        "imagebuilder:CreateInfrastructureConfiguration": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "kinesisanalytics-001": {
+      "by": [
+        "finding:PRIVESC-038",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-038"
+      ],
+      "twins": {
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        },
+        "kinesisanalytics:CreateApplication": {
+          "by": [],
+          "fired": false
+        },
+        "kinesisanalytics:StartApplication": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "lambda-001": {
+      "by": [
+        "finding:PRIVESC-014",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-014"
+      ],
+      "twins": {
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        },
+        "lambda:CreateFunction": {
+          "by": [],
+          "fired": false
+        },
+        "lambda:InvokeFunction": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "lambda-002": {
+      "by": [
+        "finding:PRIVESC-014",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-014"
+      ],
+      "twins": {
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        },
+        "lambda:CreateEventSourceMapping": {
+          "by": [],
+          "fired": false
+        },
+        "lambda:CreateFunction": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "lambda-003": {
+      "by": [
+        "finding:PRIVESC-021",
+        "path:CAN_UPDATE_CODE>USES_ROLE>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "existing-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-021"
+      ],
+      "twins": {
+        "lambda:UpdateFunctionCode": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "lambda-004": {
+      "by": [
+        "finding:PRIVESC-021",
+        "path:CAN_UPDATE_CODE>USES_ROLE>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "existing-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-021"
+      ],
+      "twins": {
+        "lambda:InvokeFunction": {
+          "by": [
+            "finding:PRIVESC-021",
+            "path:CAN_UPDATE_CODE>USES_ROLE>IS_ADMIN_EQUIVALENT"
+          ],
+          "fired": true,
+          "justified": "remaining permissions complete lambda-003"
+        },
+        "lambda:UpdateFunctionCode": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "lambda-005": {
+      "by": [
+        "finding:PRIVESC-021",
+        "path:CAN_UPDATE_CODE>USES_ROLE>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "existing-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-021"
+      ],
+      "twins": {
+        "lambda:AddPermission": {
+          "by": [
+            "finding:PRIVESC-021",
+            "path:CAN_UPDATE_CODE>USES_ROLE>IS_ADMIN_EQUIVALENT"
+          ],
+          "fired": true,
+          "justified": "remaining permissions complete lambda-003"
+        },
+        "lambda:UpdateFunctionCode": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "lambda-006": {
+      "by": [
+        "finding:PRIVESC-025",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-025"
+      ],
+      "twins": {
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        },
+        "lambda:AddPermission": {
+          "by": [],
+          "fired": false
+        },
+        "lambda:CreateFunction": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "omics-001": {
+      "by": [
+        "finding:PRIVESC-039",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-039"
+      ],
+      "twins": {
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        },
+        "omics:CreateWorkflow": {
+          "by": [],
+          "fired": false
+        },
+        "omics:StartRun": {
+          "by": [],
+          "fired": false
+        },
+        "s3:GetObject": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "sagemaker-001": {
+      "by": [],
+      "category": "new-passrole",
+      "covered": false,
+      "rules": [
+        "PRIVESC-020"
+      ],
+      "twins": {
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        },
+        "sagemaker:CreateNotebookInstance": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "sagemaker-002": {
+      "by": [
+        "finding:PRIVESC-040",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-040"
+      ],
+      "twins": {
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        },
+        "sagemaker:CreateTrainingJob": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "sagemaker-003": {
+      "by": [
+        "finding:PRIVESC-040",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-040"
+      ],
+      "twins": {
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        },
+        "sagemaker:CreateProcessingJob": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "sagemaker-004": {
+      "by": [
+        "finding:PRIVESC-054",
+        "path:CAN_EXEC>USES_ROLE>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "existing-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-054"
+      ],
+      "twins": {
+        "sagemaker:CreatePresignedNotebookInstanceUrl": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "sagemaker-005": {
+      "by": [
+        "finding:PRIVESC-055",
+        "path:CAN_HIJACK>USES_ROLE>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "existing-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-055"
+      ],
+      "twins": {
+        "sagemaker:CreateNotebookInstanceLifecycleConfig": {
+          "by": [],
+          "fired": false
+        },
+        "sagemaker:StartNotebookInstance": {
+          "by": [],
+          "fired": false
+        },
+        "sagemaker:StopNotebookInstance": {
+          "by": [],
+          "fired": false
+        },
+        "sagemaker:UpdateNotebookInstance": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "scheduler-001": {
+      "by": [
+        "finding:PRIVESC-041",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-041"
+      ],
+      "twins": {
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        },
+        "scheduler:CreateSchedule": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "ssm-001": {
+      "by": [
+        "finding:PRIVESC-050",
+        "path:CAN_CONNECT>INSTANCE_ROLE>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "existing-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-050"
+      ],
+      "twins": {
+        "ssm:StartSession": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "ssm-002": {
+      "by": [
+        "finding:PRIVESC-050",
+        "path:CAN_CONNECT>INSTANCE_ROLE>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "existing-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-050"
+      ],
+      "twins": {
+        "ssm:SendCommand": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "ssm-003": {
+      "by": [
+        "finding:PRIVESC-042",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-042"
+      ],
+      "twins": {
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        },
+        "ssm:CreateDocument": {
+          "by": [],
+          "fired": false
+        },
+        "ssm:StartAutomationExecution": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "stepfunctions-001": {
+      "by": [
+        "finding:PRIVESC-043",
+        "path:CAN_PASS_ROLE_TO>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "new-passrole",
+      "covered": true,
+      "rules": [
+        "PRIVESC-043"
+      ],
+      "twins": {
+        "iam:PassRole": {
+          "by": [],
+          "fired": false
+        },
+        "states:CreateStateMachine": {
+          "by": [],
+          "fired": false
+        },
+        "states:StartExecution": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "stepfunctions-002": {
+      "by": [],
+      "category": "existing-passrole",
+      "covered": false,
+      "note": "Step Functions state machines are not collected",
+      "rules": [
+        "PRIVESC-063"
+      ],
+      "twins": {
+        "states:StartExecution": {
+          "by": [],
+          "fired": false
+        },
+        "states:UpdateStateMachine": {
+          "by": [],
+          "fired": false
+        }
+      }
+    },
+    "sts-001": {
+      "by": [
+        "path:CAN_ASSUME>IS_ADMIN_EQUIVALENT"
+      ],
+      "category": "principal-access",
+      "covered": true,
+      "rules": [],
+      "twins": {
+        "sts:AssumeRole": {
+          "by": [],
+          "fired": false
+        }
+      }
+    }
+  },
+  "total": 92,
+  "twins": {
+    "evaluated": 208,
+    "fired": 0,
+    "fired_justified": 13,
+    "precision": 1.0
+  }
+}

@@ -1,0 +1,48 @@
+[
+  {
+    "api_version": null,
+    "kind": null,
+    "metadata": {
+      "name": "default",
+      "namespace": null,
+      "labels": null,
+      "annotations": null,
+      "uid": "2f6ed539-aaaa-4bbb-8ccc-7505d64a54e0",
+      "creation_timestamp": "2026-01-01 00:00:00+00:00",
+      "resource_version": "1000",
+      "owner_references": null,
+      "managed_fields": null
+    },
+    "spec": {
+      "finalizers": [
+        "kubernetes"
+      ]
+    },
+    "status": {
+      "phase": "Active"
+    }
+  },
+  {
+    "api_version": null,
+    "kind": null,
+    "metadata": {
+      "name": "apps",
+      "namespace": null,
+      "labels": null,
+      "annotations": null,
+      "uid": "fb29e5df-aaaa-4bbb-8ccc-80250a7a9e2e",
+      "creation_timestamp": "2026-01-01 00:00:00+00:00",
+      "resource_version": "1000",
+      "owner_references": null,
+      "managed_fields": null
+    },
+    "spec": {
+      "finalizers": [
+        "kubernetes"
+      ]
+    },
+    "status": {
+      "phase": "Active"
+    }
+  }
+]

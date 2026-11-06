@@ -1,0 +1,9 @@
+{
+  "demo-deployer": [],
+  "demo-analyst": [
+    {
+      "PolicyName": "ReadOnlyAccess",
+      "PolicyArn": "arn:aws:iam::aws:policy/ReadOnlyAccess"
+    }
+  ]
+}

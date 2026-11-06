@@ -1,0 +1,24 @@
+[
+  {
+    "Type": "route53zone",
+    "Id": "Z0EXAMPLEZONEBBB",
+    "Name": "example.org.",
+    "Private": false,
+    "RecordCount": 1,
+    "Records": [
+      {
+        "Name": "static.example.org.",
+        "Type": "CNAME",
+        "Targets": [
+          "demo-gone.s3.amazonaws.com"
+        ]
+      }
+    ],
+    "TakeoverCandidates": [
+      {
+        "Name": "static.example.org.",
+        "Target": "demo-gone.s3.amazonaws.com"
+      }
+    ]
+  }
+]

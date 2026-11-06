@@ -1,0 +1,50 @@
+[
+  {
+    "Arn": "arn:aws:iam::111122223333:policy/demo-app-policy",
+    "AttachmentCount": 1,
+    "CreateDate": "2024-01-01T10:00:00Z",
+    "DefaultVersionId": "v1",
+    "IsAttachable": true,
+    "Path": "/",
+    "PermissionsBoundaryUsageCount": 1,
+    "PolicyId": "ANPAEXAMPLEAPPPOLICY01",
+    "PolicyName": "demo-app-policy",
+    "UpdateDate": "2024-01-09T10:00:00Z"
+  },
+  {
+    "Arn": "arn:aws:iam::111122223333:policy/demo-broken-policy",
+    "AttachmentCount": 0,
+    "CreateDate": "2024-01-01T10:00:00Z",
+    "DefaultVersionId": "v1",
+    "IsAttachable": true,
+    "Path": "/",
+    "PermissionsBoundaryUsageCount": 0,
+    "PolicyId": "ANPAEXAMPLEBROKENPOL01",
+    "PolicyName": "demo-broken-policy",
+    "UpdateDate": "2024-01-09T10:00:00Z"
+  },
+  {
+    "Arn": "arn:aws:iam::111122223333:policy/demo-ci-deploy",
+    "AttachmentCount": 1,
+    "CreateDate": "2024-01-01T10:00:00Z",
+    "DefaultVersionId": "v1",
+    "IsAttachable": true,
+    "Path": "/",
+    "PermissionsBoundaryUsageCount": 0,
+    "PolicyId": "ANPAEXAMPLECIDEPLOY001",
+    "PolicyName": "demo-ci-deploy",
+    "UpdateDate": "2024-01-09T10:00:00Z"
+  },
+  {
+    "Arn": "arn:aws:iam::111122223333:policy/demo-dev-policy",
+    "AttachmentCount": 2,
+    "CreateDate": "2024-01-01T10:00:00Z",
+    "DefaultVersionId": "v2",
+    "IsAttachable": true,
+    "Path": "/",
+    "PermissionsBoundaryUsageCount": 0,
+    "PolicyId": "ANPAEXAMPLEDEVPOLICY01",
+    "PolicyName": "demo-dev-policy",
+    "UpdateDate": "2024-01-09T10:00:00Z"
+  }
+]

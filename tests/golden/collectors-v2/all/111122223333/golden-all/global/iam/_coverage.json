@@ -1,0 +1,260 @@
+{
+  "breakers": [],
+  "calls": [
+    {
+      "api": "iam:GenerateCredentialReport",
+      "count": 2,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": true,
+      "pages": 2,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "iam:GetAccountAuthorizationDetails",
+      "count": 1,
+      "error_code": null,
+      "items": 26,
+      "not_configured": false,
+      "optional": true,
+      "pages": 3,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "iam:GetAccountPasswordPolicy",
+      "count": 1,
+      "error_code": "NoSuchEntity",
+      "items": null,
+      "not_configured": true,
+      "optional": false,
+      "pages": 0,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "iam:GetAccountSummary",
+      "count": 1,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "iam:GetCredentialReport",
+      "count": 1,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": true,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "iam:GetOpenIDConnectProvider",
+      "count": 2,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 2,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "iam:ListAccessKeys",
+      "count": 3,
+      "error_code": null,
+      "items": 4,
+      "not_configured": false,
+      "optional": false,
+      "pages": 3,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "iam:ListOpenIDConnectProviders",
+      "count": 1,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "iam:ListRoles",
+      "count": 1,
+      "error_code": null,
+      "items": 13,
+      "not_configured": false,
+      "optional": false,
+      "pages": 3,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "iam:ListSAMLProviders",
+      "count": 1,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "iam:ListSSHPublicKeys",
+      "count": 1,
+      "error_code": "AccessDenied",
+      "items": 0,
+      "not_configured": false,
+      "optional": false,
+      "pages": 0,
+      "primary": false,
+      "status": "denied"
+    },
+    {
+      "api": "iam:ListSSHPublicKeys",
+      "count": 2,
+      "error_code": null,
+      "items": 1,
+      "not_configured": false,
+      "optional": false,
+      "pages": 2,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "iam:ListServiceSpecificCredentials",
+      "count": 3,
+      "error_code": null,
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 3,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "iam:ListSigningCertificates",
+      "count": 3,
+      "error_code": null,
+      "items": 1,
+      "not_configured": false,
+      "optional": false,
+      "pages": 3,
+      "primary": false,
+      "status": "ok"
+    },
+    {
+      "api": "iam:ListVirtualMFADevices",
+      "count": 1,
+      "error_code": null,
+      "items": 1,
+      "not_configured": false,
+      "optional": false,
+      "pages": 1,
+      "primary": false,
+      "status": "ok"
+    }
+  ],
+  "duration_seconds": "<stripped>",
+  "ended_at": "<stripped>",
+  "error": null,
+  "item_errors": [
+    {
+      "api": "iam:ListSSHPublicKeys",
+      "error_code": "AccessDenied",
+      "resource": "arn:aws:iam::111122223333:user/demo-bob",
+      "status": "denied"
+    }
+  ],
+  "item_errors_truncated": false,
+  "module": "iam",
+  "protocol": "ctx",
+  "region": "global",
+  "schema_version": 1,
+  "sections": [
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "account",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "credentials",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "entities",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "identity_providers",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "policy_documents",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "write_inline_policies",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "write_permission_boundaries",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "write_policy_documents",
+      "status": "ok"
+    }
+  ],
+  "services": [
+    "iam"
+  ],
+  "started_at": "<stripped>",
+  "status": "partial",
+  "status_reason": "iam:ListSSHPublicKeys denied",
+  "summary": {
+    "calls": 24,
+    "denied": 1,
+    "error": 0,
+    "item_errors": 1,
+    "not_configured": 1,
+    "ok": 23,
+    "skipped": 0,
+    "throttled": 0
+  }
+}

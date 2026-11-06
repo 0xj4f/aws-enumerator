@@ -1,0 +1,84 @@
+[
+  {
+    "api_version": null,
+    "kind": null,
+    "metadata": {
+      "name": "web-ingress",
+      "namespace": "web",
+      "labels": null,
+      "annotations": null,
+      "uid": "0458da67-aaaa-4bbb-8ccc-01982b5369f8",
+      "creation_timestamp": "2026-01-01 00:00:00+00:00",
+      "resource_version": "1000",
+      "owner_references": null,
+      "managed_fields": null
+    },
+    "spec": {
+      "ingress_class_name": "alb",
+      "rules": [
+        {
+          "host": "demo.example.com",
+          "http": {
+            "paths": [
+              {
+                "path": "/",
+                "path_type": "Prefix",
+                "backend": {
+                  "service": {
+                    "name": "web-lb",
+                    "port": {
+                      "number": 443
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "status": {}
+  },
+  {
+    "api_version": null,
+    "kind": null,
+    "metadata": {
+      "name": "payments-ingress",
+      "namespace": "payments",
+      "labels": null,
+      "annotations": {
+        "alb.ingress.kubernetes.io/auth-type": "cognito"
+      },
+      "uid": "4c674d46-aaaa-4bbb-8ccc-e04258a220f8",
+      "creation_timestamp": "2026-01-01 00:00:00+00:00",
+      "resource_version": "1000",
+      "owner_references": null,
+      "managed_fields": null
+    },
+    "spec": {
+      "ingress_class_name": "alb",
+      "rules": [
+        {
+          "host": "demo.example.com",
+          "http": {
+            "paths": [
+              {
+                "path": "/",
+                "path_type": "Prefix",
+                "backend": {
+                  "service": {
+                    "name": "payments-svc",
+                    "port": {
+                      "number": 443
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "status": {}
+  }
+]

@@ -1,0 +1,81 @@
+{
+  "breakers": [],
+  "calls": [
+    {
+      "api": "k8s:Authenticate",
+      "count": 1,
+      "error_code": "NoEndpoint",
+      "items": null,
+      "not_configured": false,
+      "optional": true,
+      "pages": 0,
+      "primary": false,
+      "status": "skipped"
+    },
+    {
+      "api": "k8s:GetVersion",
+      "count": 1,
+      "error_code": "Unauthorized",
+      "items": null,
+      "not_configured": false,
+      "optional": false,
+      "pages": 0,
+      "primary": false,
+      "status": "denied"
+    }
+  ],
+  "duration_seconds": "<stripped>",
+  "ended_at": "<stripped>",
+  "error": null,
+  "item_errors": [
+    {
+      "api": "k8s:Authenticate",
+      "error_code": "NoEndpoint",
+      "resource": "arn:aws:eks:eu-west-1:111122223333:cluster/demo-denied-cluster",
+      "status": "skipped"
+    },
+    {
+      "api": "k8s:GetVersion",
+      "error_code": "Unauthorized",
+      "resource": "arn:aws:eks:eu-west-1:111122223333:cluster/demo-west-cluster",
+      "status": "denied"
+    }
+  ],
+  "item_errors_truncated": false,
+  "module": "k8s",
+  "protocol": "ctx",
+  "region": "eu-west-1",
+  "schema_version": 1,
+  "sections": [
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "cluster",
+      "status": "ok"
+    },
+    {
+      "error_code": null,
+      "error_type": null,
+      "message": null,
+      "name": "cluster",
+      "status": "ok"
+    }
+  ],
+  "services": [
+    "eks"
+  ],
+  "started_at": "<stripped>",
+  "status": "partial",
+  "status_reason": "k8s:GetVersion denied (arn:aws:eks:eu-west-1:111122223333:cluster/demo-west-cluster) (+1 more)",
+  "summary": {
+    "calls": 2,
+    "denied": 1,
+    "error": 0,
+    "item_errors": 2,
+    "not_configured": 0,
+    "ok": 0,
+    "skipped": 1,
+    "throttled": 0
+  }
+}

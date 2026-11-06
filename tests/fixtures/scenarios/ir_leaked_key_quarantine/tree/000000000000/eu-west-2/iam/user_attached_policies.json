@@ -1,0 +1,9 @@
+{
+  "leaked-user": [],
+  "admin-user": [
+    {
+      "PolicyName": "AdministratorAccess",
+      "PolicyArn": "arn:aws:iam::aws:policy/AdministratorAccess"
+    }
+  ]
+}

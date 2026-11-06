@@ -1,0 +1,15 @@
+[
+  {
+    "CidrBlock": "10.10.0.0/16",
+    "IsDefault": false,
+    "OwnerId": "111122223333",
+    "State": "available",
+    "Tags": [
+      {
+        "Key": "Name",
+        "Value": "demo-west-vpc"
+      }
+    ],
+    "VpcId": "vpc-0dec000000000001"
+  }
+]

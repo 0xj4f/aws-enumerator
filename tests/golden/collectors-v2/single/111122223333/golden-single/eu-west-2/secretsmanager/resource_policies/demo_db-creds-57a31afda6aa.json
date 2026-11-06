@@ -1,0 +1,16 @@
+{
+  "ResourcePolicy": {
+    "Statement": [
+      {
+        "Action": "secretsmanager:GetSecretValue",
+        "Effect": "Allow",
+        "Principal": "*",
+        "Resource": "*",
+        "Sid": "PublicRead"
+      }
+    ],
+    "Version": "2012-10-17"
+  },
+  "SecretArn": "arn:aws:secretsmanager:eu-west-2:111122223333:secret:demo_db-creds-GhIjKl",
+  "SecretName": "demo_db-creds"
+}

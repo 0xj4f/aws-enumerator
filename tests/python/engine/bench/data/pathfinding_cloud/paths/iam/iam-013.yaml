@@ -1,0 +1,185 @@
+id: iam-013
+name: iam:AddUserToGroup
+category: self-escalation
+services:
+- iam
+description: A principal with `iam:AddUserToGroup` can add any user to any group they
+  have this permission on. By adding themselves to a group with elevated permissions,
+  they can gain access to the policies attached to that group. The level of access
+  gained depends on the permissions of the target group.
+prerequisites:
+  admin:
+  - A group must exist with administrative permissions (e.g., AdministratorAccess)
+  lateral:
+  - A group must exist with some level of permissions
+exploitationSteps:
+  awscli:
+  - step: 1
+    command: aws iam add-user-to-group --user-name @username --group-name @privileged-group
+    description: Add the target user (or yourself) to a group with elevated permissions
+  - step: 2
+    command: aws sts get-caller-identity
+    description: Verify the new permissions are active
+  pathrunner:
+  - step: 1
+    command: pathrunner use iam-013
+    description: Load the iam-013 exploit module in Pathrunner.
+  - step: 2
+    command: pathrunner set GROUP_NAME target-iam-group
+    description: Set the GROUP_NAME option (replace the placeholder with your target's real value).
+  - step: 3
+    command: pathrunner exploit
+    description: Execute the privilege escalation.
+recommendation: |
+  Restrict access to `iam:AddUserToGroup` using the principle of least privilege. Only allow users to add users to groups they are authorized to manage. Very few principals need this permission, so it should be restricted to only the few principals that need it.
+
+  Use IAM policy conditions to restrict which groups users can be added to:
+
+  ```json
+  {
+    "Effect": "Allow",
+    "Action": "iam:AddUserToGroup",
+    "Resource": "arn:aws:iam::ACCOUNT_ID:group/SpecificGroup"
+  }
+  ```
+
+  Monitor CloudTrail for unusual AddUserToGroup activity, especially adding users to privileged groups.
+limitations: 'This path provides administrative access only if the target user or
+  group has administrative permissions. The attacker gains whatever permissions the
+  target principal has. If the target has limited permissions, the attacker gains
+  limited access. However, even limited access may enable multi-hop attacks or access
+  to sensitive data.
+
+  '
+discoveryAttribution:
+  firstDocumented:
+    author: Spencer Gietzen
+    organization: Rhino Security Labs
+    date: 2019
+    link: https://rhinosecuritylabs.com/aws/aws-privilege-escalation-methods-mitigation/
+references:
+- title: AWS Privilege Escalation Methods and Mitigation
+  url: https://rhinosecuritylabs.com/aws/aws-privilege-escalation-methods-mitigation/
+- title: IAM Vulnerable - AddUserToGroup
+  url: https://github.com/BishopFox/iam-vulnerable
+- title: HackTricks - AWS - IAM Privesc
+  url: https://cloud.hacktricks.wiki/en/pentesting-cloud/aws-security/aws-privilege-escalation/aws-iam-privesc/index.html#iamaddusertogroup
+- title: HackingTheCloud - AddUserToGroup Privilege Escalation
+  url: https://hackingthe.cloud/aws/exploitation/iam_privilege_escalation/#iamaddusertogroup
+- title: Well, That Escalated Quickly - Privesc 13
+  url: https://labs.bishopfox.com/tech-blog/privilege-escalation-in-aws
+relatedPaths:
+- iam-008
+- iam-010
+detectionTools:
+  cloudsplaining: https://github.com/salesforce/cloudsplaining/blob/015f16030f35a40631560a895d5ae416f58b6a94/cloudsplaining/shared/constants.py#L115
+  pacu: https://github.com/RhinoSecurityLabs/pacu/blob/50e7ad2d885b7ab4bc130f44b798ca85ed4d7a91/pacu/modules/iam__privesc_scan/main.py#L572
+  prowler: https://github.com/prowler-cloud/prowler/blob/eabe4884379070c72e07103f239bac70d31f6320/prowler/providers/aws/services/iam/lib/privilege_escalation.py#L38
+learningEnvironments:
+  pathfinding-labs:
+    type: open-source
+    githubLink: https://github.com/DataDog/pathfinding-labs
+    scenario: privesc-self-escalation/to-admin/iam-addusertogroup
+    description: Deploy Terraform into your own AWS account to practice this attack
+      path
+  iam-vulnerable:
+    type: open-source
+    githubLink: https://github.com/BishopFox/iam-vulnerable
+    scenario: IAM-AddUserToGroup
+    description: Deploy Terraform into your own AWS account and practice individual
+      exploitation paths
+  cybr:
+    type: closed-source
+    description: Hosted learning environment with interactive AWS security labs
+    scenario: https://cybr.com/courses/iam-privilege-escalation-labs/lessons/lab-ctf-iamaddusertogroup-privesc/
+    scenarioPricingModel: paid
+attackVisualization:
+  nodes:
+  - id: start
+    label: Starting Principal
+    type: principal
+    description: 'The principal with iam:AddUserToGroup permission on the target group.
+      Can be an IAM user or role with permission to add users to groups with elevated
+      permissions.
+
+      '
+  - id: target_group
+    label: Existing target-group
+    type: resource
+    description: 'The target IAM group with elevated permissions. The attacker adds
+      a user (themselves or another user) to this group to gain access to all policies
+      attached to the group.
+
+      '
+  - id: admin
+    label: Effective Administrator
+    type: outcome
+    description: 'Full administrative access to the AWS account when the target group
+      has AdministratorAccess or equivalent permissions attached.
+
+      '
+  - id: some_perms
+    label: Some additional access
+    type: outcome
+    color: '#ffeb99'
+    description: 'The target group has some elevated permissions. Check for data access
+      (S3, RDS, DynamoDB) or additional privilege escalation paths.
+
+      '
+  - id: no_access
+    label: No additional access
+    type: outcome
+    color: '#cccccc'
+    description: 'The target group has no interesting permissions beyond what the
+      starting principal already had.
+
+      '
+  edges:
+  - from: start
+    to: target_group
+    label: iam:AddUserToGroup
+    description: 'Execute iam:AddUserToGroup to add a user to the target group. The
+      user immediately gains access to all policies attached to that group. You can
+      add yourself (if you''re a user) or add another user and then create access
+      keys for them.
+
+
+      Command: `aws iam add-user-to-group --user-name @username --group-name @privileged-group`
+
+      '
+  - from: target_group
+    to: admin
+    label: If group has admin permissions
+    branch: A
+    condition: admin
+    description: 'If the target group has AdministratorAccess or equivalent permissions
+      attached, the attacker gains full administrative access to the account.
+
+      '
+  - from: target_group
+    to: some_perms
+    label: If group has some permissions
+    branch: B
+    condition: some_permissions
+    description: 'If the target group has some elevated permissions, check for data
+      access (S3, RDS, DynamoDB) or additional privilege escalation paths.
+
+      '
+  - from: target_group
+    to: no_access
+    label: If group has no interesting permissions
+    branch: C
+    condition: no_permissions
+    description: 'If the target group only has minimal permissions, there may be no
+      meaningful privilege escalation achieved.
+
+      '
+permissions:
+  required:
+  - permission: iam:AddUserToGroup
+    resourceConstraints: Target group must be in the Resource section
+  additional:
+  - permission: iam:ListUsers
+    resourceConstraints: Helpful for discovering target users
+  - permission: iam:GetUser
+    resourceConstraints: Useful for viewing user details

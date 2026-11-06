@@ -1,0 +1,578 @@
+{
+  "edges": [
+    {
+      "category": "apigw",
+      "edge_id": "e:5c218796055c3b0c18d0",
+      "source": "apigw:arn:aws:apigateway:eu-west-2::/apis/demohttp01",
+      "target": "lambda:arn:aws:lambda:eu-west-2:111122223333:function:demo-processor",
+      "type": "INVOKES",
+      "weight": 1
+    },
+    {
+      "category": "apigw",
+      "edge_id": "e:4822cf89d3542f5fa2fb",
+      "source": "apigw:arn:aws:apigateway:eu-west-2::/restapis/demorest01",
+      "target": "lambda:arn:aws:lambda:eu-west-2:111122223333:function:demo-processor",
+      "type": "INVOKES",
+      "weight": 1
+    },
+    {
+      "category": "apigw",
+      "edge_id": "e:4d856c39da89f09317de",
+      "source": "apigw:arn:aws:apigateway:eu-west-2::/restapis/demorest02",
+      "target": "lambda:arn:aws:lambda:eu-west-2:111122223333:function:demo-internal",
+      "type": "INVOKES",
+      "weight": 1
+    },
+    {
+      "category": "dynamodb",
+      "edge_id": "e:7e5a496cf82a95ac2379",
+      "matched_actions": [
+        "dynamodb:GetItem"
+      ],
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "target": "dynamodb:arn:aws:dynamodb:eu-west-2:111122223333:table/demo-denied-table",
+      "type": "CAN_READ_TABLE",
+      "weight": 1
+    },
+    {
+      "category": "dynamodb",
+      "edge_id": "e:1e6b574d0d93f28c8f70",
+      "matched_actions": [
+        "dynamodb:PutItem"
+      ],
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "target": "dynamodb:arn:aws:dynamodb:eu-west-2:111122223333:table/demo-denied-table",
+      "type": "CAN_WRITE_TABLE",
+      "weight": 1
+    },
+    {
+      "category": "dynamodb",
+      "edge_id": "e:99e1f30187cfeb46d02f",
+      "matched_actions": [
+        "dynamodb:GetItem"
+      ],
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "target": "dynamodb:arn:aws:dynamodb:eu-west-2:111122223333:table/demo-orders",
+      "type": "CAN_READ_TABLE",
+      "weight": 1
+    },
+    {
+      "category": "dynamodb",
+      "edge_id": "e:9ce59d781f4f72be18c6",
+      "matched_actions": [
+        "dynamodb:PutItem"
+      ],
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "target": "dynamodb:arn:aws:dynamodb:eu-west-2:111122223333:table/demo-orders",
+      "type": "CAN_WRITE_TABLE",
+      "weight": 1
+    },
+    {
+      "category": "dynamodb",
+      "edge_id": "e:9648a9af144e5fbd2ae7",
+      "matched_actions": [
+        "dynamodb:GetItem"
+      ],
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "target": "dynamodb:arn:aws:dynamodb:eu-west-2:111122223333:table/demo-sessions",
+      "type": "CAN_READ_TABLE",
+      "weight": 1
+    },
+    {
+      "category": "dynamodb",
+      "edge_id": "e:f0e82e348f0271b68613",
+      "matched_actions": [
+        "dynamodb:PutItem"
+      ],
+      "source": "arn:aws:iam::111122223333:group/demo-admins",
+      "target": "dynamodb:arn:aws:dynamodb:eu-west-2:111122223333:table/demo-sessions",
+      "type": "CAN_WRITE_TABLE",
+      "weight": 1
+    },
+    {
+      "category": "dynamodb",
+      "edge_id": "e:c873a107c10e16bdc2f9",
+      "matched_actions": [
+        "dynamodb:GetItem"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "target": "dynamodb:arn:aws:dynamodb:eu-west-2:111122223333:table/demo-denied-table",
+      "type": "CAN_READ_TABLE",
+      "weight": 1
+    },
+    {
+      "category": "dynamodb",
+      "edge_id": "e:50b6c29c4de069df6dc9",
+      "matched_actions": [
+        "dynamodb:PutItem"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "target": "dynamodb:arn:aws:dynamodb:eu-west-2:111122223333:table/demo-denied-table",
+      "type": "CAN_WRITE_TABLE",
+      "weight": 1
+    },
+    {
+      "category": "dynamodb",
+      "edge_id": "e:4e446a633b199ca491a2",
+      "matched_actions": [
+        "dynamodb:GetItem"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "target": "dynamodb:arn:aws:dynamodb:eu-west-2:111122223333:table/demo-orders",
+      "type": "CAN_READ_TABLE",
+      "weight": 1
+    },
+    {
+      "category": "dynamodb",
+      "edge_id": "e:8511aae8f260762c1ff4",
+      "matched_actions": [
+        "dynamodb:PutItem"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "target": "dynamodb:arn:aws:dynamodb:eu-west-2:111122223333:table/demo-orders",
+      "type": "CAN_WRITE_TABLE",
+      "weight": 1
+    },
+    {
+      "category": "dynamodb",
+      "edge_id": "e:4a0439d74a788c8e4291",
+      "matched_actions": [
+        "dynamodb:GetItem"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "target": "dynamodb:arn:aws:dynamodb:eu-west-2:111122223333:table/demo-sessions",
+      "type": "CAN_READ_TABLE",
+      "weight": 1
+    },
+    {
+      "category": "dynamodb",
+      "edge_id": "e:89685f222f9c9dd4e4f1",
+      "matched_actions": [
+        "dynamodb:PutItem"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-admin-role",
+      "target": "dynamodb:arn:aws:dynamodb:eu-west-2:111122223333:table/demo-sessions",
+      "type": "CAN_WRITE_TABLE",
+      "weight": 1
+    },
+    {
+      "category": "dynamodb",
+      "edge_id": "e:8fe8d33786962155c38d",
+      "matched_actions": [
+        "dynamodb:GetItem"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "target": "dynamodb:arn:aws:dynamodb:eu-west-2:111122223333:table/demo-denied-table",
+      "type": "CAN_READ_TABLE",
+      "weight": 1
+    },
+    {
+      "category": "dynamodb",
+      "edge_id": "e:57d4bfe646c185319734",
+      "matched_actions": [
+        "dynamodb:PutItem"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "target": "dynamodb:arn:aws:dynamodb:eu-west-2:111122223333:table/demo-denied-table",
+      "type": "CAN_WRITE_TABLE",
+      "weight": 1
+    },
+    {
+      "category": "dynamodb",
+      "edge_id": "e:9148103fecb82ef03a34",
+      "matched_actions": [
+        "dynamodb:GetItem"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "target": "dynamodb:arn:aws:dynamodb:eu-west-2:111122223333:table/demo-orders",
+      "type": "CAN_READ_TABLE",
+      "weight": 1
+    },
+    {
+      "category": "dynamodb",
+      "edge_id": "e:728aa50f5dcdde69c471",
+      "matched_actions": [
+        "dynamodb:PutItem"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "target": "dynamodb:arn:aws:dynamodb:eu-west-2:111122223333:table/demo-orders",
+      "type": "CAN_WRITE_TABLE",
+      "weight": 1
+    },
+    {
+      "category": "dynamodb",
+      "edge_id": "e:759541f1c292590c4c75",
+      "matched_actions": [
+        "dynamodb:GetItem"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "target": "dynamodb:arn:aws:dynamodb:eu-west-2:111122223333:table/demo-sessions",
+      "type": "CAN_READ_TABLE",
+      "weight": 1
+    },
+    {
+      "category": "dynamodb",
+      "edge_id": "e:f4763c517b6e701ddc30",
+      "matched_actions": [
+        "dynamodb:PutItem"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-build-role",
+      "target": "dynamodb:arn:aws:dynamodb:eu-west-2:111122223333:table/demo-sessions",
+      "type": "CAN_WRITE_TABLE",
+      "weight": 1
+    },
+    {
+      "category": "dynamodb",
+      "edge_id": "e:2ac4440e402884dcb643",
+      "matched_actions": [
+        "dynamodb:GetItem"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "target": "dynamodb:arn:aws:dynamodb:eu-west-2:111122223333:table/demo-denied-table",
+      "type": "CAN_READ_TABLE",
+      "weight": 1
+    },
+    {
+      "category": "dynamodb",
+      "edge_id": "e:e69726232a45e4ddea4d",
+      "matched_actions": [
+        "dynamodb:PutItem"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "target": "dynamodb:arn:aws:dynamodb:eu-west-2:111122223333:table/demo-denied-table",
+      "type": "CAN_WRITE_TABLE",
+      "weight": 1
+    },
+    {
+      "category": "dynamodb",
+      "edge_id": "e:b2182b64e692e9b6dd04",
+      "matched_actions": [
+        "dynamodb:GetItem"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "target": "dynamodb:arn:aws:dynamodb:eu-west-2:111122223333:table/demo-orders",
+      "type": "CAN_READ_TABLE",
+      "weight": 1
+    },
+    {
+      "category": "dynamodb",
+      "edge_id": "e:11668960a1e4a698da92",
+      "matched_actions": [
+        "dynamodb:PutItem"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "target": "dynamodb:arn:aws:dynamodb:eu-west-2:111122223333:table/demo-orders",
+      "type": "CAN_WRITE_TABLE",
+      "weight": 1
+    },
+    {
+      "category": "dynamodb",
+      "edge_id": "e:e110bc52f4b315b13db0",
+      "matched_actions": [
+        "dynamodb:GetItem"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "target": "dynamodb:arn:aws:dynamodb:eu-west-2:111122223333:table/demo-sessions",
+      "type": "CAN_READ_TABLE",
+      "weight": 1
+    },
+    {
+      "category": "dynamodb",
+      "edge_id": "e:608eae210219be40b8c0",
+      "matched_actions": [
+        "dynamodb:PutItem"
+      ],
+      "source": "arn:aws:iam::111122223333:role/demo-cfn-role",
+      "target": "dynamodb:arn:aws:dynamodb:eu-west-2:111122223333:table/demo-sessions",
+      "type": "CAN_WRITE_TABLE",
+      "weight": 1
+    },
+    {
+      "category": "dynamodb",
+      "edge_id": "e:79317dc850b9e54e704a",
+      "has_conditions": true,
+      "is_cross_account": true,
+      "matched_actions": [
+        "dynamodb:GetItem",
+        "dynamodb:Query"
+      ],
+      "source": "dynamodb:arn:aws:dynamodb:eu-west-2:111122223333:table/demo-orders",
+      "target": "arn:aws:iam::999999999999:root",
+      "type": "DDB_GRANTS_CROSS_ACCOUNT",
+      "weight": 2
+    },
+    {
+      "category": "ecr",
+      "edge_id": "e:4e68b6ccc2b1b42d6209",
+      "has_conditions": true,
+      "is_cross_account": true,
+      "matched_actions": [
+        "ecr:BatchGetImage",
+        "ecr:GetDownloadUrlForLayer"
+      ],
+      "source": "ecr:arn:aws:ecr:eu-west-2:111122223333:repository/demo-api",
+      "target": "arn:aws:iam::999999999999:root",
+      "type": "ECR_GRANTS_CROSS_ACCOUNT",
+      "weight": 2
+    },
+    {
+      "category": "kms",
+      "edge_id": "e:5aae9868c00832ecc5d4",
+      "source": "rds:arn:aws:rds:eu-west-2:111122223333:cluster-snapshot:demo-aurora-snap-shared",
+      "target": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a1",
+      "type": "RDS_ENCRYPTED_BY",
+      "weight": 3
+    },
+    {
+      "category": "kms",
+      "edge_id": "e:85180216bbcaf3a5bd6f",
+      "source": "rds:arn:aws:rds:eu-west-2:111122223333:cluster:demo-aurora",
+      "target": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a1",
+      "type": "RDS_ENCRYPTED_BY",
+      "weight": 3
+    },
+    {
+      "category": "kms",
+      "edge_id": "e:1b2dfa0339bf993ad63f",
+      "source": "rds:arn:aws:rds:eu-west-2:111122223333:db:demo-db-private",
+      "target": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a1",
+      "type": "RDS_ENCRYPTED_BY",
+      "weight": 3
+    },
+    {
+      "category": "kms",
+      "edge_id": "e:5db8ae247a91c606c91d",
+      "source": "rds:arn:aws:rds:eu-west-2:111122223333:snapshot:demo-db-snap-shared",
+      "target": "kms:arn:aws:kms:eu-west-2:111122223333:key/1111aaaa-0000-4000-8000-0000000000a1",
+      "type": "RDS_ENCRYPTED_BY",
+      "weight": 3
+    }
+  ],
+  "findings": [
+    {
+      "category": "apigw_public",
+      "description": "These methods/routes have no effective authorisation (NONE): anyone who can reach the endpoint can invoke the Lambda function.",
+      "entity": "apigw/demo-http-api",
+      "entity_arn": "arn:aws:apigateway:eu-west-2::/apis/demohttp01",
+      "fingerprint": "b82f1122d9d31c25f25de12d20b3646c",
+      "id": "APIGW-AUTH-001",
+      "matched_actions": [],
+      "node_id": "arn:aws:apigateway:eu-west-2::/apis/demohttp01",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "remediation": "Attach an authorizer (IAM, Cognito, JWT or Lambda) to the listed routes, or confirm that unauthenticated access is intended.",
+      "resource": [
+        "arn:aws:apigateway:eu-west-2::/apis/demohttp01"
+      ],
+      "severity": "MEDIUM",
+      "source_policy": "APIConfig",
+      "source_type": "apigw_config",
+      "title": "API 'demo-http-api' has 1 Lambda route(s) without authentication"
+    },
+    {
+      "category": "apigw_public",
+      "description": "These methods/routes have no effective authorisation (NONE): anyone who can reach the endpoint can invoke the Lambda function.",
+      "entity": "apigw/demo-rest-api",
+      "entity_arn": "arn:aws:apigateway:eu-west-2::/restapis/demorest01",
+      "fingerprint": "b8abf4dd920b9eca1537761634ffa38f",
+      "id": "APIGW-AUTH-001",
+      "matched_actions": [],
+      "node_id": "arn:aws:apigateway:eu-west-2::/restapis/demorest01",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "remediation": "Attach an authorizer (IAM, Cognito, JWT or Lambda) to the listed routes, or confirm that unauthenticated access is intended.",
+      "resource": [
+        "arn:aws:apigateway:eu-west-2::/restapis/demorest01"
+      ],
+      "severity": "MEDIUM",
+      "source_policy": "APIConfig",
+      "source_type": "apigw_config",
+      "title": "API 'demo-rest-api' has 1 Lambda route(s) without authentication"
+    },
+    {
+      "category": "dynamodb_cross_account",
+      "description": "The dynamodb table's resource policy grants dynamodb:GetItem, dynamodb:Query to principals of account(s) 999999999999, independently of this account's IAM policies.",
+      "entity": "dynamodb/demo-orders",
+      "entity_arn": "arn:aws:dynamodb:eu-west-2:111122223333:table/demo-orders",
+      "fingerprint": "6c2f35e5534e3d2a8ae343763087f623",
+      "id": "DDB-XACCT-001",
+      "matched_actions": [
+        "dynamodb:GetItem",
+        "dynamodb:Query"
+      ],
+      "node_id": "arn:aws:dynamodb:eu-west-2:111122223333:table/demo-orders",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "remediation": "Verify cross-account access is intended.",
+      "resource": [
+        "arn:aws:dynamodb:eu-west-2:111122223333:table/demo-orders"
+      ],
+      "severity": "MEDIUM",
+      "source_policy": "ResourcePolicy",
+      "source_type": "dynamodb_resource_policy",
+      "title": "DynamoDB table 'demo-orders' is shared with 999999999999"
+    },
+    {
+      "category": "ecr_registry",
+      "description": "The registry permission policy grants replication or repository creation to principals outside this account, so they can place images in this registry.",
+      "entity": "ecr-registry/eu-west-2",
+      "entity_arn": "arn:aws:ecr:eu-west-2:111122223333:repository/*",
+      "fingerprint": "49c0f1121f54f4f00d4ecf2f7a78173a",
+      "id": "ECR-REGISTRY-001",
+      "matched_actions": [],
+      "node_id": "aws-enumerator:region/111122223333/eu-west-2",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "remediation": "Remove registry-policy grants (ReplicateImage, CreateRepository) to accounts that should not write into this registry.",
+      "severity": "MEDIUM",
+      "title": "ECR registry in eu-west-2 lets 999999999999 write images"
+    },
+    {
+      "category": "ecr_registry",
+      "description": "Registry replication rules copy images to registries of other accounts.",
+      "entity": "ecr-registry/eu-west-2",
+      "entity_arn": "arn:aws:ecr:eu-west-2:111122223333:repository/*",
+      "fingerprint": "ad2b36b42659fe43c6e698eafa2e9be8",
+      "id": "ECR-REPLICATION-001",
+      "matched_actions": [],
+      "node_id": "aws-enumerator:region/111122223333/eu-west-2",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "remediation": "Verify that cross-account replication destinations are intended and trusted.",
+      "severity": "LOW",
+      "title": "ECR images in eu-west-2 replicate to 999999999999"
+    },
+    {
+      "category": "ecr_cross_account",
+      "description": "The ecr repository's resource policy grants ecr:BatchGetImage, ecr:GetDownloadUrlForLayer to principals of account(s) 999999999999, independently of this account's IAM policies.",
+      "entity": "ecr/demo-api",
+      "entity_arn": "arn:aws:ecr:eu-west-2:111122223333:repository/demo-api",
+      "fingerprint": "fe664c5997bd2315083ef836279c5f21",
+      "id": "ECR-XACCT-001",
+      "matched_actions": [
+        "ecr:BatchGetImage",
+        "ecr:GetDownloadUrlForLayer"
+      ],
+      "node_id": "arn:aws:ecr:eu-west-2:111122223333:repository/demo-api",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "remediation": "Verify cross-account pull/push access is intended.",
+      "resource": [
+        "arn:aws:ecr:eu-west-2:111122223333:repository/demo-api"
+      ],
+      "severity": "MEDIUM",
+      "source_policy": "ResourcePolicy",
+      "source_type": "ecr_resource_policy",
+      "title": "ECR repository 'demo-api' is shared with 999999999999"
+    },
+    {
+      "category": "rds_unencrypted",
+      "description": "StorageEncrypted is false: data at rest and its snapshots are not protected by KMS.",
+      "entity": "rds/demo-db",
+      "entity_arn": "arn:aws:rds:eu-west-2:111122223333:db:demo-db",
+      "fingerprint": "60376ef0a89e07b7dbf40da9487ba744",
+      "id": "RDS-ENC-001",
+      "matched_actions": [],
+      "node_id": "arn:aws:rds:eu-west-2:111122223333:db:demo-db",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "remediation": "Recreate the database (or restore an encrypted copy of a snapshot) with storage encryption.",
+      "resource": [
+        "arn:aws:rds:eu-west-2:111122223333:db:demo-db"
+      ],
+      "severity": "MEDIUM",
+      "source_policy": "DBConfig",
+      "source_type": "rds_config",
+      "title": "RDS instance 'demo-db' storage is not encrypted"
+    },
+    {
+      "category": "rds_public",
+      "description": "PubliclyAccessible is true: the endpoint resolves to a public address and is reachable from the internet wherever its security groups allow it.",
+      "entity": "rds/demo-db",
+      "entity_arn": "arn:aws:rds:eu-west-2:111122223333:db:demo-db",
+      "fingerprint": "e409efc219c900f9d05874504fa17b97",
+      "id": "RDS-PUB-001",
+      "matched_actions": [],
+      "node_id": "arn:aws:rds:eu-west-2:111122223333:db:demo-db",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "remediation": "Set PubliclyAccessible=false and place the database in private subnets.",
+      "resource": [
+        "arn:aws:rds:eu-west-2:111122223333:db:demo-db"
+      ],
+      "severity": "HIGH",
+      "source_policy": "DBConfig",
+      "source_type": "rds_config",
+      "title": "RDS instance 'demo-db' is publicly accessible"
+    },
+    {
+      "category": "rds_public_snapshot",
+      "description": "The snapshot's restore attribute includes 'all': any AWS account can restore it and read the data.",
+      "entity": "rds/demo-aurora-snap-public",
+      "entity_arn": "arn:aws:rds:eu-west-2:111122223333:cluster-snapshot:demo-aurora-snap-public",
+      "fingerprint": "da7903e7d9f2ca0501026d59e3470a4d",
+      "id": "RDS-SNAP-001",
+      "matched_actions": [],
+      "node_id": "arn:aws:rds:eu-west-2:111122223333:cluster-snapshot:demo-aurora-snap-public",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "remediation": "Remove public sharing from the snapshot immediately.",
+      "resource": [
+        "arn:aws:rds:eu-west-2:111122223333:cluster-snapshot:demo-aurora-snap-public"
+      ],
+      "severity": "HIGH",
+      "source_policy": "SnapshotAttributes",
+      "source_type": "rds_config",
+      "title": "RDS cluster snapshot 'demo-aurora-snap-public' is shared publicly"
+    },
+    {
+      "category": "rds_public_snapshot",
+      "description": "The snapshot's restore attribute includes 'all': any AWS account can restore it and read the data.",
+      "entity": "rds/demo-db-snap-public",
+      "entity_arn": "arn:aws:rds:eu-west-2:111122223333:snapshot:demo-db-snap-public",
+      "fingerprint": "1ce38521df91a3edc9c5e16320bb0460",
+      "id": "RDS-SNAP-001",
+      "matched_actions": [],
+      "node_id": "arn:aws:rds:eu-west-2:111122223333:snapshot:demo-db-snap-public",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "remediation": "Remove public sharing from the snapshot immediately.",
+      "resource": [
+        "arn:aws:rds:eu-west-2:111122223333:snapshot:demo-db-snap-public"
+      ],
+      "severity": "HIGH",
+      "source_policy": "SnapshotAttributes",
+      "source_type": "rds_config",
+      "title": "RDS snapshot 'demo-db-snap-public' is shared publicly"
+    },
+    {
+      "category": "rds_cross_account",
+      "description": "The snapshot's restore attribute lists account 999999999999, which can restore it.",
+      "entity": "rds/demo-aurora-snap-shared",
+      "entity_arn": "arn:aws:rds:eu-west-2:111122223333:cluster-snapshot:demo-aurora-snap-shared",
+      "fingerprint": "b260af1f9bfb20223284e33076784d53",
+      "id": "RDS-XACCT-001",
+      "matched_actions": [],
+      "node_id": "arn:aws:rds:eu-west-2:111122223333:cluster-snapshot:demo-aurora-snap-shared",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "remediation": "Verify the snapshot sharing is intended; remove accounts that should not restore it.",
+      "resource": [
+        "arn:aws:rds:eu-west-2:111122223333:cluster-snapshot:demo-aurora-snap-shared"
+      ],
+      "severity": "MEDIUM",
+      "source_policy": "SnapshotAttributes",
+      "source_type": "rds_config",
+      "title": "RDS cluster snapshot 'demo-aurora-snap-shared' is shared with account 999999999999"
+    },
+    {
+      "category": "rds_cross_account",
+      "description": "The snapshot's restore attribute lists account 999999999999, which can restore it.",
+      "entity": "rds/demo-db-snap-shared",
+      "entity_arn": "arn:aws:rds:eu-west-2:111122223333:snapshot:demo-db-snap-shared",
+      "fingerprint": "bf1ca539be292fc7874b20ba63bb79df",
+      "id": "RDS-XACCT-001",
+      "matched_actions": [],
+      "node_id": "arn:aws:rds:eu-west-2:111122223333:snapshot:demo-db-snap-shared",
+      "reference": "https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#resource-exposure--external-access-findings",
+      "remediation": "Verify the snapshot sharing is intended; remove accounts that should not restore it.",
+      "resource": [
+        "arn:aws:rds:eu-west-2:111122223333:snapshot:demo-db-snap-shared"
+      ],
+      "severity": "MEDIUM",
+      "source_policy": "SnapshotAttributes",
+      "source_type": "rds_config",
+      "title": "RDS snapshot 'demo-db-snap-shared' is shared with account 999999999999"
+    }
+  ]
+}
