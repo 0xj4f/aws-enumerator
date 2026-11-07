@@ -1,6 +1,6 @@
 # README screenshots
 
-`docs/00.png`, `docs/01.png` and `docs/02.png` are produced by the scripts in this directory from a
+`docs/00.png`, `docs/01.png`, `docs/02.png` and `docs/03.png` are produced by the scripts in this directory from a
 **synthetic** run. No real account, collector or AWS API is involved (finding F-134: the earlier images
 showed identifiers from a real-looking environment).
 
@@ -9,11 +9,12 @@ showed identifiers from a real-looking environment).
 | `docs/00.png` | Brief: the verdict, the headline numbers, the top attack paths, internet exposure, detection posture and coverage, right after the run zip is opened |
 | `docs/01.png` | Explore: the `demo-web-1` EC2 instance, chosen through the search box, its neighbourhood on the canvas and its details in the drawer |
 | `docs/02.png` | Attack paths: the external partner account's 6-step route to the account administrator, selected, with its kill-chain canvas in the drawer |
+| `docs/03.png` | Map: the kill-chain map of every route (ways in, footholds, escalation, admin, data reached), with the top key pivot pinned so its routes light up |
 
 ## Regenerate
 
 ```sh
-scripts/screenshots/capture.sh                 # writes docs/00.png docs/01.png docs/02.png
+scripts/screenshots/capture.sh                 # writes docs/00.png docs/01.png docs/02.png docs/03.png
 scripts/screenshots/capture.sh --out-dir /tmp/shots --view detail   # one view elsewhere
 ```
 

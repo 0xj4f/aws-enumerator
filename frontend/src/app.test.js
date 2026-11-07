@@ -554,6 +554,19 @@ describe('Phase 3: the kill-chain map and the operator\'s audit, offensive only 
     expect(store.findingsView.value.some((f) => f.category !== 'privilege-escalation')).toBe(true);
   });
 
+  it('[F-008] colours canvas cards from a fixed list of node groups, whatever the report calls them (D-60)', async () => {
+    const g = fixture('example');
+    const t = g.nodes.find((n) => n.type === 'role').type;
+    g.node_types = { ...(g.node_types || {}), [t]: { ...((g.node_types || {})[t] || {}), group: 'x" onmouseover="alert(1) evil' } };
+    await mountApp();
+    await load(g);
+    await go('/map');
+    const tiles = all('[data-testid="map-canvas"] .nc-icon').map((e) => e.className);
+    expect(tiles.length).toBeGreaterThan(0);
+    expect(tiles.every((c) => /^nc-icon g-(identity|synthetic|admin|compute|network|data|messaging|edge|kubernetes|posture|other)$/.test(c))).toBe(true);
+    expect(tiles).toContain('nc-icon g-other');
+  });
+
   it('never shows remediation text in a finding drawer', async () => {
     await mountApp();
     await load(fixture('example'));

@@ -28,6 +28,8 @@ const model = computed(() => {
   return killChainMap(index.value, simplified.value, paths.value, dataAssets.value, { ...opts.value, expanded: expanded.value });
 });
 const pivotList = computed(() => (index.value && simplified.value ? pivots(index.value, simplified.value, paths.value) : []));
+/** Two-digit rank of a pivot ("01"). */
+const rank = (i) => String(i + 1).padStart(2, '0');
 const active = computed(() => pivotList.value.find((p) => p.id === (hovered.value || pinned.value)) || null);
 const highlight = computed(() => {
   if (!active.value || !model.value) return null;
@@ -87,7 +89,7 @@ const tabs = [
         <p class="muted small">Where the routes converge. Compromise one and every route through it is yours. Hover to light them up, click to pin.</p>
         <p v-if="!pivotList.length" class="muted">Every route goes straight from its way in to admin.</p>
         <div
-          v-for="p in pivotList"
+          v-for="(p, i) in pivotList"
           :key="p.id"
           class="pivot"
           :class="{ active: active && active.id === p.id, pinned: pinned === p.id }"
@@ -103,7 +105,10 @@ const tabs = [
           @click="togglePin(p.id)"
           @keydown.enter.prevent="togglePin(p.id)"
         >
-          <div class="pivot-label ellipsis" :title="p.label">{{ shorten(p.label, 48) }}</div>
+          <div class="pivot-head">
+            <span class="pivot-rank">{{ rank(i) }}</span>
+            <div class="pivot-label ellipsis" :title="p.label">{{ shorten(p.label, 44) }}</div>
+          </div>
           <div class="pivot-meta">
             <span>{{ p.typeLabel }}</span>
             <span v-if="p.admin" class="badge bad">admin-equivalent</span>
@@ -111,6 +116,7 @@ const tabs = [
             <span>{{ plural(p.waysIn, 'way in', 'ways in') }}</span>
             <button type="button" class="link small" data-action="open-pivot" @click.stop="open(p.id)">details</button>
           </div>
+          <progress class="pivot-meter" :value="p.routes" :max="Math.max(1, paths.length)" :title="p.routes + ' of ' + paths.length + ' routes'" aria-hidden="true" />
         </div>
       </aside>
     </div>

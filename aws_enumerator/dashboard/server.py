@@ -4,17 +4,19 @@ The dashboard is a static page: reports are loaded in the browser through the pa
 pickers, so the server never serves report data. It serves an allow-list of the page's own files
 and nothing else:
 
-* ``index.html`` (also at ``/``), ``css/*.css``, ``js/*.js``, ``vendor/*.js``, ``vendor/LICENSE-*.txt``
-  and ``icons/*.svg``, snapshotted when the server starts (regular files inside the dashboard
-  directory only; ``server.py``, ``__init__.py`` and ``__pycache__`` are never reachable);
+* ``index.html`` (also at ``/``), ``css/*.css``, ``js/*.js``, ``vendor/*.js``, ``vendor/LICENSE-*.txt``,
+  ``icons/*.svg`` and ``fonts/*.woff2`` (the bundled Fira fonts, D-60), snapshotted when the server starts
+  (regular files inside the dashboard directory only; ``server.py``, ``__init__.py`` and ``__pycache__`` are
+  never reachable);
 * no directory listings (any other path is 404), ``GET`` and ``HEAD`` only (other methods: 405);
 * a ``Host`` allow-list against DNS rebinding (421 Misdirected Request otherwise): ``127.0.0.1``,
   ``localhost`` and ``[::1]`` and the bind host, each with the bound port, plus every ``allowed_hosts``
   entry (``name`` = that name on any port, ``name:port`` = exactly that);
 * security headers on every response: the page's Content-Security-Policy plus ``frame-ancestors``,
   ``X-Content-Type-Options: nosniff``, ``Referrer-Policy: no-referrer`` and the rest of :data:`SECURITY_HEADERS`;
-* ``Cache-Control: no-store`` on every response except the immutable static assets (``icons/*.svg`` and
-  ``vendor/*``), which get ``private, max-age=3600`` so a session does not refetch every icon on each render;
+* ``Cache-Control: no-store`` on every response except the immutable static assets (``icons/*.svg``,
+  ``fonts/*.woff2`` and ``vendor/*``), which get ``private, max-age=3600`` so a session does not refetch every
+  icon on each render;
 * no request is ever read out of another request's body: a request that announces a body (``Content-Length``
   above 0 or any ``Transfer-Encoding``) and every ``405`` are answered with ``Connection: close``, and a body
   of up to 64 KiB is read and dropped before the socket closes, so bytes sent as a body can never be parsed
@@ -62,7 +64,7 @@ LOOPBACK_HOSTS: FrozenSet[str] = frozenset({"127.0.0.1", "localhost", "::1"})
 #: dashboard-docs-tests.md A2: the policy of the page's ``<meta http-equiv>``, character for character.
 CONTENT_SECURITY_POLICY = (
     "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; "
-    "font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; worker-src 'none'; "
+    "font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; worker-src 'none'; "
     "frame-src 'none'; manifest-src 'none'"
 )
 
@@ -86,7 +88,7 @@ CACHE_NO_STORE = "no-store"
 CACHE_STATIC = "private, max-age=3600"
 #: URL prefixes of the assets that never change while a package version is installed. ``vendor/`` holds
 #: the SRI-pinned libraries; ``js/`` and ``css/`` are the app and stay ``no-store`` (edited in development).
-_CACHEABLE_PREFIXES: Tuple[str, ...] = ("/icons/", "/vendor/")
+_CACHEABLE_PREFIXES: Tuple[str, ...] = ("/icons/", "/fonts/", "/vendor/")
 
 #: The ``Server`` header: the product only (no Python version, no trailing space).
 SERVER_HEADER = "aws-enumerator-dashboard"
@@ -111,6 +113,7 @@ _ASSET_KINDS: Tuple[Tuple[str, str, str], ...] = (
     ("vendor", ".js", "text/javascript; charset=utf-8"),
     ("vendor", ".txt", "text/plain; charset=utf-8"),
     ("icons", ".svg", "image/svg+xml"),
+    ("fonts", ".woff2", "font/woff2"),
 )
 _INDEX_TYPE = "text/html; charset=utf-8"
 _MAX_ASSET_BYTES = 16 * 1024 * 1024

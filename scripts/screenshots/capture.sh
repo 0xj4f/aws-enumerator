@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Regenerate the README screenshots docs/00.png, docs/01.png and docs/02.png (F-134).
+# Regenerate the README screenshots docs/00.png, docs/01.png, docs/02.png and docs/03.png (F-134).
 #
 #   scripts/screenshots/capture.sh [capture.py options, e.g. --out-dir DIR --chrome PATH]
 #

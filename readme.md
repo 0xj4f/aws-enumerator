@@ -470,6 +470,8 @@ through; hover one to light up its routes. **From your foothold** narrows it to 
 Under **More**, the **Audit** is the operator's: where you would be seen (each detection control per region:
 watching, blind or unknown) and what the account exposes for you to use, by category and severity.
 
+![The kill-chain map with a key pivot lit](docs/03.png)
+
 Two more pages list what the routes go through: **Principals** (every user, role, group and outside principal:
 admin-equivalent first, then who reaches admin, who can become each one and what it can become) and **Data**
 (secrets, keys, buckets, parameters, snapshots …: public or shared ones first, who can read each one). Routes and

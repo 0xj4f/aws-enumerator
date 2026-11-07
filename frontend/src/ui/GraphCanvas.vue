@@ -24,7 +24,8 @@ const props = defineProps({
 const grid = computed(() => ({ ...DEFAULT_GRID, gapX: props.gapX }));
 const emit = defineEmits(['open', 'group']);
 
-const MARKER = { control: '#ef5350', access: '#f5c542', exposure: '#ff1744', admin: '#ffd600', context: '#607d8b' };
+/** Arrowhead colours: the edge colours of styles/tokens.css (markers are SVG attributes, not CSS). */
+const MARKER = { control: '#ff5a6a', access: '#ffc53d', exposure: '#ff2e88', admin: '#ffd23f', context: '#4b5568' };
 const positions = shallowRef(new Map());
 const flow = shallowRef(null);
 const nodes = shallowRef([]);
@@ -129,7 +130,7 @@ defineExpose({ fit, positions });
       <template #node-column="colProps">
         <div class="column-label">{{ colProps.data.label }}</div>
       </template>
-      <Background variant="dots" :gap="DEFAULT_GRID.grid" :size="1" pattern-color="#2a3050" />
+      <Background variant="dots" :gap="DEFAULT_GRID.grid" :size="1" pattern-color="#243049" />
     </VueFlow>
   </div>
 </template>

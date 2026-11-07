@@ -109,7 +109,8 @@ default.
     ATT&CK kill chains and expected routes, the kill-chain map with its key pivots, Principals, Data, Findings
     grouped by rule and Explore; under More, the operator's audit (where you would be seen, what is exposed) and
     Report health;
-  - offensive and observe-only: the dashboard shows no remediation text and has no defender views.
+  - offensive and observe-only: the dashboard shows no remediation text and has no defender views;
+  - a Kali-style dark theme with bundled Fira Sans and Fira Code fonts (the page's CSP allows `font-src 'self'`).
 - **Documentation:** `SECURITY.md`, `CONTRIBUTING.md`, `docs/report-handling.md`, `docs/detection.md`,
   `docs/permissions.md` and the contracts under `docs/contracts/`.
 

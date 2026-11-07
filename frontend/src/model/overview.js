@@ -85,7 +85,7 @@ export function killChainMap(index, s, paths, dataRows, { expanded = new Set(), 
   };
   const group = (key, column, type, members, label) => {
     const info = K.nodeTypeInfo(type, index.nodeTypes.get(type));
-    add({ id: 'group:' + key, column, kind: 'group', nodeId: null, type, label: label || `${members.length} × ${info.label}`,
+    add({ id: 'group:' + key, column, kind: 'group', nodeId: null, type, group: info.group, label: label || `${members.length} × ${info.label}`,
       sub: 'Click to expand', iconUrl: info.iconUrl, severity: null, badges: [], count: members.length, groupKey: key }, members);
   };
   const byLabel = (a, b) => cmp(index.nodesById.get(a)?.label || a, index.nodesById.get(b)?.label || b) || cmp(a, b);

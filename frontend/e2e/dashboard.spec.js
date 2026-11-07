@@ -116,6 +116,21 @@ test('[F-126] [F-146] a merged run folder shows both accounts, the merged view a
   await expect(page.locator('[data-role="source-runs"] tbody tr')).toHaveCount(2);
 });
 
+test('[D-60] the theme loads its bundled fonts, and with reduced motion nothing animates', async ({ page }) => {
+  const w = await watch(page);
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await open(page, FIX('graph/example.json'));
+  await page.evaluate(() => document.fonts.ready);
+  expect(await page.evaluate(() => document.fonts.check('13px "Fira Sans"') && document.fonts.check('12px "Fira Code"'))).toBe(true);
+  await nav(page, 'nav-map');
+  await page.getByTestId('pivot').first().hover();
+  const lit = page.getByTestId('map-canvas').locator('.vue-flow__edge.hl .vue-flow__edge-path').first();
+  await expect(lit).toBeAttached();
+  expect(await lit.evaluate((e) => getComputedStyle(e).animationName)).toBe('none');
+  expect(await w.csp()).toEqual([]);
+  expect(w.errors).toEqual([]);
+});
+
 test('[F-145] [F-092] an input that is not a report is a visible error, never a "Loading" hang', async ({ page }) => {
   await page.goto('index.html');
   await page.locator('#file-input').setInputFiles({ name: 'graph.json', mimeType: 'application/json', buffer: Buffer.from('this is not json') });

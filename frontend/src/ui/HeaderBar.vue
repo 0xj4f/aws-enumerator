@@ -81,8 +81,8 @@ function onClear(e) {
 <template>
   <header class="topbar" data-panel="header" data-testid="header">
     <div class="brand">
-      <img src="icons/admin.svg" alt="">
-      <span class="brand-name">aws-enumerator</span>
+      <span class="brand-mark"><img src="icons/admin.svg" alt=""></span>
+      <span class="brand-name">aws<span class="brand-dot">-</span>enumerator</span>
       <span class="brand-sub">attack graph</span>
     </div>
 

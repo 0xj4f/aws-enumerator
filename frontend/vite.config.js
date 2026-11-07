@@ -2,11 +2,12 @@
  * Build of the aws-enumerator dashboard (DECISIONS.md D-57).
  *
  * `npm run build` writes the page into aws_enumerator/dashboard/, next to server.py:
- *   index.html, js/app.js (one classic IIFE bundle), css/app.css, icons/*.svg, vendor/LICENSE-*.txt.
+ *   index.html, js/app.js (one classic IIFE bundle), css/app.css, icons/*.svg, fonts/*.woff2 (the bundled Fira
+ *   fonts, D-60), vendor/LICENSE-*.txt.
  * The output is committed so `pip install` users never need Node. The constraints of the old hand-written
  * page carry over (dashboard-core-api.md §1, §5):
  *   - one classic `<script defer>` and one stylesheet, both with an SRI hash (F-089), at fixed names, so the
- *     server's allow-list (css/*.css, js/*.js, icons/*.svg, vendor/LICENSE-*.txt) does not change. Browsers
+ *     server's allow-list (css/*.css, js/*.js, icons/*.svg, fonts/*.woff2, vendor/LICENSE-*.txt) holds. Browsers
  *     refuse SRI-checked files over file:// (no CORS there), so the page is opened through
  *     `aws-enumerator dashboard`, as before;
  *   - the Content-Security-Policy of server.py, as a <meta>, in the built page only (the dev server's hot
@@ -26,7 +27,7 @@ const REPO = resolve(HERE, '..');
 const OUT_DIR = join(REPO, 'aws_enumerator', 'dashboard');
 const SERVER_PY = join(OUT_DIR, 'server.py');
 /** What the build owns inside OUT_DIR (server.py and __init__.py are never touched). */
-const MANAGED = ['index.html', 'js', 'css', 'icons', 'vendor'];
+const MANAGED = ['index.html', 'js', 'css', 'icons', 'fonts', 'vendor'];
 const UMD_FILES = [join(HERE, 'src', 'core') + sep, join(HERE, 'vendor', 'jszip.min.js')];
 /** The ES-module barrel of the core directory (src/core/index.js) is the one file there that is not UMD. */
 const CORE_BARREL = join(HERE, 'src', 'core', 'index.js');
@@ -87,12 +88,14 @@ function licences() {
     name: 'ae-licences',
     apply: 'build',
     generateBundle(_opts, bundle) {
+      const note = (id) => {
+        const m = /[\\/]node_modules[\\/]((?:@[^\\/]+[\\/])?[^\\/]+)[\\/]/.exec(id);
+        if (m) packages.set(m[1].replace(/\\/g, '/'), id.slice(0, m.index + m[0].length));
+      };
       for (const item of Object.values(bundle)) {
-        if (item.type !== 'chunk') continue;
-        for (const id of Object.keys(item.modules)) {
-          const m = /[\\/]node_modules[\\/]((?:@[^\\/]+[\\/])?[^\\/]+)[\\/]/.exec(id);
-          if (m) packages.set(m[1].replace(/\\/g, '/'), id.slice(0, m.index + m[0].length));
-        }
+        // Modules of the script, and the files an asset was made from (the woff2 fonts of src/styles/fonts.css).
+        if (item.type === 'chunk') Object.keys(item.modules).forEach(note);
+        else (item.originalFileNames || []).forEach((f) => note(resolve(HERE, f)));
       }
     },
     writeBundle() {
@@ -191,7 +194,11 @@ export default defineConfig({
         format: 'iife',
         inlineDynamicImports: true,
         entryFileNames: 'js/app.js',
-        assetFileNames: (info) => ((info.names?.[0] || info.name || '').endsWith('.css') ? 'css/app.css' : 'assets/[name][extname]'),
+        assetFileNames: (info) => {
+          const name = info.names?.[0] || info.name || '';
+          if (name.endsWith('.css')) return 'css/app.css';
+          return name.endsWith('.woff2') ? 'fonts/[name][extname]' : 'assets/[name][extname]';
+        },
       },
       onwarn(warning, warn) {
         if (warning.code === 'THIS_IS_UNDEFINED' || warning.code === 'EVAL') return;

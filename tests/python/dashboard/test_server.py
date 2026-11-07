@@ -461,6 +461,7 @@ def test_the_asset_map_is_an_allow_list(tmp_path):
         "css/app.css": "a{}", "css/evil.js": "x", "js/ui.js": "x", "js/data.json": "{}", "js/.hidden.js": "x",
         "vendor/jszip.min.js": "x", "vendor/VENDOR.md": "x", "vendor/LICENSE-x.txt": "x", "vendor/other.txt": "x",
         "icons/a.svg": "<svg/>", "icons/a b.svg": "<svg/>", "icons/sub/b.svg": "<svg/>",
+        "fonts/a.woff2": "x", "fonts/a.ttf": "x", "fonts/a.woff": "x",
         "__pycache__/server.cpython-310.pyc": "x",
     }.items():
         (root / rel).parent.mkdir(parents=True, exist_ok=True)
@@ -474,7 +475,7 @@ def test_the_asset_map_is_an_allow_list(tmp_path):
     assets = server.asset_map(root)
     assert list(assets) == sorted(assets)
     assert set(assets) == {"/", "/index.html", "/css/app.css", "/js/ui.js", "/vendor/jszip.min.js",
-                           "/vendor/LICENSE-x.txt", "/icons/a.svg"}
+                           "/vendor/LICENSE-x.txt", "/icons/a.svg", "/fonts/a.woff2"}
     for path, ctype in assets.values():
         assert path.resolve().is_relative_to(root.resolve()) and ctype
 
@@ -564,8 +565,9 @@ def test_static_icons_and_vendor_libraries_may_be_cached_privately_everything_el
 def test_the_cache_policy_covers_exactly_the_immutable_assets():
     assets = server.asset_map()
     static = {url for url in assets if server.cache_control(url) == server.CACHE_STATIC}
-    assert static == {url for url in assets if url.startswith(("/icons/", "/vendor/"))}
-    assert any(url.startswith("/icons/") for url in static) and any(url.startswith("/vendor/") for url in static)
+    assert static == {url for url in assets if url.startswith(("/icons/", "/fonts/", "/vendor/"))}
+    for prefix in ("/icons/", "/fonts/", "/vendor/"):
+        assert any(url.startswith(prefix) for url in static), prefix
     for url in ("/", "/index.html", "/js/app.js", "/css/app.css"):
         assert server.cache_control(url) == server.CACHE_NO_STORE == "no-store", url
     assert server.CACHE_STATIC == "private, max-age=3600"

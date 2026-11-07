@@ -11,6 +11,10 @@ const parts = computed(() => String(state.message).split('`').map((text, i) => (
 <template>
   <div class="load" data-panel="overlay" data-testid="load-screen" :data-status="state.status">
     <div v-if="state.status === 'empty'" class="load-card">
+      <div class="prompt" aria-hidden="true">
+        <div><span class="p-frame">┌──(</span><span class="p-user">operator㉿aws-enumerator</span><span class="p-frame">)-[</span><span class="p-path">~/reports</span><span class="p-frame">]</span></div>
+        <div><span class="p-frame">└─$</span> <span class="p-cmd">open report</span><span class="caret" /></div>
+      </div>
       <div class="load-title">Open an aws-enumerator report</div>
       <p class="secondary">Drop a run zip, a run folder or its analysis/graph.json here, or use Open report above.</p>
       <div class="row">

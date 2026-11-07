@@ -20,12 +20,12 @@ D-57); it stays as a guard for any library that jitters.
 
 Views: ``overview`` (the Brief page), ``detail`` (Explore: a node's neighbourhood on the canvas and its details
 in the drawer), ``path`` (Attack paths: the partner account's route to the account administrator, with its
-kill-chain canvas in the drawer).
+kill-chain canvas in the drawer), ``map`` (the kill-chain map with its top key pivot pinned, D-59/D-60).
 
 It fails when the page reports a problem (a script error, a CSP violation, a load failure) or when Chrome
 requested anything other than the dashboard origin. Run it through ``capture.sh``::
 
-    scripts/screenshots/capture.sh            # writes docs/00.png docs/01.png docs/02.png
+    scripts/screenshots/capture.sh            # writes docs/00.png docs/01.png docs/02.png docs/03.png
 
 or directly: ``.venv/bin/python scripts/screenshots/capture.py --zip RUN.zip --out-dir docs``.
 """
@@ -49,8 +49,8 @@ from typing import Any, Dict, List, Optional, Sequence, Tuple
 REPO_ROOT = Path(__file__).resolve().parents[2]
 CHROME_DEFAULT = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 WIDTH, HEIGHT = 1800, 1200
-VIEWS = ("overview", "detail", "path")
-OUTPUT_NAMES = {"overview": "00.png", "detail": "01.png", "path": "02.png"}
+VIEWS = ("overview", "detail", "path", "map")
+OUTPUT_NAMES = {"overview": "00.png", "detail": "01.png", "path": "02.png", "map": "03.png"}
 #: The node of the detail view, and the owned source and target of the path view (labels as the dashboard shows).
 DETAIL_NODE = "demo-web-1"
 PATH_SOURCE = "External account 999999999999"
@@ -368,6 +368,16 @@ def drive(page: Page, view: str) -> None:
         page.click(f"{rows}:nth-child({index})")
         page.wait_for("document.querySelectorAll('[data-testid=\"path-canvas\"] .node-card').length > 1",
                       what="the kill-chain canvas")
+        return
+    if view == "map":
+        # the whole surface, with the top pivot pinned: its routes lit, the rest dimmed
+        page.click('[data-testid="nav-map"]')
+        page.wait_for("document.querySelectorAll('[data-testid=\"map-canvas\"] .node-card').length > 1",
+                      what="the kill-chain map")
+        page.wait_for("!!document.querySelector('[data-testid=\"pivot\"]')", what="the key pivots")
+        page.click('[data-testid="pivot"]')
+        page.wait_for("!!document.querySelector('[data-testid=\"map-canvas\"] .vue-flow__node.hl')",
+                      what="the lit routes")
         return
     raise CaptureError(f"unknown view {view!r}")
 

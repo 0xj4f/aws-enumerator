@@ -1,0 +1,91 @@
+/*
+ * Theme tokens (D-60): a Kali-style dark theme. A deep blue-black desktop, Kali blue for focus and selection,
+ * the neofetch accents for meaning (severity, edges, node groups), and Kali's typography (Fira Sans, Fira Code).
+ * Components use these tokens, never raw colours. Dark only: the page is an operator's console.
+ * Text tokens keep at least 4.5:1 against --panel, --surface and --surface-2.
+ */
+:root {
+  /* Surfaces, from the desktop up */
+  --bg-deep: #0b0d12;
+  --bg: #0f1218;
+  --panel: #151922;
+  --surface: #1a1f2a;
+  --surface-2: #212735;
+  --hover: #232a3a;
+  --border: #262c3a;
+  --border-strong: #353d50;
+  --scrim: rgba(11, 13, 18, 0.72);
+
+  /* Text */
+  --text: #e9edf5;
+  --text-2: #b6bfd0;
+  --muted: #8892a6;
+
+  /* Kali blue */
+  --kali: #367bf0;
+  --kali-hi: #5c9cff;
+  --kali-deep: #1d4fb8;
+  --kali-tint: rgba(54, 123, 240, 0.14);
+  --kali-line: rgba(92, 156, 255, 0.45);
+  --kali-glow: rgba(54, 123, 240, 0.45);
+
+  /* The neofetch accents */
+  --cyan: #1fb6ff;
+  --teal: #2de2c0;
+  --violet: #a259ff;
+  --orange: #ff8c1a;
+  --red: #ff4757;
+  --gold: #ffd23f;
+  --green: #2ee6a6;
+  --pink: #ff2e88;
+
+  /* Semantic roles */
+  --accent: var(--kali-hi);
+  --danger: #ff5c6a;
+  --warn: #ffb02e;
+  --ok: var(--green);
+
+  /* Severity: the stripe colour, then the pill (text, fill, line) */
+  --sev-critical: #ff4757;
+  --sev-high: #ff8c1a;
+  --sev-medium: #ffc53d;
+  --sev-low: #5c9cff;
+  --sev-info: #8892a6;
+  --sev-critical-text: #ff7a86; --sev-critical-fill: rgba(255, 71, 87, 0.14); --sev-critical-line: rgba(255, 71, 87, 0.5);
+  --sev-high-text: #ffa64d; --sev-high-fill: rgba(255, 140, 26, 0.14); --sev-high-line: rgba(255, 140, 26, 0.5);
+  --sev-medium-text: #ffd166; --sev-medium-fill: rgba(255, 197, 61, 0.12); --sev-medium-line: rgba(255, 197, 61, 0.45);
+  --sev-low-text: #8ab8ff; --sev-low-fill: rgba(92, 156, 255, 0.13); --sev-low-line: rgba(92, 156, 255, 0.45);
+  --sev-info-text: #aab3c5; --sev-info-fill: rgba(136, 146, 166, 0.12); --sev-info-line: rgba(136, 146, 166, 0.4);
+
+  /* Edges of the attack graph */
+  --edge-control: #ff5a6a;
+  --edge-access: #ffc53d;
+  --edge-exposure: #ff2e88;
+  --edge-admin: #ffd23f;
+  --edge-context: #4b5568;
+
+  /* Type */
+  --font-ui: 'Fira Sans', Cantarell, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --mono: 'Fira Code', 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* Shape and elevation */
+  --radius: 6px;
+  --radius-lg: 10px;
+  --shadow-1: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 6px 18px rgba(0, 0, 0, 0.32);
+  --shadow-pop: 0 18px 48px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.02);
+  --ring: 0 0 0 1px var(--kali), 0 0 16px var(--kali-glow);
+  --hairline: linear-gradient(90deg, var(--kali) 0%, var(--violet) 42%, rgba(162, 89, 255, 0) 100%);
+
+  /* Motion */
+  --t-fast: 120ms;
+  --t: 180ms;
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  color-scheme: dark;
+}
+
+/* Motion is decoration here: with reduced motion nothing animates, and every state still shows. */
+@media (prefers-reduced-motion: reduce) {
+  :root { --t-fast: 0ms; --t: 0ms; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

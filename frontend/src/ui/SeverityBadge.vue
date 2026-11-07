@@ -9,5 +9,5 @@ const label = computed(() => K.severityInfo(props.sev).label);
 </script>
 
 <template>
-  <span class="sev" :class="cls" :title="String(sev ?? '')" data-testid="severity">{{ label }}</span>
+  <span class="sev" :class="cls" :title="String(sev ?? '')" data-testid="severity"><i class="sev-dot" aria-hidden="true" />{{ label }}</span>
 </template>

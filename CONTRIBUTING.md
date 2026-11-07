@@ -135,6 +135,7 @@ frontend/
                   grid layout
   src/stores/     the loaded report and what the user did with it (loading pipeline, owned marks, exports)
   src/ui/         shell, table, bottom drawer, GraphCanvas (the only Vue Flow user), cards
+  src/styles/     the theme (D-60): fonts, tokens (every colour), then base, shell, views and canvas layers
   src/views/      Brief, Attack paths, Map, Principals, Data, Findings, Explore; under More: Audit, Report
                   health
   vendor/         JSZip, vendored byte for byte (VENDOR.md)

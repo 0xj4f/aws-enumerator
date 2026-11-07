@@ -25,7 +25,7 @@ export function nodeCard(index, s, id, column, ctx) {
   if (n && n.props.external === true) badges.push('external');
   if (n && isEntryPoint(n) && !n.props.external) badges.push('entry point');
   return {
-    id, column, kind: 'node', nodeId: id, type: n ? n.type : '',
+    id, column, kind: 'node', nodeId: id, type: n ? n.type : '', group: info.group,
     label: shown(n ? n.label : id), sub: info.label, iconUrl: info.iconUrl,
     severity: n && n.max_severity ? n.max_severity : null, badges, count: 1, groupKey: null,
   };
@@ -103,7 +103,7 @@ export function neighbourhood(index, s, lens, focus, expanded, ctx) {
       if (list.length > GROUP_LIMIT && !expanded.has(key)) {
         const info = K.nodeTypeInfo(t, index.nodeTypes.get(t));
         const gid = 'group:' + key;
-        cards.push({ id: gid, column, kind: 'group', nodeId: null, type: t, label: `${list.length} × ${info.label}`,
+        cards.push({ id: gid, column, kind: 'group', nodeId: null, type: t, group: info.group, label: `${list.length} × ${info.label}`,
           sub: 'Click to expand', iconUrl: info.iconUrl, severity: null, badges: [], count: list.length, groupKey: key });
         list.forEach((id) => idOf.set(id, gid));
         continue;
