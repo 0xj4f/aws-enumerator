@@ -42,8 +42,9 @@ from pathlib import Path
 from typing import Callable, Dict, List, Optional, Tuple
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-# The vendored libraries of the dashboard (the pre-0.3.0 app/dashboard/vendor fallback is gone, F-133).
-VENDOR_DIR_CANDIDATES = ("aws_enumerator/dashboard/vendor",)
+# The vendored libraries of the dashboard: frontend/vendor since the Vue build (DECISIONS.md D-57; the pre-0.3.0
+# app/dashboard/vendor fallback is gone, F-133). Cytoscape is no longer vendored: the canvas comes from npm (lockfile).
+VENDOR_DIR_CANDIDATES = ("frontend/vendor",)
 MANIFEST_NAME = "VENDOR.md"
 MAX_DOWNLOAD_BYTES = 5 * 1024 * 1024
 
@@ -104,33 +105,6 @@ LIBRARIES: Tuple[LibraryPin, ...] = (
             sha256="6adc57e6e6603ae60fddeac2298736b97344e8408c8ce00b46a166daf846844d",
             sha384="sha384-2MAIB7NW4GMSe5qYLOsK4l/wXNaEbPZRCuoYucGTcJIdhOsNawzWjJB33PJlHvjk",
             sha512="sha512-qFUIsmFqm/y+8HT3UR3tKymtL1P+t0pmKJYkMmjR3k8/sUKLujLEKTrsmRm36hTY020J680w8YJ/vW49XSCyIg==",
-        ),
-    ),
-    LibraryPin(
-        key="cytoscape",
-        version="3.30.4",
-        licence="MIT",
-        cdnjs_url="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.30.4/cytoscape.min.js",
-        npm_metadata_url="https://registry.npmjs.org/cytoscape/3.30.4",
-        npm_tarball_url="https://registry.npmjs.org/cytoscape/-/cytoscape-3.30.4.tgz",
-        npm_integrity="sha512-OxtlZwQl1WbwMmLiyPSEBuzeTIQnwZhJYYWFzZ2PhEHVFwpeaqNIkUzSiso00D98qk60l8Gwon2RP304d3BJ1A==",
-        npm_shasum="3404da0a159c00a1a3df2c85b2b43fdc66a0e28e",
-        dist_member="package/dist/cytoscape.min.js",
-        dist=FilePin(
-            name="cytoscape.min.js",
-            size=373734,
-            sha256="1bb5340e549511e111b31e5684872c949ad33d40ea5dba0ad8e7d90c62c7b3b9",
-            sha384="sha384-H3uzGzTfGHUAumB8+s4GEdfFwzAceN9wCCndN8AXubWKFIPuBSWKKtWDx7RhSf/z",
-            sha512="sha512-xpXUCbrkyJCwC5noJXZqec9rSXdRgFfDoL7Q9/pCPe54Y04OlqwPobMcNuA5NPJ7DRR51OIr6xcOH2wUspyKDQ==",
-        ),
-        licence_member="package/LICENSE",
-        licence_transform="verbatim",
-        licence_file=FilePin(
-            name="LICENSE-cytoscape.txt",
-            size=1082,
-            sha256="a29c0d78a54de204b78357976c3d272a573b8592d0478b9db07af3f1da31a65a",
-            sha384="sha384-LUh9mwHvIOWTWpP1blxMxOOcD46mFUf39koThV3Sqa7Fp28hInuBVWC2FZkjTN3s",
-            sha512="sha512-B+zTNSsgpNr6psmgBGDjcCVN39rArimACD7r3Qw3MDtQvRyi0F7jXIJgpKdmgXb9tesdHNVYzWuLBkUIQmkEpQ==",
         ),
     ),
 )

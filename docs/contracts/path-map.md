@@ -55,18 +55,17 @@ aws_enumerator/
 │   ├── ssm.py
 │   ├── vpc.py
 │   └── waf.py
-├── dashboard/
+├── dashboard/                      (since D-57 the page files are built from frontend/ by `npm run build`)
 │   ├── __init__.py
 │   ├── index.html
 │   ├── server.py
+│   ├── css/app.css
+│   ├── js/app.js
 │   ├── icons/
-│   │   └── (38 *.svg, unchanged)
+│   │   └── (*.svg, from frontend/public/icons)
 │   └── vendor/
-│       ├── LICENSE-cytoscape.txt
-│       ├── LICENSE-jszip.txt
-│       ├── VENDOR.md
-│       ├── cytoscape.min.js
-│       └── jszip.min.js
+│       ├── LICENSE-jszip.txt (and the other LICENSE-*.txt of JSZip's bundled packages)
+│       └── LICENSE-third-party.txt
 ├── engine/
 │   ├── __init__.py
 │   ├── legacy_api.py

@@ -1,0 +1,33 @@
+/*
+ * Fira Sans (the interface) and Fira Code (identifiers, numbers, titles): Kali Linux's own pairing (D-60).
+ * Bundled woff2 files, latin subset, served from fonts/ under the page's CSP (font-src 'self'); OFL-1.1, the
+ * licence ships in vendor/LICENSE-third-party.txt. Characters outside the subset fall back to the system fonts.
+ */
+@font-face {
+  font-family: 'Fira Sans'; font-style: normal; font-weight: 400; font-display: swap;
+  src: url('../../node_modules/@fontsource/fira-sans/files/fira-sans-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Fira Sans'; font-style: normal; font-weight: 500; font-display: swap;
+  src: url('../../node_modules/@fontsource/fira-sans/files/fira-sans-latin-500-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Fira Sans'; font-style: normal; font-weight: 600; font-display: swap;
+  src: url('../../node_modules/@fontsource/fira-sans/files/fira-sans-latin-600-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Fira Sans'; font-style: normal; font-weight: 700; font-display: swap;
+  src: url('../../node_modules/@fontsource/fira-sans/files/fira-sans-latin-700-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Fira Code'; font-style: normal; font-weight: 400; font-display: swap;
+  src: url('../../node_modules/@fontsource/fira-code/files/fira-code-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Fira Code'; font-style: normal; font-weight: 500; font-display: swap;
+  src: url('../../node_modules/@fontsource/fira-code/files/fira-code-latin-500-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Fira Code'; font-style: normal; font-weight: 600; font-display: swap;
+  src: url('../../node_modules/@fontsource/fira-code/files/fira-code-latin-600-normal.woff2') format('woff2');
+}

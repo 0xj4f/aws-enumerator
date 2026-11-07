@@ -142,12 +142,13 @@ def test_dashboard_threat_model_matches_the_server_and_page():
     assert server.LOOPBACK_HOSTS == {"127.0.0.1", "localhost", "::1"}
     assert "`127.0.0.1`, `localhost`, `[::1]`" in section and "`421`" in section
     assert server.serve_dashboard.__defaults__[0] == "127.0.0.1" and "binds `127.0.0.1` by default" in section
-    vendor = _text("aws_enumerator/dashboard/vendor/VENDOR.md")
-    assert "Cytoscape.js" in vendor and "JSZip" in vendor
-    dom = _text("aws_enumerator/dashboard/js/dom.js")
-    assert "noopener noreferrer" in dom and "noopener noreferrer" in section
+    vendor = _text("frontend/vendor/VENDOR.md")
+    assert "JSZip" in vendor and "frontend/vendor/VENDOR.md" in section and "frontend/package-lock.json" in section
+    assert '"lockfileVersion"' in _text("frontend/package-lock.json")
+    card = _text("frontend/src/ui/FindingCard.vue")
+    assert 'rel="noopener noreferrer"' in card and "noopener noreferrer" in section
     index = _text("aws_enumerator/dashboard/index.html")
-    assert 'integrity="sha384-' in index
+    assert 'integrity="sha384-' in index and "js/app.js" in index
 
 
 # ── docs/report-handling.md ──────────────────────────────────────────────────

@@ -35,10 +35,15 @@ These rules are not negotiable. Reviews and tests enforce them.
    `null`), never as an empty list or `false`.
 7. **Claims follow code.** Documentation describes shipped behaviour. Generated catalogues are regenerated, never
    edited by hand, and a drift test fails when docs and code disagree.
+8. **Offensive and observe-only.** aws-enumerator maps privilege escalation and attack paths for the operator.
+   Features that fix, harden or defend the account (remediation plans, choke-point "fix first" lists, what-if
+   simulation, defender or compliance views) are out of scope. An audit belongs only when it answers the
+   operator's questions: where you would be seen, where you are blind, what is exposed for you to use (DECISIONS.md
+   D-59).
 
 ## Development setup
 
-You need Python 3.10 or newer (the code must run on 3.10) and Node 20 for the dashboard tests.
+You need Python 3.10 or newer (the code must run on 3.10) and Node 20.17 or newer for the dashboard (`frontend/`).
 
 ```bash
 python3.10 -m venv .venv && . .venv/bin/activate
@@ -63,14 +68,16 @@ Run the checks through `scripts/check.sh` (or `make <target>`):
 | `setup` | prints the hash-locked dev install above; `scripts/check.sh setup --yes` runs it (needs the network) |
 | `doctor` | offline environment check: `.venv` against `requirements-dev.txt` and the build requirement, and local commits that add paths that must never be pushed. Warnings only, unless `DOCTOR_STRICT=1` |
 | `lint` | `ruff check aws_enumerator tests scripts`, `node --check` on the dashboard JS, the static JS tests |
+| `ui` | the dashboard in `frontend/`: `npm ci`, Vitest, `npm run build`, and a check that the committed build in `aws_enumerator/dashboard/` matches the sources |
+| `e2e` | Playwright against the built page and the real server (installed Google Chrome; `E2E_REPORT=run.zip` adds a real report) |
 | `py` | `pytest -m "not perf and not golden"` |
 | `js` | `node --test tests/js` |
 | `golden` | `pytest -m golden` |
 | `docs` | `scripts/gen_docs.py --check` (generated documentation is up to date) |
-| `perf` | `pytest -m perf` and `PERF=1 node --test tests/js/perf` |
+| `perf` | `pytest -m perf` |
 | `findings` | per-finding coverage: every tracked finding id needs a passing tagged test |
 | `scan` | `scripts/scan_sensitive.py` |
-| `all` | `doctor` (advisory), then `lint`, `py`, `js`, `golden`, `docs`, `perf`, `findings` and `scan` |
+| `all` | `doctor` (advisory), then `lint`, `py`, `js`, `ui`, `golden`, `docs`, `perf`, `findings` and `scan` |
 
 The tests are fully offline. `tests/conftest.py` blocks every network connection, and a test that needs a
 loopback socket must be marked `allow_loopback`. Never run the tool against a real account from a test.
@@ -97,7 +104,7 @@ aws_enumerator/
     graph/                 node ids, edge_types.py (the traversability table), builder, closure, traversal
     findings/, writers/    finding catalogue and lifecycle; graph.json, findings.json and exports
     schema/                graph and findings JSON Schemas
-  dashboard/               static page (index.html, css/, js/, vendor/, icons/) and server.py
+  dashboard/               server.py and the built page (index.html, css/, js/, vendor/, icons/; from frontend/)
 ```
 
 A `collect` run works like this:
@@ -112,6 +119,49 @@ A `collect` run works like this:
 5. The runner finalises the manifest and the digests, and builds the zip if one was asked for.
 
 The dashboard reads `graph.json` only. It contains no edge derivation.
+
+### The dashboard (`frontend/`)
+
+The page is a Vue 3 app in plain JavaScript (ES modules and `<script setup>` components, no TypeScript), built
+with Vite (DECISIONS.md D-57, D-59). `npm run build` writes it into `aws_enumerator/dashboard/`, and that build is
+committed, so users of the Python package never need Node.
+
+```
+frontend/
+  src/core/       graph-core, loader, exports, catalog: the pure UMD modules (dashboard-core-api.md §1-§4),
+                  also required by tests/js; the app imports them through the `ae-umd` transform
+  src/model/      framework-free view models: the operator lens (simplify), breach routes, the Brief,
+                  the canvas models (path, neighbourhood, the kill-chain map), the operator's audit and the
+                  grid layout
+  src/stores/     the loaded report and what the user did with it (loading pipeline, owned marks, exports)
+  src/ui/         shell, table, bottom drawer, GraphCanvas (the only Vue Flow user), cards
+  src/styles/     the theme (D-60): fonts, tokens (every colour), then base, shell, views and canvas layers
+  src/views/      Brief, Attack paths, Map, Principals, Data, Findings, Explore; under More: Audit, Report
+                  health
+  vendor/         JSZip, vendored byte for byte (VENDOR.md)
+  public/icons/   node-type icons
+  e2e/            Playwright tests of the built page
+```
+
+```bash
+cd frontend
+npm ci                 # exact versions from package-lock.json
+npm run dev            # live-reload server (no CSP), loads tests/fixtures by file picker or drop
+npm test               # Vitest: model and page tests
+npm run build          # build into ../aws_enumerator/dashboard/ (commit the result)
+npm run e2e            # Playwright against the built page and the real server
+```
+
+**MITRE ATT&CK tags** live in `aws_enumerator/engine/attack.py` (edge types and finding ids to techniques, and the
+pinned technique table). `frontend/src/core/attack.js` mirrors it for the dashboard and
+`tests/js/golden/attack-parity.test.js` keeps them equal: change both together. A new edge type or finding id gets a
+technique only when one fits. To move to a new ATT&CK release, download MITRE's `enterprise-attack-<version>.json`
+(github.com/mitre-attack/attack-stix-data), update the version, source hash and rows (`scripts/attack_catalog.py
+--stix FILE --emit T… ` prints them) and run `scripts/attack_catalog.py --stix FILE --check`.
+
+Rules for page code: report strings are rendered only as text (no `v-html` or `innerHTML`), links only through
+`safeHref`, report-keyed lookups through `Map`, and the graph and its index are held raw (`markRaw` /
+`shallowRef`), never in deep reactive proxies. `tests/js/static/page.test.js` checks the built page and the sources.
 
 The contracts between these parts are in [docs/contracts/](docs/contracts/):
 
@@ -189,7 +239,7 @@ Take the SQS collector (`aws_enumerator/collectors/sqs.py`) and its tests as the
 
    A compute resource may be entered only through `control` edges (the bridge invariant). Add path vectors to
    `tests/fixtures/graph/path_cases.json` when the new type changes which paths exist. A new node type also
-   needs an icon in `aws_enumerator/dashboard/icons/`; unknown keys fall back to `generic.svg`.
+   needs an icon in `frontend/public/icons/` (then `npm run build`); unknown keys fall back to `generic.svg`.
 6. **Documentation:**
    - Regenerate the generated pages (`scripts/gen_docs.py`, which also writes `docs/permissions.md`).
    - Document every new finding id and edge type in [docs/attack_paths.md](docs/attack_paths.md).
@@ -206,7 +256,7 @@ Take the SQS collector (`aws_enumerator/collectors/sqs.py`) and its tests as the
 | Engine | `tests/python/engine/{eval,core,domains/<x>,bench}/` | evaluator vectors (each citing the AWS page it encodes), pipeline, builder, per-domain analyzers, benchmarks |
 | CLI and orchestration | `tests/python/cli/`, `tests/python/orchestration/` | parser, exit codes, signals, resume, layout, permissions, an end-to-end fake account (collect → zip → dashboard loader) |
 | Exports | `tests/python/exports/` | SARIF, CSV, Markdown, ASFF, OpenGraph |
-| Dashboard | `tests/python/dashboard/`, `tests/js/{core,ui,static,golden,perf}/` | server hardening, graph core and loader, UI hooks, static safety scans |
+| Dashboard | `tests/python/dashboard/`, `tests/js/{core,static,golden}/`, `frontend/src/**/*.test.js`, `frontend/e2e/` | server hardening, graph core and loader, static safety scans of the built page, the page's behaviour (Vitest) and a real browser under the server's CSP (Playwright) |
 | Docs | `tests/python/docs/` | drift tests: README, security docs, generated catalogues |
 | Regressions | `tests/python/regressions/`, `tests/js/regressions/` | one or more tests per verified finding |
 | Goldens | `tests/golden/{v1,collectors-v2}/` | canonicalised outputs of the synthetic scenarios |
@@ -222,7 +272,7 @@ Conventions:
 - **Fixtures are synthetic** (rule 3). Never name a fixture directory `reports`, `build`, `dist`, `env` or
   `venv`.
 - **No new dependencies without discussion.** The runtime depends on boto3, botocore and kubernetes only, and the
-  dashboard on the two vendored libraries. Lock files are regenerated with the `pip-compile` command in their
+  dashboard on Vue, Vue Router and Vue Flow (locked in `frontend/package-lock.json`) and the vendored JSZip. Lock files are regenerated with the `pip-compile` command in their
   headers.
 
 ## Documentation images

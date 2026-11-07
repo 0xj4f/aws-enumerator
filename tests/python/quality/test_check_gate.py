@@ -23,7 +23,7 @@ from tests.support import targets
 
 CHECK = targets.REPO_ROOT / "scripts" / "check.sh"
 COVERAGE = targets.REPO_ROOT / "scripts" / "finding_coverage.py"
-GATE_STEPS = ["lint", "py", "js", "golden", "docs", "perf", "findings", "scan"]
+GATE_STEPS = ["lint", "py", "js", "ui", "golden", "docs", "perf", "findings", "scan"]
 
 
 @pytest.fixture(scope="module")

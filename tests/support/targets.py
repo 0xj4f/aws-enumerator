@@ -87,7 +87,10 @@ MERGE_MODULE = "aws_enumerator.engine.merge"
 # with BASE = REPO_ROOT or a name assigned above (e.g. PACKAGE_DIR). Baseline: REPO_ROOT / "app" / "dashboard".
 DASHBOARD_DIR = REPO_ROOT / "aws_enumerator" / "dashboard"
 DASHBOARD_INDEX = DASHBOARD_DIR / "index.html"
-DASHBOARD_VENDOR_DIR = DASHBOARD_DIR / "vendor"
+# Since DECISIONS.md D-57 the page is built from frontend/ (npm run build) into DASHBOARD_DIR; the hand-vendored
+# JSZip, the pure core modules and the icons are sources under frontend/.
+FRONTEND_DIR = REPO_ROOT / "frontend"
+DASHBOARD_VENDOR_DIR = FRONTEND_DIR / "vendor"
 VENDOR_SCRIPT = REPO_ROOT / "scripts" / "vendor_dashboard_libs.py"
 REGIONS_JSON = REPO_ROOT / "aws_enumerator" / "util" / "regions.json"
 
@@ -113,7 +116,8 @@ REGISTRY_MODULE = "aws_enumerator.registry"
 COLLECTOR_BASE_MODULE = "aws_enumerator.collectors.base"
 FSIO_MODULE = "aws_enumerator.util.fsio"
 SCHEMAS_DIR = REPO_ROOT / "aws_enumerator" / "schemas"     # coverage-1 / manifest-2.0 JSON Schemas
-DASHBOARD_JS_DIR = DASHBOARD_DIR / "js"                     # graph-core.js, loader.js, exports.js, ui.js ...
+DASHBOARD_JS_DIR = DASHBOARD_DIR / "js"                     # the built bundle: app.js
+DASHBOARD_CORE_DIR = FRONTEND_DIR / "src" / "core"         # graph-core.js, loader.js, exports.js, catalog.js
 
 # ── Wave 0 contracts: engine (docs/contracts/{graph-json,node-ids,engine-api}.md) ──
 # Requested by contracts-engine-1.
@@ -343,8 +347,8 @@ def dashboard_js_dir() -> Path:
 
 
 def dashboard_js_path(name: str) -> Path:
-    """A modular dashboard script by file name, e.g. ``graph-core.js``."""
-    return DASHBOARD_JS_DIR / name
+    """A pure core module of the dashboard by file name, e.g. ``graph-core.js`` (frontend/src/core since D-57)."""
+    return DASHBOARD_CORE_DIR / name
 
 
 # ── Engine contract modules (contracts-engine-1) ─────────────────────────────

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" preserveAspectRatio="xMidYMid meet" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- CloudFront distribution: a cloud with edge locations -->
+  <path d="M7 17 H17 A4 4 0 0 0 17 9 A5.5 5.5 0 0 0 6.5 10 A3.5 3.5 0 0 0 7 17 Z"/>
+  <circle cx="7" cy="21" r="1"/>
+  <circle cx="12" cy="21" r="1"/>
+  <circle cx="17" cy="21" r="1"/>
+</svg>

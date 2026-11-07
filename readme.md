@@ -6,8 +6,13 @@ evaluates the IAM and resource policies it collected, and writes a **directed at
 what you control to the account's high-value targets.
 
 The idea comes from [BloodHound](https://github.com/BloodHoundAD/BloodHound); this project is not affiliated with
-it. Use it for authorised offensive assessments (an assumed-breach starting point or a set of leaked keys) and for
-defensive reviews of the same account.
+it. Use it for authorised offensive assessments: an assumed-breach starting point or a set of leaked keys.
+
+**Offensive and observe-only.** aws-enumerator is an offensive enumeration tool. It observes the account and maps
+privilege escalation: who can become whom, how, and what that reaches. It never fixes, hardens or defends
+anything, and it has no defender mode: no remediation plans, no "fix first" lists, no what-if simulation, no
+compliance score. Its audit is the operator's audit: where you would be seen, where you are blind, and what the
+account exposes for you to use.
 
 What it is **not**:
 
@@ -16,6 +21,9 @@ What it is **not**:
   or parameter values, or Kubernetes Secret data.
 - **Not a compromise assessment.** It does not read CloudTrail events, logs or security-service findings, so it
   cannot tell you whether an account has been breached.
+- **Not a remediation or hardening tool.** It does not tell you how to fix the account. The engine keeps each
+  finding's `remediation` field because the report formats carry it (`findings.json`, the ASFF export), but the
+  dashboard never shows it.
 - **Not a complete IAM simulator.** The graph shows what the collected policies allow, as far as the evaluator
   models them; see [Known limitations](#known-limitations). Treat every path as a lead to confirm by hand.
 
@@ -285,14 +293,16 @@ engine's reference implementation, follows these rules:
    `CAN_PASS_ROLE_TO` costs 2 and `SSRF_TO_IMDS` costs 5. A conditional edge (a condition the evaluator could not
    resolve) costs +1 for a weak condition and +3 for a strong one. The full table of edge types, classes and
    weights is [docs/contracts/traversability-table.md](docs/contracts/traversability-table.md).
-4. **Sources.** These are the nodes you mark as **owned** in the dashboard. With nothing owned, they are the
-   default sources: the identity that ran the collection (the operator, taken from the manifest and mapped to its
-   user or role, including assumed-role and SSO sessions) plus the entry points the analysis marked.
-5. **Targets.** These are the high-value nodes, which always include the account's synthetic `account-admin` node.
-   You can optionally add data assets such as buckets, secrets, keys and tables.
-6. **Filters matter.** In the dashboard, a hidden edge category is never used for paths. Hidden node types and
-   edge classes are not used either, unless you turn off "Hidden types and classes restrict paths". "Include
-   conditional edges" decides whether conditional edges may be used.
+4. **Sources.** The graph's default sources are the identity that ran the collection (the operator, taken from the
+   manifest and mapped to its user or role, including assumed-role and SSO sessions) and the entry points: anyone
+   on the internet, external accounts and principals, identity providers and nodes the analysis marked. The
+   dashboard's **Attack paths** start from those and from the nodes you mark as **owned**.
+5. **Targets.** The high-value nodes: the account's synthetic `account-admin` node and the admin-equivalent
+   principals. A route ends at the first admin-equivalent principal it reaches, because that principal can already
+   do everything. For a data asset (a bucket, secret, key, table …) open it in **Explore** to see who reaches it, or
+   use **Find a route…**.
+6. **Options.** "Include conditional steps" decides whether conditional edges may be used. Explore's options
+   (collapse the admin fan-out, hide policies and services, hide context edges) change only what is drawn.
 
 Privilege escalation shows up as edges: `CAN_PASS_ROLE_TO`, `CAN_TAKEOVER`, `CAN_ESCALATE` and
 `IS_ADMIN_EQUIVALENT` lead towards the `account-admin` node. A finding is attached to the node it is about, of
@@ -325,7 +335,7 @@ edge and finding means.
 - **Not a compromise-assessment tool.** It reads configuration, not activity.
 - **Open untrusted reports only in an isolated browser profile.** The dashboard renders report strings as text
   under a strict Content-Security-Policy, but a report from someone else is still hostile input. Serve the
-  dashboard with `aws-enumerator dashboard`; opening `index.html` from `file://` is best-effort only.
+  dashboard with `aws-enumerator dashboard`; browsers refuse its integrity-checked files over `file://`.
 - **Old report layouts** (0.2.x `reports/<date>/<account>/...`) are not loaded by the dashboard directly. Run
   `aws-enumerator analyze <dir>` once, then load the directory.
 
@@ -438,19 +448,34 @@ These images are generated from a **synthetic** report: placeholder accounts and
 [scripts/screenshots/README.md](scripts/screenshots/README.md) explains how, and has the checklist for any new doc
 image.
 
-**Overview**: the directed graph of a synthetic account, with the filters, the legend and the findings panel.
+**Brief**: the answer first. Who can reach the account administrator and in how many steps, what anyone on the
+internet reaches, what could detect you, and how complete the collection was.
 
-![Attack graph overview](docs/00.png)
+![Brief](docs/00.png)
 
-**Node detail**: a node's properties and its findings, each with evidence, remediation and a reference; further
-down, the panel lists the node's edges in both directions.
+**Explore**: one node's neighbourhood (who reaches it, what it reaches) on a snapping grid, with its details,
+findings, attached policies and trusted services in the drawer below.
 
-![Node detail with findings](docs/01.png)
+![Explore and node details](docs/01.png)
 
-**Attack paths**: the cheapest paths from the owned nodes (here the operator and an external account) to the
-account administrator.
+**Attack paths**: every route from an entry point or your foothold to an administrator, one row per foothold.
+Selecting one opens its kill chain: the steps as cards, with the evidence and the findings on the path.
 
-![Attack path discovery](docs/02.png)
+![Attack paths and the kill-chain drawer](docs/02.png)
+
+**Map**: the kill-chain map, the whole attack surface on one canvas. Ways in, footholds, escalation, the
+admin-equivalent principals, the account administrator and the data the ways in reach, in ATT&CK order, at most 150
+cards (large groups collapse into one card). The **key pivots** beside it rank the principals the routes run
+through; hover one to light up its routes. **From your foothold** narrows it to what you already control reaches.
+Under **More**, the **Audit** is the operator's: where you would be seen (each detection control per region:
+watching, blind or unknown) and what the account exposes for you to use, by category and severity.
+
+![The kill-chain map with a key pivot lit](docs/03.png)
+
+Two more pages list what the routes go through: **Principals** (every user, role, group and outside principal:
+admin-equivalent first, then who reaches admin, who can become each one and what it can become) and **Data**
+(secrets, keys, buckets, parameters, snapshots …: public or shared ones first, who can read each one). Routes and
+findings carry MITRE ATT&CK techniques and tactics, and **Findings** shows one row per rule.
 
 ## Documentation
 

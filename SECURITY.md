@@ -122,9 +122,9 @@ runs the local server.
 
 | Threat | Control |
 |---|---|
-| Script injection from report strings | DOM-only rendering through `dom.js`: no `innerHTML`, no inline handlers, no `eval`. Severity classes and links pass allow-lists. |
+| Script injection from report strings | Report strings reach the page only as text: Vue templates escape them, and the page code has no `v-html`, `innerHTML`, inline handlers or `eval` (checked by `tests/js/static/page.test.js`). Severity classes and links pass allow-lists. |
 | Script from anywhere else | An exact Content-Security-Policy in the page and in the server's headers: `default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; ...`, plus `frame-ancestors`. |
-| Tampered third-party code | Cytoscape.js and JSZip are vendored and loaded with Subresource Integrity (`aws_enumerator/dashboard/vendor/VENDOR.md`); the page needs no network. |
+| Tampered third-party code | The page is one committed bundle (`js/app.js`) built from pinned dependencies: npm packages locked with integrity hashes in `frontend/package-lock.json`, JSZip vendored byte for byte (`frontend/vendor/VENDOR.md`). The page loads the bundle and its stylesheet with Subresource Integrity and needs no network. |
 | Data leaving the page | `connect-src 'none'`, `form-action 'none'` and `Referrer-Policy: no-referrer`. External references open with `rel="noopener noreferrer"`. |
 | Malformed or huge archives | Exact-path reads only (`<root>/analysis/graph.json`, `<root>/manifest.json`). Limits on archive size, entry count, entry size and total inflated size. Every error is shown, never swallowed. |
 | DNS rebinding, foreign pages | A `Host` allow-list (`127.0.0.1`, `localhost`, `[::1]` and the bind host, on the bound port, plus `--allowed-host`); anything else gets `421`. Only `GET`/`HEAD`. |
@@ -137,13 +137,15 @@ runs the local server.
 - A report stays sensitive inside the browser, so use an **isolated browser profile** for reports you did not
   produce.
 - "Remember owned marks" (off by default) stores node ids in that browser's `localStorage`.
-- Opening `index.html` from `file://` is best-effort: Subresource Integrity can block the scripts there.
+- Opening `index.html` from `file://` does not work: browsers refuse Subresource-Integrity-checked files there. Use
+  `aws-enumerator dashboard`.
 
 ## Supply chain
 
 - **Python dependencies** are hash-locked in `requirements.txt` (runtime) and `requirements-dev.txt` (dev). The
   Docker build installs with `--require-hashes`.
-- **The base image** is pinned by digest in the `Dockerfile`. Dashboard libraries are vendored with SRI.
+- **The base image** is pinned by digest in the `Dockerfile`. The dashboard's npm dependencies are locked with
+  integrity hashes (`frontend/package-lock.json`); the built bundle is committed and loaded with SRI.
 - **Publishing is not gated yet.** The repository's publishing workflow pushes images on every push to `main`
   without test gates or pinned actions. Until that changes, build the image from a release tag yourself, or pin a
   published image by digest.

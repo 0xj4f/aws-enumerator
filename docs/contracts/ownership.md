@@ -98,8 +98,8 @@ Every path of the repository appears below exactly once per wave: either one str
 | `aws_enumerator/engine/analyzers/k8s/**` | frozen | E-k8s |
 | `aws_enumerator/engine/analyzers/{kms,secrets,data_stores}.py` | frozen | E-data |
 | `aws_enumerator/engine/analyzers/{lambda_,compute,messaging,coverage_gaps,cognito}.py` | frozen | E-compute |
-| `aws_enumerator/dashboard/js/{graph-core,loader,exports,catalog}.js` | Dc | frozen |
-| `aws_enumerator/dashboard/{__init__.py,server.py,index.html}`, `dashboard/css/**`, `dashboard/js/{dom,ui}.js`, `dashboard/vendor/**`, `dashboard/icons/**` | frozen | Du |
+| `frontend/src/core/{graph-core,loader,exports,catalog}.js` (in `aws_enumerator/dashboard/js/` until D-57) | Dc | frozen |
+| `aws_enumerator/dashboard/{__init__.py,server.py,index.html}`, `dashboard/css/**`, `dashboard/js/**`, `dashboard/vendor/**`, `dashboard/icons/**` (since D-57 the page is built from `frontend/**` into these paths) | frozen | Du |
 
 Notes:
 
@@ -127,7 +127,6 @@ Notes:
 | `tests/fixtures/scenarios/**` | frozen | frozen |
 | `tests/fixtures/regressions/**` | frozen | frozen |
 | `tests/fixtures/graph/**`, `tests/fixtures/graph-invalid/**` | frozen (regenerated with `build_fixtures.py --write` only together with an approved `edge_types.py`/schema change request) | frozen |
-| `tests/fixtures/js-regressions/**` | frozen | Du |
 | `tests/fixtures/<stream>/**` | that stream | that stream |
 
 **Extending the fake world without editing `acme.py`.** A collector stream that needs more API answers builds
@@ -167,9 +166,8 @@ frozen in Wave 1 except for the cross-stream flips of §1 rule 4.
 | Path | Wave 1 | Wave 2 |
 |---|---|---|
 | `tests/js/helpers/**` | frozen | frozen |
-| `tests/js/legacy/**` (characterises the d13c215 dashboard through `git show`; never changes) | frozen | frozen |
 | `tests/js/core/**`, `tests/js/golden/**` | Dc | frozen |
-| `tests/js/{ui,static,perf}/**` | — | Du |
+| `tests/js/static/**` (checks of the built page, D-57) | — | Du |
 | `tests/js/regressions/**` | §4 | §4 |
 
 ### 3.4 Goldens
@@ -204,8 +202,8 @@ every golden set with its test and gives the regeneration commands and the ledge
 |---|---|---|---|
 | `tests/js/regressions/core-graph.test.js`, `core-loader.test.js`, `core-exports.test.js` (the `core-*.test.js` glob) | **Dc** | frozen | graph-core / loader / exports xfails (38 + 9 + 7) |
 | `tests/js/regressions/lib/common.js`, `lib/graphs.js` | **Dc** | frozen | fixtures, the path_cases option mapping, synthetic graphs |
-| `tests/js/regressions/ui.test.js`, `static.test.js` (the `{ui,static}*.test.js` glob), `support.test.js` | frozen | **Du** | UI (16) and static (10) xfails; self-tests of the harness |
-| `tests/js/regressions/lib/ui-harness.js` (incl. `PROTOCOL`), `lib/markup.js`, `lib/scan.js` | frozen | **Du** | the UI hooks of dashboard-core-api.md §5 |
+| `tests/js/regressions/support.test.js` | frozen | **Du** | self-tests of the support code |
+| `tests/js/regressions/lib/markup.js`, `lib/scan.js` | frozen | **Du** | the static scans (sinks, handlers, network, name matching) |
 
 - **Flipping** = `xfail(` → `test(`, drop the `RAISES` argument and the `(xfail: ...)` name suffix, keep the
   `[F-xxx]` tag. An `XFailWrongReasonError` after the module lands means the finding is not fixed yet, or the
@@ -216,8 +214,10 @@ every golden set with its test and gives the regeneration commands and the ledge
   (no markup sinks, no last-segment matching except in `js/loader.js`), but only Du flips them, because they
   stay red until Du replaces `index.html`.
 - `lib/common.js` is used by the UI tests too; a change Du needs there in Wave 2 is a change request (I1).
-- Hook names change only together in `lib/ui-harness.js` `PROTOCOL` and dashboard-core-api.md §5, by Du
-  through a change request to contract-arbiter for the contract page.
+- Since D-57 the page hooks are `data-testid` attributes tested in frontend/ (Vitest `src/**/*.test.js`, Playwright
+  `e2e/`); dashboard-core-api.md §5 lists them. The UI regression suite of the hand-written page, its harness and
+  fixtures, the legacy d13c215 characterisation (it needed the vendored Cytoscape) and the UI perf test were
+  removed with that page; their findings are tested in frontend/.
 
 ## 5. Repository root, docs, scripts, owner-only paths
 
@@ -302,8 +302,8 @@ The Status column was added in Wave 3b (w3b-tidy) from the requests' `## Resolut
   E-data and E-compute their analyzers, loaders and `tests/python/engine/domains/<x>/**`; E-rules all of
   `engine/rules/**`, `graph/closure.py`, the five export writers, `tests/python/engine/{domains/rules,bench}/**`,
   `tests/python/exports/**` and `eval/test_characterize_rules.py`; Du `dashboard/{__init__.py,server.py,index.html}`,
-  `css/**`, `js/{dom,ui}.js`, `vendor/**`, `icons/**`, `tests/js/{ui,static,perf}/**`, the Du regression tests of §4,
-  `tests/fixtures/js-regressions/**`, `tests/python/dashboard/**` and `scripts/vendor_dashboard_libs.py`; plus
+  `css/**`, `js/**`, `vendor/**`, `icons/**` (built from `frontend/**` since D-57), `tests/js/static/**`, the Du
+  regression tests of §4, `tests/python/dashboard/**` and `scripts/vendor_dashboard_libs.py`; plus
   each stream's per-stream paths of §1 rule 3.
 - **Everything Wave 1 streams owned is frozen in Wave 2** (E-policy, E-core, C-A, C-K8s, C-B, R, Dc), except the
   domain loaders handed over in §2, and the merge work done in the sync step itself (§1 rule 7). A Wave 2 stream
