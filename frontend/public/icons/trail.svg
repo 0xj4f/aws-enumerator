@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" preserveAspectRatio="xMidYMid meet" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- CloudTrail trail: a log with a magnifier -->
+  <path d="M5 3 H14 L17 6 V12"/>
+  <path d="M5 3 V21 H11"/>
+  <path d="M8 8 H13"/>
+  <path d="M8 12 H12"/>
+  <circle cx="16" cy="16" r="3"/>
+  <path d="M18.2 18.2 L21 21"/>
+</svg>

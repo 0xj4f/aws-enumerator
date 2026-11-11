@@ -1,6 +1,6 @@
 # AWS Attack Paths — Field Guide
 
-A scenario-based guide to the attack graph that `aws-enumerator` writes to `analysis/graph.json` and the dashboard draws. Use it next to the dashboard to turn graph edges and findings into attack chains you can test, or fix.
+A scenario-based guide to the attack graph that `aws-enumerator` writes to `analysis/graph.json` and the dashboard draws. Use it next to the dashboard to turn graph edges and findings into attack chains you can test.
 
 > **These are guidelines, not a checklist.** The graph describes what the collected *configuration* allows. It is not proof of exploitability: conditions the evaluator cannot resolve, data the collector could not read and runtime controls all matter. Validate every path manually before you report it.
 >
@@ -32,25 +32,36 @@ Every edge type has exactly one class. Only some classes are attack steps:
 
 A path walks an edge only when its record says `traversable: true`. Some control types decide that per edge: `MEMBER_OF` only when the member's own boundary and denies leave the group's grants intact, `IRSA_BRIDGE` / `POD_IDENTITY` only when the role's trust policy really admits the service account, `POOL_AUTH_ROLE` / `POOL_MAPPED_ROLE` only when anyone can get authenticated identities from the pool. A compute node (instance, function, task, stack, job, pod, service account, Cognito pool …) can only be entered through a `control` edge: invoking a function (`CAN_INVOKE`) never gives you its role, updating its code (`CAN_UPDATE_CODE`) does.
 
-In the dashboard, structural and context edges are hidden by default (the **Filters** panel shows them), conditional edges have a hollow arrow head and edges that cannot be walked are faded with a flat end.
+In the dashboard, structural and context edges are hidden by default (Explore: **Hide context edges**), conditional steps are drawn dashed, and the out-edges of admin-equivalent principals are collapsed (Explore: **Collapse admin fan-out**): an admin-equivalent principal can already do everything, so only its `IS_ADMIN_EQUIVALENT` edge is drawn. Managed policies and AWS service principals are listed in a node's details instead of being drawn.
+
+### The kill-chain map
+
+The dashboard's **Map** puts every route on one canvas, in kill-chain order: **Ways in** (the route sources, and any
+entry point that reaches data), **Footholds** (the first hop), **Escalation** (later hops), **Admin-equivalent**,
+**Account admin**, and **Data reached** (one card per asset type; click to expand). A node sits in the lowest column
+any route gives it, each column is labelled with the ATT&CK tactic of the steps into it, and more than 12 cards of
+one type in a column collapse into a group card. **Key pivots** rank the nodes the routes run through: the one with
+the most routes through it is where to aim first. **From your foothold** keeps only the routes from the operator and
+the nodes marked owned; routes marked expected are left out unless **Include expected routes** is on.
 
 ### Special nodes
 
 - **Anyone** (`aws-enumerator:anonymous`): the internet and every AWS account. Every public grant or exposure starts here (`GRANTS_PUBLIC`, `PUBLIC_INBOUND`, `SSRF_TO_IMDS`, `COGNITO_PUBLIC_IDENTITY`, a trust on `Principal: *` …). It is always a default path source.
-- **Account administrator** (`aws-enumerator:account-admin/<account>`): always a target of *Discover all paths*. Admin-equivalent principals reach it with `IS_ADMIN_EQUIVALENT`; principals that can raise their own permissions reach it with `CAN_ESCALATE`.
+- **Account administrator** (`aws-enumerator:account-admin/<account>`): always a target of the **Attack paths** search. Admin-equivalent principals reach it with `IS_ADMIN_EQUIVALENT`; principals that can raise their own permissions reach it with `CAN_ESCALATE`.
 - **External account / external principal**: a foreign account (`arn:aws:iam::<account>:root`) or a principal in it, named by a trust or resource policy. Trust and policy grants from them are usually conditional, because the tool cannot see what the other account's own policies allow (sharing lists such as snapshot permissions are definite).
 - **Identity providers and service principals**: OIDC/SAML providers (and well-known web identity providers such as GitHub) are sources of `CAN_ASSUME_WEB_IDENTITY` / `CAN_ASSUME_SAML`; AWS service principals only give context (`SERVICE_CAN_ASSUME`).
 - **Account and region anchors**: carry account-wide and per-region findings (hygiene, posture, collection gaps), so every finding is attached to some node.
 
 ### Sources and targets
 
-- **Sources.** The dashboard pre-marks the **operator** (the identity that ran the collection, when it is a node) as owned. **Mark owned** in a node's details adds the nodes you control. *Discover all paths* starts from the owned nodes; when nothing is marked it starts from the operator and the default entry points (Anyone, identity providers, external accounts and principals, users that have or may have long-term credentials). *Find path* goes from the node you pick with **Path from here** (else from the operator) to the one you pick with **Path to here**.
-- **Targets.** The account administrator node, admin-equivalent principals and other nodes marked high value (red border, "high value" badge). Data assets (buckets, secrets, parameters, tables …) are targets only when the *Data assets are Discover targets* option is on.
-- **Filters.** By default hidden edge categories, node types and classes also remove those edges from path finding (*Hidden types and classes restrict paths*), and conditional edges are included (*Include conditional edges*).
+- **Sources.** The dashboard pre-marks the **operator** (the identity that ran the collection, when it is a node) as owned (**You** in the header). **Mark owned** in a node's details adds the nodes you control. **Attack paths** searches from the entry points (Anyone, identity providers, external accounts and principals, nodes marked as entry points) and from the owned nodes. Each row is one route, cut at the first admin-equivalent principal it reaches; **Also reaches** lists the other admin principals behind the same foothold. **Find a route…** goes from the node you name (else from the operator) to another; **Route to admin from here** in a node's details does the same towards the account administrator.
+- **Targets.** The account administrator node and the admin-equivalent principals (an "admin-equivalent" badge). For a data asset (bucket, secret, parameter, table …), open it in **Explore** to see who reaches it, or use **Find a route…**.
+- **Options.** Conditional edges are walked unless **Include conditional steps** is off. The Explore options only change what the canvas draws, never which paths exist.
+- **Expected routes.** A route through AWS-managed plumbing (Control Tower, AFT, IAM Identity Center, Organizations access roles) gets a hint. **Mark expected** (one route) or **Entry expected** (every route from that entry point) fades it and moves it last, and **Mark suggested routes expected** does so for the hinted routes that go straight into an admin principal; a route that escalates through a non-admin foothold is never marked for you. Expected is triage, not suppression: the route stays in the verdict and the exports, and the marks are kept only in a saved session or, when you opt in, in this browser.
 
 ### Path cost
 
-A path's cost is the sum of its edge weights; *Find path* and *Discover all paths* return the cheapest path (then the fewest hops). Lower is easier. The weights come from the traversability table (`engine/graph/edge_types.py`):
+A path's cost is the sum of its edge weights; **Find a route…** and the **Attack paths** search return the cheapest path (then the fewest hops). Lower is easier. The weights come from the traversability table (`engine/graph/edge_types.py`):
 
 <!-- BEGIN GENERATED:weights (scripts/gen_docs.py; do not edit) -->
 | Base weight | Edge types a path can walk |
@@ -64,9 +75,13 @@ A path's cost is the sum of its edge weights; *Find path* and *Discover all path
 A conditional edge (the evaluator could not resolve a condition) adds 1 for a weak condition, 3 for a strong condition; `CAN_REACH_NODE_IMDS` adds 0-2 by the node's IMDS hop limit (`evidence.weight_extra`). Weight 0 is a real cost of zero. Edge types of class `structural` or `info`, and the types marked not traversable, are never path steps whatever their weight.
 <!-- END GENERATED:weights -->
 
+### ATT&CK tags
+
+Attack steps and findings carry MITRE ATT&CK Enterprise techniques (`aws_enumerator/engine/attack.py`, pinned to ATT&CK 20.1 and checked against MITRE's STIX data). Assuming or being passed a role is T1548.005 *Temporary Elevated Cloud Access*, rewriting policies T1098.003 *Additional Cloud Roles*, new keys or passwords T1098.001, instance metadata T1552.005, Lambda code T1648 *Serverless Execution*, S3 reads T1530, Secrets Manager and Parameter Store reads T1555.006, snapshot and AMI sharing T1537. The way in adds T1199 *Trusted Relationship* (another account), T1078.004 *Cloud Accounts* (federation, or a trust on `Principal: *`) or T1190 *Exploit Public-Facing Application* (the internet). Logging and detection gaps carry the ATT&CK 20 *Defense Impairment* techniques (T1685, T1685.002) whose effect is already in place. Steps with no fitting technique (KMS decrypt, messaging, DynamoDB, Cognito) carry none rather than a loose one. The dashboard shows each route's kill chain (one tactic per step), filters routes and findings by tactic, and links every technique to attack.mitre.org; the SARIF export tags its rules with them.
+
 ### Findings and their links
 
-Findings are attached to the node they are about (users, roles, buckets, instances, functions, pods, the account anchor …). The **Findings** tab lists all of them with severity tiles and filters; a node's **Details** list its own findings, the group findings it inherits, and its incoming and outgoing connections. Each finding has a **Reference** link to the section of this guide that explains it.
+Findings are attached to the node they are about (users, roles, buckets, instances, functions, pods, the account anchor …). The **Findings** page lists all of them with severity tiles and filters (INFO is hidden until you select it); a node's details in **Explore** list its own findings, the group findings it inherits, its attached policies and the AWS services that can assume it. Each finding has a **Reference** link to the section of this guide that explains it.
 
 <!-- BEGIN GENERATED:reference-format (scripts/gen_docs.py; do not edit) -->
 In this build (version 0.3.0) a reference looks like `https://github.com/0xj4f/aws-enumerator/blob/v0.3.0/docs/attack_paths.md#common-privilege-escalation-patterns`: the release tag `v0.3.0`, never the `main` branch, so the link keeps pointing at the guide that matches the analysis.

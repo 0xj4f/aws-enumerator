@@ -240,8 +240,18 @@ describe('session JSON', () => {
     const doc = JSON.parse(text);
     assert.deepEqual(Object.keys(doc), ['version', 'run_id', 'owned', 'paths']);
     assert.equal(doc.version, 1);
-    assert.deepEqual(X.parseSession(text, runId), { owned: [EX.user, EX.pod], paths: [goodPath], problems: [] });
+    assert.deepEqual(X.parseSession(text, runId), { owned: [EX.user, EX.pod], paths: [goodPath], expected: [], problems: [] });
     assert.deepEqual(JSON.parse(X.sessionJson({ runId, owned: [EX.user, EX.user, '', 7] })).owned, [EX.user]);
+  });
+
+  test('expected marks (D-58) are written only when there are some and read back; bad entries are dropped', () => {
+    const marks = ['route:a|e:1', 'entry:' + EX.user];
+    const text = X.sessionJson({ runId, owned: [EX.user], paths: [], expected: [...marks, marks[0], ''] });
+    assert.deepEqual(Object.keys(JSON.parse(text)), ['version', 'run_id', 'owned', 'paths', 'expected']);
+    assert.deepEqual(X.parseSession(text, runId).expected, marks);
+    const bad = X.parseSession(JSON.stringify({ version: 1, run_id: runId, owned: [], expected: ['ok', 7, ''] }), runId);
+    assert.deepEqual([bad.expected, bad.problems.length], [['ok'], 2]);
+    assert.equal(X.parseSession(JSON.stringify({ version: 1, run_id: runId, owned: [], expected: 'x' }), runId).problems.length, 1);
   });
 
   test('parseSession never throws; wrong run, version or shape gives nothing applied and a reason', () => {

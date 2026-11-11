@@ -40,9 +40,9 @@ REQUIRED_DATA = (
     "util/regions.json",
     "dashboard/index.html",
     "dashboard/css/app.css",
-    "dashboard/vendor/VENDOR.md",
-    "dashboard/vendor/jszip.min.js",
-    "dashboard/vendor/cytoscape.min.js",
+    "dashboard/js/app.js",
+    "dashboard/vendor/LICENSE-jszip.txt",
+    "dashboard/vendor/LICENSE-third-party.txt",
     "dashboard/icons/generic.svg",
 )
 
@@ -81,7 +81,7 @@ def test_the_wheel_ships_the_engine_and_dashboard_data(wheel):
     names = set(_names(wheel))
     missing = [rel for rel in REQUIRED_DATA if f"{PACKAGE}/{rel}" not in names]
     assert missing == []
-    for pattern, minimum in (("dashboard/js/", 6), ("dashboard/icons/", 40), ("dashboard/vendor/LICENSE-", 7)):
+    for pattern, minimum in (("dashboard/js/", 1), ("dashboard/icons/", 40), ("dashboard/vendor/LICENSE-", 7)):
         assert len([n for n in names if n.startswith(f"{PACKAGE}/{pattern}")]) >= minimum, pattern
 
 

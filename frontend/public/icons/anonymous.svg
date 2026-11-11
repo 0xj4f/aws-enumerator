@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" preserveAspectRatio="xMidYMid meet" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Anonymous / the internet: a globe -->
+  <circle cx="12" cy="12" r="9"/>
+  <path d="M3 12 H21"/>
+  <path d="M12 3 C8.5 7 8.5 17 12 21"/>
+  <path d="M12 3 C15.5 7 15.5 17 12 21"/>
+</svg>

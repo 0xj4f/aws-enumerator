@@ -13,7 +13,9 @@ One ``run`` whose ``tool.driver.rules`` holds one rule per distinct finding ``id
 * a suppressed finding (exported only with ``include_suppressed``) carries an external suppression with the
   suppression reason;
 * per-finding ``account`` is the finding's account (falling back to ``run.account_id``), a global resource's
-  region is ``global`` (D-25, D-50).
+  region is ``global`` (D-25, D-50);
+* a rule's ``properties.tags`` add the MITRE ATT&CK techniques and tactics of its finding id
+  (``external/mitre-attack/T1548.005``, ``external/mitre-attack/TA0004``; engine/attack.py, D-58).
 
 Rule metadata (short and full description, help URI) is taken from the graph itself (the first exported
 finding of each id), so the export depends only on its input.
@@ -24,6 +26,7 @@ from __future__ import annotations
 import json
 from typing import Any, Dict, List, Mapping, Optional, Tuple
 
+from aws_enumerator.engine.attack import sarif_tags
 from aws_enumerator.engine.findings.references import REPOSITORY_URL
 from aws_enumerator.engine.writers.csv import Selection, select_findings, severity_class, severity_rank
 
@@ -65,7 +68,7 @@ def _rules(sel: Selection) -> Tuple[List[Dict[str, Any]], Dict[str, int]]:
             "fullDescription": {"text": _text(first.get("description")) or _text(first.get("title")) or fid},
             "defaultConfiguration": {"level": level},
             "properties": {"tags": ["security", "aws"] + ([first["category"]] if _text(first.get("category"))
-                                                          else []),
+                                                          else []) + sarif_tags(fid),
                            "security-severity": score},
         }
         if _text(first.get("reference")):

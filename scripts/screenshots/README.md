@@ -1,19 +1,20 @@
 # README screenshots
 
-`docs/00.png`, `docs/01.png` and `docs/02.png` are produced by the scripts in this directory from a
+`docs/00.png`, `docs/01.png`, `docs/02.png` and `docs/03.png` are produced by the scripts in this directory from a
 **synthetic** run. No real account, collector or AWS API is involved (finding F-134: the earlier images
 showed identifiers from a real-looking environment).
 
 | Image | View |
 |---|---|
-| `docs/00.png` | Overview: the graph, the legend and the findings list, right after the run zip is opened |
-| `docs/01.png` | Node details: the `demo-web-1` EC2 instance, chosen through the search box, with its findings |
-| `docs/02.png` | Attack paths: the external partner account marked owned (from its details), "Discover all paths", and its 6-hop path to the account administrator selected |
+| `docs/00.png` | Brief: the verdict, the headline numbers, the top attack paths, internet exposure, detection posture and coverage, right after the run zip is opened |
+| `docs/01.png` | Explore: the `demo-web-1` EC2 instance, chosen through the search box, its neighbourhood on the canvas and its details in the drawer |
+| `docs/02.png` | Attack paths: the external partner account's 6-step route to the account administrator, selected, with its kill-chain canvas in the drawer |
+| `docs/03.png` | Map: the kill-chain map of every route (ways in, footholds, escalation, admin, data reached), with the top key pivot pinned so its routes light up |
 
 ## Regenerate
 
 ```sh
-scripts/screenshots/capture.sh                 # writes docs/00.png docs/01.png docs/02.png
+scripts/screenshots/capture.sh                 # writes docs/00.png docs/01.png docs/02.png docs/03.png
 scripts/screenshots/capture.sh --out-dir /tmp/shots --view detail   # one view elsewhere
 ```
 
@@ -45,7 +46,7 @@ Fonts and Chrome's renderer can differ elsewhere.
      127.0.0.1, other traffic goes to a dead proxy, and background networking is off.
    - **Driving the page:** it uses the DevTools protocol (`websocket-client`, which is already in the venv
      as a dependency of `kubernetes`). It opens the zip through the page's own "Open zip or graph.json"
-     input and then uses the page's search box and buttons ("Mark owned", "Discover all paths", a path row).
+     input and then uses the page's search box, its tabs and a table row.
      The zip goes through the real loader, so the header shows "digest verified".
    - **Failure checks:** it fails if the page records a script error, a CSP violation or a load problem,
      or requests anything outside the dashboard origin. Chrome's own `/favicon.ico` probe, which the server
@@ -57,8 +58,7 @@ The shipped dashboard has no demo code path. The only thing the harness adds to 
 fixed-seed `Math.random`, installed through DevTools before the page's own scripts run (`SEEDED_RANDOM`). It
 makes the force-directed layout repeatable.
 
-The viewport is 1800x1200. At 1600 px wide, the header's run metadata wraps to a third line and the coverage
-badge is clipped.
+The viewport is 1800x1200, so the Brief and the drawers show without scrolling.
 
 `tests/python/docs/test_screenshots.py` checks the following, offline and without Chrome:
 - the images are valid PNGs with no metadata chunks and the harness's dimensions;

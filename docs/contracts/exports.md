@@ -54,7 +54,7 @@ One `run`. Validated against the SARIF 2.1.0 JSON schema when it is available of
         "fullDescription": {"text": "<catalogue description>"},
         "helpUri": "<reference>",
         "defaultConfiguration": {"level": "error"},
-        "properties": {"tags": ["security", "aws", "<category>"], "security-severity": "8.0"}
+        "properties": {"tags": ["security", "aws", "<category>", "external/mitre-attack/T1548.005", "external/mitre-attack/TA0004"], "security-severity": "8.0"}
       }]
     }},
     "automationDetails": {"id": "aws-enumerator/<account_id>/<run_id>"},
@@ -77,6 +77,7 @@ One `run`. Validated against the SARIF 2.1.0 JSON schema when it is available of
 ```
 
 - `rules` holds one entry per distinct finding `id`, in id order; `ruleIndex` points into it.
+- A rule's `tags` end with the MITRE ATT&CK techniques of its finding id, then their tactics, as `external/mitre-attack/<id>` (`aws_enumerator/engine/attack.py`, pinned to ATT&CK Enterprise 20.1; DECISIONS.md D-58). A finding id with no fitting technique adds none.
 - The `physicalLocation` exists because many SARIF consumers (code scanning) require one; the real location is the logical one (the resource ARN).
 - Suppressed findings, when included, carry `"suppressions": [{"kind": "external", "justification": "<reason>"}]`.
 

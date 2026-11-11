@@ -292,6 +292,6 @@ def test_relative_links_and_anchors_resolve():
 
 def test_screenshots_are_referenced_by_their_fixed_names():
     text = _section(_readme(), "Screenshots")
-    for name in ("docs/00.png", "docs/01.png", "docs/02.png"):
+    for name in ("docs/00.png", "docs/01.png", "docs/02.png", "docs/03.png"):
         assert f"]({name})" in text and (ROOT / name).is_file(), name
     assert "synthetic" in text

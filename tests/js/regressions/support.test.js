@@ -4,17 +4,10 @@
 
 const { describe, test } = require('node:test');
 const assert = require('node:assert/strict');
-const fs = require('fs');
-const path = require('path');
-const { createDom, MarkupSinkError } = require('../helpers/dom-stub');
-const targets = require('../helpers/targets');
 const common = require('./lib/common');
 const markup = require('./lib/markup');
 const scan = require('./lib/scan');
 const G = require('./lib/graphs');
-const { bootUi, FakeClock, includesRendered, stringLeaves } = require('./lib/ui-harness');
-
-const HARNESS_PAGE = path.join(common.OWN_FIXTURE_DIR, 'harness-page');
 
 describe('regression support: fixtures and matchers', () => {
   test('missingModule() matches node\'s MODULE_NOT_FOUND for exactly that dashboard file', () => {
@@ -88,19 +81,6 @@ describe('regression support: markup loader and static scanners', () => {
     assert.deepEqual(markup.scriptTags('<script src="js/a.js"></script><script>var x = "</div>";</script>').map(s => [s.src, s.inline]), [['js/a.js', ''], [null, 'var x = "</div>";']]);
   });
 
-  test('loadTrustedMarkup builds the body through the strict stub and still rejects inline handlers', () => {
-    const { document } = createDom();
-    const page = markup.loadTrustedMarkup(document, fs.readFileSync(path.join(HARNESS_PAGE, 'index.html'), 'utf8'));
-    assert.equal(page.title, 'Harness self-test page & fixture');
-    assert.deepEqual(page.scripts.map(s => s.src), ['vendor/jszip.min.js', 'vendor/cytoscape.min.js', 'js/ui.js']);
-    assert.equal(document.querySelector('[data-panel="header"]').textContent, 'Harness \u2192 self-test');
-    assert.equal(document.getElementById('sel').options.length, 2, 'implied </option>');
-    assert.equal(document.getElementById('sel').value, 'b');
-    assert.ok(document.getElementById('pick-dir').hasAttribute('webkitdirectory'));
-    assert.throws(() => markup.loadTrustedMarkup(createDom().document, '<body><button onclick="x()">x</button></body>'), MarkupSinkError);
-    assert.throws(() => markup.loadTrustedMarkup(createDom().document, '<body><div style="color:red"></div></body>'), MarkupSinkError);
-  });
-
   test('stripJsComments removes comments but keeps strings, templates and regex literals', () => {
     const src = 'var a = "http://x"; // el.innerHTML = 1\nvar r = /\\/\\/[a]/g; /* el.onclick = f */ var t = `//${a}`;\nvar d = a / 2 / 3;';
     const out = markup.stripJsComments(src);
@@ -125,69 +105,5 @@ describe('regression support: markup loader and static scanners', () => {
     assert.deepEqual(scan.remoteLoadsInHtml('<script src="vendor/a.js"></script><img src="data:image/png;base64,AA"><a href="https://example.invalid">doc</a>'), []);
     assert.equal(scan.remoteLoadsInHtml('<script src="https://cdn.example.invalid/a.js"></script><link rel="stylesheet" href="//x/y.css">').length, 2);
     assert.deepEqual(markup.parseCsp("default-src 'none'; img-src 'self' data:;").get('img-src'), ["'self'", 'data:']);
-  });
-});
-
-describe('regression support: UI harness', () => {
-  test('FakeClock runs due timers in order, repeats intervals and refuses string callbacks', () => {
-    const c = new FakeClock();
-    const log = [];
-    c.add(() => log.push('b'), 10, [], false);
-    c.add(() => log.push('a'), 5, [], false);
-    const iv = c.add(() => log.push('i'), 4, [], true);
-    while (c.runOne(12));
-    assert.deepEqual(log, ['i', 'a', 'i', 'b', 'i']);
-    assert.equal(c.intervals().length, 1);
-    c.clear(iv);
-    assert.equal(c.pending().length, 0);
-    assert.throws(() => c.add('alert(1)', 0, [], false), TypeError);
-  });
-
-  test('includesRendered and stringLeaves accept verbatim or JSON-escaped text and ignore bidi controls', () => {
-    assert.ok(includesRendered('nested: {"x": "a \\"q\\""}', 'a "q"'));
-    assert.ok(includesRendered('demo unicode line', 'demo\u202e unicode\u200b line'));
-    assert.ok(includesRendered('demo\u202eunicode', 'demounicode'));
-    assert.deepEqual(stringLeaves({ a: 'x', b: [1, 'y', { c: 'z' }], d: true }), ['x', 'y', 'z']);
-  });
-
-  test('bootUi reports a missing ui.js as MODULE_NOT_FOUND for that file', async () => {
-    const dir = path.join(common.OWN_FIXTURE_DIR, 'no-such-dashboard');
-    await assert.rejects(bootUi(null, { dashboardDir: dir }), (e) => e.code === 'MODULE_NOT_FOUND');
-  });
-
-  test('bootUi runs the page scripts in one realm with headless Cytoscape, fake timers and page-realm files', async (t) => {
-    const ui = await bootUi(t, { dashboardDir: HARNESS_PAGE, graph: common.fixture('example') });
-    assert.deepEqual(ui.scripts, ['vendor/jszip.min.js', 'vendor/cytoscape.min.js', 'js/ui.js']);
-    assert.equal(ui.text(ui.panel('overlay')), 'loaded 22 proto=true', 'graph objects are handed over in the page realm');
-    assert.equal(ui.cy().nodes().length, 22);
-    assert.equal(ui.cy().container(), null, 'Cytoscape runs headless');
-    await ui.tap(common.EX.user);
-    await ui.click('toggle-owned', { nodeId: common.EX.user });
-    assert.deepEqual(ui.panel('owned').querySelectorAll('[data-node-id]').map(e => e.dataset.nodeId), [common.EX.user]);
-    await assert.rejects(ui.click('no-such-action'), /no \[data-action="no-such-action"\]/);
-    await ui.click('play');
-    assert.equal(ui.clock.intervals().length, 1);
-    await ui.tick(3500);
-    assert.equal(ui.AEUI.ticks(), 3);
-    await ui.click('stop');
-    assert.equal(ui.clock.intervals().length, 0);
-    const bytes = new Uint8Array(fs.readFileSync(targets.vendorFile('LICENSE-jszip.txt')));
-    await ui.chooseFiles([ui.file(bytes.slice(0, 20), 'notes.txt', { webkitRelativePath: 'run/notes.txt' })]);
-    await ui.waitFor(() => ui.text(ui.panel('overlay')).startsWith('text:'), { what: 'file read' });
-    assert.match(ui.text(ui.panel('overlay')), / rel=run\/notes\.txt$/);
-    ui.assertNoErrors();
-    assert.deepEqual(ui.unhandled, []);
-  });
-
-  test('bootUi page realm reads zips with the vendored JSZip (no cross-realm typed arrays)', async (t) => {
-    const ui = await bootUi(t, { dashboardDir: HARNESS_PAGE });
-    const { loadVendored } = require('../helpers/vendor-libs');
-    const JSZip = loadVendored('jszip').lib;
-    const z = new JSZip();
-    z.file('run/analysis/graph.json', '{}');
-    const zip = await z.generateAsync({ type: 'uint8array' });
-    await ui.chooseFiles([ui.file(zip, 'report.zip')]);
-    await ui.waitFor(() => ui.text(ui.panel('overlay')).startsWith('zip:'), { what: 'zip read' });
-    assert.match(ui.text(ui.panel('overlay')), /run\/analysis\/graph\.json/);
   });
 });

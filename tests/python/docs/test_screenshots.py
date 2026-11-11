@@ -35,7 +35,7 @@ from tests.support import targets
 REPO_ROOT = Path(targets.REPO_ROOT)
 DOCS = REPO_ROOT / "docs"
 SHOTS_DIR = REPO_ROOT / "scripts" / "screenshots"
-SHOTS = ("00.png", "01.png", "02.png")
+SHOTS = ("00.png", "01.png", "02.png", "03.png")
 PNG_SIGNATURE = b"\x89PNG\r\n\x1a\n"
 CRITICAL_CHUNKS = {b"IHDR", b"PLTE", b"IDAT", b"IEND"}
 METADATA_CHUNKS = {b"tEXt", b"zTXt", b"iTXt", b"eXIf", b"tIME", b"iCCP"}

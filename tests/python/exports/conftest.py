@@ -17,9 +17,9 @@ from tests.support import targets
 
 W = importlib.import_module("tests.fixtures.e-rules.worlds")
 GRAPH_FIXTURES = targets.GRAPH_FIXTURES_DIR
-JS_DIR = targets.DASHBOARD_JS_DIR
+JS_DIR = targets.DASHBOARD_CORE_DIR  # the pure core modules (frontend/src/core since D-57)
 
-#: Renders findingsCsv / findingsMarkdown of dashboard/js/exports.js for a graph.json given on stdin.
+#: Renders findingsCsv / findingsMarkdown of the dashboard core exports.js for a graph.json given on stdin.
 NODE_EXPORTS = r"""
 const fs = require('fs');
 const C = require(process.argv[1] + '/graph-core.js');

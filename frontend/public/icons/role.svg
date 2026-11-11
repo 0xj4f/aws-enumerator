@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" preserveAspectRatio="xMidYMid meet" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Hard hat: dome + brim (single outline) -->
+  <path d="M3 16 Q3 14 5 14 Q5 6 12 6 Q19 6 19 14 Q21 14 21 16 Q12 18 3 16 z"/>
+  <!-- Chin strap across the dome -->
+  <path d="M6 12 L16 12"/>
+  <!-- Buckle on the right of the strap -->
+  <rect x="16" y="10.5" width="3.5" height="3" rx="0.3"/>
+  <line x1="17" y1="12" x2="18.5" y2="12"/>
+</svg>

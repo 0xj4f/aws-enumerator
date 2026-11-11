@@ -47,6 +47,7 @@ version = {attr = "aws_enumerator._version.__version__"}
     "dashboard/index.html",
     "dashboard/css/*.css",
     "dashboard/icons/*.svg",
+    "dashboard/fonts/*.woff2",
     "dashboard/vendor/*",
     "dashboard/js/*.js",
     "schemas/*.json",

@@ -2,7 +2,8 @@
 // Pins the vendored libraries (F-089 groundwork) and the path indirection.
 // - Every row of vendor/VENDOR.md's Files table matches the bytes on disk.
 // - scripts/vendor_dashboard_libs.py --verify agrees (skipped without .venv).
-// - Behavioural facts of the vendored Cytoscape / JSZip that later tests rely on.
+// - Behavioural facts of the vendored JSZip that the loader tests rely on.
+// (Cytoscape.js was vendored here until DECISIONS.md D-57; the dashboard no longer uses it.)
 
 const { test, describe } = require('node:test');
 const assert = require('node:assert/strict');
@@ -12,7 +13,6 @@ const crypto = require('crypto');
 const { execFileSync } = require('child_process');
 const targets = require('./targets');
 const { loadVendored } = require('./vendor-libs');
-const { cytoscapeAvailability, createHeadless, headlessFactory } = require('./cytoscape-headless');
 
 const VENDOR_SKIP = fs.existsSync(targets.vendorDir()) ? false : `no vendor dir at ${path.relative(targets.REPO_ROOT, targets.vendorDir())}`;
 
@@ -36,7 +36,8 @@ describe('path indirection (tests/js/helpers/targets.js)', () => {
       assert.equal(src, 'tests/support/targets.py', 'targets.py exists but its DASHBOARD_DIR line was not understood');
     }
     assert.ok(fs.statSync(targets.dashboardDir()).isDirectory(), `missing ${targets.dashboardDirRel()}`);
-    assert.ok(fs.existsSync(targets.dashboardIndexPath()), 'index.html missing');
+    assert.ok(fs.existsSync(targets.dashboardIndexPath()), 'index.html missing (run npm run build in frontend/)');
+    assert.ok(fs.statSync(targets.frontendDir()).isDirectory(), 'frontend/ (the dashboard source) missing');
   });
 
   test('parser understands REPO_ROOT and chained NAME / "seg" assignments', () => {
@@ -68,7 +69,7 @@ describe('vendored files match VENDOR.md', () => {
 
   test('library versions in VENDOR.md match the files and the loaders', { skip: VENDOR_SKIP }, () => {
     const rows = Object.fromEntries(manifestRows().map(r => [r.file, r]));
-    for (const [name, file] of [['jszip', 'jszip.min.js'], ['cytoscape', 'cytoscape.min.js']]) {
+    for (const [name, file] of [['jszip', 'jszip.min.js']]) {
       const lib = loadVendored(name);
       assert.ok(lib.ok, lib.reason);
       assert.equal(lib.version, rows[file].version, `${name} version`);
@@ -81,63 +82,6 @@ describe('vendored files match VENDOR.md', () => {
       cwd: targets.REPO_ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], env: { ...process.env, PYTHONDONTWRITEBYTECODE: '1' },
     });
     assert.match(outText, /^verify: ok$/m);
-  });
-});
-
-describe('vendored Cytoscape 3.30.4 facts (headless, Node)', () => {
-  const avail = cytoscapeAvailability();
-
-  test('loads headless and exposes the pinned version', { skip: avail.skip }, () => {
-    const cy = createHeadless([{ group: 'nodes', data: { id: 'a' } }]);
-    assert.equal(avail.version, '3.30.4');
-    assert.equal(cy.nodes().length, 1);
-    cy.destroy();
-  });
-
-  test('duplicate ids are dropped silently (first wins); missing endpoints throw', { skip: avail.skip }, () => {
-    const cy = createHeadless([
-      { group: 'nodes', data: { id: 'a', v: 1 } }, { group: 'nodes', data: { id: 'a', v: 2 } }, { group: 'nodes', data: { id: 'b' } },
-      { group: 'edges', data: { id: 'e', source: 'a', target: 'b', w: 1 } }, { group: 'edges', data: { id: 'e', source: 'a', target: 'b', w: 2 } },
-    ]);
-    assert.deepEqual(cy.nodes().map(n => [n.id(), n.data('v')]), [['a', 1], ['b', undefined]]);
-    assert.deepEqual(cy.edges().map(e => [e.id(), e.data('w')]), [['e', 1]]);
-    assert.throws(() => createHeadless([{ group: 'nodes', data: { id: 'a' } }, { group: 'edges', data: { id: 'm', source: 'a', target: 'zz' } }]), /nonexistant target/);
-    assert.throws(() => cy.add({ group: 'nodes', data: { id: 'a' } }), /second element with ID/);
-  });
-
-  test('dijkstra: directed vs undirected, Infinity when unreachable, pathTo is just the target', { skip: avail.skip }, () => {
-    const cy = createHeadless([
-      { group: 'nodes', data: { id: 'a' } }, { group: 'nodes', data: { id: 'b' } }, { group: 'nodes', data: { id: 'c' } },
-      { group: 'edges', data: { id: 'ab', source: 'a', target: 'b', weight: 0 } },
-      { group: 'edges', data: { id: 'cb', source: 'c', target: 'b', weight: 1 } },
-    ]);
-    const w = e => e.data('weight');
-    const und = cy.elements().dijkstra({ root: cy.getElementById('a'), weight: w, directed: false });
-    assert.equal(und.distanceTo(cy.getElementById('c')), 1, 'weight 0 honoured by Cytoscape itself');
-    assert.deepEqual(und.pathTo(cy.getElementById('c')).map(e => e.id()), ['a', 'ab', 'b', 'cb', 'c']);
-    const dir = cy.elements().dijkstra({ root: cy.getElementById('a'), weight: w, directed: true });
-    assert.equal(dir.distanceTo(cy.getElementById('c')), Infinity);
-    assert.deepEqual(dir.pathTo(cy.getElementById('c')).map(e => e.id()), ['c']);
-    assert.equal(dir.distanceTo(cy.getElementById('a')), 0);
-  });
-
-  test('headlessFactory accepts browser-style options and records cores', { skip: avail.skip }, () => {
-    const factory = headlessFactory();
-    const cy = factory({ container: {}, style: [{ selector: 'node', style: { width: 10 } }], layout: { name: 'cose' }, elements: [{ group: 'nodes', data: { id: 'x' } }] });
-    assert.equal(factory.cores.length, 1);
-    assert.equal(cy.nodes().length, 1);
-    assert.equal(factory.version, '3.30.4');
-  });
-
-  test('cross-realm pitfall: option objects from a vm context are ignored by a main-realm Cytoscape', { skip: avail.skip }, () => {
-    // Documented so nobody "simplifies" legacy-harness.js: Cytoscape checks obj.constructor === Object.
-    const vm = require('vm');
-    const cy = createHeadless([{ group: 'nodes', data: { id: 'a' } }, { group: 'nodes', data: { id: 'b' } }, { group: 'edges', data: { id: 'e', source: 'a', target: 'b' } }]);
-    const ctx = vm.createContext({ cy });
-    const d = vm.runInContext("cy.elements().dijkstra({ root: cy.getElementById('a'), weight: () => 1, directed: false }).distanceTo(cy.getElementById('b'))", ctx);
-    assert.equal(d, Infinity);
-    const sameRealm = cy.elements().dijkstra({ root: cy.getElementById('a'), weight: () => 1, directed: false }).distanceTo(cy.getElementById('b'));
-    assert.equal(sameRealm, 1);
   });
 });
 
